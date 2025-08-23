@@ -4,6 +4,7 @@ import StrategicCodingSection from "@/components/StrategicCodingSection";
 import GrimoireSection from "@/components/GrimoireSection";
 import CardsSection from "@/components/CardsSection";
 import ForgeSection from "@/components/ForgeSection";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
         <CardsSection />
         <ForgeSection />
       </main>
+      <Footer />
     </div>
   );
 };
