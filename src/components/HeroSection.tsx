@@ -16,11 +16,6 @@ const HeroSection = () => {
       {/* Fire Sparks Effect */}
       <FireSparks />
 
-      {/* Animated Portal Effect */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-96 h-96 rounded-full bg-gradient-portal opacity-20 animate-pulse portal-spin" />
-      </div>
-
       {/* Hero Content */}
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         {/* Main Logo */}
