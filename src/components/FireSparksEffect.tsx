@@ -20,7 +20,7 @@ const FireSparksEffect = () => {
     
     // Clear existing content
     parent.innerHTML = "";
-    styles.innerHTML = "";
+    styles.innerHTML = `#fire_sparks{width:100%;height:100%;position:absolute;inset:0;pointer-events:none;overflow:hidden;}#fire_sparks .spark{transform:none!important;}`;
     
     // the HTML creator function
     const spark_HTML = (index: number, inner_speed: string, inner_delay: string, spark_travel_speed: string, spark_travel_delay: string) => {
@@ -51,12 +51,10 @@ const FireSparksEffect = () => {
         styles.innerHTML += `@keyframes scaling${i} {0% {transform: scale3d(${min}, ${min}, 1);} 50% {transform: scale3d(${max}, ${max}, 1);} 100% {transform: scale3d(${min}, ${min}, 1);}}`;
       }
       
-      // random travel directions
-      let point1w = big_random(0, 100); // this is the X position of the initial spark
-      let point1h = 103; // this is the Y position of the initial spark
-      let point2w = big_random(0, 100);
-      let point2h = -3;
-      styles.innerHTML += `@keyframes travel${i} { 0% {transform: translate(${point1w}vw, ${point1h}vh)} 100% {transform: translate(${point2w}vw, ${point2h}vh);} }`;    
+      // random travel directions bound to section (percentages)
+      let point1w = big_random(0, 100); // initial X (% of section width)
+      let point2w = big_random(0, 100); // final X (% of section width)
+      styles.innerHTML += `@keyframes travel${i} { 0% { top: 103%; left: ${point1w}%; } 100% { top: -3%; left: ${point2w}%; } }`;    
       
       let inner_speed = big_random(1500, 2000); // milliseconds
       // call the random function to get a random inner_delay
