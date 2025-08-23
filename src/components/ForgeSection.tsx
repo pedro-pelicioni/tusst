@@ -4,7 +4,7 @@ import mysticalForge from "@/assets/mystical-forge.jpg";
 
 const ForgeSection = () => {
   return (
-    <section className="min-h-screen bg-gradient-to-b from-secondary to-background py-20">
+    <section id="tutorials" className="min-h-screen bg-gradient-to-b from-secondary to-background py-20">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Image */}

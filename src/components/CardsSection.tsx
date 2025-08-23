@@ -53,7 +53,7 @@ const CardsSection = () => {
   };
 
   return (
-    <section className="py-20 bg-background relative overflow-hidden">
+    <section id="cards" className="py-20 bg-background relative overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-fantasy font-bold text-primary mystical-glow mb-6">
