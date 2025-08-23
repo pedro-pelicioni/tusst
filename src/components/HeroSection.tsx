@@ -1,15 +1,12 @@
 import { Button } from "@/components/ui/button";
 import heroPortalBg from "@/assets/hero-portal-bg.jpg";
 import FireSparks from "@/components/FireSparks";
-
 const HeroSection = () => {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroPortalBg})` }}
-      >
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
+      backgroundImage: `url(${heroPortalBg})`
+    }}>
         <div className="absolute inset-0 bg-background/40" />
       </div>
 
@@ -20,33 +17,27 @@ const HeroSection = () => {
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         {/* Main Logo */}
         <div className="animate-fade-in-up">
-          <img 
-            src="/lovable-uploads/0dab1952-e071-4e0c-a4c2-db5b1ce1fc25.png" 
-            alt="T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial"
-            className="w-full max-w-[28.8rem] mx-auto h-auto object-contain mb-8 rune-pulse"
-          />
+          <img src="/lovable-uploads/0dab1952-e071-4e0c-a4c2-db5b1ce1fc25.png" alt="T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial" className="w-full max-w-[28.8rem] mx-auto h-auto object-contain mb-8 rune-pulse" />
         </div>
 
         {/* CTA Button */}
-        <div className="animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+        <div className="animate-fade-in-up" style={{
+        animationDelay: '0.6s'
+      }}>
           <Button variant="rune" size="hero" className="float-gentle">
             ANSWER THE CALL
           </Button>
         </div>
 
         {/* Floating Runes */}
-        <div className="absolute top-20 left-20 text-rune-glow text-4xl animate-float-gentle opacity-60">
-          ◊
-        </div>
-        <div className="absolute top-40 right-32 text-magic-blue text-3xl animate-float-gentle opacity-60" style={{ animationDelay: '1s' }}>
+        
+        <div className="absolute top-40 right-32 text-magic-blue text-3xl animate-float-gentle opacity-60" style={{
+        animationDelay: '1s'
+      }}>
           ✦
         </div>
-        <div className="absolute bottom-32 left-16 text-forge-orange text-5xl animate-float-gentle opacity-60" style={{ animationDelay: '2s' }}>
-          ⬟
-        </div>
-        <div className="absolute bottom-20 right-20 text-portal-purple text-4xl animate-float-gentle opacity-60" style={{ animationDelay: '1.5s' }}>
-          ◈
-        </div>
+        
+        
       </div>
 
       {/* Scroll Indicator */}
@@ -55,8 +46,6 @@ const HeroSection = () => {
           <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-bounce" />
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
