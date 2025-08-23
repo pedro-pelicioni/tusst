@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'fantasy': ['Cinzel', 'serif'],
+				'body': ['Crimson Text', 'serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,7 +65,13 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom fantasy colors
+				'rune-glow': 'hsl(var(--rune-glow))',
+				'magic-blue': 'hsl(var(--magic-blue))',
+				'portal-purple': 'hsl(var(--portal-purple))',
+				'forge-orange': 'hsl(var(--forge-orange))',
+				'shadow-depth': 'hsl(var(--shadow-depth))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +94,63 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'rune-pulse': {
+					'0%, 100%': {
+						opacity: '1',
+						transform: 'scale(1)'
+					},
+					'50%': {
+						opacity: '0.8',
+						transform: 'scale(1.05)'
+					}
+				},
+				'float-gentle': {
+					'0%, 100%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
+					}
+				},
+				'portal-spin': {
+					'0%': {
+						transform: 'rotate(0deg)'
+					},
+					'100%': {
+						transform: 'rotate(360deg)'
+					}
+				},
+				'fade-in-up': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(40px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'card-flip': {
+					'0%': {
+						transform: 'rotateY(0deg)'
+					},
+					'50%': {
+						transform: 'rotateY(90deg)'
+					},
+					'100%': {
+						transform: 'rotateY(0deg)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'rune-pulse': 'rune-pulse 3s ease-in-out infinite',
+				'float-gentle': 'float-gentle 6s ease-in-out infinite',
+				'portal-spin': 'portal-spin 20s linear infinite',
+				'fade-in-up': 'fade-in-up 0.8s ease-out',
+				'card-flip': 'card-flip 1s ease-in-out'
 			}
 		}
 	},
