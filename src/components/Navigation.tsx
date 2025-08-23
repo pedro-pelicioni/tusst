@@ -38,7 +38,7 @@ const Navigation = () => {
 
         {/* Social Links */}
         <div className="flex items-center gap-3">
-          <a href="https://discord.gg/A2jz6z43" target="_blank" rel="noopener noreferrer">
+          <a href="https://discord.gg/QpadZuKAhj" target="_blank" rel="noopener noreferrer">
             <Button variant="ghost" size="sm" className="gap-2">
               <MessageSquare className="w-4 h-4" />
               Discord
