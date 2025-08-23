@@ -24,7 +24,7 @@ const HeroSection = () => {
           <img 
             src="/lovable-uploads/0dab1952-e071-4e0c-a4c2-db5b1ce1fc25.png" 
             alt="T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial"
-            className="w-full max-w-2xl mx-auto h-auto object-contain mb-8 rune-pulse"
+            className="w-full max-w-xl mx-auto h-auto object-contain mb-8 rune-pulse"
           />
         </div>
 
