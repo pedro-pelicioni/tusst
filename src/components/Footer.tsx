@@ -115,7 +115,7 @@ const Footer = () => {
                 © {currentYear} T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial
               </p>
               <p className="text-sm text-muted-foreground font-body">
-                Powered by Stellar Network & Soroban Smart Contracts
+                Powered by Stellar Network / Kickstart Cohort #7 Winner
               </p>
             </div>
             
