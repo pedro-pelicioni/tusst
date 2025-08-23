@@ -325,13 +325,13 @@
   overflow: hidden;
   top: 0;
   left: 0;
+  z-index: 1;
 }
 
 .spark {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   position: absolute;
-  transform: translateY(-10vh);
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
@@ -341,14 +341,27 @@
   height: 100%;
   border-radius: 50%;
   mix-blend-mode: screen;
-  background-image: radial-gradient(#ffd900 0%, #fff9c1 10%);
-  box-shadow: 0 0 0.9375em 0.1875em #f8a63a;
+  background: radial-gradient(circle, #ffd900 0%, #ffb347 50%, #ff6b35 100%);
+  box-shadow: 
+    0 0 10px #ff6b35,
+    0 0 20px #ffb347,
+    0 0 30px #ffd900;
   animation-name: scaling;
   animation-iteration-count: infinite;
+  filter: brightness(1.5) contrast(1.2);
 }
 
 @keyframes scaling {
-  0% { transform: scale3d(0.4, 0.4, 1) }
-  50% { transform: scale3d(1.4, 1.4, 1) }
-  100% { transform: scale3d(0.4, 0.4, 1) }
+  0% { 
+    transform: scale3d(0.3, 0.3, 1);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: scale3d(1.8, 1.8, 1);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale3d(0.3, 0.3, 1);
+    opacity: 0.8;
+  }
 }
