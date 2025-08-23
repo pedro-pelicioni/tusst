@@ -217,7 +217,7 @@
   --card-width: calc(var(--card-height) / 1.5);
 }
 
-.game-card {
+.game-card-evolution {
   width: var(--card-width);
   height: var(--card-height);
   position: relative;
@@ -225,7 +225,6 @@
   justify-content: center;
   align-items: flex-end;
   perspective: 2500px;
-  margin: 0 20px;
   cursor: pointer;
 }
 
@@ -234,6 +233,21 @@
   height: 100%;
   object-fit: cover;
   border-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.base-card {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  z-index: 2;
+}
+
+.evolved-card {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
 }
 
 .card-wrapper {
@@ -245,9 +259,17 @@
   overflow: hidden;
 }
 
-.game-card:hover .card-wrapper {
+.game-card-evolution:hover .card-wrapper {
   transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
   box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+}
+
+.game-card-evolution:hover .base-card {
+  opacity: 0;
+}
+
+.game-card-evolution:hover .evolved-card {
+  opacity: 1;
 }
 
 .card-wrapper::before,
@@ -260,6 +282,7 @@
   position: absolute;
   left: 0;
   border-radius: 12px;
+  z-index: 3;
 }
 
 .card-wrapper::before {
@@ -284,11 +307,11 @@
   );
 }
 
-.game-card:hover .card-wrapper::before,
-.game-card:hover .card-wrapper::after {
+.game-card-evolution:hover .card-wrapper::before,
+.game-card-evolution:hover .card-wrapper::after {
   opacity: 0.8;
 }
 
-.game-card:hover .card-wrapper::after {
+.game-card-evolution:hover .card-wrapper::after {
   height: 120px;
 }
