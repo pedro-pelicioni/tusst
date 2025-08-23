@@ -12,12 +12,14 @@ const Navigation = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/20">
-      <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
+      <nav className="container mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <h1 className="text-2xl font-fantasy font-bold mystical-glow text-primary">
-            T.U.S.S.T.
-          </h1>
+          <img 
+            src="/lovable-uploads/0dab1952-e071-4e0c-a4c2-db5b1ce1fc25.png" 
+            alt="T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial"
+            className="h-12 w-auto object-contain"
+          />
         </div>
 
         {/* Navigation Links */}

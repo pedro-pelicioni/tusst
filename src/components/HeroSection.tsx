@@ -21,16 +21,11 @@ const HeroSection = () => {
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         {/* Main Logo */}
         <div className="animate-fade-in-up">
-          <h1 className="text-8xl md:text-9xl font-fantasy font-bold mystical-glow text-primary mb-4 rune-pulse">
-            T.U.S.S.T.
-          </h1>
-        </div>
-
-        {/* Subtitle */}
-        <div className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-          <p className="text-2xl md:text-3xl font-fantasy font-medium text-accent mb-8 magic-glow">
-            The Ultimate Stellar Supreme Tutorial
-          </p>
+          <img 
+            src="/lovable-uploads/0dab1952-e071-4e0c-a4c2-db5b1ce1fc25.png" 
+            alt="T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial"
+            className="w-full max-w-2xl mx-auto h-auto object-contain mb-8 rune-pulse"
+          />
         </div>
 
         {/* CTA Button */}
