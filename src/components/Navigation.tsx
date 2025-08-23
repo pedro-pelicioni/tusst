@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Twitter } from "lucide-react";
 
 const Navigation = () => {
   const navLinks = [
@@ -36,13 +36,28 @@ const Navigation = () => {
           ))}
         </div>
 
-        {/* Join Waitlist Button */}
-        <Link to="/waitlist">
-          <Button variant="portal" size="sm" className="gap-2">
-            <MessageSquare className="w-4 h-4" />
-            Join Guild
-          </Button>
-        </Link>
+        {/* Social Links */}
+        <div className="flex items-center gap-3">
+          <a href="https://discord.gg/A2jz6z43" target="_blank" rel="noopener noreferrer">
+            <Button variant="ghost" size="sm" className="gap-2">
+              <MessageSquare className="w-4 h-4" />
+              Discord
+            </Button>
+          </a>
+          
+          <a href="https://x.com/StellarTUSST" target="_blank" rel="noopener noreferrer">
+            <Button variant="ghost" size="sm" className="gap-2">
+              <Twitter className="w-4 h-4" />
+              Twitter
+            </Button>
+          </a>
+          
+          <Link to="/waitlist">
+            <Button variant="portal" size="sm" className="gap-2">
+              Join Guild
+            </Button>
+          </Link>
+        </div>
       </nav>
     </header>
   );
