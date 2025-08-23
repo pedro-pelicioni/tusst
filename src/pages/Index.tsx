@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import StrategicCodingSection from "@/components/StrategicCodingSection";
 import GrimoireSection from "@/components/GrimoireSection";
+import CardsSection from "@/components/CardsSection";
 import ForgeSection from "@/components/ForgeSection";
 
 const Index = () => {
@@ -12,6 +13,7 @@ const Index = () => {
         <HeroSection />
         <StrategicCodingSection />
         <GrimoireSection />
+        <CardsSection />
         <ForgeSection />
       </main>
     </div>
