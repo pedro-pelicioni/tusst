@@ -56,10 +56,10 @@ const CardsSection = () => {
     <section className="py-20 bg-background relative overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="fantasy-heading text-4xl md:text-5xl lg:text-6xl mb-6">
-            Card System
+          <h2 className="text-5xl md:text-6xl font-fantasy font-bold text-primary mystical-glow mb-6">
+            CARD <span className="text-magic-blue">SYSTEM</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-muted-foreground font-body max-w-3xl mx-auto leading-relaxed">
             Unlock epic cards by completing tutorials and challenges. Each card can evolve 
             as you master new programming skills.
           </p>
@@ -92,26 +92,26 @@ const CardsSection = () => {
           {/* Explanation Content */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-primary">How It Works?</h3>
-              <div className="space-y-3 text-muted-foreground">
+              <h3 className="text-2xl font-fantasy font-bold text-primary mystical-glow">How It Works?</h3>
+              <div className="space-y-3 text-muted-foreground font-body">
                 <p className="flex items-start gap-3">
-                  <span className="text-accent font-bold text-lg">1.</span>
+                  <span className="text-accent font-fantasy font-bold text-lg">1.</span>
                   <span>Complete tutorials and challenges to unlock new cards</span>
                 </p>
                 <p className="flex items-start gap-3">
-                  <span className="text-accent font-bold text-lg">2.</span>
+                  <span className="text-accent font-fantasy font-bold text-lg">2.</span>
                   <span>Practice your programming skills to evolve your cards</span>
                 </p>
                 <p className="flex items-start gap-3">
-                  <span className="text-accent font-bold text-lg">3.</span>
+                  <span className="text-accent font-fantasy font-bold text-lg">3.</span>
                   <span>Evolved cards have greater power and special abilities</span>
                 </p>
               </div>
             </div>
 
             <div className="bg-card/50 rounded-lg p-6 border border-border/50">
-              <h4 className="text-xl font-semibold mb-4 text-primary">Evolution Example</h4>
-              <div className="grid grid-cols-2 gap-4 text-sm">
+              <h4 className="text-xl font-fantasy font-semibold mb-4 text-primary mystical-glow">Evolution Example</h4>
+              <div className="grid grid-cols-2 gap-4 text-sm font-body">
                 <div>
                   <p className="font-semibold text-foreground">Base Card</p>
                   <p className="text-muted-foreground">{cardEvolution.base.name}</p>
@@ -124,15 +124,15 @@ const CardsSection = () => {
                 </div>
               </div>
               <div className="mt-4 p-3 bg-accent/10 rounded border-l-4 border-accent">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground font-body">
                   💡 <strong>Tip:</strong> Hover over the card to see the evolution in action!
                 </p>
               </div>
             </div>
 
             <div className="bg-gradient-mystical/20 rounded-lg p-6 border border-primary/20">
-              <h4 className="text-xl font-semibold mb-3 text-primary">Learning Rewards</h4>
-              <ul className="space-y-2 text-muted-foreground">
+              <h4 className="text-xl font-fantasy font-semibold mb-3 text-primary mystical-glow">Learning Rewards</h4>
+              <ul className="space-y-2 text-muted-foreground font-body">
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-accent rounded-full"></span>
                   Basic tutorials unlock common cards
