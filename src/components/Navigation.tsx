@@ -18,13 +18,13 @@ const Navigation = () => {
       <nav className="container mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <Link to="/">
+          <a href="#" className="cursor-pointer">
             <img 
               src="/lovable-uploads/0dab1952-e071-4e0c-a4c2-db5b1ce1fc25.png" 
               alt="T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial"
               className="h-12 w-auto object-contain"
             />
-          </Link>
+          </a>
         </div>
 
         {/* Desktop Navigation Links */}
