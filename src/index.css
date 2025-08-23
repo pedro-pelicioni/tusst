@@ -117,6 +117,19 @@
     text-shadow: var(--magic-glow);
   }
 
+  /* Fire Sparks Effect */
+  .spark {
+    background-color: #DE4A00;
+    visibility: hidden;
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 30%;
+    box-shadow: 0 0 5px #AB000B;
+    pointer-events: none;
+    z-index: 15;
+  }
+
   /* Custom animations */
   .rune-pulse {
     animation: rune-pulse 3s ease-in-out infinite;

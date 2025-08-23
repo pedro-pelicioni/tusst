@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import heroPortalBg from "@/assets/hero-portal-bg.jpg";
+import FireSparks from "@/components/FireSparks";
 
 const HeroSection = () => {
   return (
@@ -11,6 +12,9 @@ const HeroSection = () => {
       >
         <div className="absolute inset-0 bg-background/40" />
       </div>
+
+      {/* Fire Sparks Effect */}
+      <FireSparks />
 
       {/* Animated Portal Effect */}
       <div className="absolute inset-0 flex items-center justify-center">
