@@ -315,3 +315,40 @@
 .game-card-evolution:hover .card-wrapper::after {
   height: 120px;
 }
+
+/* Fire Sparks Effect for Tutorials Section */
+.fire-sparks-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+
+.spark {
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  transform: translateY(-10vh);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.spark_inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  background-image: radial-gradient(#ffd900 0%, #fff9c1 10%);
+  box-shadow: 0 0 0.9375em 0.1875em #f8a63a;
+  animation-name: scaling;
+  animation-iteration-count: infinite;
+}
+
+@keyframes scaling {
+  0% { transform: scale3d(0.4, 0.4, 1) }
+  50% { transform: scale3d(1.4, 1.4, 1) }
+  100% { transform: scale3d(0.4, 0.4, 1) }
+}

@@ -1,11 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import mysticalForge from "@/assets/mystical-forge.jpg";
+import FireEffect from "@/components/FireEffect";
 
 const ForgeSection = () => {
   return (
-    <section id="tutorials" className="min-h-screen bg-gradient-to-b from-secondary to-background py-20">
-      <div className="container mx-auto px-6">
+    <section id="tutorials" className="min-h-screen bg-gradient-to-b from-secondary to-background py-20 relative overflow-hidden">
+      {/* Fire Effect */}
+      <FireEffect />
+      
+      <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Image */}
           <div className="relative animate-fade-in-up">
