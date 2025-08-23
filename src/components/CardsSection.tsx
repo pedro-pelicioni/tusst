@@ -41,14 +41,14 @@ const CardsSection = () => {
       name: "Stroowarrior",
       type: "Warrior",
       power: 4,
-      description: "Um guerreiro iniciante com coragem e determinação"
+      description: "A beginner warrior with courage and determination"
     },
     evolved: {
       image: card2,
       name: "Stroowarrior Elite",
       type: "Warrior", 
       power: 5,
-      description: "Evoluído através dos tutoriais, agora com armadura aprimorada"
+      description: "Evolved through tutorials, now with enhanced armor"
     }
   };
 
@@ -57,11 +57,11 @@ const CardsSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="fantasy-heading text-4xl md:text-5xl lg:text-6xl mb-6">
-            Sistema de Cartas
+            Card System
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Desbloqueie cartas épicas completando tutoriais e desafios. Cada carta pode evoluir 
-            conforme você domina novas habilidades de programação.
+            Unlock epic cards by completing tutorials and challenges. Each card can evolve 
+            as you master new programming skills.
           </p>
         </div>
         
@@ -92,58 +92,58 @@ const CardsSection = () => {
           {/* Explanation Content */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold text-primary">Como Funciona?</h3>
+              <h3 className="text-2xl font-bold text-primary">How It Works?</h3>
               <div className="space-y-3 text-muted-foreground">
                 <p className="flex items-start gap-3">
                   <span className="text-accent font-bold text-lg">1.</span>
-                  <span>Complete tutoriais e desafios para desbloquear novas cartas</span>
+                  <span>Complete tutorials and challenges to unlock new cards</span>
                 </p>
                 <p className="flex items-start gap-3">
                   <span className="text-accent font-bold text-lg">2.</span>
-                  <span>Pratique suas habilidades de programação para evoluir suas cartas</span>
+                  <span>Practice your programming skills to evolve your cards</span>
                 </p>
                 <p className="flex items-start gap-3">
                   <span className="text-accent font-bold text-lg">3.</span>
-                  <span>Cartas evoluídas possuem maior poder e habilidades especiais</span>
+                  <span>Evolved cards have greater power and special abilities</span>
                 </p>
               </div>
             </div>
 
             <div className="bg-card/50 rounded-lg p-6 border border-border/50">
-              <h4 className="text-xl font-semibold mb-4 text-primary">Exemplo de Evolução</h4>
+              <h4 className="text-xl font-semibold mb-4 text-primary">Evolution Example</h4>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="font-semibold text-foreground">Carta Base</p>
+                  <p className="font-semibold text-foreground">Base Card</p>
                   <p className="text-muted-foreground">{cardEvolution.base.name}</p>
-                  <p className="text-muted-foreground">Poder: {cardEvolution.base.power}</p>
+                  <p className="text-muted-foreground">Power: {cardEvolution.base.power}</p>
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground">Carta Evoluída</p>
+                  <p className="font-semibold text-foreground">Evolved Card</p>
                   <p className="text-muted-foreground">{cardEvolution.evolved.name}</p>
-                  <p className="text-muted-foreground">Poder: {cardEvolution.evolved.power}</p>
+                  <p className="text-muted-foreground">Power: {cardEvolution.evolved.power}</p>
                 </div>
               </div>
               <div className="mt-4 p-3 bg-accent/10 rounded border-l-4 border-accent">
                 <p className="text-sm text-muted-foreground">
-                  💡 <strong>Dica:</strong> Passe o mouse sobre a carta para ver a evolução em ação!
+                  💡 <strong>Tip:</strong> Hover over the card to see the evolution in action!
                 </p>
               </div>
             </div>
 
             <div className="bg-gradient-mystical/20 rounded-lg p-6 border border-primary/20">
-              <h4 className="text-xl font-semibold mb-3 text-primary">Recompensas por Aprendizado</h4>
+              <h4 className="text-xl font-semibold mb-3 text-primary">Learning Rewards</h4>
               <ul className="space-y-2 text-muted-foreground">
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-accent rounded-full"></span>
-                  Tutoriais básicos desbloqueiam cartas comuns
+                  Basic tutorials unlock common cards
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-accent rounded-full"></span>
-                  Desafios avançados concedem cartas raras
+                  Advanced challenges grant rare cards
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 bg-accent rounded-full"></span>
-                  Projetos completos evoluem suas cartas favoritas
+                  Complete projects evolve your favorite cards
                 </li>
               </ul>
             </div>
