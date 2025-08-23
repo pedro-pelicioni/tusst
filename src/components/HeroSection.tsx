@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import heroPortalBg from "@/assets/hero-portal-bg.jpg";
 import FireSparks from "@/components/FireSparks";
 const HeroSection = () => {
@@ -24,9 +25,11 @@ const HeroSection = () => {
         <div className="animate-fade-in-up" style={{
         animationDelay: '0.6s'
       }}>
-          <Button variant="rune" size="hero" className="float-gentle">
-            ANSWER THE CALL
-          </Button>
+          <Link to="/waitlist">
+            <Button variant="rune" size="hero" className="float-gentle">
+              ANSWER THE CALL
+            </Button>
+          </Link>
         </div>
 
         {/* Floating Runes */}

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import mysticalForge from "@/assets/mystical-forge.jpg";
 
 const ForgeSection = () => {
@@ -85,9 +86,11 @@ const ForgeSection = () => {
 
             {/* CTA Button */}
             <div className="pt-4">
-              <Button variant="forge" size="hero" className="float-gentle">
-                BEGIN YOUR JOURNEY
-              </Button>
+              <Link to="/waitlist">
+                <Button variant="forge" size="hero" className="float-gentle">
+                  BEGIN YOUR JOURNEY
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

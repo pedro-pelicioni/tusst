@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { MessageSquare } from "lucide-react";
 
 const Navigation = () => {
@@ -35,11 +36,13 @@ const Navigation = () => {
           ))}
         </div>
 
-        {/* Discord Button */}
-        <Button variant="portal" size="sm" className="gap-2">
-          <MessageSquare className="w-4 h-4" />
-          Discord
-        </Button>
+        {/* Join Waitlist Button */}
+        <Link to="/waitlist">
+          <Button variant="portal" size="sm" className="gap-2">
+            <MessageSquare className="w-4 h-4" />
+            Join Guild
+          </Button>
+        </Link>
       </nav>
     </header>
   );
