@@ -1,8 +1,40 @@
+import { useRef } from "react";
+
 // Importing card images directly from public folder
 const card1 = "/lovable-uploads/2666c266-0d2b-4586-8e4b-04a8a8a90601.png";
 const card2 = "/lovable-uploads/931df4f6-8cb6-4328-ba1a-9d4d10341c21.png";
 
 const CardsSection = () => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    const mouseX = e.clientX - centerX;
+    const mouseY = e.clientY - centerY;
+    
+    const rotateX = (mouseY / (rect.height / 2)) * -15;
+    const rotateY = (mouseX / (rect.width / 2)) * 15;
+    
+    const cardWrapper = card.querySelector('.card-wrapper') as HTMLElement;
+    if (cardWrapper) {
+      cardWrapper.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return;
+    
+    const cardWrapper = cardRef.current.querySelector('.card-wrapper') as HTMLElement;
+    if (cardWrapper) {
+      cardWrapper.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    }
+  };
   const cardEvolution = {
     base: {
       image: card1,
@@ -36,7 +68,12 @@ const CardsSection = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Card Evolution Demo */}
           <div className="flex justify-center">
-            <div className="game-card-evolution">
+            <div 
+              ref={cardRef}
+              className="game-card-evolution"
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            >
               <div className="card-wrapper">
                 <img 
                   src={cardEvolution.base.image} 

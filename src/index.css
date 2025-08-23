@@ -251,17 +251,17 @@
 }
 
 .card-wrapper {
-  transition: all 0.5s ease;
+  transition: transform 0.1s ease-out;
   position: absolute;
   width: 100%;
   height: 100%;
   border-radius: 12px;
   overflow: hidden;
+  transform-style: preserve-3d;
 }
 
 .game-card-evolution:hover .card-wrapper {
-  transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
-  box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .game-card-evolution:hover .base-card {
