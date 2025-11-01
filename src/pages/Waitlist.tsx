@@ -161,6 +161,13 @@ const Waitlist = () => {
                 </Label>
                 <RadioGroup value={level} onValueChange={setLevel} className="space-y-3">
                   <div className="flex items-center space-x-3 bg-background/50 border border-border rounded-lg p-3 hover:border-rune-glow/50 transition-colors">
+                    <RadioGroupItem value="enthusiast" id="enthusiast" className="border-primary" />
+                    <Label htmlFor="enthusiast" className="flex-1 cursor-pointer font-body text-foreground">
+                      <span className="font-fantasy font-semibold text-accent">🌟 Enthusiast</span>
+                      <span className="text-xs text-muted-foreground block">Fascinated by the mysteries, eager to explore the realm</span>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-3 bg-background/50 border border-border rounded-lg p-3 hover:border-rune-glow/50 transition-colors">
                     <RadioGroupItem value="apprentice" id="apprentice" className="border-primary" />
                     <Label htmlFor="apprentice" className="flex-1 cursor-pointer font-body text-foreground">
                       <span className="font-fantasy font-semibold text-magic-blue">⚔️ Apprentice</span>
