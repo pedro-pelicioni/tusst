@@ -99,7 +99,7 @@ const Footer = () => {
               </p>
               <Link 
                 to="/waitlist"
-                className="inline-block bg-gradient-mystical text-foreground font-fantasy font-semibold px-6 py-3 rounded-lg border border-rune-glow/30 hover:border-rune-glow hover:shadow-lg hover:shadow-rune-glow/25 transition-all duration-300"
+                className="inline-block bg-gradient-forge text-shadow-depth font-fantasy font-semibold px-6 py-3 rounded-lg border border-forge-orange/30 hover:border-forge-orange hover:shadow-lg hover:shadow-forge-orange/25 transition-all duration-300"
               >
                 Join Waitlist
               </Link>
