@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { MessageSquare, Twitter, Menu, X } from "lucide-react";
+import tusstLogo from "@/assets/tusst-logo.png";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,7 +21,7 @@ const Navigation = () => {
         <div className="flex items-center">
           <a href="#" className="cursor-pointer">
             <img 
-              src="/lovable-uploads/0dab1952-e071-4e0c-a4c2-db5b1ce1fc25.png" 
+              src={tusstLogo} 
               alt="T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial"
               className="h-12 w-auto object-contain"
             />
