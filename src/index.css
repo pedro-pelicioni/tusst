@@ -19,8 +19,8 @@
     --popover: 217 19% 10%;
     --popover-foreground: 45 25% 85%;
 
-    /* Mystical primary - Molten gold */
-    --primary: 43 96% 56%;             /* Bright magical gold */
+    /* Mystical primary - Bright yellow */
+    --primary: 48 100% 67%;            /* Bright yellow #ffdb54 */
     --primary-foreground: 217 19% 8%;  /* Dark for contrast */
 
     /* Ethereal secondary - Deep arcane purple */
@@ -31,8 +31,8 @@
     --muted: 217 19% 15%;
     --muted-foreground: 45 12% 65%;
 
-    /* Mystical accent - Electric blue */
-    --accent: 220 75% 60%;             /* Bright magical blue */
+    /* Mystical accent - Pure white */
+    --accent: 0 0% 100%;               /* Pure white #ffffff */
     --accent-foreground: 217 19% 8%;
 
     --destructive: 0 65% 50%;          /* Dragon fire red */
@@ -40,25 +40,25 @@
 
     --border: 217 19% 20%;             /* Subtle stone border */
     --input: 217 19% 15%;
-    --ring: 43 96% 56%;                /* Golden focus ring */
+    --ring: 48 100% 67%;               /* Yellow focus ring */
 
     --radius: 0.75rem;
 
     /* Custom fantasy tokens */
-    --rune-glow: 43 96% 56%;           /* Golden rune glow */
-    --magic-blue: 220 75% 60%;         /* Ethereal blue magic */
+    --rune-glow: 48 100% 67%;          /* Bright yellow #ffdb54 */
+    --magic-blue: 0 0% 100%;           /* Pure white #ffffff */
     --portal-purple: 262 52% 45%;      /* Portal energy */
-    --forge-orange: 25 95% 55%;        /* Forge fire */
+    --forge-orange: 356 86% 45%;       /* Red fire #d10f1d */
     --shadow-depth: 217 19% 5%;        /* Deep shadows */
 
     /* Gradients */
-    --gradient-portal: linear-gradient(135deg, hsl(262 52% 25%), hsl(220 75% 35%));
-    --gradient-forge: linear-gradient(135deg, hsl(25 95% 35%), hsl(43 96% 45%));
-    --gradient-mystical: linear-gradient(135deg, hsl(43 96% 56%), hsl(220 75% 60%));
+    --gradient-portal: linear-gradient(135deg, hsl(262 52% 25%), hsl(195 24% 68%));
+    --gradient-forge: linear-gradient(135deg, hsl(356 86% 35%), hsl(48 100% 55%));
+    --gradient-mystical: linear-gradient(135deg, hsl(48 100% 67%), hsl(0 0% 100%));
     
     /* Text shadows and glows */
-    --text-glow: 0 0 20px hsl(43 96% 56% / 0.5);
-    --magic-glow: 0 0 30px hsl(220 75% 60% / 0.6);
+    --text-glow: 0 0 20px hsl(48 100% 67% / 0.5);
+    --magic-glow: 0 0 30px hsl(0 0% 100% / 0.6);
     --rune-shadow: 2px 2px 8px hsl(217 19% 5% / 0.8);
   }
 
@@ -70,19 +70,19 @@
     --card-foreground: 45 25% 85%;
     --popover: 217 19% 10%;
     --popover-foreground: 45 25% 85%;
-    --primary: 43 96% 56%;
+    --primary: 48 100% 67%;
     --primary-foreground: 217 19% 8%;
     --secondary: 262 52% 25%;
     --secondary-foreground: 45 25% 85%;
     --muted: 217 19% 15%;
     --muted-foreground: 45 12% 65%;
-    --accent: 220 75% 60%;
+    --accent: 0 0% 100%;
     --accent-foreground: 217 19% 8%;
     --destructive: 0 65% 50%;
     --destructive-foreground: 45 25% 85%;
     --border: 217 19% 20%;
     --input: 217 19% 15%;
-    --ring: 43 96% 56%;
+    --ring: 48 100% 67%;
   }
 }
 
