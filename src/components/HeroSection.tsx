@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import heroPortalBg from "@/assets/hero-portal-bg.jpg";
+import heroPortalBg from "@/assets/mystical-hall-bg.png";
 import FireSparks from "@/components/FireSparks";
 const HeroSection = () => {
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
