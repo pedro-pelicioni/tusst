@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ArrowLeft, Sparkles, Scroll, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
@@ -10,15 +11,16 @@ import heroPortalBg from "@/assets/hero-portal-bg.jpg";
 const Waitlist = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [level, setLevel] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !name) {
+    if (!email || !name || !level) {
       toast({
         title: "Incomplete Quest Form",
-        description: "Please provide both your name and email to join the guild.",
+        description: "Please provide your name, email, and mastery level to join the guild.",
         variant: "destructive",
       });
       return;
@@ -153,7 +155,43 @@ const Waitlist = () => {
                 />
               </div>
 
-              <Button 
+              <div className="text-left">
+                <Label className="text-primary font-fantasy font-semibold mb-3 block">
+                  Your Mastery Level in the Arcane Arts (Programming & Web3/Blockchain)
+                </Label>
+                <RadioGroup value={level} onValueChange={setLevel} className="space-y-3">
+                  <div className="flex items-center space-x-3 bg-background/50 border border-border rounded-lg p-3 hover:border-rune-glow/50 transition-colors">
+                    <RadioGroupItem value="apprentice" id="apprentice" className="border-primary" />
+                    <Label htmlFor="apprentice" className="flex-1 cursor-pointer font-body text-foreground">
+                      <span className="font-fantasy font-semibold text-magic-blue">⚔️ Apprentice</span>
+                      <span className="text-xs text-muted-foreground block">Just beginning my journey in the mystical realms</span>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-3 bg-background/50 border border-border rounded-lg p-3 hover:border-rune-glow/50 transition-colors">
+                    <RadioGroupItem value="scholar" id="scholar" className="border-primary" />
+                    <Label htmlFor="scholar" className="flex-1 cursor-pointer font-body text-foreground">
+                      <span className="font-fantasy font-semibold text-portal-purple">📜 Scholar</span>
+                      <span className="text-xs text-muted-foreground block">Learning the ancient scrolls and casting basic spells</span>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-3 bg-background/50 border border-border rounded-lg p-3 hover:border-rune-glow/50 transition-colors">
+                    <RadioGroupItem value="mage" id="mage" className="border-primary" />
+                    <Label htmlFor="mage" className="flex-1 cursor-pointer font-body text-foreground">
+                      <span className="font-fantasy font-semibold text-rune-glow">🔮 Mage</span>
+                      <span className="text-xs text-muted-foreground block">Wielding powerful enchantments and forging artifacts</span>
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-3 bg-background/50 border border-border rounded-lg p-3 hover:border-rune-glow/50 transition-colors">
+                    <RadioGroupItem value="archmage" id="archmage" className="border-primary" />
+                    <Label htmlFor="archmage" className="flex-1 cursor-pointer font-body text-foreground">
+                      <span className="font-fantasy font-semibold text-forge-orange">✨ Archmage</span>
+                      <span className="text-xs text-muted-foreground block">Master of the mystic arts and blockchain sorcery</span>
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              <Button
                 type="submit" 
                 variant="rune" 
                 size="hero" 
