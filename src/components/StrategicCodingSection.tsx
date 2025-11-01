@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import sorcererArchitect from "@/assets/sorcerer-architect.jpg";
+import sorcererArchitect from "@/assets/sorcerer-spell.png";
 import { Monitor, Smartphone, Tablet } from "lucide-react";
 
 const StrategicCodingSection = () => {

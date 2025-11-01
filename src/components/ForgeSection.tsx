@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import mysticalForge from "@/assets/mystical-forge.jpg";
+import mysticalForge from "@/assets/blacksmith-forge.png";
 import FireSparks from "@/components/FireSparks";
 
 const ForgeSection = () => {
