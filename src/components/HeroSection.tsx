@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import heroPortalBg from "@/assets/mystical-hall-bg.png";
+import tusstLogo from "@/assets/tusst-logo.png";
 import FireSparks from "@/components/FireSparks";
 const HeroSection = () => {
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -18,7 +19,7 @@ const HeroSection = () => {
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         {/* Main Logo */}
         <div className="animate-fade-in-up">
-          <img src="/lovable-uploads/0dab1952-e071-4e0c-a4c2-db5b1ce1fc25.png" alt="T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial" className="w-full max-w-[28.8rem] mx-auto h-auto object-contain mb-8 rune-pulse" />
+          <img src={tusstLogo} alt="T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial" className="w-full max-w-[28.8rem] mx-auto h-auto object-contain mb-8 rune-pulse" />
         </div>
 
         {/* CTA Button */}
