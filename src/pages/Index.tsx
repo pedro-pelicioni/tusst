@@ -4,6 +4,7 @@ import StrategicCodingSection from "@/components/StrategicCodingSection";
 import GrimoireSection from "@/components/GrimoireSection";
 import CardsSection from "@/components/CardsSection";
 import ForgeSection from "@/components/ForgeSection";
+import SocialProofSection from "@/components/SocialProofSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -15,6 +16,7 @@ const Index = () => {
         <StrategicCodingSection />
         <GrimoireSection />
         <CardsSection />
+        <SocialProofSection />
         <ForgeSection />
       </main>
       <Footer />
