@@ -52,7 +52,7 @@
     --shadow-depth: 217 19% 5%;        /* Deep shadows */
 
     /* Gradients */
-    --gradient-portal: linear-gradient(135deg, hsl(262 52% 25%), hsl(195 24% 68%));
+    --gradient-portal: linear-gradient(135deg, hsl(42 100% 71%), hsl(195 24% 68%));
     --gradient-forge: linear-gradient(135deg, hsl(356 86% 35%), hsl(48 100% 55%));
     --gradient-mystical: linear-gradient(135deg, hsl(48 100% 67%), hsl(0 0% 100%));
     
