@@ -37,7 +37,7 @@ const HeroSection = () => {
       }}>
           <Link to="/waitlist">
             <Button variant="rune" size="hero" className="float-gentle">
-              ANSWER THE CALL
+              Begin The Build
             </Button>
           </Link>
         </div>
