@@ -22,7 +22,7 @@ const buttonVariants = cva(
         mystical: "bg-gradient-mystical text-shadow-depth font-fantasy font-semibold border border-rune-glow/30 hover:border-rune-glow hover:shadow-lg hover:shadow-rune-glow/25 hover:scale-105",
         rune: "bg-card border-2 border-rune-glow text-rune-glow font-fantasy font-semibold hover:bg-rune-glow hover:text-shadow-depth hover:shadow-lg hover:shadow-rune-glow/40 mystical-glow rune-pulse",
         forge: "bg-gradient-forge text-shadow-depth font-fantasy font-semibold border border-forge-orange/30 hover:border-forge-orange hover:shadow-lg hover:shadow-forge-orange/25",
-        portal: "bg-gradient-portal text-foreground font-fantasy font-semibold border border-magic-blue/30 hover:border-magic-blue hover:shadow-lg hover:shadow-magic-blue/25"
+        portal: "bg-[hsl(var(--portal-gold))] text-background font-fantasy font-semibold border border-[hsl(var(--portal-gold))]/30 hover:border-[hsl(var(--portal-gold))] hover:shadow-lg hover:shadow-[hsl(var(--portal-gold))]/25 hover:brightness-110"
       },
       size: {
         default: "h-10 px-4 py-2",
