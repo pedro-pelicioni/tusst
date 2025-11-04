@@ -23,7 +23,7 @@ const HeroSection = () => {
         </div>
 
         {/* Tagline */}
-        <div className="animate-fade-in-up mb-8" style={{
+        <div className="animate-fade-in-up mb-4" style={{
         animationDelay: '0.3s'
       }}>
           <p className="text-foreground/90 text-lg md:text-xl font-fantasy max-w-2xl mx-auto leading-relaxed">
