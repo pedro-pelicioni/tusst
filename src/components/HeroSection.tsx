@@ -22,6 +22,15 @@ const HeroSection = () => {
           <img src={tusstLogo} alt="T.U.S.S.T. - The Ultimate Stellar Supreme Tutorial" className="w-full max-w-[28.8rem] mx-auto h-auto object-contain mb-8 rune-pulse" />
         </div>
 
+        {/* Tagline */}
+        <div className="animate-fade-in-up mb-8" style={{
+        animationDelay: '0.3s'
+      }}>
+          <p className="text-foreground/90 text-lg md:text-xl font-fantasy max-w-2xl mx-auto leading-relaxed">
+            TUSST turns technical learning into an epic journey of creation. Let your code tell the story.
+          </p>
+        </div>
+
         {/* CTA Button */}
         <div className="animate-fade-in-up" style={{
         animationDelay: '0.6s'
