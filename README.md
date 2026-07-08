@@ -59,4 +59,4 @@ prisma/schema.prisma   # full data model (design artifact, incl. hidden-gold mec
 
 ## License
 
-[BSD 3-Clause](LICENSE) — built toward a Stellar Community Fund proposal.
+[Apache-2.0](LICENSE) — built toward a Stellar Community Fund proposal.
