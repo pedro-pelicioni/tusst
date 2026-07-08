@@ -1,0 +1,215 @@
+// TUSST data model.
+//
+// Key mechanic encoded here — the HIDDEN GOLD reveal:
+//   User.gold accrues silently from the first completed lesson, but every
+//   gold / shop / inventory UI is gated on User.goldRevealed, which only flips
+//   to true after the player finishes their first lesson.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ----------------------------------------------------------------------------
+// Identity & character (Auth.js Prisma adapter compatible)
+// ----------------------------------------------------------------------------
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  walletAddress String?   @unique // Stellar (Freighter / passkey) — later phase
+  createdAt     DateTime  @default(now())
+
+  // Hidden currency layer (revealed only after the first completed lesson)
+  gold         Int     @default(0)
+  goldRevealed Boolean @default(false)
+
+  accounts    Account[]
+  sessions    Session[]
+  character   Character?
+  submissions Submission[]
+  progress    Progress[]
+  inventory   Inventory[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Character {
+  id             String  @id @default(cuid())
+  userId         String  @unique
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  level          Int     @default(1)
+  xp             Int     @default(0)
+  equippedSkinId String?
+  equippedSkin   Skin?   @relation(fields: [equippedSkinId], references: [id])
+}
+
+// ----------------------------------------------------------------------------
+// Curriculum
+// ----------------------------------------------------------------------------
+
+enum TrackLevel {
+  beginner
+  intermediate
+  advanced
+}
+
+enum TrackDomain {
+  rust
+  stellar
+}
+
+enum ContentStatus {
+  active
+  locked
+  coming_soon
+}
+
+model Track {
+  id             String        @id @default(cuid())
+  slug           String        @unique
+  title          String
+  description    String
+  level          TrackLevel
+  domain         TrackDomain
+  order          Int
+  status         ContentStatus @default(active)
+  tags           String[]
+  estMinutes     Int           @default(0)
+  challengeCount Int           @default(0) // advertised headline count
+  popular        Boolean       @default(false)
+  isNew          Boolean       @default(false)
+  lessons        Lesson[]
+}
+
+model Lesson {
+  id          String        @id @default(cuid())
+  trackId     String
+  track       Track         @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  slug        String        @unique
+  title       String
+  summary     String        @default("")
+  order       Int
+  contentRef  String        @default("") // path to MDX content (Phase 3)
+  starterCode String        @default("")
+  difficulty  String        @default("easy") // easy | medium | hard
+  goldReward  Int           @default(0) // accrues silently; UI gated by User.goldRevealed
+  status      ContentStatus @default(active)
+
+  testCases   TestCase[]
+  submissions Submission[]
+  progress    Progress[]
+
+  @@unique([trackId, order])
+}
+
+model TestCase {
+  id         String  @id @default(cuid())
+  lessonId   String
+  lesson     Lesson  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  hidden     Boolean @default(true)
+  harnessRef String // server-side test harness reference (never shipped to client)
+}
+
+// ----------------------------------------------------------------------------
+// Submissions & progress
+// ----------------------------------------------------------------------------
+
+enum SubmissionStatus {
+  pending
+  pass
+  fail
+  error
+}
+
+model Submission {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonId  String
+  lesson    Lesson           @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  code      String
+  status    SubmissionStatus @default(pending)
+  // Raw stdout/stderr is kept server-side only and never returned to the client.
+  outputLog String?
+  createdAt DateTime         @default(now())
+
+  @@index([userId, lessonId])
+}
+
+model Progress {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonId    String
+  lesson      Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+
+  @@unique([userId, lessonId])
+}
+
+// ----------------------------------------------------------------------------
+// Cosmetics economy (non-cash, anti-farming) — surfaced only after reveal
+// ----------------------------------------------------------------------------
+
+model Skin {
+  id         String      @id @default(cuid())
+  name       String
+  rarity     String      @default("common")
+  price      Int         @default(0)
+  assetRef   String
+  inventory  Inventory[]
+  characters Character[]
+}
+
+model Inventory {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skinId     String
+  skin       Skin     @relation(fields: [skinId], references: [id], onDelete: Cascade)
+  acquiredAt DateTime @default(now())
+  equipped   Boolean  @default(false)
+
+  @@unique([userId, skinId])
+}

@@ -1,0 +1,180 @@
+import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/db";
+import { gradeSubmission } from "@/lib/validate";
+import { TRIAL_LESSON_SLUG } from "@/content/steps";
+import { acts } from "@/content/campaign";
+import { getUnlockedActCount } from "@/lib/unlock";
+
+const MAX_CODE_BYTES = 64 * 1024;
+const MAX_BODY_BYTES = 80 * 1024; // code + JSON envelope
+
+export async function POST(req: Request) {
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  // Reject oversized requests before buffering the body. (Chunked bodies
+  // without a length still get the per-field cap below.)
+  const contentLength = Number(req.headers.get("content-length") ?? 0);
+  if (contentLength > MAX_BODY_BYTES) {
+    return NextResponse.json(
+      { error: "Submission too large (64KB max)." },
+      { status: 413 },
+    );
+  }
+
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+  }
+
+  const { lessonSlug, code } = (body ?? {}) as {
+    lessonSlug?: unknown;
+    code?: unknown;
+  };
+  if (typeof lessonSlug !== "string" || typeof code !== "string") {
+    return NextResponse.json(
+      { error: "Expected { lessonSlug: string, code: string }." },
+      { status: 400 },
+    );
+  }
+  if (Buffer.byteLength(code, "utf8") > MAX_CODE_BYTES) {
+    return NextResponse.json(
+      { error: "Submission too large (64KB max)." },
+      { status: 413 },
+    );
+  }
+
+  // Delayed signup (Mimo-style): the trial lesson is gradeable anonymously.
+  // Everything else still requires an account. Anonymous verdicts are
+  // stateless — no Submission row, no Progress, no gold.
+  if (!userId && lessonSlug !== TRIAL_LESSON_SLUG) {
+    return NextResponse.json(
+      { error: "Sign in to submit solutions." },
+      { status: 401 },
+    );
+  }
+
+  const lesson = await prisma.lesson.findUnique({
+    where: { slug: lessonSlug },
+    include: { track: { select: { status: true, slug: true } } },
+  });
+  if (!lesson || lesson.status !== "active") {
+    return NextResponse.json({ error: "Lesson not found." }, { status: 404 });
+  }
+
+  // Same campaign gate as the lesson page: live content, or an act unlocked
+  // by the onboarding answer / by clearing everything before it.
+  if (lesson.track.status !== "active") {
+    const actIndex = acts.findIndex((a) => a.trackSlug === lesson.track.slug);
+    const unlockedAct =
+      actIndex >= 0 && actIndex < (await getUnlockedActCount(userId));
+    if (!unlockedAct) {
+      return NextResponse.json({ error: "Lesson not found." }, { status: 404 });
+    }
+  }
+
+  const verdict = await gradeSubmission(lessonSlug, code);
+  if (!verdict) {
+    return NextResponse.json(
+      { error: "This lesson isn't playable yet." },
+      { status: 422 },
+    );
+  }
+  if (verdict.infraError) {
+    return NextResponse.json(
+      { error: "The forge is cold — the runner is unavailable. Try again." },
+      { status: 503 },
+    );
+  }
+
+  // Anonymous trial run: return the sanitized verdict without persisting.
+  if (!userId) {
+    return NextResponse.json({
+      passed: verdict.passed,
+      results: verdict.results,
+      output: verdict.output,
+      firstCompletion: false,
+    });
+  }
+
+  // Full detail stays server-side (outputLog); the client gets only the
+  // sanitized verdict below — never raw internals (Phase 4 rule, applied now).
+  await prisma.submission.create({
+    data: {
+      userId,
+      lessonId: lesson.id,
+      code,
+      status: verdict.passed ? "pass" : "fail",
+      outputLog: JSON.stringify(verdict.results),
+    },
+  });
+
+  let firstCompletion = false;
+  if (verdict.passed) {
+    // Credit gold exactly once per lesson: only when this pass flips the
+    // Progress row to completed. The balance accrues SILENTLY — goldRevealed
+    // stays untouched until the Phase 5 reveal, and no gold data is returned
+    // to the client here.
+    //
+    // Atomic against concurrent passing submissions (double ⌘⏎, parallel
+    // POSTs): the conditional updateMany re-evaluates its WHERE under the row
+    // lock, and a concurrent duplicate create aborts the whole transaction
+    // with P2002 — so the gold increment can never commit twice.
+    try {
+      firstCompletion = await prisma.$transaction(async (tx) => {
+        const flipped = await tx.progress.updateMany({
+          where: { userId, lessonId: lesson.id, completed: false },
+          data: { completed: true, completedAt: new Date() },
+        });
+        let credited = flipped.count === 1;
+
+        if (!credited) {
+          const existing = await tx.progress.findUnique({
+            where: { userId_lessonId: { userId, lessonId: lesson.id } },
+            select: { id: true },
+          });
+          if (!existing) {
+            await tx.progress.create({
+              data: {
+                userId,
+                lessonId: lesson.id,
+                completed: true,
+                completedAt: new Date(),
+              },
+            });
+            credited = true;
+          }
+        }
+
+        if (credited) {
+          await tx.user.update({
+            where: { id: userId },
+            data: { gold: { increment: lesson.goldReward } },
+          });
+        }
+        return credited;
+      });
+    } catch (e) {
+      if (
+        e instanceof Prisma.PrismaClientKnownRequestError &&
+        e.code === "P2002"
+      ) {
+        // A concurrent submission won the race — it credited; we didn't.
+        firstCompletion = false;
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  return NextResponse.json({
+    passed: verdict.passed,
+    results: verdict.results,
+    output: verdict.output,
+    firstCompletion,
+  });
+}

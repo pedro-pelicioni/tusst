@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: tusst-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tusst
+      POSTGRES_PASSWORD: tusst
+      POSTGRES_DB: tusst
+    ports:
+      - "5432:5432"
+    volumes:
+      - tusst-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tusst -d tusst"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  tusst-pgdata:

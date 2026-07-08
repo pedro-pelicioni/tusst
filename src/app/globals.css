@@ -1,0 +1,291 @@
+@import "tailwindcss";
+
+:root {
+  /* terminal base */
+  --bg: #07070b;
+  --bg-elev: #0d0d14;
+  --bg-elev-2: #12121c;
+  --fg: #e7e7f1;
+  --muted: #696980;
+  --muted-2: #9c9cb4;
+  --border: rgba(255, 255, 255, 0.075);
+  --border-strong: rgba(255, 255, 255, 0.16);
+
+  /* stellar accents (cosmic) — gold is intentionally reserved for the later currency reveal */
+  --accent: #8f7bff; /* periwinkle / violet */
+  --accent-2: #45d6c4; /* stellar teal */
+  --pop: #5fd08a; /* popular badge */
+  --new: #6aa8ff; /* new badge */
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elev: var(--bg-elev);
+  --color-bg-elev2: var(--bg-elev-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-muted2: var(--muted-2);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent2: var(--accent-2);
+  --color-pop: var(--pop);
+  --color-new: var(--new);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-display: var(--font-cinzel);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* cosmic backdrop: soft nebula glows + faint dot grid */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(1100px 560px at 50% -12%, rgba(143, 123, 255, 0.12), transparent 60%),
+    radial-gradient(820px 460px at 92% 6%, rgba(69, 214, 196, 0.07), transparent 55%),
+    var(--bg);
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(1000px 700px at 50% 0%, #000 0%, transparent 80%);
+  pointer-events: none;
+}
+
+::selection {
+  background: rgba(143, 123, 255, 0.32);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   THE RUNEFORGE — diegetic hero device (FCA00C-console energy,
+   built from TUSST lore: a Ledgerstone gate framing a scrying screen).
+   ════════════════════════════════════════════════════════════════════ */
+
+/* carved Ledgerstone casing */
+.stone-frame {
+  position: relative;
+  border-radius: 28px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(255, 214, 150, 0.05), transparent 55%),
+    linear-gradient(150deg, #34302b 0%, #241f1b 45%, #1a1613 100%);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 230, 180, 0.09),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.55),
+    inset 2px 0 0 rgba(255, 230, 180, 0.03),
+    inset -2px 0 0 rgba(0, 0, 0, 0.35),
+    0 30px 80px rgba(0, 0, 0, 0.65),
+    0 4px 18px rgba(0, 0, 0, 0.5);
+}
+
+/* faint chisel grain over the stone */
+.stone-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image:
+    repeating-linear-gradient(98deg, rgba(255, 255, 255, 0.013) 0 2px, transparent 2px 7px),
+    repeating-linear-gradient(-12deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 9px);
+  pointer-events: none;
+}
+
+/* recessed slot (card strip, dial wells) */
+.stone-recess {
+  background: linear-gradient(180deg, #14100d, #1d1915);
+  box-shadow:
+    inset 0 3px 8px rgba(0, 0, 0, 0.8),
+    inset 0 -1px 0 rgba(255, 230, 180, 0.06);
+}
+
+/* carved vent slits on the pillars */
+.stone-vents {
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.55) 0 5px,
+    rgba(255, 230, 180, 0.045) 5px 6px,
+    transparent 6px 11px
+  );
+  border-radius: 10px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* the scrying screen: CRT phosphor over a night sky */
+.crt-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background:
+    radial-gradient(90% 70% at 50% 30%, rgba(143, 123, 255, 0.10), transparent 65%),
+    radial-gradient(70% 55% at 75% 75%, rgba(184, 135, 62, 0.08), transparent 60%),
+    #050408;
+  box-shadow:
+    inset 0 0 60px rgba(0, 0, 0, 0.85),
+    inset 0 0 6px rgba(0, 0, 0, 0.9),
+    0 0 24px rgba(143, 123, 255, 0.07);
+  animation: crt-flicker 7s infinite;
+}
+
+/* star specks */
+.crt-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.5) 0.7px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.28) 0.6px, transparent 1px),
+    radial-gradient(rgba(180, 160, 255, 0.3) 0.8px, transparent 1.2px);
+  background-size:
+    140px 90px,
+    90px 70px,
+    210px 130px;
+  background-position:
+    10px 20px,
+    40px 5px,
+    70px 40px;
+  pointer-events: none;
+}
+
+/* scanlines + vignette */
+.crt-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px),
+    radial-gradient(115% 100% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+  pointer-events: none;
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.86; }
+  94% { opacity: 1; }
+  97% { opacity: 0.93; }
+  98% { opacity: 1; }
+}
+
+/* keystone sigil above the screen */
+.keystone-sigil {
+  animation: sigil-pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes sigil-pulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(184, 135, 62, 0.55), 0 0 26px rgba(184, 135, 62, 0.2); }
+  50% { text-shadow: 0 0 16px rgba(255, 200, 120, 0.85), 0 0 42px rgba(184, 135, 62, 0.4); }
+}
+
+/* physical rune button (the START of the forge) */
+.rune-btn {
+  background: linear-gradient(180deg, #f4e9c8, #d9c489);
+  color: #241c0d;
+  border: 1px solid #0e0b07;
+  border-radius: 10px;
+  box-shadow:
+    0 4px 0 #6d5a33,
+    0 6px 14px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  transition: transform 90ms ease, box-shadow 90ms ease, filter 150ms ease;
+}
+
+.rune-btn:hover {
+  filter: brightness(1.05);
+}
+
+.rune-btn:active {
+  transform: translateY(3px);
+  box-shadow:
+    0 1px 0 #6d5a33,
+    0 3px 8px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+/* boot log line inside the screen */
+.phosphor {
+  color: #86e29b;
+  text-shadow: 0 0 6px rgba(110, 230, 150, 0.55);
+}
+
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.caret::after {
+  content: "▌";
+  margin-left: 2px;
+  animation: caret-blink 1.1s steps(1) infinite;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   SHATTERED SKY — cinematic landing page ("C - Shattered Sky" design).
+   Keyframes are namespaced `sky-` to avoid clashing with the runeforge.
+   ════════════════════════════════════════════════════════════════════ */
+
+@keyframes sky-stardrift {
+  0% { transform: translateY(0) translateX(0); }
+  100% { transform: translateY(-120vh) translateX(30px); }
+}
+
+@keyframes sky-slowzoom {
+  0% { transform: scale(1.05); }
+  100% { transform: scale(1.18); }
+}
+
+@keyframes sky-titleglow {
+  0%, 100% { text-shadow: 0 0 40px rgba(143, 123, 255, 0.4), 0 8px 60px rgba(0, 0, 0, 0.9); }
+  50% { text-shadow: 0 0 70px rgba(143, 123, 255, 0.7), 0 8px 60px rgba(0, 0, 0, 0.9); }
+}
+
+@keyframes sky-floaty {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-14px) rotate(var(--rot, 0deg)); }
+}
+
+@keyframes sky-redpulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(161, 61, 61, 0.25), 0 24px 70px rgba(0, 0, 0, 0.8); }
+  50% { box-shadow: 0 0 80px rgba(161, 61, 61, 0.5), 0 24px 70px rgba(0, 0, 0, 0.8); }
+}
+
+@keyframes sky-caretblink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes sky-shootingstar {
+  0% { transform: translate(0, 0) rotate(-24deg); opacity: 0; }
+  4% { opacity: 1; }
+  12% { transform: translate(-46vw, 22vh) rotate(-24deg); opacity: 0; }
+  100% { transform: translate(-46vw, 22vh) rotate(-24deg); opacity: 0; }
+}
+
+@keyframes sky-sigilglow {
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(143, 123, 255, 0.6)); }
+  50% { filter: drop-shadow(0 0 26px rgba(143, 123, 255, 1)); }
+}
+
+@keyframes sky-eyeflicker {
+  0%, 100% { opacity: 0.35; }
+  45% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+  55% { opacity: 0.35; }
+}
