@@ -7,7 +7,7 @@
 // card tilt, nav condensation and a scroll progress bar.
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface ShatteredSkyProps {
   /** First active track — "Enter the Citadel" / footer CTA target. */
@@ -92,6 +92,22 @@ const TYPED_LINE =
 
 export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Lock body scroll + close on ESC while the mobile menu is open.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -170,11 +186,13 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
         if (y > 60) {
           nav.style.background = "rgba(5,4,9,0.78)";
           nav.style.backdropFilter = "blur(12px)";
-          nav.style.padding = "12px 36px";
+          nav.style.paddingTop = "12px";
+          nav.style.paddingBottom = "12px";
         } else {
           nav.style.background = "transparent";
           nav.style.backdropFilter = "none";
-          nav.style.padding = "20px 36px";
+          nav.style.paddingTop = "";
+          nav.style.paddingBottom = "";
         }
       }
     };
@@ -239,10 +257,10 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       {/* nav */}
       <nav
         data-nav
-        className="fixed inset-x-0 top-0 z-[80] flex items-center justify-between px-9 py-5"
+        className="fixed inset-x-0 top-0 z-[80] flex items-center justify-between px-4 py-4 sm:px-9 sm:py-5"
         style={{
           transition:
-            "background 300ms ease, backdrop-filter 300ms ease, padding 300ms ease",
+            "background 300ms ease, backdrop-filter 300ms ease, padding-top 300ms ease, padding-bottom 300ms ease",
         }}
       >
         <Link href="/" className="flex items-center gap-3">
@@ -256,17 +274,18 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             TUSST
           </span>
         </Link>
+        {/* inline links — tablet / desktop */}
         <div
-          className="flex items-center gap-7 text-[10px] uppercase tracking-[0.24em]"
+          className="hidden items-center gap-7 text-[10px] uppercase tracking-[0.24em] sm:flex"
           style={{ fontFamily: MONO }}
         >
-          <a href="#prologue" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] sm:block">
+          <a href="#prologue" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
             Prologue
           </a>
-          <a href="#acts" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] sm:block">
+          <a href="#acts" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
             Campaign
           </a>
-          <a href="#champions" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] sm:block">
+          <a href="#champions" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
             Champions
           </a>
           <a href="#boss" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] md:block">
@@ -279,10 +298,96 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             Enter the Realm
           </Link>
         </div>
+
+        {/* hamburger — mobile only */}
+        <button
+          type="button"
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={menuOpen}
+          aria-controls="sky-mobile-menu"
+          onClick={() => setMenuOpen((v) => !v)}
+          className="flex h-11 w-11 items-center justify-center rounded-lg border border-[rgba(143,123,255,0.35)] bg-[rgba(143,123,255,0.08)] text-[#cfc3ff] transition-colors hover:bg-[rgba(143,123,255,0.2)] sm:hidden"
+        >
+          <span className="relative block h-[14px] w-[20px]">
+            <span
+              className="absolute left-0 block h-[2px] w-full rounded bg-current transition-transform duration-300"
+              style={{
+                top: "50%",
+                transform: menuOpen
+                  ? "translateY(-50%) rotate(45deg)"
+                  : "translateY(-7px)",
+              }}
+            />
+            <span
+              className="absolute left-0 top-1/2 block h-[2px] w-full -translate-y-1/2 rounded bg-current transition-opacity duration-200"
+              style={{ opacity: menuOpen ? 0 : 1 }}
+            />
+            <span
+              className="absolute left-0 block h-[2px] w-full rounded bg-current transition-transform duration-300"
+              style={{
+                top: "50%",
+                transform: menuOpen
+                  ? "translateY(-50%) rotate(-45deg)"
+                  : "translateY(5px)",
+              }}
+            />
+          </span>
+        </button>
       </nav>
 
+      {/* mobile menu overlay */}
+      <div
+        id="sky-mobile-menu"
+        className={`fixed inset-0 z-[85] flex flex-col transition-opacity duration-300 sm:hidden ${
+          menuOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+        aria-hidden={!menuOpen}
+      >
+        <button
+          type="button"
+          aria-label="Close navigation menu"
+          tabIndex={menuOpen ? 0 : -1}
+          onClick={() => setMenuOpen(false)}
+          className="absolute inset-0 bg-[rgba(5,4,9,0.8)] backdrop-blur-[6px]"
+        />
+        <nav
+          aria-label="Mobile"
+          className={`relative mt-[72px] flex flex-col gap-1 border-y border-[rgba(143,123,255,0.18)] bg-[rgba(9,8,16,0.96)] px-4 py-4 text-[13px] uppercase tracking-[0.24em] transition-transform duration-300 ${
+            menuOpen ? "translate-y-0" : "-translate-y-4"
+          }`}
+          style={{ fontFamily: MONO }}
+        >
+          {[
+            { href: "#prologue", label: "Prologue" },
+            { href: "#acts", label: "Campaign" },
+            { href: "#champions", label: "Champions" },
+            { href: "#boss", label: "The Beholder" },
+          ].map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              tabIndex={menuOpen ? 0 : -1}
+              onClick={() => setMenuOpen(false)}
+              className="flex min-h-[44px] items-center text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]"
+            >
+              {l.label}
+            </a>
+          ))}
+          <Link
+            href={enterHref}
+            tabIndex={menuOpen ? 0 : -1}
+            onClick={() => setMenuOpen(false)}
+            className="mt-2 flex min-h-[44px] items-center justify-center rounded-full border border-[rgba(143,123,255,0.6)] bg-[rgba(143,123,255,0.12)] px-5 text-[#cfc3ff] transition-colors hover:bg-[rgba(143,123,255,0.28)] hover:text-white"
+          >
+            Enter the Realm
+          </Link>
+        </nav>
+      </div>
+
       {/* ═══ HERO: cinematic full-bleed ═══ */}
-      <header className="relative h-screen min-h-[760px] overflow-hidden">
+      <header className="relative h-screen min-h-[640px] overflow-hidden">
         <div
           data-plx="0.25"
           className="absolute inset-[-6%] bg-cover will-change-transform"
@@ -373,7 +478,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             style={{ animation: "sky-sigilglow 4s ease-in-out infinite" }}
           />
           <p
-            className="m-0 text-xs uppercase tracking-[0.6em] text-[#cfc3ff]"
+            className="m-0 text-xs uppercase tracking-[0.3em] text-[#cfc3ff] sm:tracking-[0.6em]"
             style={{ fontFamily: MONO }}
           >
             One error unwound the sky
@@ -381,7 +486,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           <h1
             className="mb-0 mt-[22px] font-display font-black text-[#f4f2fb]"
             style={{
-              fontSize: "clamp(52px, 10vw, 132px)",
+              fontSize: "clamp(42px, 10vw, 132px)",
               lineHeight: 0.98,
               animation: "sky-titleglow 5s ease-in-out infinite",
             }}
@@ -405,7 +510,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           <div className="mt-10 flex items-center gap-5">
             <Link
               href={beginHref}
-              className="inline-block rounded-full px-[42px] py-[17px] font-display text-[15px] font-bold uppercase tracking-[0.16em] text-[#0b0817] transition-[transform,box-shadow] duration-150 hover:-translate-y-[2px] hover:shadow-[0_0_60px_rgba(143,123,255,0.7),0_14px_36px_rgba(0,0,0,0.6)]"
+              className="inline-block rounded-full px-8 py-3.5 font-display text-[13px] font-bold uppercase tracking-[0.16em] text-[#0b0817] transition-[transform,box-shadow] duration-150 hover:-translate-y-[2px] hover:shadow-[0_0_60px_rgba(143,123,255,0.7),0_14px_36px_rgba(0,0,0,0.6)] sm:px-[42px] sm:py-[17px] sm:text-[15px]"
               style={{
                 background: "linear-gradient(180deg, #cfc3ff, #8f7bff)",
                 boxShadow:
@@ -414,12 +519,6 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             >
               Begin the Campaign
             </Link>
-            <span
-              className="text-[11px] text-[#696980]"
-              style={{ fontFamily: MONO }}
-            >
-              free · no setup · in-browser
-            </span>
           </div>
         </div>
 
@@ -435,7 +534,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       </header>
 
       {/* ═══ PROLOGUE: the lore band ═══ */}
-      <section id="prologue" className="relative overflow-hidden px-6 py-[130px]">
+      <section id="prologue" className="relative overflow-hidden px-5 py-20 sm:px-6 sm:py-[130px]">
         <div
           className="absolute inset-0"
           style={{
@@ -510,12 +609,12 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
         {/* Act I band */}
         <div
           data-reveal
-          className="mx-auto mb-[110px] grid max-w-[1160px] grid-cols-[repeat(auto-fit,minmax(320px,1fr))] items-center gap-[60px] px-8"
+          className="mx-auto mb-[110px] grid max-w-[1160px] grid-cols-[repeat(auto-fit,minmax(320px,1fr))] items-center gap-8 px-5 sm:gap-[60px] sm:px-8"
         >
           <div>
-            <div className="flex items-baseline gap-[18px]">
+            <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-baseline sm:gap-[18px]">
               <span
-                className="font-display text-[110px] font-black leading-none text-transparent"
+                className="font-display text-[72px] font-black leading-none text-transparent sm:text-[110px]"
                 style={{ WebkitTextStroke: "1px rgba(217,185,106,0.7)" }}
               >
                 I
@@ -540,7 +639,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             </p>
             <Link
               href={beginHref}
-              className="mt-[26px] inline-block border-b border-[rgba(217,185,106,0.5)] pb-1 text-xs uppercase tracking-[0.2em] text-[#d9b96a] transition-colors hover:text-[#f0d894]"
+              className="mt-[26px] inline-block border-b border-[rgba(217,185,106,0.5)] py-3 pb-1 text-xs uppercase tracking-[0.2em] text-[#d9b96a] transition-colors hover:text-[#f0d894]"
               style={{ fontFamily: MONO }}
             >
               Enter the Citadel ›
@@ -548,7 +647,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           </div>
           <div
             data-tilt
-            className="w-[250px] justify-self-center transition-transform duration-[160ms]"
+            className="w-full max-w-[250px] justify-self-center transition-transform duration-[160ms]"
           >
             <img
               src="/cards/stroowarrior.png"
@@ -570,7 +669,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
         </div>
 
         {/* Acts II–VI: sealed constellation row */}
-        <div data-reveal className="mx-auto mb-10 max-w-[1160px] px-8">
+        <div data-reveal className="mx-auto mb-10 max-w-[1160px] px-5 sm:px-8">
           <p
             className="mb-7 mt-0 text-center text-[10px] uppercase tracking-[0.3em] text-[#696980]"
             style={{ fontFamily: MONO }}
@@ -612,7 +711,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       <section
         id="boss"
         data-reveal
-        className="relative overflow-hidden px-8 py-[130px]"
+        className="relative overflow-hidden px-5 py-20 sm:px-8 sm:py-[130px]"
         style={{
           background:
             "radial-gradient(900px 600px at 50% 50%, rgba(161,61,61,0.13), transparent 70%), linear-gradient(180deg, #050409, #0a0508 50%, #050409)",
@@ -634,10 +733,10 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             ◉
           </span>
         ))}
-        <div className="mx-auto grid max-w-[1160px] grid-cols-[repeat(auto-fit,minmax(320px,1fr))] items-center gap-[60px]">
+        <div className="mx-auto grid max-w-[1160px] grid-cols-[repeat(auto-fit,minmax(320px,1fr))] items-center gap-8 sm:gap-[60px]">
           <div
             data-tilt
-            className="w-[290px] justify-self-center transition-transform duration-[160ms]"
+            className="w-full max-w-[290px] justify-self-center transition-transform duration-[160ms]"
           >
             <img
               src="/cards/stroopbeholder.png"
@@ -680,7 +779,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       {/* ═══ CHAMPIONS: full gallery ═══ */}
       <section
         id="champions"
-        className="relative px-7 py-[120px]"
+        className="relative px-5 py-20 sm:px-7 sm:py-[120px]"
         style={{
           background:
             "radial-gradient(900px 500px at 50% 15%, rgba(143,123,255,0.08), transparent 65%)",
@@ -746,7 +845,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       </section>
 
       {/* ═══ HOW IT WORKS: three beats ═══ */}
-      <section className="mx-auto max-w-[1100px] px-8 pb-[110px] pt-10">
+      <section className="mx-auto max-w-[1100px] px-5 pb-20 pt-10 sm:px-8 sm:pb-[110px]">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10">
           {HOW_IT_WORKS.map((b) => (
             <div key={b.num} data-reveal className="text-center">
@@ -768,7 +867,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       </section>
 
       {/* ═══ FINAL CTA ═══ */}
-      <footer className="relative overflow-hidden px-6 pb-[60px] pt-[150px] text-center">
+      <footer className="relative overflow-hidden px-5 pb-[60px] pt-24 text-center sm:px-6 sm:pt-[150px]">
         <div
           className="absolute inset-0 bg-cover opacity-[0.28]"
           style={{

@@ -1,10 +1,15 @@
 import Link from "next/link";
-import { CharacterAvatar } from "./CharacterAvatar";
+import { NavMenu } from "./NavMenu";
 import { auth, signOut } from "@/lib/auth";
 
 export async function Nav() {
   const session = await auth();
   const user = session?.user;
+
+  async function handleSignOut() {
+    "use server";
+    await signOut({ redirectTo: "/" });
+  }
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur">
@@ -23,57 +28,36 @@ export async function Nav() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-5 sm:gap-7">
-          <Link
-            href="/path"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-          >
-            path
-          </Link>
-          <Link
-            href="/cards"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-          >
-            cards
-          </Link>
-          <Link
-            href="/ide"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-          >
-            forge
-          </Link>
-
+        <nav className="flex items-center gap-3 sm:gap-7">
           {user ? (
-            <>
-              <div className="h-5 w-px bg-line" />
-              <Link
-                href="/profile"
-                aria-label="Your profile"
-                className="transition-opacity hover:opacity-80"
-              >
-                <CharacterAvatar name={user.name ?? "guardian"} />
-              </Link>
-              <form
-                action={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/" });
-                }}
-              >
-                <button
-                  type="submit"
-                  className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted transition hover:text-fg"
-                >
-                  sign out
-                </button>
-              </form>
-            </>
+            <NavMenu name={user.name ?? "guardian"} signOutAction={handleSignOut} />
           ) : (
-            <Link
-              href="/login"
-              className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
-            >
-              sign in
-            </Link>
+            <>
+              <Link
+                href="/path"
+                className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
+              >
+                path
+              </Link>
+              <Link
+                href="/cards"
+                className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
+              >
+                cards
+              </Link>
+              <Link
+                href="/ide"
+                className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
+              >
+                forge
+              </Link>
+              <Link
+                href="/login"
+                className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
+              >
+                sign in
+              </Link>
+            </>
           )}
         </nav>
       </div>
