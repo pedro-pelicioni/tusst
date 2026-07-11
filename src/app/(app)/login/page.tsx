@@ -41,7 +41,7 @@ export default async function LoginPage() {
           >
             <button
               type="submit"
-              className="flex w-full items-center justify-center gap-2.5 rounded-md border border-line-strong bg-white/[0.04] px-4 py-2.5 font-mono text-sm transition hover:bg-white/[0.08]"
+              className="flex w-full items-center justify-center gap-2.5 rounded-md border border-line-strong bg-white/[0.04] px-4 py-2 font-mono text-[13px] transition hover:bg-white/[0.08]"
             >
               <GitHubMark className="h-4 w-4" />
               Continue with GitHub
@@ -58,7 +58,7 @@ export default async function LoginPage() {
           >
             <button
               type="submit"
-              className="flex w-full items-center justify-center gap-2.5 rounded-md border border-[#5865F2]/40 bg-[#5865F2]/10 px-4 py-2.5 font-mono text-sm transition hover:bg-[#5865F2]/20"
+              className="flex w-full items-center justify-center gap-2.5 rounded-md border border-[#5865F2]/40 bg-[#5865F2]/10 px-4 py-2 font-mono text-[13px] transition hover:bg-[#5865F2]/20"
             >
               <DiscordMark className="h-4 w-4 text-[#7984f5]" />
               Continue with Discord
@@ -82,11 +82,11 @@ export default async function LoginPage() {
               name="email"
               required
               placeholder="you@email.com"
-              className="rounded-md border border-line bg-bg px-3 py-2.5 font-mono text-sm outline-none placeholder:text-muted focus:border-accent/50"
+              className="rounded-md border border-line bg-bg px-3 py-2 font-mono text-[13px] outline-none placeholder:text-muted focus:border-accent/50"
             />
             <button
               type="submit"
-              className="w-full rounded-md border border-line-strong bg-white/[0.04] px-4 py-2.5 font-mono text-sm transition hover:bg-white/[0.08]"
+              className="w-full rounded-md border border-line-strong bg-white/[0.04] px-4 py-2 font-mono text-[13px] transition hover:bg-white/[0.08]"
             >
               Email me a magic link
             </button>
@@ -117,11 +117,11 @@ export default async function LoginPage() {
               type="text"
               name="name"
               placeholder="pick a name"
-              className="rounded-md border border-line bg-bg px-3 py-2.5 font-mono text-sm outline-none placeholder:text-muted focus:border-accent/50"
+              className="rounded-md border border-line bg-bg px-3 py-2 font-mono text-[13px] outline-none placeholder:text-muted focus:border-accent/50"
             />
             <button
               type="submit"
-              className="w-full rounded-md border border-accent/40 bg-accent/10 px-4 py-2.5 font-mono text-sm text-accent transition hover:bg-accent/20"
+              className="w-full rounded-md border border-accent/40 bg-accent/10 px-4 py-2 font-mono text-[13px] text-accent transition hover:bg-accent/20"
             >
               Continue
             </button>

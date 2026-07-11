@@ -8,8 +8,8 @@ export async function Nav() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5">
-        <Link href="/" className="group flex items-center gap-2.5">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-5">
+        <Link href="/" className="group flex shrink-0 items-center gap-2.5">
           <span className="grid h-8 w-8 place-items-center overflow-hidden rounded-full border border-[#b8873e]/40 transition group-hover:border-[#b8873e]/80">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -23,7 +23,7 @@ export async function Nav() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-5 sm:gap-7">
+        <nav className="flex min-w-0 items-center gap-4 sm:gap-6">
           <Link
             href="/path"
             className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
@@ -70,7 +70,7 @@ export async function Nav() {
           ) : (
             <Link
               href="/login"
-              className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
+              className="whitespace-nowrap rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
             >
               sign in
             </Link>

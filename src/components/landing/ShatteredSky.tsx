@@ -217,6 +217,25 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       });
     }
 
+    // resume the hero video if the browser paused it while backgrounded
+    const heroVideo = root.querySelector<HTMLVideoElement>("[data-herovideo]");
+    if (heroVideo) {
+      const resume = () => {
+        if (
+          document.visibilityState === "visible" &&
+          heroVideo.paused &&
+          !heroVideo.ended
+        ) {
+          heroVideo.play().catch(() => {});
+        }
+      };
+      document.addEventListener("visibilitychange", resume);
+      resume();
+      cleanups.push(() =>
+        document.removeEventListener("visibilitychange", resume),
+      );
+    }
+
     return () => cleanups.forEach((fn) => fn());
   }, []);
 
@@ -245,7 +264,14 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             "background 300ms ease, backdrop-filter 300ms ease, padding 300ms ease",
         }}
       >
-        <Link href="/" className="flex items-center gap-3">
+        <Link
+          href="/"
+          className="flex items-center gap-3"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
           <img
             src="/logo-sigil.png"
             alt="TUSST"
@@ -285,13 +311,33 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       <header className="relative h-screen min-h-[760px] overflow-hidden">
         <div
           data-plx="0.25"
-          className="absolute inset-[-6%] bg-cover will-change-transform"
-          style={{
-            backgroundImage: "url('/sky-shattered.png')",
-            backgroundPosition: "center 30%",
-            animation: "sky-slowzoom 30s ease-in-out infinite alternate",
-          }}
-        />
+          className="absolute inset-[-6%] overflow-hidden will-change-transform"
+          style={{ animation: "sky-slowzoom 30s ease-in-out infinite alternate" }}
+        >
+          {/* final frame: the original artwork, revealed when the video ends */}
+          <div
+            className="absolute inset-0 bg-cover"
+            style={{ backgroundImage: "url('/sky-shattered.png')", backgroundPosition: "center 30%" }}
+          />
+          <video
+            data-herovideo
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            poster="/sky-shattered.png"
+            onEnded={(e) => {
+              e.currentTarget.style.opacity = "0";
+            }}
+            className="relative h-full w-full object-cover"
+            style={{
+              objectPosition: "center 30%",
+              transition: "opacity 1500ms ease",
+            }}
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div
           className="absolute inset-0"
           style={{
@@ -372,24 +418,18 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             className="mb-[22px] h-[96px] w-[96px] object-contain md:h-[112px] md:w-[112px]"
             style={{ animation: "sky-sigilglow 4s ease-in-out infinite" }}
           />
-          <p
-            className="m-0 text-xs uppercase tracking-[0.6em] text-[#cfc3ff]"
-            style={{ fontFamily: MONO }}
-          >
-            One error unwound the sky
-          </p>
           <h1
             className="mb-0 mt-[22px] font-display font-black text-[#f4f2fb]"
             style={{
-              fontSize: "clamp(52px, 10vw, 132px)",
-              lineHeight: 0.98,
+              fontSize: "clamp(34px, 6vw, 76px)",
+              lineHeight: 1.05,
               animation: "sky-titleglow 5s ease-in-out infinite",
             }}
           >
-            SHATTERED
+            THE ULTIMATE
             <br />
             <span className="text-[0.62em] tracking-[0.14em] text-[#cfc3ff]">
-              CONSTELLATION
+              STELLAR SUPREME TUTORIAL
             </span>
           </h1>
           <p
