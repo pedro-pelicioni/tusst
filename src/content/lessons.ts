@@ -1,17 +1,20 @@
 import "server-only";
 
+import type { AstCheck } from "@/content/lesson-checks";
+
 // Authored lesson content + hidden grading data.
 //
 // SERVER-ONLY by design: the checks below are the "hidden tests" — they must
 // never ship to the client (Stellar Quest died partly from leaked answers).
 // Pages pass `instructions`/`starterCode` down as props; checks stay here.
 //
-// Grading (Phase 4): Rust lessons compile & run for real in the hardened
-// tusst-runner Docker sandbox — the regex checks are fast structural
-// pre-checks, and `expectedOutput` is the authoritative stdout the compiled
-// program must produce. Conceptual lessons (Stellar 101 configs) and Soroban
-// contracts (need soroban-sdk in the runner — Stellar phase) stay regex-only;
-// see lessonGrader() below.
+// Grading: Rust lessons (grader "sandbox") compile & run for real in the
+// hardened tusst-runner Docker sandbox. Structural checks are declarative
+// AST specs (see lesson-checks.ts) evaluated by the tusst-syntest crate
+// inside the container; `expectedOutput` is the authoritative stdout the
+// compiled program must produce. Conceptual lessons (Stellar 101 configs)
+// and Soroban contracts (need soroban-sdk in the runner — Stellar phase)
+// aren't Rust programs and stay regex-graded (grader "regex").
 
 export interface LessonCheck {
   name: string; // user-facing test name (safe to return)
@@ -19,21 +22,17 @@ export interface LessonCheck {
   forbidden?: boolean; // if true, the pattern must NOT match
 }
 
-export interface LessonContent {
+interface LessonBase {
   instructions: string; // markdown
   starterCode: string;
-  checks: LessonCheck[];
   expectedOutput: string; // authoritative stdout (sandbox) / shown on pass (regex)
 }
 
-export type LessonGrader = "sandbox" | "regex";
+export type LessonContent =
+  | (LessonBase & { grader: "sandbox"; astChecks: AstCheck[] })
+  | (LessonBase & { grader: "regex"; checks: LessonCheck[] });
 
-export function lessonGrader(slug: string): LessonGrader {
-  return slug.startsWith("stellar-101-") ||
-    slug.startsWith("soroban-smart-contracts-")
-    ? "regex"
-    : "sandbox";
-}
+export type LessonGrader = LessonContent["grader"];
 
 const lessons: Record<string, LessonContent> = {
   "rust-fundamentals-1": {
@@ -65,12 +64,15 @@ Hello, World!
     // Print "Hello, World!" to the console
 }
 `,
-    checks: [
-      { name: "defines a main function", pattern: /fn\s+main\s*\(\s*\)/ },
-      { name: "uses the println! macro", pattern: /println!\s*\(/ },
+    grader: "sandbox",
+    astChecks: [
+      { name: "defines a main function", kind: "fn_defined", fn: "main" },
+      { name: "uses the println! macro", kind: "macro_invoked", macro: "println" },
       {
         name: 'prints exactly "Hello, World!"',
-        pattern: /println!\s*\(\s*"Hello, World!"\s*\)/,
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"Hello, World!"',
       },
     ],
     expectedOutput: "Hello, World!\n",
@@ -113,12 +115,20 @@ score: 100
     println!("score: {}", score);
 }
 `,
-    checks: [
-      { name: "declares score as mutable (let mut)", pattern: /let\s+mut\s+score/ },
-      { name: "reassigns score to 100", pattern: /score\s*=\s*100/ },
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: "declares score as mutable (let mut)",
+        kind: "let_binding",
+        var: "score",
+        mutable: true,
+      },
+      { name: "reassigns score to 100", kind: "expr_present", expr: "score = 100" },
       {
         name: "prints the score with println!",
-        pattern: /println!\s*\(\s*"score: \{\}"\s*,\s*score\s*\)/,
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"score: {}", score',
       },
     ],
     expectedOutput: "score: 100\n",
@@ -167,10 +177,11 @@ open: true
     println!("open: {}", is_open);
 }
 `,
-    checks: [
-      { name: "age is labeled i32", pattern: /let\s+age\s*:\s*i32\s*=/ },
-      { name: "price is labeled f64", pattern: /let\s+price\s*:\s*f64\s*=/ },
-      { name: "is_open is labeled bool", pattern: /let\s+is_open\s*:\s*bool\s*=/ },
+    grader: "sandbox",
+    astChecks: [
+      { name: "age is labeled i32", kind: "let_binding", var: "age", ty: "i32" },
+      { name: "price is labeled f64", kind: "let_binding", var: "price", ty: "f64" },
+      { name: "is_open is labeled bool", kind: "let_binding", var: "is_open", ty: "bool" },
     ],
     expectedOutput: "age: 12\nprice: 4.5\nopen: true\n",
   },
@@ -211,16 +222,24 @@ Expected output:
 
 // Write the add function here:
 `,
-    checks: [
+    grader: "sandbox",
+    astChecks: [
       {
         name: "defines add(a: i32, b: i32) -> i32",
-        pattern: /fn\s+add\s*\(\s*a\s*:\s*i32\s*,\s*b\s*:\s*i32\s*\)\s*->\s*i32/,
+        kind: "fn_defined",
+        fn: "add",
+        params: [
+          { name: "a", ty: "i32" },
+          { name: "b", ty: "i32" },
+        ],
+        returns: "i32",
       },
-      { name: "returns a + b", pattern: /a\s*\+\s*b/ },
+      { name: "returns a + b", kind: "expr_present", expr: "a + b" },
       {
         name: "a + b has no semicolon (it's the return value)",
-        pattern: /a\s*\+\s*b\s*;/,
-        forbidden: true,
+        kind: "tail_expr",
+        fn: "add",
+        expr: "a + b",
       },
     ],
     expectedOutput: "2 + 3 = 5\n",
@@ -262,13 +281,26 @@ copy: Unbending Blade
     println!("copy: {}", copy);
 }
 `,
-    checks: [
+    grader: "sandbox",
+    astChecks: [
       {
         name: "clones sword instead of moving it",
-        pattern: /let\s+copy\s*=\s*sword\s*\.\s*clone\s*\(\s*\)/,
+        kind: "let_binding",
+        var: "copy",
+        init: "sword.clone()",
       },
-      { name: "still prints the original", pattern: /println!\s*\(\s*"original: \{\}"\s*,\s*sword\s*\)/ },
-      { name: "still prints the copy", pattern: /println!\s*\(\s*"copy: \{\}"\s*,\s*copy\s*\)/ },
+      {
+        name: "still prints the original",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"original: {}", sword',
+      },
+      {
+        name: "still prints the copy",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"copy: {}", copy',
+      },
     ],
     expectedOutput: "original: Unbending Blade\ncopy: Unbending Blade\n",
   },
@@ -312,10 +344,21 @@ fn greet(who: String) { // ← make this borrow
     println!("welcome, {}", who);
 }
 `,
-    checks: [
-      { name: "greet borrows with &String", pattern: /fn\s+greet\s*\(\s*who\s*:\s*&\s*String\s*\)/ },
-      { name: "greet is called with &name", pattern: /greet\s*\(\s*&\s*name\s*\)/ },
-      { name: "goodbye line still uses name", pattern: /println!\s*\(\s*"goodbye, \{\}"\s*,\s*name\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: "greet borrows with &String",
+        kind: "fn_defined",
+        fn: "greet",
+        params: [{ name: "who", ty: "&String" }],
+      },
+      { name: "greet is called with &name", kind: "expr_present", expr: "greet(&name)" },
+      {
+        name: "goodbye line still uses name",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"goodbye, {}", name',
+      },
     ],
     expectedOutput: "welcome, Forgeborn\ngoodbye, Forgeborn\n",
   },
@@ -355,11 +398,22 @@ The hall is lit
     // else           → print "Darkness..."
 }
 `,
-    checks: [
-      { name: "checks torches > 0 with if", pattern: /if\s+torches\s*>\s*0/ },
-      { name: "has an else branch", pattern: /else/ },
-      { name: 'prints "The hall is lit"', pattern: /println!\s*\(\s*"The hall is lit"\s*\)/ },
-      { name: 'prints "Darkness..." in the else', pattern: /println!\s*\(\s*"Darkness\.\.\."\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      { name: "checks torches > 0 with if", kind: "expr_present", expr: "torches > 0" },
+      { name: "has an else branch", kind: "uses_construct", construct: "else" },
+      {
+        name: 'prints "The hall is lit"',
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"The hall is lit"',
+      },
+      {
+        name: 'prints "Darkness..." in the else',
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"Darkness..."',
+      },
     ],
     expectedOutput: "The hall is lit\n",
   },
@@ -402,12 +456,18 @@ center
     // println!("{}", path);
 }
 `,
-    checks: [
-      { name: "matches on door", pattern: /match\s+door/ },
-      { name: "arm 1 => \"left\"", pattern: /1\s*=>\s*"left"/ },
-      { name: "arm 2 => \"center\"", pattern: /2\s*=>\s*"center"/ },
-      { name: "catch-all _ => \"no door\"", pattern: /_\s*=>\s*"no door"/ },
-      { name: "prints the chosen path", pattern: /println!\s*\(\s*"\{\}"\s*,\s*path\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      { name: "matches on door", kind: "match_on", scrutinee: "door" },
+      { name: 'arm 1 => "left"', kind: "match_arm", pat: "1", body: '"left"' },
+      { name: 'arm 2 => "center"', kind: "match_arm", pat: "2", body: '"center"' },
+      { name: 'catch-all _ => "no door"', kind: "match_arm", pat: "_", body: '"no door"' },
+      {
+        name: "prints the chosen path",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"{}", path',
+      },
     ],
     expectedOutput: "center\n",
   },
@@ -450,11 +510,19 @@ escaped after 3 echoes
     println!("escaped after {} echoes", echoes);
 }
 `,
-    checks: [
-      { name: "uses a loop block", pattern: /loop\s*\{/ },
-      { name: "increments echoes", pattern: /echoes\s*\+=\s*1|echoes\s*=\s*echoes\s*\+\s*1/ },
-      { name: "breaks when echoes == 3", pattern: /break/ },
-      { name: "checks echoes == 3", pattern: /echoes\s*==\s*3/ },
+    grader: "sandbox",
+    astChecks: [
+      { name: "uses a loop block", kind: "uses_construct", construct: "loop" },
+      {
+        name: "increments echoes",
+        kind: "any_of",
+        of: [
+          { kind: "expr_present", expr: "echoes += 1" },
+          { kind: "expr_present", expr: "echoes = echoes + 1" },
+        ],
+      },
+      { name: "breaks when echoes == 3", kind: "expr_present", expr: "break" },
+      { name: "checks echoes == 3", kind: "expr_present", expr: "echoes == 3" },
     ],
     expectedOutput: "escaped after 3 echoes\n",
   },
@@ -496,11 +564,29 @@ Ground level!
     // then print "Ground level!"
 }
 `,
-    checks: [
-      { name: "loops while floors > 0", pattern: /while\s+floors\s*>\s*0/ },
-      { name: "prints the current floor", pattern: /println!\s*\(\s*"floor \{\}"\s*,\s*floors\s*\)/ },
-      { name: "decrements floors", pattern: /floors\s*-=\s*1|floors\s*=\s*floors\s*-\s*1/ },
-      { name: 'prints "Ground level!" after the loop', pattern: /println!\s*\(\s*"Ground level!"\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      { name: "loops while floors > 0", kind: "while_loop", cond: "floors > 0" },
+      {
+        name: "prints the current floor",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"floor {}", floors',
+      },
+      {
+        name: "decrements floors",
+        kind: "any_of",
+        of: [
+          { kind: "expr_present", expr: "floors -= 1" },
+          { kind: "expr_present", expr: "floors = floors - 1" },
+        ],
+      },
+      {
+        name: 'prints "Ground level!" after the loop',
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"Ground level!"',
+      },
     ],
     expectedOutput: "floor 3\nfloor 2\nfloor 1\nGround level!\n",
   },
@@ -539,9 +625,12 @@ step 5
     // for each number from 1 to 5 (inclusive), print "step {}"
 }
 `,
-    checks: [
-      { name: "uses for over the range 1..=5", pattern: /for\s+\w+\s+in\s+1\s*\.\.=\s*5/ },
-      { name: "prints each step", pattern: /println!\s*\(\s*"step \{\}"\s*,/ },
+    grader: "sandbox",
+    astChecks: [
+      // pat omitted on purpose: any loop-variable name is fine (the old regex
+      // allowed \w+); expectedOutput pins the printed result.
+      { name: "uses for over the range 1..=5", kind: "for_loop", iter: "1..=5" },
+      { name: "prints each step", kind: "macro_invoked", macro: "println" },
     ],
     expectedOutput: "step 1\nstep 2\nstep 3\nstep 4\nstep 5\n",
   },
@@ -590,11 +679,24 @@ mirror
     //   else          → print n
 }
 `,
-    checks: [
-      { name: "loops for n in 1..=10", pattern: /for\s+n\s+in\s+1\s*\.\.=\s*10/ },
-      { name: "checks divisibility by 3", pattern: /n\s*%\s*3\s*==\s*0/ },
-      { name: 'prints "mirror" for multiples of 3', pattern: /println!\s*\(\s*"mirror"\s*\)/ },
-      { name: "prints the number otherwise", pattern: /else[\s\S]*println!\s*\(\s*"\{\}"\s*,\s*n\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      { name: "loops for n in 1..=10", kind: "for_loop", pat: "n", iter: "1..=10" },
+      { name: "checks divisibility by 3", kind: "expr_present", expr: "n % 3 == 0" },
+      {
+        name: 'prints "mirror" for multiples of 3',
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"mirror"',
+      },
+      // The old regex demanded this println after an `else`; position isn't
+      // expressible declaratively — expectedOutput guarantees the branching.
+      {
+        name: "prints the number otherwise",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"{}", n',
+      },
     ],
     expectedOutput: "1\n2\nmirror\n4\n5\nmirror\n7\n8\nmirror\n10\n",
   },
@@ -630,10 +732,28 @@ items: 3
     // 3) print "items: {}" with satchel.len()
 }
 `,
-    checks: [
-      { name: "creates the satchel with vec!", pattern: /let\s+mut\s+satchel\s*=\s*vec!\s*\[\s*"torch"\s*,\s*"rope"\s*\]/ },
-      { name: 'pushes "map"', pattern: /satchel\s*\.\s*push\s*\(\s*"map"\s*\)/ },
-      { name: "prints the length", pattern: /println!\s*\(\s*"items: \{\}"\s*,\s*satchel\s*\.\s*len\s*\(\s*\)\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: "creates the satchel with vec!",
+        kind: "let_binding",
+        var: "satchel",
+        mutable: true,
+        init: 'vec!["torch", "rope"]',
+      },
+      {
+        name: 'pushes "map"',
+        kind: "method_called",
+        method: "push",
+        receiver: "satchel",
+        args: '"map"',
+      },
+      {
+        name: "prints the length",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"items: {}", satchel.len()',
+      },
     ],
     expectedOutput: "items: 3\n",
   },
@@ -669,10 +789,21 @@ total: 40
     // print "total: {}"
 }
 `,
-    checks: [
-      { name: "sums with coins.iter().sum()", pattern: /coins\s*\.\s*iter\s*\(\s*\)\s*\.\s*sum\s*\(\s*\)/ },
-      { name: "labels total as i32", pattern: /let\s+total\s*:\s*i32\s*=/ },
-      { name: "prints the total", pattern: /println!\s*\(\s*"total: \{\}"\s*,\s*total\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: "sums with coins.iter().sum()",
+        kind: "method_called",
+        method: "sum",
+        receiver: "coins.iter()",
+      },
+      { name: "labels total as i32", kind: "let_binding", var: "total", ty: "i32" },
+      {
+        name: "prints the total",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"total: {}", total',
+      },
     ],
     expectedOutput: "total: 40\n",
   },
@@ -708,11 +839,33 @@ found: nothing
     // print "found: {}"
 }
 `,
-    checks: [
-      { name: "asks with vault.get(5)", pattern: /vault\s*\.\s*get\s*\(\s*5\s*\)/ },
-      { name: "defaults with unwrap_or(&\"nothing\")", pattern: /unwrap_or\s*\(\s*&\s*"nothing"\s*\)/ },
-      { name: "prints the result", pattern: /println!\s*\(\s*"found: \{\}"\s*,\s*tool\s*\)/ },
-      { name: "never indexes with vault[5]", pattern: /vault\s*\[\s*5\s*\]/, forbidden: true },
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: "asks with vault.get(5)",
+        kind: "method_called",
+        method: "get",
+        receiver: "vault",
+        args: "5",
+      },
+      {
+        name: 'defaults with unwrap_or(&"nothing")',
+        kind: "method_called",
+        method: "unwrap_or",
+        args: '&"nothing"',
+      },
+      {
+        name: "prints the result",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"found: {}", tool',
+      },
+      {
+        name: "never indexes with vault[5]",
+        kind: "expr_present",
+        expr: "vault[5]",
+        forbidden: true,
+      },
     ],
     expectedOutput: "found: nothing\n",
   },
@@ -752,10 +905,23 @@ fn main() {
     // print "gold: {}" with ledger["gold"]
 }
 `,
-    checks: [
-      { name: "inserts gold → 100", pattern: /ledger\s*\.\s*insert\s*\(\s*"gold"\s*,\s*100\s*\)/ },
-      { name: "inserts silver → 250", pattern: /ledger\s*\.\s*insert\s*\(\s*"silver"\s*,\s*250\s*\)/ },
-      { name: "reads ledger[\"gold\"]", pattern: /ledger\s*\[\s*"gold"\s*\]/ },
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: "inserts gold → 100",
+        kind: "method_called",
+        method: "insert",
+        receiver: "ledger",
+        args: '"gold", 100',
+      },
+      {
+        name: "inserts silver → 250",
+        kind: "method_called",
+        method: "insert",
+        receiver: "ledger",
+        args: '"silver", 250',
+      },
+      { name: 'reads ledger["gold"]', kind: "expr_present", expr: 'ledger["gold"]' },
     ],
     expectedOutput: "gold: 100\n",
   },
@@ -794,10 +960,27 @@ The Keeper of the Vaults
     // 3) print the banner
 }
 `,
-    checks: [
-      { name: 'appends with push_str(" of the Vaults")', pattern: /title\s*\.\s*push_str\s*\(\s*" of the Vaults"\s*\)/ },
-      { name: "weaves the banner with format!", pattern: /let\s+banner\s*=\s*format!\s*\(\s*"The \{\}"\s*,\s*title\s*\)/ },
-      { name: "prints the banner", pattern: /println!\s*\(\s*"\{\}"\s*,\s*banner\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: 'appends with push_str(" of the Vaults")',
+        kind: "method_called",
+        method: "push_str",
+        receiver: "title",
+        args: '" of the Vaults"',
+      },
+      {
+        name: "weaves the banner with format!",
+        kind: "let_binding",
+        var: "banner",
+        init: 'format!("The {}", title)',
+      },
+      {
+        name: "prints the banner",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"{}", banner',
+      },
     ],
     expectedOutput: "The Keeper of the Vaults\n",
   },
@@ -832,9 +1015,15 @@ middle: [2, 3, 4]
     // print "middle: {:?}"
 }
 `,
-    checks: [
-      { name: "takes the slice &shelf[1..4]", pattern: /&\s*shelf\s*\[\s*1\s*\.\.\s*4\s*\]/ },
-      { name: "prints with the {:?} debug marker", pattern: /println!\s*\(\s*"middle: \{:\?\}"\s*,\s*middle\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      { name: "takes the slice &shelf[1..4]", kind: "expr_present", expr: "&shelf[1..4]" },
+      {
+        name: "prints with the {:?} debug marker",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"middle: {:?}", middle',
+      },
     ],
     expectedOutput: "middle: [2, 3, 4]\n",
   },
@@ -882,11 +1071,17 @@ fn find(present: bool) -> Option<i32> {
     todo!()
 }
 `,
-    checks: [
-      { name: "returns Some(7) when present", pattern: /Some\s*\(\s*7\s*\)/ },
-      { name: "returns None otherwise", pattern: /None/ },
-      { name: "decides with if", pattern: /if\s+present/ },
-      { name: "no todo!() left behind", pattern: /todo!\s*\(\s*\)/, forbidden: true },
+    grader: "sandbox",
+    astChecks: [
+      { name: "returns Some(7) when present", kind: "expr_present", expr: "Some(7)" },
+      { name: "returns None otherwise", kind: "expr_present", expr: "None" },
+      { name: "decides with if", kind: "uses_construct", construct: "if" },
+      {
+        name: "no todo!() left behind",
+        kind: "macro_invoked",
+        macro: "todo",
+        forbidden: true,
+      },
     ],
     expectedOutput: "Some(7)\n",
   },
@@ -922,10 +1117,27 @@ value: 0
     // print "value: {}"
 }
 `,
-    checks: [
-      { name: "uses unwrap_or(0)", pattern: /ghost\s*\.\s*unwrap_or\s*\(\s*0\s*\)/ },
-      { name: "prints the value", pattern: /println!\s*\(\s*"value: \{\}"\s*,\s*value\s*\)/ },
-      { name: "never calls bare .unwrap()", pattern: /\.\s*unwrap\s*\(\s*\)/, forbidden: true },
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: "uses unwrap_or(0)",
+        kind: "method_called",
+        method: "unwrap_or",
+        receiver: "ghost",
+        args: "0",
+      },
+      {
+        name: "prints the value",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"value: {}", value',
+      },
+      {
+        name: "never calls bare .unwrap()",
+        kind: "method_called",
+        method: "unwrap",
+        forbidden: true,
+      },
     ],
     expectedOutput: "value: 0\n",
   },
@@ -963,10 +1175,26 @@ light: 3
     // else → print "darkness"
 }
 `,
-    checks: [
-      { name: "asks with if let Some(light)", pattern: /if\s+let\s+Some\s*\(\s*light\s*\)\s*=\s*lantern/ },
-      { name: "prints the light", pattern: /println!\s*\(\s*"light: \{\}"\s*,\s*light\s*\)/ },
-      { name: "handles darkness in the else", pattern: /println!\s*\(\s*"darkness"\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: "asks with if let Some(light)",
+        kind: "if_let",
+        pat: "Some(light)",
+        scrutinee: "lantern",
+      },
+      {
+        name: "prints the light",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"light: {}", light',
+      },
+      {
+        name: "handles darkness in the else",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"darkness"',
+      },
     ],
     expectedOutput: "light: 3\n",
   },
@@ -1008,11 +1236,21 @@ fn divide(a: i32, b: i32) -> Result<i32, String> {
     todo!()
 }
 `,
-    checks: [
-      { name: "guards against b == 0", pattern: /if\s+b\s*==\s*0/ },
-      { name: "returns Err with the reason", pattern: /Err\s*\(\s*String::from\s*\(\s*"division by zero"\s*\)\s*\)/ },
-      { name: "returns Ok(a / b)", pattern: /Ok\s*\(\s*a\s*\/\s*b\s*\)/ },
-      { name: "no todo!() left behind", pattern: /todo!\s*\(\s*\)/, forbidden: true },
+    grader: "sandbox",
+    astChecks: [
+      { name: "guards against b == 0", kind: "expr_present", expr: "b == 0" },
+      {
+        name: "returns Err with the reason",
+        kind: "expr_present",
+        expr: 'Err(String::from("division by zero"))',
+      },
+      { name: "returns Ok(a / b)", kind: "expr_present", expr: "Ok(a / b)" },
+      {
+        name: "no todo!() left behind",
+        kind: "macro_invoked",
+        macro: "todo",
+        forbidden: true,
+      },
     ],
     expectedOutput: "Ok(5)\n",
   },
@@ -1048,11 +1286,17 @@ granted: 42
     // match both arms: Ok(v) and Err(e)
 }
 `,
-    checks: [
-      { name: "matches on the verdict", pattern: /match\s+verdict/ },
-      { name: "handles Ok(v)", pattern: /Ok\s*\(\s*v\s*\)\s*=>/ },
-      { name: "handles Err(e)", pattern: /Err\s*\(\s*e\s*\)\s*=>/ },
-      { name: "prints granted with the value", pattern: /println!\s*\(\s*"granted: \{\}"\s*,\s*v\s*\)/ },
+    grader: "sandbox",
+    astChecks: [
+      { name: "matches on the verdict", kind: "match_on", scrutinee: "verdict" },
+      { name: "handles Ok(v)", kind: "match_arm", pat: "Ok(v)" },
+      { name: "handles Err(e)", kind: "match_arm", pat: "Err(e)" },
+      {
+        name: "prints granted with the value",
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"granted: {}", v',
+      },
     ],
     expectedOutput: "granted: 42\n",
   },
@@ -1098,10 +1342,20 @@ fn double_first() -> Result<i32, String> {
     todo!()
 }
 `,
-    checks: [
-      { name: "propagates with parse(\"21\")?", pattern: /parse\s*\(\s*"21"\s*\)\s*\?/ },
-      { name: "returns Ok(n * 2)", pattern: /Ok\s*\(\s*n\s*\*\s*2\s*\)/ },
-      { name: "no todo!() left behind", pattern: /todo!\s*\(\s*\)/, forbidden: true },
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: 'propagates with parse("21")?',
+        kind: "expr_present",
+        expr: 'parse("21")?',
+      },
+      { name: "returns Ok(n * 2)", kind: "expr_present", expr: "Ok(n * 2)" },
+      {
+        name: "no todo!() left behind",
+        kind: "macro_invoked",
+        macro: "todo",
+        forbidden: true,
+      },
     ],
     expectedOutput: "Ok(42)\n",
   },
@@ -1135,6 +1389,7 @@ public_key_starts_with = ""   # share freely
 secret_key_starts_with = ""   # NEVER share
 min_balance_xlm = 0           # base reserve to exist
 `,
+    grader: "regex",
     checks: [
       { name: 'public keys start with "G"', pattern: /public_key_starts_with\s*=\s*"G"/ },
       { name: 'secret keys start with "S"', pattern: /secret_key_starts_with\s*=\s*"S"/ },
@@ -1168,6 +1423,7 @@ toll paid ✓
 stroops_per_lumen = 0   # hint: ten million (underscores allowed)
 base_fee_stroops = 0    # hint: one hundred
 `,
+    grader: "regex",
     checks: [
       { name: "1 XLM = 10,000,000 stroops", pattern: /stroops_per_lumen\s*=\s*10_?000_?000\b/ },
       { name: "base fee is 100 stroops", pattern: /base_fee_stroops\s*=\s*100\b/ },
@@ -1201,6 +1457,7 @@ light-bridge opened ✓
 asset_code = ""                  # the USD coin's code
 asset_issuer_starts_with = ""    # issuers are accounts — which sigil?
 `,
+    grader: "regex",
     checks: [
       { name: 'asset code is "USDC"', pattern: /asset_code\s*=\s*"USDC"/ },
       { name: 'issuers are G... accounts', pattern: /asset_issuer_starts_with\s*=\s*"G"/ },
@@ -1236,6 +1493,7 @@ destination_starts_with = ""   # the receiving star-keep's sigil
 asset = ""                     # the native asset's code
 amount = 0                     # send 25
 `,
+    grader: "regex",
     checks: [
       { name: "destination is a G... account", pattern: /destination_starts_with\s*=\s*"G"/ },
       { name: 'the native asset is "XLM"', pattern: /asset\s*=\s*"XLM"/ },
@@ -1282,6 +1540,7 @@ impl HelloContract {
     }
 }
 `,
+    grader: "regex",
     checks: [
       { name: "impl block is marked #[contractimpl]", pattern: /#\[contractimpl\]/ },
       { name: "hello returns symbol_short!(\"beacon\")", pattern: /symbol_short!\s*\(\s*"beacon"\s*\)/ },
@@ -1333,6 +1592,7 @@ impl CounterContract {
     }
 }
 `,
+    grader: "regex",
     checks: [
       { name: "reads from instance storage", pattern: /env\s*\.\s*storage\s*\(\s*\)\s*\.\s*instance\s*\(\s*\)\s*\.\s*get/ },
       { name: "defaults to 0 with unwrap_or", pattern: /unwrap_or\s*\(\s*0\s*\)/ },
@@ -1378,6 +1638,7 @@ impl VaultContract {
     }
 }
 `,
+    grader: "regex",
     checks: [
       { name: "requires auth from the caller", pattern: /from\s*\.\s*require_auth\s*\(\s*\)/ },
     ],
