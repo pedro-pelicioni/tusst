@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth, signIn, devLoginEnabled } from "@/lib/auth";
-import { DiscordMark, GitHubMark, Sparkle } from "@/components/icons";
+import { DiscordMark, GitHubMark } from "@/components/icons";
 
 export default async function LoginPage() {
   const session = await auth();
@@ -18,8 +18,13 @@ export default async function LoginPage() {
   return (
     <div className="mx-auto flex max-w-md flex-col px-5 py-20">
       <div className="flex items-center gap-2.5">
-        <span className="grid h-8 w-8 place-items-center rounded-md border border-accent/40 bg-accent/10 text-accent">
-          <Sparkle className="h-4 w-4" />
+        <span className="grid h-8 w-8 place-items-center overflow-hidden rounded-full border border-[#b8873e]/40">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo-sigil.png"
+            alt="TUSST — the Stroop Sigil"
+            className="h-full w-full object-contain p-0.5"
+          />
         </span>
         <span className="font-mono text-sm font-semibold tracking-[0.22em]">
           TUSST
