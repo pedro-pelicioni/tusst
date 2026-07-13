@@ -24,10 +24,14 @@ export interface InvokeOutcome {
   txHash?: string;
 }
 
-/** Fetch a deployed contract's spec from the chain (works for any contract). */
+/**
+ * Fetch a deployed contract's spec from the chain (works for any contract).
+ * No account needed — the SDK falls back to a null account for spec loading,
+ * so anonymous exploration works; a publicKey only matters for invocations.
+ */
 export async function fetchContractSpec(
   contractId: string,
-  publicKey: string,
+  publicKey?: string,
 ): Promise<contract.Spec> {
   const client = await contract.Client.from({
     contractId,

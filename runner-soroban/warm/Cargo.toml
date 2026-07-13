@@ -7,7 +7,7 @@
 # don't include the leaf package name, so the warm target/ is fully reused.
 #
 # Keep these pins in sync with what the OZ Contract Wizard currently emits.
-# Verified against crates.io on 2026-07-07.
+# Verified against crates.io on 2026-07-12.
 
 [package]
 name = "contract"
@@ -29,12 +29,20 @@ stellar-fee-abstraction = "=0.7.2"
 stellar-governance = "=0.7.2"
 stellar-macros = "=0.7.2"
 stellar-tokens = "=0.7.2"
-# Common ecosystem crates
+# Common ecosystem crates — they target soroban-sdk 25 (their chain, incl.
+# sdk 25.3.1 itself, gets pre-compiled here). A user project consuming them
+# must pin soroban-sdk = "=25.3.1" and drop the OZ crates; mixing the two
+# sdk lines in one contract fails to link (duplicate panic handler).
 sep-41-token = "=1.4.0"
 soroban-fixed-point-math = "=1.5.0"
+blend-contract-sdk = "=2.25.0"
 
 [dev-dependencies]
 soroban-sdk = { version = "=26.1.0", features = ["testutils"] }
+# Pre-warm the testutils feature unification for the ecosystem crates too —
+# without these, user tests enabling them recompile the sdk chain at runtime.
+sep-41-token = { version = "=1.4.0", features = ["testutils"] }
+blend-contract-sdk = { version = "=2.25.0", features = ["testutils"] }
 
 [profile.release]
 opt-level = "z"

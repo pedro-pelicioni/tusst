@@ -66,8 +66,18 @@ case "$MODE" in
     ;;
   audit)
     echo "__TUSST_FORGE__ phase audit"
-    if [ -f /opt/scout-ready ] && [ -x "$CARGO_HOME/bin/cargo-scout-audit" ]; then
-      timeout -k 5 "$INNER_TIMEOUT" cargo scout-audit 2>&1
+    if [ -f "$CARGO_HOME/scout-ready" ] && [ -x "$CARGO_HOME/bin/cargo-scout-audit" ]; then
+      # Redirect soroban-sdk-macros to the image's patched vendor copies —
+      # the pristine crates hit an E0658 on scout's pinned nightly. Audit
+      # only; build/test keep the user's manifest untouched.
+      cat /opt/audit-patch.toml >> "$WS/Cargo.toml"
+      # CARGO_BUILD_JOBS=1: detector analysis is memory-hungry and the
+      # container is capped at 2g. Local detectors are pre-built in the image.
+      timeout -k 5 "$INNER_TIMEOUT" env CARGO_BUILD_JOBS=1 \
+        SOROBAN_SDK_BUILD_SYSTEM_SUPPORTS_SPEC_SHAKING_V2=1 \
+        cargo scout-audit --debug \
+        --scout-source /scout-audit --local-detectors /scout-audit/nightly \
+        -- --target=wasm32v1-none 2>&1
       STATUS=$?
     else
       echo "static analysis is temporarily unavailable: the Scout analyzer"

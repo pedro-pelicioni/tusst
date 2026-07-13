@@ -17,6 +17,7 @@ import { BuildToolbar } from "./BuildToolbar";
 import { ConsolePane } from "./ConsolePane";
 import { DeployPanel } from "./DeployPanel";
 import { EditorPane } from "./EditorPane";
+import { ExplorePanel } from "./ExplorePanel";
 import { FileTree } from "./FileTree";
 import { InteractPanel } from "./InteractPanel";
 import { ProjectDrawer } from "./ProjectDrawer";
@@ -40,7 +41,7 @@ export function IdeShell() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [wallet, setWallet] = useState<ForgeWallet | null>(null);
-  const [panelTab, setPanelTab] = useState<"deploy" | "interact">("deploy");
+  const [panelTab, setPanelTab] = useState<"deploy" | "interact" | "explore">("deploy");
   const [lastContractId, setLastContractId] = useState<string | null>(null);
   const { status, lines, wasm, running, run, cancel } = useForgeRun();
 
@@ -202,7 +203,7 @@ export function IdeShell() {
 
         <aside className="flex w-[360px] shrink-0 flex-col border-l border-line bg-bg-elev">
           <div className="flex border-b border-line">
-            {(["deploy", "interact"] as const).map((tab) => (
+            {(["deploy", "interact", "explore"] as const).map((tab) => (
               <button
                 key={tab}
                 type="button"
@@ -227,8 +228,10 @@ export function IdeShell() {
                   setPanelTab("interact");
                 }}
               />
-            ) : (
+            ) : panelTab === "interact" ? (
               <InteractPanel wallet={wallet} prefillContractId={lastContractId} />
+            ) : (
+              <ExplorePanel wallet={wallet} />
             )}
           </div>
         </aside>
@@ -259,6 +262,10 @@ export function IdeShell() {
         onOpenProject={(id) => openProject(id)}
         onCreate={(name, tid) => {
           const meta = createProject(name, tid, templateById(tid).files);
+          openProject(meta.id, listProjects());
+        }}
+        onImport={(name, importedFiles) => {
+          const meta = createProject(name, "github-import", importedFiles);
           openProject(meta.id, listProjects());
         }}
         onRename={(id, name) => {

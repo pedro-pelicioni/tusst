@@ -122,6 +122,17 @@ export function useForgeRun() {
             break;
           case "done":
             finished = true;
+            if (!event.ok && event.timedOut) {
+              batch.push({
+                kind: "error",
+                text: "// the run hit the forge's time limit and was stopped — heavy builds can exceed it; try again or trim the project",
+              });
+            } else if (!event.ok && event.infraError) {
+              batch.push({
+                kind: "error",
+                text: "// the forge is cold — the sandbox failed to start; try again in a moment",
+              });
+            }
             setStatus(
               event.ok ? "ok" : event.timedOut ? "timeout" : event.infraError ? "infra" : "err",
             );

@@ -80,16 +80,51 @@ const PLACEHOLDER: Record<FieldKind, string> = {
   json: 'JSON, e.g. ["a","b"] or {"k":1}',
 };
 
+/**
+ * Human-readable label for a spec type, recursing into containers so a json
+ * field reads `vec<address>` instead of a bare `vec`. Depth-capped: deeply
+ * nested generics degrade to the base name rather than an unreadable tower.
+ */
+export function typeHint(type: xdr.ScSpecTypeDef, depth = 0): string {
+  const name = type.switch().name;
+  if (depth >= 3) return name.replace("scSpecType", "").toLowerCase();
+  switch (name) {
+    case "scSpecTypeVec":
+      return `vec<${typeHint(type.vec().elementType(), depth + 1)}>`;
+    case "scSpecTypeMap":
+      return `map<${typeHint(type.map().keyType(), depth + 1)}, ${typeHint(type.map().valueType(), depth + 1)}>`;
+    case "scSpecTypeTuple": {
+      const inner = type
+        .tuple()
+        .valueTypes()
+        .map((t) => typeHint(t, depth + 1))
+        .join(", ");
+      return `(${inner})`;
+    }
+    case "scSpecTypeOption":
+      return `option<${typeHint(type.option().valueType(), depth + 1)}>`;
+    case "scSpecTypeResult":
+      return `result<${typeHint(type.result().okType(), depth + 1)}, ${typeHint(type.result().errorType(), depth + 1)}>`;
+    case "scSpecTypeBytesN":
+      return `bytes${type.bytesN().n()}`;
+    case "scSpecTypeUdt":
+      return type.udt().name().toString();
+    default:
+      return kindOf(type).label;
+  }
+}
+
 export function describeFunction(fn: xdr.ScSpecFunctionV0): SpecFunctionDescriptor {
   return {
     name: fn.name().toString(),
     fields: fn.inputs().map((input) => {
-      const { kind, label } = kindOf(input.type());
+      const { kind } = kindOf(input.type());
+      const label = typeHint(input.type());
       return {
         name: input.name().toString(),
         typeLabel: label,
         kind,
-        placeholder: PLACEHOLDER[kind],
+        placeholder: kind === "json" ? `JSON — ${label}` : PLACEHOLDER[kind],
       };
     }),
   };

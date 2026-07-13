@@ -299,6 +299,12 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             The Beholder
           </a>
           <Link
+            href="/ide"
+            className="hidden text-[#cfc3ff] transition-colors hover:text-white sm:block"
+          >
+            The Forge
+          </Link>
+          <Link
             href={enterHref}
             className="rounded-full border border-[rgba(143,123,255,0.6)] bg-[rgba(143,123,255,0.12)] px-5 py-2.5 text-[#cfc3ff] backdrop-blur-[6px] transition-colors hover:bg-[rgba(143,123,255,0.28)] hover:text-white"
           >
@@ -442,23 +448,37 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             Stellar — seven acts, seven champions, one many-eyed horror at the
             end of the sky.
           </p>
-          <div className="mt-10 flex items-center gap-5">
-            <Link
-              href={beginHref}
-              className="inline-block rounded-full px-[42px] py-[17px] font-display text-[15px] font-bold uppercase tracking-[0.16em] text-[#0b0817] transition-[transform,box-shadow] duration-150 hover:-translate-y-[2px] hover:shadow-[0_0_60px_rgba(143,123,255,0.7),0_14px_36px_rgba(0,0,0,0.6)]"
-              style={{
-                background: "linear-gradient(180deg, #cfc3ff, #8f7bff)",
-                boxShadow:
-                  "0 0 40px rgba(143,123,255,0.45), 0 10px 30px rgba(0,0,0,0.6)",
-              }}
-            >
-              Begin the Campaign
-            </Link>
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-5">
+              <Link
+                href={beginHref}
+                className="inline-block rounded-full px-[42px] py-[17px] font-display text-[15px] font-bold uppercase tracking-[0.16em] text-[#0b0817] transition-[transform,box-shadow] duration-150 hover:-translate-y-[2px] hover:shadow-[0_0_60px_rgba(143,123,255,0.7),0_14px_36px_rgba(0,0,0,0.6)]"
+                style={{
+                  background: "linear-gradient(180deg, #cfc3ff, #8f7bff)",
+                  boxShadow:
+                    "0 0 40px rgba(143,123,255,0.45), 0 10px 30px rgba(0,0,0,0.6)",
+                }}
+              >
+                Begin the Campaign
+              </Link>
+              <Link
+                href="/ide"
+                className="inline-flex items-center gap-3 rounded-full border border-[rgba(143,123,255,0.6)] bg-[rgba(143,123,255,0.12)] px-[34px] py-[16px] font-display text-[15px] font-bold uppercase tracking-[0.16em] text-[#cfc3ff] backdrop-blur-[6px] transition-[transform,box-shadow,background-color] duration-150 hover:-translate-y-[2px] hover:bg-[rgba(143,123,255,0.24)] hover:shadow-[0_0_50px_rgba(143,123,255,0.5),0_14px_36px_rgba(0,0,0,0.6)]"
+              >
+                Open the Forge
+                <span
+                  className="rounded-full border border-[rgba(207,195,255,0.45)] px-2 py-[3px] text-[9px] font-normal tracking-[0.2em] text-[#cfc3ff]"
+                  style={{ fontFamily: MONO }}
+                >
+                  no login
+                </span>
+              </Link>
+            </div>
             <span
               className="text-[11px] text-[#696980]"
               style={{ fontFamily: MONO }}
             >
-              free · no setup · in-browser
+              free · no setup · in-browser — the forge is open to everyone
             </span>
           </div>
         </div>
@@ -854,6 +874,16 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           >
             Begin the Campaign
           </Link>
+          <p className="mb-0 mt-6 text-[12px] text-[#9c9cb4]">
+            Or skip straight to the anvil —{" "}
+            <Link
+              href="/ide"
+              className="text-[#cfc3ff] underline decoration-[rgba(143,123,255,0.5)] underline-offset-4 transition-colors hover:text-white"
+            >
+              open the Forge
+            </Link>
+            , no login required.
+          </p>
           <p
             className="mb-0 mt-[90px] text-[10px] uppercase tracking-[0.3em] text-[#696980]"
             style={{ fontFamily: MONO }}
