@@ -111,6 +111,16 @@ export function WalletMenu({
                   onClick={() =>
                     guard("fund", async () => {
                       await fundWithFriendbot(wallet.address);
+                      // Horizon can lag a moment behind friendbot — poll a few
+                      // times so the balance doesn't flash "not funded yet".
+                      for (let i = 0; i < 5; i++) {
+                        const value = await fetchXlmBalance(wallet.address);
+                        if (value !== null) {
+                          setBalance(value);
+                          return;
+                        }
+                        await new Promise((r) => setTimeout(r, 1_200));
+                      }
                       await refreshBalance();
                     })
                   }

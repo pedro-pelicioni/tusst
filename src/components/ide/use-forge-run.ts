@@ -25,10 +25,15 @@ export interface ConsoleLine {
 }
 
 const MAX_CLIENT_LINES = 2_500;
+// The sandbox needs a host with Docker. Same-origin by default (dev, VPS
+// deploys); on serverless hosts set NEXT_PUBLIC_FORGE_RUNNER_URL to a
+// runner instance (same app deployed on a Docker-capable box with
+// FORGE_CORS_ORIGIN allowing this site). Inlined at build time.
+const RUNNER_BASE = (process.env.NEXT_PUBLIC_FORGE_RUNNER_URL ?? "").replace(/\/+$/, "");
 const ENDPOINT: Record<ForgeMode, string> = {
-  build: "/api/soroban/compile",
-  test: "/api/soroban/test",
-  audit: "/api/soroban/audit",
+  build: `${RUNNER_BASE}/api/soroban/compile`,
+  test: `${RUNNER_BASE}/api/soroban/test`,
+  audit: `${RUNNER_BASE}/api/soroban/audit`,
 };
 const RUNNING_STATUS: Record<ForgeMode, ForgeRunStatus> = {
   build: "building",
