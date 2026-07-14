@@ -104,19 +104,54 @@ function parseReport(containerStdout: string): Report | null {
   }
 }
 
+const FAILURE: SandboxResult = {
+  ok: false,
+  compiled: false,
+  ran: false,
+  timedOut: false,
+  stdout: "",
+  compileError: "",
+  checks: [],
+};
+
+// Serverless hosts (Vercel) can't run Docker: when RUNNER_REMOTE_URL is set,
+// grading is forwarded to the runner host (same app on a Docker-capable box,
+// see /api/internal/run), authenticated by RUNNER_SHARED_SECRET. Any remote
+// failure maps to the not-ok SandboxResult, which the API already surfaces
+// as a retryable 503 — never a verdict.
+const REMOTE_URL = (process.env.RUNNER_REMOTE_URL ?? "").replace(/\/+$/, "");
+const REMOTE_TIMEOUT_MS = 45_000;
+
+async function runRemote(code: string, checksJson?: string): Promise<SandboxResult> {
+  try {
+    const res = await fetch(`${REMOTE_URL}/api/internal/run`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-runner-secret": process.env.RUNNER_SHARED_SECRET ?? "",
+      },
+      body: JSON.stringify({ code, checks: checksJson }),
+      signal: AbortSignal.timeout(REMOTE_TIMEOUT_MS),
+      cache: "no-store",
+    });
+    if (!res.ok) return FAILURE;
+    const data = (await res.json()) as SandboxResult;
+    if (typeof data?.ok !== "boolean" || !Array.isArray(data?.checks)) {
+      return FAILURE;
+    }
+    return data;
+  } catch {
+    return FAILURE;
+  }
+}
+
 export async function runInSandbox(
   code: string,
   checksJson?: string,
 ): Promise<SandboxResult> {
-  const failure: SandboxResult = {
-    ok: false,
-    compiled: false,
-    ran: false,
-    timedOut: false,
-    stdout: "",
-    compileError: "",
-    checks: [],
-  };
+  if (REMOTE_URL) return runRemote(code, checksJson);
+
+  const failure: SandboxResult = { ...FAILURE };
 
   await acquire();
   const dir = await mkdtemp(join(tmpdir(), "tusst-sub-"));

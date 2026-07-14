@@ -10,6 +10,10 @@ import { getUnlockedActCount } from "@/lib/unlock";
 const MAX_CODE_BYTES = 64 * 1024;
 const MAX_BODY_BYTES = 80 * 1024; // code + JSON envelope
 
+// Grading may proxy to the remote runner (45s budget) — keep the function
+// alive past serverless defaults.
+export const maxDuration = 60;
+
 export async function POST(req: Request) {
   const session = await auth();
   const userId = session?.user?.id;
