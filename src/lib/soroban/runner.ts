@@ -2,7 +2,7 @@ import "server-only";
 
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
-import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import type { ForgeEvent, ForgeMode, SorobanFileMap } from "./types";
@@ -103,6 +103,9 @@ export async function* runForge(
 
   await acquire();
   const dir = await mkdtemp(join(tmpdir(), "tusst-forge-"));
+  // mkdtemp creates 0700; the container's non-root user must traverse the
+  // bind mount (Docker Desktop masks ownership, native Linux does not).
+  await chmod(dir, 0o755);
   const containerName = `tusst-forge-${randomUUID()}`;
   let killed = false;
   let killedByWallTimeout = false;

@@ -1,7 +1,7 @@
 import "server-only";
 
 import { spawn } from "node:child_process";
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { chmod, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -121,6 +121,9 @@ export async function runInSandbox(
   await acquire();
   const dir = await mkdtemp(join(tmpdir(), "tusst-sub-"));
   try {
+    // mkdtemp creates 0700; the container's non-root user must traverse the
+    // bind mount (Docker Desktop masks ownership, native Linux does not).
+    await chmod(dir, 0o755);
     await writeFile(join(dir, "main.rs"), code, "utf8");
 
     const containerStdout = await new Promise<string | null>((resolve) => {
