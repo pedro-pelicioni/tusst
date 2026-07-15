@@ -9,8 +9,9 @@ import { hueFromName } from "@/components/CharacterAvatar";
 import { ProgressBar } from "@/components/ProgressBar";
 
 // The Forgeborn's profile: identity, character progression and campaign
-// standing. Deliberately NO gold/shop/inventory — the economy stays hidden
-// until the Phase 5 reveal (User.goldRevealed).
+// standing. The pouch (gold) only appears after the Phase 5 reveal —
+// User.goldRevealed flips on the first completed lesson; before that the
+// economy stays invisible.
 export default async function ProfilePage() {
   const session = await auth();
   if (!session?.user?.id) redirect("/login");
@@ -116,6 +117,26 @@ export default async function ProfilePage() {
           </div>
         </div>
       </div>
+
+      {/* ── pouch (hidden until goldRevealed) ── */}
+      {user.goldRevealed && (
+        <div className="mt-10 flex items-center gap-4 rounded-2xl border border-[#b8873e]/30 bg-[#b8873e]/[0.06] px-5 py-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/gold-coin.png"
+            alt="Gold coin — the Stroop drachma"
+            className="h-12 w-12 object-contain drop-shadow-[0_0_14px_rgba(184,135,62,0.5)]"
+          />
+          <div>
+            <p className="font-display text-2xl font-extrabold tabular-nums text-[#e0b25f]">
+              {user.gold}
+            </p>
+            <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
+              gold · earned one lesson at a time
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* ── stats ── */}
       <div className="mt-10 grid grid-cols-3 gap-3">

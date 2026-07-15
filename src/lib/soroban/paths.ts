@@ -4,6 +4,8 @@
 const SEGMENT_RE = /^[A-Za-z0-9_.-]{1,64}$/;
 
 export const MAX_PROJECT_FILES = 32;
+export const MAX_FILE_BYTES = 128 * 1024;
+export const MAX_TOTAL_BYTES = 512 * 1024;
 
 export function isValidForgePath(path: string): boolean {
   if (path === "Cargo.toml") return true;

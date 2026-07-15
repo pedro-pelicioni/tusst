@@ -235,6 +235,25 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       });
     }
 
+    // resume the hero video if the browser paused it while backgrounded
+    const heroVideo = root.querySelector<HTMLVideoElement>("[data-herovideo]");
+    if (heroVideo) {
+      const resume = () => {
+        if (
+          document.visibilityState === "visible" &&
+          heroVideo.paused &&
+          !heroVideo.ended
+        ) {
+          heroVideo.play().catch(() => {});
+        }
+      };
+      document.addEventListener("visibilitychange", resume);
+      resume();
+      cleanups.push(() =>
+        document.removeEventListener("visibilitychange", resume),
+      );
+    }
+
     return () => cleanups.forEach((fn) => fn());
   }, []);
 
@@ -263,7 +282,14 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             "background 300ms ease, backdrop-filter 300ms ease, padding-top 300ms ease, padding-bottom 300ms ease",
         }}
       >
-        <Link href="/" className="flex items-center gap-3">
+        <Link
+          href="/"
+          className="flex items-center gap-3"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
           <img
             src="/logo-sigil.png"
             alt="TUSST"
@@ -291,6 +317,12 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           <a href="#boss" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] md:block">
             The Beholder
           </a>
+          <Link
+            href="/ide"
+            className="hidden text-[#cfc3ff] transition-colors hover:text-white sm:block"
+          >
+            The Forge
+          </Link>
           <Link
             href={enterHref}
             className="rounded-full border border-[rgba(143,123,255,0.6)] bg-[rgba(143,123,255,0.12)] px-5 py-2.5 text-[#cfc3ff] backdrop-blur-[6px] transition-colors hover:bg-[rgba(143,123,255,0.28)] hover:text-white"
@@ -390,13 +422,33 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       <header className="relative h-screen min-h-[640px] overflow-hidden">
         <div
           data-plx="0.25"
-          className="absolute inset-[-6%] bg-cover will-change-transform"
-          style={{
-            backgroundImage: "url('/sky-shattered.png')",
-            backgroundPosition: "center 30%",
-            animation: "sky-slowzoom 30s ease-in-out infinite alternate",
-          }}
-        />
+          className="absolute inset-[-6%] overflow-hidden will-change-transform"
+          style={{ animation: "sky-slowzoom 30s ease-in-out infinite alternate" }}
+        >
+          {/* final frame: the original artwork, revealed when the video ends */}
+          <div
+            className="absolute inset-0 bg-cover"
+            style={{ backgroundImage: "url('/sky-shattered.png')", backgroundPosition: "center 30%" }}
+          />
+          <video
+            data-herovideo
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            poster="/sky-shattered.png"
+            onEnded={(e) => {
+              e.currentTarget.style.opacity = "0";
+            }}
+            className="relative h-full w-full object-cover"
+            style={{
+              objectPosition: "center 30%",
+              transition: "opacity 1500ms ease",
+            }}
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div
           className="absolute inset-0"
           style={{
@@ -477,24 +529,18 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             className="mb-[22px] h-[96px] w-[96px] object-contain md:h-[112px] md:w-[112px]"
             style={{ animation: "sky-sigilglow 4s ease-in-out infinite" }}
           />
-          <p
-            className="m-0 text-xs uppercase tracking-[0.3em] text-[#cfc3ff] sm:tracking-[0.6em]"
-            style={{ fontFamily: MONO }}
-          >
-            One error unwound the sky
-          </p>
           <h1
             className="mb-0 mt-[22px] font-display font-black text-[#f4f2fb]"
             style={{
-              fontSize: "clamp(42px, 10vw, 132px)",
-              lineHeight: 0.98,
+              fontSize: "clamp(34px, 6vw, 76px)",
+              lineHeight: 1.05,
               animation: "sky-titleglow 5s ease-in-out infinite",
             }}
           >
-            SHATTERED
+            THE ULTIMATE
             <br />
             <span className="text-[0.62em] tracking-[0.14em] text-[#cfc3ff]">
-              CONSTELLATION
+              STELLAR SUPREME TUTORIAL
             </span>
           </h1>
           <p
@@ -507,18 +553,38 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             Stellar — seven acts, seven champions, one many-eyed horror at the
             end of the sky.
           </p>
-          <div className="mt-10 flex items-center gap-5">
-            <Link
-              href={beginHref}
-              className="inline-block rounded-full px-8 py-3.5 font-display text-[13px] font-bold uppercase tracking-[0.16em] text-[#0b0817] transition-[transform,box-shadow] duration-150 hover:-translate-y-[2px] hover:shadow-[0_0_60px_rgba(143,123,255,0.7),0_14px_36px_rgba(0,0,0,0.6)] sm:px-[42px] sm:py-[17px] sm:text-[15px]"
-              style={{
-                background: "linear-gradient(180deg, #cfc3ff, #8f7bff)",
-                boxShadow:
-                  "0 0 40px rgba(143,123,255,0.45), 0 10px 30px rgba(0,0,0,0.6)",
-              }}
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-5">
+              <Link
+                href={beginHref}
+                className="inline-block rounded-full px-8 py-3.5 font-display text-[13px] font-bold uppercase tracking-[0.16em] text-[#0b0817] transition-[transform,box-shadow] duration-150 hover:-translate-y-[2px] hover:shadow-[0_0_60px_rgba(143,123,255,0.7),0_14px_36px_rgba(0,0,0,0.6)] sm:px-[42px] sm:py-[17px] sm:text-[15px]"
+                style={{
+                  background: "linear-gradient(180deg, #cfc3ff, #8f7bff)",
+                  boxShadow:
+                    "0 0 40px rgba(143,123,255,0.45), 0 10px 30px rgba(0,0,0,0.6)",
+                }}
+              >
+                Begin the Campaign
+              </Link>
+              <Link
+                href="/ide"
+                className="inline-flex items-center gap-3 rounded-full border border-[rgba(143,123,255,0.6)] bg-[rgba(143,123,255,0.12)] px-7 py-3.5 font-display text-[13px] font-bold uppercase tracking-[0.16em] text-[#cfc3ff] backdrop-blur-[6px] transition-[transform,box-shadow,background-color] duration-150 hover:-translate-y-[2px] hover:bg-[rgba(143,123,255,0.24)] hover:shadow-[0_0_50px_rgba(143,123,255,0.5),0_14px_36px_rgba(0,0,0,0.6)] sm:px-[34px] sm:py-[16px] sm:text-[15px]"
+              >
+                Open the Forge
+                <span
+                  className="rounded-full border border-[rgba(207,195,255,0.45)] px-2 py-[3px] text-[9px] font-normal tracking-[0.2em] text-[#cfc3ff]"
+                  style={{ fontFamily: MONO }}
+                >
+                  no login
+                </span>
+              </Link>
+            </div>
+            <span
+              className="text-[11px] text-[#696980]"
+              style={{ fontFamily: MONO }}
             >
-              Begin the Campaign
-            </Link>
+              free · no setup · in-browser — the forge is open to everyone
+            </span>
           </div>
         </div>
 
@@ -913,6 +979,16 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           >
             Begin the Campaign
           </Link>
+          <p className="mb-0 mt-6 text-[12px] text-[#9c9cb4]">
+            Or skip straight to the anvil —{" "}
+            <Link
+              href="/ide"
+              className="text-[#cfc3ff] underline decoration-[rgba(143,123,255,0.5)] underline-offset-4 transition-colors hover:text-white"
+            >
+              open the Forge
+            </Link>
+            , no login required.
+          </p>
           <p
             className="mb-0 mt-[90px] text-[10px] uppercase tracking-[0.3em] text-[#696980]"
             style={{ fontFamily: MONO }}

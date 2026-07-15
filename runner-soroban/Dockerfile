@@ -72,6 +72,16 @@ RUN mkdir -p /opt/cargo/bin && ln -sf /usr/local/cargo/bin/* /opt/cargo/bin/ \
 RUN rustup toolchain install nightly-2025-08-07 --profile minimal \
       --component rustc-dev --component llvm-tools-preview --component rust-src \
     || echo "WARN: nightly toolchain install failed — audit mode will be unavailable"
+# Scout source checkout, pinned to the installed release. Running with
+# --scout-source + --local-detectors makes scout use these detectors (built
+# against the pinned nightly) instead of its default resolution path.
+# Recipe adapted from Soroban-Playground (jamesbachini, MIT). Owned by
+# runner: scout compiles inside this tree.
+RUN git clone --depth 1 --branch release/${SCOUT_AUDIT_VERSION} \
+      https://github.com/CoinFabrik/scout-audit.git /scout-audit \
+    && test -d /scout-audit/nightly/2025-08-07/detectors/soroban \
+    && chown -R runner:runner /scout-audit \
+    || echo "WARN: scout source clone failed — audit mode will be unavailable"
 USER runner
 # Scout's build script shells out to install dylint-link itself and fails in
 # this layout — pre-installing it satisfies the check.
@@ -79,13 +89,49 @@ RUN cargo +nightly-2025-08-07 install --locked dylint-link \
     || echo "WARN: dylint-link install failed — audit mode will be unavailable"
 RUN cargo install --locked cargo-scout-audit@${SCOUT_AUDIT_VERSION} \
     || echo "WARN: scout install failed — audit mode will be unavailable"
-# Audit is enabled ONLY if this offline-priming run succeeds end-to-end; the
-# entrypoint checks the marker. As of scout 0.3.16 the warm run fails against
-# soroban-sdk 26 (scout builds for wasm32-unknown-unknown, which sdk >= 26
-# rejects on Rust >= 1.82) — audit stays gracefully disabled until a scout
-# release supports it, at which point bumping SCOUT_AUDIT_VERSION re-enables.
-RUN (cargo scout-audit && touch /opt/scout-ready) \
-    || echo "WARN: scout warm run failed — audit mode will report unavailable"
+
+USER root
+# The wasm32v1-none target lets scout's cargo-check pass run against the real
+# Soroban target (its default, wasm32-unknown-unknown, is rejected by
+# soroban-sdk >= 26).
+RUN rustup target add wasm32v1-none --toolchain nightly-2025-08-07 \
+    || echo "WARN: nightly wasm target install failed — audit mode will be unavailable"
+# soroban-sdk-macros calls str::floor_char_boundary, stable on the image's
+# rustc but still feature-gated on scout's pinned nightly (E0658). Vendor the
+# exact versions the curated set resolves and swap in a stable equivalent;
+# audit runs redirect to these via [patch.crates-io] (audit-patch.toml is
+# appended to the project manifest by the entrypoint in audit mode only —
+# build/test always compile the pristine registry crates on stable).
+RUN set -eux; \
+    mkdir -p /opt/vendor; \
+    for v in 25.3.1 26.1.0; do \
+      short="soroban-sdk-macros-${v%%.*}"; \
+      cp -R /opt/cargo/registry/src/index.crates.io-*/soroban-sdk-macros-${v} /opt/vendor/${short}; \
+      rm -f /opt/vendor/${short}/.cargo-checksum.json; \
+      grep -q 'docs.floor_char_boundary(max)' /opt/vendor/${short}/src/doc.rs; \
+      sed -i 's|let safe_len = docs.floor_char_boundary(max);|let safe_len = { let mut i = max.min(docs.len()); while i > 0 \&\& !docs.is_char_boundary(i) { i -= 1; } i };|' \
+        /opt/vendor/${short}/src/doc.rs; \
+    done; \
+    printf '\n[patch.crates-io]\nsoroban-sdk-macros = { path = "/opt/vendor/soroban-sdk-macros-26" }\nsdk-macros-25 = { package = "soroban-sdk-macros", path = "/opt/vendor/soroban-sdk-macros-25" }\n' \
+      > /opt/audit-patch.toml; \
+    chown -R runner:runner /opt/vendor
+USER runner
+# Warm run mirroring exactly what the entrypoint does in audit mode, so
+# detectors, driver and dependency analysis artifacts are all pre-built and
+# runtime audits (offline, memory-capped) only analyze the user's crate.
+# Scout exits 0 even when the analyzed crate fails to compile, so success is
+# detected from the report ("Analyzed" row), not the exit code. The marker
+# lives under CARGO_HOME because runner cannot write /opt.
+RUN cp Cargo.toml /tmp/Cargo.toml.orig && cp Cargo.lock /tmp/Cargo.lock.orig \
+    && cat /opt/audit-patch.toml >> Cargo.toml \
+    && (SOROBAN_SDK_BUILD_SYSTEM_SUPPORTS_SPEC_SHAKING_V2=1 CARGO_BUILD_JOBS=2 \
+          cargo scout-audit --debug \
+          --scout-source /scout-audit --local-detectors /scout-audit/nightly \
+          -- --target=wasm32v1-none 2>&1 | tee /tmp/scout-warm.log; \
+        grep -q "Analyzed" /tmp/scout-warm.log && touch /opt/cargo/scout-ready) \
+    || echo "WARN: scout warm run failed — audit mode will report unavailable"; \
+    mv /tmp/Cargo.toml.orig Cargo.toml && mv /tmp/Cargo.lock.orig Cargo.lock \
+    && rm -f /tmp/scout-warm.log
 
 USER root
 COPY entrypoint.sh /entrypoint.sh

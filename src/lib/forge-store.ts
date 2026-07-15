@@ -109,3 +109,16 @@ export function listDeployments(): ForgeDeployment[] {
 export function addDeployment(deployment: ForgeDeployment): void {
   write(DEPLOYMENTS_KEY, [deployment, ...listDeployments()].slice(0, 50));
 }
+
+// Contract ids loaded through the Explore panel. Plain strings — foreign
+// contracts carry no trustworthy metadata worth storing.
+const EXPLORED_KEY = `${PREFIX}:explored`;
+
+export function listExplored(): string[] {
+  return read<string[]>(EXPLORED_KEY) ?? [];
+}
+
+export function addExplored(contractId: string): void {
+  const rest = listExplored().filter((id) => id !== contractId);
+  write(EXPLORED_KEY, [contractId, ...rest].slice(0, 20));
+}

@@ -6,7 +6,7 @@
 // The final "editor" step reuses LessonPlayer (server-graded, checks hidden).
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { LessonPlayer } from "@/components/LessonPlayer";
 import { Markdown } from "@/components/Markdown";
 import type { LessonStep } from "@/content/steps";
@@ -19,6 +19,29 @@ const PRAISE = ["Well forged!", "That's it!", "The runes approve.", "Flawless."]
 type Feedback = { correct: boolean; text: string } | null;
 
 const stepsDoneKey = (slug: string) => `tusst:steps-done:${slug}`;
+
+// Authored steps always list the correct option first, so the display order
+// must be shuffled. Seeded (not Math.random) so the server render and client
+// hydration agree on the same order.
+function hashString(s: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function seededOrder(length: number, seed: number): number[] {
+  const order = Array.from({ length }, (_, i) => i);
+  let s = seed || 1;
+  for (let i = length - 1; i > 0; i--) {
+    s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+    const j = s % (i + 1);
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order;
+}
 
 export function LessonSteps({
   lessonSlug,
@@ -54,6 +77,16 @@ export function LessonSteps({
   // Progress counts the congrats screen as 100%.
   const percent = done ? 100 : Math.round((index / total) * 100);
   const step = steps[Math.min(index, total - 1)];
+
+  // Display order for quiz options / fill choices; values are indices into
+  // the original arrays, so `selected` and `answer` keep their meaning.
+  const optionOrder = useMemo(() => {
+    if (step.kind === "quiz")
+      return seededOrder(step.options.length, hashString(lessonSlug + step.question));
+    if (step.kind === "fill")
+      return seededOrder(step.choices.length, hashString(lessonSlug + step.prompt));
+    return [];
+  }, [step, lessonSlug]);
 
   const advance = useCallback(() => {
     setSelected(null);
@@ -202,7 +235,8 @@ export function LessonSteps({
           <div className="mx-auto w-full max-w-xl">
             <Markdown>{step.question}</Markdown>
             <div className="mt-6 flex flex-col gap-3">
-              {step.options.map((opt, i) => {
+              {optionOrder.map((i) => {
+                const opt = step.options[i];
                 const isSel = selected === i;
                 const wrong = feedback && !feedback.correct && isSel;
                 const right = feedback?.correct && isSel;
@@ -259,7 +293,7 @@ export function LessonSteps({
               </pre>
             </div>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              {step.choices.map((c, i) => (
+              {optionOrder.map((i) => (
                 <button
                   key={i}
                   type="button"
@@ -274,7 +308,7 @@ export function LessonSteps({
                       : "border-line bg-bg-elev text-muted2 hover:border-line-strong hover:text-fg"
                   }`}
                 >
-                  {c}
+                  {step.choices[i]}
                 </button>
               ))}
             </div>

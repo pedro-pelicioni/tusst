@@ -10,6 +10,10 @@ import { getUnlockedActCount } from "@/lib/unlock";
 const MAX_CODE_BYTES = 64 * 1024;
 const MAX_BODY_BYTES = 80 * 1024; // code + JSON envelope
 
+// Grading may proxy to the remote runner (45s budget) — keep the function
+// alive past serverless defaults.
+export const maxDuration = 60;
+
 export async function POST(req: Request) {
   const session = await auth();
   const userId = session?.user?.id;
@@ -113,19 +117,20 @@ export async function POST(req: Request) {
     },
   });
 
+  // Phase 5 (the HIDDEN GOLD reveal): gold is credited exactly once per
+  // lesson, and the FIRST credited completion flips User.goldRevealed — from
+  // that moment on the pouch (header counter, profile) becomes visible and
+  // the verdict carries the reward so the client can celebrate it.
   let firstCompletion = false;
+  let goldOutcome: { earned: number; total: number; firstReveal: boolean } | null =
+    null;
   if (verdict.passed) {
-    // Credit gold exactly once per lesson: only when this pass flips the
-    // Progress row to completed. The balance accrues SILENTLY — goldRevealed
-    // stays untouched until the Phase 5 reveal, and no gold data is returned
-    // to the client here.
-    //
     // Atomic against concurrent passing submissions (double ⌘⏎, parallel
     // POSTs): the conditional updateMany re-evaluates its WHERE under the row
     // lock, and a concurrent duplicate create aborts the whole transaction
     // with P2002 — so the gold increment can never commit twice.
     try {
-      firstCompletion = await prisma.$transaction(async (tx) => {
+      const outcome = await prisma.$transaction(async (tx) => {
         const flipped = await tx.progress.updateMany({
           where: { userId, lessonId: lesson.id, completed: false },
           data: { completed: true, completedAt: new Date() },
@@ -150,14 +155,25 @@ export async function POST(req: Request) {
           }
         }
 
-        if (credited) {
-          await tx.user.update({
-            where: { id: userId },
-            data: { gold: { increment: lesson.goldReward } },
-          });
-        }
-        return credited;
+        if (!credited) return null;
+
+        const before = await tx.user.findUniqueOrThrow({
+          where: { id: userId },
+          select: { goldRevealed: true },
+        });
+        const after = await tx.user.update({
+          where: { id: userId },
+          data: { gold: { increment: lesson.goldReward }, goldRevealed: true },
+          select: { gold: true },
+        });
+        return {
+          earned: lesson.goldReward,
+          total: after.gold,
+          firstReveal: !before.goldRevealed,
+        };
       });
+      firstCompletion = outcome !== null;
+      goldOutcome = outcome;
     } catch (e) {
       if (
         e instanceof Prisma.PrismaClientKnownRequestError &&
@@ -176,5 +192,8 @@ export async function POST(req: Request) {
     results: verdict.results,
     output: verdict.output,
     firstCompletion,
+    // Present only when this pass credited the reward (goldRevealed is now
+    // guaranteed true — the economy stays hidden for anonymous/unrevealed).
+    gold: goldOutcome ?? undefined,
   });
 }

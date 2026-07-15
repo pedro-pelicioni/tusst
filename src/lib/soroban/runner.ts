@@ -2,7 +2,7 @@ import "server-only";
 
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
-import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import type { ForgeEvent, ForgeMode, SorobanFileMap } from "./types";
@@ -103,8 +103,12 @@ export async function* runForge(
 
   await acquire();
   const dir = await mkdtemp(join(tmpdir(), "tusst-forge-"));
+  // mkdtemp creates 0700; the container's non-root user must traverse the
+  // bind mount (Docker Desktop masks ownership, native Linux does not).
+  await chmod(dir, 0o755);
   const containerName = `tusst-forge-${randomUUID()}`;
   let killed = false;
+  let killedByWallTimeout = false;
   const kill = () => {
     if (killed) return;
     killed = true;
@@ -141,7 +145,10 @@ export async function* runForge(
       { stdio: ["ignore", "pipe", "pipe"] },
     );
 
-    const wallTimer = setTimeout(kill, WALL_TIMEOUT_MS[mode]);
+    const wallTimer = setTimeout(() => {
+      killedByWallTimeout = true;
+      kill();
+    }, WALL_TIMEOUT_MS[mode]);
     const onAbort = () => kill();
     signal?.addEventListener("abort", onAbort);
 
@@ -236,14 +243,16 @@ export async function* runForge(
 
     if (signal?.aborted) return;
     // `result` is written inside stream callbacks; TS's flow analysis can't
-    // see that, so widen it explicitly.
+    // see that, so widen it explicitly. `killed` is useless as a signal here —
+    // the cleanup path above always kills — so timeout attribution must come
+    // from the wall timer specifically.
     const r = result as { ok: boolean; timedOut: boolean } | null;
     yield {
       t: "done",
       ok: r?.ok === true && sawEnd,
-      timedOut: r?.timedOut === true || (killed && r === null),
+      timedOut: r?.timedOut === true || (killedByWallTimeout && r === null),
       // No end marker and no wall-timeout kill → docker/image trouble.
-      infraError: !sawEnd && !killed,
+      infraError: !sawEnd && !killedByWallTimeout,
     };
   } finally {
     release();

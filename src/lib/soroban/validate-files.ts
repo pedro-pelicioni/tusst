@@ -1,6 +1,11 @@
 import "server-only";
 
-import { isValidForgePath, MAX_PROJECT_FILES } from "./paths";
+import {
+  isValidForgePath,
+  MAX_FILE_BYTES,
+  MAX_PROJECT_FILES,
+  MAX_TOTAL_BYTES,
+} from "./paths";
 import type { SorobanFileMap } from "./types";
 
 // Validation of the user-supplied file map before anything touches disk.
@@ -8,8 +13,6 @@ import type { SorobanFileMap } from "./types";
 // keep the host filesystem writes trivially safe and the errors friendly.
 
 const MAX_FILES = MAX_PROJECT_FILES;
-const MAX_FILE_BYTES = 128 * 1024;
-const MAX_TOTAL_BYTES = 512 * 1024;
 
 export type ValidationResult =
   | { ok: true; files: SorobanFileMap }

@@ -130,8 +130,13 @@ export async function fundWithFriendbot(address: string): Promise<void> {
   );
   if (!res.ok) {
     // Friendbot answers 400 when the account is already funded — treat as ok.
+    // The message has two known shapes ("createAccountAlreadyExist" from the
+    // underlying tx error, "account already funded" from friendbot itself).
     const body = await res.text().catch(() => "");
-    if (!body.includes("createAccountAlreadyExist")) {
+    const alreadyFunded =
+      body.includes("createAccountAlreadyExist") ||
+      body.toLowerCase().includes("already funded");
+    if (!alreadyFunded) {
       throw new Error("friendbot funding failed — try again");
     }
   }

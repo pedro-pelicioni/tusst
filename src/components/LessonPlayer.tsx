@@ -10,6 +10,13 @@ interface CheckResult {
   passed: boolean;
 }
 
+/** Reward payload — present only when a pass credits the lesson's gold. */
+interface GoldReward {
+  earned: number;
+  total: number;
+  firstReveal: boolean;
+}
+
 type RunStatus = "idle" | "running" | "pass" | "fail" | "error";
 
 const draftKey = (slug: string) => `tusst:draft:${slug}`;
@@ -49,6 +56,7 @@ export function LessonPlayer({
   const [results, setResults] = useState<CheckResult[]>([]);
   const [output, setOutput] = useState("");
   const [message, setMessage] = useState("");
+  const [gold, setGold] = useState<GoldReward | null>(null);
   const router = useRouter();
 
   // codeRef mirrors the editor value for the run handler; it is only written
@@ -77,6 +85,7 @@ export function LessonPlayer({
     setMessage("");
     setResults([]);
     setOutput("");
+    setGold(null);
     try {
       const res = await fetch("/api/submissions", {
         method: "POST",
@@ -92,7 +101,10 @@ export function LessonPlayer({
       }
       setResults(data.results ?? []);
       setOutput(data.output ?? "");
+      setGold(data.gold ?? null);
       setStatus(data.passed ? "pass" : "fail");
+      // Refresh server components so the header pouch counter picks up the
+      // freshly credited gold (and the first-time reveal).
       if (data.passed && signedIn) router.refresh();
     } catch {
       if (fresh()) {
@@ -141,6 +153,7 @@ export function LessonPlayer({
     setResults([]);
     setOutput("");
     setMessage("");
+    setGold(null);
   };
 
   return (
@@ -239,6 +252,29 @@ export function LessonPlayer({
             <div className="mt-3 border-t border-line pt-3">
               <p className="text-muted">{"// stdout"}</p>
               <pre className="mt-1 whitespace-pre-wrap text-fg">{output}</pre>
+
+              {/* gold reward — only when this pass credited the lesson */}
+              {gold && gold.earned > 0 && (
+                <div className="mt-4 flex items-center gap-3 rounded-xl border border-[#b8873e]/35 bg-[#b8873e]/[0.08] px-4 py-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/gold-coin.png"
+                    alt="Gold coin"
+                    className="h-10 w-10 animate-bounce object-contain drop-shadow-[0_0_12px_rgba(184,135,62,0.6)]"
+                  />
+                  <div className="min-w-0">
+                    <p className="font-semibold text-[#e0b25f]">
+                      +{gold.earned} gold
+                    </p>
+                    <p className="mt-0.5 text-[11px] text-muted2">
+                      {gold.firstReveal
+                        ? "a hidden pouch reveals itself at your belt — your gold now shows in the header and on your profile"
+                        : `pouch: ${gold.total} gold`}
+                    </p>
+                  </div>
+                </div>
+              )}
+
               <div className="mt-4 flex items-center gap-3">
                 <span className="text-pop">
                   {signedIn

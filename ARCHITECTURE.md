@@ -117,17 +117,25 @@ snapshot (`{ files }`), never a project id — unsaved edits always compile.
 
 Both images follow the same posture: non-root user (uid 10001), no network
 at runtime, capability-dropped, resource-limited, host-enforced wall timeout
-with `docker kill`, and a marker protocol on stdout that the host parses and
-sanitizes (host paths stripped, output capped).
+with `docker kill`, and a stdout protocol that the host parses and sanitizes
+(host paths stripped, output capped).
 
 | | `runner/` (lessons) | `runner-soroban/` (Forge) |
 | --- | --- | --- |
-| Toolchain | `rustc` only | stable Rust + `wasm32v1-none` + pinned stellar-cli |
-| Input | one `main.rs` | `Cargo.toml` + `src/**` (≤32 files, ≤512KB) |
-| Command | compile + run with inner `timeout` | `stellar contract build` · `cargo test` · `cargo scout-audit` |
-| Output protocol | `__TUSST_COMPILE__ / __TUSST_RUN__ / __TUSST_STDOUT__` (buffered) | `__TUSST_FORGE__ phase/result/wasm-begin…end` (streamed; wasm as base64) |
+| Grader | `tusst-runner` Rust binary + `tusst-syntest` (syn AST checks) | shell entrypoint |
+| Toolchain | `rustc` + the grader binary | stable Rust + `wasm32v1-none` + pinned stellar-cli |
+| Input | one `main.rs` (ro mount) + AST check spec JSON on **stdin** | `Cargo.toml` + `src/**` (≤32 files, ≤512KB) |
+| Command | AST checks · compile (`-D warnings`) · run with 5s timeout | `stellar contract build` · `cargo test` · `cargo scout-audit` |
+| Output protocol | one line: `__TUSST_REPORT__ {json}` (schema v1, buffered) | `__TUSST_FORGE__ phase/result/wasm-begin…end` (streamed; wasm as base64) |
 | Rootfs | `--read-only` + tmpfs | writable **ephemeral layer** (see below) |
 | Wall timeout | 30s | 180s build / 240s test·audit |
+
+The lesson check spec travels over stdin — never a mount — because
+`/submission` is readable by the student's program and the specs are the
+hidden tests. The structural checks themselves are declarative AST specs
+(`src/content/lesson-checks.ts` ↔ `runner/crates/tusst-syntest`), compared
+by normalized token stream, so whitespace/comments can't fool them and
+answers hidden in comments don't count.
 
 **The warm-cache trick** (what makes OpenZeppelin pastes "just work"):
 `runner-soroban/warm/Cargo.toml` pins the exact crate set the OZ Contract
@@ -190,8 +198,8 @@ sequenceDiagram
     B->>A: POST { lessonSlug, code }
     A->>A: size caps · auth() · campaign gate
     A->>R: gradeSubmission
-    R->>C: docker run (code ro-mounted, no network)
-    C-->>R: marker-framed verdict (buffered)
+    R->>C: docker run -i (code ro-mounted, AST check spec on stdin)
+    C-->>R: __TUSST_REPORT__ JSON (checks + compile + run, buffered)
     R-->>A: sanitized Verdict
     A->>DB: Submission + Progress + gold (atomic, once)
     A-->>B: { passed, results, output }
@@ -273,7 +281,7 @@ hosts have no Docker daemon.
 
 | Setup | What works |
 | --- | --- |
-| Vercel + hosted Postgres | site, auth, lessons with `RUNNER_MODE=regex`; Forge API answers "the forge is cold" |
+| Vercel + hosted Postgres | site, auth, conceptual lessons with `RUNNER_MODE=regex` (Rust lessons report "sandbox unavailable"); Forge API answers "the forge is cold" |
 | Single VPS with Docker (≥8GB RAM) | everything — build both images, `RUNNER_MODE=docker` |
 | Split (future) | app on Vercel + runner service behind a queue (BullMQ/Redis); the `AsyncIterable<ForgeEvent>` contract already survives that swap |
 
@@ -282,7 +290,7 @@ Setup on a Docker host:
 ```bash
 npm run db:up                    # local Postgres (docker compose)
 npx prisma migrate deploy && npx prisma db seed
-docker build -t tusst-runner:latest ./runner
+npm run runner:build             # tusst-runner:latest (builds the grader binary, multi-stage)
 npm run runner:soroban:build     # tusst-soroban-runner:latest (~15-30 min first time, ~6GB)
 npm run build && npm start
 ```

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { NavMenu } from "./NavMenu";
 import { auth, signOut } from "@/lib/auth";
+import { prisma } from "@/lib/db";
 
 export async function Nav() {
   const session = await auth();
@@ -11,10 +12,19 @@ export async function Nav() {
     await signOut({ redirectTo: "/" });
   }
 
+  // The pouch stays hidden until the Phase 5 reveal — the first completed
+  // lesson flips goldRevealed, and only then does the coin counter appear.
+  const pouch = user?.id
+    ? await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { gold: true, goldRevealed: true },
+      })
+    : null;
+
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5">
-        <Link href="/" className="group flex items-center gap-2.5">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-5">
+        <Link href="/" className="group flex shrink-0 items-center gap-2.5">
           <span className="grid h-8 w-8 place-items-center overflow-hidden rounded-full border border-[#b8873e]/40 transition group-hover:border-[#b8873e]/80">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -30,7 +40,27 @@ export async function Nav() {
 
         <nav className="flex items-center gap-3 sm:gap-7">
           {user ? (
-            <NavMenu name={user.name ?? "guardian"} signOutAction={handleSignOut} />
+            <>
+              {pouch?.goldRevealed && (
+                <Link
+                  href="/profile"
+                  aria-label={`Your pouch: ${pouch.gold} gold`}
+                  title={`${pouch.gold} gold`}
+                  className="flex items-center gap-1.5 rounded-full border border-[#b8873e]/35 bg-[#b8873e]/10 px-2.5 py-1 transition hover:border-[#b8873e]/70 hover:bg-[#b8873e]/20"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/gold-coin.png"
+                    alt=""
+                    className="h-[18px] w-[18px] object-contain drop-shadow-[0_0_6px_rgba(184,135,62,0.55)]"
+                  />
+                  <span className="font-mono text-[11px] font-semibold tabular-nums text-[#e0b25f]">
+                    {pouch.gold}
+                  </span>
+                </Link>
+              )}
+              <NavMenu name={user.name ?? "guardian"} signOutAction={handleSignOut} />
+            </>
           ) : (
             <>
               <Link
