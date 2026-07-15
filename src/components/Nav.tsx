@@ -1,11 +1,16 @@
 import Link from "next/link";
-import { CharacterAvatar } from "./CharacterAvatar";
+import { NavMenu } from "./NavMenu";
 import { auth, signOut } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
 export async function Nav() {
   const session = await auth();
   const user = session?.user;
+
+  async function handleSignOut() {
+    "use server";
+    await signOut({ redirectTo: "/" });
+  }
 
   // The pouch stays hidden until the Phase 5 reveal — the first completed
   // lesson flips goldRevealed, and only then does the coin counter appear.
@@ -33,29 +38,9 @@ export async function Nav() {
           </span>
         </Link>
 
-        <nav className="flex min-w-0 items-center gap-4 sm:gap-6">
-          <Link
-            href="/path"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-          >
-            path
-          </Link>
-          <Link
-            href="/cards"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-          >
-            cards
-          </Link>
-          <Link
-            href="/ide"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-          >
-            forge
-          </Link>
-
+        <nav className="flex items-center gap-3 sm:gap-7">
           {user ? (
             <>
-              <div className="h-5 w-px bg-line" />
               {pouch?.goldRevealed && (
                 <Link
                   href="/profile"
@@ -74,34 +59,35 @@ export async function Nav() {
                   </span>
                 </Link>
               )}
-              <Link
-                href="/profile"
-                aria-label="Your profile"
-                className="transition-opacity hover:opacity-80"
-              >
-                <CharacterAvatar name={user.name ?? "guardian"} />
-              </Link>
-              <form
-                action={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/" });
-                }}
-              >
-                <button
-                  type="submit"
-                  className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted transition hover:text-fg"
-                >
-                  sign out
-                </button>
-              </form>
+              <NavMenu name={user.name ?? "guardian"} signOutAction={handleSignOut} />
             </>
           ) : (
-            <Link
-              href="/login"
-              className="whitespace-nowrap rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
-            >
-              sign in
-            </Link>
+            <>
+              <Link
+                href="/path"
+                className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
+              >
+                path
+              </Link>
+              <Link
+                href="/cards"
+                className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
+              >
+                cards
+              </Link>
+              <Link
+                href="/ide"
+                className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
+              >
+                forge
+              </Link>
+              <Link
+                href="/login"
+                className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
+              >
+                sign in
+              </Link>
+            </>
           )}
         </nav>
       </div>

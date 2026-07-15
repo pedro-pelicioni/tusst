@@ -347,24 +347,26 @@ export function LessonSteps({
       {step.kind !== "editor" && (
         <div className="sticky bottom-0 -mx-5 mt-10 border-t border-line bg-bg/90 px-5 py-4 backdrop-blur">
           {feedback ? (
-            <div className="mx-auto flex max-w-xl items-center gap-4">
-              <img
-                src={feedback.correct ? MASCOT_CELEBRATE : MASCOT_ENCOURAGE}
-                alt=""
-                className="h-14 w-14 shrink-0 object-contain"
-              />
-              <p
-                className={`flex-1 text-sm font-medium ${
-                  feedback.correct ? "text-pop" : "text-red-300"
-                }`}
-              >
-                {feedback.text}
-              </p>
+            <div className="mx-auto flex max-w-xl flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              <div className="flex items-center gap-4 sm:flex-1">
+                <img
+                  src={feedback.correct ? MASCOT_CELEBRATE : MASCOT_ENCOURAGE}
+                  alt=""
+                  className="h-14 w-14 shrink-0 object-contain"
+                />
+                <p
+                  className={`flex-1 text-sm font-medium ${
+                    feedback.correct ? "text-pop" : "text-red-300"
+                  }`}
+                >
+                  {feedback.text}
+                </p>
+              </div>
               {feedback.correct ? (
                 <button
                   type="button"
                   onClick={advance}
-                  className="rounded-full px-7 py-3 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-[#0b0817]"
+                  className="w-full rounded-full px-7 py-3 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-[#0b0817] sm:w-auto"
                   style={{ background: "linear-gradient(180deg, #cfc3ff, #8f7bff)" }}
                 >
                   Continue
@@ -373,7 +375,7 @@ export function LessonSteps({
                 <button
                   type="button"
                   onClick={retry}
-                  className="rounded-full border border-red-400/50 px-7 py-3 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-red-300 transition hover:bg-red-400/10"
+                  className="w-full rounded-full border border-red-400/50 px-7 py-3 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-red-300 transition hover:bg-red-400/10 sm:w-auto"
                 >
                   Retry
                 </button>
