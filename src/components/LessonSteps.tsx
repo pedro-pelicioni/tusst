@@ -6,7 +6,7 @@
 // The final "editor" step reuses LessonPlayer (server-graded, checks hidden).
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { LessonPlayer } from "@/components/LessonPlayer";
 import { Markdown } from "@/components/Markdown";
 import type { LessonStep } from "@/content/steps";
@@ -19,6 +19,57 @@ const PRAISE = ["Well forged!", "That's it!", "The runes approve.", "Flawless."]
 type Feedback = { correct: boolean; text: string } | null;
 
 const stepsDoneKey = (slug: string) => `tusst:steps-done:${slug}`;
+
+// A step's answer options in their shuffled display order, plus the index the
+// correct answer ended up at once shuffled.
+type ShuffledChoices = { displayOrder: string[]; correctIndex: number };
+
+// Fold the option text down to a 32-bit number (FNV-1a) to seed the shuffle.
+// We seed off the question's own text rather than Math.random so the shuffle is
+// deterministic: the server and the client then produce the exact same order,
+// which avoids a React hydration mismatch without needing a client-only effect.
+const hashOptionsToSeed = (options: string[]): number => {
+  const text = options.join(" ");
+  let hash = 2166136261;
+  for (let i = 0; i < text.length; i++) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+};
+
+// mulberry32 PRNG: a small deterministic generator. The same seed always yields
+// the same sequence of numbers, which is what makes the shuffle reproducible.
+const createSeededRandom = (seed: number): (() => number) => () => {
+  seed = (seed + 0x6d2b79f5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+};
+
+// Authored quiz/fill data always lists the correct option first (the answer
+// index is 0 for every question), so without shuffling the whole game is beaten
+// by always clicking the top option. This shuffles the options into a stable,
+// deterministic order and reports where the correct answer moved to. Theory and
+// editor steps have no options and return null.
+const shuffleStepChoices = (step: LessonStep): ShuffledChoices | null => {
+  let options: string[];
+  if (step.kind === "quiz") options = step.options;
+  else if (step.kind === "fill") options = step.choices;
+  else return null;
+
+  const correctOption = options[step.answer];
+  const nextRandom = createSeededRandom(hashOptionsToSeed(options));
+
+  // Fisher-Yates over a copy, so the original authored order stays untouched.
+  const displayOrder = [...options];
+  for (let i = displayOrder.length - 1; i > 0; i--) {
+    const swapWith = Math.floor(nextRandom() * (i + 1));
+    [displayOrder[i], displayOrder[swapWith]] = [displayOrder[swapWith], displayOrder[i]];
+  }
+
+  return { displayOrder, correctIndex: displayOrder.indexOf(correctOption) };
+};
 
 export function LessonSteps({
   lessonSlug,
@@ -49,11 +100,15 @@ export function LessonSteps({
   const [selected, setSelected] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [done, setDone] = useState(false);
+  // Deterministic per-question shuffle, identical on server and client.
+  const shuffledChoicesByStep = useMemo(() => steps.map(shuffleStepChoices), [steps]);
 
   const total = steps.length;
   // Progress counts the congrats screen as 100%.
   const percent = done ? 100 : Math.round((index / total) * 100);
-  const step = steps[Math.min(index, total - 1)];
+  const safeIndex = Math.min(index, total - 1);
+  const step = steps[safeIndex];
+  const shuffledChoices = shuffledChoicesByStep[safeIndex];
 
   const advance = useCallback(() => {
     setSelected(null);
@@ -202,7 +257,7 @@ export function LessonSteps({
           <div className="mx-auto w-full max-w-xl">
             <Markdown>{step.question}</Markdown>
             <div className="mt-6 flex flex-col gap-3">
-              {step.options.map((opt, i) => {
+              {(shuffledChoices?.displayOrder ?? step.options).map((opt, i) => {
                 const isSel = selected === i;
                 const wrong = feedback && !feedback.correct && isSel;
                 const right = feedback?.correct && isSel;
@@ -253,13 +308,13 @@ export function LessonSteps({
                       : "border-dashed border-line-strong text-muted"
                   }`}
                 >
-                  {selected !== null ? step.choices[selected] : " "}
+                  {selected !== null ? (shuffledChoices?.displayOrder ?? step.choices)[selected] : " "}
                 </span>
                 {step.after}
               </pre>
             </div>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              {step.choices.map((c, i) => (
+              {(shuffledChoices?.displayOrder ?? step.choices).map((c, i) => (
                 <button
                   key={i}
                   type="button"
@@ -365,7 +420,7 @@ export function LessonSteps({
                   disabled={selected === null}
                   onClick={() =>
                     step.kind === "quiz" || step.kind === "fill"
-                      ? check(step.answer, step.explain)
+                      ? check(shuffledChoices?.correctIndex ?? step.answer, step.explain)
                       : undefined
                   }
                   className="w-full rounded-full px-7 py-3.5 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-[#0b0817] transition-transform hover:-translate-y-[1px] disabled:opacity-40 sm:w-auto"
