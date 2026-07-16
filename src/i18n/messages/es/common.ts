@@ -9,6 +9,8 @@ export const common = {
     forge: "forja",
     signOut: "cerrar sesión",
     signIn: "iniciar sesión",
+    profile: "perfil",
+    openProfileMenu: "Abrir menú del perfil",
     profileAria: "Tu perfil",
     pouchAria: "Tu bolsa: {gold} de oro",
     pouchTitle: "{gold} de oro",

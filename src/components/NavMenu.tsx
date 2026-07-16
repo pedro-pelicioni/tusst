@@ -3,12 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CharacterAvatar } from "./CharacterAvatar";
-
-const LINKS = [
-  { href: "/path", label: "path" },
-  { href: "/cards", label: "cards" },
-  { href: "/ide", label: "forge" },
-] as const;
+import { useMessages } from "@/i18n/client";
 
 /** Profile avatar that opens a dropdown with the nav links and sign out. */
 export function NavMenu({
@@ -18,8 +13,15 @@ export function NavMenu({
   name: string;
   signOutAction: () => Promise<void>;
 }) {
+  const m = useMessages();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  const links = [
+    { href: "/path", label: m.common.nav.path },
+    { href: "/cards", label: m.common.nav.cards },
+    { href: "/ide", label: m.common.nav.forge },
+  ] as const;
 
   useEffect(() => {
     if (!open) return;
@@ -41,13 +43,13 @@ export function NavMenu({
     <div ref={ref} className="relative">
       <button
         type="button"
-        aria-label="Open profile menu"
+        aria-label={m.common.nav.openProfileMenu}
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className="flex items-center rounded-full transition-opacity hover:opacity-80"
       >
-        <CharacterAvatar name={name} />
+        <CharacterAvatar name={name} levelLabel={m.common.nav.lvl} />
       </button>
 
       {open && (
@@ -61,9 +63,9 @@ export function NavMenu({
             onClick={() => setOpen(false)}
             className="flex min-h-[44px] items-center px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:bg-white/[0.04] hover:text-fg"
           >
-            profile
+            {m.common.nav.profile}
           </Link>
-          {LINKS.map((l) => (
+          {links.map((l) => (
             <Link
               key={l.href}
               role="menuitem"
@@ -81,7 +83,7 @@ export function NavMenu({
               type="submit"
               className="flex min-h-[44px] w-full items-center px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted transition hover:bg-white/[0.04] hover:text-fg"
             >
-              sign out
+              {m.common.nav.signOut}
             </button>
           </form>
         </div>

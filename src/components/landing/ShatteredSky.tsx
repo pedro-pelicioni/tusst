@@ -7,13 +7,9 @@
 // card tilt, nav condensation and a scroll progress bar.
 
 import Link from "next/link";
-<<<<<<< Updated upstream
 import { useEffect, useRef, useState } from "react";
-=======
-import { useEffect, useRef } from "react";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useMessages } from "@/i18n/client";
->>>>>>> Stashed changes
 
 interface ShatteredSkyProps {
   /** First active track — "Enter the Citadel" / footer CTA target. */
@@ -95,7 +91,8 @@ const EYES = [
 
 export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
   const rootRef = useRef<HTMLDivElement>(null);
-<<<<<<< Updated upstream
+  const m = useMessages();
+  const typedLine = m.landing.prologue.typedLine;
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Lock body scroll + close on ESC while the mobile menu is open.
@@ -112,10 +109,6 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       document.removeEventListener("keydown", onKey);
     };
   }, [menuOpen]);
-=======
-  const m = useMessages();
-  const typedLine = m.landing.prologue.typedLine;
->>>>>>> Stashed changes
 
   useEffect(() => {
     const root = rootRef.current;
@@ -313,25 +306,14 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           className="hidden items-center gap-7 text-[10px] uppercase tracking-[0.24em] sm:flex"
           style={{ fontFamily: MONO }}
         >
-<<<<<<< Updated upstream
           <a href="#prologue" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
-            Prologue
-          </a>
-          <a href="#acts" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
-            Campaign
-          </a>
-          <a href="#champions" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
-            Champions
-=======
-          <a href="#prologue" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] sm:block">
             {m.landing.nav.prologue}
           </a>
-          <a href="#acts" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] sm:block">
+          <a href="#acts" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
             {m.landing.nav.campaign}
           </a>
-          <a href="#champions" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] sm:block">
+          <a href="#champions" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
             {m.landing.nav.champions}
->>>>>>> Stashed changes
           </a>
           <a href="#boss" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] md:block">
             {m.landing.nav.beholder}
@@ -354,7 +336,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
         {/* hamburger — mobile only */}
         <button
           type="button"
-          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={menuOpen ? m.landing.nav.closeMenu : m.landing.nav.openMenu}
           aria-expanded={menuOpen}
           aria-controls="sky-mobile-menu"
           onClick={() => setMenuOpen((v) => !v)}
@@ -399,7 +381,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       >
         <button
           type="button"
-          aria-label="Close navigation menu"
+          aria-label={m.landing.nav.closeMenu}
           tabIndex={menuOpen ? 0 : -1}
           onClick={() => setMenuOpen(false)}
           className="absolute inset-0 bg-[rgba(5,4,9,0.8)] backdrop-blur-[6px]"
@@ -412,10 +394,10 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           style={{ fontFamily: MONO }}
         >
           {[
-            { href: "#prologue", label: "Prologue" },
-            { href: "#acts", label: "Campaign" },
-            { href: "#champions", label: "Champions" },
-            { href: "#boss", label: "The Beholder" },
+            { href: "#prologue", label: m.landing.nav.prologue },
+            { href: "#acts", label: m.landing.nav.campaign },
+            { href: "#champions", label: m.landing.nav.champions },
+            { href: "#boss", label: m.landing.nav.beholder },
           ].map((l) => (
             <a
               key={l.href}
@@ -427,13 +409,16 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
               {l.label}
             </a>
           ))}
+          <div className="flex min-h-[44px] items-center">
+            <LanguageSwitcher variant="landing" />
+          </div>
           <Link
             href={enterHref}
             tabIndex={menuOpen ? 0 : -1}
             onClick={() => setMenuOpen(false)}
             className="mt-2 flex min-h-[44px] items-center justify-center rounded-full border border-[rgba(143,123,255,0.6)] bg-[rgba(143,123,255,0.12)] px-5 text-[#cfc3ff] transition-colors hover:bg-[rgba(143,123,255,0.28)] hover:text-white"
           >
-            Enter the Realm
+            {m.landing.nav.enterRealm}
           </Link>
         </nav>
       </div>

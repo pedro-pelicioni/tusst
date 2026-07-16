@@ -1,10 +1,6 @@
 import Link from "next/link";
-<<<<<<< Updated upstream
-import { NavMenu } from "./NavMenu";
-=======
-import { CharacterAvatar } from "./CharacterAvatar";
 import { LanguageSwitcher } from "./LanguageSwitcher";
->>>>>>> Stashed changes
+import { NavMenu } from "./NavMenu";
 import { auth, signOut } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getMessages } from "@/i18n/server";
@@ -46,32 +42,7 @@ export async function Nav() {
           </span>
         </Link>
 
-<<<<<<< Updated upstream
         <nav className="flex items-center gap-3 sm:gap-7">
-=======
-        <nav className="flex min-w-0 items-center gap-4 sm:gap-6">
-          <Link
-            href="/path"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-          >
-            {m.common.nav.path}
-          </Link>
-          <Link
-            href="/cards"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-          >
-            {m.common.nav.cards}
-          </Link>
-          <Link
-            href="/ide"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-          >
-            {m.common.nav.forge}
-          </Link>
-
-          <LanguageSwitcher />
-
->>>>>>> Stashed changes
           {user ? (
             <>
               {pouch?.goldRevealed && (
@@ -92,7 +63,7 @@ export async function Nav() {
                   </span>
                 </Link>
               )}
-<<<<<<< Updated upstream
+              <LanguageSwitcher />
               <NavMenu name={user.name ?? "guardian"} signOutAction={handleSignOut} />
             </>
           ) : (
@@ -101,60 +72,28 @@ export async function Nav() {
                 href="/path"
                 className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
               >
-                path
+                {m.common.nav.path}
               </Link>
               <Link
                 href="/cards"
                 className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
               >
-                cards
+                {m.common.nav.cards}
               </Link>
               <Link
                 href="/ide"
                 className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
               >
-                forge
+                {m.common.nav.forge}
               </Link>
+              <LanguageSwitcher />
               <Link
                 href="/login"
-                className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
+                className="whitespace-nowrap rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
               >
-                sign in
+                {m.common.nav.signIn}
               </Link>
             </>
-=======
-              <Link
-                href="/profile"
-                aria-label={m.common.nav.profileAria}
-                className="transition-opacity hover:opacity-80"
-              >
-                <CharacterAvatar
-                  name={user.name ?? "guardian"}
-                  levelLabel={m.common.nav.lvl}
-                />
-              </Link>
-              <form
-                action={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/" });
-                }}
-              >
-                <button
-                  type="submit"
-                  className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted transition hover:text-fg"
-                >
-                  {m.common.nav.signOut}
-                </button>
-              </form>
-            </>
-          ) : (
-            <Link
-              href="/login"
-              className="whitespace-nowrap rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
-            >
-              {m.common.nav.signIn}
-            </Link>
->>>>>>> Stashed changes
           )}
         </nav>
       </div>

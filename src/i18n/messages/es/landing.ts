@@ -7,6 +7,8 @@ export const landing = {
     beholder: "El Beholder",
     forge: "La Forja",
     enterRealm: "Entra al Reino",
+    openMenu: "Abrir menú de navegación",
+    closeMenu: "Cerrar menú de navegación",
   },
   hero: {
     titleTop: "THE ULTIMATE",
