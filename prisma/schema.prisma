@@ -82,6 +82,13 @@ model Character {
   xp             Int     @default(0)
   equippedSkinId String?
   equippedSkin   Skin?   @relation(fields: [equippedSkinId], references: [id])
+
+  // Campaign unlock ratchet: the highest act-unlock count this player has
+  // ever earned (1 = Act I only). Recomputed live from Progress every read
+  // (see src/lib/campaign-progress.ts) and only ever bumped UP here — so
+  // adding lessons later to an act a player already cleared can never
+  // retroactively re-lock the acts after it. See memory `tusst-seed-safety`.
+  maxUnlockedAct Int @default(1)
 }
 
 // ----------------------------------------------------------------------------

@@ -28,6 +28,14 @@ export interface CampaignProgress {
   rows: ActProgress[];
   /** consecutive cleared acts from Act I (progression unlock basis) */
   clearedStreak: number;
+  /**
+   * How many acts are unlocked, ratcheted: max(live clearedStreak+1, the
+   * highest this player ever earned). Persisted on Character.maxUnlockedAct
+   * so adding lessons later to an act this player already cleared can never
+   * retroactively re-lock the acts after it — see memory `tusst-seed-safety`
+   * for the incident this closes.
+   */
+  unlockedActCount: number;
   /** champion cards = fully cleared acts */
   cardsClaimed: number;
   totalPlayable: number;
@@ -76,9 +84,30 @@ export async function getCampaignProgress(
     clearedStreak++;
   }
 
+  const liveUnlock = Math.min(clearedStreak + 1, acts.length);
+  let unlockedActCount = liveUnlock;
+
+  if (userId) {
+    const character = await prisma.character.findUnique({
+      where: { userId },
+      select: { maxUnlockedAct: true },
+    });
+    const persisted = character?.maxUnlockedAct ?? 1;
+    unlockedActCount = Math.max(liveUnlock, persisted);
+    if (character && liveUnlock > persisted) {
+      // Ratchet up only — never write a lower value, so a later change to
+      // the lesson catalog can't undo progress a player already earned.
+      await prisma.character.update({
+        where: { userId },
+        data: { maxUnlockedAct: liveUnlock },
+      });
+    }
+  }
+
   return {
     rows,
     clearedStreak,
+    unlockedActCount,
     cardsClaimed: rows.filter((r) => r.cleared).length,
     totalPlayable: rows.reduce((n, r) => n + r.playable.length, 0),
     totalDone: rows.reduce((n, r) => n + r.doneCount, 0),

@@ -14,18 +14,16 @@ export default async function PathPage() {
   const session = await auth();
   const userId = session?.user?.id;
 
-  const [{ rows, clearedStreak, cardsClaimed }, unlockedByOnboarding] =
+  const [{ rows, unlockedActCount, cardsClaimed }, unlockedByOnboarding] =
     await Promise.all([getCampaignProgress(userId), getUnlockedActs()]);
 
   const locale = await getLocale();
   const m = await getMessages();
 
-  // An act is unlocked by the onboarding answer, or by finishing every act
-  // before it (which is also the only way to reach Act VII).
-  const unlockedCount = Math.max(
-    unlockedByOnboarding,
-    Math.min(clearedStreak + 1, acts.length),
-  );
+  // An act is unlocked by the onboarding answer, or by the ratcheted
+  // unlockedActCount (finishing every act before it, or having earned it
+  // before — see getCampaignProgress).
+  const unlockedCount = Math.max(unlockedByOnboarding, unlockedActCount);
 
   const cardsPercent = Math.round((cardsClaimed / acts.length) * 100);
 

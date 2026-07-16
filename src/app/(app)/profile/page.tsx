@@ -55,12 +55,9 @@ export default async function ProfilePage() {
     year: "numeric",
   }).format(user.createdAt);
 
-  const { rows, clearedStreak, cardsClaimed, totalPlayable, totalDone } =
+  const { rows, unlockedActCount, cardsClaimed, totalPlayable, totalDone } =
     campaign;
-  const unlockedCount = Math.max(
-    onboardingUnlock,
-    Math.min(clearedStreak + 1, acts.length),
-  );
+  const unlockedCount = Math.max(onboardingUnlock, unlockedActCount);
   const campaignPercent = Math.round(
     (totalDone / Math.max(totalPlayable, 1)) * 100,
   );
