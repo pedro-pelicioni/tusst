@@ -9,13 +9,20 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { acts } from "@/content/campaign";
+import { getActsLocalized } from "@/content/i18n";
+import { setLocale } from "@/i18n/actions";
+import { useI18n } from "@/i18n/client";
+import { LOCALES, LOCALE_FLAGS, LOCALE_LABELS } from "@/i18n/config";
+import { fmt } from "@/i18n/format";
 
 const MASCOT_GUIDE = "/mascot/mascot-guide.png";
 const MASCOT_CELEBRATE = "/mascot/mascot-celebrate.png";
 
 const STORAGE_KEY = "tusst:onboarding";
 
+// Canonical (English) option values. These are what gets written to
+// localStorage and the tusst_onboarding cookie — they must stay stable
+// across locales. Display labels come from m.onboarding by index.
 const GOALS = [
   { icon: "⚒", label: "Switch to a career in tech" },
   { icon: "✦", label: "Get better at my job or studies" },
@@ -32,11 +39,7 @@ const PROFILES = [
   { icon: "𖤐", label: "None of these" },
 ] as const;
 
-const XP_LEVELS = [
-  { label: "NONE", blurb: "You've never written a rune. Perfect — the Citadel was built for you." },
-  { label: "LOW", blurb: "You've tried coding before and know some fundamentals." },
-  { label: "HIGH", blurb: "You code regularly and want to master Rust & Soroban." },
-] as const;
+const XP_LEVELS = [{ label: "NONE" }, { label: "LOW" }, { label: "HIGH" }] as const;
 
 const MONO = "var(--font-jetbrains-mono), monospace";
 
@@ -44,11 +47,20 @@ const MONO = "var(--font-jetbrains-mono), monospace";
 // is never unlocked from onboarding — it must be earned in the campaign.
 const UNLOCKED_BY_XP = [1, 3, 6] as const; // NONE · LOW · HIGH
 
-// welcome · goal · profile · xp · social proof · plan
-const TOTAL_SCREENS = 6;
+// Language options are always shown in their own language.
+const LANGUAGE_OPTIONS = LOCALES.map((l) => ({
+  icon: LOCALE_FLAGS[l],
+  label: LOCALE_LABELS[l],
+}));
+
+// language · welcome · goal · profile · xp · social proof · plan
+const TOTAL_SCREENS = 7;
 
 export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string }) {
   const router = useRouter();
+  const { locale, messages } = useI18n();
+  const m = messages.onboarding;
+  const localizedActs = getActsLocalized(locale);
   const [screen, setScreen] = useState(0);
   const [goal, setGoal] = useState<number | null>(null);
   const [profile, setProfile] = useState<number | null>(null);
@@ -98,7 +110,19 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
 
   const screens = useMemo(
     () => [
-      /* ─── 0 · welcome ─── */
+      /* ─── 0 · language ─── */
+      <QuestionScreen
+        key="language"
+        question={m.chooseLanguage}
+        options={LANGUAGE_OPTIONS}
+        selected={LOCALES.indexOf(locale)}
+        onPick={(i) => {
+          void setLocale(LOCALES[i]);
+          window.setTimeout(next, 250);
+        }}
+      />,
+
+      /* ─── 1 · welcome ─── */
       <div key="welcome" className="flex flex-1 flex-col items-center justify-center text-center">
         <img
           src={MASCOT_GUIDE}
@@ -107,37 +131,39 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
           style={{ filter: "drop-shadow(0 0 40px rgba(143,123,255,0.35))" }}
         />
         <h1 className="mt-8 font-display text-3xl font-extrabold text-[#f4f2fb] sm:text-4xl">
-          Learn the Runecraft
+          {m.welcomeHeading}
         </h1>
         <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-muted2">
-          Master the skills to forge <strong className="text-fg">Rust</strong> programs and{" "}
-          <strong className="text-fg">Soroban contracts</strong> on Stellar — one small
-          rune at a time.
+          {m.welcomeBody1}
+          <strong className="text-fg">{m.welcomeBodyRust}</strong>
+          {m.welcomeBody2}
+          <strong className="text-fg">{m.welcomeBodySoroban}</strong>
+          {m.welcomeBody3}
         </p>
       </div>,
 
-      /* ─── 1 · goal ─── */
+      /* ─── 2 · goal ─── */
       <QuestionScreen
         key="goal"
-        question="Why are you learning to code?"
-        options={GOALS}
+        question={m.goalQuestion}
+        options={GOALS.map((g, i) => ({ icon: g.icon, label: m.goals[i] }))}
         selected={goal}
         onPick={pick(setGoal)}
       />,
 
-      /* ─── 2 · profile ─── */
+      /* ─── 3 · profile ─── */
       <QuestionScreen
         key="profile"
-        question="Which of these best describes you?"
-        options={PROFILES}
+        question={m.profileQuestion}
+        options={PROFILES.map((p, i) => ({ icon: p.icon, label: m.profiles[i] }))}
         selected={profile}
         onPick={pick(setProfile)}
       />,
 
-      /* ─── 3 · experience ─── */
+      /* ─── 4 · experience ─── */
       <div key="xp" className="flex flex-1 flex-col items-center justify-center text-center">
         <h2 className="max-w-lg font-display text-2xl font-extrabold text-[#f4f2fb] sm:text-3xl">
-          How much coding experience do you have?
+          {m.xpQuestion}
         </h2>
         <img
           src={MASCOT_GUIDE}
@@ -157,7 +183,7 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
                 onClick={() => setXp(i)}
                 className={xp === i ? "font-bold text-accent" : "text-muted"}
               >
-                {l.label}
+                {m.xpLevels[i].label}
               </button>
             ))}
           </div>
@@ -169,22 +195,21 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
             value={xp}
             onChange={(e) => setXp(Number(e.target.value))}
             className="mt-3 w-full accent-[#8f7bff]"
-            aria-label="Coding experience"
+            aria-label={m.codingExperience}
           />
         </div>
         <p className="mt-8 max-w-sm text-[15px] leading-relaxed text-muted2">
-          {XP_LEVELS[xp].blurb}
+          {m.xpLevels[xp].blurb}
         </p>
       </div>,
 
-      /* ─── 4 · social proof ─── */
+      /* ─── 5 · social proof ─── */
       <div key="proof" className="flex flex-1 flex-col items-center justify-center text-center">
         <h2 className="max-w-lg font-display text-2xl font-extrabold text-[#f4f2fb] sm:text-3xl">
-          The elders have forged many apprentices
+          {m.proofHeading}
         </h2>
         <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-muted2">
-          Our mission is to turn Forgeborn into masters of the runecraft — real code,
-          judged by hidden trials, straight in your browser. No setup. No excuses.
+          {m.proofBody}
         </p>
         <img
           src={MASCOT_CELEBRATE}
@@ -194,24 +219,24 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
         />
       </div>,
 
-      /* ─── 5 · campaign plan ─── */
+      /* ─── 6 · campaign plan ─── */
       <div key="plan" className="flex flex-1 flex-col items-center pt-2">
         <p
           className="text-[11px] uppercase tracking-[0.4em] text-muted"
           style={{ fontFamily: MONO }}
         >
-          Your campaign plan
+          {m.planKicker}
         </p>
         <h2 className="mt-3 text-center font-display text-2xl font-extrabold text-[#f4f2fb] sm:text-3xl">
-          Forgeborn — Rust to Soroban
+          {m.planHeading}
         </h2>
         <p className="mt-2 text-center text-[13px] text-muted2">
           {UNLOCKED_BY_XP[xp] > 1
-            ? `Your experience unlocks the first ${UNLOCKED_BY_XP[xp]} paths.`
-            : "Every legend starts at the first path."}
+            ? fmt(m.unlocksPaths, { count: UNLOCKED_BY_XP[xp] })
+            : m.firstPath}
         </p>
         <div className="mt-8 w-full max-w-md">
-          {acts.map((act, i) => {
+          {localizedActs.map((act, i) => {
             const unlocked = i < UNLOCKED_BY_XP[xp];
             return (
             <div key={act.numeral} className="flex gap-4">
@@ -226,7 +251,7 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
                 >
                   {unlocked ? act.numeral : "🔒"}
                 </span>
-                {i < acts.length - 1 && (
+                {i < localizedActs.length - 1 && (
                   <span
                     className={`w-px flex-1 ${unlocked ? "bg-accent/50" : "bg-white/[0.08]"}`}
                   />
@@ -251,10 +276,10 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
         </div>
       </div>,
     ],
-    [goal, profile, xp], // eslint-disable-line react-hooks/exhaustive-deps
+    [goal, profile, xp, locale, messages], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  const isQuestion = screen === 1 || screen === 2;
+  const isQuestion = screen === 0 || screen === 2 || screen === 3;
 
   return (
     <div className="mx-auto flex min-h-dvh max-w-2xl flex-col px-6 py-6">
@@ -264,7 +289,7 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
           <button
             type="button"
             onClick={back}
-            aria-label="Back"
+            aria-label={m.back}
             className="text-lg leading-none text-muted transition hover:text-fg"
           >
             ‹
@@ -272,7 +297,7 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
         ) : (
           <Link
             href="/"
-            aria-label="Exit"
+            aria-label={m.exit}
             className="text-base leading-none text-muted transition hover:text-fg"
           >
             ✕
@@ -302,19 +327,19 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
               className={primaryBtn}
               style={primaryStyle}
             >
-              Start learning
+              {m.startLearning}
             </button>
           ) : (
             <button type="button" onClick={next} className={primaryBtn} style={primaryStyle}>
-              {screen === 0 ? "Begin" : "Continue"}
+              {screen === 1 ? m.begin : m.continue}
             </button>
           )}
-          {screen === 0 && (
+          {screen === 1 && (
             <Link
               href="/login"
               className="text-sm text-muted2 transition hover:text-fg"
             >
-              I already have an account
+              {m.haveAccount}
             </Link>
           )}
         </div>

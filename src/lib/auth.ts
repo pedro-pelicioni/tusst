@@ -5,7 +5,9 @@ import Discord from "next-auth/providers/discord";
 import Nodemailer from "next-auth/providers/nodemailer";
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
+import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
+import { LOCALE_COOKIE, isLocale } from "@/i18n/config";
 
 const providers: Provider[] = [];
 
@@ -106,6 +108,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         create: { userId: user.id },
         update: {},
       });
+      // Language picked before signup (header switcher / onboarding) lives
+      // in the locale cookie — adopt it as the account's language.
+      try {
+        const store = await cookies();
+        const locale = store.get(LOCALE_COOKIE)?.value;
+        if (isLocale(locale) && locale !== "en") {
+          await prisma.user.update({ where: { id: user.id }, data: { locale } });
+        }
+      } catch {
+        // No request scope (e.g. seed scripts) — keep the default.
+      }
     },
   },
   callbacks: {

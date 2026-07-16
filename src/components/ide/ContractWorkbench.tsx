@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import type { contract } from "@stellar/stellar-sdk";
+import { useMessages } from "@/i18n/client";
+import { fmt } from "@/i18n/format";
 import { explorerTxUrl } from "@/lib/stellar/network";
 import { displayResult, fetchContractSpec, invokeFunction } from "@/lib/stellar/invoke";
 import {
@@ -38,6 +40,7 @@ export function ContractWorkbench({
   datalistId: string;
   onSpecLoaded?: (contractId: string) => void;
 }) {
+  const m = useMessages();
   const [contractId, setContractId] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState("");
@@ -67,7 +70,7 @@ export function ContractWorkbench({
   const load = async () => {
     const id = contractId.trim();
     if (!/^C[A-Z2-7]{55}$/.test(id)) {
-      setLoadError("that doesn't look like a contract id (C…)");
+      setLoadError(m.ide.workbench.invalidId);
       return;
     }
     setLoading(true);
@@ -82,10 +85,10 @@ export function ContractWorkbench({
       onSpecLoaded?.(id);
     } catch (e) {
       const message =
-        e instanceof Error ? e.message.slice(0, 300) : "could not load the contract";
+        e instanceof Error ? e.message.slice(0, 300) : m.ide.workbench.loadFailed;
       setLoadError(
         /wasm|entry|not found/i.test(message)
-          ? `${message} — Stellar Asset Contracts expose no spec`
+          ? fmt(m.ide.workbench.noSpecSuffix, { message })
           : message,
       );
     } finally {
@@ -117,7 +120,7 @@ export function ContractWorkbench({
     } catch (e) {
       patchFn(fn.name, {
         busy: false,
-        error: e instanceof Error ? e.message.slice(0, 300) : "invocation failed",
+        error: e instanceof Error ? e.message.slice(0, 300) : m.ide.workbench.invocationFailed,
       });
     }
   };
@@ -126,7 +129,7 @@ export function ContractWorkbench({
     <div className="flex flex-col gap-3 p-4">
       <div className="flex flex-col gap-1.5">
         <label className="font-mono text-[10px] uppercase tracking-wider text-muted">
-          contract id
+          {m.ide.workbench.contractIdLabel}
         </label>
         <input
           value={contractId}
@@ -146,7 +149,7 @@ export function ContractWorkbench({
           disabled={loading || contractId.trim() === ""}
           className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20 disabled:opacity-50"
         >
-          {loading ? "loading spec…" : "load contract"}
+          {loading ? m.ide.workbench.loadingSpec : m.ide.workbench.loadContract}
         </button>
         {loadError && <p className="font-mono text-[10px] text-red-400">{loadError}</p>}
       </div>
@@ -154,11 +157,11 @@ export function ContractWorkbench({
       {functions.length > 0 && (
         <div className="flex flex-col gap-1.5">
           <p className="font-mono text-[10px] uppercase tracking-wider text-muted">
-            functions · reads answer without signing
+            {m.ide.workbench.functionsHeading}
           </p>
           {!wallet && (
             <p className="font-mono text-[10px] text-muted2">
-              connect a wallet to invoke — calls run from its account
+              {m.ide.workbench.connectToInvoke}
             </p>
           )}
           {functions.map((fn) => {
@@ -173,7 +176,13 @@ export function ContractWorkbench({
                 >
                   <span className="font-mono text-[12px] text-fg">{fn.name}</span>
                   <span className="font-mono text-[10px] text-muted">
-                    {fn.fields.length} arg{fn.fields.length === 1 ? "" : "s"} {open ? "▾" : "▸"}
+                    {fmt(
+                      fn.fields.length === 1
+                        ? m.ide.workbench.argCountOne
+                        : m.ide.workbench.argCountOther,
+                      { count: fn.fields.length },
+                    )}{" "}
+                    {open ? "▾" : "▸"}
                   </span>
                 </button>
                 {open && (
@@ -195,7 +204,7 @@ export function ContractWorkbench({
                       onClick={() => invoke(fn)}
                       className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20 disabled:opacity-50"
                     >
-                      {state?.busy ? "invoking…" : "invoke"}
+                      {state?.busy ? m.ide.workbench.invoking : m.ide.workbench.invoke}
                     </button>
                     {state?.error && (
                       <p className="break-all font-mono text-[10px] text-red-400">{state.error}</p>
@@ -203,7 +212,9 @@ export function ContractWorkbench({
                     {state?.outcome && (
                       <div className="rounded border border-line bg-bg-elev px-2 py-1.5">
                         <p className="font-mono text-[10px] uppercase tracking-wider text-muted">
-                          {state.outcome.readOnly ? "read (no signature)" : "write (signed)"}
+                          {state.outcome.readOnly
+                            ? m.ide.workbench.readResult
+                            : m.ide.workbench.writeResult}
                         </p>
                         <pre className="mt-1 whitespace-pre-wrap break-all font-mono text-[11px] text-pop">
                           {state.outcome.text}
@@ -215,7 +226,7 @@ export function ContractWorkbench({
                             rel="noreferrer"
                             className="font-mono text-[10px] text-accent underline-offset-2 hover:underline"
                           >
-                            tx ↗
+                            {m.ide.workbench.txLink}
                           </a>
                         )}
                       </div>

@@ -9,12 +9,12 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { LessonPlayer } from "@/components/LessonPlayer";
 import { Markdown } from "@/components/Markdown";
+import { useMessages } from "@/i18n/client";
+import { fmt } from "@/i18n/format";
 import type { LessonStep } from "@/content/steps";
 
 const MASCOT_CELEBRATE = "/mascot/mascot-celebrate.png";
 const MASCOT_ENCOURAGE = "/mascot/mascot-encourage.png";
-
-const PRAISE = ["Well forged!", "That's it!", "The runes approve.", "Flawless."];
 
 type Feedback = { correct: boolean; text: string } | null;
 
@@ -68,6 +68,7 @@ export function LessonSteps({
   fileName?: string;
   language?: string;
 }) {
+  const m = useMessages();
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<Feedback>(null);
@@ -117,10 +118,10 @@ export function LessonSteps({
     if (selected === answer) {
       setFeedback({
         correct: true,
-        text: explain ?? PRAISE[index % PRAISE.length],
+        text: explain ?? m.lesson.praise[index % m.lesson.praise.length],
       });
     } else {
-      setFeedback({ correct: false, text: "Not quite — study the rune again." });
+      setFeedback({ correct: false, text: m.lesson.incorrect });
     }
   };
 
@@ -140,16 +141,14 @@ export function LessonSteps({
           style={{ filter: "drop-shadow(0 0 40px rgba(143,123,255,0.35))" }}
         />
         <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.3em] text-accent">
-          skirmish complete
+          {m.lesson.skirmishComplete}
         </p>
         <h1 className="mt-3 font-display text-3xl font-bold tracking-wide text-fg">
           {numeral && <span className="mr-3 text-lg text-accent/70">{numeral}</span>}
           {title}
         </h1>
         <p className="mt-4 max-w-md text-sm leading-relaxed text-muted2">
-          {signedIn
-            ? "The beacon flickers a little brighter. Your progress is carved into the Ledgerstone."
-            : "The beacon flickers a little brighter — but unwritten runes fade. Create a free account to save your progress and claim your champion cards."}
+          {signedIn ? m.lesson.doneSignedIn : m.lesson.doneAnonymous}
         </p>
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row">
           {!signedIn && (
@@ -161,7 +160,7 @@ export function LessonSteps({
                 boxShadow: "0 0 34px rgba(143,123,255,0.4)",
               }}
             >
-              Save my progress
+              {m.lesson.saveProgress}
             </Link>
           )}
           {signedIn && nextHref && (
@@ -173,14 +172,14 @@ export function LessonSteps({
                 boxShadow: "0 0 34px rgba(143,123,255,0.4)",
               }}
             >
-              Next skirmish ›
+              {m.lesson.nextSkirmish}
             </Link>
           )}
           <Link
             href={trackHref}
             className="rounded-full border border-line px-6 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:border-line-strong hover:text-fg"
           >
-            Back to the act
+            {m.lesson.backToAct}
           </Link>
         </div>
       </div>
@@ -193,7 +192,7 @@ export function LessonSteps({
       <div className="flex items-center gap-4">
         <Link
           href={trackHref}
-          aria-label="Exit lesson"
+          aria-label={m.lesson.exitLesson}
           className="text-lg leading-none text-muted transition hover:text-fg"
         >
           ✕
@@ -209,7 +208,10 @@ export function LessonSteps({
           />
         </div>
         <span className="font-mono text-[11px] text-muted">
-          {Math.min(index + 1, total)}/{total}
+          {fmt(m.lesson.stepProgress, {
+            current: Math.min(index + 1, total),
+            total,
+          })}
         </span>
       </div>
 
@@ -322,9 +324,9 @@ export function LessonSteps({
               {!signedIn && !allowAnonymous && (
                 <p className="mt-3 font-mono text-[11px] text-muted">
                   <Link href="/login" className="text-accent hover:underline">
-                    sign in
+                    {m.lesson.signIn}
                   </Link>{" "}
-                  to run code and save progress
+                  {m.lesson.signInSuffix}
                 </p>
               )}
             </div>
@@ -369,7 +371,7 @@ export function LessonSteps({
                   className="w-full rounded-full px-7 py-3 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-[#0b0817] sm:w-auto"
                   style={{ background: "linear-gradient(180deg, #cfc3ff, #8f7bff)" }}
                 >
-                  Continue
+                  {m.lesson.continueLabel}
                 </button>
               ) : (
                 <button
@@ -377,7 +379,7 @@ export function LessonSteps({
                   onClick={retry}
                   className="w-full rounded-full border border-red-400/50 px-7 py-3 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-red-300 transition hover:bg-red-400/10 sm:w-auto"
                 >
-                  Retry
+                  {m.lesson.retry}
                 </button>
               )}
             </div>
@@ -393,7 +395,7 @@ export function LessonSteps({
                     boxShadow: "0 0 24px rgba(143,123,255,0.35)",
                   }}
                 >
-                  Continue
+                  {m.lesson.continueLabel}
                 </button>
               ) : (
                 <button
@@ -410,7 +412,7 @@ export function LessonSteps({
                     boxShadow: "0 0 24px rgba(143,123,255,0.35)",
                   }}
                 >
-                  Check
+                  {m.lesson.check}
                 </button>
               )}
             </div>

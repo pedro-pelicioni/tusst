@@ -1,10 +1,13 @@
 import { redirect } from "next/navigation";
 import { auth, signIn, devLoginEnabled } from "@/lib/auth";
 import { DiscordMark, GitHubMark } from "@/components/icons";
+import { getMessages } from "@/i18n/server";
 
 export default async function LoginPage() {
   const session = await auth();
   if (session?.user) redirect("/path");
+
+  const m = await getMessages();
 
   const githubEnabled = !!(
     process.env.AUTH_GITHUB_ID && process.env.AUTH_GITHUB_SECRET
@@ -22,7 +25,7 @@ export default async function LoginPage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo-sigil.png"
-            alt="TUSST — the Stroop Sigil"
+            alt={m.common.logoAlt}
             className="h-full w-full object-contain p-0.5"
           />
         </span>
@@ -31,10 +34,10 @@ export default async function LoginPage() {
         </span>
       </div>
 
-      <h1 className="mt-8 text-2xl font-semibold tracking-tight">Sign in</h1>
-      <p className="mt-2 text-sm text-muted2">
-        Track your progress across every challenge.
-      </p>
+      <h1 className="mt-8 text-2xl font-semibold tracking-tight">
+        {m.auth.signIn}
+      </h1>
+      <p className="mt-2 text-sm text-muted2">{m.auth.tagline}</p>
 
       <div className="mt-8 flex flex-col gap-4 rounded-xl border border-line bg-bg-elev p-6">
         {githubEnabled && (
@@ -49,7 +52,7 @@ export default async function LoginPage() {
               className="flex w-full items-center justify-center gap-2.5 rounded-md border border-line-strong bg-white/[0.04] px-4 py-2 font-mono text-[13px] transition hover:bg-white/[0.08]"
             >
               <GitHubMark className="h-4 w-4" />
-              Continue with GitHub
+              {m.auth.continueWithGitHub}
             </button>
           </form>
         )}
@@ -66,7 +69,7 @@ export default async function LoginPage() {
               className="flex w-full items-center justify-center gap-2.5 rounded-md border border-[#5865F2]/40 bg-[#5865F2]/10 px-4 py-2 font-mono text-[13px] transition hover:bg-[#5865F2]/20"
             >
               <DiscordMark className="h-4 w-4 text-[#7984f5]" />
-              Continue with Discord
+              {m.auth.continueWithDiscord}
             </button>
           </form>
         )}
@@ -86,14 +89,14 @@ export default async function LoginPage() {
               type="email"
               name="email"
               required
-              placeholder="you@email.com"
+              placeholder={m.auth.emailPlaceholder}
               className="rounded-md border border-line bg-bg px-3 py-2 font-mono text-[13px] outline-none placeholder:text-muted focus:border-accent/50"
             />
             <button
               type="submit"
               className="w-full rounded-md border border-line-strong bg-white/[0.04] px-4 py-2 font-mono text-[13px] transition hover:bg-white/[0.08]"
             >
-              Email me a magic link
+              {m.auth.emailMagicLink}
             </button>
           </form>
         )}
@@ -113,7 +116,7 @@ export default async function LoginPage() {
               <div className="my-1 flex items-center gap-3">
                 <span className="h-px flex-1 bg-line" />
                 <span className="font-mono text-[10px] uppercase tracking-widest text-muted">
-                  dev login
+                  {m.auth.devLogin}
                 </span>
                 <span className="h-px flex-1 bg-line" />
               </div>
@@ -121,23 +124,20 @@ export default async function LoginPage() {
             <input
               type="text"
               name="name"
-              placeholder="pick a name"
+              placeholder={m.auth.devNamePlaceholder}
               className="rounded-md border border-line bg-bg px-3 py-2 font-mono text-[13px] outline-none placeholder:text-muted focus:border-accent/50"
             />
             <button
               type="submit"
               className="w-full rounded-md border border-accent/40 bg-accent/10 px-4 py-2 font-mono text-[13px] text-accent transition hover:bg-accent/20"
             >
-              Continue
+              {m.auth.devContinue}
             </button>
           </form>
         )}
 
         {!githubEnabled && !discordEnabled && !emailEnabled && !devEnabled && (
-          <p className="font-mono text-xs text-muted">
-            No auth providers are configured. Set AUTH_DEV_LOGIN=true in local
-            dev (or GitHub / Discord / email env vars) to enable sign-in.
-          </p>
+          <p className="font-mono text-xs text-muted">{m.auth.noProviders}</p>
         )}
       </div>
     </div>

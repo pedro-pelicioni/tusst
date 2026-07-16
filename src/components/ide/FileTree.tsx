@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useMessages } from "@/i18n/client";
+import { fmt } from "@/i18n/format";
 import { isValidForgePath, MAX_PROJECT_FILES } from "@/lib/soroban/paths";
 
 // Flat file list (Cargo.toml + src/**) with add/delete. Client-side rules
@@ -29,6 +31,7 @@ export function FileTree({
   onAdd: (path: string) => void;
   onDelete: (path: string) => void;
 }) {
+  const m = useMessages();
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState("src/");
   const [error, setError] = useState("");
@@ -36,15 +39,15 @@ export function FileTree({
   const submitAdd = () => {
     const path = draft.trim();
     if (!isValidForgePath(path)) {
-      setError("only Cargo.toml and src/** paths");
+      setError(m.ide.fileTree.invalidPath);
       return;
     }
     if (files.includes(path)) {
-      setError("file already exists");
+      setError(m.ide.fileTree.alreadyExists);
       return;
     }
     if (files.length >= MAX_PROJECT_FILES) {
-      setError(`max ${MAX_PROJECT_FILES} files`);
+      setError(fmt(m.ide.fileTree.maxFiles, { max: MAX_PROJECT_FILES }));
       return;
     }
     onAdd(path);
@@ -57,7 +60,7 @@ export function FileTree({
     <div className="flex h-full flex-col gap-1 overflow-y-auto p-2">
       <div className="flex items-center justify-between px-2 py-1">
         <span className="font-mono text-[11px] uppercase tracking-wider text-muted">
-          files
+          {m.ide.fileTree.title}
         </span>
         <button
           type="button"
@@ -66,7 +69,7 @@ export function FileTree({
             setError("");
           }}
           className="rounded border border-line px-1.5 font-mono text-[11px] text-muted2 transition hover:border-line-strong hover:text-fg"
-          title="new file"
+          title={m.ide.fileTree.newFileTitle}
         >
           +
         </button>
@@ -111,7 +114,7 @@ export function FileTree({
                 type="button"
                 onClick={() => onDelete(path)}
                 className="hidden rounded px-1 font-mono text-[11px] text-muted2 transition hover:text-red-400 group-hover:block"
-                title={`delete ${path}`}
+                title={fmt(m.ide.fileTree.deleteFileTitle, { path })}
               >
                 ×
               </button>

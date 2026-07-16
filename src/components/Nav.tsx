@@ -1,11 +1,19 @@
 import Link from "next/link";
+<<<<<<< Updated upstream
 import { NavMenu } from "./NavMenu";
+=======
+import { CharacterAvatar } from "./CharacterAvatar";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+>>>>>>> Stashed changes
 import { auth, signOut } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { getMessages } from "@/i18n/server";
+import { fmt } from "@/i18n/format";
 
 export async function Nav() {
   const session = await auth();
   const user = session?.user;
+  const m = await getMessages();
 
   async function handleSignOut() {
     "use server";
@@ -29,7 +37,7 @@ export async function Nav() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo-sigil.png"
-              alt="TUSST — the Stroop Sigil"
+              alt={m.common.logoAlt}
               className="h-full w-full object-contain p-0.5"
             />
           </span>
@@ -38,14 +46,39 @@ export async function Nav() {
           </span>
         </Link>
 
+<<<<<<< Updated upstream
         <nav className="flex items-center gap-3 sm:gap-7">
+=======
+        <nav className="flex min-w-0 items-center gap-4 sm:gap-6">
+          <Link
+            href="/path"
+            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
+          >
+            {m.common.nav.path}
+          </Link>
+          <Link
+            href="/cards"
+            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
+          >
+            {m.common.nav.cards}
+          </Link>
+          <Link
+            href="/ide"
+            className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
+          >
+            {m.common.nav.forge}
+          </Link>
+
+          <LanguageSwitcher />
+
+>>>>>>> Stashed changes
           {user ? (
             <>
               {pouch?.goldRevealed && (
                 <Link
                   href="/profile"
-                  aria-label={`Your pouch: ${pouch.gold} gold`}
-                  title={`${pouch.gold} gold`}
+                  aria-label={fmt(m.common.nav.pouchAria, { gold: pouch.gold })}
+                  title={fmt(m.common.nav.pouchTitle, { gold: pouch.gold })}
                   className="flex items-center gap-1.5 rounded-full border border-[#b8873e]/35 bg-[#b8873e]/10 px-2.5 py-1 transition hover:border-[#b8873e]/70 hover:bg-[#b8873e]/20"
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -59,6 +92,7 @@ export async function Nav() {
                   </span>
                 </Link>
               )}
+<<<<<<< Updated upstream
               <NavMenu name={user.name ?? "guardian"} signOutAction={handleSignOut} />
             </>
           ) : (
@@ -88,6 +122,39 @@ export async function Nav() {
                 sign in
               </Link>
             </>
+=======
+              <Link
+                href="/profile"
+                aria-label={m.common.nav.profileAria}
+                className="transition-opacity hover:opacity-80"
+              >
+                <CharacterAvatar
+                  name={user.name ?? "guardian"}
+                  levelLabel={m.common.nav.lvl}
+                />
+              </Link>
+              <form
+                action={async () => {
+                  "use server";
+                  await signOut({ redirectTo: "/" });
+                }}
+              >
+                <button
+                  type="submit"
+                  className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted transition hover:text-fg"
+                >
+                  {m.common.nav.signOut}
+                </button>
+              </form>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="whitespace-nowrap rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
+            >
+              {m.common.nav.signIn}
+            </Link>
+>>>>>>> Stashed changes
           )}
         </nav>
       </div>

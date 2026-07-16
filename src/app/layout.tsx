@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, JetBrains_Mono, Cinzel } from "next/font/google";
+import { LocaleProvider } from "@/i18n/client";
+import { MESSAGES } from "@/i18n/messages";
+import { getLocale } from "@/i18n/server";
 import "./globals.css";
 
 const sans = Geist({
@@ -66,17 +69,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${sans.variable} ${mono.variable} ${display.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-bg text-fg">{children}</body>
+      <body className="min-h-full bg-bg text-fg">
+        <LocaleProvider locale={locale} messages={MESSAGES[locale]}>
+          {children}
+        </LocaleProvider>
+      </body>
     </html>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useMessages } from "@/i18n/client";
 import type { ConsoleLine, ForgeRunStatus } from "./use-forge-run";
 
 // Streamed output console. Follows the tail unless the user scrolls up
@@ -28,6 +29,7 @@ export function ConsolePane({
   lines: ConsoleLine[];
   status: ForgeRunStatus;
 }) {
+  const m = useMessages();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const pinnedRef = useRef(true);
 
@@ -39,11 +41,11 @@ export function ConsolePane({
   return (
     <div className="flex h-full min-h-0 flex-col bg-bg-elev">
       <div className="flex items-center justify-between border-b border-line px-4 py-2">
-        <span className="font-mono text-[11px] text-muted">console</span>
+        <span className="font-mono text-[11px] text-muted">{m.ide.console.title}</span>
         <span
           className={`font-mono text-[11px] uppercase tracking-wider ${STATUS_STYLE[status]}`}
         >
-          {status === "infra" ? "forge cold" : status}
+          {m.ide.console.status[status]}
         </span>
       </div>
       <div
@@ -56,9 +58,7 @@ export function ConsolePane({
         className="min-h-0 flex-1 overflow-y-auto px-4 py-3 font-mono text-[12px] leading-relaxed"
       >
         {lines.length === 0 ? (
-          <p className="text-muted">
-            {"// build, test or audit your contract to see output here (⌘⏎ builds)"}
-          </p>
+          <p className="text-muted">{m.ide.console.empty}</p>
         ) : (
           lines.map((line, i) => (
             <div

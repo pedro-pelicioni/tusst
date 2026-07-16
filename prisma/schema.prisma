@@ -24,6 +24,7 @@ model User {
   emailVerified DateTime?
   image         String?
   walletAddress String?   @unique // Stellar (Freighter / passkey) — later phase
+  locale        String    @default("en") // UI language: en | pt | es | fr
   createdAt     DateTime  @default(now())
 
   // Hidden currency layer (revealed only after the first completed lesson)

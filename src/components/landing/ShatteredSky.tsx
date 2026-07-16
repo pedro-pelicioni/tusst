@@ -7,7 +7,13 @@
 // card tilt, nav condensation and a scroll progress bar.
 
 import Link from "next/link";
+<<<<<<< Updated upstream
 import { useEffect, useRef, useState } from "react";
+=======
+import { useEffect, useRef } from "react";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useMessages } from "@/i18n/client";
+>>>>>>> Stashed changes
 
 interface ShatteredSkyProps {
   /** First active track — "Enter the Citadel" / footer CTA target. */
@@ -57,27 +63,27 @@ const DRIFT_STARS = [
 ] as const;
 
 const SEALED_ACTS = [
-  { numeral: "II", src: "/cards/stropillusion.png", title: "Hall of Forking Roads", tag: "control flow · the mirror overlord", hover: "hover:border-[rgba(143,123,255,0.45)]" },
-  { numeral: "III", src: "/cards/stroopkeeper.png", title: "The Endless Vaults", tag: "std library · the hoarder", hover: "hover:border-[rgba(143,123,255,0.45)]" },
-  { numeral: "IV", src: "/cards/stroophantom.png", title: "The Vanishing Marsh", tag: "option · some, or none?", hover: "hover:border-[rgba(143,123,255,0.45)]" },
-  { numeral: "V", src: "/cards/strooracle.png", title: "Trial of Two Fates", tag: "result · ok, or err", hover: "hover:border-[rgba(143,123,255,0.45)]" },
-  { numeral: "VI", src: "/cards/astrostroopie.png", title: "Constellation Gate", tag: "stellar 101 · lumens flow again", hover: "hover:border-[rgba(69,214,196,0.5)]" },
+  { numeral: "II", src: "/cards/stropillusion.png", titleKey: "act2Title", tagKey: "act2Tag", hover: "hover:border-[rgba(143,123,255,0.45)]" },
+  { numeral: "III", src: "/cards/stroopkeeper.png", titleKey: "act3Title", tagKey: "act3Tag", hover: "hover:border-[rgba(143,123,255,0.45)]" },
+  { numeral: "IV", src: "/cards/stroophantom.png", titleKey: "act4Title", tagKey: "act4Tag", hover: "hover:border-[rgba(143,123,255,0.45)]" },
+  { numeral: "V", src: "/cards/strooracle.png", titleKey: "act5Title", tagKey: "act5Tag", hover: "hover:border-[rgba(143,123,255,0.45)]" },
+  { numeral: "VI", src: "/cards/astrostroopie.png", titleKey: "act6Title", tagKey: "act6Tag", hover: "hover:border-[rgba(69,214,196,0.5)]" },
 ] as const;
 
 const CHAMPIONS = [
-  { src: "/cards/stroowarrior.png", alt: "Stroowarrior", name: "STROOWARRIOR", meta: "act i · warrior", border: "rgba(217,185,106,0.4)", glow: "", nameColor: "#f4f2fb", metaColor: "#696980" },
-  { src: "/cards/stropillusion.png", alt: "Stropillusion", name: "STROPILLUSION", meta: "act ii · illusionist", border: "rgba(143,123,255,0.35)", glow: "", nameColor: "#f4f2fb", metaColor: "#696980" },
-  { src: "/cards/stroopkeeper.png", alt: "Stroopkeeper", name: "STROOPKEEPER", meta: "act iii · archivist", border: "rgba(143,123,255,0.35)", glow: "", nameColor: "#f4f2fb", metaColor: "#696980" },
-  { src: "/cards/stroophantom.png", alt: "Stroophantom", name: "STROOPHANTOM", meta: "act iv · rare · specter", border: "rgba(69,214,196,0.4)", glow: ", 0 0 30px rgba(69,214,196,0.12)", nameColor: "#f4f2fb", metaColor: "#45d6c4" },
-  { src: "/cards/strooracle.png", alt: "Strooracle", name: "STROORACLE", meta: "act v · rare · oracle", border: "rgba(69,214,196,0.4)", glow: ", 0 0 30px rgba(69,214,196,0.12)", nameColor: "#f4f2fb", metaColor: "#45d6c4" },
-  { src: "/cards/astrostroopie.png", alt: "Astrostroopie", name: "ASTROSTROOPIE", meta: "act vi · rare · voyager", border: "rgba(69,214,196,0.4)", glow: ", 0 0 30px rgba(69,214,196,0.12)", nameColor: "#f4f2fb", metaColor: "#45d6c4" },
-  { src: "/cards/stroopbeholder.png", alt: "Stroopbeholder", name: "STROOPBEHOLDER", meta: "act vii · boss · aberration", border: "rgba(161,61,61,0.55)", glow: ", 0 0 34px rgba(161,61,61,0.25)", nameColor: "#c96a6a", metaColor: "#c96a6a" },
+  { src: "/cards/stroowarrior.png", alt: "Stroowarrior", name: "STROOWARRIOR", metaKey: "metaStroowarrior", border: "rgba(217,185,106,0.4)", glow: "", nameColor: "#f4f2fb", metaColor: "#696980" },
+  { src: "/cards/stropillusion.png", alt: "Stropillusion", name: "STROPILLUSION", metaKey: "metaStropillusion", border: "rgba(143,123,255,0.35)", glow: "", nameColor: "#f4f2fb", metaColor: "#696980" },
+  { src: "/cards/stroopkeeper.png", alt: "Stroopkeeper", name: "STROOPKEEPER", metaKey: "metaStroopkeeper", border: "rgba(143,123,255,0.35)", glow: "", nameColor: "#f4f2fb", metaColor: "#696980" },
+  { src: "/cards/stroophantom.png", alt: "Stroophantom", name: "STROOPHANTOM", metaKey: "metaStroophantom", border: "rgba(69,214,196,0.4)", glow: ", 0 0 30px rgba(69,214,196,0.12)", nameColor: "#f4f2fb", metaColor: "#45d6c4" },
+  { src: "/cards/strooracle.png", alt: "Strooracle", name: "STROORACLE", metaKey: "metaStrooracle", border: "rgba(69,214,196,0.4)", glow: ", 0 0 30px rgba(69,214,196,0.12)", nameColor: "#f4f2fb", metaColor: "#45d6c4" },
+  { src: "/cards/astrostroopie.png", alt: "Astrostroopie", name: "ASTROSTROOPIE", metaKey: "metaAstrostroopie", border: "rgba(69,214,196,0.4)", glow: ", 0 0 30px rgba(69,214,196,0.12)", nameColor: "#f4f2fb", metaColor: "#45d6c4" },
+  { src: "/cards/stroopbeholder.png", alt: "Stroopbeholder", name: "STROOPBEHOLDER", metaKey: "metaStroopbeholder", border: "rgba(161,61,61,0.55)", glow: ", 0 0 34px rgba(161,61,61,0.25)", nameColor: "#c96a6a", metaColor: "#c96a6a" },
 ] as const;
 
 const HOW_IT_WORKS = [
-  { num: "01", title: "Forge in the Browser", copy: "Every skirmish is real code judged by hidden trials — no setup, no excuses. The compiler is your harshest ally." },
-  { num: "02", title: "March at Your Pace", copy: "Acts unlock in order, skirmishes retry forever — from Rust fundamentals to contracts live on the Stellar testnet." },
-  { num: "03", title: "Claim the Champions", copy: "Seven painted cards for seven acts. Flawless runs earn rare prints — and the boss card must be taken by force." },
+  { num: "01", titleKey: "step1Title", copyKey: "step1Copy" },
+  { num: "02", titleKey: "step2Title", copyKey: "step2Copy" },
+  { num: "03", titleKey: "step3Title", copyKey: "step3Copy" },
 ] as const;
 
 const EYES = [
@@ -87,11 +93,9 @@ const EYES = [
   { top: "74%", right: "10%", size: 12, anim: "sky-eyeflicker 9s ease-in-out 1s infinite" },
 ] as const;
 
-const TYPED_LINE =
-  "“The First Rune held the sky together. Someone let it panic.”";
-
 export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
   const rootRef = useRef<HTMLDivElement>(null);
+<<<<<<< Updated upstream
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Lock body scroll + close on ESC while the mobile menu is open.
@@ -108,6 +112,10 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       document.removeEventListener("keydown", onKey);
     };
   }, [menuOpen]);
+=======
+  const m = useMessages();
+  const typedLine = m.landing.prologue.typedLine;
+>>>>>>> Stashed changes
 
   useEffect(() => {
     const root = rootRef.current;
@@ -151,8 +159,8 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           let i = 0;
           const tick = () => {
             i++;
-            typeEl.textContent = TYPED_LINE.slice(0, i);
-            if (i < TYPED_LINE.length) t = setTimeout(tick, 34);
+            typeEl.textContent = typedLine.slice(0, i);
+            if (i < typedLine.length) t = setTimeout(tick, 34);
           };
           tick();
           typeIo.disconnect();
@@ -255,7 +263,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
     }
 
     return () => cleanups.forEach((fn) => fn());
-  }, []);
+  }, [typedLine]);
 
   return (
     <div
@@ -305,6 +313,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           className="hidden items-center gap-7 text-[10px] uppercase tracking-[0.24em] sm:flex"
           style={{ fontFamily: MONO }}
         >
+<<<<<<< Updated upstream
           <a href="#prologue" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
             Prologue
           </a>
@@ -313,21 +322,32 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           </a>
           <a href="#champions" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
             Champions
+=======
+          <a href="#prologue" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] sm:block">
+            {m.landing.nav.prologue}
+          </a>
+          <a href="#acts" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] sm:block">
+            {m.landing.nav.campaign}
+          </a>
+          <a href="#champions" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] sm:block">
+            {m.landing.nav.champions}
+>>>>>>> Stashed changes
           </a>
           <a href="#boss" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] md:block">
-            The Beholder
+            {m.landing.nav.beholder}
           </a>
           <Link
             href="/ide"
             className="hidden text-[#cfc3ff] transition-colors hover:text-white sm:block"
           >
-            The Forge
+            {m.landing.nav.forge}
           </Link>
+          <LanguageSwitcher variant="landing" />
           <Link
             href={enterHref}
             className="rounded-full border border-[rgba(143,123,255,0.6)] bg-[rgba(143,123,255,0.12)] px-5 py-2.5 text-[#cfc3ff] backdrop-blur-[6px] transition-colors hover:bg-[rgba(143,123,255,0.28)] hover:text-white"
           >
-            Enter the Realm
+            {m.landing.nav.enterRealm}
           </Link>
         </div>
 
@@ -537,21 +557,21 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
               animation: "sky-titleglow 5s ease-in-out infinite",
             }}
           >
-            THE ULTIMATE
+            {m.landing.hero.titleTop}
             <br />
             <span className="text-[0.62em] tracking-[0.14em] text-[#cfc3ff]">
-              STELLAR SUPREME TUTORIAL
+              {m.landing.hero.titleBottom}
             </span>
           </h1>
           <p
             className="mb-0 mt-[30px] max-w-[520px] text-base leading-[1.75] text-[#b9b9d1]"
             style={{ textShadow: "0 2px 20px rgba(0,0,0,0.95)" }}
           >
-            A campaign awaits, Forgeborn. Master{" "}
-            <strong className="text-[#f4f2fb]">Rust</strong>, then{" "}
-            <strong className="text-[#f4f2fb]">Soroban contracts</strong> on
-            Stellar — seven acts, seven champions, one many-eyed horror at the
-            end of the sky.
+            {m.landing.hero.taglineIntro}{" "}
+            <strong className="text-[#f4f2fb]">{m.landing.hero.taglineRust}</strong>
+            {m.landing.hero.taglineMiddle}{" "}
+            <strong className="text-[#f4f2fb]">{m.landing.hero.taglineSoroban}</strong>{" "}
+            {m.landing.hero.taglineOutro}
           </p>
           <div className="mt-10 flex flex-col items-center gap-4">
             <div className="flex flex-wrap items-center justify-center gap-5">
@@ -564,18 +584,18 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
                     "0 0 40px rgba(143,123,255,0.45), 0 10px 30px rgba(0,0,0,0.6)",
                 }}
               >
-                Begin the Campaign
+                {m.landing.hero.beginCampaign}
               </Link>
               <Link
                 href="/ide"
                 className="inline-flex items-center gap-3 rounded-full border border-[rgba(143,123,255,0.6)] bg-[rgba(143,123,255,0.12)] px-7 py-3.5 font-display text-[13px] font-bold uppercase tracking-[0.16em] text-[#cfc3ff] backdrop-blur-[6px] transition-[transform,box-shadow,background-color] duration-150 hover:-translate-y-[2px] hover:bg-[rgba(143,123,255,0.24)] hover:shadow-[0_0_50px_rgba(143,123,255,0.5),0_14px_36px_rgba(0,0,0,0.6)] sm:px-[34px] sm:py-[16px] sm:text-[15px]"
               >
-                Open the Forge
+                {m.landing.hero.openForge}
                 <span
                   className="rounded-full border border-[rgba(207,195,255,0.45)] px-2 py-[3px] text-[9px] font-normal tracking-[0.2em] text-[#cfc3ff]"
                   style={{ fontFamily: MONO }}
                 >
-                  no login
+                  {m.landing.hero.noLoginBadge}
                 </span>
               </Link>
             </div>
@@ -583,7 +603,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
               className="text-[11px] text-[#696980]"
               style={{ fontFamily: MONO }}
             >
-              free · no setup · in-browser — the forge is open to everyone
+              {m.landing.hero.freeLine}
             </span>
           </div>
         </div>
@@ -595,7 +615,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           <span style={{ animation: "sky-caretblink 1.4s steps(1) infinite" }}>
             ▼
           </span>{" "}
-          descend
+          {m.landing.hero.descend}
         </div>
       </header>
 
@@ -613,7 +633,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             className="m-0 text-[11px] uppercase tracking-[0.5em] text-[#696980]"
             style={{ fontFamily: MONO }}
           >
-            Prologue · The Great Panic
+            {m.landing.prologue.kicker}
           </p>
           <div className="my-[26px] flex items-center justify-center gap-4">
             <span
@@ -638,17 +658,13 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             style={{ fontSize: "clamp(22px, 3.2vw, 34px)" }}
           />
           <p className="mx-auto mb-0 mt-[34px] max-w-[560px] text-[15px] leading-[1.85] text-[#9c9cb4]">
-            For an age, the Constellation held the realm together — a lattice
-            of star-contracts written by the First Forgeborn. Then a single
-            rune went unhandled. The panic propagated. The sky unwound. Now the
-            elders forge new apprentices in the ruins, and the runecraft must
-            be relearned from its first waking words.
+            {m.landing.prologue.body}
           </p>
           <p
             className="mb-0 mt-[26px] text-[11px] tracking-[0.2em] text-[#696980]"
             style={{ fontFamily: MONO }}
           >
-            — from the Ledgerstone fragments, a.p. 0001
+            {m.landing.prologue.attribution}
           </p>
         </div>
       </section>
@@ -660,15 +676,15 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             className="m-0 text-[11px] uppercase tracking-[0.5em] text-[#696980]"
             style={{ fontFamily: MONO }}
           >
-            The Campaign
+            {m.landing.acts.kicker}
           </p>
           <h2
             className="mb-0 mt-4 font-display font-extrabold text-[#f4f2fb]"
             style={{ fontSize: "clamp(36px, 5vw, 64px)" }}
           >
-            Seven Acts.
+            {m.landing.acts.headingTop}
             <br />
-            One Sky to Relight.
+            {m.landing.acts.headingBottom}
           </h2>
         </div>
 
@@ -690,25 +706,22 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
                   className="m-0 text-[10px] uppercase tracking-[0.3em] text-[#d9b96a]"
                   style={{ fontFamily: MONO }}
                 >
-                  Act I · Rust Fundamentals · open
+                  {m.landing.acts.act1Kicker}
                 </p>
                 <h3 className="mb-0 mt-2 font-display text-[34px] font-extrabold text-[#f4f2fb]">
-                  The Rusted Citadel
+                  {m.landing.acts.act1Title}
                 </h3>
               </div>
             </div>
             <p className="mb-0 mt-[22px] max-w-[460px] text-[15px] leading-[1.8] text-[#9c9cb4]">
-              You awaken in the oxidized ruins of the old capital of runecraft.
-              Ferrisia the Crab-Mother teaches you the waking words, the
-              binding of names, and the law of the Unbending Blade. Relight the
-              beacon, Forgeborn.
+              {m.landing.acts.act1Body}
             </p>
             <Link
               href={beginHref}
               className="mt-[26px] inline-block border-b border-[rgba(217,185,106,0.5)] py-3 pb-1 text-xs uppercase tracking-[0.2em] text-[#d9b96a] transition-colors hover:text-[#f0d894]"
               style={{ fontFamily: MONO }}
             >
-              Enter the Citadel ›
+              {m.landing.acts.act1Cta}
             </Link>
           </div>
           <div
@@ -729,7 +742,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
               className="mb-0 mt-[14px] text-center text-[10px] uppercase tracking-[0.2em] text-[#696980]"
               style={{ fontFamily: MONO }}
             >
-              reward · STROOWARRIOR
+              {m.landing.acts.act1Reward}
             </p>
           </div>
         </div>
@@ -740,7 +753,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             className="mb-7 mt-0 text-center text-[10px] uppercase tracking-[0.3em] text-[#696980]"
             style={{ fontFamily: MONO }}
           >
-            ⊗ sealed territories — they open as the campaign is forged
+            ⊗ {m.landing.acts.sealedNote}
           </p>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(190px,1fr))] gap-4">
             {SEALED_ACTS.map((a) => (
@@ -759,13 +772,13 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
                   {a.numeral}
                 </span>
                 <div className="mt-1.5 font-display text-[15px] font-bold text-[#c9c9dd]">
-                  {a.title}
+                  {m.landing.acts[a.titleKey]}
                 </div>
                 <div
                   className="mt-1.5 text-[9px] uppercase tracking-[0.16em] text-[#696980]"
                   style={{ fontFamily: MONO }}
                 >
-                  {a.tag}
+                  {m.landing.acts[a.tagKey]}
                 </div>
               </div>
             ))}
@@ -816,27 +829,24 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
               className="m-0 text-[10px] uppercase tracking-[0.3em] text-[#c96a6a]"
               style={{ fontFamily: MONO }}
             >
-              Act VII · Soroban Contracts · final
+              {m.landing.boss.kicker}
             </p>
             <h3
               className="mb-0 mt-3 font-display font-black leading-[1.08] text-[#f0dede]"
               style={{ fontSize: "clamp(34px, 4.5vw, 54px)" }}
             >
-              The Beholder&apos;s
+              {m.landing.boss.titleTop}
               <br />
-              Lair
+              {m.landing.boss.titleBottom}
             </h3>
             <p className="mb-0 mt-6 max-w-[460px] text-[15px] leading-[1.8] text-[#9c9cb4]">
-              Beyond the Gate it waits, in a fortress built of every error
-              never handled. Forge Soroban runes, deploy them to the living
-              sky, and turn the Beholder&apos;s own corrupted contracts against
-              it.
+              {m.landing.boss.body}
             </p>
             <p
               className="mb-0 mt-5 text-xs text-[#c96a6a]"
               style={{ fontFamily: MONO }}
             >
-              its card is not a reward. it is a trophy.
+              {m.landing.boss.trophy}
             </p>
           </div>
         </div>
@@ -856,18 +866,16 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
             className="m-0 text-[11px] uppercase tracking-[0.5em] text-[#696980]"
             style={{ fontFamily: MONO }}
           >
-            The Collection
+            {m.landing.champions.kicker}
           </p>
           <h2
             className="mb-0 mt-4 font-display font-extrabold text-[#f4f2fb]"
             style={{ fontSize: "clamp(34px, 4.8vw, 58px)" }}
           >
-            Champions of the Realm
+            {m.landing.champions.heading}
           </h2>
           <p className="mx-auto mb-0 mt-5 max-w-[540px] text-sm leading-[1.75] text-[#9c9cb4]">
-            Seven painted cards for seven acts. Clear an act&apos;s finale and
-            its champion joins your collection — flawless runs earn rare
-            prints.
+            {m.landing.champions.body}
           </p>
         </div>
 
@@ -902,7 +910,7 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
                   className="mt-[3px] text-[10px]"
                   style={{ fontFamily: MONO, color: c.metaColor }}
                 >
-                  {c.meta}
+                  {m.landing.champions[c.metaKey]}
                 </div>
               </div>
             </div>
@@ -922,10 +930,10 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
                 {b.num}
               </span>
               <h3 className="mb-0 mt-[14px] font-display text-xl font-bold text-[#f4f2fb]">
-                {b.title}
+                {m.landing.howItWorks[b.titleKey]}
               </h3>
               <p className="mx-auto mb-0 mt-3 max-w-[300px] text-sm leading-[1.75] text-[#9c9cb4]">
-                {b.copy}
+                {m.landing.howItWorks[b.copyKey]}
               </p>
             </div>
           ))}
@@ -962,11 +970,10 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
               animation: "sky-titleglow 5s ease-in-out infinite",
             }}
           >
-            The Sky Awaits, Forgeborn.
+            {m.landing.footer.heading}
           </h2>
           <p className="mx-auto mb-0 mt-[18px] max-w-[460px] text-sm leading-[1.75] text-[#9c9cb4]">
-            The elders are blunt about your odds: your compiler will insult you
-            a thousand times so the Beholder cannot hurt you once.
+            {m.landing.footer.body}
           </p>
           <Link
             href={beginHref}
@@ -977,24 +984,24 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
                 "0 0 50px rgba(143,123,255,0.5), 0 12px 32px rgba(0,0,0,0.6)",
             }}
           >
-            Begin the Campaign
+            {m.landing.footer.beginCampaign}
           </Link>
           <p className="mb-0 mt-6 text-[12px] text-[#9c9cb4]">
-            Or skip straight to the anvil —{" "}
+            {m.landing.footer.skipPrefix}{" "}
             <Link
               href="/ide"
               className="text-[#cfc3ff] underline decoration-[rgba(143,123,255,0.5)] underline-offset-4 transition-colors hover:text-white"
             >
-              open the Forge
+              {m.landing.footer.skipLink}
             </Link>
-            , no login required.
+            {m.landing.footer.skipSuffix}
           </p>
           <p
             className="mb-0 mt-[90px] text-[10px] uppercase tracking-[0.3em] text-[#696980]"
             style={{ fontFamily: MONO }}
           >
-            tusst · the ultimate stellar supreme tutorial · Ø nothing left
-            unhandled
+            tusst · {m.landing.footer.taglineTutorial} · Ø{" "}
+            {m.landing.footer.taglineMotto}
           </p>
         </div>
       </footer>

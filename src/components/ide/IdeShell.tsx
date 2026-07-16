@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useMessages } from "@/i18n/client";
 import type { SorobanFileMap } from "@/lib/soroban/types";
 import {
   createProject,
@@ -34,6 +35,7 @@ import { useForgeRun } from "./use-forge-run";
 //   └───────┴────────────────────────────────┴────────────┘
 
 export function IdeShell() {
+  const m = useMessages();
   const [projects, setProjects] = useState<ForgeProjectMeta[]>([]);
   const [projectId, setProjectId] = useState<string | null>(null);
   const [files, setFiles] = useState<SorobanFileMap>({});
@@ -62,13 +64,13 @@ export function IdeShell() {
     let metas = listProjects();
     if (metas.length === 0) {
       const template = templateById("hello-world");
-      createProject("hello world", template.id, template.files);
+      createProject(m.ide.shell.defaultProjectName, template.id, template.files);
       metas = listProjects();
     }
     setProjects(metas);
     openProject(metas[0].id, metas);
     setLoaded(true);
-     
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   /* eslint-enable react-hooks/set-state-in-effect */
 
@@ -131,7 +133,7 @@ export function IdeShell() {
   if (!loaded) {
     return (
       <div className="grid h-full place-items-center font-mono text-xs text-muted">
-        lighting the forge…
+        {m.ide.shell.loading}
       </div>
     );
   }
@@ -146,7 +148,7 @@ export function IdeShell() {
             onClick={() => setDrawerOpen(true)}
             className="rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2 transition hover:border-line-strong hover:text-fg"
           >
-            ☰ projects
+            ☰ {m.ide.shell.projects}
           </button>
           <span className="truncate font-mono text-[12px] text-fg">
             {activeProject?.name ?? "…"}
@@ -214,7 +216,7 @@ export function IdeShell() {
                     : "text-muted hover:text-fg"
                 }`}
               >
-                {tab}
+                {m.ide.shell.tabs[tab]}
               </button>
             ))}
           </div>
@@ -240,16 +242,16 @@ export function IdeShell() {
       {/* in memoriam — James Bachini, creator of the Soroban Playground */}
       <div className="flex shrink-0 items-center justify-center gap-1.5 border-t border-line bg-bg-elev px-4 py-1.5">
         <span className="font-mono text-[10px] text-muted">
-          ✦ in memory of{" "}
-          <span className="text-muted2">James Bachini</span> — the Forge
-          carries on the legacy of his{" "}
+          ✦ {m.ide.shell.memorialInMemoryOf}{" "}
+          <span className="text-muted2">James Bachini</span>{" "}
+          {m.ide.shell.memorialLegacy}{" "}
           <a
             href="https://github.com/jamesbachini/Soroban-Playground"
             target="_blank"
             rel="noreferrer"
             className="text-accent/80 underline-offset-2 transition hover:text-accent hover:underline"
           >
-            Soroban Playground ↗
+            {m.ide.shell.memorialLink}
           </a>
         </span>
       </div>
@@ -280,7 +282,7 @@ export function IdeShell() {
             if (metas.length > 0) openProject(metas[0].id);
             else {
               const template = forgeTemplates[0];
-              const meta = createProject("hello world", template.id, template.files);
+              const meta = createProject(m.ide.shell.defaultProjectName, template.id, template.files);
               openProject(meta.id, listProjects());
             }
           }

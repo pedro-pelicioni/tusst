@@ -2,10 +2,18 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
-import { getLessonContent } from "@/content/lessons";
-import { acts, getSkirmish } from "@/content/campaign";
+import { acts } from "@/content/campaign";
 import { getUnlockedActCount } from "@/lib/unlock";
-import { getLessonSteps, TRIAL_LESSON_SLUG } from "@/content/steps";
+import { TRIAL_LESSON_SLUG } from "@/content/steps";
+import {
+  getLessonStepsLocalized,
+  getSkirmishLocalized,
+  localizeLessonTitle,
+  localizeTrackText,
+} from "@/content/i18n";
+import { getLessonContentLocalized } from "@/content/i18n/server";
+import { getLocale, getMessages } from "@/i18n/server";
+import { fmt } from "@/i18n/format";
 import { LessonPlayer } from "@/components/LessonPlayer";
 import { LessonSteps } from "@/components/LessonSteps";
 import { Markdown } from "@/components/Markdown";
@@ -44,8 +52,19 @@ export default async function LessonPage({
     }
   }
 
-  const content = getLessonContent(slug);
-  const skirmish = getSkirmish(slug);
+  const locale = await getLocale();
+  const m = await getMessages();
+
+  const content = getLessonContentLocalized(slug, locale);
+  const skirmish = getSkirmishLocalized(slug, locale);
+
+  // DB-sourced titles go through the locale overlays (English fallback).
+  const lessonTitle = localizeLessonTitle(slug, lesson.title, locale);
+  const trackText = localizeTrackText(
+    lesson.track.slug,
+    { title: lesson.track.title, description: lesson.track.description },
+    locale,
+  );
 
   let completed = false;
   if (userId) {
@@ -61,7 +80,10 @@ export default async function LessonPage({
     idx >= 0
       ? siblings
           .slice(idx + 1)
-          .find((l) => l.status === "active" && getLessonContent(l.slug))
+          .find(
+            (l) =>
+              l.status === "active" && getLessonContentLocalized(l.slug, locale),
+          )
       : undefined;
   const nextHref = next ? `/lessons/${next.slug}` : null;
 
@@ -77,7 +99,7 @@ export default async function LessonPage({
 
   // Bite-sized step flow (Mimo-style) — used whenever the lesson has authored
   // steps. Falls back to the classic two-pane layout otherwise.
-  const steps = getLessonSteps(slug);
+  const steps = getLessonStepsLocalized(slug, locale);
   if (content && steps) {
     return (
       <LessonSteps
@@ -88,7 +110,7 @@ export default async function LessonPage({
         trackHref={`/tracks/${lesson.track.slug}`}
         signedIn={!!userId}
         allowAnonymous={slug === TRIAL_LESSON_SLUG}
-        title={skirmish?.title ?? lesson.title}
+        title={skirmish?.title ?? lessonTitle}
         numeral={skirmish?.numeral}
         fileName={fileName}
         language={language}
@@ -104,18 +126,20 @@ export default async function LessonPage({
           href={`/tracks/${lesson.track.slug}`}
           className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted transition hover:text-fg"
         >
-          ‹ {lesson.track.title}
+          ‹ {trackText.title}
         </Link>
         <span className="font-mono text-[11px] text-muted">/</span>
         <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted2">
-          lesson {String(lesson.order).padStart(2, "0")}
+          {fmt(m.lesson.lessonNumber, {
+            number: String(lesson.order).padStart(2, "0"),
+          })}
         </span>
         <span className="rounded bg-white/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-muted2">
           {lesson.difficulty}
         </span>
         {completed && (
           <span className="rounded border border-pop/30 bg-pop/10 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-pop">
-            completed
+            {m.lesson.completedBadge}
           </span>
         )}
       </div>
@@ -129,14 +153,14 @@ export default async function LessonPage({
             {skirmish.title}
           </>
         ) : (
-          lesson.title
+          lessonTitle
         )}
       </h1>
 
       {skirmish && (
         <div className="mt-6 max-w-3xl rounded-xl border border-accent/20 bg-accent/[0.04] p-5">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent/70">
-            skirmish · {skirmish.act.title}
+            {fmt(m.lesson.skirmishTag, { act: skirmish.act.title })}
           </p>
           <p className="mt-3 text-sm italic leading-relaxed text-muted2">
             {skirmish.intro}
@@ -164,9 +188,9 @@ export default async function LessonPage({
             {!userId && (
               <p className="mt-3 font-mono text-[11px] text-muted">
                 <Link href="/login" className="text-accent hover:underline">
-                  sign in
+                  {m.lesson.signIn}
                 </Link>{" "}
-                to run code and save progress
+                {m.lesson.signInSuffix}
               </p>
             )}
           </div>
@@ -174,18 +198,17 @@ export default async function LessonPage({
       ) : (
         <div className="mt-10 max-w-xl rounded-xl border border-line bg-bg-elev p-8">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
-            coming soon
+            {m.lesson.comingSoon}
           </p>
           <p className="mt-3 text-sm leading-relaxed text-muted2">
-            This lesson&apos;s interactive content is still being written. Try
-            the earlier lessons in{" "}
+            {m.lesson.comingSoonBody}{" "}
             <Link
               href={`/tracks/${lesson.track.slug}`}
               className="text-accent hover:underline"
             >
-              {lesson.track.title}
+              {trackText.title}
             </Link>
-            .
+            {m.lesson.comingSoonEnd}
           </p>
         </div>
       )}

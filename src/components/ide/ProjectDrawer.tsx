@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useMessages } from "@/i18n/client";
+import { fmt } from "@/i18n/format";
 import type { ForgeProjectMeta } from "@/lib/forge-store";
 import type { SorobanFileMap } from "@/lib/soroban/types";
 import { forgeTemplates } from "@/content/soroban-templates";
@@ -35,6 +37,7 @@ export function ProjectDrawer({
   onRename: (id: string, name: string) => void;
   onDelete: (id: string) => void;
 }) {
+  const m = useMessages();
   const [creating, setCreating] = useState(false);
   const [name, setName] = useState("");
   const [templateId, setTemplateId] = useState(forgeTemplates[0].id);
@@ -48,7 +51,7 @@ export function ProjectDrawer({
   if (!open) return null;
 
   const submit = () => {
-    const trimmed = name.trim() || "untitled contract";
+    const trimmed = name.trim() || m.ide.drawer.untitledName;
     onCreate(trimmed, templateId);
     setCreating(false);
     setName("");
@@ -73,9 +76,7 @@ export function ProjectDrawer({
       setImportName(result.name);
     } catch (e) {
       setImportError(
-        e instanceof GithubImportError
-          ? e.message
-          : "import failed — check the URL and your connection",
+        e instanceof GithubImportError ? e.message : m.ide.drawer.importFailed,
       );
     } finally {
       setImportBusy(false);
@@ -96,7 +97,7 @@ export function ProjectDrawer({
       <div className="flex w-80 flex-col border-r border-line bg-bg-elev shadow-2xl">
         <div className="flex items-center justify-between border-b border-line px-4 py-3">
           <span className="font-mono text-[11px] uppercase tracking-wider text-muted">
-            projects
+            {m.ide.drawer.title}
           </span>
           <button
             type="button"
@@ -110,7 +111,7 @@ export function ProjectDrawer({
         <div className="flex-1 overflow-y-auto p-2">
           {projects.length === 0 && (
             <p className="px-2 py-3 font-mono text-[11px] text-muted">
-              {"// no projects yet — create one below"}
+              {m.ide.drawer.empty}
             </p>
           )}
           <ul className="flex flex-col gap-1">
@@ -131,22 +132,22 @@ export function ProjectDrawer({
                 <button
                   type="button"
                   onClick={() => {
-                    const next = window.prompt("rename project", p.name);
+                    const next = window.prompt(m.ide.drawer.renamePrompt, p.name);
                     if (next?.trim()) onRename(p.id, next.trim());
                   }}
                   className="hidden rounded px-1 font-mono text-[11px] text-muted2 hover:text-fg group-hover:block"
-                  title="rename"
+                  title={m.ide.drawer.renameTitle}
                 >
                   ✎
                 </button>
                 <button
                   type="button"
                   onClick={() => {
-                    if (window.confirm(`delete "${p.name}"? this can't be undone.`))
+                    if (window.confirm(fmt(m.ide.drawer.deleteConfirm, { name: p.name })))
                       onDelete(p.id);
                   }}
                   className="hidden rounded px-1 font-mono text-[11px] text-muted2 hover:text-red-400 group-hover:block"
-                  title="delete"
+                  title={m.ide.drawer.deleteTitle}
                 >
                   ×
                 </button>
@@ -163,7 +164,7 @@ export function ProjectDrawer({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && submit()}
-                placeholder="project name"
+                placeholder={m.ide.drawer.namePlaceholder}
                 className="rounded border border-line bg-bg px-2 py-1.5 font-mono text-[12px] text-fg outline-none focus:border-accent/60"
               />
               <div className="flex flex-col gap-1">
@@ -196,14 +197,14 @@ export function ProjectDrawer({
                   onClick={submit}
                   className="flex-1 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20"
                 >
-                  create
+                  {m.ide.drawer.create}
                 </button>
                 <button
                   type="button"
                   onClick={() => setCreating(false)}
                   className="rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2 transition hover:text-fg"
                 >
-                  cancel
+                  {m.ide.drawer.cancel}
                 </button>
               </div>
             </div>
@@ -228,7 +229,10 @@ export function ProjectDrawer({
                     className="rounded border border-line bg-bg-elev px-2 py-1 font-mono text-[12px] text-fg outline-none focus:border-accent/60"
                   />
                   <p className="font-mono text-[10px] text-muted">
-                    {Object.keys(preview.files).length} files · {previewKb} KB
+                    {fmt(m.ide.drawer.importSummary, {
+                      count: Object.keys(preview.files).length,
+                      kb: previewKb,
+                    })}
                   </p>
                   {preview.warnings.map((w, i) => (
                     <p key={i} className="font-mono text-[10px] text-amber-400/90">
@@ -247,7 +251,7 @@ export function ProjectDrawer({
                     }}
                     className="flex-1 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20"
                   >
-                    create project
+                    {m.ide.drawer.createProject}
                   </button>
                 ) : (
                   <button
@@ -256,7 +260,7 @@ export function ProjectDrawer({
                     disabled={importBusy || importUrl.trim() === ""}
                     className="flex-1 rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20 disabled:opacity-50"
                   >
-                    {importBusy ? "fetching…" : "fetch"}
+                    {importBusy ? m.ide.drawer.fetching : m.ide.drawer.fetch}
                   </button>
                 )}
                 <button
@@ -264,7 +268,7 @@ export function ProjectDrawer({
                   onClick={resetImport}
                   className="rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2 transition hover:text-fg"
                 >
-                  cancel
+                  {m.ide.drawer.cancel}
                 </button>
               </div>
             </div>
@@ -275,14 +279,14 @@ export function ProjectDrawer({
                 onClick={() => setCreating(true)}
                 className="w-full rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20"
               >
-                + new project
+                {m.ide.drawer.newProject}
               </button>
               <button
                 type="button"
                 onClick={() => setImporting(true)}
                 className="w-full rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2 transition hover:border-accent/40 hover:text-accent"
               >
-                ⤓ import from GitHub
+                {m.ide.drawer.importFromGithub}
               </button>
             </div>
           )}
@@ -290,7 +294,7 @@ export function ProjectDrawer({
       </div>
       <button
         type="button"
-        aria-label="close project drawer"
+        aria-label={m.ide.drawer.closeDrawer}
         onClick={onClose}
         className="flex-1 bg-black/40"
       />

@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import { useMessages } from "@/i18n/client";
+import { fmt } from "@/i18n/format";
 import type { ForgeEvent, ForgeMode, SorobanFileMap } from "@/lib/soroban/types";
 
 // Client half of the NDJSON streaming contract: POST the live editor
@@ -49,6 +51,7 @@ function decodeBase64(b64: string): Uint8Array {
 }
 
 export function useForgeRun() {
+  const m = useMessages();
   const [status, setStatus] = useState<ForgeRunStatus>("idle");
   const [mode, setMode] = useState<ForgeMode>("build");
   const [lines, setLines] = useState<ConsoleLine[]>([]);
@@ -86,13 +89,13 @@ export function useForgeRun() {
       if (res.headers.get("content-type")?.includes("application/json")) {
         const data = await res.json().catch(() => null);
         pushLines([
-          { kind: "error", text: (data as { error?: string })?.error ?? "Something went wrong." },
+          { kind: "error", text: (data as { error?: string })?.error ?? m.ide.run.genericError },
         ]);
         setStatus("err");
         return;
       }
       if (!res.ok || !res.body) {
-        pushLines([{ kind: "error", text: "The forge is cold — try again." }]);
+        pushLines([{ kind: "error", text: m.ide.run.forgeCold }]);
         setStatus("infra");
         return;
       }
@@ -108,12 +111,12 @@ export function useForgeRun() {
             setStatus("queued");
             batch.push({
               kind: "info",
-              text: `// queued — position ${event.position} in the forge line`,
+              text: fmt(m.ide.run.queued, { position: event.position }),
             });
             break;
           case "phase":
             if (event.name !== "prepare") setStatus(RUNNING_STATUS[runMode]);
-            batch.push({ kind: "info", text: `// phase: ${event.name}` });
+            batch.push({ kind: "info", text: fmt(m.ide.run.phase, { name: event.name }) });
             break;
           case "log":
             batch.push({ kind: "log", text: event.line });
@@ -122,21 +125,15 @@ export function useForgeRun() {
             try {
               setWasm(decodeBase64(event.b64));
             } catch {
-              batch.push({ kind: "error", text: "internal: could not decode wasm payload" });
+              batch.push({ kind: "error", text: m.ide.run.wasmDecodeError });
             }
             break;
           case "done":
             finished = true;
             if (!event.ok && event.timedOut) {
-              batch.push({
-                kind: "error",
-                text: "// the run hit the forge's time limit and was stopped — heavy builds can exceed it; try again or trim the project",
-              });
+              batch.push({ kind: "error", text: m.ide.run.timedOut });
             } else if (!event.ok && event.infraError) {
-              batch.push({
-                kind: "error",
-                text: "// the forge is cold — the sandbox failed to start; try again in a moment",
-              });
+              batch.push({ kind: "error", text: m.ide.run.infraError });
             }
             setStatus(
               event.ok ? "ok" : event.timedOut ? "timeout" : event.infraError ? "infra" : "err",
@@ -169,17 +166,17 @@ export function useForgeRun() {
       if (!finished) setStatus("infra");
     } catch {
       if (!abort.signal.aborted) {
-        pushLines([{ kind: "error", text: "Network error — try again." }]);
+        pushLines([{ kind: "error", text: m.ide.run.networkError }]);
         setStatus("err");
       } else {
-        pushLines([{ kind: "info", text: "// cancelled" }]);
+        pushLines([{ kind: "info", text: m.ide.run.cancelled }]);
         setStatus("idle");
       }
     } finally {
       inFlightRef.current = false;
       abortRef.current = null;
     }
-  }, []);
+  }, [m]);
 
   const cancel = useCallback(() => {
     abortRef.current?.abort();

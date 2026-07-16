@@ -1,5 +1,6 @@
 "use client";
 
+import { useMessages } from "@/i18n/client";
 import type { ForgeRunStatus } from "./use-forge-run";
 
 // Point-and-click actions for the sandbox pipeline: build / test / audit,
@@ -24,6 +25,7 @@ export function BuildToolbar({
   onCancel: () => void;
   onDownload: () => void;
 }) {
+  const m = useMessages();
   const actionClass =
     "rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2 transition hover:border-line-strong hover:text-fg disabled:opacity-40 disabled:hover:border-line disabled:hover:text-muted2";
 
@@ -35,13 +37,13 @@ export function BuildToolbar({
         disabled={running}
         className="rounded-md border border-accent/40 bg-accent/10 px-4 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20 disabled:opacity-50"
       >
-        {running && status === "building" ? "building…" : "build ⌘⏎"}
+        {running && status === "building" ? m.ide.toolbar.building : m.ide.toolbar.build}
       </button>
       <button type="button" onClick={onTest} disabled={running} className={actionClass}>
-        {running && status === "testing" ? "testing…" : "test"}
+        {running && status === "testing" ? m.ide.toolbar.testing : m.ide.toolbar.test}
       </button>
       <button type="button" onClick={onAudit} disabled={running} className={actionClass}>
-        {running && status === "auditing" ? "auditing…" : "audit"}
+        {running && status === "auditing" ? m.ide.toolbar.auditing : m.ide.toolbar.audit}
       </button>
       {running ? (
         <button
@@ -49,7 +51,7 @@ export function BuildToolbar({
           onClick={onCancel}
           className="rounded-md border border-red-400/40 px-3 py-1.5 font-mono text-[11px] text-red-400 transition hover:bg-red-400/10"
         >
-          cancel
+          {m.ide.toolbar.cancel}
         </button>
       ) : (
         <button
@@ -57,7 +59,7 @@ export function BuildToolbar({
           onClick={onDownload}
           disabled={!hasWasm}
           className={actionClass}
-          title={hasWasm ? "download the compiled .wasm" : "build first"}
+          title={hasWasm ? m.ide.toolbar.downloadTitle : m.ide.toolbar.buildFirstTitle}
         >
           ↓ .wasm
         </button>

@@ -3,8 +3,11 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { acts } from "@/content/campaign";
+import { getActLocalized } from "@/content/i18n";
 import { getCampaignProgress } from "@/lib/campaign-progress";
 import { getUnlockedActs } from "@/lib/onboarding";
+import { getLocale, getMessages } from "@/i18n/server";
+import { fmt } from "@/i18n/format";
 import { hueFromName } from "@/components/CharacterAvatar";
 import { ProgressBar } from "@/components/ProgressBar";
 
@@ -30,6 +33,10 @@ export default async function ProfilePage() {
   ]);
   if (!user) redirect("/login");
 
+  const locale = await getLocale();
+  const m = await getMessages();
+  const p = m.pages.profile;
+
   const name = user.name ?? "guardian";
   const hue = hueFromName(name);
   const initial = (name.trim()[0] ?? "?").toUpperCase();
@@ -43,7 +50,7 @@ export default async function ProfilePage() {
         ? ["dev"]
         : [];
 
-  const joined = new Intl.DateTimeFormat("en", {
+  const joined = new Intl.DateTimeFormat(locale, {
     month: "short",
     year: "numeric",
   }).format(user.createdAt);
@@ -60,9 +67,13 @@ export default async function ProfilePage() {
   const current = rows.find((r, i) => i < unlockedCount && r.nextLessonSlug);
 
   const stats = [
-    { label: "skirmishes won", value: `${totalDone}/${totalPlayable}` },
-    { label: "acts cleared", value: `${cardsClaimed}/${acts.length}` },
-    { label: "champion cards", value: `${cardsClaimed}/${acts.length}`, href: "/cards" },
+    { label: p.stats.skirmishesWon, value: `${totalDone}/${totalPlayable}` },
+    { label: p.stats.actsCleared, value: `${cardsClaimed}/${acts.length}` },
+    {
+      label: p.stats.championCards,
+      value: `${cardsClaimed}/${acts.length}`,
+      href: "/cards",
+    },
   ];
 
   return (
@@ -93,18 +104,18 @@ export default async function ProfilePage() {
           <p
             className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted"
           >
-            forgeborn
+            {p.forgeborn}
           </p>
           <h1 className="mt-1 truncate font-display text-3xl font-extrabold tracking-wide text-[#f4f2fb]">
             {name}
           </h1>
           <p className="mt-1 font-mono text-[11px] text-muted">
-            lvl {level} · {xp} xp
+            {fmt(p.lvlXp, { level, xp })}
             {user.email ? ` · ${user.email}` : ""}
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <span className="rounded bg-white/[0.04] px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted2">
-              since {joined}
+              {fmt(p.since, { date: joined })}
             </span>
             {providers.map((p) => (
               <span
@@ -124,7 +135,7 @@ export default async function ProfilePage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/gold-coin.png"
-            alt="Gold coin — the Stroop drachma"
+            alt={p.goldCoinAlt}
             className="h-12 w-12 object-contain drop-shadow-[0_0_14px_rgba(184,135,62,0.5)]"
           />
           <div>
@@ -132,7 +143,7 @@ export default async function ProfilePage() {
               {user.gold}
             </p>
             <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
-              gold · earned one lesson at a time
+              {p.goldCaption}
             </p>
           </div>
         </div>
@@ -165,7 +176,7 @@ export default async function ProfilePage() {
       <div className="mt-10">
         <div className="flex items-center justify-between">
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
-            {"// campaign"}
+            {p.campaignHeading}
           </p>
           <span className="font-mono text-[11px] text-muted">
             {campaignPercent}%
@@ -176,7 +187,8 @@ export default async function ProfilePage() {
         </div>
 
         <ul className="mt-6 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-bg-elev">
-          {rows.map(({ act, cleared, percent }, i) => {
+          {rows.map(({ act: rawAct, cleared, percent }, i) => {
+            const act = getActLocalized(rawAct.trackSlug, locale) ?? rawAct;
             const unlocked = i < unlockedCount;
             const row = (
               <>
@@ -199,7 +211,11 @@ export default async function ProfilePage() {
                   {act.title}
                 </span>
                 <span className="shrink-0 font-mono text-[11px] text-muted">
-                  {cleared ? "cleared" : unlocked ? `${percent}%` : "locked"}
+                  {cleared
+                    ? p.status.cleared
+                    : unlocked
+                      ? `${percent}%`
+                      : p.status.locked}
                 </span>
               </>
             );
@@ -235,7 +251,7 @@ export default async function ProfilePage() {
               boxShadow: "0 0 34px rgba(143,123,255,0.4)",
             }}
           >
-            {current ? "Continue the campaign" : "View your champions"}
+            {current ? p.continueCampaign : p.viewChampions}
           </Link>
         </div>
       </div>

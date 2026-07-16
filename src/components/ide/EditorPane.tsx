@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Editor, { type OnMount } from "@monaco-editor/react";
+import { useMessages } from "@/i18n/client";
 
 // Multi-file Monaco pane. The `path` prop keys one Monaco model per file, so
 // switching files preserves undo history and view state per model. Theme and
@@ -28,6 +29,7 @@ export function EditorPane({
   /** ⌘S — flush the draft to storage. */
   onSave: () => void;
 }) {
+  const m = useMessages();
   // Refs keep the Monaco commands pointed at fresh callbacks (commands are
   // registered once in onMount; state inside them would go stale).
   const runRef = useRef(onRun);
@@ -67,7 +69,7 @@ export function EditorPane({
       theme="vs-dark"
       loading={
         <div className="grid h-full w-full place-items-center font-mono text-xs text-muted">
-          loading editor…
+          {m.ide.editor.loading}
         </div>
       }
       options={{

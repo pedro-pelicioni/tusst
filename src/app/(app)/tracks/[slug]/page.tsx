@@ -3,7 +3,16 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { getLessonContent } from "@/content/lessons";
-import { acts, getAct, getCard, getSkirmish } from "@/content/campaign";
+import { acts } from "@/content/campaign";
+import {
+  getActLocalized,
+  getCardLocalized,
+  getSkirmishLocalized,
+  localizeLessonTitle,
+  localizeTrackText,
+} from "@/content/i18n";
+import { getLocale, getMessages } from "@/i18n/server";
+import { fmt } from "@/i18n/format";
 import { getUnlockedActCount } from "@/lib/unlock";
 import { ProgressBar } from "@/components/ProgressBar";
 
@@ -44,8 +53,19 @@ export default async function TrackPage({
     completed = new Set(progress.map((p) => p.lessonId));
   }
 
-  const act = getAct(track.slug);
-  const rewardCard = act?.cardId ? getCard(act.cardId) : undefined;
+  const locale = await getLocale();
+  const m = await getMessages();
+  const t = m.pages.track;
+
+  const act = getActLocalized(track.slug, locale);
+  const rewardCard = act?.cardId
+    ? getCardLocalized(act.cardId, locale)
+    : undefined;
+  const trackText = localizeTrackText(
+    track.slug,
+    { title: track.title, description: track.description },
+    locale,
+  );
 
   const completedCount = completed.size;
   const denom = track.challengeCount || track.lessons.length || 1;
@@ -57,7 +77,7 @@ export default async function TrackPage({
         href="/path"
         className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted transition hover:text-fg"
       >
-        ‹ campaign path
+        ‹ {t.backToPath}
       </Link>
 
       <div className="mt-6 flex items-center gap-3">
@@ -65,7 +85,7 @@ export default async function TrackPage({
           {String(track.order).padStart(2, "0")}
         </span>
         <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
-          track / {track.level}
+          {fmt(t.trackLabel, { level: t.level[track.level] })}
         </span>
       </div>
 
@@ -73,22 +93,24 @@ export default async function TrackPage({
         {act ? (
           <>
             <span className="mr-3 align-middle text-lg text-accent/70">
-              Act {act.numeral}
+              {fmt(t.act, { numeral: act.numeral })}
             </span>
             {act.title}
           </>
         ) : (
-          track.title
+          trackText.title
         )}
       </h1>
       {act && (
         <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
-          {track.title} · {act.territory}
-          {act.overlord ? ` · overlord: ${act.overlord}` : ""}
+          {trackText.title} · {act.territory}
+          {act.overlord
+            ? ` · ${fmt(t.overlord, { overlord: act.overlord })}`
+            : ""}
         </p>
       )}
       <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted2">
-        {act ? act.synopsis : track.description}
+        {act ? act.synopsis : trackText.description}
       </p>
 
       {rewardCard && (
@@ -96,14 +118,17 @@ export default async function TrackPage({
           <span className="font-mono text-lg text-accent">Ø</span>
           <div className="min-w-0">
             <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent/70">
-              act reward
+              {t.actReward}
             </p>
             <p className="mt-1 truncate text-sm text-fg">
               {rewardCard.name}
               {rewardCard.epithet ? ` — ${rewardCard.epithet}` : ""}
             </p>
             <p className="font-mono text-[11px] text-muted">
-              {rewardCard.type} · power {rewardCard.power}
+              {fmt(t.rewardStats, {
+                type: rewardCard.type,
+                power: rewardCard.power,
+              })}
             </p>
           </div>
         </div>
@@ -112,7 +137,7 @@ export default async function TrackPage({
       {/* progress */}
       <div className="mt-6 max-w-sm">
         <div className="flex items-center justify-between font-mono text-[11px] text-muted">
-          <span>progress</span>
+          <span>{t.progress}</span>
           <span>
             {completedCount} / {track.challengeCount} · {percent}%
           </span>
@@ -125,20 +150,19 @@ export default async function TrackPage({
       {/* lessons */}
       <div className="mt-10">
         <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
-          {"// lessons"}
+          {t.lessonsHeading}
         </p>
         {track.lessons.length === 0 && (
           <div className="mt-4 rounded-xl border border-line bg-bg-elev p-8">
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
-              skirmishes being forged
+              {t.forgingTitle}
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted2">
-              Your onboarding unlocked this act, but its skirmishes are still
-              being written. Head back to the{" "}
+              {t.forgingBefore}{" "}
               <Link href="/path" className="text-accent hover:underline">
-                campaign path
+                {t.forgingLink}
               </Link>{" "}
-              to keep fighting.
+              {t.forgingAfter}
             </p>
           </div>
         )}
@@ -146,7 +170,12 @@ export default async function TrackPage({
         <ul className="mt-4 divide-y divide-line overflow-hidden rounded-xl border border-line bg-bg-elev">
           {track.lessons.map((lesson) => {
             const done = completed.has(lesson.id);
-            const skirmish = getSkirmish(lesson.slug);
+            const skirmish = getSkirmishLocalized(lesson.slug, locale);
+            const lessonTitle = localizeLessonTitle(
+              lesson.slug,
+              lesson.title,
+              locale,
+            );
             const playable =
               lesson.status === "active" && !!getLessonContent(lesson.slug);
             const row = (
@@ -170,15 +199,19 @@ export default async function TrackPage({
                         {skirmish.title}
                       </>
                     ) : (
-                      lesson.title
+                      lessonTitle
                     )}
                   </div>
                   <div className="font-mono text-[11px] text-muted">
-                    {skirmish ? lesson.title : lesson.summary}
+                    {skirmish ? lessonTitle : lesson.summary}
                   </div>
                 </div>
                 <span className="shrink-0 rounded bg-white/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-muted2">
-                  {playable ? lesson.difficulty : "soon"}
+                  {playable
+                    ? (t.difficulty[
+                        lesson.difficulty as keyof typeof t.difficulty
+                      ] ?? lesson.difficulty)
+                    : t.soon}
                 </span>
                 {playable && (
                   <span className="shrink-0 font-mono text-xs text-accent">
@@ -209,8 +242,10 @@ export default async function TrackPage({
 
         {track.lessons.length > 0 && (
           <p className="mt-4 font-mono text-[11px] text-muted">
-            {track.lessons.length} of {track.challengeCount} challenges
-            available · more are on the way.
+            {fmt(t.challengesAvailable, {
+              count: track.lessons.length,
+              total: track.challengeCount,
+            })}
           </p>
         )}
       </div>

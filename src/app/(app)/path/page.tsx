@@ -2,7 +2,10 @@ import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { getUnlockedActs } from "@/lib/onboarding";
 import { getCampaignProgress } from "@/lib/campaign-progress";
-import { acts, getCard } from "@/content/campaign";
+import { acts } from "@/content/campaign";
+import { getActLocalized, getCardLocalized } from "@/content/i18n";
+import { getLocale, getMessages } from "@/i18n/server";
+import { fmt } from "@/i18n/format";
 import { ProgressBar } from "@/components/ProgressBar";
 
 // Campaign path — the Mimo-style "career plan" view. One vertical rail of
@@ -13,6 +16,9 @@ export default async function PathPage() {
 
   const [{ rows, clearedStreak, cardsClaimed }, unlockedByOnboarding] =
     await Promise.all([getCampaignProgress(userId), getUnlockedActs()]);
+
+  const locale = await getLocale();
+  const m = await getMessages();
 
   // An act is unlocked by the onboarding answer, or by finishing every act
   // before it (which is also the only way to reach Act VII).
@@ -34,10 +40,10 @@ export default async function PathPage() {
   return (
     <div className="mx-auto max-w-2xl px-5 pb-32 pt-12">
       <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-muted">
-        campaign path
+        {m.pages.path.kicker}
       </p>
       <h1 className="mt-3 font-display text-3xl font-extrabold tracking-wide text-[#f4f2fb]">
-        Forgeborn — Rust to Soroban
+        {m.pages.path.title}
       </h1>
 
       {/* champion cards summary (Mimo's certificates strip) */}
@@ -46,12 +52,14 @@ export default async function PathPage() {
           Ø
         </span>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-fg">Champion cards</p>
+          <p className="text-sm font-semibold text-fg">
+            {m.pages.path.championCards}
+          </p>
           <div className="mt-2">
             <ProgressBar percent={cardsPercent} />
           </div>
           <div className="mt-1.5 flex justify-between font-mono text-[11px] text-muted">
-            <span>{cardsPercent}% claimed</span>
+            <span>{fmt(m.pages.path.claimed, { percent: cardsPercent })}</span>
             <span>
               {cardsClaimed}/{acts.length}
             </span>
@@ -61,10 +69,13 @@ export default async function PathPage() {
 
       {/* rail */}
       <div className="mt-10">
-        {rows.map(({ act, cleared: complete, percent, playable }, i) => {
+        {rows.map(({ act: rawAct, cleared: complete, percent, playable }, i) => {
+          const act = getActLocalized(rawAct.trackSlug, locale) ?? rawAct;
           const unlocked = i < unlockedCount;
           const isCurrent = current ? rows[i] === current : false;
-          const reward = act.cardId ? getCard(act.cardId) : undefined;
+          const reward = act.cardId
+            ? getCardLocalized(act.cardId, locale)
+            : undefined;
           const hasContent = playable.length > 0;
 
           const body = (
@@ -97,21 +108,24 @@ export default async function PathPage() {
                   }`}
                 >
                   <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
-                    act reward
+                    {m.pages.path.actReward}
                   </p>
                   <p className={`mt-1 text-sm ${unlocked ? "text-fg" : "text-muted2"}`}>
                     {reward.name}
                     {reward.epithet ? ` — ${reward.epithet}` : ""}
                   </p>
                   <p className="font-mono text-[11px] text-muted">
-                    {reward.type} · power {reward.power}
+                    {fmt(m.pages.path.rewardStats, {
+                      type: reward.type,
+                      power: reward.power,
+                    })}
                   </p>
                 </div>
               )}
 
               {unlocked && !hasContent && (
                 <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                  skirmishes being forged — soon
+                  {m.pages.path.skirmishesForgingSoon}
                 </p>
               )}
             </div>
@@ -168,7 +182,7 @@ export default async function PathPage() {
               boxShadow: "0 0 40px rgba(143,123,255,0.45), 0 10px 30px rgba(0,0,0,0.6)",
             }}
           >
-            {current ? "Start learning" : "View your champions"}
+            {current ? m.pages.path.startLearning : m.pages.path.viewChampions}
           </Link>
         </div>
       </div>

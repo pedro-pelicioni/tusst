@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Editor, { type OnMount } from "@monaco-editor/react";
+import { useMessages } from "@/i18n/client";
+import { fmt } from "@/i18n/format";
 
 interface CheckResult {
   name: string;
@@ -46,6 +48,7 @@ export function LessonPlayer({
   /** Monaco language id for highlighting. */
   language?: string;
 }) {
+  const m = useMessages();
   // Lazy init restores any saved draft (client only; SSR sees starterCode —
   // safe because the editor value is never serialized into server HTML).
   const [code, setCode] = useState(() => {
@@ -73,7 +76,7 @@ export function LessonPlayer({
   const run = useCallback(async () => {
     if (!signedIn && !allowAnonymous) {
       setStatus("error");
-      setMessage("Sign in to run your code and save progress.");
+      setMessage(m.lesson.signInToRun);
       return;
     }
     if (inFlightRef.current) return;
@@ -96,7 +99,7 @@ export function LessonPlayer({
       if (!fresh()) return;
       if (!res.ok) {
         setStatus("error");
-        setMessage(data.error ?? "Something went wrong.");
+        setMessage(data.error ?? m.lesson.genericError);
         return;
       }
       setResults(data.results ?? []);
@@ -109,12 +112,12 @@ export function LessonPlayer({
     } catch {
       if (fresh()) {
         setStatus("error");
-        setMessage("Network error — try again.");
+        setMessage(m.lesson.networkError);
       }
     } finally {
       inFlightRef.current = false;
     }
-  }, [lessonSlug, signedIn, allowAnonymous, router]);
+  }, [lessonSlug, signedIn, allowAnonymous, router, m]);
 
   const runRef = useRef(run);
   useEffect(() => {
@@ -168,7 +171,7 @@ export function LessonPlayer({
               onClick={reset}
               className="rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2 transition hover:border-line-strong hover:text-fg"
             >
-              reset
+              {m.lesson.reset}
             </button>
             <button
               type="button"
@@ -176,7 +179,7 @@ export function LessonPlayer({
               disabled={status === "running"}
               className="rounded-md border border-accent/40 bg-accent/10 px-4 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20 disabled:opacity-50"
             >
-              {status === "running" ? "running…" : "run ⌘⏎"}
+              {status === "running" ? m.lesson.running : m.lesson.run}
             </button>
           </div>
         </div>
@@ -192,7 +195,7 @@ export function LessonPlayer({
               className="grid w-full place-items-center font-mono text-xs text-muted"
               style={{ height: editorHeight }}
             >
-              loading editor…
+              {m.lesson.loadingEditor}
             </div>
           }
           options={{
@@ -212,7 +215,9 @@ export function LessonPlayer({
       {/* output */}
       <div className="rounded-xl border border-line bg-bg-elev">
         <div className="flex items-center justify-between border-b border-line px-4 py-2">
-          <span className="font-mono text-[11px] text-muted">output</span>
+          <span className="font-mono text-[11px] text-muted">
+            {m.lesson.output}
+          </span>
           <span
             className={`font-mono text-[11px] uppercase tracking-wider ${
               status === "pass"
@@ -222,16 +227,24 @@ export function LessonPlayer({
                   : "text-muted"
             }`}
           >
-            {status === "idle" ? "idle" : status}
+            {
+              {
+                idle: m.lesson.statusIdle,
+                running: m.lesson.statusRunning,
+                pass: m.lesson.statusPass,
+                fail: m.lesson.statusFail,
+                error: m.lesson.statusError,
+              }[status]
+            }
           </span>
         </div>
         <div className="min-h-[120px] px-4 py-3 font-mono text-[12.5px] leading-relaxed">
           {status === "idle" && (
-            <p className="text-muted">
-              {"// run your code to check it against the tests (⌘⏎)"}
-            </p>
+            <p className="text-muted">{m.lesson.idleHint}</p>
           )}
-          {status === "running" && <p className="text-muted2">compiling…</p>}
+          {status === "running" && (
+            <p className="text-muted2">{m.lesson.compiling}</p>
+          )}
           {message && <p className="text-red-400">{message}</p>}
 
           {results.length > 0 && (
@@ -250,7 +263,7 @@ export function LessonPlayer({
 
           {status === "pass" && (
             <div className="mt-3 border-t border-line pt-3">
-              <p className="text-muted">{"// stdout"}</p>
+              <p className="text-muted">{m.lesson.stdout}</p>
               <pre className="mt-1 whitespace-pre-wrap text-fg">{output}</pre>
 
               {/* gold reward — only when this pass credited the lesson */}
@@ -259,17 +272,17 @@ export function LessonPlayer({
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/gold-coin.png"
-                    alt="Gold coin"
+                    alt={m.lesson.goldCoinAlt}
                     className="h-10 w-10 animate-bounce object-contain drop-shadow-[0_0_12px_rgba(184,135,62,0.6)]"
                   />
                   <div className="min-w-0">
                     <p className="font-semibold text-[#e0b25f]">
-                      +{gold.earned} gold
+                      {fmt(m.lesson.goldEarned, { gold: gold.earned })}
                     </p>
                     <p className="mt-0.5 text-[11px] text-muted2">
                       {gold.firstReveal
-                        ? "a hidden pouch reveals itself at your belt — your gold now shows in the header and on your profile"
-                        : `pouch: ${gold.total} gold`}
+                        ? m.lesson.goldFirstReveal
+                        : fmt(m.lesson.goldPouch, { total: gold.total })}
                     </p>
                   </div>
                 </div>
@@ -277,9 +290,7 @@ export function LessonPlayer({
 
               <div className="mt-4 flex items-center gap-3">
                 <span className="text-pop">
-                  {signedIn
-                    ? "all checks passed — progress saved"
-                    : "all checks passed"}
+                  {signedIn ? m.lesson.passedSaved : m.lesson.passed}
                 </span>
                 {onPass ? (
                   <button
@@ -287,7 +298,7 @@ export function LessonPlayer({
                     onClick={onPass}
                     className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-accent transition hover:bg-accent/20"
                   >
-                    continue ›
+                    {m.lesson.continueStep}
                   </button>
                 ) : (
                   nextHref && (
@@ -295,7 +306,7 @@ export function LessonPlayer({
                       href={nextHref}
                       className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-accent transition hover:bg-accent/20"
                     >
-                      next lesson ›
+                      {m.lesson.nextLesson}
                     </Link>
                   )
                 )}

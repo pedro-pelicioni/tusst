@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useMessages } from "@/i18n/client";
+import { fmt } from "@/i18n/format";
 import {
   connectKitWallet,
   exportLocalSecret,
@@ -27,6 +29,7 @@ export function WalletMenu({
   wallet: ForgeWallet | null;
   onWalletChange: (wallet: ForgeWallet | null) => void;
 }) {
+  const m = useMessages();
   const [open, setOpen] = useState(false);
   const [balance, setBalance] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -66,7 +69,7 @@ export function WalletMenu({
     try {
       await action();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "something went wrong");
+      setError(e instanceof Error ? e.message : m.ide.wallet.genericError);
     } finally {
       setBusy(null);
     }
@@ -83,7 +86,7 @@ export function WalletMenu({
             : "border-line text-muted2 hover:border-line-strong hover:text-fg"
         }`}
       >
-        {wallet ? `${wallet.kind === "local" ? "⚿" : "◈"} ${short(wallet.address)}` : "connect wallet"}
+        {wallet ? `${wallet.kind === "local" ? "⚿" : "◈"} ${short(wallet.address)}` : m.ide.wallet.connect}
       </button>
 
       {open && (
@@ -92,16 +95,18 @@ export function WalletMenu({
             <div className="flex flex-col gap-3">
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-wider text-muted">
-                  {wallet.kind === "local" ? "local wallet (testnet only)" : "connected wallet"}
+                  {wallet.kind === "local" ? m.ide.wallet.localWallet : m.ide.wallet.connectedWallet}
                 </p>
                 <p className="mt-1 break-all font-mono text-[11px] text-fg">{wallet.address}</p>
                 <p className="mt-1 font-mono text-[11px] text-muted2">
-                  {balance === null ? "account not funded yet" : `${balance} XLM`}
+                  {balance === null
+                    ? m.ide.wallet.notFunded
+                    : fmt(m.ide.wallet.balanceXlm, { balance })}
                 </p>
               </div>
               {wallet.kind === "local" && (
                 <p className="rounded border border-yellow-500/30 bg-yellow-500/5 px-2 py-1.5 font-mono text-[10px] leading-relaxed text-yellow-200/80">
-                  this key lives in your browser — never send real funds to it
+                  {m.ide.wallet.localKeyWarning}
                 </p>
               )}
               <div className="flex flex-wrap gap-2">
@@ -126,14 +131,14 @@ export function WalletMenu({
                   }
                   className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20 disabled:opacity-50"
                 >
-                  {busy === "fund" ? "funding…" : "fund (friendbot)"}
+                  {busy === "fund" ? m.ide.wallet.funding : m.ide.wallet.fund}
                 </button>
                 <button
                   type="button"
                   onClick={refreshBalance}
                   className="rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2 transition hover:text-fg"
                 >
-                  refresh
+                  {m.ide.wallet.refresh}
                 </button>
                 {wallet.kind === "local" && (
                   <button
@@ -143,9 +148,9 @@ export function WalletMenu({
                       if (secret) navigator.clipboard?.writeText(secret).catch(() => {});
                     }}
                     className="rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2 transition hover:text-fg"
-                    title="copy the secret key to the clipboard"
+                    title={m.ide.wallet.copySecretTitle}
                   >
-                    copy secret
+                    {m.ide.wallet.copySecret}
                   </button>
                 )}
                 <button
@@ -156,14 +161,14 @@ export function WalletMenu({
                   }}
                   className="rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2 transition hover:text-red-400"
                 >
-                  disconnect
+                  {m.ide.wallet.disconnect}
                 </button>
               </div>
             </div>
           ) : (
             <div className="flex flex-col gap-2">
               <p className="font-mono text-[10px] uppercase tracking-wider text-muted">
-                choose a signing mode
+                {m.ide.wallet.chooseMode}
               </p>
               <button
                 type="button"
@@ -176,9 +181,9 @@ export function WalletMenu({
                 }
                 className="rounded-md border border-accent/40 bg-accent/10 px-3 py-2 text-left font-mono text-[11px] text-accent transition hover:bg-accent/20 disabled:opacity-50"
               >
-                {busy === "kit" ? "opening…" : "connect a wallet (Freighter, xBull, …)"}
+                {busy === "kit" ? m.ide.wallet.connectKitOpening : m.ide.wallet.connectKit}
                 <span className="mt-0.5 block text-[10px] text-muted">
-                  via Stellar Wallets Kit — the extension signs
+                  {m.ide.wallet.connectKitHint}
                 </span>
               </button>
               <button
@@ -186,9 +191,9 @@ export function WalletMenu({
                 onClick={() => onWalletChange(generateLocalWallet())}
                 className="rounded-md border border-line px-3 py-2 text-left font-mono text-[11px] text-fg transition hover:border-line-strong"
               >
-                generate a local wallet
+                {m.ide.wallet.generateLocal}
                 <span className="mt-0.5 block text-[10px] text-muted">
-                  keypair in this browser — testnet experiments only
+                  {m.ide.wallet.generateLocalHint}
                 </span>
               </button>
               {importing ? (
@@ -197,7 +202,7 @@ export function WalletMenu({
                     autoFocus
                     value={secretDraft}
                     onChange={(e) => setSecretDraft(e.target.value)}
-                    placeholder="S… secret key"
+                    placeholder={m.ide.wallet.secretPlaceholder}
                     className="rounded border border-line bg-bg px-2 py-1.5 font-mono text-[11px] text-fg outline-none focus:border-accent/60"
                   />
                   <div className="flex gap-2">
@@ -212,14 +217,14 @@ export function WalletMenu({
                       }
                       className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] text-accent"
                     >
-                      import
+                      {m.ide.wallet.import}
                     </button>
                     <button
                       type="button"
                       onClick={() => setImporting(false)}
                       className="rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2"
                     >
-                      cancel
+                      {m.ide.wallet.cancel}
                     </button>
                   </div>
                 </div>
@@ -229,7 +234,7 @@ export function WalletMenu({
                   onClick={() => setImporting(true)}
                   className="rounded-md border border-line px-3 py-2 text-left font-mono text-[11px] text-muted2 transition hover:text-fg"
                 >
-                  import a secret key
+                  {m.ide.wallet.importSecret}
                 </button>
               )}
             </div>

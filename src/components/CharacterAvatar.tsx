@@ -6,6 +6,8 @@
 // from the name, bearing the player's initial — every Forgeborn gets their
 // own stone, no uploads needed.
 
+import { fmt } from "@/i18n/format";
+
 export function hueFromName(name: string): number {
   let h = 0;
   for (let i = 0; i < name.length; i++) {
@@ -17,9 +19,12 @@ export function hueFromName(name: string): number {
 export function CharacterAvatar({
   name = "guardian",
   level = 1,
+  levelLabel = "lvl {level}",
 }: {
   name?: string;
   level?: number;
+  /** i18n template for the level line, e.g. "lvl {level}". */
+  levelLabel?: string;
 }) {
   const hue = hueFromName(name);
   const initial = (name.trim()[0] ?? "?").toUpperCase();
@@ -29,7 +34,7 @@ export function CharacterAvatar({
       <div className="hidden text-right leading-tight sm:block">
         <div className="font-mono text-[11px] text-muted2">{name}</div>
         <div className="font-mono text-[10px] uppercase tracking-wider text-muted">
-          lvl {level}
+          {fmt(levelLabel, { level })}
         </div>
       </div>
       <div className="relative grid h-9 w-9 place-items-center" aria-hidden="true">
