@@ -121,6 +121,20 @@ export const tracks: Track[] = [
     badge: null,
     status: "locked",
   },
+  {
+    index: "08",
+    slug: "stellar-protocol-27",
+    title: "Stellar Protocol 27: The Zipper",
+    description:
+      "Master the Protocol 27 upgrade: authentication delegation, address-bound signatures, and the migration path for every SDK.",
+    level: "advanced",
+    domain: "stellar",
+    challenges: 0,
+    estHours: null,
+    tags: ["protocol-27", "cap-71", "smart-accounts"],
+    badge: "new",
+    status: "locked",
+  },
 ];
 
 export const activeTrackCount = tracks.filter((t) => t.status === "active").length;

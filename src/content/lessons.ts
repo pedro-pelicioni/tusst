@@ -1644,6 +1644,339 @@ impl VaultContract {
     ],
     expectedOutput: "withdraw: authorized ✓\n",
   },
+
+  // ---- Act VIII — Stellar Protocol 27 ("The Zipper") -----------------------
+  // Regex-graded like the Soroban act: the runner has no soroban-sdk, and
+  // lessons 1 & 5 are fact manifests, not compilable programs.
+
+  "stellar-protocol-27-1": {
+    instructions: `## Protocol 27: The Zipper
+
+Stellar doesn't patch itself quietly — the network upgrades **by vote**. Validators arm a new protocol version, and at a scheduled ledger the *entire network* switches at once. No forks, no stragglers.
+
+**Protocol 27 — codename "Zipper"** — is the 2026 upgrade. The timeline that already played out:
+
+- Stellar Core stable release — **June 5, 2026**
+- SDK releases — June 5–11 · RPC & Galexie — June 10 · Horizon — June 12
+- **Testnet upgraded — June 18, 2026**
+- **Mainnet vote — July 8, 2026**
+
+Its headline changes both live in [CAP-0071](https://github.com/stellar/stellar-protocol/blob/master/core/cap-0071.md): **authentication delegation** for custom accounts, and **address-bound signature payloads**. (Earlier protocols shipped CAP-0055/0060/0064 — the Zipper is about how accounts *prove who they are*.)
+
+Read the official [Protocol 27 upgrade guide](https://stellar.org/blog/foundation-news/stellar-zipper-protocol-27-upgrade-guide) and keep [Software Versions](https://developers.stellar.org/docs/networks/software-versions) bookmarked.
+
+### Your task
+
+Light the upgrade beacon — record the facts in \`lib.rs\`:
+
+1. \`PROTOCOL_VERSION\` — the version the network voted in.
+2. \`CODENAME\` — the upgrade's codename, lowercase.
+3. \`MAINNET_VOTE\` — the date of the Mainnet vote, \`YYYY-MM-DD\`.
+
+Expected result:
+
+\`\`\`text
+beacon lit: protocol 27 (zipper) ✓
+\`\`\`
+`,
+    starterCode: `// The Upgrade Beacon — record the facts of the reforging.
+
+pub const PROTOCOL_VERSION: u32 = 0; // ← the version the validators armed
+pub const CODENAME: &str = "";       // ← the upgrade's codename, lowercase
+pub const TESTNET_UPGRADE: &str = "2026-06-18";
+pub const MAINNET_VOTE: &str = "";   // ← YYYY-MM-DD of the Mainnet vote
+`,
+    grader: "regex",
+    checks: [
+      { name: "records protocol version 27", pattern: /PROTOCOL_VERSION\s*:\s*u32\s*=\s*27/ },
+      { name: "knows the codename", pattern: /CODENAME\s*:\s*&str\s*=\s*"zipper"/ },
+      { name: "keeps the Testnet date", pattern: /TESTNET_UPGRADE\s*:\s*&str\s*=\s*"2026-06-18"/ },
+      { name: "records the Mainnet vote date", pattern: /MAINNET_VOTE\s*:\s*&str\s*=\s*"2026-07-08"/ },
+    ],
+    expectedOutput: "beacon lit: protocol 27 (zipper) ✓\n",
+  },
+
+  "stellar-protocol-27-2": {
+    instructions: `## Smart Accounts & \`__check_auth\`
+
+In the Lair you learned \`require_auth()\` — the seal. But *who* verifies the seal? For a normal account, the protocol checks an ed25519 signature. When the \`Address\` belongs to a **contract**, the host instead invokes that contract's own entry point:
+
+\`\`\`rust
+fn __check_auth(env: Env, payload: Hash<32>, signatures: ..., contexts: Vec<Context>)
+\`\`\`
+
+The account *is* a contract, and \`__check_auth\` is its law of signatures. This is how **custom accounts** exist: multisig wallets, social recovery, passkey logins, account abstraction — each just a different \`__check_auth\`. (OpenZeppelin was already building these; Protocol 27 makes the hard parts first-class.)
+
+Context: [Protocol 27 discussion — modular custom accounts & signature security](https://developers.stellar.org/meetings/2026/04/30#protocol-discussion-modular-custom-accounts-and-signature-security-in-protocol-27).
+
+### Your task
+
+1. Export the impl block with \`#[contractimpl]\`.
+2. Rename the entry point to the name the host actually calls: \`__check_auth\`.
+
+Expected result:
+
+\`\`\`text
+__check_auth: the account writes its own law ✓
+\`\`\`
+`,
+    starterCode: `#![no_std]
+use soroban_sdk::{auth::Context, contract, contractimpl, crypto::Hash, BytesN, Env, Vec};
+
+#[contract]
+pub struct GuardianAccount;
+
+// TODO: export this impl block as the contract interface
+impl GuardianAccount {
+    // TODO: rename — the host invokes exactly one name when a
+    // require_auth fires for this account's Address.
+    pub fn check_auth_placeholder(
+        _env: Env,
+        _signature_payload: Hash<32>,
+        _signature: BytesN<64>,
+        _auth_contexts: Vec<Context>,
+    ) {
+        // this account's law of signatures — written in the next skirmishes
+    }
+}
+`,
+    grader: "regex",
+    checks: [
+      { name: "impl block is marked #[contractimpl]", pattern: /#\[contractimpl\]/ },
+      { name: "defines the __check_auth entry point", pattern: /fn\s+__check_auth/ },
+      { name: "placeholder name is gone", pattern: /check_auth_placeholder/, forbidden: true },
+    ],
+    expectedOutput: "__check_auth: the account writes its own law ✓\n",
+  },
+
+  "stellar-protocol-27-3": {
+    instructions: `## Authentication Delegation (CAP-0071-01)
+
+Before the Zipper, a custom account that wanted *another* contract to vouch for it had no protocol support — builders faked it with fragile rounds of pre-simulation to propagate the auth context. Protocol 27 makes delegation law with two new host functions:
+
+- \`delegate_account_auth\` — callable **only inside \`__check_auth\`**: hands the current auth check to a delegate address, whose own signature logic then runs.
+- \`get_delegated_signers_for_current_auth_check\` — lets the contract being called see which delegated signers approved.
+
+A new credential type, \`SOROBAN_CREDENTIALS_ADDRESS_WITH_DELEGATES\`, bundles the delegated signers and signatures into a single authorization entry — smaller transactions, simpler simulation.
+
+Deep dive: [CAP-0071](https://github.com/stellar/stellar-protocol/blob/master/core/cap-0071.md) · [CAP-71 recap — authentication delegation](https://developers.stellar.org/meetings/2026/04/30#cap-71-recap-authentication-delegation-for-custom-accounts).
+
+### Your task
+
+Inside \`__check_auth\`, hand the check to the stored steward:
+
+1. The delegate \`Address\` is already loaded from instance storage.
+2. Call \`delegate_account_auth\` with the delegate and the signature payload — and remove the \`todo!()\`.
+
+Expected result:
+
+\`\`\`text
+crown delegated: steward honored ✓
+\`\`\`
+`,
+    starterCode: `#![no_std]
+use soroban_sdk::{auth::Context, contract, contractimpl, crypto::Hash,
+    symbol_short, Address, BytesN, Env, Symbol, Vec};
+
+const DELEGATE: Symbol = symbol_short!("DELEGATE");
+
+#[contract]
+pub struct CrownAccount;
+
+#[contractimpl]
+impl CrownAccount {
+    pub fn __check_auth(
+        env: Env,
+        signature_payload: Hash<32>,
+        _signature: BytesN<64>,
+        _auth_contexts: Vec<Context>,
+    ) {
+        // the steward this crown trusts:
+        let delegate: Address = env.storage().instance().get(&DELEGATE).unwrap();
+
+        // NEW in Protocol 27 (CAP-0071-01): one host call hands this
+        // auth check to the steward's own signature logic.
+        todo!()
+    }
+}
+`,
+    grader: "regex",
+    checks: [
+      { name: "loads the steward from instance storage", pattern: /\.\s*get\s*\(\s*&DELEGATE\s*\)/ },
+      { name: "delegates the auth check (Protocol 27)", pattern: /delegate_account_auth\s*\(/ },
+      { name: "no todo!() left behind", pattern: /todo!\s*\(\s*\)/, forbidden: true },
+    ],
+    expectedOutput: "crown delegated: steward honored ✓\n",
+  },
+
+  "stellar-protocol-27-4": {
+    instructions: `## Signature Security & V2 Credentials (CAP-0071-02)
+
+Security audits found a subtle echo in the old credential format. The scenario needs three things at once:
+
+1. An admin-style contract that **doesn't include the signer's address** in the signed payload.
+2. The admin is **rotated** to a different address…
+3. …and both addresses share the **same private key**.
+
+Then a signature made for the old admin can be **replayed** for the new one — duplicate mints, unauthorized actions. It has *never happened on-chain*, but the blast radius justified a protocol fix.
+
+**\`SOROBAN_CREDENTIALS_ADDRESS_V2\`** binds the signature payload to the address it was made for. A stolen echo no longer matches a different door. The old \`SOROBAN_CREDENTIALS_ADDRESS\` stays valid **until Protocol 28** — a migration window, not a cliff. Interim safeguard for admin-style contracts: include the signer's address in the payload yourself.
+
+Watch: [Stellar Developer Meeting — custom accounts & signature security](https://www.youtube.com/watch?v=5O1cDDGv7_o).
+
+### Your task
+
+1. Upgrade \`CREDENTIALS\` to the V2 credential name.
+2. Record until which protocol V1 stays valid.
+3. In \`bound_payload\`, fetch this contract's own \`Address\` via \`env.current_contract_address()\` and return it (the caller appends it to the signed material) — remove the \`todo!()\`.
+
+Expected result:
+
+\`\`\`text
+seal bound to its door: the echo dies ✓
+\`\`\`
+`,
+    starterCode: `#![no_std]
+use soroban_sdk::{contract, contractimpl, Address, Env};
+
+// Which credential format does this account speak?
+pub const CREDENTIALS: &str = "SOROBAN_CREDENTIALS_ADDRESS"; // ← upgrade to V2
+pub const V1_VALID_UNTIL_PROTOCOL: u32 = 0;                  // ← until which protocol?
+
+#[contract]
+pub struct BoundAccount;
+
+#[contractimpl]
+impl BoundAccount {
+    /// Interim safeguard: the address every signed payload must name.
+    pub fn binding_address(env: Env) -> Address {
+        // whose door is this seal bound to? ask the env.
+        todo!()
+    }
+}
+`,
+    grader: "regex",
+    checks: [
+      { name: "speaks the V2 credential", pattern: /CREDENTIALS\s*:\s*&str\s*=\s*"SOROBAN_CREDENTIALS_ADDRESS_V2"/ },
+      { name: "knows V1 dies at Protocol 28", pattern: /V1_VALID_UNTIL_PROTOCOL\s*:\s*u32\s*=\s*28/ },
+      { name: "binds to the contract's own address", pattern: /current_contract_address\s*\(\s*\)/ },
+      { name: "no todo!() left behind", pattern: /todo!\s*\(\s*\)/, forbidden: true },
+    ],
+    expectedOutput: "seal bound to its door: the echo dies ✓\n",
+  },
+
+  "stellar-protocol-27-5": {
+    instructions: `## Migrating to Protocol 27
+
+A protocol upgrade is a caravan, and the release order was the road: **Core → SDKs → RPC & Galexie → Horizon → Testnet → Mainnet**. Every SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixir — shipped a Protocol-27 release and must be upgraded before Mainnet turns.
+
+The one **breaking change** most apps feel: \`@stellar/stellar-base\` was **consolidated into \`@stellar/stellar-sdk\`**. Old imports break; the fix is renaming the package.
+
+Your migration checklist:
+
+1. Upgrade every Stellar SDK and client library — check [Software Versions](https://developers.stellar.org/docs/networks/software-versions).
+2. Rename \`@stellar/stellar-base\` imports to \`@stellar/stellar-sdk\`.
+3. Plan the move to \`SOROBAN_CREDENTIALS_ADDRESS_V2\` before Protocol 28.
+4. Node operators: upgrade Core, RPC, Galexie, and Horizon before the vote.
+
+References: [upgrade guide](https://stellar.org/blog/foundation-news/stellar-zipper-protocol-27-upgrade-guide) · [migration guidance](https://developers.stellar.org/meetings/2026/04/30#migration-guidance).
+
+### Your task
+
+Fill the caravan manifest:
+
+1. \`JS_XDR_PACKAGE\` — the package that absorbed \`stellar-base\`.
+2. \`TESTNET_UPGRADE\` — the date Testnet turned, \`YYYY-MM-DD\`.
+3. \`UPGRADE_ALL_SDKS\` — do *all* SDKs need the upgrade?
+
+Expected result:
+
+\`\`\`text
+caravan cleared the Gate: nothing left behind ✓
+\`\`\`
+`,
+    starterCode: `// The Caravan Manifest — what crosses the Gate must be renamed.
+
+// Your JS app used to import from the old base package.
+// Protocol 27 consolidated it — write the package that replaced it:
+pub const JS_XDR_PACKAGE: &str = "";
+
+// When did Testnet turn? (YYYY-MM-DD)
+pub const TESTNET_UPGRADE: &str = "";
+
+// Must every SDK be upgraded before Mainnet?
+pub const UPGRADE_ALL_SDKS: bool = false;
+`,
+    grader: "regex",
+    checks: [
+      { name: "names the consolidated package", pattern: /JS_XDR_PACKAGE\s*:\s*&str\s*=\s*"@stellar\/stellar-sdk"/ },
+      { name: "old base package is gone from the code", pattern: /stellar-base/, forbidden: true },
+      { name: "records the Testnet date", pattern: /TESTNET_UPGRADE\s*:\s*&str\s*=\s*"2026-06-18"/ },
+      { name: "every SDK crosses the Gate", pattern: /UPGRADE_ALL_SDKS\s*:\s*bool\s*=\s*true/ },
+    ],
+    expectedOutput: "caravan cleared the Gate: nothing left behind ✓\n",
+  },
+
+  "stellar-protocol-27-6": {
+    instructions: `## Boss: The Delegated Account
+
+Everything converges. The Echo Wraith arrives with a stolen seal — and meets an account that is *law*: a custom account whose \`__check_auth\` verifies its root signer **and** delegates to a steward, exactly as Protocol 27 intended.
+
+Your \`ZipperAccount\` must, inside \`__check_auth\`:
+
+1. Load the root signer's public key (\`BytesN<32>\`) from instance storage under \`SIGNER\`.
+2. Verify the ed25519 signature over the payload with \`env.crypto().ed25519_verify(...)\` — a bad seal must trap.
+3. Load the steward \`Address\` from instance storage under \`DELEGATE\` and hand the rest of the check to it with \`delegate_account_auth\` — the Protocol 27 stroke.
+
+And export the impl block. No \`todo!()\` survives the finale.
+
+Expected result:
+
+\`\`\`text
+__check_auth: signature verified, steward honored — the echo is silent ✓
+\`\`\`
+`,
+    starterCode: `#![no_std]
+use soroban_sdk::{auth::Context, contract, contractimpl, crypto::Hash,
+    symbol_short, Address, BytesN, Env, Symbol, Vec};
+
+const SIGNER: Symbol = symbol_short!("SIGNER");
+const DELEGATE: Symbol = symbol_short!("DELEGATE");
+
+#[contract]
+pub struct ZipperAccount;
+
+// TODO: export this impl block as the contract interface
+impl ZipperAccount {
+    /// The host calls this for every require_auth on this account.
+    pub fn __check_auth(
+        env: Env,
+        signature_payload: Hash<32>,
+        signature: BytesN<64>,
+        _auth_contexts: Vec<Context>,
+    ) {
+        // 1) load the root signer key (BytesN<32>) stored under SIGNER
+
+        // 2) verify the ed25519 signature over the payload
+        //    (env.crypto() has the verifier you need)
+
+        // 3) the Protocol 27 stroke: load the steward under DELEGATE
+        //    and hand the rest of the check to it
+        todo!()
+    }
+}
+`,
+    grader: "regex",
+    checks: [
+      { name: "impl block is marked #[contractimpl]", pattern: /#\[contractimpl\]/ },
+      { name: "loads the root signer from storage", pattern: /\.\s*get\s*\(\s*&SIGNER\s*\)/ },
+      { name: "verifies the ed25519 signature", pattern: /ed25519_verify\s*\(/ },
+      { name: "loads the steward from storage", pattern: /\.\s*get\s*\(\s*&DELEGATE\s*\)/ },
+      { name: "delegates the auth check (Protocol 27)", pattern: /delegate_account_auth\s*\(/ },
+      { name: "no todo!() left behind", pattern: /todo!\s*\(\s*\)/, forbidden: true },
+    ],
+    expectedOutput: "__check_auth: signature verified, steward honored — the echo is silent ✓\n",
+  },
 };
 
 export function getLessonContent(slug: string): LessonContent | undefined {

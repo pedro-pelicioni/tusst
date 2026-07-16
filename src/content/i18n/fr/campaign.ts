@@ -47,6 +47,13 @@ export const actText: Record<string, ActText> = {
     synopsis:
       "Au-delà de la Porte, il attend, dans une forteresse bâtie de chaque erreur jamais gérée. Forge des runes Soroban, déploie-les dans le ciel vivant, et retourne contre le Beholder ses propres contrats corrompus.",
   },
+  "stellar-protocol-27": {
+    title: "Le Ciel Réécrit",
+    territory: "Le firmament lui-même, en pleine reforge",
+    overlord: "Le Spectre de l'Écho",
+    synopsis:
+      "Le Beholder gît, brisé — mais le ciel vivant ne porte pas le deuil ; il se reforge, couture après couture. Les étoiles appellent cela le Zipper : le Protocol 27. Pourtant, dans les décombres de l'Antre, un œil ne s'est jamais fermé. Il a appris à copier le sceau du signataire et à le prononcer deux fois. Maîtrise les lois réécrites du ciel, Forgeborn, et fais taire le Spectre de l'Écho.",
+  },
 };
 
 export const skirmishText: Record<string, SkirmishText> = {
@@ -218,6 +225,36 @@ export const skirmishText: Record<string, SkirmishText> = {
     intro:
       "La corruption du Beholder a commencé par une seule fonction sans garde — n'importe qui pouvait retirer ce qui ne lui appartenait pas. Une seule ligne l'aurait arrêtée. Exige le sceau du signataire avant de déplacer le moindre lumen : `require_auth`. Retourne son propre coffre contre lui.",
   },
+  "stellar-protocol-27-1": {
+    title: "Le Basculement du Ciel",
+    intro:
+      "Le Beholder vaincu, les étoiles-validatrices se rassemblent. Elles ne rapiècent pas le ciel — elles votent, et à un ledger désigné le firmament entier bascule d'un seul coup. Les étoiles appellent cette reforge le Zipper : le Protocol 27. Observe une mise à niveau de l'intérieur, Forgeborn.",
+  },
+  "stellar-protocol-27-2": {
+    title: "Le Sceau, Ravivé",
+    intro:
+      "Retourne au coffre que tu as scellé dans l'Antre. `require_auth` a tenu — mais une question rôde dans les salles reconstruites : et si celui qui tient le sceau n'était pas une paire de clés, mais un *contrat* ? Les comptes qui sont des contrats écrivent leur propre loi des signatures : `__check_auth`.",
+  },
+  "stellar-protocol-27-3": {
+    title: "La Couronne Déléguée",
+    intro:
+      "Aucun gardien ne veille seul sur tous les coffres. Sous l'ancien ciel, prêter son sceau exigeait de fragiles rondes de divination — simule, propage, prie. Le ciel réécrit fait de la délégation une loi : `delegate_account_auth`, prononcé dans `__check_auth`, confie la vérification à un intendant de confiance.",
+  },
+  "stellar-protocol-27-4": {
+    title: "L'Écho Qui Signe Deux Fois",
+    intro:
+      "Il se révèle enfin : l'œil qui ne s'est jamais fermé. Le Spectre de l'Écho vole un sceau véritable et le prononce à nouveau — devant un autre coffre, signé de la même plume. Le ciel réécrit répond par un sceau lié à sa propre porte : des credentials qui nomment leur adresse.",
+  },
+  "stellar-protocol-27-5": {
+    title: "La Caravane de la Migration",
+    intro:
+      "Les caravanes s'alignent devant la Porte, chariots chargés de chaque outil forgé sous l'ancien ciel. Rien ne franchit le firmament reforgé sans changer — chaque SDK reforgé, chaque import renommé. Parcours la route de la caravane, Forgeborn, et ne laisse derrière toi rien qui parle encore l'ancienne langue.",
+  },
+  "stellar-protocol-27-6": {
+    title: "Le Dernier Écho du Spectre",
+    intro:
+      "Le Spectre vient pour ton coffre avec un sceau volé et un écho parfait. Mais ton compte n'est plus une porte à clé unique — c'est une loi : un `__check_auth` qui vérifie son signataire et délègue à une couronne-intendante. Lie le sceau. Fais taire l'écho. Achève la campagne.",
+  },
 };
 
 export const cardText: Record<string, CardText> = {
@@ -260,5 +297,11 @@ export const cardText: Record<string, CardText> = {
     type: "Stropie · Aberration",
     flavor:
       "Des profondeurs de la ruine, ses yeux innombrables ne voient que la conquête.",
+  },
+  stroopzipper: {
+    epithet: "Héraut du Ciel Réécrit",
+    type: "Stropie · Héraut",
+    flavor:
+      "Le ciel ne se brise pas quand il change — il se referme sur lui-même, couture lumineuse après couture.",
   },
 };

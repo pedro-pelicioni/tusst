@@ -64,6 +64,7 @@ const SEALED_ACTS = [
   { numeral: "IV", src: "/cards/stroophantom.png", titleKey: "act4Title", tagKey: "act4Tag", hover: "hover:border-[rgba(143,123,255,0.45)]" },
   { numeral: "V", src: "/cards/strooracle.png", titleKey: "act5Title", tagKey: "act5Tag", hover: "hover:border-[rgba(143,123,255,0.45)]" },
   { numeral: "VI", src: "/cards/astrostroopie.png", titleKey: "act6Title", tagKey: "act6Tag", hover: "hover:border-[rgba(69,214,196,0.5)]" },
+  { numeral: "VIII", src: "/cards/stroopzipper.png", titleKey: "act8Title", tagKey: "act8Tag", hover: "hover:border-[rgba(217,185,106,0.5)]" },
 ] as const;
 
 const CHAMPIONS = [
@@ -74,6 +75,7 @@ const CHAMPIONS = [
   { src: "/cards/strooracle.png", alt: "Strooracle", name: "STROORACLE", metaKey: "metaStrooracle", border: "rgba(69,214,196,0.4)", glow: ", 0 0 30px rgba(69,214,196,0.12)", nameColor: "#f4f2fb", metaColor: "#45d6c4" },
   { src: "/cards/astrostroopie.png", alt: "Astrostroopie", name: "ASTROSTROOPIE", metaKey: "metaAstrostroopie", border: "rgba(69,214,196,0.4)", glow: ", 0 0 30px rgba(69,214,196,0.12)", nameColor: "#f4f2fb", metaColor: "#45d6c4" },
   { src: "/cards/stroopbeholder.png", alt: "Stroopbeholder", name: "STROOPBEHOLDER", metaKey: "metaStroopbeholder", border: "rgba(161,61,61,0.55)", glow: ", 0 0 34px rgba(161,61,61,0.25)", nameColor: "#c96a6a", metaColor: "#c96a6a" },
+  { src: "/cards/stroopzipper.png", alt: "Stroopzipper", name: "STROOPZIPPER", metaKey: "metaStroopzipper", border: "rgba(217,185,106,0.5)", glow: ", 0 0 34px rgba(217,185,106,0.2)", nameColor: "#d9b96a", metaColor: "#d9b96a" },
 ] as const;
 
 const HOW_IT_WORKS = [

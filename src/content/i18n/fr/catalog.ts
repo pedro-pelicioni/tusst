@@ -37,6 +37,11 @@ export const trackText: Record<string, TrackText> = {
     description:
       "Écris, teste et déploie des smart contracts Soroban en Rust sur le testnet Stellar actuel.",
   },
+  "stellar-protocol-27": {
+    title: "Stellar Protocol 27 : Le Zipper",
+    description:
+      "Maîtrise la mise à niveau Protocol 27 : délégation d'authentification, signatures liées à l'adresse et chemin de migration de chaque SDK.",
+  },
 };
 
 export const lessonTitles: Record<string, string> = {
@@ -84,4 +89,12 @@ export const lessonTitles: Record<string, string> = {
   "soroban-smart-contracts-1": "Ton Premier Contrat",
   "soroban-smart-contracts-2": "Le Stockage du Contrat",
   "soroban-smart-contracts-3": "Autorisation",
+
+  // Stellar Protocol 27
+  "stellar-protocol-27-1": "Protocol 27 : Le Zipper",
+  "stellar-protocol-27-2": "Smart Accounts & __check_auth",
+  "stellar-protocol-27-3": "Délégation d'Authentification (CAP-0071)",
+  "stellar-protocol-27-4": "Sécurité des Signatures & Credentials V2",
+  "stellar-protocol-27-5": "Migrer vers le Protocol 27",
+  "stellar-protocol-27-6": "Boss : Le Compte Délégué",
 };

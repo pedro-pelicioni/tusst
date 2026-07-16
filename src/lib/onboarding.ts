@@ -5,8 +5,8 @@ import { cookies } from "next/headers";
 
 export const ONBOARDING_COOKIE = "tusst_onboarding";
 
-// Act VII (Soroban finale) is never unlocked from onboarding — it must be
-// earned by completing the campaign.
+// Acts VII and VIII (Soroban + Protocol 27 finales) are never unlocked from
+// onboarding — they must be earned by completing the campaign.
 const MAX_ONBOARDING_UNLOCK = 6;
 
 export async function getUnlockedActs(): Promise<number> {

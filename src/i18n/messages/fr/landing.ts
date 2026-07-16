@@ -18,7 +18,7 @@ export const landing = {
     taglineMiddle: ", puis les",
     taglineSoroban: "contrats Soroban",
     taglineOutro:
-      "sur Stellar — sept actes, sept champions, une horreur aux mille yeux au bout du ciel.",
+      "sur Stellar — huit actes, huit champions, une horreur aux mille yeux — et l'écho qu'elle a laissé derrière elle.",
     beginCampaign: "Commencer la Campagne",
     openForge: "Ouvrir la Forge",
     noLoginBadge: "sans compte",
@@ -34,7 +34,7 @@ export const landing = {
   },
   acts: {
     kicker: "La Campagne",
-    headingTop: "Sept Actes.",
+    headingTop: "Huit Actes.",
     headingBottom: "Un Ciel à Rallumer.",
     act1Kicker: "Acte I · Fondamentaux de Rust · ouvert",
     act1Title: "La Citadelle Rouillée",
@@ -53,9 +53,11 @@ export const landing = {
     act5Tag: "result · ok, ou err",
     act6Title: "La Porte de la Constellation",
     act6Tag: "stellar 101 · les lumens coulent à nouveau",
+    act8Title: "Le Ciel Réécrit",
+    act8Tag: "protocol 27 · le ciel se reforge",
   },
   boss: {
-    kicker: "Acte VII · Contrats Soroban · final",
+    kicker: "Acte VII · Contrats Soroban · boss",
     titleTop: "L'Antre du",
     titleBottom: "Beholder",
     body: "Au-delà de la Porte, il attend, dans une forteresse bâtie de chaque erreur jamais traitée. Forge des runes Soroban, déploie-les dans le ciel vivant, et retourne contre le Beholder ses propres contrats corrompus.",
@@ -64,7 +66,7 @@ export const landing = {
   champions: {
     kicker: "La Collection",
     heading: "Champions du Royaume",
-    body: "Sept cartes peintes pour sept actes. Termine le final d'un acte et son champion rejoint ta collection — les runs sans faute rapportent des tirages rares.",
+    body: "Huit cartes peintes pour huit actes. Termine le final d'un acte et son champion rejoint ta collection — les runs sans faute rapportent des tirages rares.",
     metaStroowarrior: "acte i · guerrier",
     metaStropillusion: "acte ii · illusionniste",
     metaStroopkeeper: "acte iii · archiviste",
@@ -72,6 +74,7 @@ export const landing = {
     metaStrooracle: "acte v · rare · oracle",
     metaAstrostroopie: "acte vi · rare · voyageur",
     metaStroopbeholder: "acte vii · boss · aberration",
+    metaStroopzipper: "acte viii · boss · héraut",
   },
   howItWorks: {
     step1Title: "Forge dans le Navigateur",
@@ -82,7 +85,7 @@ export const landing = {
       "Les actes se déverrouillent dans l'ordre, les escarmouches se retentent à l'infini — des fondamentaux de Rust jusqu'aux contrats en direct sur le testnet Stellar.",
     step3Title: "Réclame les Champions",
     step3Copy:
-      "Sept cartes peintes pour sept actes. Les runs sans faute rapportent des tirages rares — et la carte du boss doit être prise de force.",
+      "Huit cartes peintes pour huit actes. Les runs sans faute rapportent des tirages rares — et les cartes de boss doivent être prises de force.",
   },
   footer: {
     heading: "Le Ciel T'attend, Forgeborn.",

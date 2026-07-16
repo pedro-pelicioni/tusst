@@ -92,7 +92,8 @@ export default async function LessonPage({
   const fileName =
     lesson.track.slug === "stellar-101"
       ? "star-chart.toml"
-      : lesson.track.slug === "soroban-smart-contracts"
+      : lesson.track.slug === "soroban-smart-contracts" ||
+          lesson.track.slug === "stellar-protocol-27"
         ? "lib.rs"
         : "main.rs";
   const language = lesson.track.slug === "stellar-101" ? "toml" : "rust";

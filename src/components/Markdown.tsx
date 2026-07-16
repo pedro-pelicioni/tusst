@@ -88,8 +88,15 @@ export function Markdown({ children }: { children: string }) {
         },
         a: ({ node, ...props }) => {
           void node;
+          // External references open in a new tab so learners never lose
+          // their place mid-step-flow.
           return (
-            <a className="text-accent underline underline-offset-2" {...props} />
+            <a
+              className="text-accent underline underline-offset-2"
+              target="_blank"
+              rel="noopener noreferrer"
+              {...props}
+            />
           );
         },
       }}

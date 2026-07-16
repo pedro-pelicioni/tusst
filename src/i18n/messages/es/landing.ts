@@ -18,7 +18,7 @@ export const landing = {
     taglineMiddle: ", luego",
     taglineSoroban: "contratos Soroban",
     taglineOutro:
-      "en Stellar — siete actos, siete campeones y un horror de muchos ojos al final del cielo.",
+      "en Stellar — ocho actos, ocho campeones, un horror de muchos ojos — y el eco que dejó atrás.",
     beginCampaign: "Comienza la Campaña",
     openForge: "Abre la Forja",
     noLoginBadge: "sin login",
@@ -34,7 +34,7 @@ export const landing = {
   },
   acts: {
     kicker: "La Campaña",
-    headingTop: "Siete Actos.",
+    headingTop: "Ocho Actos.",
     headingBottom: "Un Cielo por Reencender.",
     act1Kicker: "Acto I · Fundamentos de Rust · abierto",
     act1Title: "La Ciudadela Oxidada",
@@ -53,9 +53,11 @@ export const landing = {
     act5Tag: "result · ok o err",
     act6Title: "La Puerta de la Constelación",
     act6Tag: "stellar 101 · los lumens fluyen de nuevo",
+    act8Title: "El Cielo Reescrito",
+    act8Tag: "protocol 27 · el cielo se reforja",
   },
   boss: {
-    kicker: "Acto VII · Contratos Soroban · final",
+    kicker: "Acto VII · Contratos Soroban · jefe",
     titleTop: "La Guarida",
     titleBottom: "del Beholder",
     body: "Más allá de la Puerta aguarda, en una fortaleza construida con cada error que nunca fue manejado. Forja runas Soroban, despliégalas al cielo viviente y vuelve los propios contratos corruptos del Beholder en su contra.",
@@ -64,7 +66,7 @@ export const landing = {
   champions: {
     kicker: "La Colección",
     heading: "Campeones del Reino",
-    body: "Siete cartas pintadas para siete actos. Supera el final de un acto y su campeón se une a tu colección — las partidas impecables otorgan ediciones raras.",
+    body: "Ocho cartas pintadas para ocho actos. Supera el final de un acto y su campeón se une a tu colección — las partidas impecables otorgan ediciones raras.",
     metaStroowarrior: "acto i · guerrero",
     metaStropillusion: "acto ii · ilusionista",
     metaStroopkeeper: "acto iii · archivista",
@@ -72,6 +74,7 @@ export const landing = {
     metaStrooracle: "acto v · rara · oráculo",
     metaAstrostroopie: "acto vi · rara · viajero",
     metaStroopbeholder: "acto vii · jefe · aberración",
+    metaStroopzipper: "acto viii · jefe · heraldo",
   },
   howItWorks: {
     step1Title: "Forja en el Navegador",
@@ -82,7 +85,7 @@ export const landing = {
       "Los actos se desbloquean en orden, las escaramuzas se reintentan por siempre — desde los fundamentos de Rust hasta contratos vivos en la testnet de Stellar.",
     step3Title: "Reclama a los Campeones",
     step3Copy:
-      "Siete cartas pintadas para siete actos. Las partidas impecables otorgan ediciones raras — y la carta del jefe debe tomarse por la fuerza.",
+      "Ocho cartas pintadas para ocho actos. Las partidas impecables otorgan ediciones raras — y las cartas de los jefes deben tomarse por la fuerza.",
   },
   footer: {
     heading: "El Cielo Aguarda, Forgeborn.",

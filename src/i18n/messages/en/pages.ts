@@ -18,7 +18,7 @@ export const pages = {
     kicker: "// the shattered constellation",
     title: "Champions of the Realm",
     intro:
-      "Seven cards for seven acts, scattered by the Great Panic. Each act of the campaign ends with a final skirmish — clear it, and its champion joins your collection. The last card is not given. It is taken.",
+      "Eight cards for eight acts, scattered by the Great Panic. Each act of the campaign ends with a final skirmish — clear it, and its champion joins your collection. The last card is not given. It is taken.",
     bossCard: "boss card",
     actLink: "Act {numeral} — {title}",
     unassigned: "unassigned",

@@ -18,7 +18,7 @@ export const pages = {
     kicker: "// a constelação despedaçada",
     title: "Campeões do Reino",
     intro:
-      "Sete cartas para sete atos, espalhadas pelo Grande Pânico. Cada ato da campanha termina com uma escaramuça final — vença-a, e seu campeão entra para a sua coleção. A última carta não é dada. Ela é tomada.",
+      "Oito cartas para oito atos, espalhadas pelo Grande Pânico. Cada ato da campanha termina com uma escaramuça final — vença-a, e seu campeão entra para a sua coleção. A última carta não é dada. Ela é tomada.",
     bossCard: "carta do chefe",
     actLink: "Ato {numeral} — {title}",
     unassigned: "não atribuída",

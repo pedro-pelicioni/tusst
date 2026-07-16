@@ -18,7 +18,7 @@ export const landing = {
     taglineMiddle: ", depois",
     taglineSoroban: "contratos Soroban",
     taglineOutro:
-      "na Stellar — sete atos, sete campeões, um horror de muitos olhos no fim do céu.",
+      "na Stellar — oito atos, oito campeões, um horror de muitos olhos — e o eco que ele deixou para trás.",
     beginCampaign: "Começar a Campanha",
     openForge: "Abrir a Forja",
     noLoginBadge: "sem login",
@@ -34,7 +34,7 @@ export const landing = {
   },
   acts: {
     kicker: "A Campanha",
-    headingTop: "Sete Atos.",
+    headingTop: "Oito Atos.",
     headingBottom: "Um Céu para Reacender.",
     act1Kicker: "Ato I · Fundamentos de Rust · aberto",
     act1Title: "A Cidadela Enferrujada",
@@ -53,9 +53,11 @@ export const landing = {
     act5Tag: "result · ok, ou err",
     act6Title: "Portal da Constelação",
     act6Tag: "stellar 101 · os lumens fluem de novo",
+    act8Title: "O Céu Reescrito",
+    act8Tag: "protocol 27 · o céu se reforja",
   },
   boss: {
-    kicker: "Ato VII · Contratos Soroban · final",
+    kicker: "Ato VII · Contratos Soroban · chefe",
     titleTop: "O Covil",
     titleBottom: "do Beholder",
     body: "Além do Portal ele espera, numa fortaleza erguida de cada erro que nunca foi tratado. Forje runas Soroban, faça deploy delas no céu vivo e volte os próprios contratos corrompidos do Beholder contra ele.",
@@ -64,7 +66,7 @@ export const landing = {
   champions: {
     kicker: "A Coleção",
     heading: "Campeões do Reino",
-    body: "Sete cartas pintadas para sete atos. Complete o final de um ato e seu campeão entra para a sua coleção — runs impecáveis rendem edições raras.",
+    body: "Oito cartas pintadas para oito atos. Complete o final de um ato e seu campeão entra para a sua coleção — runs impecáveis rendem edições raras.",
     metaStroowarrior: "ato i · guerreiro",
     metaStropillusion: "ato ii · ilusionista",
     metaStroopkeeper: "ato iii · arquivista",
@@ -72,6 +74,7 @@ export const landing = {
     metaStrooracle: "ato v · rara · oráculo",
     metaAstrostroopie: "ato vi · rara · viajante",
     metaStroopbeholder: "ato vii · chefe · aberração",
+    metaStroopzipper: "ato viii · chefe · arauto",
   },
   howItWorks: {
     step1Title: "Forje no Navegador",
@@ -82,7 +85,7 @@ export const landing = {
       "Os atos desbloqueiam em ordem, as escaramuças aceitam tentativas infinitas — dos fundamentos de Rust a contratos ao vivo na testnet da Stellar.",
     step3Title: "Conquiste os Campeões",
     step3Copy:
-      "Sete cartas pintadas para sete atos. Runs impecáveis rendem edições raras — e a carta do chefe precisa ser tomada à força.",
+      "Oito cartas pintadas para oito atos. Runs impecáveis rendem edições raras — e as cartas dos chefes precisam ser tomadas à força.",
   },
   footer: {
     heading: "O Céu Aguarda, Forgeborn.",

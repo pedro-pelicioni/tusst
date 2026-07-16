@@ -18,7 +18,7 @@ export const pages = {
     kicker: "// la constellation brisée",
     title: "Champions du Royaume",
     intro:
-      "Sept cartes pour sept actes, dispersées par la Grande Panique. Chaque acte de la campagne s'achève sur une escarmouche finale — remporte-la, et son champion rejoint ta collection. La dernière carte ne se donne pas. Elle se prend.",
+      "Huit cartes pour huit actes, dispersées par la Grande Panique. Chaque acte de la campagne s'achève sur une escarmouche finale — remporte-la, et son champion rejoint ta collection. La dernière carte ne se donne pas. Elle se prend.",
     bossCard: "carte de boss",
     actLink: "Acte {numeral} — {title}",
     unassigned: "non attribuée",

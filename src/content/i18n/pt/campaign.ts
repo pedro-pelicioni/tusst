@@ -46,6 +46,13 @@ export const actText: Record<string, ActText> = {
     synopsis:
       "Além do Portal, ele espera, numa fortaleza erguida com cada erro jamais tratado. Forje runas Soroban, implante-as no céu vivo e volte os próprios contratos corrompidos do Beholder contra ele.",
   },
+  "stellar-protocol-27": {
+    title: "O Céu Reescrito",
+    territory: "O próprio firmamento, em plena reforja",
+    overlord: "O Espectro do Eco",
+    synopsis:
+      "O Beholder jaz quebrado — mas o céu vivo não guarda luto; ele se reforja, costura por costura. As estrelas chamam isso de Zipper: o Protocol 27. Porém, nos escombros do Covil, um olho jamais se fechou. Ele aprendeu a copiar o selo do signatário e pronunciá-lo duas vezes. Domine as leis reescritas do céu, Forgeborn, e silencie o Espectro do Eco.",
+  },
 };
 
 export const skirmishText: Record<string, SkirmishText> = {
@@ -204,6 +211,36 @@ export const skirmishText: Record<string, SkirmishText> = {
     intro:
       "A corrupção do Beholder começou com uma única função desprotegida — qualquer um podia sacar o que não era seu. Uma linha teria impedido. Exija o selo do signatário antes de mover um único lumen: `require_auth`. Volte o próprio cofre dele contra ele.",
   },
+  "stellar-protocol-27-1": {
+    title: "A Virada do Céu",
+    intro:
+      "Com o Beholder derrotado, as estrelas-validadoras se reúnem. Elas não remendam o céu — elas votam, e num ledger marcado o firmamento inteiro vira de uma vez. As estrelas chamam essa reforja de Zipper: o Protocol 27. Assista a um upgrade acontecer por dentro, Forgeborn.",
+  },
+  "stellar-protocol-27-2": {
+    title: "O Selo, Relembrado",
+    intro:
+      "Volte ao cofre que você selou no Covil. O `require_auth` resistiu — mas uma pergunta paira nos salões reconstruídos: e se quem segura o selo não for um par de chaves, e sim um *contrato*? Contas que são contratos escrevem a própria lei das assinaturas: `__check_auth`.",
+  },
+  "stellar-protocol-27-3": {
+    title: "A Coroa Delegada",
+    intro:
+      "Nenhum guardião vigia todos os cofres sozinho. Sob o céu antigo, emprestar o selo exigia frágeis rodadas de adivinhação — simule, propague, reze. O céu reescrito faz da delegação uma lei: `delegate_account_auth`, pronunciado dentro de `__check_auth`, entrega a verificação a um guardião de confiança.",
+  },
+  "stellar-protocol-27-4": {
+    title: "O Eco Que Assina Duas Vezes",
+    intro:
+      "Ele enfim se revela: o olho que nunca se fechou. O Espectro do Eco rouba um selo verdadeiro e o pronuncia de novo — diante de um cofre diferente, firmado pela mesma pena. O céu reescrito responde com um selo atado à própria porta: credenciais que nomeiam seu endereço.",
+  },
+  "stellar-protocol-27-5": {
+    title: "A Caravana da Migração",
+    intro:
+      "As caravanas se enfileiram no Portal, carroças pesadas com cada ferramenta forjada sob o céu antigo. Nada cruza para o firmamento reforjado sem mudar — cada SDK reforjado, cada import renomeado. Percorra a estrada da caravana, Forgeborn, e não deixe para trás nada que ainda fale a língua antiga.",
+  },
+  "stellar-protocol-27-6": {
+    title: "O Último Eco do Espectro",
+    intro:
+      "O Espectro vem atrás do seu cofre com um selo roubado e um eco perfeito. Mas a sua conta já não é uma porta com uma só chave — é lei: um `__check_auth` que verifica seu signatário e delega a uma coroa-guardiã. Ate o selo. Silencie o eco. Encerre a campanha.",
+  },
 };
 
 export const cardText: Record<string, CardText> = {
@@ -247,5 +284,11 @@ export const cardText: Record<string, CardText> = {
     epithet: null,
     type: "Stropie · Aberração",
     flavor: "Das profundezas da ruína, seus muitos olhos veem apenas conquista.",
+  },
+  stroopzipper: {
+    epithet: "Arauto do Céu Reescrito",
+    type: "Stropie · Arauto",
+    flavor:
+      "O céu não se quebra quando muda — ele se fecha de novo, costura por costura luminosa.",
   },
 };

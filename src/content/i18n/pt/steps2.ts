@@ -847,4 +847,434 @@ withdraw: authorized ✓
 \`\`\``,
     },
   ],
+
+  // ---- Ato VIII — Stellar Protocol 27 ("O Zipper") -------------------------
+
+  "stellar-protocol-27-1": [
+    {
+      kind: "theory",
+      image: "/mascot/mascot-guide.png",
+      body: `O Beholder se foi — e o próprio céu está mudando. A Stellar se atualiza **por consenso**: os validadores votam para armar uma nova versão do protocolo e, num ledger agendado, a *rede inteira* vira de uma vez. Sem forks, sem retardatários.
+
+Isso é um **protocol upgrade**: uma única virada coordenada do céu.`,
+    },
+    {
+      kind: "theory",
+      body: `O **Protocol 27**, codinome **"Zipper"**, é o upgrade de 2026 — e sua linha do tempo já aconteceu:
+
+- Stellar Core estável — **5 de junho de 2026**
+- SDKs — 5–11 de junho · RPC e Galexie — 10 de junho · Horizon — 12 de junho
+- **Testnet atualizada — 18 de junho de 2026**
+- **Voto da Mainnet — 8 de julho de 2026**
+
+O plano completo está no [guia oficial de upgrade do Protocol 27](https://stellar.org/blog/foundation-news/stellar-zipper-protocol-27-upgrade-guide).`,
+    },
+    {
+      kind: "theory",
+      body: `O que o Zipper muda de fato? As duas grandes novidades vivem no [CAP-0071](https://github.com/stellar/stellar-protocol/blob/master/core/cap-0071.md):
+
+1. **Delegação de autenticação** — custom accounts podem entregar sua verificação de auth a outro contrato.
+2. **Assinaturas vinculadas ao endereço** — um selo que só abre a própria porta.
+
+(Upgrades anteriores trouxeram os CAP-0055, 0060 e 0064 — o Zipper é sobre como as contas *provam quem são*.) Acompanhe as versões dos componentes em [Software Versions](https://developers.stellar.org/docs/networks/software-versions).`,
+    },
+    {
+      kind: "quiz",
+      question: "Como um protocol upgrade da Stellar entra em vigor?",
+      options: [
+        "Os validadores votam para armá-lo; no ledger agendado a rede inteira vira de uma vez",
+        "Cada nó atualiza quando quiser e as versões coexistem",
+        "A Foundation aperta um botão nos próprios servidores",
+      ],
+      answer: 0,
+      explain: "Consenso, não decreto: o voto arma, um ledger vira o céu inteiro.",
+    },
+    {
+      kind: "quiz",
+      question: "Quando aconteceu o voto da Mainnet para o Protocol 27?",
+      options: ["8 de julho de 2026", "18 de junho de 2026", "Ainda não aconteceu"],
+      answer: 0,
+      explain: "A Testnet virou em 18 de junho; a Mainnet votou em 8 de julho de 2026. O Zipper está no ar.",
+    },
+    {
+      kind: "fill",
+      prompt: "Arme o farol com a versão que os validadores votaram.",
+      file: "lib.rs",
+      before: "pub const PROTOCOL_VERSION: u32 = ",
+      after: ";",
+      choices: ["27", "26", "28"],
+      answer: 0,
+      explain: "Protocol 27 — o Zipper. (28 é onde as credenciais V1 vão morrer.)",
+    },
+    {
+      kind: "editor",
+      intro: `### Prova final — acenda o farol do upgrade
+
+Registre os fatos da reforja:
+
+1. \`PROTOCOL_VERSION\` — a versão que a rede votou.
+2. \`CODENAME\` — em minúsculas.
+3. \`MAINNET_VOTE\` — \`YYYY-MM-DD\`.
+
+Esperado:
+
+\`\`\`text
+beacon lit: protocol 27 (zipper) ✓
+\`\`\``,
+    },
+  ],
+
+  "stellar-protocol-27-2": [
+    {
+      kind: "theory",
+      image: "/mascot/mascot-guide.png",
+      body: `No Covil você selou um cofre com \`require_auth()\`. Mas quem *verifica* o selo?
+
+Para uma conta normal, o protocolo confere uma assinatura ed25519 contra as chaves da conta. Mas um \`Address\` no Soroban também pode pertencer a um **contrato** — e aí algo notável acontece.`,
+    },
+    {
+      kind: "theory",
+      body: `Quando \`require_auth\` dispara para um \`Address\` de contrato, o host invoca o ponto de entrada do próprio contrato:
+
+\`\`\`rust
+pub fn __check_auth(
+    env: Env,
+    signature_payload: Hash<32>,
+    signatures: ...,
+    auth_contexts: Vec<Context>,
+) { ... }
+\`\`\`
+
+A conta **é** um contrato, e \`__check_auth\` é a sua lei particular das assinaturas. Aprove retornando; rejeite com trap.`,
+    },
+    {
+      kind: "theory",
+      body: `Toda **custom account** é apenas um \`__check_auth\` diferente:
+
+- **Multisig** — exija 2 de 3 assinaturas
+- **Social recovery** — deixe amigos de confiança rotacionar uma chave perdida
+- **Passkeys** — verifique uma assinatura WebAuthn em vez de ed25519
+- **Account abstraction** — qualquer regra que você consiga escrever em Rust
+
+Construtores como a OpenZeppelin já forjavam essas contas; [o Protocol 27 torna as partes difíceis nativas](https://developers.stellar.org/meetings/2026/04/30#protocol-discussion-modular-custom-accounts-and-signature-security-in-protocol-27).`,
+    },
+    {
+      kind: "quiz",
+      question: "Quem invoca `__check_auth`?",
+      options: [
+        "O host do Soroban, sempre que require_auth dispara para um Address de uma custom account",
+        "O usuário, manualmente, antes de cada transação",
+        "O compilador, em tempo de build",
+      ],
+      answer: 0,
+      explain: "É o callback do host: seu contrato vira o juiz dos próprios selos.",
+    },
+    {
+      kind: "fill",
+      prompt: "Nomeie o ponto de entrada que o host chama numa custom account.",
+      file: "lib.rs",
+      before: "impl GuardianAccount {\n    pub fn ",
+      after: "(env: Env, payload: Hash<32>, sig: BytesN<64>, ctx: Vec<Context>) {",
+      choices: ["__check_auth", "check_auth", "require_auth"],
+      answer: 0,
+      explain: "Underscore duplo: __check_auth é o nome reservado que o host procura.",
+    },
+    {
+      kind: "editor",
+      intro: `### Prova final — a conta escreve a própria lei
+
+1. Exporte o bloco impl com \`#[contractimpl]\`.
+2. Renomeie o placeholder para o ponto de entrada que o host realmente chama.
+
+Esperado:
+
+\`\`\`text
+__check_auth: the account writes its own law ✓
+\`\`\``,
+    },
+  ],
+
+  "stellar-protocol-27-3": [
+    {
+      kind: "theory",
+      image: "/mascot/mascot-guide.png",
+      body: `Uma coroa que guarda todos os cofres sozinha logo se parte. Contas de verdade querem dizer: *"deixe meu guardião responder por mim."*
+
+Antes do Zipper não havia suporte do protocolo para isso — os construtores improvisavam a delegação com frágeis rodadas de **pré-simulação** para propagar o contexto de auth. Funcionava. Por pouco. Às vezes.`,
+    },
+    {
+      kind: "theory",
+      body: `O Protocol 27 (CAP-0071-01) faz da delegação uma lei, com duas novas host functions:
+
+\`\`\`rust
+// APENAS dentro de __check_auth:
+delegate_account_auth(&delegate, &payload);
+
+// e para o contrato sendo chamado:
+get_delegated_signers_for_current_auth_check()
+\`\`\`
+
+A primeira entrega a verificação de auth atual à lógica de assinatura do delegado. A segunda revela quais signatários delegados aprovaram.`,
+    },
+    {
+      kind: "theory",
+      body: `O formato de transporte ganhou o upgrade correspondente: o tipo de credencial \`SOROBAN_CREDENTIALS_ADDRESS_WITH_DELEGATES\` empacota signatários delegados e suas assinaturas numa **única** entrada de autorização.
+
+Transações menores, simulação mais simples — a delegação deixa de ser gambiarra frágil e vira padrão suportado. Spec completa: [CAP-0071](https://github.com/stellar/stellar-protocol/blob/master/core/cap-0071.md) · [recap do CAP-71](https://developers.stellar.org/meetings/2026/04/30#cap-71-recap-authentication-delegation-for-custom-accounts).`,
+    },
+    {
+      kind: "quiz",
+      question: "O que `delegate_account_auth` permite a uma custom account fazer?",
+      options: [
+        "Entregar a verificação de auth atual à lógica de assinatura de um contrato delegado",
+        "Transferir a posse da conta permanentemente",
+        "Pular a verificação de assinatura por completo",
+      ],
+      answer: 0,
+      explain: "A coroa continua sua — só a *verificação* vai para o guardião, chamada a chamada.",
+    },
+    {
+      kind: "fill",
+      prompt: "Entregue esta verificação de auth ao guardião armazenado — do jeito do Protocol 27.",
+      file: "lib.rs",
+      before: "// dentro de __check_auth:\n",
+      after: "(&delegate, &signature_payload);",
+      choices: ["delegate_account_auth", "require_auth", "get_delegated_signers_for_current_auth_check"],
+      answer: 0,
+      explain: "delegate_account_auth — só pode ser chamada dentro de __check_auth, nova no Protocol 27.",
+    },
+    {
+      kind: "editor",
+      intro: `### Prova final — delegue a coroa
+
+O \`Address\` do guardião já está carregado. Chame \`delegate_account_auth\` com o delegado e o signature payload — e remova o \`todo!()\`.
+
+Esperado:
+
+\`\`\`text
+crown delegated: steward honored ✓
+\`\`\``,
+    },
+  ],
+
+  "stellar-protocol-27-4": [
+    {
+      kind: "theory",
+      image: "/mascot/mascot-guide.png",
+      body: `O truque do Espectro do Eco, em termos simples — um **replay de assinatura**. As auditorias de segurança descobriram que ele exige três coisas ao mesmo tempo:
+
+1. Um contrato estilo admin que **não nomeia o endereço do signatário** no payload assinado.
+2. O admin é **rotacionado** para um endereço diferente…
+3. …e os dois endereços compartilham a **mesma chave privada**.
+
+Aí um selo feito para a porta antiga abre a nova. Mints duplicados. Movimentos não autorizados.`,
+    },
+    {
+      kind: "theory",
+      body: `Essa combinação exata **nunca ocorreu on-chain** — mas o estrago possível justificou uma correção no protocolo.
+
+O **\`SOROBAN_CREDENTIALS_ADDRESS_V2\`** (CAP-0071-02) vincula o signature payload ao endereço para o qual foi criado. Um eco roubado não abre mais uma porta diferente.
+
+O antigo \`SOROBAN_CREDENTIALS_ADDRESS\` continua válido **até o Protocol 28** — uma janela de migração, não um precipício.`,
+    },
+    {
+      kind: "theory",
+      body: `Até migrar, existe uma salvaguarda provisória para contratos estilo admin: **inclua você mesmo o endereço do signatário no payload** — assim a rotação com chave compartilhada não pode ser ecoada.
+
+\`\`\`rust
+let me: Address = env.current_contract_address();
+// anexe \`me\` ao material assinado
+\`\`\`
+
+Assista ao mergulho técnico: [Stellar Developer Meeting — signature security](https://www.youtube.com/watch?v=5O1cDDGv7_o).`,
+    },
+    {
+      kind: "quiz",
+      question: "Que ataque as credenciais V2 eliminam?",
+      options: [
+        "Repetir um signature payload válido contra outra conta que compartilha a mesma chave de assinatura",
+        "Força bruta em chaves privadas ed25519",
+        "Front-running de transações antes de chegarem ao ledger",
+      ],
+      answer: 0,
+      explain: "Payloads vinculados ao endereço: o selo nomeia sua porta, e o eco morre.",
+    },
+    {
+      kind: "quiz",
+      question: "Por quanto tempo o antigo SOROBAN_CREDENTIALS_ADDRESS continua válido?",
+      options: [
+        "Até o upgrade do Protocol 28",
+        "Parou de funcionar no momento em que o Protocol 27 ativou",
+        "Para sempre — o V2 é opcional",
+      ],
+      answer: 0,
+      explain: "Uma janela de migração: adote o V2 no seu ritmo, mas antes do Protocol 28.",
+    },
+    {
+      kind: "fill",
+      prompt: "Pronuncie a credencial que ata o selo à sua porta.",
+      file: "lib.rs",
+      before: "pub const CREDENTIALS: &str = \"SOROBAN_CREDENTIALS_",
+      after: "\";",
+      choices: ["ADDRESS_V2", "ADDRESS", "ADDRESS_WITH_DELEGATES"],
+      answer: 0,
+      explain: "V2 = payloads vinculados ao endereço. (WITH_DELEGATES é o pacote de delegação da VIII.3.)",
+    },
+    {
+      kind: "editor",
+      intro: `### Prova final — ate o selo
+
+1. Atualize \`CREDENTIALS\` para o nome V2.
+2. Registre até qual protocolo o V1 continua válido.
+3. Em \`binding_address\`, retorne o próprio \`Address\` deste contrato via \`env.current_contract_address()\` — remova o \`todo!()\`.
+
+Esperado:
+
+\`\`\`text
+seal bound to its door: the echo dies ✓
+\`\`\``,
+    },
+  ],
+
+  "stellar-protocol-27-5": [
+    {
+      kind: "theory",
+      image: "/mascot/mascot-guide.png",
+      body: `Nada cruza para o céu reforjado sem mudar. A caravana de releases viajou em ordem estrita:
+
+**Core → SDKs → RPC e Galexie → Horizon → Testnet → Mainnet**
+
+Todo SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixir — lançou uma versão Protocol 27. Todos precisam de upgrade antes de a Mainnet virar. Confira o seu em [Software Versions](https://developers.stellar.org/docs/networks/software-versions).`,
+    },
+    {
+      kind: "theory",
+      body: `A única **breaking change** que a maioria dos apps sente:
+
+\`\`\`ts
+// antes do Zipper:
+import { xdr } from "@stellar/stellar-base";
+
+// depois — o pacote base foi consolidado:
+import { xdr } from "@stellar/stellar-sdk";
+\`\`\`
+
+Renomeie o import e a caravana segue. O resto das notas de migração está na [orientação oficial](https://developers.stellar.org/meetings/2026/04/30#migration-guidance).`,
+    },
+    {
+      kind: "theory",
+      body: `O checklist de migração do Forgeborn:
+
+1. **Atualize todo SDK** e biblioteca cliente.
+2. **Renomeie** imports de \`stellar-base\` para \`stellar-sdk\`.
+3. **Planeje a mudança para credenciais V2** antes do Protocol 28.
+4. **Operadores de nó**: Core, RPC, Galexie, Horizon — tudo atualizado antes do voto.
+
+O [guia de upgrade](https://stellar.org/blog/foundation-news/stellar-zipper-protocol-27-upgrade-guide) tem o manifesto completo.`,
+    },
+    {
+      kind: "quiz",
+      question: "Seu app JS importa de `@stellar/stellar-base`. Depois do Protocol 27…",
+      options: [
+        "Troque o import — o pacote foi consolidado em @stellar/stellar-sdk",
+        "Nada muda; ele continua sendo publicado separadamente",
+        "Você precisa reescrever o app em Rust",
+      ],
+      answer: 0,
+      explain: "Um rename. O pacote base entrou no sdk e não saiu mais.",
+    },
+    {
+      kind: "fill",
+      prompt: "Conserte o import para ele cruzar o Portal.",
+      file: "app.ts",
+      before: "import { xdr } from \"@stellar/stellar-",
+      after: "\";",
+      choices: ["sdk", "base", "core"],
+      answer: 0,
+      explain: "O stellar-base foi consolidado no stellar-sdk nas releases do Protocol 27.",
+    },
+    {
+      kind: "editor",
+      intro: `### Prova final — libere o manifesto da caravana
+
+1. \`JS_XDR_PACKAGE\` — o pacote que absorveu o antigo base.
+2. \`TESTNET_UPGRADE\` — \`YYYY-MM-DD\`.
+3. \`UPGRADE_ALL_SDKS\` — *todo* SDK cruza o Portal?
+
+Esperado:
+
+\`\`\`text
+caravan cleared the Gate: nothing left behind ✓
+\`\`\``,
+    },
+  ],
+
+  "stellar-protocol-27-6": [
+    {
+      kind: "theory",
+      image: "/mascot/mascot-guide.png",
+      body: `O Espectro vem atrás do seu cofre com um selo roubado e um eco perfeito. Disponha o que você forjou pelo Céu Reescrito:
+
+- \`__check_auth\` — a lei da sua própria conta (VIII.2)
+- \`delegate_account_auth\` — a coroa-guardiã (VIII.3)
+- selos vinculados ao endereço — o mata-eco (VIII.4)
+
+Hora de combinar os três numa única conta.`,
+    },
+    {
+      kind: "theory",
+      body: `O plano do \`ZipperAccount\`, dentro de \`__check_auth\`:
+
+\`\`\`rust
+// 1) a chave pública do signatário-raiz, do storage:
+let signer: BytesN<32> = env.storage().instance().get(&SIGNER).unwrap();
+
+// 2) um selo falso precisa dar trap:
+env.crypto().ed25519_verify(&signer, &payload.into(), &signature);
+
+// 3) o golpe do Protocol 27 — entregue o resto ao guardião:
+delegate_account_auth(...)
+\`\`\`
+
+Assinatura primeiro, delegação depois. O eco do Espectro morre no passo 2; um guardião forjado morre no passo 3.`,
+    },
+    {
+      kind: "quiz",
+      question: "Dentro de `__check_auth`, o que derrota o replay do Espectro do Eco?",
+      options: [
+        "Verificar um payload vinculado a esta conta — um eco roubado não casa com outro endereço",
+        "Assinar duas vezes mais rápido que o Espectro",
+        "Chamar require_auth em si mesmo, recursivamente",
+      ],
+      answer: 0,
+      explain: "Selos atados + assinaturas verificadas: o eco fica sem porta para abrir.",
+    },
+    {
+      kind: "fill",
+      prompt: "Um selo falso precisa dar trap — verifique a assinatura sobre o payload.",
+      file: "lib.rs",
+      before: "env.crypto().",
+      after: "(&signer, &signature_payload.into(), &signature);",
+      choices: ["ed25519_verify", "sha256", "delegate_account_auth"],
+      answer: 0,
+      explain: "ed25519_verify dá trap numa assinatura inválida — exatamente o que um selo deve fazer.",
+    },
+    {
+      kind: "editor",
+      intro: `### O último eco do Espectro
+
+Dentro de \`__check_auth\`:
+
+1. Carregue o signatário-raiz (\`BytesN<32>\`) do storage sob \`SIGNER\`.
+2. Verifique a assinatura ed25519 sobre o payload — \`env.crypto().ed25519_verify(...)\`.
+3. Carregue o guardião sob \`DELEGATE\` e chame \`delegate_account_auth\`.
+
+Exporte o bloco impl. Nenhum \`todo!()\` sobrevive ao final.
+
+Esperado:
+
+\`\`\`text
+__check_auth: signature verified, steward honored — the echo is silent ✓
+\`\`\``,
+    },
+  ],
 };

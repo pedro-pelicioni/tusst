@@ -56,6 +56,15 @@ const LESSON_TITLES: Record<string, string[]> = {
     "Contract Storage",
     "Authorization",
   ],
+  // Act VIII — the Protocol 27 finale; same progression-only gating as Act VII.
+  "stellar-protocol-27": [
+    "Protocol 27: The Zipper",
+    "Smart Accounts & __check_auth",
+    "Authentication Delegation (CAP-0071)",
+    "Signature Security & V2 Credentials",
+    "Migrating to Protocol 27",
+    "Boss: The Delegated Account",
+  ],
 };
 
 async function main() {
@@ -98,7 +107,7 @@ async function main() {
         summary: `Lesson ${order} of the ${t.title} track.`,
         order,
         difficulty:
-          t.slug === "soroban-smart-contracts"
+          t.slug === "soroban-smart-contracts" || t.slug === "stellar-protocol-27"
             ? "hard"
             : i < 4
               ? "easy"

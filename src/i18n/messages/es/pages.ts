@@ -18,7 +18,7 @@ export const pages = {
     kicker: "// la constelación rota",
     title: "Campeones del Reino",
     intro:
-      "Siete cartas para siete actos, esparcidas por el Gran Pánico. Cada acto de la campaña termina con una escaramuza final — supérala y su campeón se une a tu colección. La última carta no se regala. Se toma.",
+      "Ocho cartas para ocho actos, esparcidas por el Gran Pánico. Cada acto de la campaña termina con una escaramuza final — supérala y su campeón se une a tu colección. La última carta no se regala. Se toma.",
     bossCard: "carta de jefe",
     actLink: "Acto {numeral} — {title}",
     unassigned: "sin asignar",

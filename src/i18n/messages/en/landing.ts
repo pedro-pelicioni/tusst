@@ -18,7 +18,7 @@ export const landing = {
     taglineMiddle: ", then",
     taglineSoroban: "Soroban contracts",
     taglineOutro:
-      "on Stellar — seven acts, seven champions, one many-eyed horror at the end of the sky.",
+      "on Stellar — eight acts, eight champions, one many-eyed horror — and the echo it left behind.",
     beginCampaign: "Begin the Campaign",
     openForge: "Open the Forge",
     noLoginBadge: "no login",
@@ -34,7 +34,7 @@ export const landing = {
   },
   acts: {
     kicker: "The Campaign",
-    headingTop: "Seven Acts.",
+    headingTop: "Eight Acts.",
     headingBottom: "One Sky to Relight.",
     act1Kicker: "Act I · Rust Fundamentals · open",
     act1Title: "The Rusted Citadel",
@@ -53,9 +53,11 @@ export const landing = {
     act5Tag: "result · ok, or err",
     act6Title: "Constellation Gate",
     act6Tag: "stellar 101 · lumens flow again",
+    act8Title: "The Rewritten Sky",
+    act8Tag: "protocol 27 · the sky reforges",
   },
   boss: {
-    kicker: "Act VII · Soroban Contracts · final",
+    kicker: "Act VII · Soroban Contracts · boss",
     titleTop: "The Beholder's",
     titleBottom: "Lair",
     body: "Beyond the Gate it waits, in a fortress built of every error never handled. Forge Soroban runes, deploy them to the living sky, and turn the Beholder's own corrupted contracts against it.",
@@ -64,7 +66,7 @@ export const landing = {
   champions: {
     kicker: "The Collection",
     heading: "Champions of the Realm",
-    body: "Seven painted cards for seven acts. Clear an act's finale and its champion joins your collection — flawless runs earn rare prints.",
+    body: "Eight painted cards for eight acts. Clear an act's finale and its champion joins your collection — flawless runs earn rare prints.",
     metaStroowarrior: "act i · warrior",
     metaStropillusion: "act ii · illusionist",
     metaStroopkeeper: "act iii · archivist",
@@ -72,6 +74,7 @@ export const landing = {
     metaStrooracle: "act v · rare · oracle",
     metaAstrostroopie: "act vi · rare · voyager",
     metaStroopbeholder: "act vii · boss · aberration",
+    metaStroopzipper: "act viii · boss · herald",
   },
   howItWorks: {
     step1Title: "Forge in the Browser",
@@ -82,7 +85,7 @@ export const landing = {
       "Acts unlock in order, skirmishes retry forever — from Rust fundamentals to contracts live on the Stellar testnet.",
     step3Title: "Claim the Champions",
     step3Copy:
-      "Seven painted cards for seven acts. Flawless runs earn rare prints — and the boss card must be taken by force.",
+      "Eight painted cards for eight acts. Flawless runs earn rare prints — and the boss cards must be taken by force.",
   },
   footer: {
     heading: "The Sky Awaits, Forgeborn.",

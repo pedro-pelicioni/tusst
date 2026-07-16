@@ -121,6 +121,18 @@ export const cards: ChampionCard[] = [
     image: "/cards/stroopbeholder.png",
     awardedByTrack: "soroban-smart-contracts",
   },
+  {
+    id: "stroopzipper",
+    name: "STROOPZIPPER",
+    epithet: "Herald of the Rewritten Sky",
+    type: "Stropie · Herald",
+    power: 10,
+    flavor:
+      "The sky does not break when it changes — it zips itself anew, seam by luminous seam.",
+    rarity: "boss",
+    image: "/cards/stroopzipper.png",
+    awardedByTrack: "stellar-protocol-27",
+  },
 ];
 
 export const acts: Act[] = [
@@ -422,6 +434,60 @@ export const acts: Act[] = [
         title: "The Seal of the Signer",
         intro:
           "The Beholder's corruption began with a single unguarded function — anyone could withdraw what wasn't theirs. One line would have stopped it. Demand the signer's seal before you move a single lumen: `require_auth`. Turn its own vault against it.",
+      },
+    ],
+  },
+  {
+    numeral: "VIII",
+    trackSlug: "stellar-protocol-27",
+    title: "The Rewritten Sky",
+    territory: "The firmament itself, mid-reforge",
+    overlord: "The Echo Wraith",
+    synopsis:
+      "The Beholder lies broken — but the living sky does not mourn; it reforges itself, seam by seam. The stars call it the Zipper: Protocol 27. Yet in the rubble of the Lair, one eye never closed. It learned to copy the signer's seal and speak it twice. Master the rewritten laws of the sky, Forgeborn, and silence the Echo Wraith.",
+    cardId: "stroopzipper",
+    skirmishes: [
+      {
+        lessonSlug: "stellar-protocol-27-1",
+        numeral: "VIII.1",
+        title: "The Turning of the Sky",
+        intro:
+          "With the Beholder gone, the validator-stars convene. They do not patch the sky — they vote, and at an appointed ledger the whole firmament turns at once. The stars call this reforging the Zipper: Protocol 27. Watch an upgrade happen from the inside, Forgeborn.",
+      },
+      {
+        lessonSlug: "stellar-protocol-27-2",
+        numeral: "VIII.2",
+        title: "The Seal, Remembered",
+        intro:
+          "Return to the vault you sealed in the Lair. `require_auth` held — but a question lingers in the rebuilt halls: what if the one holding the seal is not a keypair, but a *contract*? Accounts that are contracts write their own law of signatures: `__check_auth`.",
+      },
+      {
+        lessonSlug: "stellar-protocol-27-3",
+        numeral: "VIII.3",
+        title: "The Delegated Crown",
+        intro:
+          "No keeper guards every vault alone. Under the old sky, lending your seal meant fragile rounds of divination — simulate, propagate, pray. The rewritten sky makes delegation law: `delegate_account_auth`, spoken inside `__check_auth`, hands the check to a steward you trust.",
+      },
+      {
+        lessonSlug: "stellar-protocol-27-4",
+        numeral: "VIII.4",
+        title: "The Echo That Signs Twice",
+        intro:
+          "It shows itself at last: the eye that never closed. The Echo Wraith steals a true seal and speaks it again — before a different vault signed by the same pen. The rewritten sky answers with a seal bound to its own door: credentials that name their address.",
+      },
+      {
+        lessonSlug: "stellar-protocol-27-5",
+        numeral: "VIII.5",
+        title: "The Migration Caravan",
+        intro:
+          "The caravans line up at the Gate, wagons heavy with every tool forged under the old sky. Nothing crosses into the reforged firmament unchanged — every SDK reforged, every import renamed. Walk the caravan road, Forgeborn, and leave nothing behind that still speaks the old tongue.",
+      },
+      {
+        lessonSlug: "stellar-protocol-27-6",
+        numeral: "VIII.6",
+        title: "The Wraith's Last Echo",
+        intro:
+          "The Wraith comes for your vault with a stolen seal and a perfect echo. But your account is no longer a door with one key — it is law: a `__check_auth` that verifies its signer and delegates to a steward crown. Bind the seal. Silence the echo. End the campaign.",
       },
     ],
   },

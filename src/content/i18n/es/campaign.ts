@@ -47,6 +47,13 @@ export const actText: Record<string, ActText> = {
     synopsis:
       "Más allá de la Puerta te espera, en una fortaleza construida con cada error que nadie manejó jamás. Forja runas Soroban, despliégalas en el cielo viviente y vuelve los contratos corruptos del Beholder en su contra.",
   },
+  "stellar-protocol-27": {
+    title: "El Cielo Reescrito",
+    territory: "El propio firmamento, en plena reforja",
+    overlord: "El Espectro del Eco",
+    synopsis:
+      "El Beholder yace roto — pero el cielo viviente no guarda luto; se reforja a sí mismo, costura a costura. Las estrellas lo llaman el Zipper: Protocol 27. Sin embargo, entre los escombros de la Guarida, un ojo nunca se cerró. Aprendió a copiar el sello del firmante y a pronunciarlo dos veces. Domina las leyes reescritas del cielo, Forgeborn, y silencia al Espectro del Eco.",
+  },
 };
 
 export const skirmishText: Record<string, SkirmishText> = {
@@ -205,6 +212,36 @@ export const skirmishText: Record<string, SkirmishText> = {
     intro:
       "La corrupción del Beholder comenzó con una sola función sin custodia — cualquiera podía retirar lo que no era suyo. Una sola línea lo habría impedido. Exige el sello del firmante antes de mover un solo lumen: `require_auth`. Vuelve su propia bóveda en su contra.",
   },
+  "stellar-protocol-27-1": {
+    title: "El Giro del Cielo",
+    intro:
+      "Con el Beholder derrotado, las estrellas-validadoras se reúnen. No remiendan el cielo — votan, y en un ledger señalado el firmamento entero gira de una vez. Las estrellas llaman a esta reforja el Zipper: Protocol 27. Observa una actualización desde dentro, Forgeborn.",
+  },
+  "stellar-protocol-27-2": {
+    title: "El Sello, Recordado",
+    intro:
+      "Vuelve a la bóveda que sellaste en la Guarida. `require_auth` resistió — pero una pregunta flota en los salones reconstruidos: ¿y si quien sostiene el sello no es un par de claves, sino un *contrato*? Las cuentas que son contratos escriben su propia ley de firmas: `__check_auth`.",
+  },
+  "stellar-protocol-27-3": {
+    title: "La Corona Delegada",
+    intro:
+      "Ningún guardián vigila todas las bóvedas solo. Bajo el cielo antiguo, prestar el sello exigía frágiles rondas de adivinación — simula, propaga, reza. El cielo reescrito hace de la delegación una ley: `delegate_account_auth`, pronunciado dentro de `__check_auth`, entrega la verificación a un custodio de confianza.",
+  },
+  "stellar-protocol-27-4": {
+    title: "El Eco Que Firma Dos Veces",
+    intro:
+      "Por fin se revela: el ojo que nunca se cerró. El Espectro del Eco roba un sello verdadero y lo pronuncia de nuevo — ante una bóveda distinta, firmada por la misma pluma. El cielo reescrito responde con un sello atado a su propia puerta: credenciales que nombran su dirección.",
+  },
+  "stellar-protocol-27-5": {
+    title: "La Caravana de la Migración",
+    intro:
+      "Las caravanas hacen fila ante la Puerta, carretas cargadas con cada herramienta forjada bajo el cielo antiguo. Nada cruza al firmamento reforjado sin cambiar — cada SDK reforjado, cada import renombrado. Recorre el camino de la caravana, Forgeborn, y no dejes atrás nada que aún hable la lengua antigua.",
+  },
+  "stellar-protocol-27-6": {
+    title: "El Último Eco del Espectro",
+    intro:
+      "El Espectro viene por tu bóveda con un sello robado y un eco perfecto. Pero tu cuenta ya no es una puerta con una sola llave — es ley: un `__check_auth` que verifica a su firmante y delega en una corona custodia. Ata el sello. Silencia el eco. Cierra la campaña.",
+  },
 };
 
 export const cardText: Record<string, CardText> = {
@@ -246,5 +283,11 @@ export const cardText: Record<string, CardText> = {
   stroopbeholder: {
     type: "Stropie · Aberración",
     flavor: "Desde las profundidades de la ruina, sus muchos ojos solo ven conquista.",
+  },
+  stroopzipper: {
+    epithet: "Heraldo del Cielo Reescrito",
+    type: "Stropie · Heraldo",
+    flavor:
+      "El cielo no se rompe cuando cambia — vuelve a cerrarse sobre sí mismo, costura a costura luminosa.",
   },
 };
