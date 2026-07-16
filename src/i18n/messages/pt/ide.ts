@@ -146,4 +146,42 @@ export const ide = {
     networkError: "Erro de rede — tente de novo.",
     cancelled: "// cancelado",
   },
+  tutorial: {
+    reopenTitle: "rever o tutorial",
+    skip: "pular tutorial",
+    next: "próximo",
+    back: "voltar",
+    done: "entendi",
+    stepCounter: "{current} de {total}",
+    steps: {
+      projects: {
+        title: "Projetos",
+        body: "Todo contrato que você escreve mora em um projeto. Abra aqui para trocar de projeto, começar de um template ou importar do GitHub.",
+      },
+      fileTree: {
+        title: "Arquivos",
+        body: "Os arquivos do seu projeto — o Cargo.toml e tudo dentro de src/. Clique em um para abrir; o + adiciona um novo.",
+      },
+      editor: {
+        title: "Editor",
+        body: "Seu código, ao vivo. ⌘⏎ faz o build, ⌘S salva. Cargo.toml e src/lib.rs ficam protegidos — o contrato precisa dos dois para compilar.",
+      },
+      build: {
+        title: "Build · Test · Audit",
+        body: "Build compila seu contrato para WASM. Test roda os testes unitários. Audit verifica problemas comuns de segurança. Nada faz deploy antes do Build funcionar.",
+      },
+      console: {
+        title: "Console",
+        body: "A saída do build, dos testes e da auditoria aparece aqui — inclusive as próprias mensagens de erro do compilador Rust.",
+      },
+      wallet: {
+        title: "Carteira",
+        body: "Fazer deploy ou escrever em um contrato exige assinatura. Gere uma carteira local gratuita para experimentos na testnet, ou conecte uma de verdade, como a Freighter.",
+      },
+      panels: {
+        title: "Deploy · Interagir · Explorar",
+        body: "Depois do build, Deploy envia seu contrato para a testnet. Interagir chama funções dos contratos que você já fez deploy. Explorar chama funções de qualquer contrato, seu ou não.",
+      },
+    },
+  },
 };

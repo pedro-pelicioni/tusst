@@ -1224,6 +1224,134 @@ middle: [2, 3, 4]
     },
   ],
 
+  "rust-standard-library-7": [
+    {
+      kind: "theory",
+      image: "/mascot/mascot-guide.png",
+      body: `Deep in the Hoarder's vault, past every satchel and ledger, sits a workshop nobody enters uninvited. Here, treasure doesn't begin as treasure — it begins as a **blueprint**:
+
+\`\`\`rust
+struct Player {
+    name: String,
+    hp: i32,
+}
+\`\`\`
+
+A \`struct\` binds several values into one named shape. Define it once; the vault remembers the shape forever after.`,
+    },
+    {
+      kind: "theory",
+      body: `To bring the blueprint to life, fill in every field — a **struct literal**:
+
+\`\`\`rust
+let hero = Player { name: String::from("Ferrisia"), hp: 100 };
+\`\`\`
+
+Reach into it with a dot: \`hero.name\`, \`hero.hp\`. No key, no lookup — the field is simply *part of* the value.`,
+    },
+    {
+      kind: "quiz",
+      question: "Given `struct Player { name: String, hp: i32 }`, how do you read the hp field of `hero`?",
+      options: ["hero.hp", "hero[\"hp\"]", "hero::hp"],
+      answer: 0,
+      explain: "Dot notation reaches straight into a field — no lookup, no brackets.",
+    },
+    {
+      kind: "fill",
+      prompt: "Complete the struct literal for hero.",
+      file: "main.rs",
+      before: "let hero = Player { name: String::from(\"Ferrisia\"), ",
+      after: " };",
+      choices: ["hp: 100", "hp = 100", "100"],
+      answer: 0,
+      explain: "Every field needs `field: value` inside the literal, separated by commas.",
+    },
+    {
+      kind: "editor",
+      intro: `### Final trial — the blueprint in the deepest vault
+
+1. Define \`struct Player { name: String, hp: i32 }\`.
+2. Create \`let hero = Player { name: String::from("Ferrisia"), hp: 100 };\`.
+3. Print \`Ferrisia has 100 hp\`.
+
+Expected output:
+
+\`\`\`text
+Ferrisia has 100 hp
+\`\`\``,
+    },
+  ],
+
+  "rust-standard-library-8": [
+    {
+      kind: "theory",
+      image: "/mascot/mascot-guide.png",
+      body: `A blueprint alone is inert — it holds shape, but no behavior. The Hoarder teaches you the rite that wakes it: an \`impl\` block.
+
+\`\`\`rust
+impl Player {
+    fn new(name: &str) -> Player {
+        Player { name: String::from(name), hp: 100 }
+    }
+}
+\`\`\`
+
+\`new\` takes no \`self\` — it doesn't act on an existing Player, it *makes* one. Call it \`Player::new("Ferrisia")\`, with the type name, not a value.`,
+    },
+    {
+      kind: "theory",
+      body: `A function that *does* take \`&self\` is a **method** — it acts on one specific instance, called with the dot:
+
+\`\`\`rust
+impl Player {
+    fn is_alive(&self) -> bool {
+        self.hp > 0
+    }
+}
+
+hero.is_alive();
+\`\`\`
+
+And mark the struct \`#[derive(Debug)]\` to let Rust generate a debug view for free — printable with \`{:?}\`, no method required.`,
+    },
+    {
+      kind: "quiz",
+      question: "Why doesn't `Player::new(...)` take `&self`?",
+      options: [
+        "It creates the Player — there's no instance yet to act on",
+        "self is optional in every impl block",
+        "new is a keyword that never takes arguments",
+      ],
+      answer: 0,
+      explain: "Associated functions like `new` build the value — a method acts on one that already exists.",
+    },
+    {
+      kind: "fill",
+      prompt: "Complete the method signature — it needs to read the instance, not consume it.",
+      file: "main.rs",
+      before: "fn is_alive(",
+      after: ") -> bool {\n    self.hp > 0\n}",
+      choices: ["&self", "self", "player: &Player"],
+      answer: 0,
+      explain: "&self borrows the instance so is_alive can read hp without taking ownership of hero.",
+    },
+    {
+      kind: "editor",
+      intro: `### Final trial — the rite that wakes the vessel
+
+1. Add \`#[derive(Debug)]\` above \`Player\`.
+2. Write \`new(name: &str) -> Player\` and \`is_alive(&self) -> bool\` inside \`impl Player\`.
+3. Create \`hero\` with \`Player::new("Ferrisia")\`, print \`alive: {}\` with \`hero.is_alive()\`, then print \`hero\` with \`{:?}\`.
+
+Expected output:
+
+\`\`\`text
+alive: true
+Player { name: "Ferrisia", hp: 100 }
+\`\`\``,
+    },
+  ],
+
   /* ───────────────────── Act IV · Option ───────────────────── */
 
   "mastering-option-1": [
@@ -1573,6 +1701,16 @@ fn double_first() -> Result<i32, String> {
 This is how real Rust code stays readable: errors flow uphill, logic stays flat.`,
     },
     {
+      kind: "theory",
+      body: `One more rune sits in the \`parse\` helper you're given, already written:
+
+\`\`\`rust
+text.parse().map_err(|_| String::from("not a number"))
+\`\`\`
+
+\`|_| String::from("not a number")\` is a **closure** — a small, anonymous function. The \`_\` means "take the argument, I don't need it"; the body is what the closure hands back. You don't need to write one yet — just know \`map_err\` calls it only when there's an \`Err\` to translate.`,
+    },
+    {
       kind: "quiz",
       question: "What does `?` do when the Result is `Err`?",
       options: [
@@ -1864,6 +2002,20 @@ lumens flowing ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
+      body: `Before the Gate, in the Hoarder's vault, you learned the rite of \`struct\` and \`impl\` — a blueprint, and the maker that gives it life. Nothing beyond the Gate is different in kind.
+
+\`\`\`rust
+#[contract]
+pub struct HelloContract;
+
+#[contractimpl]
+impl HelloContract { /* ... */ }
+\`\`\`
+
+\`#[contract]\` and \`#[contractimpl]\` are marks the ledger's host reads on top of that same struct and impl — not new syntax, the same shape with a seal pressed into it.`,
+    },
+    {
+      kind: "theory",
       body: `Forgeborn, the rules change beyond the Gate. A **Soroban contract** is a Rust library compiled to WASM and stored on the Stellar ledger — where anyone can invoke it.
 
 \`\`\`rust
@@ -2151,6 +2303,58 @@ beacon lit: protocol 27 (zipper) ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
+      body: `Under the old sky, \`star-keep chartered ✓\` felt simple: two keys, \`G...\` and \`S...\`. But nobody ever asked *how* the sky checked a signature. The answer has a name: **ed25519** — the cryptographic scheme that lets a secret key sign and a public key verify, with nobody else able to forge it.`,
+    },
+    {
+      kind: "theory",
+      body: `An \`Address\`, though, was never a promise of *keys* — only a promise of identity. Protocol 27 makes plain what was always true: some Addresses hold no keypair at all. They hold code, and that code writes its own law of what counts as signed.
+
+\`\`\`rust
+fn __check_auth(env: Env, payload: Hash<32>, signatures: BytesN<64>, contexts: Vec<Context>)
+\`\`\`
+
+Same \`Address\`. Same \`require_auth()\` call site. Two entirely different keepers underneath.`,
+    },
+    {
+      kind: "quiz",
+      question: "How does a contract-account Address prove a signature is valid?",
+      options: [
+        "It runs its own __check_auth logic — there's no keypair to check",
+        "The protocol always checks an ed25519 signature, for every Address",
+        "Contract accounts can never be signed for",
+      ],
+      answer: 0,
+      explain: "A contract-account Address has no keys — __check_auth is the entirety of its law of signatures.",
+    },
+    {
+      kind: "fill",
+      prompt: "Name the entry point a contract-account defines to write its own law of signatures.",
+      file: "lib.rs",
+      before: "impl GuardianAccount {\n    fn ",
+      after: "(env: Env, payload: Hash<32>, sig: BytesN<64>, ctx: Vec<Context>) {\n        // ...\n    }\n}",
+      choices: ["__check_auth", "check_auth", "verify_signature"],
+      answer: 0,
+      explain: "The host looks for exactly this name when require_auth() fires on a contract-account Address.",
+    },
+    {
+      kind: "editor",
+      intro: `### Final trial — the seal reconsidered
+
+1. \`signature_scheme = "ed25519"\`
+2. \`contract_entry_point = "__check_auth"\`
+
+Expected result:
+
+\`\`\`text
+the seal reconsidered ✓
+\`\`\``,
+    },
+  ],
+
+  "stellar-protocol-27-3": [
+    {
+      kind: "theory",
+      image: "/mascot/mascot-guide.png",
       body: `In the Lair you sealed a vault with \`require_auth()\`. But who *verifies* the seal?
 
 For a normal account, the protocol checks an ed25519 signature against the account's keys. But an \`Address\` in Soroban can also belong to a **contract** — and then something remarkable happens.`,
@@ -2217,7 +2421,7 @@ __check_auth: the account writes its own law ✓
     },
   ],
 
-  "stellar-protocol-27-3": [
+  "stellar-protocol-27-4": [
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
@@ -2280,11 +2484,15 @@ crown delegated: steward honored ✓
     },
   ],
 
-  "stellar-protocol-27-4": [
+  "stellar-protocol-27-5": [
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `The Echo Wraith's trick, in plain terms — a **signature replay**. Security audits found it needs three things at once:
+      body: `A **replay attack** is an old trick with a new name: take something valid — a signature, a stamped seal, a ticket stub — and reuse it somewhere it was never meant to work. The signer never agreed to the second use. The seal itself has no memory; it can't tell it's being asked twice.`,
+    },
+    {
+      kind: "theory",
+      body: `The Echo Wraith's version needs three things at once:
 
 1. An admin-style contract that **doesn't name the signer's address** in the signed payload.
 2. The admin gets **rotated** to a different address…
@@ -2359,7 +2567,7 @@ seal bound to its door: the echo dies ✓
     },
   ],
 
-  "stellar-protocol-27-5": [
+  "stellar-protocol-27-6": [
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
@@ -2371,17 +2579,15 @@ Every SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixi
     },
     {
       kind: "theory",
-      body: `The one **breaking change** most apps feel:
+      body: `The one **breaking change** most apps feel — recorded here as a fact, not a rewrite:
 
-\`\`\`ts
-// before the Zipper:
-import { xdr } from "@stellar/stellar-base";
-
-// after — the base package was consolidated:
-import { xdr } from "@stellar/stellar-sdk";
+\`\`\`rust
+// before the Zipper, JS apps imported from "@stellar/stellar-base"
+// after — the base package was consolidated into "@stellar/stellar-sdk"
+pub const JS_XDR_PACKAGE: &str = "@stellar/stellar-sdk";
 \`\`\`
 
-Rename the import, and the caravan moves on. The rest of the migration notes live in the [official guidance](https://developers.stellar.org/meetings/2026/04/30#migration-guidance).`,
+Whatever SDK you ship in, the caravan moves on. The rest of the migration notes live in the [official guidance](https://developers.stellar.org/meetings/2026/04/30#migration-guidance).`,
     },
     {
       kind: "theory",
@@ -2407,9 +2613,9 @@ The [upgrade guide](https://stellar.org/blog/foundation-news/stellar-zipper-prot
     },
     {
       kind: "fill",
-      prompt: "Fix the import so it crosses the Gate.",
-      file: "app.ts",
-      before: "import { xdr } from \"@stellar/stellar-",
+      prompt: "Record the package that crossed the Gate.",
+      file: "lib.rs",
+      before: "pub const JS_XDR_PACKAGE: &str = \"@stellar/stellar-",
       after: "\";",
       choices: ["sdk", "base", "core"],
       answer: 0,
@@ -2431,7 +2637,7 @@ caravan cleared the Gate: nothing left behind ✓
     },
   ],
 
-  "stellar-protocol-27-6": [
+  "stellar-protocol-27-7": [
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",

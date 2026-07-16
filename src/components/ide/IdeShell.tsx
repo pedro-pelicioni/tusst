@@ -6,10 +6,12 @@ import type { SorobanFileMap } from "@/lib/soroban/types";
 import {
   createProject,
   deleteProject,
+  getTutorialSeen,
   listProjects,
   loadProject,
   renameProject,
   saveProject,
+  setTutorialSeen,
   type ForgeProjectMeta,
 } from "@/lib/forge-store";
 import { forgeTemplates, templateById } from "@/content/soroban-templates";
@@ -20,6 +22,7 @@ import { DeployPanel } from "./DeployPanel";
 import { EditorPane } from "./EditorPane";
 import { ExplorePanel } from "./ExplorePanel";
 import { FileTree } from "./FileTree";
+import { IdeTutorial } from "./IdeTutorial";
 import { InteractPanel } from "./InteractPanel";
 import { ProjectDrawer } from "./ProjectDrawer";
 import { WalletMenu } from "./WalletMenu";
@@ -45,6 +48,7 @@ export function IdeShell() {
   const [wallet, setWallet] = useState<ForgeWallet | null>(null);
   const [panelTab, setPanelTab] = useState<"deploy" | "interact" | "explore">("deploy");
   const [lastContractId, setLastContractId] = useState<string | null>(null);
+  const [showTutorial, setShowTutorial] = useState(false);
   const { status, lines, wasm, running, run, cancel } = useForgeRun();
 
   function openProject(id: string, metas?: ForgeProjectMeta[]) {
@@ -70,9 +74,15 @@ export function IdeShell() {
     setProjects(metas);
     openProject(metas[0].id, metas);
     setLoaded(true);
+    if (!getTutorialSeen()) setShowTutorial(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   /* eslint-enable react-hooks/set-state-in-effect */
+
+  const dismissTutorial = useCallback(() => {
+    setTutorialSeen();
+    setShowTutorial(false);
+  }, []);
 
   // Debounced autosave of the working copy.
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -145,6 +155,7 @@ export function IdeShell() {
         <div className="flex min-w-0 items-center gap-3">
           <button
             type="button"
+            data-tutorial-id="projects"
             onClick={() => setDrawerOpen(true)}
             className="rounded-md border border-line px-3 py-1.5 font-mono text-[11px] text-muted2 transition hover:border-line-strong hover:text-fg"
           >
@@ -158,24 +169,37 @@ export function IdeShell() {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <BuildToolbar
-            status={status}
-            running={running}
-            hasWasm={wasm !== null}
-            onBuild={() => run("build", files)}
-            onTest={() => run("test", files)}
-            onAudit={() => run("audit", files)}
-            onCancel={cancel}
-            onDownload={downloadWasm}
-          />
+          <div data-tutorial-id="build" className="flex items-center gap-2">
+            <BuildToolbar
+              status={status}
+              running={running}
+              hasWasm={wasm !== null}
+              onBuild={() => run("build", files)}
+              onTest={() => run("test", files)}
+              onAudit={() => run("audit", files)}
+              onCancel={cancel}
+              onDownload={downloadWasm}
+            />
+          </div>
           <div className="h-5 w-px bg-line" />
-          <WalletMenu wallet={wallet} onWalletChange={setWallet} />
+          <div data-tutorial-id="wallet">
+            <WalletMenu wallet={wallet} onWalletChange={setWallet} />
+          </div>
+          <button
+            type="button"
+            title={m.ide.tutorial.reopenTitle}
+            aria-label={m.ide.tutorial.reopenTitle}
+            onClick={() => setShowTutorial(true)}
+            className="grid h-7 w-7 place-items-center rounded-full border border-line font-mono text-[11px] text-muted2 transition hover:border-line-strong hover:text-fg"
+          >
+            ?
+          </button>
         </div>
       </div>
 
       {/* panes */}
       <div className="flex min-h-0 flex-1">
-        <aside className="w-52 shrink-0 border-r border-line bg-bg-elev">
+        <aside data-tutorial-id="fileTree" className="w-52 shrink-0 border-r border-line bg-bg-elev">
           <FileTree
             files={Object.keys(files)}
             activeFile={activeFile}
@@ -189,7 +213,7 @@ export function IdeShell() {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <div className="min-h-0 flex-1">
+          <div data-tutorial-id="editor" className="min-h-0 flex-1">
             <EditorPane
               path={activeFile}
               value={files[activeFile] ?? ""}
@@ -198,12 +222,12 @@ export function IdeShell() {
               onSave={saveNow}
             />
           </div>
-          <div className="h-56 shrink-0 border-t border-line">
+          <div data-tutorial-id="console" className="h-56 shrink-0 border-t border-line">
             <ConsolePane lines={lines} status={status} />
           </div>
         </div>
 
-        <aside className="flex w-[360px] shrink-0 flex-col border-l border-line bg-bg-elev">
+        <aside data-tutorial-id="panels" className="flex w-[360px] shrink-0 flex-col border-l border-line bg-bg-elev">
           <div className="flex border-b border-line">
             {(["deploy", "interact", "explore"] as const).map((tab) => (
               <button
@@ -288,6 +312,8 @@ export function IdeShell() {
           }
         }}
       />
+
+      {showTutorial && <IdeTutorial onDone={dismissTutorial} />}
     </div>
   );
 }

@@ -296,6 +296,20 @@ export const acts: Act[] = [
         intro:
           "The Hoarder will not let you carry the hoard out — but he'll let you look. A slice is a window into a stretch of treasure: no copy, no theft, just a view from here to there. Mind the edges; the window includes its start and excludes its end.",
       },
+      {
+        lessonSlug: "rust-standard-library-7",
+        numeral: "III.7",
+        title: "The Blueprint in the Deepest Vault",
+        intro:
+          "Past the ledgers and the living ink, one door remains: the Hoarder's own workshop, where every treasure begins as a blueprint before it becomes a thing. \"A `struct`,\" he says, tracing the mold with one claw, \"binds many parts under one name — a shape the vault will recognize forever after.\"",
+      },
+      {
+        lessonSlug: "rust-standard-library-8",
+        numeral: "III.8",
+        title: "The Rite That Wakes the Vessel",
+        intro:
+          "A blueprint is inert until it is given a rite — a maker to shape it, and a voice to answer for it. \"An `impl` block teaches the shape what it can do,\" the Hoarder says. \"Mark it with `derive`, too, so it may speak its own secrets aloud when you demand to see them.\"",
+      },
     ],
   },
   {
@@ -457,34 +471,41 @@ export const acts: Act[] = [
       {
         lessonSlug: "stellar-protocol-27-2",
         numeral: "VIII.2",
+        title: "The Seal, Two Ways",
+        intro:
+          "Before the vault answers your question, ask what a seal even is. Under the old sky, a keeper was two keys: one that speaks, one that must never be spoken aloud — and the sky itself judged the speaking, a rite called ed25519. But some doors in the reforged firmament have no keeper at all. Only a law, written in `__check_auth`, judging itself.",
+      },
+      {
+        lessonSlug: "stellar-protocol-27-3",
+        numeral: "VIII.3",
         title: "The Seal, Remembered",
         intro:
           "Return to the vault you sealed in the Lair. `require_auth` held — but a question lingers in the rebuilt halls: what if the one holding the seal is not a keypair, but a *contract*? Accounts that are contracts write their own law of signatures: `__check_auth`.",
       },
       {
-        lessonSlug: "stellar-protocol-27-3",
-        numeral: "VIII.3",
+        lessonSlug: "stellar-protocol-27-4",
+        numeral: "VIII.4",
         title: "The Delegated Crown",
         intro:
           "No keeper guards every vault alone. Under the old sky, lending your seal meant fragile rounds of divination — simulate, propagate, pray. The rewritten sky makes delegation law: `delegate_account_auth`, spoken inside `__check_auth`, hands the check to a steward you trust.",
       },
       {
-        lessonSlug: "stellar-protocol-27-4",
-        numeral: "VIII.4",
+        lessonSlug: "stellar-protocol-27-5",
+        numeral: "VIII.5",
         title: "The Echo That Signs Twice",
         intro:
           "It shows itself at last: the eye that never closed. The Echo Wraith steals a true seal and speaks it again — before a different vault signed by the same pen. The rewritten sky answers with a seal bound to its own door: credentials that name their address.",
       },
       {
-        lessonSlug: "stellar-protocol-27-5",
-        numeral: "VIII.5",
+        lessonSlug: "stellar-protocol-27-6",
+        numeral: "VIII.6",
         title: "The Migration Caravan",
         intro:
           "The caravans line up at the Gate, wagons heavy with every tool forged under the old sky. Nothing crosses into the reforged firmament unchanged — every SDK reforged, every import renamed. Walk the caravan road, Forgeborn, and leave nothing behind that still speaks the old tongue.",
       },
       {
-        lessonSlug: "stellar-protocol-27-6",
-        numeral: "VIII.6",
+        lessonSlug: "stellar-protocol-27-7",
+        numeral: "VIII.7",
         title: "The Wraith's Last Echo",
         intro:
           "The Wraith comes for your vault with a stolen seal and a perfect echo. But your account is no longer a door with one key — it is law: a `__check_auth` that verifies its signer and delegates to a steward crown. Bind the seal. Silence the echo. End the campaign.",

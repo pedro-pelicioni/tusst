@@ -146,4 +146,42 @@ export const ide = {
     networkError: "Error de red — intenta de nuevo.",
     cancelled: "// cancelado",
   },
+  tutorial: {
+    reopenTitle: "repetir el tutorial",
+    skip: "omitir tutorial",
+    next: "siguiente",
+    back: "atrás",
+    done: "entendido",
+    stepCounter: "{current} de {total}",
+    steps: {
+      projects: {
+        title: "Proyectos",
+        body: "Cada contrato que escribes vive en un proyecto. Ábrelo para cambiar de proyecto, empezar desde una plantilla o importar uno desde GitHub.",
+      },
+      fileTree: {
+        title: "Archivos",
+        body: "Los archivos de tu proyecto — el Cargo.toml y todo lo que hay bajo src/. Haz clic en uno para abrirlo; el + añade uno nuevo.",
+      },
+      editor: {
+        title: "Editor",
+        body: "Tu código, en vivo. ⌘⏎ compila, ⌘S guarda. Cargo.toml y src/lib.rs quedan protegidos — el contrato necesita ambos para compilar.",
+      },
+      build: {
+        title: "Build · Test · Audit",
+        body: "Build compila tu contrato a WASM. Test corre sus pruebas unitarias. Audit revisa problemas de seguridad comunes. Nada se despliega hasta que Build funcione.",
+      },
+      console: {
+        title: "Consola",
+        body: "La salida del build, las pruebas y la auditoría aparece aquí — incluidos los propios mensajes de error del compilador de Rust.",
+      },
+      wallet: {
+        title: "Billetera",
+        body: "Desplegar o escribir en un contrato requiere firma. Genera una billetera local gratuita para experimentos en testnet, o conecta una real como Freighter.",
+      },
+      panels: {
+        title: "Desplegar · Interactuar · Explorar",
+        body: "Una vez compilado, Desplegar envía tu contrato a testnet. Interactuar llama funciones de los contratos que ya desplegaste. Explorar llama funciones de cualquier contrato, sea tuyo o no.",
+      },
+    },
+  },
 };

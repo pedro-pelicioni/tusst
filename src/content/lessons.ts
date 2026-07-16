@@ -1028,6 +1028,153 @@ middle: [2, 3, 4]
     expectedOutput: "middle: [2, 3, 4]\n",
   },
 
+  "rust-standard-library-7": {
+    instructions: `## Structs
+
+A **struct** groups related values into one named type. Define the shape once, then create as many instances as you want:
+
+\`\`\`rust
+struct Player {
+    name: String,
+    hp: i32,
+}
+\`\`\`
+
+Create an instance with a **struct literal**, giving every field a value:
+
+\`\`\`rust
+let hero = Player { name: String::from("Ferrisia"), hp: 100 };
+\`\`\`
+
+Access a field with dot notation: \`hero.name\`, \`hero.hp\`.
+
+### Your task
+
+1. Define a \`Player\` struct with fields \`name: String\` and \`hp: i32\` — in that order.
+2. Create a \`Player\` named \`hero\` with \`name: String::from("Ferrisia")\` and \`hp: 100\`.
+3. Print exactly: \`Ferrisia has 100 hp\`.
+
+### Hints
+
+- Field order in the struct definition matters for this lesson: \`name\` first, then \`hp\`.
+- Use \`{} has {} hp\` with \`hero.name\` and \`hero.hp\`.
+`,
+    starterCode: `struct Player {
+    // define name: String and hp: i32
+}
+
+fn main() {
+    // create hero, then print "Ferrisia has 100 hp"
+}
+`,
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: "defines a Player struct with name and hp fields",
+        kind: "struct_defined",
+        struct: "Player",
+        fields: [
+          { name: "name", ty: "String" },
+          { name: "hp", ty: "i32" },
+        ],
+      },
+      { name: "binds a variable named hero", kind: "let_binding", var: "hero" },
+      {
+        name: 'prints "Ferrisia has 100 hp"',
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"{} has {} hp", hero.name, hero.hp',
+      },
+    ],
+    expectedOutput: "Ferrisia has 100 hp\n",
+  },
+
+  "rust-standard-library-8": {
+    instructions: `## impl & Methods
+
+A struct on its own only holds data. An \`impl\` block attaches behavior to it — functions that know how to work with that type.
+
+\`\`\`rust
+impl Player {
+    fn new(name: &str) -> Player {
+        Player { name: String::from(name), hp: 100 }
+    }
+
+    fn is_alive(&self) -> bool {
+        self.hp > 0
+    }
+}
+\`\`\`
+
+- \`new\` is an **associated function** — no \`self\`, called as \`Player::new(...)\`.
+- \`is_alive\` is a **method** — takes \`&self\`, called as \`hero.is_alive()\`.
+
+Add \`#[derive(Debug)]\` above the struct to let Rust auto-generate a debug view you can print with \`{:?}\`:
+
+\`\`\`rust
+#[derive(Debug)]
+struct Player { /* ... */ }
+\`\`\`
+
+### Your task
+
+1. Add \`#[derive(Debug)]\` above \`Player\`.
+2. Inside \`impl Player\`, write \`new(name: &str) -> Player\` that builds a \`Player\` with the given name and \`hp: 100\`.
+3. Write a method \`is_alive(&self) -> bool\` returning \`self.hp > 0\`.
+4. In \`main\`, create \`hero\` with \`Player::new("Ferrisia")\`, print \`alive: {}\` with \`hero.is_alive()\`, then print \`hero\` with \`{:?}\`.
+
+Expected output:
+
+\`\`\`text
+alive: true
+Player { name: "Ferrisia", hp: 100 }
+\`\`\`
+`,
+    starterCode: `#[derive(Debug)]
+struct Player {
+    name: String,
+    hp: i32,
+}
+
+impl Player {
+    // fn new(name: &str) -> Player { ... }
+
+    // fn is_alive(&self) -> bool { ... }
+}
+
+fn main() {
+    // create hero with Player::new("Ferrisia")
+    // print "alive: {}" with hero.is_alive()
+    // print hero with {:?}
+}
+`,
+    grader: "sandbox",
+    astChecks: [
+      {
+        name: "derives Debug on Player",
+        kind: "derive_present",
+        type: "Player",
+        derives: ["Debug"],
+      },
+      { name: "defines impl Player", kind: "impl_defined", type: "Player" },
+      { name: "defines an associated fn new returning Player", kind: "fn_defined", fn: "new", returns: "Player" },
+      { name: "defines a method is_alive returning bool", kind: "fn_defined", fn: "is_alive", returns: "bool" },
+      {
+        name: 'prints "alive: {}" with hero.is_alive()',
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"alive: {}", hero.is_alive()',
+      },
+      {
+        name: 'prints hero with the {:?} debug marker',
+        kind: "macro_invoked",
+        macro: "println",
+        args: '"{:?}", hero',
+      },
+    ],
+    expectedOutput: 'alive: true\nPlayer { name: "Ferrisia", hp: 100 }\n',
+  },
+
   /* ───────────────────── Act IV · Option ───────────────────── */
 
   "mastering-option-1": {
@@ -1697,6 +1844,50 @@ pub const MAINNET_VOTE: &str = "";   // ← YYYY-MM-DD of the Mainnet vote
   },
 
   "stellar-protocol-27-2": {
+    instructions: `## The Seal, Two Ways
+
+Under the old sky, an account was simple: two keys. The secret key signs; the network checks that signature against the public key using **ed25519** — a specific cryptographic scheme for making and verifying digital signatures. Sign with the secret half, verify with the public half — nobody without the secret key can forge it.
+
+But an \`Address\` on Stellar was never *only* a promise of keys — only a promise of identity. It can also point to a **contract**: no keypair at all, just code that writes its own rule for what counts as "signed." That rule lives in one entry point, \`__check_auth\`.
+
+| | classic account | contract account |
+|---|---|---|
+| holds | a keypair | no keys — just code |
+| proves identity via | an ed25519 signature | its own \`__check_auth\` logic |
+
+Same \`Address\` type. Same \`require_auth()\` call site. Two entirely different keepers underneath.
+
+### Your task
+
+Fill in the reconsidered charter:
+
+1. \`signature_scheme\` — the cryptographic scheme a classic account signs with.
+2. \`contract_entry_point\` — the function name a contract-account defines to write its own law of signatures.
+
+Expected result:
+
+\`\`\`text
+the seal reconsidered ✓
+\`\`\`
+`,
+    starterCode: `# ── the seal reconsidered ──────────────────────
+# Two kinds of keeper can hold the same Address.
+
+signature_scheme = ""        # what a classic account signs with
+contract_entry_point = ""    # what a contract account defines instead
+`,
+    grader: "regex",
+    checks: [
+      { name: "names the classic signature scheme", pattern: /signature_scheme\s*=\s*"ed25519"/ },
+      {
+        name: "names the contract-account entry point",
+        pattern: /contract_entry_point\s*=\s*"__check_auth"/,
+      },
+    ],
+    expectedOutput: "the seal reconsidered ✓\n",
+  },
+
+  "stellar-protocol-27-3": {
     instructions: `## Smart Accounts & \`__check_auth\`
 
 In the Lair you learned \`require_auth()\` — the seal. But *who* verifies the seal? For a normal account, the protocol checks an ed25519 signature. When the \`Address\` belongs to a **contract**, the host instead invokes that contract's own entry point:
@@ -1749,7 +1940,7 @@ impl GuardianAccount {
     expectedOutput: "__check_auth: the account writes its own law ✓\n",
   },
 
-  "stellar-protocol-27-3": {
+  "stellar-protocol-27-4": {
     instructions: `## Authentication Delegation (CAP-0071-01)
 
 Before the Zipper, a custom account that wanted *another* contract to vouch for it had no protocol support — builders faked it with fragile rounds of pre-simulation to propagate the auth context. Protocol 27 makes delegation law with two new host functions:
@@ -1809,10 +2000,10 @@ impl CrownAccount {
     expectedOutput: "crown delegated: steward honored ✓\n",
   },
 
-  "stellar-protocol-27-4": {
+  "stellar-protocol-27-5": {
     instructions: `## Signature Security & V2 Credentials (CAP-0071-02)
 
-Security audits found a subtle echo in the old credential format. The scenario needs three things at once:
+A **replay attack** takes something valid — a signature, a stamped seal — and reuses it somewhere it was never meant to work. Security audits found a subtle version of this hiding in the old credential format. The scenario needs three things at once:
 
 1. An admin-style contract that **doesn't include the signer's address** in the signed payload.
 2. The admin is **rotated** to a different address…
@@ -1865,7 +2056,7 @@ impl BoundAccount {
     expectedOutput: "seal bound to its door: the echo dies ✓\n",
   },
 
-  "stellar-protocol-27-5": {
+  "stellar-protocol-27-6": {
     instructions: `## Migrating to Protocol 27
 
 A protocol upgrade is a caravan, and the release order was the road: **Core → SDKs → RPC & Galexie → Horizon → Testnet → Mainnet**. Every SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixir — shipped a Protocol-27 release and must be upgraded before Mainnet turns.
@@ -1917,7 +2108,7 @@ pub const UPGRADE_ALL_SDKS: bool = false;
     expectedOutput: "caravan cleared the Gate: nothing left behind ✓\n",
   },
 
-  "stellar-protocol-27-6": {
+  "stellar-protocol-27-7": {
     instructions: `## Boss: The Delegated Account
 
 Everything converges. The Echo Wraith arrives with a stolen seal — and meets an account that is *law*: a custom account whose \`__check_auth\` verifies its root signer **and** delegates to a steward, exactly as Protocol 27 intended.

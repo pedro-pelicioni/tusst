@@ -146,4 +146,42 @@ export const ide = {
     networkError: "Erreur réseau — réessaie.",
     cancelled: "// annulé",
   },
+  tutorial: {
+    reopenTitle: "revoir le tutoriel",
+    skip: "passer le tutoriel",
+    next: "suivant",
+    back: "précédent",
+    done: "compris",
+    stepCounter: "{current} sur {total}",
+    steps: {
+      projects: {
+        title: "Projets",
+        body: "Chaque contrat que tu écris vit dans un projet. Ouvre ce menu pour changer de projet, partir d'un modèle, ou importer depuis GitHub.",
+      },
+      fileTree: {
+        title: "Fichiers",
+        body: "Les fichiers de ton projet — le Cargo.toml et tout ce qui se trouve sous src/. Clique sur un fichier pour l'ouvrir ; le + en ajoute un nouveau.",
+      },
+      editor: {
+        title: "Éditeur",
+        body: "Ton code, en direct. ⌘⏎ compile, ⌘S enregistre. Cargo.toml et src/lib.rs restent protégés — le contrat a besoin des deux pour compiler.",
+      },
+      build: {
+        title: "Build · Test · Audit",
+        body: "Build compile ton contrat en WASM. Test lance ses tests unitaires. Audit vérifie les problèmes de sécurité courants. Rien ne se déploie tant que Build n'a pas réussi.",
+      },
+      console: {
+        title: "Console",
+        body: "La sortie du build, des tests et de l'audit apparaît ici — y compris les messages d'erreur du compilateur Rust lui-même.",
+      },
+      wallet: {
+        title: "Portefeuille",
+        body: "Déployer ou écrire dans un contrat nécessite une signature. Génère un portefeuille local gratuit pour tes essais sur testnet, ou connecte-en un vrai comme Freighter.",
+      },
+      panels: {
+        title: "Déployer · Interagir · Explorer",
+        body: "Une fois le build fait, Déployer envoie ton contrat sur testnet. Interagir appelle des fonctions sur les contrats que tu as déployés. Explorer appelle des fonctions sur n'importe quel contrat, le tien ou non.",
+      },
+    },
+  },
 };

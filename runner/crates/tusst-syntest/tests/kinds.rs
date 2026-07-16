@@ -4,7 +4,7 @@
 use tusst_syntest::{evaluate, parse_spec};
 
 fn run(source: &str, checks_json: &str) -> Vec<bool> {
-    let spec = parse_spec(&format!(r#"{{"schema_version":1,"checks":{checks_json}}}"#))
+    let spec = parse_spec(&format!(r#"{{"schema_version":2,"checks":{checks_json}}}"#))
         .expect("spec parses");
     let result = evaluate(source, &spec.checks);
     assert!(result.syntax_ok, "fixture source must parse");
@@ -358,6 +358,101 @@ fn comments_and_strings_do_not_count() {
     assert!(run_one(
         src,
         r#"{"name":"t","kind":"macro_invoked","macro":"todo","forbidden":true}"#
+    ));
+}
+
+#[test]
+fn struct_defined() {
+    let src = r#"
+        struct Player { name: String, hp: i32 }
+        struct Point(i32, i32);
+        struct Unit;
+    "#;
+    assert!(run_one(
+        src,
+        r#"{"name":"t","kind":"struct_defined","struct":"Player"}"#
+    ));
+    assert!(run_one(
+        src,
+        r#"{"name":"t","kind":"struct_defined","struct":"Player","fields":[{"name":"name","ty":"String"},{"name":"hp","ty":"i32"}]}"#
+    ));
+    // field type mismatch / arity mismatch / unknown struct
+    assert!(!run_one(
+        src,
+        r#"{"name":"t","kind":"struct_defined","struct":"Player","fields":[{"name":"name","ty":"String"}]}"#
+    ));
+    assert!(!run_one(
+        src,
+        r#"{"name":"t","kind":"struct_defined","struct":"Player","fields":[{"name":"hp","ty":"String"}]}"#
+    ));
+    assert!(!run_one(
+        src,
+        r#"{"name":"t","kind":"struct_defined","struct":"Ghost"}"#
+    ));
+    // tuple struct fields by positional index
+    assert!(run_one(
+        src,
+        r#"{"name":"t","kind":"struct_defined","struct":"Point","fields":[{"ty":"i32"},{"ty":"i32"}]}"#
+    ));
+    assert!(run_one(
+        src,
+        r#"{"name":"t","kind":"struct_defined","struct":"Unit"}"#
+    ));
+}
+
+#[test]
+fn impl_defined() {
+    let src = r#"
+        struct Player { hp: i32 }
+        impl Player {
+            fn heal(&self) {}
+        }
+        impl std::fmt::Debug for Player {
+            fn fmt(&self) {}
+        }
+    "#;
+    assert!(run_one(
+        src,
+        r#"{"name":"t","kind":"impl_defined","type":"Player"}"#
+    ));
+    assert!(run_one(
+        src,
+        r#"{"name":"t","kind":"impl_defined","type":"Player","trait":"std::fmt::Debug"}"#
+    ));
+    // wrong trait / wrong type
+    assert!(!run_one(
+        src,
+        r#"{"name":"t","kind":"impl_defined","type":"Player","trait":"Clone"}"#
+    ));
+    assert!(!run_one(
+        src,
+        r#"{"name":"t","kind":"impl_defined","type":"Ghost"}"#
+    ));
+}
+
+#[test]
+fn derive_present() {
+    let src = r#"
+        #[derive(Debug, Clone)]
+        struct Player { hp: i32 }
+        struct Ghost { hp: i32 }
+    "#;
+    assert!(run_one(
+        src,
+        r#"{"name":"t","kind":"derive_present","type":"Player","derives":["Debug"]}"#
+    ));
+    assert!(run_one(
+        src,
+        r#"{"name":"t","kind":"derive_present","type":"Player","derives":["Debug","Clone"]}"#
+    ));
+    // missing derive / wrong struct
+    assert!(!run_one(
+        src,
+        r#"{"name":"t","kind":"derive_present","type":"Player","derives":["PartialEq"]}"#
+    ));
+    assert!(!run_one(
+        src,
+        r#"{"name":"t","kind":"derive_present","type":"Ghost","derives":["Debug"]}"#
     ));
 }
 

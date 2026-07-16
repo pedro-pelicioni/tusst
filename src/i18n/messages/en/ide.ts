@@ -146,4 +146,42 @@ export const ide = {
     networkError: "Network error — try again.",
     cancelled: "// cancelled",
   },
+  tutorial: {
+    reopenTitle: "replay the tutorial",
+    skip: "skip tutorial",
+    next: "next",
+    back: "back",
+    done: "got it",
+    stepCounter: "{current} of {total}",
+    steps: {
+      projects: {
+        title: "Projects",
+        body: "Every contract you write lives in a project. Open this to switch between projects, start from a template, or import one from GitHub.",
+      },
+      fileTree: {
+        title: "Files",
+        body: "Your project's files — Cargo.toml and everything under src/. Click one to open it; + adds a new one.",
+      },
+      editor: {
+        title: "Editor",
+        body: "Your code, live. ⌘⏎ builds, ⌘S saves. Cargo.toml and src/lib.rs stay protected — a contract needs both to compile.",
+      },
+      build: {
+        title: "Build · Test · Audit",
+        body: "Build compiles your contract to WASM. Test runs its unit tests. Audit checks for common security issues. Nothing deploys until Build succeeds.",
+      },
+      console: {
+        title: "Console",
+        body: "Build, test, and audit output lands here — including the Rust compiler's own error messages.",
+      },
+      wallet: {
+        title: "Wallet",
+        body: "Deploying or writing to a contract needs a signature. Generate a free local wallet for testnet experiments, or connect a real one like Freighter.",
+      },
+      panels: {
+        title: "Deploy · Interact · Explore",
+        body: "Once you've built, Deploy sends your contract to testnet. Interact calls functions on contracts you've deployed. Explore calls functions on any contract, yours or not.",
+      },
+    },
+  },
 };

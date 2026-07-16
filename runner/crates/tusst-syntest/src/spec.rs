@@ -6,7 +6,7 @@
 
 use serde::Deserialize;
 
-pub const SCHEMA_VERSION: u32 = 1;
+pub const SCHEMA_VERSION: u32 = 2;
 
 #[derive(Debug, Deserialize)]
 pub struct CheckSpecFile {
@@ -84,6 +84,18 @@ pub enum CheckKind {
     TailExpr {
         r#fn: Option<String>,
         expr: String,
+    },
+    StructDefined {
+        r#struct: String,
+        fields: Option<Vec<ParamSpec>>,
+    },
+    ImplDefined {
+        r#type: String,
+        r#trait: Option<String>,
+    },
+    DerivePresent {
+        r#type: String,
+        derives: Vec<String>,
     },
     AnyOf {
         of: Vec<CheckKind>,

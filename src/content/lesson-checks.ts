@@ -18,7 +18,7 @@ import "server-only";
 // comments never matter, and code inside comments or string literals does
 // NOT count (it isn't in the AST).
 
-export const CHECKS_SCHEMA_VERSION = 1;
+export const CHECKS_SCHEMA_VERSION = 2;
 
 export type AstCheckSpec =
   | {
@@ -47,6 +47,21 @@ export type AstCheckSpec =
   | { kind: "match_on"; scrutinee: string }
   | { kind: "match_arm"; pat: string; body?: string }
   | { kind: "tail_expr"; fn?: string; expr: string }
+  | {
+      kind: "struct_defined";
+      struct: string;
+      fields?: { name?: string; ty: string }[];
+    }
+  | {
+      kind: "impl_defined";
+      type: string;
+      trait?: string;
+    }
+  | {
+      kind: "derive_present";
+      type: string;
+      derives: string[];
+    }
   | { kind: "any_of"; of: AstCheckSpec[] };
 
 export type AstCheck = {

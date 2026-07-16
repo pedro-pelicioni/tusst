@@ -39,6 +39,39 @@ pub struct MatchInfo {
     pub arms: Vec<(String, String)>,
 }
 
+#[derive(Debug)]
+pub struct StructInfo {
+    pub name: String,
+    /// (field name, normalized type) — tuple structs get positional indices as names.
+    pub fields: Vec<(String, String)>,
+    /// Trait idents from any `#[derive(...)]` attribute on this struct.
+    pub derives: Vec<String>,
+}
+
+#[derive(Debug)]
+pub struct ImplInfo {
+    /// Normalized `Self` type, e.g. `Player`.
+    pub self_ty: String,
+    /// Normalized trait path when this is `impl Trait for Type`.
+    pub trait_: Option<String>,
+}
+
+/// Trait idents named in any `#[derive(...)]` attribute in `attrs`.
+fn derives_of(attrs: &[syn::Attribute]) -> Vec<String> {
+    let mut out = Vec::new();
+    for attr in attrs {
+        if attr.path().is_ident("derive") {
+            let _ = attr.parse_nested_meta(|meta| {
+                if let Some(ident) = meta.path.get_ident() {
+                    out.push(ident.to_string());
+                }
+                Ok(())
+            });
+        }
+    }
+    out
+}
+
 #[derive(Default)]
 pub struct Index {
     pub fns: Vec<FnInfo>,
@@ -55,6 +88,8 @@ pub struct Index {
     /// (normalized pat, normalized scrutinee) from `if let`.
     pub if_lets: Vec<(String, String)>,
     pub matches: Vec<MatchInfo>,
+    pub structs: Vec<StructInfo>,
+    pub impls: Vec<ImplInfo>,
     pub has_loop: bool,
     pub has_if: bool,
     pub has_else: bool,
@@ -97,6 +132,8 @@ impl Index {
         self.whiles.extend(other.whiles);
         self.if_lets.extend(other.if_lets);
         self.matches.extend(other.matches);
+        self.structs.extend(other.structs);
+        self.impls.extend(other.impls);
         self.has_loop |= other.has_loop;
         self.has_if |= other.has_if;
         self.has_else |= other.has_else;
@@ -145,6 +182,42 @@ impl<'ast> Visit<'ast> for Index {
     fn visit_impl_item_fn(&mut self, node: &'ast syn::ImplItemFn) {
         self.record_fn(node.sig.ident.to_string(), &node.sig, &node.block);
         visit::visit_impl_item_fn(self, node);
+    }
+
+    fn visit_item_struct(&mut self, node: &'ast syn::ItemStruct) {
+        let fields = match &node.fields {
+            syn::Fields::Named(f) => f
+                .named
+                .iter()
+                .filter_map(|field| {
+                    field
+                        .ident
+                        .as_ref()
+                        .map(|id| (id.to_string(), norm(&field.ty)))
+                })
+                .collect(),
+            syn::Fields::Unnamed(f) => f
+                .unnamed
+                .iter()
+                .enumerate()
+                .map(|(i, field)| (i.to_string(), norm(&field.ty)))
+                .collect(),
+            syn::Fields::Unit => Vec::new(),
+        };
+        self.structs.push(StructInfo {
+            name: node.ident.to_string(),
+            fields,
+            derives: derives_of(&node.attrs),
+        });
+        visit::visit_item_struct(self, node);
+    }
+
+    fn visit_item_impl(&mut self, node: &'ast syn::ItemImpl) {
+        self.impls.push(ImplInfo {
+            self_ty: norm(&*node.self_ty),
+            trait_: node.trait_.as_ref().map(|(_, path, _)| norm(path)),
+        });
+        visit::visit_item_impl(self, node);
     }
 
     fn visit_local(&mut self, node: &'ast syn::Local) {
@@ -342,6 +415,39 @@ pub fn eval_kind(kind: &CheckKind, idx: &Index) -> Result<bool, String> {
                 .iter()
                 .filter(|f| r#fn.as_ref().is_none_or(|n| *n == f.name))
                 .any(|f| f.tail.as_deref() == Some(expr.as_str())))
+        }
+        CheckKind::StructDefined { r#struct, fields } => {
+            let fields = fields
+                .as_ref()
+                .map(|fs| {
+                    fs.iter()
+                        .map(|ParamSpec { name, ty }| Ok((name.clone(), norm_type(ty)?)))
+                        .collect::<Result<Vec<_>, String>>()
+                })
+                .transpose()?;
+            Ok(idx.structs.iter().any(|s| {
+                s.name == *r#struct
+                    && fields.as_ref().is_none_or(|fs| {
+                        s.fields.len() == fs.len()
+                            && fs.iter().zip(&s.fields).all(|((fname, fty), (sname, sty))| {
+                                fname.as_ref().is_none_or(|n| n == sname) && fty == sty
+                            })
+                    })
+            }))
+        }
+        CheckKind::ImplDefined { r#type, r#trait } => {
+            let ty = norm_type(r#type)?;
+            let trait_ = r#trait.as_deref().map(norm_type).transpose()?;
+            Ok(idx
+                .impls
+                .iter()
+                .any(|i| i.self_ty == ty && opt_matches(&trait_, i.trait_.as_deref())))
+        }
+        CheckKind::DerivePresent { r#type, derives } => {
+            let ty = norm_type(r#type)?;
+            Ok(idx.structs.iter().any(|s| {
+                s.name == ty && derives.iter().all(|d| s.derives.iter().any(|sd| sd == d))
+            }))
         }
         CheckKind::AnyOf { of } => {
             let mut first_err = None;

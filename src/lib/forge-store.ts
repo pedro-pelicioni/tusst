@@ -122,3 +122,15 @@ export function addExplored(contractId: string): void {
   const rest = listExplored().filter((id) => id !== contractId);
   write(EXPLORED_KEY, [contractId, ...rest].slice(0, 20));
 }
+
+// First-visit walkthrough. No auth gate on /ide, so this stays client-side —
+// same as everything else in this store — rather than a User column.
+const TUTORIAL_SEEN_KEY = `${PREFIX}:tutorialSeen`;
+
+export function getTutorialSeen(): boolean {
+  return read<boolean>(TUTORIAL_SEEN_KEY) ?? false;
+}
+
+export function setTutorialSeen(): void {
+  write(TUTORIAL_SEEN_KEY, true);
+}
