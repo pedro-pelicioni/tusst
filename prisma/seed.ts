@@ -61,7 +61,6 @@ const LESSON_TITLES: Record<string, string[]> = {
   // Act VIII — the Protocol 27 finale; same progression-only gating as Act VII.
   "stellar-protocol-27": [
     "Protocol 27: The Zipper",
-    "The Seal, Two Ways",
     "Smart Accounts & __check_auth",
     "Authentication Delegation (CAP-0071)",
     "Signature Security & V2 Credentials",

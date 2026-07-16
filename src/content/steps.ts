@@ -2303,58 +2303,6 @@ beacon lit: protocol 27 (zipper) ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Under the old sky, \`star-keep chartered ✓\` felt simple: two keys, \`G...\` and \`S...\`. But nobody ever asked *how* the sky checked a signature. The answer has a name: **ed25519** — the cryptographic scheme that lets a secret key sign and a public key verify, with nobody else able to forge it.`,
-    },
-    {
-      kind: "theory",
-      body: `An \`Address\`, though, was never a promise of *keys* — only a promise of identity. Protocol 27 makes plain what was always true: some Addresses hold no keypair at all. They hold code, and that code writes its own law of what counts as signed.
-
-\`\`\`rust
-fn __check_auth(env: Env, payload: Hash<32>, signatures: BytesN<64>, contexts: Vec<Context>)
-\`\`\`
-
-Same \`Address\`. Same \`require_auth()\` call site. Two entirely different keepers underneath.`,
-    },
-    {
-      kind: "quiz",
-      question: "How does a contract-account Address prove a signature is valid?",
-      options: [
-        "It runs its own __check_auth logic — there's no keypair to check",
-        "The protocol always checks an ed25519 signature, for every Address",
-        "Contract accounts can never be signed for",
-      ],
-      answer: 0,
-      explain: "A contract-account Address has no keys — __check_auth is the entirety of its law of signatures.",
-    },
-    {
-      kind: "fill",
-      prompt: "Name the entry point a contract-account defines to write its own law of signatures.",
-      file: "lib.rs",
-      before: "impl GuardianAccount {\n    fn ",
-      after: "(env: Env, payload: Hash<32>, sig: BytesN<64>, ctx: Vec<Context>) {\n        // ...\n    }\n}",
-      choices: ["__check_auth", "check_auth", "verify_signature"],
-      answer: 0,
-      explain: "The host looks for exactly this name when require_auth() fires on a contract-account Address.",
-    },
-    {
-      kind: "editor",
-      intro: `### Final trial — the seal reconsidered
-
-1. \`signature_scheme = "ed25519"\`
-2. \`contract_entry_point = "__check_auth"\`
-
-Expected result:
-
-\`\`\`text
-the seal reconsidered ✓
-\`\`\``,
-    },
-  ],
-
-  "stellar-protocol-27-3": [
-    {
-      kind: "theory",
-      image: "/mascot/mascot-guide.png",
       body: `In the Lair you sealed a vault with \`require_auth()\`. But who *verifies* the seal?
 
 For a normal account, the protocol checks an ed25519 signature against the account's keys. But an \`Address\` in Soroban can also belong to a **contract** — and then something remarkable happens.`,
@@ -2421,7 +2369,7 @@ __check_auth: the account writes its own law ✓
     },
   ],
 
-  "stellar-protocol-27-4": [
+  "stellar-protocol-27-3": [
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
@@ -2484,7 +2432,7 @@ crown delegated: steward honored ✓
     },
   ],
 
-  "stellar-protocol-27-5": [
+  "stellar-protocol-27-4": [
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
@@ -2567,7 +2515,7 @@ seal bound to its door: the echo dies ✓
     },
   ],
 
-  "stellar-protocol-27-6": [
+  "stellar-protocol-27-5": [
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
@@ -2637,7 +2585,7 @@ caravan cleared the Gate: nothing left behind ✓
     },
   ],
 
-  "stellar-protocol-27-7": [
+  "stellar-protocol-27-6": [
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",

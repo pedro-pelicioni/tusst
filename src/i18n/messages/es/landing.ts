@@ -1,6 +1,7 @@
 // Landing page (ShatteredSky).
 export const landing = {
   nav: {
+    content: "Contenido",
     prologue: "Prólogo",
     campaign: "Campaña",
     champions: "Campeones",

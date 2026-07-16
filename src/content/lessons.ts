@@ -1844,7 +1844,9 @@ pub const MAINNET_VOTE: &str = "";   // ← YYYY-MM-DD of the Mainnet vote
   },
 
   "stellar-protocol-27-2": {
-    instructions: `## The Seal, Two Ways
+    instructions: `## Smart Accounts & \`__check_auth\`
+
+In the Lair you learned \`require_auth()\` — the seal. But *who* verifies the seal?
 
 Under the old sky, an account was simple: two keys. The secret key signs; the network checks that signature against the public key using **ed25519** — a specific cryptographic scheme for making and verifying digital signatures. Sign with the secret half, verify with the public half — nobody without the secret key can forge it.
 
@@ -1855,42 +1857,7 @@ But an \`Address\` on Stellar was never *only* a promise of keys — only a prom
 | holds | a keypair | no keys — just code |
 | proves identity via | an ed25519 signature | its own \`__check_auth\` logic |
 
-Same \`Address\` type. Same \`require_auth()\` call site. Two entirely different keepers underneath.
-
-### Your task
-
-Fill in the reconsidered charter:
-
-1. \`signature_scheme\` — the cryptographic scheme a classic account signs with.
-2. \`contract_entry_point\` — the function name a contract-account defines to write its own law of signatures.
-
-Expected result:
-
-\`\`\`text
-the seal reconsidered ✓
-\`\`\`
-`,
-    starterCode: `# ── the seal reconsidered ──────────────────────
-# Two kinds of keeper can hold the same Address.
-
-signature_scheme = ""        # what a classic account signs with
-contract_entry_point = ""    # what a contract account defines instead
-`,
-    grader: "regex",
-    checks: [
-      { name: "names the classic signature scheme", pattern: /signature_scheme\s*=\s*"ed25519"/ },
-      {
-        name: "names the contract-account entry point",
-        pattern: /contract_entry_point\s*=\s*"__check_auth"/,
-      },
-    ],
-    expectedOutput: "the seal reconsidered ✓\n",
-  },
-
-  "stellar-protocol-27-3": {
-    instructions: `## Smart Accounts & \`__check_auth\`
-
-In the Lair you learned \`require_auth()\` — the seal. But *who* verifies the seal? For a normal account, the protocol checks an ed25519 signature. When the \`Address\` belongs to a **contract**, the host instead invokes that contract's own entry point:
+Same \`Address\` type. Same \`require_auth()\` call site. Two entirely different keepers underneath. When the \`Address\` belongs to a **contract**, the host invokes that contract's own entry point:
 
 \`\`\`rust
 fn __check_auth(env: Env, payload: Hash<32>, signatures: ..., contexts: Vec<Context>)
@@ -1940,7 +1907,7 @@ impl GuardianAccount {
     expectedOutput: "__check_auth: the account writes its own law ✓\n",
   },
 
-  "stellar-protocol-27-4": {
+  "stellar-protocol-27-3": {
     instructions: `## Authentication Delegation (CAP-0071-01)
 
 Before the Zipper, a custom account that wanted *another* contract to vouch for it had no protocol support — builders faked it with fragile rounds of pre-simulation to propagate the auth context. Protocol 27 makes delegation law with two new host functions:
@@ -2000,7 +1967,7 @@ impl CrownAccount {
     expectedOutput: "crown delegated: steward honored ✓\n",
   },
 
-  "stellar-protocol-27-5": {
+  "stellar-protocol-27-4": {
     instructions: `## Signature Security & V2 Credentials (CAP-0071-02)
 
 A **replay attack** takes something valid — a signature, a stamped seal — and reuses it somewhere it was never meant to work. Security audits found a subtle version of this hiding in the old credential format. The scenario needs three things at once:
@@ -2056,7 +2023,7 @@ impl BoundAccount {
     expectedOutput: "seal bound to its door: the echo dies ✓\n",
   },
 
-  "stellar-protocol-27-6": {
+  "stellar-protocol-27-5": {
     instructions: `## Migrating to Protocol 27
 
 A protocol upgrade is a caravan, and the release order was the road: **Core → SDKs → RPC & Galexie → Horizon → Testnet → Mainnet**. Every SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixir — shipped a Protocol-27 release and must be upgraded before Mainnet turns.
@@ -2108,7 +2075,7 @@ pub const UPGRADE_ALL_SDKS: bool = false;
     expectedOutput: "caravan cleared the Gate: nothing left behind ✓\n",
   },
 
-  "stellar-protocol-27-7": {
+  "stellar-protocol-27-6": {
     instructions: `## Boss: The Delegated Account
 
 Everything converges. The Echo Wraith arrives with a stolen seal — and meets an account that is *law*: a custom account whose \`__check_auth\` verifies its root signer **and** delegates to a steward, exactly as Protocol 27 intended.

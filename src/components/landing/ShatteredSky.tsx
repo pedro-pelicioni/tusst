@@ -96,6 +96,8 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
   const m = useMessages();
   const typedLine = m.landing.prologue.typedLine;
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contentOpen, setContentOpen] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   // Lock body scroll + close on ESC while the mobile menu is open.
   useEffect(() => {
@@ -111,6 +113,23 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
       document.removeEventListener("keydown", onKey);
     };
   }, [menuOpen]);
+
+  // Close the "content" dropdown on outside click or ESC.
+  useEffect(() => {
+    if (!contentOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setContentOpen(false);
+    };
+    const onClick = (e: MouseEvent) => {
+      if (!contentRef.current?.contains(e.target as Node)) setContentOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, [contentOpen]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -308,18 +327,47 @@ export function ShatteredSky({ beginHref, enterHref }: ShatteredSkyProps) {
           className="hidden items-center gap-7 text-[10px] uppercase tracking-[0.24em] sm:flex"
           style={{ fontFamily: MONO }}
         >
-          <a href="#prologue" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
-            {m.landing.nav.prologue}
-          </a>
-          <a href="#acts" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
-            {m.landing.nav.campaign}
-          </a>
-          <a href="#champions" className="text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]">
-            {m.landing.nav.champions}
-          </a>
-          <a href="#boss" className="hidden text-[#9c9cb4] transition-colors hover:text-[#e7e7f1] md:block">
-            {m.landing.nav.beholder}
-          </a>
+          <div ref={contentRef} className="relative">
+            <button
+              type="button"
+              aria-haspopup="true"
+              aria-expanded={contentOpen}
+              onClick={() => setContentOpen((v) => !v)}
+              className="flex items-center gap-1.5 text-[#9c9cb4] transition-colors hover:text-[#e7e7f1]"
+            >
+              {m.landing.nav.content}
+              <svg
+                viewBox="0 0 10 6"
+                className={`h-[6px] w-[10px] fill-current transition-transform duration-200 ${contentOpen ? "rotate-180" : ""}`}
+              >
+                <path d="M0 0 5 6 10 0Z" />
+              </svg>
+            </button>
+            <div
+              className={`absolute left-1/2 top-full mt-3 flex w-[180px] -translate-x-1/2 flex-col gap-1 rounded-xl border border-[rgba(143,123,255,0.25)] bg-[rgba(9,8,16,0.97)] p-2 backdrop-blur-[6px] transition-all duration-200 ${
+                contentOpen
+                  ? "pointer-events-auto translate-y-0 opacity-100"
+                  : "pointer-events-none -translate-y-1 opacity-0"
+              }`}
+            >
+              {[
+                { href: "#prologue", label: m.landing.nav.prologue },
+                { href: "#acts", label: m.landing.nav.campaign },
+                { href: "#champions", label: m.landing.nav.champions },
+                { href: "#boss", label: m.landing.nav.beholder },
+              ].map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  tabIndex={contentOpen ? 0 : -1}
+                  onClick={() => setContentOpen(false)}
+                  className="rounded-lg px-3 py-2 text-[#9c9cb4] transition-colors hover:bg-[rgba(143,123,255,0.12)] hover:text-[#e7e7f1]"
+                >
+                  {l.label}
+                </a>
+              ))}
+            </div>
+          </div>
           <Link
             href="/ide"
             className="hidden text-[#cfc3ff] transition-colors hover:text-white sm:block"
