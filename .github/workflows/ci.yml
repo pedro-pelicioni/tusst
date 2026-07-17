@@ -1,0 +1,35 @@
+name: CI
+
+# Validates PRs (including from forks) and non-main pushes. Deliberately
+# carries NO secrets and never touches the VPS or Neon — see deploy.yml for
+# that. This split keeps "workflow that accepts fork content" and "workflow
+# that holds production credentials" physically separate.
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # prisma generate only reads schema.prisma — never connects. A dummy
+      # value keeps it from erroring on a missing DATABASE_URL.
+      DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy?schema=public"
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: "npm"
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run build
