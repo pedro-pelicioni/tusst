@@ -1,0 +1,31 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  # Workspace with two members (tusst-runner, tusst-syntest) — one entry
+  # covers both, Dependabot resolves against the workspace Cargo.lock.
+  - package-ecosystem: "cargo"
+    directory: "/runner"
+    schedule:
+      interval: "weekly"
+
+  # No Cargo.lock committed here on purpose (it's generated fresh inside the
+  # Docker build — see runner-soroban/Dockerfile). Dependabot still resolves
+  # against the pinned versions in Cargo.toml, just with weaker precision
+  # than /runner. See SECURITY.md / runner-soroban/Dockerfile for the pins
+  # this directory carries (ed25519-dalek, etc).
+  - package-ecosystem: "cargo"
+    directory: "/runner-soroban/warm"
+    schedule:
+      interval: "weekly"
+
+  # Keeps the SHA-pinned actions in ci.yml/deploy.yml/cargo-audit.yml from
+  # going stale forever — pinning by SHA means nothing else would ever
+  # surface that a newer release exists.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
