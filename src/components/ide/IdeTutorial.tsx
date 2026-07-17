@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
 
@@ -22,23 +22,31 @@ const POPOVER_WIDTH = 320;
 const POPOVER_EST_HEIGHT = 200;
 const MARGIN = 12;
 
+function measureTarget(stepKey: string): DOMRect | null {
+  const el = document.querySelector(`[data-tutorial-id="${stepKey}"]`);
+  return el ? el.getBoundingClientRect() : null;
+}
+
 export function IdeTutorial({ onDone }: { onDone: () => void }) {
   const m = useMessages();
   const [index, setIndex] = useState(0);
-  const [rect, setRect] = useState<DOMRect | null>(null);
-
-  const stepKey = STEP_ORDER[index];
-
-  const measure = useCallback(() => {
-    const el = document.querySelector(`[data-tutorial-id="${stepKey}"]`);
-    setRect(el ? el.getBoundingClientRect() : null);
-  }, [stepKey]);
+  // Resize is the only genuine external event here — the listener only ever
+  // sets state from inside its own callback, never synchronously in the
+  // effect body, so it counts as the "subscribe + setState in a callback"
+  // pattern rather than the "setState in an effect" one.
+  const [resizeTick, setResizeTick] = useState(0);
 
   useEffect(() => {
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, [measure]);
+    const onResize = () => setResizeTick((t) => t + 1);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const stepKey = STEP_ORDER[index];
+  // Derived at render time, not in an effect — resizeTick is only a
+  // recompute trigger, the DOM query itself has no dependency of its own.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const rect = useMemo(() => measureTarget(stepKey), [stepKey, resizeTick]);
 
   const step = m.ide.tutorial.steps[stepKey];
   const isLast = index === STEP_ORDER.length - 1;

@@ -1,0 +1,22 @@
+# Paths that can touch production (Neon, the VPS sandbox, or the CI/CD
+# pipeline itself) require review from the infra owner, regardless of who
+# else reviews the rest of the PR.
+#
+# - prisma/           — SQL that runs against the real Neon database; this is
+#                        where the 2026-07-16 schema drift + progress
+#                        corruption incidents both started.
+# - runner/           — defines the untrusted-code sandbox (Docker isolation
+#                        flags); a regression here is a sandbox escape running
+#                        on the production VPS.
+# - runner-soroban/   — same, for the Soroban/Scout sandbox.
+# - .github/workflows/ — controls what runs with production secrets.
+# - deploy/           — the canonical copy of the VPS deploy script.
+# - .mcp.json         — the only third-party trust surface declared publicly
+#                        in this repo (a remote MCP server URL).
+
+/prisma/                @pedro-pelicioni
+/runner/                @pedro-pelicioni
+/runner-soroban/        @pedro-pelicioni
+/.github/workflows/     @pedro-pelicioni
+/deploy/                @pedro-pelicioni
+/.mcp.json              @pedro-pelicioni

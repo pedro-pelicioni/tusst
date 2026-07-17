@@ -1,0 +1,119 @@
+name: Deploy
+
+# Production pipeline: Neon migrations/seed, then sync the VPS runner. Never
+# triggered by pull_request/pull_request_target — only push to main (which
+# requires write access) or a manual, write-access-gated workflow_dispatch.
+# Both jobs sit behind the `deploy-production` Environment (required reviewer
+# + where the secrets live), so nothing here runs unattended. Named distinctly
+# from the pre-existing "Production" environment (Vercel's own GitHub App
+# creates that one for deployment-status tracking — unrelated to these
+# secrets, left untouched).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      force_migration:
+        description: "Run migrate deploy + seed on Neon even if prisma/** didn't change"
+        type: boolean
+        default: false
+
+concurrency:
+  group: tusst-production-deploy
+  cancel-in-progress: false # never cancel a deploy/migration mid-flight — queue instead
+
+permissions:
+  contents: read
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      prisma: ${{ steps.filter.outputs.prisma }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          fetch-depth: 0
+      - id: filter
+        uses: dorny/paths-filter@7b450fff21473bca461d4b92ce414b9d0420d706 # v4.0.2
+        with:
+          base: ${{ github.event.before }}
+          filters: |
+            prisma:
+              - 'prisma/**'
+
+  migrate-neon:
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.prisma == 'true' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.force_migration == 'true')
+    runs-on: ubuntu-latest
+    environment: deploy-production
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: "npm"
+      - run: npm ci --no-audit --no-fund
+
+      - name: Preflight — refuse to run if the schema has drifted
+        env:
+          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: |
+          set +e
+          OUT="$(npx prisma migrate status 2>&1)"
+          CODE=$?
+          set -e
+          echo "$OUT"
+          if echo "$OUT" | grep -qiE "drift|diverged"; then
+            echo "::error::Schema drift detected between Neon and the migration history. Aborting — investigate manually before running migrate deploy (see memory tusst-seed-safety for the incident this guards against)."
+            exit 1
+          fi
+          if [ "$CODE" -ne 0 ] && ! echo "$OUT" | grep -qi "have not yet been applied"; then
+            echo "::error::prisma migrate status failed unexpectedly — aborting."
+            exit 1
+          fi
+
+      - name: Apply migrations
+        env:
+          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: npx prisma migrate deploy
+
+      - name: Seed (idempotent — explicit per-lesson slugs, see prisma/seed.ts)
+        env:
+          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+        run: npx prisma db seed
+
+  deploy-vps:
+    needs: [detect-changes, migrate-neon]
+    if: |
+      always() &&
+      needs.detect-changes.result == 'success' &&
+      (needs.migrate-neon.result == 'success' || needs.migrate-neon.result == 'skipped')
+    runs-on: ubuntu-latest
+    environment: deploy-production
+    steps:
+      - name: Pin the VPS host key (avoid TOFU on an ephemeral runner)
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ vars.VPS_HOST }} ${{ vars.VPS_HOST_KEY }}" >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Load the dedicated deploy key
+        run: |
+          umask 077
+          printf '%s\n' "${{ secrets.VPS_CI_DEPLOY_KEY }}" > /tmp/tusst_ci_deploy
+          chmod 600 /tmp/tusst_ci_deploy
+
+      - name: Trigger the remote deploy (forced command ignores what we send)
+        run: |
+          ssh -i /tmp/tusst_ci_deploy \
+              -o StrictHostKeyChecking=yes -o BatchMode=yes -o ConnectTimeout=15 \
+              "${{ vars.VPS_SSH_USER }}@${{ vars.VPS_HOST }}" \
+              "deploy"
+
+      - name: Clean up the deploy key
+        if: always()
+        run: rm -f /tmp/tusst_ci_deploy
