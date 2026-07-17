@@ -20,7 +20,7 @@ crate-type = ["cdylib"]
 doctest = false
 
 [dependencies]
-soroban-sdk = "=26.1.0"
+soroban-sdk = "=27.0.0"
 # OpenZeppelin Stellar suite
 stellar-access = "=0.7.2"
 stellar-accounts = "=0.7.2"
@@ -38,7 +38,7 @@ soroban-fixed-point-math = "=1.5.0"
 blend-contract-sdk = "=2.25.0"
 
 [dev-dependencies]
-soroban-sdk = { version = "=26.1.0", features = ["testutils"] }
+soroban-sdk = { version = "=27.0.0", features = ["testutils"] }
 # Pre-warm the testutils feature unification for the ecosystem crates too —
 # without these, user tests enabling them recompile the sdk chain at runtime.
 sep-41-token = { version = "=1.4.0", features = ["testutils"] }
