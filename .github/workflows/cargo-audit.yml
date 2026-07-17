@@ -1,0 +1,41 @@
+name: Cargo Audit
+
+# CodeQL's default setup doesn't cover Rust, so the sandbox crates (runner/,
+# runner-soroban/) would otherwise have no dependency-vulnerability scanner
+# at all. This closes that gap using the RustSec Advisory Database. Safe to
+# run on fork PRs too — read-only, no secrets, no production access.
+
+on:
+  push:
+    paths: ["runner/**", "runner-soroban/**"]
+  pull_request:
+    paths: ["runner/**", "runner-soroban/**"]
+  schedule:
+    # Weekly, independent of any code change — the point is to catch newly
+    # published advisories against dependencies that have been pinned and
+    # untouched for a while.
+    - cron: "0 6 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  audit-runner:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
+      - run: cargo install cargo-audit --locked
+      - run: cargo audit
+        working-directory: runner
+
+  audit-runner-soroban:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
+      - run: cargo install cargo-audit --locked
+      - name: Audit (no committed lockfile here — generate one fresh)
+        run: cargo generate-lockfile && cargo audit
+        working-directory: runner-soroban/warm
