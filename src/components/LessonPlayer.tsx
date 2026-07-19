@@ -159,6 +159,14 @@ export function LessonPlayer({
     setGold(null);
   };
 
+  // Which failure the output text belongs to: a compile error (sanitized
+  // rustc stderr) or the program's actual stdout on a mismatch. The check
+  // names are the server contract from validate.ts.
+  const compileFailed = results.some((r) => r.name === "compiles" && !r.passed);
+  const outputMismatch = results.some(
+    (r) => r.name === "produces the expected output" && !r.passed,
+  );
+
   return (
     <div className="flex flex-col gap-4">
       {/* editor */}
@@ -259,6 +267,21 @@ export function LessonPlayer({
                 </li>
               ))}
             </ul>
+          )}
+
+          {status === "fail" && output && (
+            <div className="mt-3 border-t border-line pt-3">
+              <p className="text-muted">
+                {compileFailed
+                  ? m.lesson.compilerError
+                  : outputMismatch
+                    ? m.lesson.actualOutput
+                    : m.lesson.details}
+              </p>
+              <pre className="mt-1 whitespace-pre-wrap text-red-300/90">
+                {output}
+              </pre>
+            </div>
           )}
 
           {status === "pass" && (

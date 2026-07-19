@@ -45,6 +45,9 @@ export const lesson = {
   idleHint: "// exécute ton code pour le confronter aux tests (⌘⏎)",
   compiling: "compilation…",
   stdout: "// stdout",
+  compilerError: "// erreur de compilation",
+  actualOutput: "// ta sortie",
+  details: "// détails",
   goldCoinAlt: "Pièce d'or",
   goldEarned: "+{gold} or",
   goldFirstReveal:
