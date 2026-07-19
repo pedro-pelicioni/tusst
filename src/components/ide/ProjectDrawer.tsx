@@ -94,7 +94,7 @@ export function ProjectDrawer({
 
   return (
     <div className="absolute inset-0 z-20 flex">
-      <div className="flex w-80 flex-col border-r border-line bg-bg-elev shadow-2xl">
+      <div className="flex w-[min(20rem,85vw)] flex-col border-r border-line bg-bg-elev shadow-2xl">
         <div className="flex items-center justify-between border-b border-line px-4 py-3">
           <span className="font-mono text-[11px] uppercase tracking-wider text-muted">
             {m.ide.drawer.title}
@@ -135,7 +135,7 @@ export function ProjectDrawer({
                     const next = window.prompt(m.ide.drawer.renamePrompt, p.name);
                     if (next?.trim()) onRename(p.id, next.trim());
                   }}
-                  className="hidden rounded px-1 font-mono text-[11px] text-muted2 hover:text-fg group-hover:block"
+                  className="hidden rounded px-1 font-mono text-[11px] text-muted2 hover:text-fg group-hover:block pointer-coarse:block"
                   title={m.ide.drawer.renameTitle}
                 >
                   ✎
@@ -146,7 +146,7 @@ export function ProjectDrawer({
                     if (window.confirm(fmt(m.ide.drawer.deleteConfirm, { name: p.name })))
                       onDelete(p.id);
                   }}
-                  className="hidden rounded px-1 font-mono text-[11px] text-muted2 hover:text-red-400 group-hover:block"
+                  className="hidden rounded px-1 font-mono text-[11px] text-muted2 hover:text-red-400 group-hover:block pointer-coarse:block"
                   title={m.ide.drawer.deleteTitle}
                 >
                   ×

@@ -125,7 +125,10 @@ export function addExplored(contractId: string): void {
 
 // First-visit walkthrough. No auth gate on /ide, so this stays client-side —
 // same as everything else in this store — rather than a User column.
+// Desktop and the compact (phone/tablet) layout have different walkthroughs,
+// so each keeps its own flag — seeing one shouldn't suppress the other.
 const TUTORIAL_SEEN_KEY = `${PREFIX}:tutorialSeen`;
+const MOBILE_TUTORIAL_SEEN_KEY = `${PREFIX}:mobileTutorialSeen`;
 
 export function getTutorialSeen(): boolean {
   return read<boolean>(TUTORIAL_SEEN_KEY) ?? false;
@@ -133,4 +136,32 @@ export function getTutorialSeen(): boolean {
 
 export function setTutorialSeen(): void {
   write(TUTORIAL_SEEN_KEY, true);
+}
+
+export function getMobileTutorialSeen(): boolean {
+  return read<boolean>(MOBILE_TUTORIAL_SEEN_KEY) ?? false;
+}
+
+export function setMobileTutorialSeen(): void {
+  write(MOBILE_TUTORIAL_SEEN_KEY, true);
+}
+
+// The "better on desktop" notice nags once per browser session, not once
+// ever — sessionStorage instead of localStorage is deliberate.
+const MOBILE_NOTICE_KEY = `${PREFIX}:mobileNoticeSeen`;
+
+export function getMobileNoticeSeen(): boolean {
+  try {
+    return window.sessionStorage.getItem(MOBILE_NOTICE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function setMobileNoticeSeen(): void {
+  try {
+    window.sessionStorage.setItem(MOBILE_NOTICE_KEY, "1");
+  } catch {
+    // Private mode — the modal just shows again next time.
+  }
 }

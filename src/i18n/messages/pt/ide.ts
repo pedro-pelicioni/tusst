@@ -146,6 +146,31 @@ export const ide = {
     networkError: "Erro de rede — tente de novo.",
     cancelled: "// cancelado",
   },
+  mobile: {
+    noticeTag: "forja compacta",
+    noticeTitle: "A Forja rende mais no desktop",
+    noticeBody:
+      "Você está num celular ou tablet, então esta é a Forja compacta: só o essencial, ajustado para o toque. A oficina completa — deploy, contratos ao vivo, carteiras — abre no desktop.",
+    noticeHereTitle: "o que funciona aqui",
+    noticeHereItems: [
+      "escrever e editar seu contrato",
+      "compilar e testar na toolchain de verdade",
+      "começar por um template",
+      "o conselho do Corvo quando algo falha",
+    ],
+    noticeDesktopTitle: "o que espera no desktop",
+    noticeDesktopItems: [
+      "deploy na testnet",
+      "invocar e explorar contratos",
+      "carteiras e assinaturas",
+    ],
+    noticeContinue: "continuar na forja compacta",
+    build: "build",
+    tabs: {
+      editor: "editor",
+      console: "console",
+    },
+  },
   tutorial: {
     reopenTitle: "rever o tutorial",
     skip: "pular tutorial",
@@ -153,6 +178,28 @@ export const ide = {
     back: "voltar",
     done: "entendi",
     stepCounter: "{current} de {total}",
+    mobileSteps: {
+      projects: {
+        title: "Projetos",
+        body: "Todo contrato mora em um projeto. Toque aqui para trocar de projeto ou começar um novo a partir de um template.",
+      },
+      files: {
+        title: "Arquivos",
+        body: "Os arquivos do seu projeto. Toque em um nome para abrir no editor — Cargo.toml e src/lib.rs são o coração do contrato.",
+      },
+      editor: {
+        title: "Editor",
+        body: "Seu código, ao vivo. Ele salva sozinho neste navegador enquanto você digita — sem precisar de atalho.",
+      },
+      run: {
+        title: "Build e Teste",
+        body: "Build compila seu contrato para WASM numa toolchain Rust de verdade; Testar roda os testes unitários. O console abre sozinho para você acompanhar.",
+      },
+      console: {
+        title: "Console",
+        body: "A saída do compilador e o resultado dos testes chegam nesta aba — e quando algo falha, o Corvo oferece uma dica. Toque nas abas para alternar entre código e saída.",
+      },
+    },
     steps: {
       projects: {
         title: "Projetos",

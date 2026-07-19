@@ -146,6 +146,31 @@ export const ide = {
     networkError: "Network error — try again.",
     cancelled: "// cancelled",
   },
+  mobile: {
+    noticeTag: "compact forge",
+    noticeTitle: "The Forge is best at a desk",
+    noticeBody:
+      "You're on a phone or tablet, so this is the compact Forge: just the essentials, tuned for touch. The full smithy — deploy, live contracts, wallets — opens up on a desktop.",
+    noticeHereTitle: "what works here",
+    noticeHereItems: [
+      "write and edit your contract",
+      "build and test on the real toolchain",
+      "start from templates",
+      "the Raven's counsel when a run fails",
+    ],
+    noticeDesktopTitle: "what waits on desktop",
+    noticeDesktopItems: [
+      "deploy to testnet",
+      "invoke and explore contracts",
+      "wallets and signing",
+    ],
+    noticeContinue: "continue to the compact forge",
+    build: "build",
+    tabs: {
+      editor: "editor",
+      console: "console",
+    },
+  },
   tutorial: {
     reopenTitle: "replay the tutorial",
     skip: "skip tutorial",
@@ -153,6 +178,28 @@ export const ide = {
     back: "back",
     done: "got it",
     stepCounter: "{current} of {total}",
+    mobileSteps: {
+      projects: {
+        title: "Projects",
+        body: "Every contract lives in a project. Tap here to switch projects or start a new one from a template.",
+      },
+      files: {
+        title: "Files",
+        body: "Your project's files. Tap a name to open it in the editor — Cargo.toml and src/lib.rs are the heart of the contract.",
+      },
+      editor: {
+        title: "Editor",
+        body: "Your code, live. It autosaves to this browser as you type — no keyboard shortcuts needed here.",
+      },
+      run: {
+        title: "Build & Test",
+        body: "Build compiles your contract to WASM on a real Rust toolchain; Test runs its unit tests. The console opens on its own so you can watch.",
+      },
+      console: {
+        title: "Console",
+        body: "Compiler output and test results land in this tab — and when a run fails, the Raven offers a hint. Tap the tabs to hop between code and output.",
+      },
+    },
     steps: {
       projects: {
         title: "Projects",

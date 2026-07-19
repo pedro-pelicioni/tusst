@@ -146,6 +146,31 @@ export const ide = {
     networkError: "Error de red — intenta de nuevo.",
     cancelled: "// cancelado",
   },
+  mobile: {
+    noticeTag: "forja compacta",
+    noticeTitle: "La Forja rinde más en desktop",
+    noticeBody:
+      "Estás en un móvil o tablet, así que esta es la Forja compacta: solo lo esencial, pensado para pantallas táctiles. El taller completo — deploy, contratos en vivo, billeteras — se abre en un desktop.",
+    noticeHereTitle: "qué funciona aquí",
+    noticeHereItems: [
+      "escribir y editar tu contrato",
+      "compilar y probar en la toolchain real",
+      "empezar desde una plantilla",
+      "el consejo del Cuervo cuando algo falla",
+    ],
+    noticeDesktopTitle: "qué te espera en desktop",
+    noticeDesktopItems: [
+      "desplegar a testnet",
+      "invocar y explorar contratos",
+      "billeteras y firmas",
+    ],
+    noticeContinue: "seguir en la forja compacta",
+    build: "compilar",
+    tabs: {
+      editor: "editor",
+      console: "consola",
+    },
+  },
   tutorial: {
     reopenTitle: "repetir el tutorial",
     skip: "omitir tutorial",
@@ -153,6 +178,28 @@ export const ide = {
     back: "atrás",
     done: "entendido",
     stepCounter: "{current} de {total}",
+    mobileSteps: {
+      projects: {
+        title: "Proyectos",
+        body: "Cada contrato vive en un proyecto. Toca aquí para cambiar de proyecto o empezar uno nuevo desde una plantilla.",
+      },
+      files: {
+        title: "Archivos",
+        body: "Los archivos de tu proyecto. Toca un nombre para abrirlo en el editor — Cargo.toml y src/lib.rs son el corazón del contrato.",
+      },
+      editor: {
+        title: "Editor",
+        body: "Tu código, en vivo. Se guarda solo en este navegador mientras escribes — sin atajos de teclado.",
+      },
+      run: {
+        title: "Compilar y probar",
+        body: "Compilar convierte tu contrato a WASM en una toolchain Rust real; Probar corre sus pruebas unitarias. La consola se abre sola para que lo veas.",
+      },
+      console: {
+        title: "Consola",
+        body: "La salida del compilador y el resultado de las pruebas llegan a esta pestaña — y cuando algo falla, el Cuervo ofrece una pista. Toca las pestañas para saltar entre código y salida.",
+      },
+    },
     steps: {
       projects: {
         title: "Proyectos",

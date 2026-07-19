@@ -146,6 +146,31 @@ export const ide = {
     networkError: "Erreur réseau — réessaie.",
     cancelled: "// annulé",
   },
+  mobile: {
+    noticeTag: "forge compacte",
+    noticeTitle: "La Forge donne le meilleur sur desktop",
+    noticeBody:
+      "Tu es sur un téléphone ou une tablette, alors voici la Forge compacte : l'essentiel, pensé pour le tactile. L'atelier complet — déploiement, contrats en direct, portefeuilles — t'attend sur un desktop.",
+    noticeHereTitle: "ce qui marche ici",
+    noticeHereItems: [
+      "écrire et modifier ton contrat",
+      "compiler et tester sur la vraie toolchain",
+      "partir d'un modèle",
+      "le conseil du Corbeau quand ça échoue",
+    ],
+    noticeDesktopTitle: "ce qui t'attend sur desktop",
+    noticeDesktopItems: [
+      "déployer sur le testnet",
+      "invoquer et explorer des contrats",
+      "portefeuilles et signatures",
+    ],
+    noticeContinue: "continuer sur la forge compacte",
+    build: "build",
+    tabs: {
+      editor: "éditeur",
+      console: "console",
+    },
+  },
   tutorial: {
     reopenTitle: "revoir le tutoriel",
     skip: "passer le tutoriel",
@@ -153,6 +178,28 @@ export const ide = {
     back: "précédent",
     done: "compris",
     stepCounter: "{current} sur {total}",
+    mobileSteps: {
+      projects: {
+        title: "Projets",
+        body: "Chaque contrat vit dans un projet. Touche ici pour changer de projet ou en créer un nouveau à partir d'un modèle.",
+      },
+      files: {
+        title: "Fichiers",
+        body: "Les fichiers de ton projet. Touche un nom pour l'ouvrir dans l'éditeur — Cargo.toml et src/lib.rs sont le cœur du contrat.",
+      },
+      editor: {
+        title: "Éditeur",
+        body: "Ton code, en direct. Il s'enregistre tout seul dans ce navigateur pendant que tu tapes — pas besoin de raccourcis.",
+      },
+      run: {
+        title: "Build et test",
+        body: "Build compile ton contrat en WASM sur une vraie toolchain Rust ; Test lance ses tests unitaires. La console s'ouvre toute seule pour que tu suives.",
+      },
+      console: {
+        title: "Console",
+        body: "La sortie du compilateur et les résultats des tests arrivent dans cet onglet — et quand ça échoue, le Corbeau propose un indice. Touche les onglets pour passer du code à la sortie.",
+      },
+    },
     steps: {
       projects: {
         title: "Projets",

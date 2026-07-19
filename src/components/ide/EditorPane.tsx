@@ -20,6 +20,7 @@ export function EditorPane({
   onChange,
   onRun,
   onSave,
+  fontSize = 13,
 }: {
   path: string;
   value: string;
@@ -28,6 +29,8 @@ export function EditorPane({
   onRun: () => void;
   /** ⌘S — flush the draft to storage. */
   onSave: () => void;
+  /** The compact (mobile) shell passes 16 — anything smaller makes iOS Safari zoom in when the editor focuses. */
+  fontSize?: number;
 }) {
   const m = useMessages();
   // Refs keep the Monaco commands pointed at fresh callbacks (commands are
@@ -74,8 +77,8 @@ export function EditorPane({
       }
       options={{
         minimap: { enabled: false },
-        fontSize: 13,
-        lineHeight: 22,
+        fontSize,
+        lineHeight: Math.round(fontSize * 1.7),
         scrollBeyondLastLine: false,
         tabSize: 4,
         padding: { top: 14 },
