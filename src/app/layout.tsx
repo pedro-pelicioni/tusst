@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, JetBrains_Mono, Cinzel } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { LocaleProvider } from "@/i18n/client";
 import { MESSAGES } from "@/i18n/messages";
 import { getLocale } from "@/i18n/server";
@@ -85,6 +86,7 @@ export default async function RootLayout({
         <LocaleProvider locale={locale} messages={MESSAGES[locale]}>
           {children}
         </LocaleProvider>
+        <Analytics />
       </body>
     </html>
   );
