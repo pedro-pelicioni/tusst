@@ -185,12 +185,12 @@ export const ide = {
     },
   },
   mentor: {
-    ask: "pedir consejo al mentor",
-    thinking: "el mentor reflexiona…",
-    title: "// consejo del mentor",
+    ask: "Cuervo (mentor de IA)",
+    thinking: "el Cuervo sobrevuela el error…",
+    title: "// consejo del Cuervo",
     remaining: "{n} pistas restantes hoy",
-    limit: "el mentor descansa — usaste las pistas de hoy. Intenta leer con calma la primera línea de error.",
-    unavailable: "el mentor está lejos de la fragua — inténtalo de nuevo en un momento.",
-    signIn: "inicia sesión para pedir consejo al mentor.",
+    limit: "el Cuervo descansa — usaste las pistas de hoy. Lee con calma la primera línea de error.",
+    unavailable: "el Cuervo salió de patrulla — inténtalo de nuevo en un momento.",
+    signIn: "inicia sesión para pedir consejo al Cuervo.",
   },
 };

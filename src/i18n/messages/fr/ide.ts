@@ -185,12 +185,12 @@ export const ide = {
     },
   },
   mentor: {
-    ask: "demander conseil au mentor",
-    thinking: "le mentor réfléchit…",
-    title: "// conseil du mentor",
+    ask: "Corbeau (mentor IA)",
+    thinking: "le Corbeau survole l'erreur…",
+    title: "// conseil du Corbeau",
     remaining: "{n} indices restants aujourd'hui",
-    limit: "le mentor se repose — tu as utilisé les indices du jour. Relis calmement la première ligne d'erreur.",
-    unavailable: "le mentor est loin de la forge — réessaie dans un instant.",
-    signIn: "connecte-toi pour demander conseil au mentor.",
+    limit: "le Corbeau se repose — tu as utilisé les indices du jour. Relis calmement la première ligne d'erreur.",
+    unavailable: "le Corbeau est parti en éclaireur — réessaie dans un instant.",
+    signIn: "connecte-toi pour demander conseil au Corbeau.",
   },
 };

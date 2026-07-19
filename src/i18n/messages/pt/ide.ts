@@ -185,12 +185,12 @@ export const ide = {
     },
   },
   mentor: {
-    ask: "pedir dica ao mentor",
-    thinking: "o mentor reflete…",
-    title: "// conselho do mentor",
+    ask: "Corvo (mentor de IA)",
+    thinking: "o Corvo sobrevoa o erro…",
+    title: "// conselho do Corvo",
     remaining: "{n} dicas restantes hoje",
-    limit: "o mentor descansa — você usou as dicas de hoje. Tente ler com calma a primeira linha de erro.",
-    unavailable: "o mentor está longe da forja — tente de novo em instantes.",
-    signIn: "entre para pedir dica ao mentor.",
+    limit: "o Corvo descansa — você usou as dicas de hoje. Leia com calma a primeira linha de erro.",
+    unavailable: "o Corvo saiu em patrulha — tente de novo em instantes.",
+    signIn: "entre para pedir dica ao Corvo.",
   },
 };

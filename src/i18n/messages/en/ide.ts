@@ -185,12 +185,12 @@ export const ide = {
     },
   },
   mentor: {
-    ask: "ask the mentor",
-    thinking: "the mentor ponders…",
-    title: "// mentor's counsel",
+    ask: "Raven (AI mentor)",
+    thinking: "the Raven scouts the error…",
+    title: "// raven's counsel",
     remaining: "{n} hints left today",
-    limit: "the mentor rests — you've used today's hints. Try reading the first error line closely.",
-    unavailable: "the mentor is away from the forge — try again in a moment.",
-    signIn: "sign in to ask the mentor.",
+    limit: "the Raven rests — you've used today's hints. Read the first error line closely.",
+    unavailable: "the Raven is off scouting — try again in a moment.",
+    signIn: "sign in to ask the Raven.",
   },
 };

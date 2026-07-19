@@ -18,6 +18,7 @@ import { forgeTemplates, templateById } from "@/content/soroban-templates";
 import type { ForgeWallet } from "@/lib/stellar/wallet";
 import { BuildToolbar } from "./BuildToolbar";
 import { ConsolePane } from "./ConsolePane";
+import { RavenPanel } from "./RavenPanel";
 import { DeployPanel } from "./DeployPanel";
 import { EditorPane } from "./EditorPane";
 import { ExplorePanel } from "./ExplorePanel";
@@ -223,11 +224,13 @@ export function IdeShell() {
             />
           </div>
           <div data-tutorial-id="console" className="h-56 shrink-0 border-t border-line">
-            <ConsolePane lines={lines} status={status} mode={mode} files={files} />
+            <ConsolePane lines={lines} status={status} />
           </div>
         </div>
 
         <aside data-tutorial-id="panels" className="flex w-[360px] shrink-0 flex-col border-l border-line bg-bg-elev">
+          {/* The Raven perches here only when a run failed. */}
+          <RavenPanel status={status} mode={mode} files={files} lines={lines} />
           <div className="flex border-b border-line">
             {(["deploy", "interact", "explore"] as const).map((tab) => (
               <button

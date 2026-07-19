@@ -1,19 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useMessages } from "@/i18n/client";
-import { fmt } from "@/i18n/format";
-import type { SorobanFileMap, ForgeMode } from "@/lib/soroban/types";
 import type { ConsoleLine, ForgeRunStatus } from "./use-forge-run";
-
-// AI mentor over a failed run: one hint per click, quota'd server-side.
-type MentorState =
-  | { status: "idle" }
-  | { status: "loading" }
-  | { status: "shown"; hint: string; remaining: number }
-  | { status: "limited" }
-  | { status: "unavailable" }
-  | { status: "signin" };
 
 // Streamed output console. Follows the tail unless the user scrolls up
 // (a manual scroll unpins; scrolling back to the bottom re-pins).
@@ -36,64 +25,18 @@ const STATUS_STYLE: Record<ForgeRunStatus, string> = {
 export function ConsolePane({
   lines,
   status,
-  mode,
-  files,
 }: {
   lines: ConsoleLine[];
   status: ForgeRunStatus;
-  mode: ForgeMode;
-  files: SorobanFileMap;
 }) {
   const m = useMessages();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const pinnedRef = useRef(true);
-  const [mentor, setMentor] = useState<MentorState>({ status: "idle" });
 
   useEffect(() => {
     const el = scrollRef.current;
     if (el && pinnedRef.current) el.scrollTop = el.scrollHeight;
-  }, [lines, mentor]);
-
-  const failed = status === "err" || status === "timeout";
-
-  // A new run makes the previous counsel stale — adjust-during-render
-  // pattern (React 19 lint forbids setState inside effects).
-  const [wasFailed, setWasFailed] = useState(failed);
-  if (wasFailed !== failed) {
-    setWasFailed(failed);
-    if (!failed) setMentor({ status: "idle" });
-  }
-
-  const askMentor = useCallback(async () => {
-    setMentor({ status: "loading" });
-    try {
-      const res = await fetch("/api/mentor/forge", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          mode,
-          files,
-          log: lines.map((l) => l.text).join("\n"),
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (res.ok) {
-        setMentor({
-          status: "shown",
-          hint: data.hint ?? "",
-          remaining: data.remaining ?? 0,
-        });
-      } else if (res.status === 401) {
-        setMentor({ status: "signin" });
-      } else if (res.status === 429) {
-        setMentor({ status: "limited" });
-      } else {
-        setMentor({ status: "unavailable" });
-      }
-    } catch {
-      setMentor({ status: "unavailable" });
-    }
-  }, [mode, files, lines]);
+  }, [lines]);
 
   return (
     <div className="flex h-full min-h-0 flex-col bg-bg-elev">
@@ -131,43 +74,6 @@ export function ConsolePane({
               {line.text.replace(ANSI_RE, "") || " "}
             </div>
           ))
-        )}
-
-        {failed && (
-          <div className="mt-3 border-t border-line pt-3">
-            {(mentor.status === "idle" || mentor.status === "loading") && (
-              <button
-                type="button"
-                onClick={askMentor}
-                disabled={mentor.status === "loading"}
-                className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20 disabled:opacity-50"
-              >
-                {mentor.status === "loading"
-                  ? m.ide.mentor.thinking
-                  : <>🧙 {m.ide.mentor.ask}</>}
-              </button>
-            )}
-            {mentor.status === "shown" && (
-              <div className="rounded-xl border border-accent/40 bg-accent/[0.06] px-4 py-3">
-                <p className="text-muted">{m.ide.mentor.title}</p>
-                <p className="mt-1 whitespace-pre-wrap text-fg/90">
-                  {mentor.hint}
-                </p>
-                <p className="mt-2 text-[11px] text-muted2">
-                  {fmt(m.ide.mentor.remaining, { n: mentor.remaining })}
-                </p>
-              </div>
-            )}
-            {mentor.status === "signin" && (
-              <p className="text-muted2">{m.ide.mentor.signIn}</p>
-            )}
-            {mentor.status === "limited" && (
-              <p className="text-muted2">{m.ide.mentor.limit}</p>
-            )}
-            {mentor.status === "unavailable" && (
-              <p className="text-muted2">{m.ide.mentor.unavailable}</p>
-            )}
-          </div>
         )}
       </div>
     </div>
