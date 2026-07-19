@@ -107,14 +107,21 @@ export async function POST(req: Request) {
 
   // Full detail stays server-side (outputLog); the client gets only the
   // sanitized verdict below — never raw internals (Phase 4 rule, applied now).
-  await prisma.submission.create({
+  // outputLog carries { results, output } so the mentor endpoint can rebuild
+  // the failure context from the DB instead of trusting the client. (Older
+  // rows hold a bare results array — readers must accept both shapes.)
+  const submission = await prisma.submission.create({
     data: {
       userId,
       lessonId: lesson.id,
       code,
       status: verdict.passed ? "pass" : "fail",
-      outputLog: JSON.stringify(verdict.results),
+      outputLog: JSON.stringify({
+        results: verdict.results,
+        output: verdict.output,
+      }),
     },
+    select: { id: true },
   });
 
   // Phase 5 (the HIDDEN GOLD reveal): gold is credited exactly once per
@@ -191,6 +198,7 @@ export async function POST(req: Request) {
     passed: verdict.passed,
     results: verdict.results,
     output: verdict.output,
+    submissionId: submission.id,
     firstCompletion,
     // Present only when this pass credited the reward (goldRevealed is now
     // guaranteed true — the economy stays hidden for anonymous/unrevealed).

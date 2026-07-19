@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Editor, { type OnMount } from "@monaco-editor/react";
+import { Markdown } from "@/components/Markdown";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
 
@@ -11,6 +12,16 @@ interface CheckResult {
   name: string;
   passed: boolean;
 }
+
+// AI mentor panel: idle → loading → one of shown (a hint for the latest
+// failed run), limited (daily quota) or unavailable (LLM offline) — the
+// last two fall back to the lesson's authored hints when it has any.
+type MentorState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "shown"; hint: string; remaining: number }
+  | { status: "limited"; staticHints: string | null }
+  | { status: "unavailable"; staticHints: string | null };
 
 /** Reward payload — present only when a pass credits the lesson's gold. */
 interface GoldReward {
@@ -29,6 +40,7 @@ export function LessonPlayer({
   nextHref,
   signedIn,
   allowAnonymous = false,
+  mentorEnabled = false,
   onPass,
   editorHeight = "420px",
   fileName = "main.rs",
@@ -40,6 +52,8 @@ export function LessonPlayer({
   signedIn: boolean;
   /** Trial lessons can be run without an account (progress isn't saved). */
   allowAnonymous?: boolean;
+  /** AI mentor hints — server-gated (signed in + MENTOR_API_KEY set). */
+  mentorEnabled?: boolean;
   /** Step-player mode: called when the user continues after a pass. */
   onPass?: () => void;
   editorHeight?: string;
@@ -60,6 +74,7 @@ export function LessonPlayer({
   const [output, setOutput] = useState("");
   const [message, setMessage] = useState("");
   const [gold, setGold] = useState<GoldReward | null>(null);
+  const [mentor, setMentor] = useState<MentorState>({ status: "idle" });
   const router = useRouter();
 
   // codeRef mirrors the editor value for the run handler; it is only written
@@ -89,6 +104,7 @@ export function LessonPlayer({
     setResults([]);
     setOutput("");
     setGold(null);
+    setMentor({ status: "idle" });
     try {
       const res = await fetch("/api/submissions", {
         method: "POST",
@@ -124,6 +140,39 @@ export function LessonPlayer({
     runRef.current = run;
   }, [run]);
 
+  const askMentor = useCallback(async () => {
+    // Tagged with the run id so a slow hint can't surface after the student
+    // already re-ran (or reset) — same staleness rule as run() itself.
+    const runId = runIdRef.current;
+    const fresh = () => runId === runIdRef.current;
+    setMentor({ status: "loading" });
+    try {
+      const res = await fetch("/api/mentor/hint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lessonSlug }),
+      });
+      const data = await res.json();
+      if (!fresh()) return;
+      if (res.ok) {
+        setMentor({
+          status: "shown",
+          hint: data.hint ?? "",
+          remaining: data.remaining ?? 0,
+        });
+      } else if (res.status === 429) {
+        setMentor({ status: "limited", staticHints: data.staticHints ?? null });
+      } else {
+        setMentor({
+          status: "unavailable",
+          staticHints: data.staticHints ?? null,
+        });
+      }
+    } catch {
+      if (fresh()) setMentor({ status: "unavailable", staticHints: null });
+    }
+  }, [lessonSlug]);
+
   const onMount: OnMount = (editor, monaco) => {
     monaco.editor.defineTheme("tusst", {
       base: "vs-dark",
@@ -157,6 +206,7 @@ export function LessonPlayer({
     setOutput("");
     setMessage("");
     setGold(null);
+    setMentor({ status: "idle" });
   };
 
   // Which failure the output text belongs to: a compile error (sanitized
@@ -281,6 +331,51 @@ export function LessonPlayer({
               <pre className="mt-1 whitespace-pre-wrap text-red-300/90">
                 {output}
               </pre>
+            </div>
+          )}
+
+          {status === "fail" && mentorEnabled && (
+            <div className="mt-3 border-t border-line pt-3">
+              {(mentor.status === "idle" || mentor.status === "loading") && (
+                <button
+                  type="button"
+                  onClick={askMentor}
+                  disabled={mentor.status === "loading"}
+                  className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] text-accent transition hover:bg-accent/20 disabled:opacity-50"
+                >
+                  {mentor.status === "loading"
+                    ? m.lesson.mentorThinking
+                    : <>🧙 {m.lesson.mentorAsk}</>}
+                </button>
+              )}
+
+              {mentor.status === "shown" && (
+                <div className="rounded-xl border border-accent/40 bg-accent/[0.06] px-4 py-3">
+                  <p className="text-muted">{m.lesson.mentorTitle}</p>
+                  <div className="mt-1">
+                    <Markdown>{mentor.hint}</Markdown>
+                  </div>
+                  <p className="mt-2 text-[11px] text-muted2">
+                    {fmt(m.lesson.mentorRemaining, { n: mentor.remaining })}
+                  </p>
+                </div>
+              )}
+
+              {(mentor.status === "limited" ||
+                mentor.status === "unavailable") && (
+                <div className="rounded-xl border border-line px-4 py-3">
+                  <p className="text-muted2">
+                    {mentor.status === "limited"
+                      ? m.lesson.mentorLimit
+                      : m.lesson.mentorUnavailable}
+                  </p>
+                  {mentor.staticHints && (
+                    <div className="mt-1">
+                      <Markdown>{mentor.staticHints}</Markdown>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           )}
 

@@ -48,6 +48,14 @@ export const lesson = {
   compilerError: "// erro de compilação",
   actualOutput: "// sua saída",
   details: "// detalhes",
+  mentorAsk: "pedir dica ao mentor",
+  mentorThinking: "o mentor reflete…",
+  mentorTitle: "// conselho do mentor",
+  mentorRemaining: "{n} dicas restantes para esta lição hoje",
+  mentorLimit:
+    "o mentor descansa — você usou as dicas de hoje para esta lição. Restam as dicas do pergaminho:",
+  mentorUnavailable:
+    "o mentor está longe da forja — as dicas do pergaminho podem ajudar:",
   goldCoinAlt: "Moeda de ouro",
   goldEarned: "+{gold} de ouro",
   goldFirstReveal:

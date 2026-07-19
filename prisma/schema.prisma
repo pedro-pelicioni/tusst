@@ -37,6 +37,7 @@ model User {
   submissions Submission[]
   progress    Progress[]
   inventory   Inventory[]
+  mentorHints MentorHint[]
 }
 
 model Account {
@@ -146,6 +147,7 @@ model Lesson {
   testCases   TestCase[]
   submissions Submission[]
   progress    Progress[]
+  mentorHints MentorHint[]
 
   @@unique([trackId, order])
 }
@@ -182,6 +184,27 @@ model Submission {
   createdAt DateTime         @default(now())
 
   @@index([userId, lessonId])
+}
+
+// AI mentor hints. Rows double as the rate-limit counter (per-user, per-lesson
+// and global daily quotas are counted here — in-memory buckets don't survive
+// serverless instances) and as a per-submission cache so a re-click never
+// spends provider quota. The hint text is safe to show the student; grading
+// internals (AST checks) are never part of the prompt or stored here.
+model MentorHint {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonId     String
+  lesson       Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  submissionId String?  @unique // cache key: one hint per graded submission
+  locale       String
+  hint         String
+  model        String // provider model id, for cost/quality telemetry
+  createdAt    DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([userId, lessonId, createdAt])
 }
 
 model Progress {

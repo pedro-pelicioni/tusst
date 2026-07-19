@@ -115,6 +115,7 @@ export default async function LessonPage({
         numeral={skirmish?.numeral}
         fileName={fileName}
         language={language}
+        mentorEnabled={!!userId && !!process.env.MENTOR_API_KEY}
       />
     );
   }
@@ -183,6 +184,7 @@ export default async function LessonPage({
               starterCode={content.starterCode}
               nextHref={nextHref}
               signedIn={!!userId}
+              mentorEnabled={!!userId && !!process.env.MENTOR_API_KEY}
               fileName={fileName}
               language={language}
             />

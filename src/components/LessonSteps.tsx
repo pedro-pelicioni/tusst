@@ -55,6 +55,7 @@ export function LessonSteps({
   numeral,
   fileName,
   language,
+  mentorEnabled = false,
 }: {
   lessonSlug: string;
   steps: LessonStep[];
@@ -67,6 +68,7 @@ export function LessonSteps({
   numeral?: string;
   fileName?: string;
   language?: string;
+  mentorEnabled?: boolean;
 }) {
   const m = useMessages();
   const [index, setIndex] = useState(0);
@@ -336,6 +338,7 @@ export function LessonSteps({
               nextHref={null}
               signedIn={signedIn}
               allowAnonymous={allowAnonymous}
+              mentorEnabled={mentorEnabled}
               onPass={advance}
               editorHeight="300px"
               fileName={fileName}

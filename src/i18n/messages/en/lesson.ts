@@ -48,6 +48,14 @@ export const lesson = {
   compilerError: "// compiler error",
   actualOutput: "// your output",
   details: "// details",
+  mentorAsk: "ask the mentor",
+  mentorThinking: "the mentor ponders…",
+  mentorTitle: "// mentor's counsel",
+  mentorRemaining: "{n} hints left for this lesson today",
+  mentorLimit:
+    "the mentor rests — you've used today's hints for this lesson. The scroll's own hints remain:",
+  mentorUnavailable:
+    "the mentor is away from the forge — the scroll's hints may help:",
   goldCoinAlt: "Gold coin",
   goldEarned: "+{gold} gold",
   goldFirstReveal:
