@@ -49,7 +49,7 @@ export function IdeShell() {
   const [panelTab, setPanelTab] = useState<"deploy" | "interact" | "explore">("deploy");
   const [lastContractId, setLastContractId] = useState<string | null>(null);
   const [showTutorial, setShowTutorial] = useState(false);
-  const { status, lines, wasm, running, run, cancel } = useForgeRun();
+  const { status, mode, lines, wasm, running, run, cancel } = useForgeRun();
 
   function openProject(id: string, metas?: ForgeProjectMeta[]) {
     const data = loadProject(id);
@@ -223,7 +223,7 @@ export function IdeShell() {
             />
           </div>
           <div data-tutorial-id="console" className="h-56 shrink-0 border-t border-line">
-            <ConsolePane lines={lines} status={status} />
+            <ConsolePane lines={lines} status={status} mode={mode} files={files} />
           </div>
         </div>
 

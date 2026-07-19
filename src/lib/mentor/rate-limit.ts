@@ -20,29 +20,35 @@ export type MentorQuota =
   | { allowed: true; remaining: number }
   | { allowed: false; scope: "lesson" | "user" | "global" };
 
+// Forge hints pass lessonId null — they only count toward the per-user and
+// global fences (the per-lesson cap is a lesson-pedagogy rule).
 export async function checkMentorQuota(
   userId: string,
-  lessonId: string,
+  lessonId: string | null,
 ): Promise<MentorQuota> {
   const dayStart = new Date();
   dayStart.setUTCHours(0, 0, 0, 0);
   const today = { createdAt: { gte: dayStart } };
 
   const [lessonCount, userCount, globalCount] = await Promise.all([
-    prisma.mentorHint.count({ where: { userId, lessonId, ...today } }),
+    lessonId
+      ? prisma.mentorHint.count({ where: { userId, lessonId, ...today } })
+      : Promise.resolve(0),
     prisma.mentorHint.count({ where: { userId, ...today } }),
     prisma.mentorHint.count({ where: today }),
   ]);
 
   if (globalCount >= GLOBAL_DAILY_LIMIT) return { allowed: false, scope: "global" };
   if (userCount >= USER_DAILY_LIMIT) return { allowed: false, scope: "user" };
-  if (lessonCount >= LESSON_DAILY_LIMIT) return { allowed: false, scope: "lesson" };
+  if (lessonId && lessonCount >= LESSON_DAILY_LIMIT) {
+    return { allowed: false, scope: "lesson" };
+  }
 
+  const remaining = USER_DAILY_LIMIT - userCount;
   return {
     allowed: true,
-    remaining: Math.min(
-      LESSON_DAILY_LIMIT - lessonCount,
-      USER_DAILY_LIMIT - userCount,
-    ),
+    remaining: lessonId
+      ? Math.min(LESSON_DAILY_LIMIT - lessonCount, remaining)
+      : remaining,
   };
 }

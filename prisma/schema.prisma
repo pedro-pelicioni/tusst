@@ -191,12 +191,16 @@ model Submission {
 // serverless instances) and as a per-submission cache so a re-click never
 // spends provider quota. The hint text is safe to show the student; grading
 // internals (AST checks) are never part of the prompt or stored here.
+// kind "lesson" rows have a lessonId; kind "forge" rows (IDE build/test
+// help) have neither lesson nor submission — they only count toward the
+// per-user and global daily quotas.
 model MentorHint {
   id           String   @id @default(cuid())
   userId       String
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  lessonId     String
-  lesson       Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  kind         String   @default("lesson") // lesson | forge
+  lessonId     String?
+  lesson       Lesson?  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   submissionId String?  @unique // cache key: one hint per graded submission
   locale       String
   hint         String
@@ -205,6 +209,20 @@ model MentorHint {
 
   @@index([userId, createdAt])
   @@index([userId, lessonId, createdAt])
+}
+
+// Raven MCP OAuth tokens (raven.stellar.buzz — Stellar docs for the mentor).
+// The MCP only supports the interactive authorization-code grant, so a human
+// consents once via scripts/raven-auth.mjs; after that the server refreshes
+// by itself. Stored in Postgres because serverless instances can't hold a
+// rotating refresh token in memory or env. Single row, id "raven".
+model RavenToken {
+  id           String   @id @default("raven")
+  clientId     String
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
+  updatedAt    DateTime @updatedAt
 }
 
 model Progress {

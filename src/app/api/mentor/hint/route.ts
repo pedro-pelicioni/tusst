@@ -13,6 +13,7 @@ import {
 } from "@/lib/mentor/provider";
 import { buildMentorMessages } from "@/lib/mentor/prompt";
 import { checkMentorQuota } from "@/lib/mentor/rate-limit";
+import { searchRavenDocs } from "@/lib/mentor/raven";
 import { extractStaticHints } from "@/lib/mentor/static-hints";
 
 // AI mentor: one Socratic hint for the student's latest failed submission.
@@ -83,7 +84,7 @@ export async function POST(req: Request) {
 
   const lesson = await prisma.lesson.findUnique({
     where: { slug: lessonSlug },
-    include: { track: { select: { status: true, slug: true } } },
+    include: { track: { select: { status: true, slug: true, domain: true } } },
   });
   if (!lesson || lesson.status !== "active") {
     return NextResponse.json({ error: "Lesson not found." }, { status: 404 });
@@ -150,6 +151,13 @@ export async function POST(req: Request) {
     );
   }
 
+  // Stellar-domain lessons get grounding excerpts from the official docs via
+  // the Raven MCP (best-effort — null when unauthorized or unreachable).
+  const stellarDocs =
+    lesson.track.domain === "stellar"
+      ? await searchRavenDocs(`${lesson.title} (${lesson.track.slug})`)
+      : null;
+
   const verdict = parseOutputLog(submission.outputLog);
   const messages = buildMentorMessages({
     locale,
@@ -158,6 +166,7 @@ export async function POST(req: Request) {
     failedChecks: verdict.results.filter((r) => !r.passed).map((r) => r.name),
     output: verdict.output,
     expectedOutput: content.expectedOutput,
+    stellarDocs,
   });
   if (process.env.NODE_ENV !== "production") {
     console.debug("[mentor] prompt:\n", messages[1]?.content);
