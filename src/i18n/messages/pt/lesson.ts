@@ -3,7 +3,7 @@ export const lesson = {
   // página da lição (server)
   lessonNumber: "lição {number}",
   completedBadge: "concluída",
-  skirmishTag: "escaramuça · {act}",
+  skirmishTag: "combate · {act}",
   signIn: "entre",
   signInSuffix: "para rodar código e salvar o progresso",
   comingSoon: "em breve",
@@ -14,13 +14,13 @@ export const lesson = {
   // LessonSteps (player de passos)
   praise: ["Bem forjado!", "É isso!", "As runas aprovam.", "Impecável."],
   incorrect: "Ainda não — estude a runa de novo.",
-  skirmishComplete: "escaramuça concluída",
+  skirmishComplete: "combate concluído",
   doneSignedIn:
     "O farol tremula um pouco mais forte. Seu progresso está gravado na Pedra do Ledger.",
   doneAnonymous:
     "O farol tremula um pouco mais forte — mas runas não escritas se apagam. Crie uma conta gratuita para salvar seu progresso e reivindicar suas cartas de campeão.",
   saveProgress: "Salvar meu progresso",
-  nextSkirmish: "Próxima escaramuça ›",
+  nextSkirmish: "Próximo combate ›",
   backToAct: "Voltar ao ato",
   exitLesson: "Sair da lição",
   stepProgress: "{current}/{total}",

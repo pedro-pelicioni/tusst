@@ -946,7 +946,7 @@ total: 40
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Le piège favori du Thésauriseur : un Vec de 2 éléments, et un aventurier qui tend la main vers la case 5.
+      body: `Le piège favori de l'Amasseur : un Vec de 2 éléments, et un aventurier qui tend la main vers la case 5.
 
 \`\`\`rust
 let vault = vec!["hammer", "chisel"];
@@ -1008,7 +1008,7 @@ found: nothing
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Un Vec répond par **position**. Mais le registre du Thésauriseur répond par **nom** : demande « gold ? » et il répond « 100 ».
+      body: `Un Vec répond par **position**. Mais le registre de l'Amasseur répond par **nom** : demande « gold ? » et il répond « 100 ».
 
 C'est une \`HashMap\` — des clés liées à des valeurs :
 
@@ -1133,14 +1133,14 @@ The Keeper of the Vaults
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Le Thésauriseur ne laisse pas sortir le trésor — mais il te laisse **regarder**. Une **slice** est une fenêtre sur une portion de collection :
+      body: `L'Amasseur ne laisse pas sortir le trésor — mais il te laisse **regarder**. Une **slice** est une fenêtre sur une portion de collection :
 
 \`\`\`rust
 let shelf = vec![1, 2, 3, 4, 5];
 let window = &shelf[1..4];   // → [2, 3, 4]
 \`\`\`
 
-Aucune copie n'est faite. Le \`&\` la marque comme un emprunt — tu contemples l'étagère du Thésauriseur, tu ne l'emportes pas.`,
+Aucune copie n'est faite. Le \`&\` la marque comme un emprunt — tu contemples l'étagère de l'Amasseur, tu ne l'emportes pas.`,
     },
     {
       kind: "theory",

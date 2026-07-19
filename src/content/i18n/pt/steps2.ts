@@ -430,7 +430,7 @@ E para sequer existir no ledger, uma conta guarda uma **reserva base mínima: 1 
     },
     {
       kind: "fill",
-      prompt: "Preencha a carta: qual sigilo inicia uma chave **pública**?",
+      prompt: "Preencha a carta: qual selo inicia uma chave **pública**?",
       file: "star-chart.toml",
       before: "public_key_starts_with = \"",
       after: "\"",
@@ -442,7 +442,7 @@ E para sequer existir no ledger, uma conta guarda uma **reserva base mínima: 1 
       kind: "editor",
       intro: `### Prova final — a carta da fortaleza-estelar
 
-Complete a carta: os dois sigilos, e a reserva base (em XLM) que uma conta precisa para existir.
+Complete a carta: os dois selos, e a reserva base (em XLM) que uma conta precisa para existir.
 
 Saída esperada:
 
@@ -564,7 +564,7 @@ Sem trustline, sem saldo — pagamentos naquele ativo simplesmente não consegue
       kind: "editor",
       intro: `### Prova final — abra a ponte de luz
 
-Preencha a trustline para **USDC**: o código do ativo, e o sigilo com que todo endereço de emissor começa.
+Preencha a trustline para **USDC**: o código do ativo, e o selo com que todo endereço de emissor começa.
 
 Saída esperada:
 
@@ -625,7 +625,7 @@ Este é o céu que o Beholder quebrou — e o que você está prestes a reacende
       kind: "editor",
       intro: `### Prova final — a primeira luz cruzando o céu
 
-Registre o pagamento: o sigilo do destino, o código do ativo nativo, e envie **25**.
+Registre o pagamento: o selo do destino, o código do ativo nativo, e envie **25**.
 
 Saída esperada:
 

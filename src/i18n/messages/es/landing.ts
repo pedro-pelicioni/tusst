@@ -80,10 +80,10 @@ export const landing = {
   howItWorks: {
     step1Title: "Forja en el Navegador",
     step1Copy:
-      "Cada escaramuza es código real juzgado por pruebas ocultas — sin instalación, sin excusas. El compilador es tu aliado más severo.",
+      "Cada combate es código real juzgado por pruebas ocultas — sin instalación, sin excusas. El compilador es tu aliado más severo.",
     step2Title: "Marcha a Tu Ritmo",
     step2Copy:
-      "Los actos se desbloquean en orden, las escaramuzas se reintentan por siempre — desde los fundamentos de Rust hasta contratos vivos en la testnet de Stellar.",
+      "Los actos se desbloquean en orden, los combates se reintentan por siempre — desde los fundamentos de Rust hasta contratos vivos en la testnet de Stellar.",
     step3Title: "Reclama a los Campeones",
     step3Copy:
       "Ocho cartas pintadas para ocho actos. Las partidas impecables otorgan ediciones raras — y las cartas de los jefes deben tomarse por la fuerza.",

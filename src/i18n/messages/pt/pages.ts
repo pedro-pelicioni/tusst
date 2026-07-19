@@ -7,18 +7,18 @@ export const pages = {
     claimed: "{percent}% reivindicadas",
     actReward: "recompensa do ato",
     rewardStats: "{type} · poder {power}",
-    skirmishesForgingSoon: "escaramuças sendo forjadas — em breve",
+    skirmishesForgingSoon: "combates sendo forjados — em breve",
     startLearning: "Começar a aprender",
     viewChampions: "Ver seus campeões",
   },
   cards: {
     metaTitle: "Campeões do Reino — TUSST",
     metaDescription:
-      "As cartas de campeão da Constelação Despedaçada. Complete a escaramuça final de um ato para reivindicar seu campeão.",
+      "As cartas de campeão da Constelação Despedaçada. Vença o combate final de um ato para reivindicar seu campeão.",
     kicker: "// a constelação despedaçada",
     title: "Campeões do Reino",
     intro:
-      "Oito cartas para oito atos, espalhadas pelo Grande Pânico. Cada ato da campanha termina com uma escaramuça final — vença-a, e seu campeão entra para a sua coleção. A última carta não é dada. Ela é tomada.",
+      "Oito cartas para oito atos, espalhadas pelo Grande Pânico. Cada ato da campanha termina com um combate final — vença-o, e seu campeão entra para a sua coleção. A última carta não é dada. Ela é tomada.",
     bossCard: "carta do chefe",
     actLink: "Ato {numeral} — {title}",
     unassigned: "não atribuída",
@@ -34,14 +34,14 @@ export const pages = {
       advanced: "avançado",
     },
     act: "Ato {numeral}",
-    overlord: "soberano: {overlord}",
+    overlord: "chefe: {overlord}",
     actReward: "recompensa do ato",
     rewardStats: "{type} · poder {power}",
     progress: "progresso",
     lessonsHeading: "// lições",
-    forgingTitle: "escaramuças sendo forjadas",
+    forgingTitle: "combates sendo forjados",
     forgingBefore:
-      "Seu onboarding desbloqueou este ato, mas as escaramuças dele ainda estão sendo escritas. Volte para a",
+      "Seu onboarding desbloqueou este ato, mas os combates dele ainda estão sendo escritos. Volte para a",
     forgingLink: "trilha da campanha",
     forgingAfter: "para continuar lutando.",
     difficulty: {
@@ -60,7 +60,7 @@ export const pages = {
     goldCoinAlt: "Moeda de ouro — o dracma Stroop",
     goldCaption: "ouro · ganho uma lição de cada vez",
     stats: {
-      skirmishesWon: "escaramuças vencidas",
+      skirmishesWon: "combates vencidos",
       actsCleared: "atos concluídos",
       championCards: "cartas de campeão",
     },

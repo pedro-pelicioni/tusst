@@ -430,7 +430,7 @@ Y para siquiera existir en el libro mayor, una cuenta guarda una **reserva base 
     },
     {
       kind: "fill",
-      prompt: "Completa la carta fundacional: ¿qué sigilo inicia una clave **pública**?",
+      prompt: "Completa la carta fundacional: ¿qué sello inicia una clave **pública**?",
       file: "star-chart.toml",
       before: "public_key_starts_with = \"",
       after: "\"",
@@ -442,7 +442,7 @@ Y para siquiera existir en el libro mayor, una cuenta guarda una **reserva base 
       kind: "editor",
       intro: `### Prueba final — la carta de la fortaleza estelar
 
-Completa la carta: los dos sigilos, y la reserva base (en XLM) que una cuenta necesita para existir.
+Completa la carta: los dos sellos, y la reserva base (en XLM) que una cuenta necesita para existir.
 
 Salida esperada:
 
@@ -564,7 +564,7 @@ Sin trustline, no hay balance — los pagos en ese activo simplemente no pueden 
       kind: "editor",
       intro: `### Prueba final — abre el puente de luz
 
-Completa la trustline para **USDC**: el código del activo, y el sigilo con el que empieza toda dirección de emisor.
+Completa la trustline para **USDC**: el código del activo, y el sello con el que empieza toda dirección de emisor.
 
 Salida esperada:
 
@@ -625,7 +625,7 @@ Este es el cielo que el Beholder rompió — y el que estás a punto de volver a
       kind: "editor",
       intro: `### Prueba final — primera luz a través del cielo
 
-Traza el pago: el sigilo del destino, el código del activo nativo, y envía **25**.
+Traza el pago: el sello del destino, el código del activo nativo, y envía **25**.
 
 Salida esperada:
 

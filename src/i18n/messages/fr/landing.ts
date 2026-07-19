@@ -44,8 +44,8 @@ export const landing = {
     act1Cta: "Entrer dans la Citadelle ›",
     act1Reward: "récompense · STROOWARRIOR",
     sealedNote: "territoires scellés — ils s'ouvrent à mesure que la campagne se forge",
-    act2Title: "La Halle des Chemins Fourchus",
-    act2Tag: "flux de contrôle · le suzerain des miroirs",
+    act2Title: "La Salle des Chemins Fourchus",
+    act2Tag: "flux de contrôle · le seigneur des miroirs",
     act3Title: "Les Cryptes Sans Fin",
     act3Tag: "bibliothèque std · l'amasseur",
     act4Title: "Le Marais Évanescent",
@@ -80,10 +80,10 @@ export const landing = {
   howItWorks: {
     step1Title: "Forge dans le Navigateur",
     step1Copy:
-      "Chaque escarmouche est du vrai code jugé par des épreuves cachées — zéro installation, zéro excuse. Le compilateur est ton allié le plus impitoyable.",
+      "Chaque combat est du vrai code jugé par des épreuves cachées — zéro installation, zéro excuse. Le compilateur est ton allié le plus impitoyable.",
     step2Title: "Avance à Ton Rythme",
     step2Copy:
-      "Les actes se déverrouillent dans l'ordre, les escarmouches se retentent à l'infini — des fondamentaux de Rust jusqu'aux contrats en direct sur le testnet Stellar.",
+      "Les actes se déverrouillent dans l'ordre, les combats se retentent à l'infini — des fondamentaux de Rust jusqu'aux contrats en direct sur le testnet Stellar.",
     step3Title: "Réclame les Champions",
     step3Copy:
       "Huit cartes peintes pour huit actes. Les runs sans faute rapportent des tirages rares — et les cartes de boss doivent être prises de force.",

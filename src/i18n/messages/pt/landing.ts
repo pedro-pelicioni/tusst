@@ -45,7 +45,7 @@ export const landing = {
     act1Reward: "recompensa · STROOWARRIOR",
     sealedNote: "territórios selados — eles abrem conforme a campanha é forjada",
     act2Title: "Salão das Estradas Bifurcadas",
-    act2Tag: "controle de fluxo · o soberano dos espelhos",
+    act2Tag: "controle de fluxo · o senhor dos espelhos",
     act3Title: "Os Cofres Sem Fim",
     act3Tag: "biblioteca std · o acumulador",
     act4Title: "O Pântano Evanescente",
@@ -80,10 +80,10 @@ export const landing = {
   howItWorks: {
     step1Title: "Forje no Navegador",
     step1Copy:
-      "Cada escaramuça é código de verdade julgado por provas ocultas — sem setup, sem desculpas. O compilador é seu aliado mais severo.",
+      "Cada combate é código de verdade julgado por provas ocultas — sem setup, sem desculpas. O compilador é seu aliado mais severo.",
     step2Title: "Marche no Seu Ritmo",
     step2Copy:
-      "Os atos desbloqueiam em ordem, as escaramuças aceitam tentativas infinitas — dos fundamentos de Rust a contratos ao vivo na testnet da Stellar.",
+      "Os atos desbloqueiam em ordem, os combates aceitam tentativas infinitas — dos fundamentos de Rust a contratos ao vivo na testnet da Stellar.",
     step3Title: "Conquiste os Campeões",
     step3Copy:
       "Oito cartas pintadas para oito atos. Runs impecáveis rendem edições raras — e as cartas dos chefes precisam ser tomadas à força.",

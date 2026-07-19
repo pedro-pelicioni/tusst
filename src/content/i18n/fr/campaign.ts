@@ -9,18 +9,18 @@ export const actText: Record<string, ActText> = {
       "Tu t'éveilles dans les ruines oxydées de la Citadelle. Ferrisia la Mère-Crabe t'enseigne les mots d'éveil, la liaison des noms et la loi de la Lame Inflexible. Rallume le phare, Forgeborn.",
   },
   "control-flow": {
-    title: "La Halle des Chemins qui Bifurquent",
+    title: "La Salle des Chemins qui Bifurquent",
     territory: "Labyrinthe de miroirs",
-    overlord: "Le Suzerain des Miroirs",
+    overlord: "Le Seigneur des Miroirs",
     synopsis:
-      "Un labyrinthe où chaque couloir mène à un destin différent. Le Suzerain des Miroirs piège les voyageurs dans des boucles infinies. Bifurque avec sagesse, matche chaque reflet et brise la boucle éternelle.",
+      "Un labyrinthe où chaque couloir mène à un destin différent. Le Seigneur des Miroirs piège les voyageurs dans des boucles infinies. Bifurque avec sagesse, matche chaque reflet et brise la boucle éternelle.",
   },
   "rust-standard-library": {
     title: "Les Coffres Sans Fin",
     territory: "Archive-donjon sous le royaume",
-    overlord: "Le Thésauriseur",
+    overlord: "L'Amasseur",
     synopsis:
-      "Sous le royaume dorment tous les outils que les anciens Stroopies ont jamais forgés : sacoches extensibles, registres enchantés, chaînes d'esprits paresseux qui ne travaillent que lorsqu'on les collecte. Le Thésauriseur veille sur tout — et indexe tout avec un décalage de un.",
+      "Sous le royaume dorment tous les outils que les anciens Stroopies ont jamais forgés : sacoches extensibles, registres enchantés, chaînes d'esprits paresseux qui ne travaillent que lorsqu'on les collecte. L'Amasseur veille sur tout — et indexe tout avec un décalage de un.",
   },
   "mastering-option": {
     title: "Le Marais Évanescent",
@@ -38,7 +38,7 @@ export const actText: Record<string, ActText> = {
     title: "La Porte de la Constellation",
     territory: "Le ciel brisé",
     synopsis:
-      "Cinq champions réunis, tu t'élèves. Des forts-étoiles pour les comptes, sigle-et-secret pour les paires de clés, des ponts de lumière pour les trustlines — et les lumens qui circulent à nouveau pour la première fois depuis la Panique.",
+      "Cinq champions réunis, tu t'élèves. Des forts-étoiles pour les comptes, sceau et secret pour les paires de clés, des ponts de lumière pour les trustlines — et les lumens qui circulent à nouveau pour la première fois depuis la Panique.",
   },
   "soroban-smart-contracts": {
     title: "L'Antre du Beholder",
@@ -86,7 +86,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-fundamentals-6": {
     title: "La Lame Empruntée",
     intro:
-      "Le Gardien de l'Emprunt parle enfin : « Nul besoin de céder une lame pour qu'un autre lise son inscription. Prête-la — une référence — et elle revient dans ta main quand il a terminé. » Il tapote le sigle `&` gravé dans son gantelet. « Cette marque. Apprends-la. »",
+      "Le Gardien de l'Emprunt parle enfin : « Nul besoin de céder une lame pour qu'un autre lise son inscription. Prête-la — une référence — et elle revient dans ta main quand il a terminé. » Il tapote le glyphe `&` gravé dans son gantelet. « Cette marque. Apprends-la. »",
   },
 
   // Act II — The Hall of Forking Roads
@@ -96,9 +96,9 @@ export const skirmishText: Record<string, SkirmishText> = {
       "La première salle du labyrinthe abrite deux portes et une seule torche. « Chaque chemin ici est une question », murmure un reflet qui est presque toi. « Si la torche brûle, une porte. Sinon, l'autre. Le dédale ne respecte qu'un voyageur capable de décider. »",
   },
   "control-flow-2": {
-    title: "La Halle de Tous les Reflets",
+    title: "La Salle de Tous les Reflets",
     intro:
-      "Un couloir de miroirs, chacun montrant une porte différente que tu aurais pu prendre. La règle du Suzerain des Miroirs est absolue : nomme ce que tu vois dans chaque miroir — chacun d'eux — ou reste piégé entre eux. L'ancien art runique appelle cela un `match`, et il n'oublie rien.",
+      "Un couloir de miroirs, chacun montrant une porte différente que tu aurais pu prendre. La règle du Seigneur des Miroirs est absolue : nomme ce que tu vois dans chaque miroir — chacun d'eux — ou reste piégé entre eux. L'ancien art runique appelle cela un `match`, et il n'oublie rien.",
   },
   "control-flow-3": {
     title: "Le Couloir Sans Fin",
@@ -116,9 +116,9 @@ export const skirmishText: Record<string, SkirmishText> = {
       "Cinq pierres de gué traversent le lac-miroir, numérotées de un à cinq. Marche sur chacune exactement une fois, dans l'ordre, en l'annonçant à voix haute — le lac écoute. Les anciens forgerons avaient une rune pour parcourir un chemin connu sans compter sur ses doigts : `for`.",
   },
   "control-flow-6": {
-    title: "Le Dédale du Suzerain",
+    title: "Le Dédale du Seigneur des Miroirs",
     intro:
-      "La galerie finale : dix miroirs, et le Suzerain des Miroirs caché derrière un miroir sur trois. Parcours la rangée ; annonce le numéro de chaque miroir — mais là où le Suzerain se cache, crie « mirror » à la place. Branche à l'intérieur de ta boucle, Forgeborn. Brise le cœur du labyrinthe.",
+      "La galerie finale : dix miroirs, et le Seigneur des Miroirs caché derrière un miroir sur trois. Parcours la rangée ; annonce le numéro de chaque miroir — mais là où il se cache, crie « mirror » à la place. Branche à l'intérieur de ta boucle, Forgeborn. Brise le cœur du labyrinthe.",
   },
 
   // Act III — The Endless Vaults
@@ -135,12 +135,12 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-standard-library-3": {
     title: "L'Étagère Peut-Être Vide",
     intro:
-      "Le piège du Thésauriseur : une étagère à cinq emplacements, et des aventuriers qui tendent la main vers le sixième. Jadis, ce geste faisait s'effondrer le coffre tout entier. Le `.get` de la sacoche demande poliment à la place — et la réponse, Forgeborn, peut n'être rien du tout.",
+      "Le piège de l'Amasseur : une étagère à cinq emplacements, et des aventuriers qui tendent la main vers le sixième. Jadis, ce geste faisait s'effondrer le coffre tout entier. Le `.get` de la sacoche demande poliment à la place — et la réponse, Forgeborn, peut n'être rien du tout.",
   },
   "rust-standard-library-4": {
     title: "Le Registre Enchanté",
     intro:
-      "Un livre qui répond aux questions : demande-lui « gold ? » et il répond « 100 ». Chaque entrée est une clé liée à une valeur, sans ordre particulier — l'enchantement troque l'ordre contre la vitesse. Les forgerons l'appelaient une `HashMap`. Le Thésauriseur l'appelle sa mémoire.",
+      "Un livre qui répond aux questions : demande-lui « gold ? » et il répond « 100 ». Chaque entrée est une clé liée à une valeur, sans ordre particulier — l'enchantement troque l'ordre contre la vitesse. Les forgerons l'appelaient une `HashMap`. L'Amasseur l'appelle sa mémoire.",
   },
   "rust-standard-library-5": {
     title: "L'Inscription Vivante",
@@ -150,7 +150,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-standard-library-6": {
     title: "Une Fenêtre sur le Trésor",
     intro:
-      "Le Thésauriseur ne te laissera pas emporter le trésor — mais il te laissera regarder. Une slice est une fenêtre sur une étendue de trésor : pas de copie, pas de vol, juste une vue d'ici à là. Prends garde aux bords ; la fenêtre inclut son début et exclut sa fin.",
+      "L'Amasseur ne te laissera pas emporter le trésor — mais il te laissera regarder. Une slice est une fenêtre sur une étendue de trésor : pas de copie, pas de vol, juste une vue d'ici à là. Prends garde aux bords ; la fenêtre inclut son début et exclut sa fin.",
   },
 
   // Act IV — The Vanishing Marsh
@@ -191,7 +191,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "stellar-101-1": {
     title: "La Charte du Fort-Étoile",
     intro:
-      "Astrostroopie t'accueille à la Porte avec une charte et deux clés. « Chaque âme du ciel est un fort-étoile — un compte. Le sigle `G`, tu peux le crier du haut des tours ; la graine `S`, tu la gardes au péril de ta vie. Perds le premier, c'est gênant. Perds la seconde, c'est tout perdre. »",
+      "Astrostroopie t'accueille à la Porte avec une charte et deux clés. « Chaque âme du ciel est un fort-étoile — un compte. Le sceau `G`, tu peux le crier du haut des tours ; la graine `S`, tu la gardes au péril de ta vie. Perds le premier, c'est gênant. Perds la seconde, c'est tout perdre. »",
   },
   "stellar-101-2": {
     title: "Le Péage de la Porte",

@@ -38,7 +38,7 @@ export const actText: Record<string, ActText> = {
     title: "La Puerta de la Constelación",
     territory: "El cielo quebrado",
     synopsis:
-      "Con cinco campeones reunidos, asciendes. Torreones estelares como cuentas, sigilo y secreto como keypairs, puentes de luz como trustlines — y lumens fluyendo de nuevo por primera vez desde el Pánico.",
+      "Con cinco campeones reunidos, asciendes. Torreones estelares como cuentas, sello y secreto como keypairs, puentes de luz como trustlines — y lumens fluyendo de nuevo por primera vez desde el Pánico.",
   },
   "soroban-smart-contracts": {
     title: "La Guarida del Beholder",
@@ -85,7 +85,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-fundamentals-6": {
     title: "La Hoja Prestada",
     intro:
-      "El Guardián de los Préstamos por fin habla: «No hace falta entregar una hoja para que otro lea su inscripción. Préstala — una referencia — y volverá a tu mano cuando terminen.» Golpea el sigilo `&` grabado en su guantelete. «Esta marca. Apréndela.»",
+      "El Guardián de los Préstamos por fin habla: «No hace falta entregar una hoja para que otro lea su inscripción. Préstala — una referencia — y volverá a tu mano cuando terminen.» Golpea el glifo `&` grabado en su guantelete. «Esta marca. Apréndela.»",
   },
   "control-flow-1": {
     title: "Las Dos Puertas",
@@ -180,7 +180,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "stellar-101-1": {
     title: "La Carta del Torreón Estelar",
     intro:
-      "Astrostroopie te recibe en la Puerta con una carta constitutiva y dos llaves. «Toda alma en el cielo es un torreón estelar — una cuenta. El sigilo `G` puedes gritarlo desde las torres; la semilla `S` la guardas con tu vida. Pierde la primera: incómodo. Pierde la segunda: todo.»",
+      "Astrostroopie te recibe en la Puerta con una carta constitutiva y dos llaves. «Toda alma en el cielo es un torreón estelar — una cuenta. El sello `G` puedes gritarlo desde las torres; la semilla `S` la guardas con tu vida. Pierde la primera: incómodo. Pierde la segunda: todo.»",
   },
   "stellar-101-2": {
     title: "El Peaje de la Puerta",

@@ -6,21 +6,21 @@ export const actText: Record<string, ActText> = {
     title: "A Cidadela Enferrujada",
     territory: "Capital em ruínas da arte rúnica",
     synopsis:
-      "Você desperta nas ruínas oxidadas da Cidadela. Ferrisia, a Mãe-Caranguejo, ensina a você as palavras do despertar, a vinculação dos nomes e a lei da Lâmina Inflexível. Reacenda o farol, Forgeborn.",
+      "Você desperta nas ruínas oxidadas da Cidadela. Ferrisia, a Mãe-Caranguejo, ensina a você as palavras do despertar, o vínculo dos nomes e a lei da Lâmina Inflexível. Reacenda o farol, Forgeborn.",
   },
   "control-flow": {
     title: "O Salão dos Caminhos que se Bifurcam",
     territory: "Labirinto de espelhos",
-    overlord: "O Suserano dos Espelhos",
+    overlord: "O Senhor dos Espelhos",
     synopsis:
-      "Um labirinto onde cada corredor corresponde a um destino diferente. O Suserano dos Espelhos aprisiona viajantes em loops infinitos. Ramifique com sabedoria, faça match de cada reflexo e quebre o loop eterno.",
+      "Um labirinto onde cada corredor corresponde a um destino diferente. O Senhor dos Espelhos aprisiona viajantes em loops infinitos. Ramifique com sabedoria, faça match de cada reflexo e quebre o loop eterno.",
   },
   "rust-standard-library": {
     title: "Os Cofres Infindáveis",
     territory: "Arquivo-masmorra sob o reino",
     overlord: "O Acumulador",
     synopsis:
-      "Sob o reino dorme toda ferramenta que os antigos Stroopies já forjaram: sacolas que crescem, livros-razão encantados, correntes de espíritos preguiçosos que não trabalham até serem coletados. O Acumulador guarda tudo — e indexa tudo deslocado em um.",
+      "Sob o reino dorme toda ferramenta que os antigos Stroopies já forjaram: bolsas que crescem, livros-razão encantados, correntes de espíritos preguiçosos que não trabalham até serem coletados. O Acumulador guarda tudo — e indexa tudo errado por um.",
   },
   "mastering-option": {
     title: "O Pântano Evanescente",
@@ -84,7 +84,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-fundamentals-6": {
     title: "A Lâmina Emprestada",
     intro:
-      "O Guardião do Empréstimo finalmente fala: \"Não é preciso entregar uma lâmina para que outro leia sua inscrição. Empreste-a — uma referência — e ela volta à sua mão quando terminarem.\" Ele toca o sigilo `&` gravado em sua manopla. \"Esta marca. Aprenda-a.\"",
+      "O Guardião do Empréstimo finalmente fala: \"Não é preciso entregar uma lâmina para que outro leia sua inscrição. Empreste-a — uma referência — e ela volta à sua mão quando terminarem.\" Ele toca o glifo `&` gravado em sua manopla. \"Esta marca. Aprenda-a.\"",
   },
   "control-flow-1": {
     title: "As Duas Portas",
@@ -94,7 +94,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "control-flow-2": {
     title: "O Salão de Todos os Reflexos",
     intro:
-      "Um corredor de espelhos, cada um mostrando uma porta diferente que você poderia ter tomado. A regra do Suserano dos Espelhos é absoluta: nomeie o que vê em cada espelho — em todos — ou fique preso entre eles. A antiga arte rúnica chama isso de `match`, e ele não esquece nada.",
+      "Um corredor de espelhos, cada um mostrando uma porta diferente que você poderia ter tomado. A regra do Senhor dos Espelhos é absoluta: nomeie o que vê em cada espelho — em todos — ou fique preso entre eles. A antiga arte rúnica chama isso de `match`, e ele não esquece nada.",
   },
   "control-flow-3": {
     title: "O Corredor Sem Fim",
@@ -112,14 +112,14 @@ export const skirmishText: Record<string, SkirmishText> = {
       "Cinco pedras de passagem cruzam o lago-espelho, numeradas de um a cinco. Pise em cada uma exatamente uma vez, em ordem, anunciando em voz alta — o lago escuta. Os ferreiros antigos tinham uma runa para percorrer um caminho conhecido sem contar nos dedos: `for`.",
   },
   "control-flow-6": {
-    title: "O Labirinto do Suserano",
+    title: "O Labirinto do Senhor dos Espelhos",
     intro:
-      "A galeria final: dez espelhos, e o Suserano dos Espelhos escondido atrás de cada terceiro. Percorra a fileira; anuncie o número de cada espelho — mas, onde o Suserano se esconde, grite \"mirror\" em vez disso. Ramifique dentro do seu loop, Forgeborn. Quebre o coração do labirinto.",
+      "A galeria final: dez espelhos, e o Senhor dos Espelhos escondido atrás de cada terceiro. Percorra a fileira; anuncie o número de cada espelho — mas, onde ele se esconde, grite \"mirror\" em vez disso. Ramifique dentro do seu loop, Forgeborn. Quebre o coração do labirinto.",
   },
   "rust-standard-library-1": {
-    title: "A Sacola Sem Fundo",
+    title: "A Bolsa Sem Fundo",
     intro:
-      "O primeiro cofre guarda a ferramenta favorita dos Stroopies: uma sacola que cresce para caber tudo o que você empurrar para dentro. \"Um `Vec`\", diz o Stroopkeeper, destrancando a vitrine. \"Todo aventureiro carrega um. Poucos o respeitam. Ele conta a partir do zero, como os deuses antigos queriam.\"",
+      "O primeiro cofre guarda a ferramenta favorita dos Stroopies: uma bolsa que cresce para caber tudo o que você empurrar para dentro. \"Um `Vec`\", diz o Stroopkeeper, destrancando a vitrine. \"Todo aventureiro carrega um. Poucos o respeitam. Ele conta a partir do zero, como os deuses antigos queriam.\"",
   },
   "rust-standard-library-2": {
     title: "A Corrente dos Espíritos Preguiçosos",
@@ -129,7 +129,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-standard-library-3": {
     title: "A Prateleira Que Pode Estar Vazia",
     intro:
-      "A armadilha do Acumulador: uma prateleira com cinco espaços, e aventureiros que tentam alcançar o sexto. Antigamente, esse gesto derrubava o cofre inteiro. O `.get` da sacola pergunta com educação — e a resposta, Forgeborn, pode muito bem ser nada.",
+      "A armadilha do Acumulador: uma prateleira com cinco espaços, e aventureiros que tentam alcançar o sexto. Antigamente, esse gesto derrubava o cofre inteiro. O `.get` da bolsa pergunta com educação — e a resposta, Forgeborn, pode muito bem ser nada.",
   },
   "rust-standard-library-4": {
     title: "O Livro-Razão Encantado",

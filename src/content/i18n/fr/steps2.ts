@@ -16,7 +16,7 @@ enum Option<T> {
 }
 \`\`\`
 
-Tu as croisé Option sur l'étagère du Thésauriseur. Maintenant, tu vas la maîtriser.`,
+Tu as croisé Option sur l'étagère de l'Amasseur. Maintenant, tu vas la maîtriser.`,
     },
     {
       kind: "theory",
@@ -86,7 +86,7 @@ Sur \`None\`, unwrap **panique** — tout le programme sombre. Les pierres tomba
 let value = ghost.unwrap_or(0);   // Some(x) → x · None → 0
 \`\`\`
 
-Tu as déjà utilisé cet idiome deux fois — sur l'étagère du Thésauriseur, et il te protégera encore dans la forteresse Soroban. C'est la rune la plus utile du marais.`,
+Tu as déjà utilisé cet idiome deux fois — sur l'étagère de l'Amasseur, et il te protégera encore dans la forteresse Soroban. C'est la rune la plus utile du marais.`,
     },
     {
       kind: "quiz",
@@ -430,7 +430,7 @@ Et pour exister sur le registre, un compte détient une **réserve de base : 1 X
     },
     {
       kind: "fill",
-      prompt: "Remplis la charte : quel sigle ouvre une clé **publique** ?",
+      prompt: "Remplis la charte : quel sceau ouvre une clé **publique** ?",
       file: "star-chart.toml",
       before: "public_key_starts_with = \"",
       after: "\"",
@@ -442,7 +442,7 @@ Et pour exister sur le registre, un compte détient une **réserve de base : 1 X
       kind: "editor",
       intro: `### Épreuve finale — la charte du fort-étoile
 
-Complète la charte : les deux sigles, et la réserve de base (en XLM) dont un compte a besoin pour exister.
+Complète la charte : les deux sceaux, et la réserve de base (en XLM) dont un compte a besoin pour exister.
 
 Sortie attendue :
 
@@ -564,7 +564,7 @@ Pas de trustline, pas de solde — les paiements dans cet actif ne peuvent tout 
       kind: "editor",
       intro: `### Épreuve finale — ouvre le pont de lumière
 
-Complète la trustline pour **USDC** : le code de l'actif, et le sigle par lequel commence toute adresse d'émetteur.
+Complète la trustline pour **USDC** : le code de l'actif, et le sceau par lequel commence toute adresse d'émetteur.
 
 Sortie attendue :
 
@@ -625,7 +625,7 @@ C'est le ciel que le Beholder a brisé — et celui que tu t'apprêtes à rallum
       kind: "editor",
       intro: `### Épreuve finale — première lumière à travers le ciel
 
-Trace le paiement : le sigle de destination, le code de l'actif natif, et envoie **25**.
+Trace le paiement : le sceau de destination, le code de l'actif natif, et envoie **25**.
 
 Sortie attendue :
 
