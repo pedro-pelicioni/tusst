@@ -21,7 +21,7 @@
     "@auth/prisma-adapter": "^2.11.2",
     "@creit.tech/stellar-wallets-kit": "^2.5.0",
     "@monaco-editor/react": "^4.7.0",
-    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/adapter-pg": "^7.9.0",
     "@prisma/client": "^7.8.0",
     "@stellar/stellar-sdk": "^16.0.1",
     "@vercel/analytics": "^2.0.1",
