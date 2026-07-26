@@ -47,5 +47,17 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Dependabot routinely supersedes its own PRs — it opens one per
+          # dependency, then replaces them with the grouped PR moments later.
+          # This workflow can be mid-flight when that happens, and approving a
+          # closed PR fails with "Pull request is closed
+          # (enablePullRequestAutoMerge)". That's a race, not a problem, so
+          # don't paint the Actions tab red over it.
+          state="$(gh pr view "$PR_URL" --json state --jq .state)"
+          if [ "$state" != "OPEN" ]; then
+            echo "PR is already $state (superseded by Dependabot) — nothing to do."
+            exit 0
+          fi
+
           gh pr review --approve "$PR_URL"
           gh pr merge --auto --squash "$PR_URL"
