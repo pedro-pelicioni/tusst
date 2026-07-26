@@ -84,11 +84,22 @@ jobs:
       # the Dockerfile does. The ed25519-dalek downgrade is load-bearing: 3.x
       # breaks soroban-env-host's testutils through an open ">=2.0.0" req
       # upstream.
+      #
+      # Conditional, and mirrored in runner-soroban/Dockerfile: `cargo update
+      # -p <pkg>@<ver>` is a hard error when that exact version isn't in the
+      # graph, and soroban-sdk 26.1.1 already resolves ed25519-dalek to 2.2.0
+      # by itself. Assert the outcome rather than assuming the command applies.
       - name: Resolve the lockfile the way the image does
         working-directory: runner-soroban/warm
         run: |
           cargo generate-lockfile
-          cargo update -p ed25519-dalek@3.0.0 --precise 2.2.0
+          if cargo pkgid ed25519-dalek@3.0.0 >/dev/null 2>&1; then
+            cargo update -p ed25519-dalek@3.0.0 --precise 2.2.0
+          fi
+          if grep -A1 '^name = "ed25519-dalek"$' Cargo.lock | grep -q '^version = "3\.'; then
+            echo "::error::ed25519-dalek 3.x survived the pin — it breaks soroban-env-host testutils. See runner-soroban/Dockerfile."
+            exit 1
+          fi
 
       # The warm contract is a bare `ping` that never links the OZ crates, so a
       # bad pin still COMPILES — building alone would not have caught PR #31
