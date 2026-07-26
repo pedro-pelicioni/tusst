@@ -1,20 +1,23 @@
 name: CI
 
-# Validates PRs (including from forks) and non-main pushes. Deliberately
-# carries NO secrets and never touches the VPS or Neon — see deploy.yml for
-# that. This split keeps "workflow that accepts fork content" and "workflow
-# that holds production credentials" physically separate.
+# Validates PRs (including from forks). Deliberately carries NO secrets and
+# never touches the VPS or Neon — see deploy.yml for that. This split keeps
+# "workflow that accepts fork content" and "workflow that holds production
+# credentials" physically separate.
+#
+# `pull_request` only, on purpose: branch protection means nothing reaches main
+# without a PR, so a `push` trigger just ran every branch twice (the concurrency
+# group can't dedupe them — push is refs/heads/x, PR is refs/pull/N/merge).
 
 on:
   pull_request:
-  push:
-    branches-ignore: [main]
+  workflow_dispatch: {}
 
 permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -30,6 +33,15 @@ jobs:
         with:
           node-version: "22"
           cache: "npm"
+
+      # Dependabot regenerates package-lock.json with npm 11, which prunes the
+      # `optional: true, peer: true` entries (typescript@4.9.5 under
+      # stellar-wallets-kit, utf-8-validate@5.0.10 under walletconnect). Node 22
+      # ships npm 10, whose `npm ci` rejects that lockfile as out of sync
+      # ("Missing: typescript@4.9.5 from lock file") — which is what made every
+      # npm Dependabot PR red. Pinning the major makes both sides agree.
+      - run: npm install -g npm@11
+
       - run: npm ci --no-audit --no-fund
       - run: npm run lint
       - run: npm run build
