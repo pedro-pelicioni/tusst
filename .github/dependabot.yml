@@ -21,6 +21,15 @@ updates:
       npm-minor-patch:
         patterns: ["*"]
         update-types: ["minor", "patch"]
+    ignore:
+      # eslint-config-next still bundles an eslint-plugin-react that calls
+      # context.getFilename(), removed in ESLint 10 — `npm run lint` dies with
+      # "Error while loading rule 'react/display-name'" before linting a single
+      # file. Not our bug and not fixable here; the bump can only land once
+      # eslint-config-next supports v10, so drop this entry then rather than
+      # letting the same red PR reappear every week.
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
 
   # Workspace with two members (tusst-runner, tusst-syntest) — one entry
   # covers both, Dependabot resolves against the workspace Cargo.lock.
