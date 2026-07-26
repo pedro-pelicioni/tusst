@@ -20,13 +20,13 @@ export const actText: Record<string, ActText> = {
     territory: "Archive-donjon sous le royaume",
     overlord: "L'Amasseur",
     synopsis:
-      "Sous le royaume dorment tous les outils que les anciens Stroopies ont jamais forgés : sacoches extensibles, registres enchantés, chaînes d'esprits paresseux qui ne travaillent que lorsqu'on les collecte. L'Amasseur veille sur tout — et indexe tout avec un décalage de un.",
+      "Sous le royaume dorment tous les outils que les anciens Stroopies ont jamais forgés : sacs extensibles, registres enchantés, chaînes d'esprits paresseux qui ne travaillent que lorsqu'on les collecte. L'Amasseur veille sur tout — et indexe tout avec un décalage de un.",
   },
   "mastering-option": {
     title: "Le Marais Évanescent",
     territory: "Marécages hantés du peut-être",
     synopsis:
-      "Ici, les choses sont ou ne sont pas — peut-être. Des villageois disparaissent dans le None ; les imprudents unwrappent à l'aveugle et on ne les revoit jamais. Dans le marais, tu poses la seule question qui compte : Some, ou None ?",
+      "Ici, les choses sont ou ne sont pas — peut-être. Des villageois disparaissent dans le None ; les imprudents font unwrap à l'aveugle et on ne les revoit jamais. Dans le marais, tu poses la seule question qui compte : Some, ou None ?",
   },
   "mastering-result": {
     title: "Le Procès des Deux Destins",
@@ -61,7 +61,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-fundamentals-1": {
     title: "Les Mots d'Éveil",
     intro:
-      "Le phare de la Citadelle est éteint depuis la Grande Panique, et il ne répond qu'à une rune prononcée. Ferrisia te tend un burin. « Toute rune jamais forgée commence à `main` », dit-elle. « Parle, Forgeborn — et surveille tes points-virgules. Le phare est pédant. »",
+      "Le phare de la Citadelle est éteint depuis la Grande Panique, et il ne répond qu'à une rune prononcée. Ferrisia te tend un burin. « Toute rune jamais forgée commence à `main` », dit-elle. « Parle, Forgeborn — et surveille tes points-virgules. Le phare est pointilleux. »",
   },
   "rust-fundamentals-2": {
     title: "La Lame Inflexible",
@@ -71,7 +71,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-fundamentals-3": {
     title: "Les Formes de la Matière",
     intro:
-      "Ferrisia ouvre une armoire de fioles étiquetées : nombres entiers, nombres brisés, vérités et mensonges. « La Citadelle refuse toute rune dont elle ne peut nommer la forme », dit-elle. « Étiquette tes fioles, Forgeborn — le phare ne lit que ce qui est typé. »",
+      "Ferrisia ouvre une armoire de fioles étiquetées : nombres entiers, nombres à virgule, vérités et mensonges. « La Citadelle refuse toute rune dont elle ne peut nommer la forme », dit-elle. « Étiquette tes fioles, Forgeborn — le phare ne lit que ce qui est typé. »",
   },
   "rust-fundamentals-4": {
     title: "La Recette du Forgeron de Runes",
@@ -123,9 +123,9 @@ export const skirmishText: Record<string, SkirmishText> = {
 
   // Act III — The Endless Vaults
   "rust-standard-library-1": {
-    title: "La Sacoche Sans Fond",
+    title: "Le Sac Sans Fond",
     intro:
-      "Le premier coffre renferme l'outil favori des Stroopies : une sacoche qui grandit pour contenir tout ce que tu y pousses. « Un `Vec` », dit le Stroopkeeper en déverrouillant la vitrine. « Chaque aventurier en porte une. Peu la respectent. Elle compte à partir de zéro, comme les anciens dieux l'ont voulu. »",
+      "Le premier coffre renferme l'outil favori des Stroopies : un sac qui grandit pour contenir tout ce que tu y pousses. « Un `Vec` », dit le Stroopkeeper en déverrouillant la vitrine. « Chaque aventurier en porte un. Peu le respectent. Il compte à partir de zéro, comme les anciens dieux l'ont voulu. »",
   },
   "rust-standard-library-2": {
     title: "La Chaîne des Esprits Paresseux",
@@ -135,7 +135,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-standard-library-3": {
     title: "L'Étagère Peut-Être Vide",
     intro:
-      "Le piège de l'Amasseur : une étagère à cinq emplacements, et des aventuriers qui tendent la main vers le sixième. Jadis, ce geste faisait s'effondrer le coffre tout entier. Le `.get` de la sacoche demande poliment à la place — et la réponse, Forgeborn, peut n'être rien du tout.",
+      "Le piège de l'Amasseur : une étagère à cinq emplacements, et des aventuriers qui tendent la main vers le sixième. Jadis, ce geste faisait s'effondrer le coffre tout entier. Le `.get` du sac demande poliment à la place — et la réponse, Forgeborn, peut n'être rien du tout.",
   },
   "rust-standard-library-4": {
     title: "Le Registre Enchanté",
@@ -150,7 +150,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-standard-library-6": {
     title: "Une Fenêtre sur le Trésor",
     intro:
-      "L'Amasseur ne te laissera pas emporter le trésor — mais il te laissera regarder. Une slice est une fenêtre sur une étendue de trésor : pas de copie, pas de vol, juste une vue d'ici à là. Prends garde aux bords ; la fenêtre inclut son début et exclut sa fin.",
+      "L'Amasseur ne te laissera pas emporter le trésor — mais il te laissera regarder. Une slice est une fenêtre sur une portion du trésor : pas de copie, pas de vol, juste une vue d'ici à là. Prends garde aux bords ; la fenêtre inclut son début et exclut sa fin.",
   },
 
   // Act IV — The Vanishing Marsh
@@ -206,7 +206,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "stellar-101-4": {
     title: "Première Lumière à Travers le Ciel",
     intro:
-      "Tout converge : un fort-étoile de destination, un actif, un montant. Le Voyageur s'écarte de la console. « Aucun lumen n'a franchi cette Porte depuis la Panique. Trace le paiement, Forgeborn. Que le trafic soit. »",
+      "Tout converge : un fort-étoile de destination, un actif, un montant. Le Voyageur s'écarte de la console. « Aucun lumen n'a franchi cette Porte depuis la Panique. Envoie le paiement, Forgeborn. Que le trafic soit. »",
   },
 
   // Act VII — The Beholder's Lair
@@ -238,7 +238,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "stellar-protocol-27-3": {
     title: "La Couronne Déléguée",
     intro:
-      "Aucun gardien ne veille seul sur tous les coffres. Sous l'ancien ciel, prêter son sceau exigeait de fragiles rondes de divination — simule, propage, prie. Le ciel réécrit fait de la délégation une loi : `delegate_account_auth`, prononcé dans `__check_auth`, confie la vérification à un intendant de confiance.",
+      "Aucun gardien ne veille seul sur tous les coffres. Sous l'ancien ciel, prêter son sceau exigeait de fragiles rituels de divination — simule, propage, prie. Le ciel réécrit fait de la délégation une loi : `delegate_account_auth`, prononcé dans `__check_auth`, confie la vérification à un intendant de confiance.",
   },
   "stellar-protocol-27-4": {
     title: "L'Écho Qui Signe Deux Fois",
@@ -261,7 +261,7 @@ export const cardText: Record<string, CardText> = {
   stroowarrior: {
     type: "Guerrier",
     flavor:
-      "Ce n'est que lorsque le monde tremble que le vrai guerrier révèle sa lumière inflexible.",
+      "Ce n'est que lorsque le monde tremble que le vrai guerrier révèle son éclat inébranlable.",
   },
   stropillusion: {
     epithet: "Explorateur de la Galerie des Glaces",

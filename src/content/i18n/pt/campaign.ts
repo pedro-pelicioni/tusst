@@ -16,7 +16,7 @@ export const actText: Record<string, ActText> = {
       "Um labirinto onde cada corredor corresponde a um destino diferente. O Senhor dos Espelhos aprisiona viajantes em loops infinitos. Ramifique com sabedoria, faça match de cada reflexo e quebre o loop eterno.",
   },
   "rust-standard-library": {
-    title: "Os Cofres Infindáveis",
+    title: "Os Cofres Sem Fim",
     territory: "Arquivo-masmorra sob o reino",
     overlord: "O Acumulador",
     synopsis:
@@ -24,7 +24,7 @@ export const actText: Record<string, ActText> = {
   },
   "mastering-option": {
     title: "O Pântano Evanescente",
-    territory: "Charcos assombrados do talvez",
+    territory: "Brejos assombrados do talvez",
     synopsis:
       "As coisas aqui podem ser ou não ser. Aldeões desaparecem em None; os tolos dão unwrap às cegas e nunca mais são vistos. No pântano você faz a única pergunta que importa: Some ou None?",
   },
@@ -64,7 +64,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-fundamentals-2": {
     title: "A Lâmina Inflexível",
     intro:
-      "Na armaria, toda lâmina é imutável por força da antiga lei — uma vez forjada, jamais alterada. Para reforjar uma, você precisa declarar sua intenção ao próprio aço. O Guardião do Empréstimo observa da porta, de braços cruzados, esperando você tentar mudá-la sem `mut`.",
+      "No arsenal, toda lâmina é imutável por força da antiga lei — uma vez forjada, jamais alterada. Para reforjar uma, você precisa declarar sua intenção ao próprio aço. O Guardião do Empréstimo observa da porta, de braços cruzados, esperando você tentar mudá-la sem `mut`.",
   },
   "rust-fundamentals-3": {
     title: "As Formas da Matéria",
@@ -174,7 +174,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "mastering-result-3": {
     title: "A Marca da Propagação",
     intro:
-      "Nem toda corte precisa sentenciar; algumas remetem o caso à instância superior. A Oráculo lhe mostra a menor runa do reino: `?`. \"Em Ok, desembrulhe e siga. Em Err, devolva-o a quem chamou você — no mesmo instante. Uma marca, e o julgamento sobe a correnteza.\"",
+      "Nem toda corte precisa sentenciar; algumas remetem o caso à instância superior. A Oráculo lhe mostra a menor runa do reino: `?`. \"Em Ok, desembrulhe e siga. Em Err, devolva-o a quem chamou você — no mesmo instante. Uma marca, e o julgamento sobe de instância.\"",
   },
   "stellar-101-1": {
     title: "A Carta da Fortaleza-Estelar",
@@ -184,7 +184,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "stellar-101-2": {
     title: "O Pedágio do Portal",
     intro:
-      "\"A moeda do céu é o lumen\", diz o Viajante, girando uma moeda que se parte em dez milhões de fagulhas. \"Cada fagulha, um stroop. Toda travessia paga um pequeno pedágio — cem stroops, mais ou menos conforme o tráfego — para que ninguém inunde o céu de ruído.\"",
+      "\"A moeda do céu é o lumen\", diz o Viajante, girando uma moeda que se parte em dez milhões de centelhas. \"Cada centelha, um stroop. Toda travessia paga um pequeno pedágio — cem stroops, mais ou menos conforme o tráfego — para que ninguém inunde o céu de ruído.\"",
   },
   "stellar-101-3": {
     title: "A Ponte de Luz",
@@ -194,7 +194,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "stellar-101-4": {
     title: "Primeira Luz Através do Céu",
     intro:
-      "Tudo converge: uma fortaleza-estelar de destino, um ativo, uma quantia. O Viajante se afasta do console. \"Lumens não cruzam este Portal desde o Pânico. Trace o pagamento, Forgeborn. Que haja tráfego.\"",
+      "Tudo converge: uma fortaleza-estelar de destino, um ativo, uma quantia. O Viajante se afasta do console. \"Lumens não cruzam este Portal desde o Pânico. Envie o pagamento, Forgeborn. Que haja tráfego.\"",
   },
   "soroban-smart-contracts-1": {
     title: "A Primeira Runa Celeste",
@@ -239,7 +239,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "stellar-protocol-27-6": {
     title: "O Último Eco do Espectro",
     intro:
-      "O Espectro vem atrás do seu cofre com um selo roubado e um eco perfeito. Mas a sua conta já não é uma porta com uma só chave — é lei: um `__check_auth` que verifica seu signatário e delega a uma coroa-guardiã. Ate o selo. Silencie o eco. Encerre a campanha.",
+      "O Espectro vem atrás do seu cofre com um selo roubado e um eco perfeito. Mas a sua conta já não é uma porta com uma só chave — é lei: um `__check_auth` que verifica seu signatário e delega a uma coroa-guardiã. Vincule o selo. Silencie o eco. Encerre a campanha.",
   },
 };
 
@@ -257,7 +257,7 @@ export const cardText: Record<string, CardText> = {
       "Reflexos enganam, segredos permanecem ocultos — ele dobra a realidade dentro dos espelhos infinitos.",
   },
   stroopkeeper: {
-    epithet: "Guardião dos Cofres Infindáveis",
+    epithet: "Guardião dos Cofres Sem Fim",
     type: "Stropie · Arquivista",
     flavor:
       "Toda ferramenta já forjada dorme em seus cofres — indexada a partir do zero, como os deuses antigos queriam.",

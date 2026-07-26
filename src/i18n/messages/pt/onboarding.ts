@@ -29,7 +29,7 @@ export const onboarding = {
   profiles: [
     "Estudante do ensino médio",
     "Estudante universitário",
-    "Empregado",
+    "Trabalho em tempo integral",
     "Freelancer / autônomo",
     "Nenhuma dessas",
   ],

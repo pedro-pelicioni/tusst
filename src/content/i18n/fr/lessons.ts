@@ -292,7 +292,7 @@ while supplies > 0 {
 
 ### Ta mission
 
-Descends la galerie qui s'enfonce :
+Descends la galerie qui sombre :
 
 1. **Tant que** \`floors\` est supérieur à \`0\` : affiche \`floor {}\` (l'étage courant), puis soustrais \`1\` de \`floors\`.
 2. Après la boucle, affiche \`Ground level!\`.
@@ -357,7 +357,7 @@ for n in 1..=6 {
 
 ### Ta mission
 
-Parcours les dix miroirs de l'Overlord :
+Parcours les dix miroirs de la Salle :
 
 1. \`for n in 1..=10\`
 2. **Si** \`n\` est divisible par 3 (\`n % 3 == 0\`), affiche \`mirror\`.
@@ -383,7 +383,7 @@ mirror
   "rust-standard-library-1": {
     instructions: `## Les bases de Vec
 
-Un \`Vec\` est une liste extensible — la sacoche du royaume :
+Un \`Vec\` est une liste extensible — le sac du royaume :
 
 \`\`\`rust
 let mut items = vec!["torch", "rope"];  // créer avec un contenu
@@ -418,7 +418,7 @@ let total: i32 = coins.iter().sum();
 
 ### Ta mission
 
-La sacoche contient \`coins = vec![5, 10, 25]\`.
+Le sac contient \`coins = vec![5, 10, 25]\`.
 
 1. Additionne-les avec \`.iter().sum()\` dans \`total: i32\`.
 2. Affiche \`total: {}\`.
@@ -523,7 +523,7 @@ let shelf = vec![1, 2, 3, 4, 5];
 let window = &shelf[1..4];   // → [2, 3, 4]
 \`\`\`
 
-La plage inclut son début et **exclut** sa fin (\`1..4\` → emplacements 1, 2, 3). Affiche une slice avec le marqueur de débogage \`{:?}\`.
+La plage inclut son début et **exclut** sa fin (\`1..4\` → emplacements 1, 2, 3). Affiche une slice avec le marqueur de debug \`{:?}\`.
 
 ### Ta mission
 
@@ -715,11 +715,11 @@ Chaque acteur sur Stellar est un **compte**, contrôlé par une **paire de clés
 - **Clé publique** — commence par \`G\`. Ton adresse ; partage-la librement.
 - **Clé secrète** — commence par \`S\`. Elle signe tout ; ne la partage **jamais**. Perds-la et le compte est perdu à jamais.
 
-Un compte doit détenir un solde minimum (**base reserve**) de **1 XLM** pour exister sur le registre.
+Un compte doit détenir un solde minimum (**base reserve**) de **1 XLM** pour exister sur le ledger.
 
 ### Ta mission
 
-Complète la charte du fort stellaire — remplis les trois valeurs.
+Complète la charte du fort-étoile — remplis les trois valeurs.
 
 Sortie attendue :
 
@@ -786,7 +786,7 @@ Signe-la avec ta clé secrète, paie le péage d'environ 100 stroops, et en ~5 s
 
 ### Ta mission
 
-Trace le premier paiement depuis la Panique : **25 XLM**.
+Envoie le premier paiement depuis la Panique : **25 XLM**.
 
 Sortie attendue :
 
@@ -799,11 +799,11 @@ lumens flowing ✓
   "soroban-smart-contracts-1": {
     instructions: `## Ton premier contrat
 
-Un contrat Soroban est une bibliothèque Rust compilée en WASM et gravée dans le registre. Trois choses en font un contrat :
+Un contrat Soroban est une bibliothèque Rust compilée en WASM et gravée dans le ledger. Trois choses en font un contrat :
 
-- \`#![no_std]\` — pas d'OS, pas d'allocateur de tas, pas de bibliothèque standard. Le registre est la machine.
+- \`#![no_std]\` — pas d'OS, pas d'allocateur de tas, pas de bibliothèque standard. Le ledger est la machine.
 - \`#[contract]\` sur une struct unitaire — l'identité du contrat.
-- \`#[contractimpl]\` sur le bloc impl — exporte ses \`pub fn\` comme entrées invocables. Chaque entrée prend \`Env\` en premier : ta poignée vers le stockage, les événements et les appels inter-contrats.
+- \`#[contractimpl]\` sur le bloc impl — exporte ses \`pub fn\` comme entrées invocables. Chaque entrée prend \`Env\` en premier : ton accès au stockage, aux événements et aux appels inter-contrats.
 
 Les chaînes coûtent cher sur la chaîne ; les identifiants courts utilisent \`Symbol\` (≤ 9 caractères via \`symbol_short!\`).
 
@@ -823,7 +823,7 @@ hello() → Symbol(beacon)
   "soroban-smart-contracts-2": {
     instructions: `## Le stockage du contrat
 
-Les contrats sont sans état entre les invocations — l'état vit dans le **registre**, derrière \`env.storage()\`. Pour l'état à l'échelle du contrat, utilise le stockage **instance** :
+Les contrats sont sans état entre les invocations — l'état vit dans le **ledger**, derrière \`env.storage()\`. Pour l'état à l'échelle du contrat, utilise le stockage **d'instance** :
 
 \`\`\`rust
 let count: u32 = env.storage().instance().get(&KEY).unwrap_or(0);
@@ -836,7 +836,7 @@ env.storage().instance().set(&KEY, &count);
 
 Implémente \`increment\` :
 
-1. Lis le compteur courant depuis le stockage instance sous \`COUNTER\` (par défaut \`0\`).
+1. Lis le compteur courant depuis le stockage d'instance sous \`COUNTER\` (par défaut \`0\`).
 2. Ajoute \`1\`.
 3. Réécris-le avec \`set\`.
 4. Renvoie le nouveau compteur.
@@ -858,7 +858,7 @@ Chaque \`Address\` dans Soroban peut prouver qu'elle a approuvé un appel. Côt�
 from.require_auth();
 \`\`\`
 
-Si la transaction n'a pas été signée (ou pré-autorisée) par \`from\`, l'invocation **trappe** — l'état reste intact. Oublier cette ligne sur une fonction qui déplace des fonds est le bug fatal classique : n'importe qui pourrait passer n'importe quelle adresse et tout vider.
+Si la transaction n'a pas été signée (ou pré-autorisée) par \`from\`, l'invocation **trap** — l'état reste intact. Oublier cette ligne sur une fonction qui déplace des fonds est le bug fatal classique : n'importe qui pourrait passer n'importe quelle adresse et tout vider.
 
 ### Ta mission
 
@@ -881,7 +881,7 @@ Le **Protocol 27 — nom de code « Zipper »** — est la mise à niveau de 202
 
 - Version stable de Stellar Core — **5 juin 2026**
 - SDKs — 5–11 juin · RPC & Galexie — 10 juin · Horizon — 12 juin
-- **Testnet mise à niveau — 18 juin 2026**
+- **Mise à niveau du Testnet — 18 juin 2026**
 - **Vote du Mainnet — 8 juillet 2026**
 
 Ses deux grands changements vivent dans le [CAP-0071](https://github.com/stellar/stellar-protocol/blob/master/core/cap-0071.md) : **délégation d'authentification** pour les custom accounts et **signature payloads liés à l'adresse**. (Les protocoles précédents ont livré les CAP-0055/0060/0064 — le Zipper concerne la façon dont les comptes *prouvent qui ils sont*.)
@@ -933,7 +933,7 @@ __check_auth: the account writes its own law ✓
   "stellar-protocol-27-3": {
     instructions: `## Délégation d'Authentification (CAP-0071-01)
 
-Avant le Zipper, une custom account qui voulait qu'un *autre* contrat réponde pour elle n'avait aucun soutien du protocole — les bâtisseurs bricolaient avec de fragiles rondes de pré-simulation pour propager le contexte d'auth. Le Protocol 27 fait de la délégation une loi, avec deux nouvelles host functions :
+Avant le Zipper, une custom account qui voulait qu'un *autre* contrat réponde pour elle n'avait aucun soutien du protocole — les bâtisseurs bricolaient avec de fragiles allers-retours de pré-simulation pour propager le contexte d'auth. Le Protocol 27 fait de la délégation une loi, avec deux nouvelles host functions :
 
 - \`delegate_account_auth\` — appelable **uniquement dans \`__check_auth\`** : confie la vérification d'auth en cours à une adresse déléguée, dont la propre logique de signatures s'exécute alors.
 - \`get_delegated_signers_for_current_auth_check\` — permet au contrat appelé de voir quels signataires délégués ont approuvé.
@@ -946,7 +946,7 @@ En profondeur : [CAP-0071](https://github.com/stellar/stellar-protocol/blob/mast
 
 Dans \`__check_auth\`, confie la vérification à l'intendant stocké :
 
-1. L'\`Address\` déléguée est déjà chargée depuis l'instance storage.
+1. L'\`Address\` déléguée est déjà chargée depuis le stockage d'instance.
 2. Appelle \`delegate_account_auth\` avec le délégué et le signature payload — et supprime le \`todo!()\`.
 
 Résultat attendu :
@@ -968,7 +968,7 @@ Les audits de sécurité ont trouvé un écho subtil dans l'ancien format de cre
 
 Alors une signature créée pour l'ancien admin peut être **rejouée** pour le nouveau — mints dupliqués, actions non autorisées. *Jamais arrivé on-chain*, mais l'ampleur des dégâts possibles justifiait le correctif.
 
-Le **\`SOROBAN_CREDENTIALS_ADDRESS_V2\`** lie le signature payload à l'adresse pour laquelle il a été créé. Un écho volé n'ouvre plus une autre porte. L'ancien \`SOROBAN_CREDENTIALS_ADDRESS\` reste valide **jusqu'au Protocol 28** — fenêtre de migration, pas falaise. Protection provisoire pour les contrats de type admin : inclus toi-même l'adresse du signataire dans le payload.
+Le **\`SOROBAN_CREDENTIALS_ADDRESS_V2\`** lie le signature payload à l'adresse pour laquelle il a été créé. Un écho volé n'ouvre plus une autre porte. L'ancien \`SOROBAN_CREDENTIALS_ADDRESS\` reste valide **jusqu'au Protocol 28** — fenêtre de migration, pas un couperet. Protection provisoire pour les contrats de type admin : inclus toi-même l'adresse du signataire dans le payload.
 
 À regarder : [Stellar Developer Meeting — custom accounts & sécurité des signatures](https://www.youtube.com/watch?v=5O1cDDGv7_o).
 
@@ -1025,9 +1025,9 @@ Tout converge. Le Spectre de l'Écho arrive avec un sceau volé — et rencontre
 
 Ton \`ZipperAccount\` doit, dans \`__check_auth\` :
 
-1. Charger la clé publique du signataire racine (\`BytesN<32>\`) depuis l'instance storage sous \`SIGNER\`.
+1. Charger la clé publique du signataire racine (\`BytesN<32>\`) depuis le stockage d'instance sous \`SIGNER\`.
 2. Vérifier la signature ed25519 sur le payload avec \`env.crypto().ed25519_verify(...)\` — un sceau invalide doit trap.
-3. Charger l'\`Address\` de l'intendant depuis l'instance storage sous \`DELEGATE\` et confier le reste de la vérification avec \`delegate_account_auth\` — le coup du Protocol 27.
+3. Charger l'\`Address\` de l'intendant depuis le stockage d'instance sous \`DELEGATE\` et confier le reste de la vérification avec \`delegate_account_auth\` — le coup du Protocol 27.
 
 Et exporte le bloc impl. Aucun \`todo!()\` ne survit au final.
 

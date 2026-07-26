@@ -70,7 +70,7 @@ export const lessonTitles: Record<string, string> = {
   "mastering-result-2": "La lectura del veredicto",
   "mastering-result-3": "El operador ?",
   "stellar-101-1": "Cuentas y keypairs",
-  "stellar-101-2": "Lumens y comisiones",
+  "stellar-101-2": "Lumens y tarifas",
   "stellar-101-3": "Trustlines y activos",
   "stellar-101-4": "Tu primer pago",
   "soroban-smart-contracts-1": "Tu primer contrato",

@@ -364,7 +364,7 @@ copy: Unbending Blade
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Clonar tudo levaria a forja à falência. O Guardião dos Empréstimos ensina um caminho melhor:
+      body: `Clonar tudo levaria a forja à falência. O Guardião do Empréstimo ensina um caminho melhor:
 
 **Você não precisa entregar um valor para que alguém o leia. Empreste-o.**
 
@@ -509,7 +509,7 @@ Cada linha é um **braço** (arm): \`padrão => o que fazer\`.`,
     },
     {
       kind: "theory",
-      body: `Duas regras fazem do \`match\` o favorito do Overlord:
+      body: `Duas regras fazem do \`match\` o favorito do Senhor dos Espelhos:
 
 1. **Todo caso precisa ser coberto.** O braço \`_\` significa "qualquer outra coisa" — esqueça-o e o compilador se recusa.
 2. **Um match produz um valor** que você pode guardar:
@@ -525,7 +525,7 @@ let word = match number {
       kind: "quiz",
       question: "O que o braço `_` significa em um match?",
       options: [
-        "Qualquer outra coisa — o caso pega-tudo",
+        "Qualquer outra coisa — o caso coringa",
         "Um valor vazio",
         "Pular este match",
       ],
@@ -697,7 +697,7 @@ Ground level!
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Quando você conhece o caminho de antemão — "todo número de 1 a 5" — administrar seu próprio contador está abaixo de você. O \`for\` percorre a sequência por você:
+      body: `Quando você conhece o caminho de antemão — "todo número de 1 a 5" — não faz sentido gerenciar o contador na mão. O \`for\` percorre a sequência por você:
 
 \`\`\`rust
 for n in 1..=5 {
@@ -705,7 +705,7 @@ for n in 1..=5 {
 }
 \`\`\`
 
-A cada passagem, \`n\` assume o próximo valor: 1, 2, 3, 4, 5. Sem contador para esquecer, sem como passar do ponto.`,
+A cada passagem, \`n\` assume o próximo valor: 1, 2, 3, 4, 5. Sem contador para esquecer, sem risco de passar do ponto.`,
     },
     {
       kind: "theory",
@@ -758,7 +758,7 @@ step 5
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Você conhece todas as runas agora — \`if\`, \`match\`, \`loop\`, \`while\`, \`for\`. O labirinto do Overlord exige que você as **combine**: uma decisão *dentro* de uma repetição.
+      body: `Você conhece todas as runas agora — \`if\`, \`match\`, \`loop\`, \`while\`, \`for\`. O labirinto do Senhor dos Espelhos exige que você as **combine**: uma decisão *dentro* de uma repetição.
 
 \`\`\`rust
 for n in 1..=6 {
@@ -798,7 +798,7 @@ Então \`n % 3 == 0\` pergunta: *"n é divisível por 3?"* — o jeito clássico
     },
     {
       kind: "editor",
-      intro: `### Prova final — o labirinto do Overlord
+      intro: `### Prova final — o labirinto do Senhor dos Espelhos
 
 Percorra os dez espelhos:
 
@@ -829,7 +829,7 @@ mirror
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Uma variável guarda **um** valor. Mas aventuras produzem *listas*: itens, moedas, nomes. Para isso, a ferramenta favorita do reino é o \`Vec\` — um alforje que cresce:
+      body: `Uma variável guarda **um** valor. Mas aventuras produzem *listas*: itens, moedas, nomes. Para isso, a ferramenta favorita do reino é o \`Vec\` — uma mochila que cresce:
 
 \`\`\`rust
 let mut items = vec!["torch", "rope"];
@@ -842,7 +842,7 @@ let mut items = vec!["torch", "rope"];
       body: `Dois movimentos que você vai usar o tempo todo:
 
 \`\`\`rust
-items.push("map");    // adiciona ao final — o alforje cresce
+items.push("map");    // adiciona ao final — a mochila cresce
 items.len()           // quantos dentro? → 3
 \`\`\`
 
@@ -857,7 +857,7 @@ E a regra dos deuses antigos: posições contam **a partir do zero**. \`items[0]
     },
     {
       kind: "fill",
-      prompt: "Faça o alforje crescer: adicione `\"map\"` ao final.",
+      prompt: "Faça a mochila crescer: adicione `\"map\"` ao final.",
       file: "main.rs",
       before: "let mut satchel = vec![\"torch\", \"rope\"];\nsatchel.",
       after: "(\"map\");",
@@ -867,7 +867,7 @@ E a regra dos deuses antigos: posições contam **a partir do zero**. \`items[0]
     },
     {
       kind: "editor",
-      intro: `### Prova final — arrume o alforje
+      intro: `### Prova final — arrume a mochila
 
 1. Crie um \`satchel\` **mutável** com \`vec!["torch", "rope"]\`.
 2. Dê \`push\` em \`"map"\`.
@@ -946,7 +946,7 @@ total: 40
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `A armadilha favorita do Hoarder: um Vec com 2 itens, e um aventureiro esticando a mão para o compartimento 5.
+      body: `A armadilha favorita do Acumulador: um Vec com 2 itens, e um aventureiro esticando a mão para o compartimento 5.
 
 \`\`\`rust
 let vault = vec!["hammer", "chisel"];
@@ -1008,7 +1008,7 @@ found: nothing
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Um Vec responde por **posição**. Mas o livro-razão do Hoarder responde por **nome**: pergunte "ouro?" e ele diz "100".
+      body: `Um Vec responde por **posição**. Mas o livro-razão do Acumulador responde por **nome**: pergunte "ouro?" e ele diz "100".
 
 Isso é um \`HashMap\` — chaves vinculadas a valores:
 
@@ -1090,7 +1090,7 @@ s.push_str(" of keys");   // anexa texto ao final
 let banner = format!("The {}", s);
 \`\`\`
 
-Funciona **exatamente** como \`println!\` — os mesmos encaixes \`{}\` — mas em vez de imprimir, ele te entrega a nova String para guardar.`,
+Funciona **exatamente** como \`println!\` — os mesmos marcadores \`{}\` — mas em vez de imprimir, ele te entrega a nova String para guardar.`,
     },
     {
       kind: "quiz",
@@ -1098,7 +1098,7 @@ Funciona **exatamente** como \`println!\` — os mesmos encaixes \`{}\` — mas 
       options: [
         "println! imprime; format! retorna a String em vez disso",
         "format! é mais rápido",
-        "println! não pode usar encaixes {}",
+        "println! não pode usar marcadores {}",
       ],
       answer: 0,
       explain: "Mesmo feitiço, destino diferente — o console, ou as suas mãos.",
@@ -1133,14 +1133,14 @@ The Keeper of the Vaults
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `O Hoarder não deixa tesouro sair — mas deixa você **olhar**. Um **slice** (fatia) é uma janela para um trecho de uma coleção:
+      body: `O Acumulador não deixa tesouro sair — mas deixa você **olhar**. Um **slice** (fatia) é uma janela para um trecho de uma coleção:
 
 \`\`\`rust
 let shelf = vec![1, 2, 3, 4, 5];
 let window = &shelf[1..4];   // → [2, 3, 4]
 \`\`\`
 
-Nenhuma cópia é feita. O \`&\` a marca como empréstimo — você está olhando a prateleira do Hoarder, não a carregando para fora.`,
+Nenhuma cópia é feita. O \`&\` a marca como empréstimo — você está olhando a prateleira do Acumulador, não a carregando para fora.`,
     },
     {
       kind: "theory",

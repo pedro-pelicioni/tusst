@@ -364,7 +364,7 @@ copy: Unbending Blade
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Tout cloner mettrait la forge en faillite. Le Gardien des Emprunts enseigne une meilleure voie :
+      body: `Tout cloner mettrait la forge en faillite. Le Gardien de l'Emprunt enseigne une meilleure voie :
 
 **Tu n'as pas à donner une valeur pour que quelqu'un la lise. Prête-la.**
 
@@ -509,7 +509,7 @@ Chaque ligne est un **bras** : \`motif => quoi faire\`.`,
     },
     {
       kind: "theory",
-      body: `Deux règles font de \`match\` le favori de l'Overlord :
+      body: `Deux règles font de \`match\` le favori du Seigneur des Miroirs :
 
 1. **Chaque cas doit être couvert.** Le bras \`_\` signifie « tout le reste » — oublie-le et le compilateur refuse.
 2. **Un match produit une valeur** que tu peux stocker :
@@ -758,7 +758,7 @@ step 5
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Tu connais désormais toutes les runes — \`if\`, \`match\`, \`loop\`, \`while\`, \`for\`. Le dédale de l'Overlord exige que tu les **combines** : une décision *au sein* d'une répétition.
+      body: `Tu connais désormais toutes les runes — \`if\`, \`match\`, \`loop\`, \`while\`, \`for\`. Le dédale du Seigneur des Miroirs exige que tu les **combines** : une décision *au sein* d'une répétition.
 
 \`\`\`rust
 for n in 1..=6 {
@@ -798,7 +798,7 @@ Donc \`n % 3 == 0\` demande : *« n est-il divisible par 3 ? »* — la façon c
     },
     {
       kind: "editor",
-      intro: `### Épreuve finale — le dédale de l'Overlord
+      intro: `### Épreuve finale — le dédale du Seigneur des Miroirs
 
 Parcours les dix miroirs :
 
@@ -829,7 +829,7 @@ mirror
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Une variable contient **une** valeur. Mais les aventures produisent des *listes* : objets, pièces, noms. Pour ça, l'outil favori du royaume est le \`Vec\` — une sacoche qui grandit :
+      body: `Une variable contient **une** valeur. Mais les aventures produisent des *listes* : objets, pièces, noms. Pour ça, l'outil favori du royaume est le \`Vec\` — un sac qui grandit :
 
 \`\`\`rust
 let mut items = vec!["torch", "rope"];
@@ -842,7 +842,7 @@ let mut items = vec!["torch", "rope"];
       body: `Deux gestes que tu utiliseras sans cesse :
 
 \`\`\`rust
-items.push("map");    // ajoute à la fin — la sacoche grandit
+items.push("map");    // ajoute à la fin — le sac grandit
 items.len()           // combien dedans ? → 3
 \`\`\`
 
@@ -857,7 +857,7 @@ Et la règle des anciens dieux : les positions comptent **à partir de zéro**. 
     },
     {
       kind: "fill",
-      prompt: "Fais grandir la sacoche : ajoute `\"map\"` à la fin.",
+      prompt: "Fais grandir le sac : ajoute `\"map\"` à la fin.",
       file: "main.rs",
       before: "let mut satchel = vec![\"torch\", \"rope\"];\nsatchel.",
       after: "(\"map\");",
@@ -867,7 +867,7 @@ Et la règle des anciens dieux : les positions comptent **à partir de zéro**. 
     },
     {
       kind: "editor",
-      intro: `### Épreuve finale — remplis la sacoche
+      intro: `### Épreuve finale — remplis le sac
 
 1. Crée une \`satchel\` **mutable** avec \`vec!["torch", "rope"]\`.
 2. \`push\` \`"map"\`.

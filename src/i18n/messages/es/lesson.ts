@@ -57,7 +57,7 @@ export const lesson = {
   mentorLimit:
     "el mentor descansa — usaste las pistas de hoy para esta lección. Quedan las pistas del pergamino:",
   mentorUnavailable:
-    "el mentor está lejos de la fragua — las pistas del pergamino pueden ayudar:",
+    "el mentor está lejos de la forja — las pistas del pergamino pueden ayudar:",
   goldCoinAlt: "Moneda de oro",
   goldEarned: "+{gold} de oro",
   goldFirstReveal:

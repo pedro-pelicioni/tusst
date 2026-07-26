@@ -23,7 +23,7 @@ export const pages = {
     actLink: "Acto {numeral} — {title}",
     unassigned: "sin asignar",
     footnote:
-      "las cartas son progresión cosmética — no otorgan ventaja de juego. las ediciones raras se conceden por completar un acto de forma impecable. el reclamo on-chain llega con el capstone de Soroban.",
+      "las cartas son progresión cosmética — no otorgan ventaja de juego. las ediciones raras se conceden por completar un acto de forma impecable. el reclamo on-chain llega con el proyecto final de Soroban.",
   },
   track: {
     backToPath: "senda de campaña",

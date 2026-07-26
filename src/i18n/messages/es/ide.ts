@@ -150,7 +150,7 @@ export const ide = {
     noticeTag: "forja compacta",
     noticeTitle: "La Forja rinde más en desktop",
     noticeBody:
-      "Estás en un móvil o tablet, así que esta es la Forja compacta: solo lo esencial, pensado para pantallas táctiles. El taller completo — deploy, contratos en vivo, billeteras — se abre en un desktop.",
+      "Estás en un celular o una tablet, así que esta es la Forja compacta: solo lo esencial, pensado para pantallas táctiles. El taller completo — deploy, contratos en vivo, billeteras — se abre en un desktop.",
     noticeHereTitle: "qué funciona aquí",
     noticeHereItems: [
       "escribir y editar tu contrato",

@@ -40,7 +40,7 @@ export const landing = {
     act1Kicker: "Acto I · Fundamentos de Rust · abierto",
     act1Title: "La Ciudadela Oxidada",
     act1Body:
-      "Despiertas en las ruinas oxidadas de la vieja capital del arte rúnico. Ferrisia, la Madre-Cangrejo, te enseña las palabras de despertar, la atadura de los nombres y la ley de la Hoja Inflexible. Reenciende el faro, Forgeborn.",
+      "Despiertas en las ruinas oxidadas de la vieja capital del arte rúnico. Ferrisia, la Madre Cangrejo, te enseña las palabras de despertar, la atadura de los nombres y la ley de la Hoja Inflexible. Reenciende el faro, Forgeborn.",
     act1Cta: "Entra a la Ciudadela ›",
     act1Reward: "recompensa · STROOWARRIOR",
     sealedNote: "territorios sellados — se abren a medida que la campaña se forja",

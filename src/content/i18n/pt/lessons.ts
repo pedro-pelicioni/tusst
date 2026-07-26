@@ -315,7 +315,7 @@ Ground level!
   "control-flow-5": {
     instructions: `## Loops for
 
-\`for\` percorre uma sequência — sem contador para gerenciar, sem como passar do limite:
+\`for\` percorre uma sequência — sem contador para gerenciar, sem risco de passar do limite:
 
 \`\`\`rust
 for n in 1..=5 {
@@ -361,7 +361,7 @@ for n in 1..=6 {
 
 ### Sua missão
 
-Percorra os dez espelhos do Overlord:
+Percorra os dez espelhos do Salão:
 
 1. \`for n in 1..=10\`
 2. **Se** \`n\` for divisível por 3 (\`n % 3 == 0\`), imprima \`mirror\`.
@@ -509,7 +509,7 @@ let banner = format!("The {}", s);   // tece strings em uma nova
 
 1. Anexe \`" of the Vaults"\` a \`title\` com \`push_str\`.
 2. Construa \`banner\` com \`format!("The {}", title)\`.
-3. Imprima o estandarte.
+3. Imprima o banner.
 
 Saída esperada:
 
@@ -529,7 +529,7 @@ let shelf = vec![1, 2, 3, 4, 5];
 let window = &shelf[1..4];   // → [2, 3, 4]
 \`\`\`
 
-O range inclui seu início e **exclui** seu fim (\`1..4\` → posições 1, 2, 3). Imprima um slice com o marcador de depuração \`{:?}\`.
+O range inclui seu início e **exclui** seu fim (\`1..4\` → posições 1, 2, 3). Imprima um slice com o marcador de debug \`{:?}\`.
 
 ### Sua missão
 
@@ -583,7 +583,7 @@ Some(7)
 
 \`.unwrap()\` arranca o valor de dentro de um Option — e entra em **pânico** (trava) num \`None\`. O pântano está cheio dos que deram unwrap.
 
-O idioma seguro carrega um valor padrão:
+O jeito seguro carrega um valor reserva:
 
 \`\`\`rust
 let value = ghost.unwrap_or(0);   // Some(x) → x · None → 0
@@ -731,7 +731,7 @@ Uma conta precisa manter um saldo mínimo (**base reserve**) de **1 XLM** para e
 
 ### Sua missão
 
-Complete a carta de fundação da fortaleza estelar — preencha os três valores.
+Complete a carta de fundação da fortaleza-estelar — preencha os três valores.
 
 Saída esperada:
 
@@ -749,7 +749,7 @@ O ativo nativo é o **lumen (XLM)**, e sua menor unidade é o **stroop**:
 - \`1 XLM = 10_000_000 stroops\` (dez milhões)
 - Toda transação paga uma pequena taxa — a taxa base é de **100 stroops** (0.00001 XLM)
 
-A taxa não é receita — é um pedágio anti-spam que mantém a rede rápida para todos.
+A taxa não é receita — é um pedágio antispam que mantém a rede rápida para todos.
 
 ### Sua missão
 
@@ -798,7 +798,7 @@ Assine com sua chave secreta, pague o pedágio de ~100 stroops e em ~5 segundos 
 
 ### Sua missão
 
-Trace o primeiro pagamento desde o Pânico: **25 XLM**.
+Envie o primeiro pagamento desde o Pânico: **25 XLM**.
 
 Saída esperada:
 
@@ -817,7 +817,7 @@ Um contrato Soroban é uma biblioteca Rust compilada para WASM e gravada no ledg
 
 - \`#![no_std]\` — sem SO, sem alocador de heap, sem biblioteca padrão. O ledger é a máquina.
 - \`#[contract]\` em uma struct unitária — a identidade do contrato.
-- \`#[contractimpl]\` no bloco impl — exporta suas \`pub fn\`s como entradas invocáveis. Toda entrada recebe \`Env\` primeiro: sua alça para storage, eventos e chamadas entre contratos.
+- \`#[contractimpl]\` no bloco impl — exporta suas \`pub fn\`s como entradas invocáveis. Toda entrada recebe \`Env\` primeiro: seu acesso ao storage, eventos e chamadas entre contratos.
 
 Strings são caras on-chain; identificadores curtos usam \`Symbol\` (≤ 9 caracteres via \`symbol_short!\`).
 
@@ -844,7 +844,7 @@ let count: u32 = env.storage().instance().get(&KEY).unwrap_or(0);
 env.storage().instance().set(&KEY, &count);
 \`\`\`
 
-\`get\` retorna \`Option<T>\` — a chave pode nunca ter sido escrita (ou o aluguel dela expirou), então \`unwrap_or(0)\` é o idioma para contadores. Chaves e valores passam por referência.
+\`get\` retorna \`Option<T>\` — a chave pode nunca ter sido escrita (ou o aluguel dela expirou), então \`unwrap_or(0)\` é o padrão clássico para contadores. Chaves e valores passam por referência.
 
 ### Sua missão
 
@@ -1041,7 +1041,7 @@ Seu \`ZipperAccount\` deve, dentro de \`__check_auth\`:
 
 1. Carregar a chave pública do signatário-raiz (\`BytesN<32>\`) do instance storage sob \`SIGNER\`.
 2. Verificar a assinatura ed25519 sobre o payload com \`env.crypto().ed25519_verify(...)\` — um selo falso precisa dar trap.
-3. Carregar o \`Address\` do guardião do instance storage sob \`DELEGATE\` e entregar o resto da verificação com \`delegate_account_auth\` — o golpe do Protocol 27.
+3. Carregar o \`Address\` do guardião do instance storage sob \`DELEGATE\` e entregar o resto da verificação com \`delegate_account_auth\` — a jogada do Protocol 27.
 
 E exporte o bloco impl. Nenhum \`todo!()\` sobrevive ao final.
 

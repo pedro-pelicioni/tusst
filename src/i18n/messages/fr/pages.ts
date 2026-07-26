@@ -23,7 +23,7 @@ export const pages = {
     actLink: "Acte {numeral} — {title}",
     unassigned: "non attribuée",
     footnote:
-      "les cartes sont une progression cosmétique — elles n'apportent aucun avantage en jeu. les tirages rares récompensent un acte terminé sans faute. la réclamation on-chain arrive avec le capstone Soroban.",
+      "les cartes sont une progression cosmétique — elles n'apportent aucun avantage en jeu. les tirages rares récompensent un acte terminé sans faute. la réclamation on-chain arrive avec le projet final Soroban.",
   },
   track: {
     backToPath: "voie de campagne",

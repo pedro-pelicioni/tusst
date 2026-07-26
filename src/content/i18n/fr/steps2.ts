@@ -309,7 +309,7 @@ Cela signifie que Rust **t'avertit** si tu reçois un Result et l'ignores — un
       kind: "editor",
       intro: `### Épreuve finale — lire le jugement
 
-La cour te remet \`Ok(42)\`. Matche les deux verdicts :
+La cour te remet \`Ok(42)\`. Rends les deux verdicts avec \`match\` :
 
 1. \`Ok(v)\` → affiche \`granted: {}\`
 2. \`Err(e)\` → affiche \`denied: {}\`
@@ -343,11 +343,11 @@ Ce \`?\` signifie : *sur Ok, déballe et continue. Sur Err, renvoie l'erreur à 
 \`\`\`rust
 fn double_first() -> Result<i32, String> {
     let n = parse("21")?;   // Err sortirait ici, vers le haut
-    Ok(n * 2)               // le chemin heureux reste net
+    Ok(n * 2)               // le happy path reste net
 }
 \`\`\`
 
-C'est ainsi que le vrai code Rust reste lisible : les erreurs remontent la pente, la logique reste plate.`,
+C'est ainsi que le vrai code Rust reste lisible : les erreurs remontent vers l'appelant, la logique reste plate.`,
     },
     {
       kind: "quiz",
@@ -393,7 +393,7 @@ Ok(42)
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Bienvenue dans le ciel, Forgeborn. **Stellar** est un registre public — un livre de comptes partagé qu'aucun pouvoir ne contrôle seul, qui règle les paiements en ~5 secondes.
+      body: `Bienvenue dans le ciel, Forgeborn. **Stellar** est un **ledger** — le grand registre public du ciel : un livre de comptes partagé qu'aucun pouvoir ne contrôle seul, qui règle les paiements en ~5 secondes.
 
 Chaque acteur y est un **compte** (un fort-étoile), contrôlé par une **paire de clés** : deux clés, nées ensemble, aux devoirs opposés.`,
     },
@@ -404,7 +404,7 @@ Chaque acteur y est un **compte** (un fort-étoile), contrôlé par une **paire 
 - **Clé publique** — commence par \`G\`. Ton adresse. Crie-la du haut des tours ; c'est ainsi que les autres te trouvent et te paient.
 - **Clé secrète** — commence par \`S\`. Elle signe tout ce que tu fais. Ne la partage **jamais**, ne la colle jamais, ne la committe jamais. Si tu la perds → le compte est perdu à jamais. Pas de service d'assistance dans le ciel.
 
-Et pour exister sur le registre, un compte détient une **réserve de base : 1 XLM** minimum.`,
+Et pour exister sur le ledger, un compte détient une **réserve de base : 1 XLM** minimum.`,
     },
     {
       kind: "quiz",
@@ -462,13 +462,13 @@ star-keep chartered ✓
 1 XLM = 10,000,000 stroops
 \`\`\`
 
-Dix millions. Tous les montants du registre sont en réalité comptés en stroops — les décimales sont pour les humains.`,
+Dix millions. Tous les montants du ledger sont en réalité comptés en stroops — les décimales sont pour les humains.`,
     },
     {
       kind: "theory",
-      body: `Chaque transaction paie un petit péage — le **frais de base : 100 stroops** (0,00001 XLM).
+      body: `Chaque transaction paie un petit péage — les **frais de base : 100 stroops** (0,00001 XLM).
 
-Ce n'est pas un revenu. C'est de l'anti-spam : assez cher pour empêcher quiconque d'inonder le ciel de bruit, assez bon marché pour qu'un million de vrais paiements coûtent environ un dollar. Quand le trafic monte, les frais grimpent brièvement — une enchère pour l'espace.`,
+Ce n'est pas un revenu. C'est de l'anti-spam : assez cher pour empêcher quiconque d'inonder le ciel de bruit, assez bon marché pour qu'un million de vrais paiements coûtent environ un dollar. Quand le trafic monte, les frais grimpent brièvement — une enchère pour la place dans le ledger.`,
     },
     {
       kind: "quiz",
@@ -495,7 +495,7 @@ Ce n'est pas un revenu. C'est de l'anti-spam : assez cher pour empêcher quiconq
       kind: "editor",
       intro: `### Épreuve finale — le péage de la porte
 
-Complète la plaque : les stroops par lumen, et le frais de base en stroops.
+Complète la plaque : les stroops par lumen, et les frais de base en stroops.
 
 Sortie attendue :
 
@@ -595,10 +595,10 @@ construis l'opération
   → signe avec ta clé S...
     → soumets au réseau
       → les validateurs s'accordent (~5s)
-        → définitif. pour toujours. sur le registre.
+        → définitif. pour toujours. sur le ledger.
 \`\`\`
 
-C'est le ciel que le Beholder a brisé — et celui que tu t'apprêtes à rallumer. Après cette Porte : Soroban, où le registre exécute *ton* Rust.`,
+C'est le ciel que le Beholder a brisé — et celui que tu t'apprêtes à rallumer. Après cette Porte : Soroban, où le ledger exécute *ton* Rust.`,
     },
     {
       kind: "quiz",
@@ -613,7 +613,7 @@ C'est le ciel que le Beholder a brisé — et celui que tu t'apprêtes à rallum
     },
     {
       kind: "fill",
-      prompt: "Trace la cargaison : le code de l'actif natif.",
+      prompt: "Déclare la cargaison : le code de l'actif natif.",
       file: "star-chart.toml",
       before: "asset = \"",
       after: "\"",
@@ -625,7 +625,7 @@ C'est le ciel que le Beholder a brisé — et celui que tu t'apprêtes à rallum
       kind: "editor",
       intro: `### Épreuve finale — première lumière à travers le ciel
 
-Trace le paiement : le sceau de destination, le code de l'actif natif, et envoie **25**.
+Envoie le paiement : le sceau de destination, le code de l'actif natif, et un montant de **25**.
 
 Sortie attendue :
 
@@ -641,14 +641,14 @@ lumens flowing ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Forgeborn, au-delà de la Porte, les règles changent. Un **contrat Soroban** est une bibliothèque Rust compilée en WASM et stockée sur le registre Stellar — où n'importe qui peut l'invoquer.
+      body: `Forgeborn, au-delà de la Porte, les règles changent. Un **contrat Soroban** est une bibliothèque Rust compilée en WASM et stockée sur le ledger Stellar — où n'importe qui peut l'invoquer.
 
 \`\`\`rust
 #![no_std]
 use soroban_sdk::{contract, contractimpl, Env};
 \`\`\`
 
-\`#![no_std]\` n'est pas une décoration : il n'y a ni OS, ni allocateur, ni \`std\` on-chain. Le registre est la machine, et le \`soroban_sdk\` est désormais ta bibliothèque standard.`,
+\`#![no_std]\` n'est pas une décoration : il n'y a ni OS, ni allocateur, ni \`std\` on-chain. Le ledger est la machine, et le \`soroban_sdk\` est désormais ta bibliothèque standard.`,
     },
     {
       kind: "theory",
@@ -664,11 +664,11 @@ impl HelloContract {
 }
 \`\`\`
 
-\`#[contractimpl]\` exporte chaque \`pub fn\` comme point d'entrée invocable. Chacune prend \`Env\` en premier — ta poignée vers le stockage, les événements et les autres contrats.`,
+\`#[contractimpl]\` exporte chaque \`pub fn\` comme point d'entrée invocable. Chacune prend \`Env\` en premier — ton accès au stockage, aux événements et aux autres contrats.`,
     },
     {
       kind: "theory",
-      body: `On-chain, chaque octet est un loyer. Les strings sont lourdes — alors les identifiants courts utilisent \`Symbol\`, un type compact du registre :
+      body: `On-chain, chaque octet est un loyer. Les strings sont lourdes — alors les identifiants courts utilisent \`Symbol\`, un type compact du ledger :
 
 \`\`\`rust
 use soroban_sdk::{symbol_short, Symbol};
@@ -687,7 +687,7 @@ Là où un dev web renvoie \`"ok"\`, un dev Soroban renvoie \`symbol_short!("ok"
         "C'est un style optionnel — std fonctionne très bien on-chain",
       ],
       answer: 0,
-      explain: "Le WASM sur le registre n'a aucun système d'exploitation sous lui. Le SDK remplace std.",
+      explain: "Le WASM sur le ledger n'a aucun système d'exploitation sous lui. Le SDK remplace std.",
     },
     {
       kind: "fill",
@@ -718,7 +718,7 @@ hello() → Symbol(beacon)
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Les contrats ne gardent **aucune mémoire entre les invocations** — chaque variable locale meurt quand l'appel se termine. L'état vit dans le **registre**, derrière \`env.storage()\`.
+      body: `Les contrats ne gardent **aucune mémoire entre les invocations** — chaque variable locale meurt quand l'appel se termine. L'état vit dans le **ledger**, derrière \`env.storage()\`.
 
 Pour l'état global du contrat (compteurs, config, admin), la bonne étagère est le **stockage d'instance** :
 
@@ -753,7 +753,7 @@ env.storage().instance().set(&COUNTER, &count);
         "Pour forcer la gestion d'erreurs sur les incompatibilités de types",
       ],
       answer: 0,
-      explain: "Le stockage du registre est loué, pas possédé. L'absence est un état normal — gère-la.",
+      explain: "Le stockage du ledger est loué, pas possédé. L'absence est un état normal — gère-la.",
     },
     {
       kind: "fill",
@@ -817,7 +817,7 @@ La règle du royaume : **toute fonction qui déplace de la valeur ou change l'é
       options: [
         "L'invocation trap — tout est annulé, l'état reste intact",
         "Elle renvoie false et la fonction continue",
-        "Elle enregistre un avertissement sur le registre",
+        "Elle enregistre un avertissement sur le ledger",
       ],
       answer: 0,
       explain: "Un échec d'auth n'est pas une condition à gérer — il tue l'invocation net.",
@@ -864,7 +864,7 @@ Voilà ce qu'est un **protocol upgrade** : un unique basculement coordonné du c
 
 - Stellar Core stable — **5 juin 2026**
 - SDKs — 5–11 juin · RPC & Galexie — 10 juin · Horizon — 12 juin
-- **Testnet mise à niveau — 18 juin 2026**
+- **Mise à niveau du Testnet — 18 juin 2026**
 - **Vote du Mainnet — 8 juillet 2026**
 
 Le plan complet vit dans le [guide officiel de mise à niveau du Protocol 27](https://stellar.org/blog/foundation-news/stellar-zipper-protocol-27-upgrade-guide).`,
@@ -1000,7 +1000,7 @@ __check_auth: the account writes its own law ✓
       image: "/mascot/mascot-guide.png",
       body: `Une couronne qui garde seule tous les coffres finit par se briser. Les vrais comptes veulent dire : *« que mon intendant réponde pour moi. »*
 
-Avant le Zipper, aucun soutien du protocole — les bâtisseurs simulaient la délégation par de fragiles rondes de **pré-simulation** pour propager le contexte d'auth. Ça marchait. À peine. Parfois.`,
+Avant le Zipper, aucun soutien du protocole — les bâtisseurs simulaient la délégation par de fragiles allers-retours de **pré-simulation** pour propager le contexte d'auth. Ça marchait. À peine. Parfois.`,
     },
     {
       kind: "theory",
@@ -1075,7 +1075,7 @@ Alors un sceau forgé pour l'ancienne porte ouvre la nouvelle. Mints dupliqués.
 
 Le **\`SOROBAN_CREDENTIALS_ADDRESS_V2\`** (CAP-0071-02) lie le signature payload à l'adresse pour laquelle il a été créé. Un écho volé ne correspond plus à une autre porte.
 
-L'ancien \`SOROBAN_CREDENTIALS_ADDRESS\` reste valide **jusqu'au Protocol 28** — une fenêtre de migration, pas une falaise.`,
+L'ancien \`SOROBAN_CREDENTIALS_ADDRESS\` reste valide **jusqu'au Protocol 28** — une fenêtre de migration, pas un couperet.`,
     },
     {
       kind: "theory",
@@ -1225,7 +1225,7 @@ Il est temps de combiner les trois en un seul compte.`,
       body: `Le plan du \`ZipperAccount\`, dans \`__check_auth\` :
 
 \`\`\`rust
-// 1) la clé publique du signataire racine, depuis le storage :
+// 1) la clé publique du signataire racine, depuis le stockage :
 let signer: BytesN<32> = env.storage().instance().get(&SIGNER).unwrap();
 
 // 2) un sceau invalide doit trap :
@@ -1235,7 +1235,7 @@ env.crypto().ed25519_verify(&signer, &payload.into(), &signature);
 delegate_account_auth(...)
 \`\`\`
 
-La signature d'abord, la délégation ensuite. L'écho du Spectre meurt à l'étape 2 ; un intendant forgé meurt à l'étape 3.`,
+La signature d'abord, la délégation ensuite. L'écho du Spectre meurt à l'étape 2 ; un faux intendant meurt à l'étape 3.`,
     },
     {
       kind: "quiz",
@@ -1264,7 +1264,7 @@ La signature d'abord, la délégation ensuite. L'écho du Spectre meurt à l'ét
 
 Dans \`__check_auth\` :
 
-1. Charge le signataire racine (\`BytesN<32>\`) depuis le storage sous \`SIGNER\`.
+1. Charge le signataire racine (\`BytesN<32>\`) depuis le stockage sous \`SIGNER\`.
 2. Vérifie la signature ed25519 sur le payload — \`env.crypto().ed25519_verify(...)\`.
 3. Charge l'intendant sous \`DELEGATE\` et appelle \`delegate_account_auth\`.
 

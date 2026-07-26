@@ -39,7 +39,7 @@ Fíjate: sin punto y coma en \`Some(7)\` / \`None\` — el \`if/else\` es una ex
         "Todas las funciones de Rust deben devolver Option",
       ],
       answer: 0,
-      explain: "El tipo obliga a cada llamador a manejar el caso None. Sin emboscadas a medianoche.",
+      explain: "El tipo obliga a quien llama a manejar el caso None. Sin emboscadas a medianoche.",
     },
     {
       kind: "fill",
@@ -229,7 +229,7 @@ Sin crash, sin respuesta errónea silenciosa — un veredicto, que queda registr
       kind: "quiz",
       question: "¿Cuándo debería una función devolver `Result` en lugar de `Option`?",
       options: [
-        "Cuando el llamador necesita saber POR QUÉ falló",
+        "Cuando quien llama necesita saber POR QUÉ falló",
         "Cuando nunca falla",
         "Result y Option son intercambiables",
       ],
@@ -393,7 +393,7 @@ Ok(42)
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Bienvenido al cielo, Forgeborn. **Stellar** es un libro mayor público — un libro de cuentas compartido que ningún poder controla en solitario, y que liquida pagos en ~5 segundos.
+      body: `Bienvenido al cielo, Forgeborn. **Stellar** es un **ledger** público — el libro mayor del cielo — un registro compartido que ningún poder controla en solitario, y que liquida pagos en ~5 segundos.
 
 Cada actor en él es una **cuenta** (una fortaleza estelar), controlada por un **par de claves**: dos claves, nacidas juntas, con deberes opuestos.`,
     },
@@ -402,9 +402,9 @@ Cada actor en él es una **cuenta** (una fortaleza estelar), controlada por un *
       body: `Las dos claves:
 
 - **Clave pública** — empieza con \`G\`. Tu dirección. Grítala desde las torres; es como los demás te encuentran y te pagan.
-- **Clave secreta** — empieza con \`S\`. Firma todo lo que haces. **Nunca** la compartas, nunca la pegues, nunca la subas a un repositorio. Si la pierdes → la cuenta se pierde para siempre. No hay mesa de soporte en el cielo.
+- **Clave secreta** — empieza con \`S\`. Firma todo lo que haces. **Nunca** la compartas, nunca la pegues, nunca la subas a un repositorio. Si la pierdes → la cuenta se pierde para siempre. No hay soporte técnico en el cielo.
 
-Y para siquiera existir en el libro mayor, una cuenta guarda una **reserva base mínima: 1 XLM**.`,
+Y para siquiera existir en el ledger, una cuenta guarda una **reserva base mínima: 1 XLM**.`,
     },
     {
       kind: "quiz",
@@ -462,7 +462,7 @@ star-keep chartered ✓
 1 XLM = 10,000,000 stroops
 \`\`\`
 
-Diez millones. Todos los montos del libro mayor se cuentan en realidad en stroops — los decimales son para los humanos.`,
+Diez millones. Todos los montos del ledger se cuentan en realidad en stroops — los decimales son para los humanos.`,
     },
     {
       kind: "theory",
@@ -526,7 +526,7 @@ Una **trustline** es esa aceptación — un puente que abres desde tu cuenta hac
 trustline = "Acepto USDC, emitido por G...CENTRE"
 \`\`\`
 
-Sin trustline, no hay balance — los pagos en ese activo simplemente no pueden llegarte. (Cada trustline abierta también eleva un poco tu reserva.)`,
+Sin trustline, no hay saldo — los pagos en ese activo simplemente no pueden llegarte. (Cada trustline abierta también eleva un poco tu reserva.)`,
     },
     {
       kind: "quiz",
@@ -595,10 +595,10 @@ construye la operación
   → firma con tu clave S...
     → envíala a la red
       → los validadores acuerdan (~5s)
-        → definitiva. para siempre. en el libro mayor.
+        → definitiva. para siempre. en el ledger.
 \`\`\`
 
-Este es el cielo que el Beholder rompió — y el que estás a punto de volver a encender. Tras esta Puerta: Soroban, donde el libro mayor ejecuta *tu* Rust.`,
+Este es el cielo que el Beholder rompió — y el que estás a punto de volver a encender. Tras esta Puerta: Soroban, donde el ledger ejecuta *tu* Rust.`,
     },
     {
       kind: "quiz",
@@ -641,14 +641,14 @@ lumens flowing ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Forgeborn, las reglas cambian más allá de la Puerta. Un **contrato Soroban** es una biblioteca de Rust compilada a WASM y almacenada en el libro mayor de Stellar — donde cualquiera puede invocarlo.
+      body: `Forgeborn, las reglas cambian más allá de la Puerta. Un **contrato Soroban** es una biblioteca de Rust compilada a WASM y almacenada en el ledger de Stellar — donde cualquiera puede invocarlo.
 
 \`\`\`rust
 #![no_std]
 use soroban_sdk::{contract, contractimpl, Env};
 \`\`\`
 
-\`#![no_std]\` no es decoración: no hay OS, no hay allocator, no hay \`std\` on-chain. El libro mayor es la máquina, y el \`soroban_sdk\` es ahora tu biblioteca estándar.`,
+\`#![no_std]\` no es decoración: no hay OS, no hay allocator, no hay \`std\` on-chain. El ledger es la máquina, y el \`soroban_sdk\` es ahora tu biblioteca estándar.`,
     },
     {
       kind: "theory",
@@ -668,7 +668,7 @@ impl HelloContract {
     },
     {
       kind: "theory",
-      body: `On-chain, cada byte paga renta. Los strings pesan — así que los identificadores cortos usan \`Symbol\`, un tipo compacto del libro mayor:
+      body: `On-chain, cada byte paga renta. Los strings pesan — así que los identificadores cortos usan \`Symbol\`, un tipo compacto del ledger:
 
 \`\`\`rust
 use soroban_sdk::{symbol_short, Symbol};
@@ -687,7 +687,7 @@ Donde un dev web devuelve \`"ok"\`, un dev de Soroban devuelve \`symbol_short!("
         "Es estilo opcional — std funciona bien on-chain",
       ],
       answer: 0,
-      explain: "El WASM en el libro mayor no tiene sistema operativo debajo. El SDK reemplaza a std.",
+      explain: "El WASM en el ledger no tiene sistema operativo debajo. El SDK reemplaza a std.",
     },
     {
       kind: "fill",
@@ -718,7 +718,7 @@ hello() → Symbol(beacon)
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Los contratos **no guardan memoria entre invocaciones** — toda variable local muere cuando la llamada retorna. El estado vive en el **libro mayor**, detrás de \`env.storage()\`.
+      body: `Los contratos **no guardan memoria entre invocaciones** — toda variable local muere cuando la llamada retorna. El estado vive en el **ledger**, detrás de \`env.storage()\`.
 
 Para el estado de todo el contrato (contadores, configuración, admin), el estante correcto es el **instance storage**:
 
@@ -753,7 +753,7 @@ env.storage().instance().set(&COUNTER, &count);
         "Para forzar el manejo de errores en desajustes de tipo",
       ],
       answer: 0,
-      explain: "El almacenamiento del libro mayor se renta, no se posee. La ausencia es un estado normal — manéjala.",
+      explain: "El almacenamiento del ledger se renta, no se posee. La ausencia es un estado normal — manéjala.",
     },
     {
       kind: "fill",
@@ -767,7 +767,7 @@ env.storage().instance().set(&COUNTER, &count);
     },
     {
       kind: "editor",
-      intro: `### Prueba final — haz que el libro mayor recuerde
+      intro: `### Prueba final — haz que el ledger recuerde
 
 Implementa \`increment\`:
 
@@ -817,7 +817,7 @@ La regla del reino: **toda función que mueve valor o cambia el estado de alguie
       options: [
         "La invocación se aborta (trap) — todo se revierte, el estado queda intacto",
         "Devuelve false y la función continúa",
-        "Registra una advertencia en el libro mayor",
+        "Registra una advertencia en el ledger",
       ],
       answer: 0,
       explain: "Un fallo de autorización no es una condición que se maneja — mata la invocación de raíz.",
@@ -884,7 +884,7 @@ El plan completo vive en la [guía oficial de actualización del Protocol 27](ht
       options: [
         "Los validadores votan para armarlo; en el ledger programado toda la red gira de una vez",
         "Cada nodo se actualiza cuando quiere y las versiones coexisten",
-        "La Foundation pulsa un botón en sus propios servidores",
+        "La Foundation presiona un botón en sus propios servidores",
       ],
       answer: 0,
       explain: "Consenso, no decreto: el voto lo arma, un ledger hace girar el cielo entero.",
@@ -1079,7 +1079,7 @@ El viejo \`SOROBAN_CREDENTIALS_ADDRESS\` sigue siendo válido **hasta el Protoco
     },
     {
       kind: "theory",
-      body: `Hasta que migres, hay una salvaguarda provisional para contratos estilo admin: **incluye tú mismo la dirección del firmante en el payload** — así la rotación con clave compartida no puede ser ecoada.
+      body: `Hasta que migres, hay una salvaguarda provisional para contratos estilo admin: **incluye tú mismo la dirección del firmante en el payload** — así la rotación con clave compartida no puede repetirse como un eco.
 
 \`\`\`rust
 let me: Address = env.current_contract_address();

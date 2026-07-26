@@ -16,7 +16,7 @@ enum Option<T> {
 }
 \`\`\`
 
-Você conheceu Option na estante do Acumulador. Agora vai dominá-lo.`,
+Você conheceu Option na prateleira do Acumulador. Agora vai dominá-lo.`,
     },
     {
       kind: "theory",
@@ -86,7 +86,7 @@ Diante de \`None\`, unwrap **entra em pânico** — o programa inteiro afunda. A
 let value = ghost.unwrap_or(0);   // Some(x) → x · None → 0
 \`\`\`
 
-Você já usou esse idioma duas vezes — na estante do Acumulador — e ele vai te proteger de novo na fortaleza de Soroban. É a runa mais útil do pântano.`,
+Você já usou esse padrão duas vezes — na prateleira do Acumulador — e ele vai te proteger de novo na fortaleza de Soroban. É a runa mais útil do pântano.`,
     },
     {
       kind: "quiz",
@@ -342,12 +342,12 @@ Esse \`?\` significa: *em Ok, desembrulhe e continue. Em Err, devolva o erro a q
 
 \`\`\`rust
 fn double_first() -> Result<i32, String> {
-    let n = parse("21")?;   // um Err sairia aqui, rumo acima
+    let n = parse("21")?;   // um Err sairia aqui, direto para quem chamou
     Ok(n * 2)               // o caminho feliz fica limpo
 }
 \`\`\`
 
-É assim que o código Rust de verdade se mantém legível: os erros correm morro acima, a lógica fica plana.`,
+É assim que o código Rust de verdade se mantém legível: os erros sobem direto para quem chamou, a lógica fica plana.`,
     },
     {
       kind: "quiz",
@@ -358,7 +358,7 @@ fn double_first() -> Result<i32, String> {
         "Converte para None",
       ],
       answer: 0,
-      explain: "Uma marca, e o julgamento corre morro acima até quem te chamou.",
+      explain: "Uma marca, e o julgamento sobe direto até quem te chamou.",
     },
     {
       kind: "fill",
@@ -402,7 +402,7 @@ Cada ator nele é uma **conta** (uma fortaleza-estelar), controlada por um **par
       body: `As duas chaves:
 
 - **Chave pública** — começa com \`G\`. Seu endereço. Grite-a das torres; é assim que os outros te encontram e te pagam.
-- **Chave secreta** — começa com \`S\`. Assina tudo o que você faz. **Nunca** a compartilhe, nunca a cole, nunca a comite. Perdeu → a conta se foi para sempre. Não há balcão de suporte no céu.
+- **Chave secreta** — começa com \`S\`. Assina tudo o que você faz. **Nunca** a compartilhe, nunca a cole, nunca dê commit nela. Perdeu → a conta se foi para sempre. Não há balcão de suporte no céu.
 
 E para sequer existir no ledger, uma conta guarda uma **reserva base mínima: 1 XLM**.`,
     },
@@ -468,7 +468,7 @@ Dez milhões. Todos os valores no ledger são contados, na verdade, em stroops �
       kind: "theory",
       body: `Toda transação paga um pequeno pedágio — a **taxa base: 100 stroops** (0,00001 XLM).
 
-Não é receita. É antisspam: caro o bastante para impedir que alguém inunde o céu de ruído, barato o bastante para que um milhão de pagamentos reais custe cerca de um dólar. Quando o tráfego dispara, as taxas sobem por um breve momento — um leilão por espaço.`,
+Não é receita. É antispam: caro o bastante para impedir que alguém inunde o céu de ruído, barato o bastante para que um milhão de pagamentos reais custe cerca de um dólar. Quando o tráfego dispara, as taxas sobem por um breve momento — um leilão por espaço.`,
     },
     {
       kind: "quiz",
@@ -479,7 +479,7 @@ Não é receita. É antisspam: caro o bastante para impedir que alguém inunde o
         "Uma porcentagem do valor enviado",
       ],
       answer: 0,
-      explain: "Fixa, minúscula, antisspam. O valor que você envia não muda o pedágio.",
+      explain: "Fixa, minúscula, antispam. O valor que você envia não muda o pedágio.",
     },
     {
       kind: "fill",
@@ -742,7 +742,7 @@ let count: u32 = env.storage().instance()
 env.storage().instance().set(&COUNTER, &count);
 \`\`\`
 
-\`get\` retorna um \`Option<T>\` — a chave pode nunca ter sido escrita, ou o aluguel dela (TTL) pode ter expirado. \`unwrap_or(0)\` é o idioma do contador.`,
+\`get\` retorna um \`Option<T>\` — a chave pode nunca ter sido escrita, ou o aluguel dela (TTL) pode ter expirado. \`unwrap_or(0)\` é o padrão do contador.`,
     },
     {
       kind: "quiz",
@@ -1112,7 +1112,7 @@ Assista ao mergulho técnico: [Stellar Developer Meeting — signature security]
     },
     {
       kind: "fill",
-      prompt: "Pronuncie a credencial que ata o selo à sua porta.",
+      prompt: "Pronuncie a credencial que vincula o selo à sua porta.",
       file: "lib.rs",
       before: "pub const CREDENTIALS: &str = \"SOROBAN_CREDENTIALS_",
       after: "\";",
@@ -1122,7 +1122,7 @@ Assista ao mergulho técnico: [Stellar Developer Meeting — signature security]
     },
     {
       kind: "editor",
-      intro: `### Prova final — ate o selo
+      intro: `### Prova final — vincule o selo
 
 1. Atualize \`CREDENTIALS\` para o nome V2.
 2. Registre até qual protocolo o V1 continua válido.
@@ -1212,7 +1212,7 @@ caravan cleared the Gate: nothing left behind ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `O Espectro vem atrás do seu cofre com um selo roubado e um eco perfeito. Disponha o que você forjou pelo Céu Reescrito:
+      body: `O Espectro vem atrás do seu cofre com um selo roubado e um eco perfeito. Reúna o que você forjou pelo Céu Reescrito:
 
 - \`__check_auth\` — a lei da sua própria conta (VIII.2)
 - \`delegate_account_auth\` — a coroa-guardiã (VIII.3)
@@ -1231,7 +1231,7 @@ let signer: BytesN<32> = env.storage().instance().get(&SIGNER).unwrap();
 // 2) um selo falso precisa dar trap:
 env.crypto().ed25519_verify(&signer, &payload.into(), &signature);
 
-// 3) o golpe do Protocol 27 — entregue o resto ao guardião:
+// 3) a jogada do Protocol 27 — entregue o resto ao guardião:
 delegate_account_auth(...)
 \`\`\`
 

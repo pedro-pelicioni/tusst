@@ -34,7 +34,7 @@ export const ide = {
     empty: "// build, teste ou audite ton contrat pour voir la sortie ici (⌘⏎ lance le build)",
     status: {
       idle: "inactif",
-      queued: "en file",
+      queued: "en attente",
       building: "build",
       testing: "tests",
       auditing: "audit",
@@ -137,7 +137,7 @@ export const ide = {
   run: {
     genericError: "Quelque chose a mal tourné.",
     forgeCold: "La forge est froide — réessaie.",
-    queued: "// en file — position {position} dans la file de la forge",
+    queued: "// en attente — position {position} dans la file de la forge",
     phase: "// phase : {name}",
     wasmDecodeError: "interne : impossible de décoder le payload wasm",
     timedOut:

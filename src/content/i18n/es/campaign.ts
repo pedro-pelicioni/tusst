@@ -20,7 +20,7 @@ export const actText: Record<string, ActText> = {
     territory: "Archivo-mazmorra bajo el reino",
     overlord: "El Acaparador",
     synopsis:
-      "Bajo el reino duerme cada herramienta que los viejos Stroopies forjaron: morrales que crecen, libros de cuentas encantados, cadenas de espíritus perezosos que no trabajan hasta que los recolectas. El Acaparador lo custodia todo — y todo lo indexa con un desfase de uno.",
+      "Bajo el reino duerme cada herramienta que los viejos Stroopies forjaron: mochilas que crecen, libros de cuentas encantados, cadenas de espíritus perezosos que no trabajan hasta que los recolectas. El Acaparador lo custodia todo — y todo lo indexa con un desfase de uno.",
   },
   "mastering-option": {
     title: "El Pantano Evanescente",
@@ -38,7 +38,7 @@ export const actText: Record<string, ActText> = {
     title: "La Puerta de la Constelación",
     territory: "El cielo quebrado",
     synopsis:
-      "Con cinco campeones reunidos, asciendes. Torreones estelares como cuentas, sello y secreto como keypairs, puentes de luz como trustlines — y lumens fluyendo de nuevo por primera vez desde el Pánico.",
+      "Con cinco campeones reunidos, asciendes. Fortalezas estelares como cuentas, sello y secreto como keypairs, puentes de luz como trustlines — y lumens fluyendo de nuevo por primera vez desde el Pánico.",
   },
   "soroban-smart-contracts": {
     title: "La Guarida del Beholder",
@@ -70,7 +70,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-fundamentals-3": {
     title: "Las Formas de la Materia",
     intro:
-      "Ferrisia abre un gabinete de frascos etiquetados: números enteros, números quebrados, verdades y mentiras. «La Ciudadela rechaza toda runa cuya forma no pueda nombrar», dice. «Etiqueta tus frascos, Forgeborn: el faro solo lee lo que está tipado.»",
+      "Ferrisia abre un gabinete de frascos etiquetados: números enteros, números con decimales, verdades y mentiras. «La Ciudadela rechaza toda runa cuya forma no pueda nombrar», dice. «Etiqueta tus frascos, Forgeborn: el faro solo lee lo que está tipado.»",
   },
   "rust-fundamentals-4": {
     title: "La Receta del Herrero Rúnico",
@@ -100,7 +100,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "control-flow-3": {
     title: "El Corredor Sin Fin",
     intro:
-      "Este corredor se repite. El mismo candelabro, la misma grieta en la piedra, una y otra vez. Los viajeros que lo recorren para siempre acaban formando parte del muro. La única salida es contar tus ecos — y cuando la cuenta sea la correcta, romper el hechizo con `break` a mitad de paso.",
+      "Este corredor se repite. El mismo candelabro, la misma grieta en la piedra, una y otra vez. Los viajeros que lo recorren para siempre acaban formando parte del muro. La única salida es contar tus ecos — y cuando la cuenta sea la correcta, romper el hechizo con `break` en seco.",
   },
   "control-flow-4": {
     title: "La Galería que se Hunde",
@@ -118,9 +118,9 @@ export const skirmishText: Record<string, SkirmishText> = {
       "La galería final: diez espejos, y el Señor de los Espejos escondido detrás de cada tercero. Recorre la fila; anuncia el número de cada espejo — pero donde se esconda el Señor, grita «mirror» en su lugar. Bifurca dentro de tu bucle, Forgeborn. Rompe el corazón del laberinto.",
   },
   "rust-standard-library-1": {
-    title: "El Morral Sin Fondo",
+    title: "La Mochila Sin Fondo",
     intro:
-      "La primera bóveda guarda la herramienta favorita de los Stroopies: un morral que crece hasta abarcar todo lo que metas en él. «Un `Vec`», dice el Stroopkeeper mientras abre la vitrina. «Todo aventurero lleva uno. Pocos lo respetan. Cuenta desde cero, como querían los dioses antiguos.»",
+      "La primera bóveda guarda la herramienta favorita de los Stroopies: una mochila que crece hasta abarcar todo lo que metas en ella. «Un `Vec`», dice el Stroopkeeper mientras abre la vitrina. «Todo aventurero lleva uno. Pocos lo respetan. Cuenta desde cero, como querían los dioses antiguos.»",
   },
   "rust-standard-library-2": {
     title: "La Cadena de Espíritus Perezosos",
@@ -130,7 +130,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-standard-library-3": {
     title: "El Estante que Puede Estar Vacío",
     intro:
-      "La trampa del Acaparador: un estante con cinco ranuras, y aventureros que buscan la sexta. En los viejos tiempos, ese gesto derrumbaba la bóveda entera. El `.get` del morral pregunta con cortesía en su lugar — y la respuesta, Forgeborn, puede ser nada en absoluto.",
+      "La trampa del Acaparador: un estante con cinco ranuras, y aventureros que buscan la sexta. En los viejos tiempos, ese gesto derrumbaba la bóveda entera. El `.get` de la mochila pregunta con cortesía en su lugar — y la respuesta, Forgeborn, puede ser nada en absoluto.",
   },
   "rust-standard-library-4": {
     title: "El Libro Encantado",
@@ -178,9 +178,9 @@ export const skirmishText: Record<string, SkirmishText> = {
       "No toda corte debe dictar sentencia; algunas elevan el caso. La Oráculo te muestra la runa más pequeña del reino: `?`. «Con Ok, desenvuelve y continúa. Con Err, devuélvelo a quien te llamó — al instante. Una sola marca, y el juicio fluye cuesta arriba.»",
   },
   "stellar-101-1": {
-    title: "La Carta del Torreón Estelar",
+    title: "La Carta de la Fortaleza Estelar",
     intro:
-      "Astrostroopie te recibe en la Puerta con una carta constitutiva y dos llaves. «Toda alma en el cielo es un torreón estelar — una cuenta. El sello `G` puedes gritarlo desde las torres; la semilla `S` la guardas con tu vida. Pierde la primera: incómodo. Pierde la segunda: todo.»",
+      "Astrostroopie te recibe en la Puerta con una carta fundacional y dos llaves. «Toda alma en el cielo es una fortaleza estelar — una cuenta. El sello `G` puedes gritarlo desde las torres; la semilla `S` la guardas con tu vida. Pierde la primera: incómodo. Pierde la segunda: todo.»",
   },
   "stellar-101-2": {
     title: "El Peaje de la Puerta",
@@ -190,12 +190,12 @@ export const skirmishText: Record<string, SkirmishText> = {
   "stellar-101-3": {
     title: "El Puente de Luz",
     intro:
-      "Más allá de los lumens, el cielo transporta cada activo que un torreón estelar se atreva a emitir — pero solo por puentes que tú mismo construyes. «Una trustline», dice Astrostroopie, «eres tú diciéndole al cielo: acepto ESTE activo, de ESTE emisor. Sin puente no hay carga. El cielo se toma el consentimiento en serio.»",
+      "Más allá de los lumens, el cielo transporta cada activo que una fortaleza estelar se atreva a emitir — pero solo por puentes que tú mismo construyes. «Una trustline», dice Astrostroopie, «eres tú diciéndole al cielo: acepto ESTE activo, de ESTE emisor. Sin puente no hay carga. El cielo se toma el consentimiento en serio.»",
   },
   "stellar-101-4": {
     title: "Primera Luz a Través del Cielo",
     intro:
-      "Todo converge: un torreón estelar de destino, un activo, un monto. El Viajero se aparta de la consola. «Ningún lumen ha cruzado esta Puerta desde el Pánico. Traza el pago, Forgeborn. Que haya tráfico.»",
+      "Todo converge: una fortaleza estelar de destino, un activo, un monto. El Viajero se aparta de la consola. «Ningún lumen ha cruzado esta Puerta desde el Pánico. Traza el pago, Forgeborn. Que haya tráfico.»",
   },
   "soroban-smart-contracts-1": {
     title: "La Primera Runa Celeste",

@@ -21,24 +21,24 @@ fn main() {
     },
     {
       kind: "theory",
-      body: `Para imprimir texto en la consola, Rust te da el **macro** \`println!\`.
+      body: `Para imprimir texto en la consola, Rust te da la **macro** \`println!\`.
 
 \`\`\`rust
 println!("your text here");
 \`\`\`
 
-El \`!\` significa que es un *macro*, no una función — más adelante aprenderás por qué eso importa. Por ahora: si ves un \`!\`, piensa "macro".`,
+El \`!\` significa que es una *macro*, no una función — más adelante aprenderás por qué eso importa. Por ahora: si ves un \`!\`, piensa "macro".`,
     },
     {
       kind: "quiz",
       question: "¿Qué te dice el `!` en `println!`?",
       options: [
-        "Es un macro, no una función",
+        "Es una macro, no una función",
         "El texto se imprime en voz alta",
         "La línea nunca puede fallar",
       ],
       answer: 0,
-      explain: "El `!` marca la invocación de un macro — println! es el más famoso de Rust.",
+      explain: "El `!` marca la invocación de una macro — println! es el más famoso de Rust.",
     },
     {
       kind: "fill",
@@ -364,7 +364,7 @@ copy: Unbending Blade
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Clonar todo llevaría a la forja a la bancarrota. El Guardián del Préstamo enseña un camino mejor:
+      body: `Clonar todo llevaría a la forja a la bancarrota. El Guardián de los Préstamos enseña un camino mejor:
 
 **No tienes que regalar un valor para que alguien lo lea. Préstalo.**
 
@@ -509,7 +509,7 @@ Cada línea es un **brazo** (arm): \`patrón => qué hacer\`.`,
     },
     {
       kind: "theory",
-      body: `Dos reglas hacen de \`match\` el favorito del Overlord:
+      body: `Dos reglas hacen de \`match\` el favorito del Señor de los Espejos:
 
 1. **Todo caso debe estar cubierto.** El brazo \`_\` significa "cualquier otra cosa" — olvídalo y el compilador se niega.
 2. **Un match produce un valor** que puedes guardar:
@@ -610,7 +610,7 @@ Nota \`==\` (una pregunta: "¿igual?") frente a \`=\` (una orden: "guarda esto")
       after: ";\n    }\n}",
       choices: ["break", "stop", "exit"],
       answer: 0,
-      explain: "break sale del bucle a mitad de zancada.",
+      explain: "break corta el bucle en seco.",
     },
     {
       kind: "editor",
@@ -758,7 +758,7 @@ step 5
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Ya conoces todas las runas — \`if\`, \`match\`, \`loop\`, \`while\`, \`for\`. El laberinto del Overlord exige que las **combines**: una decisión *dentro* de una repetición.
+      body: `Ya conoces todas las runas — \`if\`, \`match\`, \`loop\`, \`while\`, \`for\`. El laberinto del Señor de los Espejos exige que las **combines**: una decisión *dentro* de una repetición.
 
 \`\`\`rust
 for n in 1..=6 {
@@ -798,7 +798,7 @@ Así que \`n % 3 == 0\` pregunta: *"¿n es divisible por 3?"* — la forma clás
     },
     {
       kind: "editor",
-      intro: `### Prueba final — el laberinto del Overlord
+      intro: `### Prueba final — el laberinto del Señor de los Espejos
 
 Recorre los diez espejos:
 
@@ -829,7 +829,7 @@ mirror
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Una variable guarda **un** valor. Pero las aventuras producen *listas*: objetos, monedas, nombres. Para eso, la herramienta favorita del reino es el \`Vec\` — un morral que crece:
+      body: `Una variable guarda **un** valor. Pero las aventuras producen *listas*: objetos, monedas, nombres. Para eso, la herramienta favorita del reino es el \`Vec\` — una mochila que crece:
 
 \`\`\`rust
 let mut items = vec!["torch", "rope"];
@@ -842,7 +842,7 @@ let mut items = vec!["torch", "rope"];
       body: `Dos movimientos que usarás constantemente:
 
 \`\`\`rust
-items.push("map");    // agrega al final — el morral crece
+items.push("map");    // agrega al final — la mochila crece
 items.len()           // ¿cuántos hay dentro? → 3
 \`\`\`
 
@@ -857,7 +857,7 @@ Y la regla de los antiguos dioses: las posiciones se cuentan **desde cero**. \`i
     },
     {
       kind: "fill",
-      prompt: "Haz crecer el morral: agrega `\"map\"` al final.",
+      prompt: "Haz crecer la mochila: agrega `\"map\"` al final.",
       file: "main.rs",
       before: "let mut satchel = vec![\"torch\", \"rope\"];\nsatchel.",
       after: "(\"map\");",
@@ -867,7 +867,7 @@ Y la regla de los antiguos dioses: las posiciones se cuentan **desde cero**. \`i
     },
     {
       kind: "editor",
-      intro: `### Prueba final — empaca el morral
+      intro: `### Prueba final — empaca la mochila
 
 1. Crea un \`satchel\` **mutable** con \`vec!["torch", "rope"]\`.
 2. Haz \`push\` de \`"map"\`.
@@ -950,7 +950,7 @@ total: 40
 
 \`\`\`rust
 let vault = vec!["hammer", "chisel"];
-vault[5]   // 💥 PANIC — el programa se estrella
+vault[5]   // 💥 PANIC — el programa colapsa
 \`\`\`
 
 Los corchetes *asumen* que la ranura existe. Las suposiciones, en las bóvedas, son fatales.`,
@@ -961,7 +961,7 @@ Los corchetes *asumen* que la ranura existe. Las suposiciones, en las bóvedas, 
 
 \`\`\`rust
 vault.get(0)   // → Some(&"hammer")  — la ranura existe
-vault.get(5)   // → None             — sin estrellarse, solo "no hay nada"
+vault.get(5)   // → None             — sin colapsar, solo "no hay nada"
 \`\`\`
 
 Esa respuesta \`Some / None\` es un \`Option\` — tu primera probada del Pantano Evanescente. Acompáñala con un plan B: \`vault.get(5).unwrap_or(&"nothing")\`.`,
@@ -971,15 +971,15 @@ Esa respuesta \`Some / None\` es un \`Option\` — tu primera probada del Pantan
       question: "`vault` tiene 2 elementos. ¿Qué devuelve `vault.get(5)`?",
       options: [
         "None — un sereno \"no hay nada\"",
-        "Estrella el programa",
+        "Hace colapsar el programa",
         "El último elemento",
       ],
       answer: 0,
-      explain: "get nunca se estrella — responde Some(&item) o None.",
+      explain: "get nunca colapsa — responde Some(&item) o None.",
     },
     {
       kind: "fill",
-      prompt: "Pregunta por la ranura 5 **con cortesía** — prohibido estrellarse.",
+      prompt: "Pregunta por la ranura 5 **con cortesía** — prohibido colapsar.",
       file: "main.rs",
       before: "let tool = vault.",
       after: "(5).unwrap_or(&\"nothing\");",
@@ -1039,7 +1039,7 @@ Las entradas **no guardan ningún orden en particular** — el encantamiento cam
       options: [
         "El valor viejo se reemplaza — un valor por clave",
         "El mapa conserva ambos valores",
-        "Se estrella con un error de duplicado",
+        "Colapsa con un error de duplicado",
       ],
       answer: 0,
       explain: "Una clave se liga a exactamente un valor; insertar de nuevo lo sobrescribe.",

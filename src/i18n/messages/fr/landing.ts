@@ -30,7 +30,7 @@ export const landing = {
     kicker: "Prologue · La Grande Panique",
     typedLine:
       "“La Première Rune tenait le ciel entier. Quelqu'un l'a laissée paniquer.”",
-    body: "Pendant un âge, la Constellation a tenu le royaume — un treillis de contrats-étoiles écrits par les Premiers Forgeborn. Puis une seule rune est restée sans traitement. La panique s'est propagée. Le ciel s'est défait. Désormais, les anciens forgent de nouveaux apprentis dans les ruines, et l'art des runes doit être réappris depuis ses premiers mots d'éveil.",
+    body: "Pendant un âge, la Constellation a tenu le royaume — un treillis de contrats-étoiles écrits par les Premiers Forgeborn. Puis une seule rune est restée non gérée. La panique s'est propagée. Le ciel s'est défait. Désormais, les anciens forgent de nouveaux apprentis dans les ruines, et l'art des runes doit être réappris depuis ses premiers mots d'éveil.",
     attribution: "— extrait des fragments de la Ledgerstone, a.p. 0001",
   },
   acts: {
@@ -40,20 +40,20 @@ export const landing = {
     act1Kicker: "Acte I · Fondamentaux de Rust · ouvert",
     act1Title: "La Citadelle Rouillée",
     act1Body:
-      "Tu t'éveilles dans les ruines oxydées de l'ancienne capitale de l'art des runes. Ferrisia la Mère-Crabe t'enseigne les mots d'éveil, le lien des noms et la loi de la Lame Inflexible. Rallume le phare, Forgeborn.",
+      "Tu t'éveilles dans les ruines oxydées de l'ancienne capitale de l'art des runes. Ferrisia la Mère-Crabe t'enseigne les mots d'éveil, la liaison des noms et la loi de la Lame Inflexible. Rallume le phare, Forgeborn.",
     act1Cta: "Entrer dans la Citadelle ›",
     act1Reward: "récompense · STROOWARRIOR",
     sealedNote: "territoires scellés — ils s'ouvrent à mesure que la campagne se forge",
-    act2Title: "La Salle des Chemins Fourchus",
+    act2Title: "La Salle des Chemins qui Bifurquent",
     act2Tag: "flux de contrôle · le seigneur des miroirs",
-    act3Title: "Les Cryptes Sans Fin",
+    act3Title: "Les Coffres Sans Fin",
     act3Tag: "bibliothèque std · l'amasseur",
     act4Title: "Le Marais Évanescent",
     act4Tag: "option · some, ou none ?",
-    act5Title: "L'Épreuve des Deux Destins",
+    act5Title: "Le Procès des Deux Destins",
     act5Tag: "result · ok, ou err",
     act6Title: "La Porte de la Constellation",
-    act6Tag: "stellar 101 · les lumens coulent à nouveau",
+    act6Tag: "stellar 101 · les lumens circulent à nouveau",
     act8Title: "Le Ciel Réécrit",
     act8Tag: "protocol 27 · le ciel se reforge",
   },
@@ -61,7 +61,7 @@ export const landing = {
     kicker: "Acte VII · Contrats Soroban · boss",
     titleTop: "L'Antre du",
     titleBottom: "Beholder",
-    body: "Au-delà de la Porte, il attend, dans une forteresse bâtie de chaque erreur jamais traitée. Forge des runes Soroban, déploie-les dans le ciel vivant, et retourne contre le Beholder ses propres contrats corrompus.",
+    body: "Au-delà de la Porte, il attend, dans une forteresse bâtie de chaque erreur jamais gérée. Forge des runes Soroban, déploie-les dans le ciel vivant, et retourne contre le Beholder ses propres contrats corrompus.",
     trophy: "sa carte n'est pas une récompense. c'est un trophée.",
   },
   champions: {
@@ -80,10 +80,10 @@ export const landing = {
   howItWorks: {
     step1Title: "Forge dans le Navigateur",
     step1Copy:
-      "Chaque combat est du vrai code jugé par des épreuves cachées — zéro installation, zéro excuse. Le compilateur est ton allié le plus impitoyable.",
+      "Chaque combat est du vrai code jugé par des épreuves cachées — zéro installation, zéro excuse. Le compilateur est ton allié le plus intransigeant.",
     step2Title: "Avance à Ton Rythme",
     step2Copy:
-      "Les actes se déverrouillent dans l'ordre, les combats se retentent à l'infini — des fondamentaux de Rust jusqu'aux contrats en direct sur le testnet Stellar.",
+      "Les actes se déverrouillent dans l'ordre, les combats se rejouent à l'infini — des fondamentaux de Rust jusqu'aux contrats en direct sur le testnet Stellar.",
     step3Title: "Réclame les Champions",
     step3Copy:
       "Huit cartes peintes pour huit actes. Les runs sans faute rapportent des tirages rares — et les cartes de boss doivent être prises de force.",
@@ -96,6 +96,6 @@ export const landing = {
     skipLink: "ouvre la Forge",
     skipSuffix: ", sans compte requis.",
     taglineTutorial: "the ultimate stellar supreme tutorial",
-    taglineMotto: "rien n'est laissé sans traitement",
+    taglineMotto: "aucune erreur laissée sans réponse",
   },
 };

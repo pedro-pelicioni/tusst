@@ -54,7 +54,7 @@ El código inicial declara \`score\` como inmutable y luego intenta cambiarlo �
 
 1. Haz que \`score\` sea **mutable**.
 2. Conserva la reasignación a \`100\`.
-3. Imprime la puntuación final con \`println!("score: {}", score);\`
+3. Imprime el puntaje final con \`println!("score: {}", score);\`
 
 Salida esperada:
 
@@ -357,7 +357,7 @@ for n in 1..=6 {
 
 ### Tu misión
 
-Recorre los diez espejos del Overlord:
+Recorre los diez espejos del Salón:
 
 1. \`for n in 1..=10\`
 2. **Si** \`n\` es divisible por 3 (\`n % 3 == 0\`), imprime \`mirror\`.
@@ -383,7 +383,7 @@ mirror
   "rust-standard-library-1": {
     instructions: `## Fundamentos de Vec
 
-Un \`Vec\` es una lista que crece — el zurrón del reino:
+Un \`Vec\` es una lista que crece — la mochila del reino:
 
 \`\`\`rust
 let mut items = vec!["torch", "rope"];  // crear con contenido
@@ -418,7 +418,7 @@ let total: i32 = coins.iter().sum();
 
 ### Tu misión
 
-El zurrón contiene \`coins = vec![5, 10, 25]\`.
+La mochila contiene \`coins = vec![5, 10, 25]\`.
 
 1. Súmalas con \`.iter().sum()\` en \`total: i32\`.
 2. Imprime \`total: {}\`.
@@ -434,7 +434,7 @@ total: 40
   "rust-standard-library-3": {
     instructions: `## Indexación segura con .get
 
-\`vault[5]\` sobre un Vec de 2 elementos **hace colapsar** el programa. La pregunta cortés es \`.get(5)\` — devuelve un \`Option\`: \`Some(&item)\` si la casilla existe, \`None\` si no.
+\`vault[5]\` sobre un Vec de 2 elementos **hace colapsar** el programa. La pregunta cortés es \`.get(5)\` — devuelve un \`Option\`: \`Some(&item)\` si la ranura existe, \`None\` si no.
 
 \`\`\`rust
 let tool = vault.get(5).unwrap_or(&"nothing");
@@ -444,7 +444,7 @@ let tool = vault.get(5).unwrap_or(&"nothing");
 
 ### Tu misión
 
-La bóveda tiene 2 herramientas; pregunta por la casilla \`5\` de todos modos:
+La bóveda tiene 2 herramientas; pregunta por la ranura \`5\` de todos modos:
 
 1. \`let tool = vault.get(5).unwrap_or(&"nothing");\`
 2. Imprime \`found: {}\`.
@@ -523,7 +523,7 @@ let shelf = vec![1, 2, 3, 4, 5];
 let window = &shelf[1..4];   // → [2, 3, 4]
 \`\`\`
 
-El rango incluye su inicio y **excluye** su final (\`1..4\` → casillas 1, 2, 3). Imprime un slice con el marcador de depuración \`{:?}\`.
+El rango incluye su inicio y **excluye** su final (\`1..4\` → ranuras 1, 2, 3). Imprime un slice con el marcador de depuración \`{:?}\`.
 
 ### Tu misión
 
@@ -681,7 +681,7 @@ granted: 42
   "mastering-result-3": {
     instructions: `## El operador ?
 
-Manejar cada \`Result\` donde ocurre entierra la lógica. El signo \`?\` **propaga**: con \`Ok\` desenvuelve y continúa; con \`Err\` devuelve el error a *tu* invocador de inmediato.
+Manejar cada \`Result\` donde ocurre entierra la lógica. El signo \`?\` **propaga**: con \`Ok\` desenvuelve y continúa; con \`Err\` devuelve el error de inmediato a *quien te llamó*.
 
 \`\`\`rust
 fn double_first() -> Result<i32, String> {
@@ -719,7 +719,7 @@ Una cuenta debe mantener un saldo mínimo (**base reserve**) de **1 XLM** para e
 
 ### Tu misión
 
-Completa la carta fundacional del fuerte estelar — rellena los tres valores.
+Completa la carta fundacional de la fortaleza estelar — rellena los tres valores.
 
 Salida esperada:
 
@@ -730,14 +730,14 @@ star-keep chartered ✓
   },
 
   "stellar-101-2": {
-    instructions: `## Lumens y comisiones
+    instructions: `## Lumens y tarifas
 
 El activo nativo es el **lumen (XLM)**, y su unidad más pequeña es el **stroop**:
 
 - \`1 XLM = 10_000_000 stroops\` (diez millones)
-- Cada transacción paga una pequeña comisión — la comisión base es de **100 stroops** (0.00001 XLM)
+- Cada transacción paga una pequeña tarifa — la tarifa base es de **100 stroops** (0.00001 XLM)
 
-La comisión no es una ganancia — es un peaje antispam que mantiene la red rápida para todos.
+La tarifa no es una ganancia — es un peaje antispam que mantiene la red rápida para todos.
 
 ### Tu misión
 
