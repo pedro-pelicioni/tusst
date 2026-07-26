@@ -1130,7 +1130,8 @@ alive: true
 Player { name: "Ferrisia", hp: 100 }
 \`\`\`
 `,
-    starterCode: `#[derive(Debug)]
+    starterCode: `// add the Debug derive here
+
 struct Player {
     name: String,
     hp: i32,

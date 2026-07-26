@@ -23,6 +23,8 @@ export const lesson = {
   nextSkirmish: "Combat suivant ›",
   backToAct: "Retour à l'acte",
   exitLesson: "Quitter la leçon",
+  previousStep: "Étape précédente",
+  nextStep: "Étape suivante",
   stepProgress: "{current}/{total}",
   continueLabel: "Continuer",
   retry: "Réessayer",

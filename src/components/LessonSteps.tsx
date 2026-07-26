@@ -15,8 +15,43 @@ import type { LessonStep } from "@/content/steps";
 
 const MASCOT_CELEBRATE = "/mascot/mascot-celebrate.png";
 const MASCOT_ENCOURAGE = "/mascot/mascot-encourage.png";
+// Carved rune arrow; the forward button is the same sigil mirrored.
+const RUNE_ARROW = "/rune-arrow.png";
 
 type Feedback = { correct: boolean; text: string } | null;
+
+// Step back / forward. Disabled hides the button (keeping its slot, so the
+// progress bar never jumps): forward only ever shows on ground already covered
+// after a rewind, so it can't skip a step the student hasn't cleared.
+function ArrowButton({
+  direction,
+  label,
+  disabled,
+  onClick,
+}: {
+  direction: "back" | "forward";
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={label}
+      title={label}
+      className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-bg-elev transition hover:border-accent/40 hover:bg-accent/[0.07] disabled:invisible"
+    >
+      <img
+        src={RUNE_ARROW}
+        alt=""
+        className={`h-[22px] w-[22px] object-contain ${direction === "forward" ? "-scale-x-100" : ""}`}
+        style={{ filter: "drop-shadow(0 0 6px rgba(143,123,255,0.45))" }}
+      />
+    </button>
+  );
+}
 
 const stepsDoneKey = (slug: string) => `tusst:steps-done:${slug}`;
 
@@ -72,6 +107,8 @@ export function LessonSteps({
 }) {
   const m = useMessages();
   const [index, setIndex] = useState(0);
+  // Furthest step reached — the ceiling for the forward arrow after a rewind.
+  const [maxIndex, setMaxIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [done, setDone] = useState(false);
@@ -101,8 +138,25 @@ export function LessonSteps({
       } catch {}
     } else {
       setIndex((i) => i + 1);
+      setMaxIndex((mx) => Math.max(mx, index + 1));
     }
   }, [index, total, lessonSlug]);
+
+  // Rewind / replay. Both drop any pending answer so the step starts clean.
+  // The bounds live inside the updater, not in a guard: clicks fired in the
+  // same tick all see the same stale `index`, so a guard would let a mashed
+  // forward arrow walk past `maxIndex` onto a step that was never cleared.
+  const goBack = useCallback(() => {
+    setSelected(null);
+    setFeedback(null);
+    setIndex((i) => Math.max(0, i - 1));
+  }, []);
+
+  const goForward = useCallback(() => {
+    setSelected(null);
+    setFeedback(null);
+    setIndex((i) => Math.min(i + 1, maxIndex));
+  }, [maxIndex]);
 
   // Enter advances theory steps / confirmed feedback.
   useEffect(() => {
@@ -190,15 +244,21 @@ export function LessonSteps({
 
   return (
     <div className="mx-auto flex min-h-[calc(100dvh-120px)] max-w-3xl flex-col px-5 py-6">
-      {/* ─── top bar: exit + progress ─── */}
-      <div className="flex items-center gap-4">
+      {/* ─── top bar: exit + step nav + progress ─── */}
+      <div className="flex items-center gap-3">
         <Link
           href={trackHref}
           aria-label={m.lesson.exitLesson}
-          className="text-lg leading-none text-muted transition hover:text-fg"
+          className="shrink-0 text-lg leading-none text-muted transition hover:text-fg"
         >
           ✕
         </Link>
+        <ArrowButton
+          direction="back"
+          label={m.lesson.previousStep}
+          disabled={index === 0}
+          onClick={goBack}
+        />
         <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/[0.06]">
           <div
             className="h-full rounded-full transition-[width] duration-500"
@@ -209,7 +269,13 @@ export function LessonSteps({
             }}
           />
         </div>
-        <span className="font-mono text-[11px] text-muted">
+        <ArrowButton
+          direction="forward"
+          label={m.lesson.nextStep}
+          disabled={index >= maxIndex}
+          onClick={goForward}
+        />
+        <span className="shrink-0 font-mono text-[11px] text-muted">
           {fmt(m.lesson.stepProgress, {
             current: Math.min(index + 1, total),
             total,
