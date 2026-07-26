@@ -1,0 +1,8 @@
+/target/
+
+# Deliberately NOT committed: the lockfile is generated fresh inside the Docker
+# build (see runner-soroban/Dockerfile, which resolves it and then downgrades
+# ed25519-dalek to 2.2.0). Anyone running cargo or `stellar contract build` in
+# this directory locally produces one — ignoring it keeps that from being
+# committed by accident and silently pinning the image to a stale graph.
+/Cargo.lock

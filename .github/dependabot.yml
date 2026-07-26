@@ -1,9 +1,26 @@
 version: 2
+
+# Every ecosystem groups its minor+patch updates into a single PR. Ungrouped,
+# this repo produced ~13 PRs a week — more than anyone merges, so most were
+# closed unmerged and the branches piled up. Majors deliberately stay OUT of
+# the groups: they arrive as individual PRs so each can be reviewed, and
+# reverted, on its own.
+#
+# Grouped minor/patch PRs auto-merge once CI is green — see
+# .github/workflows/dependabot-auto-merge.yml. CODEOWNERS still holds: anything
+# touching runner/, runner-soroban/ or .github/workflows/ waits for a human.
+
 updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
 
   # Workspace with two members (tusst-runner, tusst-syntest) — one entry
   # covers both, Dependabot resolves against the workspace Cargo.lock.
@@ -11,6 +28,12 @@ updates:
     directory: "/runner"
     schedule:
       interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 3
+    groups:
+      cargo-runner-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
 
   # No Cargo.lock committed here on purpose (it's generated fresh inside the
   # Docker build — see runner-soroban/Dockerfile). Dependabot still resolves
@@ -21,11 +44,33 @@ updates:
     directory: "/runner-soroban/warm"
     schedule:
       interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 3
+    groups:
+      soroban-warm-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      # These exact pins exist to keep the OpenZeppelin Stellar suite linkable
+      # — see the comment block at the top of runner-soroban/warm/Cargo.toml.
+      # Bumping soroban-sdk without the OZ crates following mixes two sdk lines
+      # in one contract and fails to link (duplicate panic handler), so a major
+      # bump here is never independently mergeable. This set moves manually,
+      # together, when OZ moves. Dependabot proposed exactly that in PR #31
+      # (=26.1.0 -> =27.0.2) and CI had no way to catch it.
+      - dependency-name: "soroban-sdk"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "stellar-*"
+        update-types: ["version-update:semver-major"]
 
-  # Keeps the SHA-pinned actions in ci.yml/deploy.yml/cargo-audit.yml from
-  # going stale forever — pinning by SHA means nothing else would ever
-  # surface that a newer release exists.
+  # Keeps the SHA-pinned actions in ci.yml/deploy.yml/rust.yml from going stale
+  # forever — pinning by SHA means nothing else would ever surface that a newer
+  # release exists. One grouped PR, since they're reviewed together anyway.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+    groups:
+      github-actions:
+        patterns: ["*"]

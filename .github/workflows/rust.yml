@@ -1,0 +1,136 @@
+name: Rust
+
+# Compiles, tests and audits the sandbox crates (runner/, runner-soroban/).
+#
+# CodeQL's default setup doesn't cover Rust, so these crates would otherwise
+# have no dependency-vulnerability scanner at all. The audit jobs close that
+# gap using the RustSec Advisory Database.
+#
+# The compile jobs exist because nothing in CI ever built Rust: ci.yml is
+# npm-only, and `cargo audit` reads the dependency graph without invoking rustc.
+# That made Cargo bumps show green without anyone knowing whether they still
+# build — a major syn bump would have sailed straight through.
+#
+# Compiling is necessary but not sufficient for runner-soroban: the warm
+# contract is deliberately trivial, so a wrong pin can still build. See the
+# soroban-sdk major guard in build-runner-soroban for the part that catches it.
+#
+# Safe to run on fork PRs — read-only, no secrets, no production access.
+#
+# `pull_request` only (no `push`): branch protection means nothing reaches main
+# without a PR, so the push trigger just ran every branch twice.
+
+on:
+  pull_request:
+    paths: ["runner/**", "runner-soroban/**"]
+  schedule:
+    # Weekly, independent of any code change — the point is to catch newly
+    # published advisories against dependencies that have been pinned and
+    # untouched for a while.
+    - cron: "0 6 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rust-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-runner:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
+      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        with:
+          workspaces: runner
+      # --locked: this workspace commits Cargo.lock, so a bump that edits
+      # Cargo.toml without the lock should fail loudly rather than quietly
+      # resolve to something else.
+      - run: cargo test --workspace --locked
+        working-directory: runner
+
+  build-runner-soroban:
+    runs-on: ubuntu-latest
+    # Mirrors the warm-workspace build in runner-soroban/Dockerfile step for
+    # step. Nothing else in CI builds that image, so this is the only place a
+    # soroban-sdk / OpenZeppelin pin mismatch can surface before deploy.
+    #
+    # It has to be `stellar contract build`, not plain cargo: the CLI targets
+    # wasm32v1-none (soroban-sdk's build.rs hard-refuses wasm32-unknown-unknown
+    # on Rust 1.82+) and applies the Soroban build settings that the sdk's
+    # spec-shaking feature requires. Keep STELLAR_CLI_VERSION in sync with the
+    # ARG of the same name in runner-soroban/Dockerfile.
+    env:
+      STELLAR_CLI_VERSION: "27.0.0"
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
+        with:
+          targets: wasm32v1-none
+      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        with:
+          workspaces: runner-soroban/warm
+
+      - name: Install the pinned stellar-cli
+        run: |
+          curl -fsSL "https://github.com/stellar/stellar-cli/releases/download/v${STELLAR_CLI_VERSION}/stellar-cli-${STELLAR_CLI_VERSION}-x86_64-unknown-linux-gnu.tar.gz" \
+            | tar -xz -C /usr/local/bin stellar
+          stellar --version
+
+      # No committed Cargo.lock here on purpose — generated fresh, exactly as
+      # the Dockerfile does. The ed25519-dalek downgrade is load-bearing: 3.x
+      # breaks soroban-env-host's testutils through an open ">=2.0.0" req
+      # upstream.
+      - name: Resolve the lockfile the way the image does
+        working-directory: runner-soroban/warm
+        run: |
+          cargo generate-lockfile
+          cargo update -p ed25519-dalek@3.0.0 --precise 2.2.0
+
+      # The warm contract is a bare `ping` that never links the OZ crates, so a
+      # bad pin still COMPILES — building alone would not have caught PR #31
+      # (soroban-sdk =26.1.0 -> =27.0.2 built fine and stayed green). What that
+      # bump actually did was pull a third soroban-sdk major into the image:
+      # 25.3.2 + 26.1.1 + 27.0.2 instead of 25.3.2 + 26.1.0.
+      #
+      # That is the failure the Cargo.toml comment warns about — a user contract
+      # combining the OZ crates with the newer sdk gets two sdk lines linked
+      # together and fails on a duplicate panic handler. Assert the count of
+      # distinct majors instead of exact versions, so ordinary patch drift in
+      # the transitive 25.x line doesn't trip it.
+      - name: Guard — the warm image must carry exactly two soroban-sdk majors
+        working-directory: runner-soroban/warm
+        run: |
+          majors="$(grep -A1 '^name = "soroban-sdk"$' Cargo.lock \
+                    | sed -n 's/^version = "\([0-9]*\)\..*/\1/p' | sort -u)"
+          count="$(printf '%s\n' "$majors" | wc -l | tr -d ' ')"
+          echo "soroban-sdk majors resolved: $(printf '%s' "$majors" | tr '\n' ' ')"
+          if [ "$count" -ne 2 ]; then
+            echo "::error::Expected exactly 2 soroban-sdk majors (25 and 26), got $count. A pin in Cargo.toml has drifted out of step with the OpenZeppelin suite — see the comment block at the top of runner-soroban/warm/Cargo.toml before changing this."
+            exit 1
+          fi
+
+      - run: stellar contract build
+        working-directory: runner-soroban/warm
+
+  audit-runner:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
+      - run: cargo install cargo-audit --locked
+      - run: cargo audit
+        working-directory: runner
+
+  audit-runner-soroban:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
+      - run: cargo install cargo-audit --locked
+      - name: Audit (no committed lockfile here — generate one fresh)
+        run: cargo generate-lockfile && cargo audit
+        working-directory: runner-soroban/warm
