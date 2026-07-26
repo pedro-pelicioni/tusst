@@ -25,7 +25,7 @@ const display = Cinzel({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tusst.dev"),
+  metadataBase: new URL("https://tusst.xyz"),
   title: "TUSST — The Ultimate Stellar Supreme Tutorial",
   description:
     "Hands-on, gamified coding challenges. Master Rust first, then ship real Soroban smart contracts on Stellar. No setup — just code.",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     title: "TUSST — The Ultimate Stellar Supreme Tutorial",
     description:
       "Hands-on, gamified coding challenges. Master Rust first, then ship real Soroban smart contracts on Stellar. No setup — just code.",
-    url: "https://tusst.dev",
+    url: "https://tusst.xyz",
     siteName: "TUSST",
     type: "website",
     locale: "en_US",
