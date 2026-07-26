@@ -114,9 +114,19 @@ RUN rustup target add wasm32v1-none --toolchain nightly-2025-08-07 \
 # audit runs redirect to these via [patch.crates-io] (audit-patch.toml is
 # appended to the project manifest by the entrypoint in audit mode only —
 # build/test always compile the pristine registry crates on stable).
+#
+# The versions are read out of the generated Cargo.lock rather than hardcoded.
+# Only the 26 line is pinned exactly (soroban-sdk = "=26.1.0"); the 25 line is
+# transitive through sep-41-token / blend-contract-sdk on a caret range, so it
+# floats. It floated 25.3.1 -> 25.3.2 and the hardcoded list silently stopped
+# matching — `cp: cannot stat '.../soroban-sdk-macros-25.3.1'` aborted the
+# image build. Nothing rebuilt the image for a while, so it went unnoticed.
 RUN set -eux; \
     mkdir -p /opt/vendor; \
-    for v in 25.3.1 26.1.0; do \
+    versions="$(grep -A1 '^name = "soroban-sdk-macros"$' Cargo.lock \
+                | sed -n 's/^version = "\(.*\)"/\1/p')"; \
+    test -n "$versions"; \
+    for v in $versions; do \
       short="soroban-sdk-macros-${v%%.*}"; \
       cp -R /opt/cargo/registry/src/index.crates.io-*/soroban-sdk-macros-${v} /opt/vendor/${short}; \
       rm -f /opt/vendor/${short}/.cargo-checksum.json; \
