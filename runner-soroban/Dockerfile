@@ -48,8 +48,20 @@ WORKDIR /opt/warm
 # ed25519-dalek 3.x breaks soroban-env-host's testutils (open ">=2.0.0" req
 # upstream); pin 2.2.0 in the lockfile, which ships in the image and governs
 # every offline user build.
+#
+# Conditional, because `cargo update -p <pkg>@<ver>` is a hard error when that
+# exact version isn't in the graph: soroban-sdk 26.1.1 already resolves
+# ed25519-dalek to 2.2.0 on its own, so the unconditional form aborted the
+# image build on a routine patch bump. Assert the outcome instead of assuming
+# the command applies.
 RUN cargo generate-lockfile \
-    && cargo update -p ed25519-dalek@3.0.0 --precise 2.2.0 \
+    && if cargo pkgid ed25519-dalek@3.0.0 >/dev/null 2>&1; then \
+         cargo update -p ed25519-dalek@3.0.0 --precise 2.2.0; \
+       fi \
+    && if grep -A1 '^name = "ed25519-dalek"$' Cargo.lock | grep -q '^version = "3\.'; then \
+         echo "ed25519-dalek 3.x survived the pin — it breaks soroban-env-host testutils"; \
+         exit 1; \
+       fi \
     && cargo fetch
 RUN stellar contract build
 RUN cargo test --no-run && cargo test
@@ -102,9 +114,19 @@ RUN rustup target add wasm32v1-none --toolchain nightly-2025-08-07 \
 # audit runs redirect to these via [patch.crates-io] (audit-patch.toml is
 # appended to the project manifest by the entrypoint in audit mode only —
 # build/test always compile the pristine registry crates on stable).
+#
+# The versions are read out of the generated Cargo.lock rather than hardcoded.
+# Only the 26 line is pinned exactly (soroban-sdk = "=26.1.0"); the 25 line is
+# transitive through sep-41-token / blend-contract-sdk on a caret range, so it
+# floats. It floated 25.3.1 -> 25.3.2 and the hardcoded list silently stopped
+# matching — `cp: cannot stat '.../soroban-sdk-macros-25.3.1'` aborted the
+# image build. Nothing rebuilt the image for a while, so it went unnoticed.
 RUN set -eux; \
     mkdir -p /opt/vendor; \
-    for v in 25.3.1 26.1.0; do \
+    versions="$(grep -A1 '^name = "soroban-sdk-macros"$' Cargo.lock \
+                | sed -n 's/^version = "\(.*\)"/\1/p')"; \
+    test -n "$versions"; \
+    for v in $versions; do \
       short="soroban-sdk-macros-${v%%.*}"; \
       cp -R /opt/cargo/registry/src/index.crates.io-*/soroban-sdk-macros-${v} /opt/vendor/${short}; \
       rm -f /opt/vendor/${short}/.cargo-checksum.json; \
