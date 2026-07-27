@@ -114,8 +114,14 @@ jobs:
 
       - name: Trigger the remote deploy (forced command ignores what we send)
         run: |
+          # ServerAlive*: the deploy streams a log that can go quiet for a long
+          # stretch while the Soroban image builds. Keepalives stop an idle
+          # NAT/firewall from silently dropping the TCP connection. The build
+          # itself is detached host-side (see deploy/vps-deploy.sh), so a drop
+          # is no longer fatal — this just keeps us watching.
           ssh -i /tmp/tusst_ci_deploy \
               -o StrictHostKeyChecking=yes -o BatchMode=yes -o ConnectTimeout=15 \
+              -o ServerAliveInterval=30 -o ServerAliveCountMax=10 \
               "${{ vars.VPS_SSH_USER }}@${{ vars.VPS_HOST }}" \
               "deploy"
 
