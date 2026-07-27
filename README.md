@@ -12,7 +12,7 @@ forge real Soroban contracts that compile, run, and deploy to the Stellar testne
 in the browser.
 
 [![CI](https://github.com/pedro-pelicioni/tusst/actions/workflows/ci.yml/badge.svg)](https://github.com/pedro-pelicioni/tusst/actions/workflows/ci.yml)
-[![Cargo Audit](https://github.com/pedro-pelicioni/tusst/actions/workflows/cargo-audit.yml/badge.svg)](https://github.com/pedro-pelicioni/tusst/actions/workflows/cargo-audit.yml)
+[![Rust](https://github.com/pedro-pelicioni/tusst/actions/workflows/rust.yml/badge.svg)](https://github.com/pedro-pelicioni/tusst/actions/workflows/rust.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-8f7bff)](LICENSE)
 
 ### [▶ Play it live at tusst.xyz](https://tusst.xyz)
