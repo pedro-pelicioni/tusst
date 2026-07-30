@@ -26,7 +26,7 @@ crate-type = ["cdylib"]
 doctest = false
 
 [dependencies]
-soroban-sdk = "=26.1.0"
+soroban-sdk = "=26.1.1"
 # OpenZeppelin Stellar suite — matches the Contract Wizard output
 stellar-access = "=0.7.2"
 stellar-accounts = "=0.7.2"
@@ -36,7 +36,7 @@ stellar-governance = "=0.7.2"
 stellar-macros = "=0.7.2"
 stellar-tokens = "=0.7.2"
 # Common ecosystem crates — pre-cached offline, but they target soroban-sdk
-# 25: to \`use\` any of them, pin soroban-sdk = "=25.3.1" above and remove the
+# 25: to \`use\` any of them, pin soroban-sdk = "=25.3.2" above and remove the
 # OZ crates (which need sdk 26). Mixing the two sdk lines in one contract
 # fails to link (duplicate panic handler).
 sep-41-token = "=1.4.0"
@@ -44,7 +44,7 @@ soroban-fixed-point-math = "=1.5.0"
 blend-contract-sdk = "=2.25.0"
 
 [dev-dependencies]
-soroban-sdk = { version = "=26.1.0", features = ["testutils"] }
+soroban-sdk = { version = "=26.1.1", features = ["testutils"] }
 sep-41-token = { version = "=1.4.0", features = ["testutils"] }
 blend-contract-sdk = { version = "=2.25.0", features = ["testutils"] }
 

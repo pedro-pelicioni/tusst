@@ -43,5 +43,11 @@ jobs:
       - run: npm install -g npm@11
 
       - run: npm ci --no-audit --no-fund
+
+      # Runs before lint/build (and needs no node_modules) so a Dependabot bump
+      # to runner-soroban/warm that leaves the IDE template behind fails fast
+      # instead of auto-merging green and breaking Forge in production.
+      - run: npm run check:forge-pins
+
       - run: npm run lint
       - run: npm run build

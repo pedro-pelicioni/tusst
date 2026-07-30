@@ -116,7 +116,7 @@ RUN rustup target add wasm32v1-none --toolchain nightly-2025-08-07 \
 # build/test always compile the pristine registry crates on stable).
 #
 # The versions are read out of the generated Cargo.lock rather than hardcoded.
-# Only the 26 line is pinned exactly (soroban-sdk = "=26.1.0"); the 25 line is
+# Only the 26 line is pinned exactly (soroban-sdk = "=26.1.1"); the 25 line is
 # transitive through sep-41-token / blend-contract-sdk on a caret range, so it
 # floats. It floated 25.3.1 -> 25.3.2 and the hardcoded list silently stopped
 # matching — `cp: cannot stat '.../soroban-sdk-macros-25.3.1'` aborted the

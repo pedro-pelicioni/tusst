@@ -139,7 +139,7 @@ answers hidden in comments don't count.
 
 **The warm-cache trick** (what makes OpenZeppelin pastes "just work"):
 `runner-soroban/warm/Cargo.toml` pins the exact crate set the OZ Contract
-Wizard emits (`soroban-sdk =26.1.0`, the `stellar-*` OZ suite `=0.7.2`,
+Wizard emits (`soroban-sdk =26.1.1`, the `stellar-*` OZ suite `=0.7.2`,
 plus `sep-41-token`, `soroban-fixed-point-math`). At image build time the
 whole set is fetched and pre-compiled for both the wasm release profile and
 the native test profile. At runtime the container swaps the user's sources

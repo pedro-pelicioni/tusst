@@ -52,8 +52,41 @@ export function listProjects(): ForgeProjectMeta[] {
   );
 }
 
+// The sandbox resolves crates fully offline, so the only soroban-sdk versions
+// a project can build against are the ones baked into the image
+// (runner-soroban/warm/Cargo.toml). A project saved before an image bump keeps
+// the superseded pin forever and every run dies in resolution with
+// "failed to select a version for `soroban-sdk`" — so heal the pin on load.
+// Keyed on the exact stale version: a user who deliberately moved to another
+// line is left alone, and so is every non-soroban-sdk dependency.
+const STALE_SDK_PINS: Readonly<Record<string, string>> = {
+  "26.1.0": "26.1.1",
+  "25.3.1": "25.3.2",
+};
+
+function healSdkPin(files: SorobanFileMap): SorobanFileMap {
+  const manifest = files["Cargo.toml"];
+  if (typeof manifest !== "string") return files;
+  // Only rewrites exact-pin `soroban-sdk` requirements at the start of a line,
+  // covering both `soroban-sdk = "=x.y.z"` and the dev-dependency table form.
+  // Commented-out guidance lines don't match, so they stay as authored.
+  const healed = manifest.replace(
+    /^(\s*soroban-sdk\s*=[^\n]*?"=)(\d+\.\d+\.\d+)(")/gm,
+    (whole, head: string, version: string, tail: string) =>
+      STALE_SDK_PINS[version] ? `${head}${STALE_SDK_PINS[version]}${tail}` : whole,
+  );
+  return healed === manifest ? files : { ...files, "Cargo.toml": healed };
+}
+
 export function loadProject(id: string): ForgeProjectData | null {
-  return read<ForgeProjectData>(projectKey(id));
+  const data = read<ForgeProjectData>(projectKey(id));
+  if (!data?.files) return data;
+  const files = healSdkPin(data.files);
+  if (files === data.files) return data;
+  // Persist the heal so the rewrite happens once, not on every open.
+  const healed = { ...data, files };
+  write(projectKey(id), healed);
+  return healed;
 }
 
 export function createProject(
