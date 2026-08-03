@@ -24,7 +24,7 @@
     "@monaco-editor/react": "^4.7.0",
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
-    "@stellar/stellar-sdk": "^16.1.0",
+    "@stellar/stellar-sdk": "^16.2.0",
     "@vercel/analytics": "^2.0.1",
     "next": "16.2.12",
     "next-auth": "^5.0.0-beta.32",
