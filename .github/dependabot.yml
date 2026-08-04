@@ -31,6 +31,15 @@ updates:
       - dependency-name: "eslint"
         update-types: ["version-update:semver-major"]
 
+      # @types/node's major tracks the Node runtime, and ours is 22 everywhere
+      # — ci.yml, deploy.yml and every dev machine. A newer major is not an
+      # upgrade here, it's a mismatch: it types the project against APIs the
+      # runtime doesn't have, and tsc goes green anyway (verified on 26.1.2),
+      # so nothing fails until runtime. It moves when the Node version in the
+      # workflows moves, not before — PR #55 proposed 22 -> 26 and was closed.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
   # Workspace with two members (tusst-runner, tusst-syntest) — one entry
   # covers both, Dependabot resolves against the workspace Cargo.lock.
   - package-ecosystem: "cargo"
