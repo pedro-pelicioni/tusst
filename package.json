@@ -26,7 +26,7 @@
     "@prisma/client": "^7.9.1",
     "@stellar/stellar-sdk": "^16.2.0",
     "@vercel/analytics": "^2.0.1",
-    "next": "16.2.12",
+    "next": "16.3.0",
     "next-auth": "^5.0.0-beta.32",
     "nodemailer": "^9.0.1",
     "pg": "^8.22.0",
@@ -44,7 +44,7 @@
     "@types/react-dom": "^19",
     "dotenv": "^17.4.2",
     "eslint": "^9",
-    "eslint-config-next": "16.2.12",
+    "eslint-config-next": "16.3.0",
     "prisma": "^7.9.1",
     "tailwindcss": "^4",
     "tsx": "^4.22.4",
@@ -56,7 +56,11 @@
     "dompurify": "^3.4.12",
     "uuid": "^14.0.1",
     "esbuild": "^0.28.1",
-    "postcss": "^8.5.10",
-    "@hono/node-server": "^1.19.13"
+    "postcss": "^8.5.23",
+    "@hono/node-server": "^1.19.13",
+    "axios": "^1.18.0",
+    "fast-uri": "^3.1.5",
+    "brace-expansion@1": "^1.1.16",
+    "brace-expansion@5": "^5.0.7"
   }
 }

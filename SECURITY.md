@@ -35,3 +35,28 @@ that dependency specifically, it's worth flagging too.
 - Missing security headers or best-practice suggestions with no
   demonstrated impact — feel free to open those as a regular issue instead.
 - Automated scanner output without manual verification that it applies here.
+
+## Known advisories we carry on purpose
+
+**`elliptic` <= 6.6.1 — GHSA-848j-6mx2-7j84 (low).** No fix exists: 6.6.1 is
+both the latest published version and the vulnerable one, so there is nothing
+to upgrade to. `npm audit` reports it 23 times, which is one advisory counted
+once per package in the chain, not 23 problems.
+
+It is unreachable in this app. `elliptic` is pulled in only by
+`@creit.tech/stellar-wallets-kit`, through two wallet connectors — HOT/NEAR
+(`@hot-wallet/sdk` -> `@near-js/crypto` -> `secp256k1`) and Trezor
+(`@trezor/connect`). We register neither: `src/lib/stellar/wallet.ts` inits the
+kit with `defaultModules()`, whose 12 modules are Albedo, Freighter, Fordefi,
+Rabet, xBull, Lobstr, Hana, Klever, OneKey, Bitget, CactusLink and Dcent. The
+kit is also imported lazily, so nothing outside that set is ever loaded. Grep
+the client bundle after `npm run build` and `elliptic`, `@trezor` and
+`near-api-js` are all absent while the kit itself is present — the code is not
+merely unused, it is never shipped.
+
+Re-check this if the kit is ever switched to explicit modules that include HOT
+or Trezor, or if upstream adds one of them to `defaultModules()`.
+
+`npm audit` suggests "fixing" it by moving `@creit.tech/stellar-wallets-kit`
+from 2.5.0 to 1.5.0. That is a major *downgrade* of our wallet layer to drop a
+low-severity advisory in code we don't ship — do not take it.
