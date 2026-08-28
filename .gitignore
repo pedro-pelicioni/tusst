@@ -44,3 +44,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 INFRA-RUNNER.md
+
+# landing art masters (regenerable via Higgsfield; see scripts/landing-assets.mjs)
+art-src/

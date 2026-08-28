@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/sky-shattered.png",
+        url: "/landing/og.jpg",
         width: 1200,
         height: 630,
         alt: "TUSST — forge your path from Rust to Stellar",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     title: "TUSST — The Ultimate Stellar Supreme Tutorial",
     description:
       "Hands-on, gamified coding challenges. Master Rust first, then ship real Soroban smart contracts on Stellar. No setup — just code.",
-    images: ["/sky-shattered.png"],
+    images: ["/landing/og.jpg"],
   },
   robots: {
     index: true,

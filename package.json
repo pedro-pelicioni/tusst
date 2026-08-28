@@ -16,7 +16,8 @@
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset",
     "runner:build": "docker build -t tusst-runner:latest runner",
-    "runner:soroban:build": "docker build -t tusst-soroban-runner:latest runner-soroban"
+    "runner:soroban:build": "docker build -t tusst-soroban-runner:latest runner-soroban",
+    "assets:landing": "node scripts/landing-assets.mjs"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.3",
@@ -46,6 +47,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.2",
     "prisma": "^7.9.1",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4",
     "tsx": "^4.23.12",
     "typescript": "^5"

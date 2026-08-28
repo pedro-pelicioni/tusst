@@ -1,0 +1,257 @@
+/* ════════════════════════════════════════════════════════════════════
+   LANDING — full-viewport illustrated scenes. Namespace `ld-`.
+   Imported only by src/app/page.tsx; everything here is scoped under
+   #landing so it cannot leak into the app chrome.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Reveal gate ─────────────────────────────────────────────────────
+   A synchronous inline <script> (JsGate) stamps `data-js` on #landing
+   during HTML parse, before first paint. Only then do reveals start
+   hidden — without JS the content is simply visible (fail-safe), and
+   there is no post-hydration flash because the gate never waits for
+   React. The orchestrator only ever toggles the `is-revealed` class. */
+#landing[data-js] [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#landing[data-js] [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* stagger steps for siblings revealed together */
+#landing[data-js] [data-reveal="2"] { transition-delay: 0.12s; }
+#landing[data-js] [data-reveal="3"] { transition-delay: 0.24s; }
+#landing[data-js] [data-reveal="4"] { transition-delay: 0.36s; }
+#landing[data-js] [data-reveal="5"] { transition-delay: 0.48s; }
+
+/* ── Keyframes (transform/opacity only — cheap to composite) ──────── */
+
+@keyframes ld-rise {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  6% { opacity: var(--mote-peak, 0.9); }
+  85% { opacity: var(--mote-peak, 0.9); }
+  100% { transform: translate3d(0, -112vh, 0); opacity: 0; }
+}
+
+@keyframes ld-sway {
+  from { transform: translateX(calc(var(--sway, 16px) * -1)); }
+  to { transform: translateX(var(--sway, 16px)); }
+}
+
+@keyframes ld-flicker {
+  0%, 100% { opacity: 0.85; }
+  8% { opacity: 0.62; }
+  12% { opacity: 0.9; }
+  34% { opacity: 0.7; }
+  41% { opacity: 1; }
+  67% { opacity: 0.66; }
+  72% { opacity: 0.92; }
+}
+
+@keyframes ld-ray-pulse {
+  0%, 100% { opacity: 0.22; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes ld-flip-in {
+  from { transform: perspective(1400px) rotateY(70deg) scale(0.94); opacity: 0.2; }
+  to { transform: perspective(1400px) rotateY(0deg) scale(1); opacity: 1; }
+}
+
+@keyframes ld-float {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-11px) rotate(var(--tilt, 0deg)); }
+}
+
+@keyframes ld-glow {
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(143, 123, 255, 0.55)); }
+  50% { filter: drop-shadow(0 0 26px rgba(143, 123, 255, 0.95)); }
+}
+
+@keyframes ld-hint-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50% { transform: translateY(7px); opacity: 1; }
+}
+
+/* animation utility classes (ld- prefixed so the reduced-motion block
+   below catches every one of them) */
+.ld-glow { animation: ld-glow 3.4s ease-in-out infinite; }
+.ld-float { animation: ld-float 7s ease-in-out infinite; }
+.ld-hint { animation: ld-hint-bob 2.6s ease-in-out infinite; }
+.ld-flicker { animation: ld-flicker 4.6s steps(1, end) infinite; }
+
+/* ── Scenes ──────────────────────────────────────────────────────────
+   Every full-viewport section is a .ld-scene. Each modifier paints a
+   CSS-gradient stand-in for its illustration, so the page reads as
+   designed even before (or without) the generated art. */
+.ld-scene {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ld-scene--hero {
+  background:
+    radial-gradient(120% 90% at 22% 42%, rgba(120, 46, 46, 0.28), transparent 55%),
+    radial-gradient(90% 70% at 78% 18%, rgba(143, 123, 255, 0.14), transparent 60%),
+    linear-gradient(180deg, #0b0716 0%, #120b22 46%, #07050e 100%);
+}
+
+.ld-scene--intro {
+  background:
+    radial-gradient(85% 80% at 78% 62%, rgba(217, 185, 106, 0.13), transparent 58%),
+    radial-gradient(70% 60% at 12% 20%, rgba(143, 123, 255, 0.07), transparent 60%),
+    linear-gradient(180deg, #07050e 0%, #0e0a18 55%, #0a0712 100%);
+}
+
+.ld-scene--carousel {
+  background:
+    radial-gradient(75% 85% at 50% 45%, rgba(143, 123, 255, 0.14), transparent 62%),
+    linear-gradient(180deg, #0a0712 0%, #150f26 50%, #0a0712 100%);
+}
+
+.ld-scene--campaign {
+  background:
+    radial-gradient(95% 75% at 72% 68%, rgba(217, 185, 106, 0.1), transparent 60%),
+    linear-gradient(180deg, #07050e 0%, #100b1d 55%, #08060f 100%);
+}
+
+.ld-scene--boss {
+  background:
+    radial-gradient(90% 80% at 70% 60%, rgba(161, 61, 61, 0.2), transparent 58%),
+    linear-gradient(180deg, #08060f 0%, #150a12 55%, #060409 100%);
+}
+
+.ld-scene--forge {
+  background:
+    radial-gradient(90% 80% at 74% 60%, rgba(69, 214, 196, 0.1), transparent 58%),
+    radial-gradient(70% 60% at 60% 80%, rgba(217, 185, 106, 0.12), transparent 55%),
+    linear-gradient(180deg, #060409 0%, #0c0916 55%, #07050e 100%);
+}
+
+.ld-scene--cta {
+  background:
+    radial-gradient(110% 90% at 50% 100%, rgba(143, 123, 255, 0.16), transparent 60%),
+    linear-gradient(180deg, #07050e 0%, #100b1e 60%, #050409 100%);
+}
+
+/* readability scrim between the art and the copy */
+.ld-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(5, 4, 9, 0.62) 0%, rgba(5, 4, 9, 0.12) 30%, rgba(5, 4, 9, 0.14) 62%, rgba(5, 4, 9, 0.78) 100%);
+}
+
+.ld-scrim--left {
+  background:
+    linear-gradient(90deg, rgba(5, 4, 9, 0.82) 0%, rgba(5, 4, 9, 0.5) 38%, rgba(5, 4, 9, 0.06) 70%),
+    linear-gradient(180deg, rgba(5, 4, 9, 0.55) 0%, transparent 26%, transparent 70%, rgba(5, 4, 9, 0.7) 100%);
+}
+
+/* parallax layers get bleed so translation never exposes an edge */
+.ld-layer {
+  position: absolute;
+  inset: -6%;
+}
+
+.ld-plx {
+  will-change: transform;
+}
+
+/* ── Light rays (pure CSS, sit over the art) ─────────────────────── */
+.ld-ray {
+  position: absolute;
+  top: -12%;
+  width: clamp(60px, 7vw, 120px);
+  height: 130%;
+  transform: skewX(-16deg);
+  background: linear-gradient(180deg, rgba(217, 185, 106, 0.16), rgba(217, 185, 106, 0.05) 55%, transparent 85%);
+  filter: blur(2px);
+  animation: ld-ray-pulse 7s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  pointer-events: none;
+}
+
+/* ── Particles ───────────────────────────────────────────────────────
+   Two nested spans compose two axes without animating anything but
+   transform/opacity: the outer span rises, the inner one sways. */
+.ld-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ld-mote {
+  position: absolute;
+  bottom: -4%;
+  left: var(--x, 50%);
+  animation: ld-rise var(--dur, 16s) linear var(--delay, 0s) infinite;
+  opacity: 0;
+}
+
+.ld-mote-dot {
+  display: block;
+  width: var(--sz, 5px);
+  height: var(--sz, 5px);
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--clr, rgba(207, 195, 255, 0.95)) 0%, transparent 72%);
+  animation: ld-sway var(--sway-dur, 5s) ease-in-out infinite alternate;
+}
+
+/* ── Nav ───────────────────────────────────────────────────────────── */
+.ld-nav {
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    padding 0.35s ease;
+  border-bottom: 1px solid transparent;
+  background-color: transparent;
+}
+
+.ld-nav.is-condensed {
+  /* solid color on purpose: no backdrop-filter on a full-width fixed bar */
+  background-color: rgba(5, 4, 9, 0.92);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Carousel ──────────────────────────────────────────────────────── */
+.ld-stage {
+  perspective: 1400px;
+}
+
+.ld-card {
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.55s ease;
+}
+
+.ld-card--flip {
+  animation: ld-flip-in 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Reduced motion: everything static, everything visible ─────────── */
+@media (prefers-reduced-motion: reduce) {
+  #landing [class^="ld-"],
+  #landing [class*=" ld-"] {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  #landing[data-js] [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  #landing .ld-mote {
+    display: none;
+  }
+}
