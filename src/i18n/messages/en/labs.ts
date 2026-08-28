@@ -31,6 +31,16 @@ export const labs = {
     adept: "adept",
     master: "master",
   },
+  sim: {
+    propose: "Propose a ledger",
+    reset: "Reset the council",
+    running: "the council deliberates…",
+    closed: "Ledger {n} closed ✓",
+    stalled: "{count} seat(s) wait for their council — safety over liveness.",
+    halted: "No quorum can form — the network waits rather than fork.",
+    hint: "Press propose and watch acceptance ripple. Click a node to strike it down (or raise it back).",
+    ledgers: "ledgers closed: {n}",
+  },
   player: {
     exit: "Leave the lab",
     wallet: {

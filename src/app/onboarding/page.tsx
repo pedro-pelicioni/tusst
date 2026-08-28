@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { TRIAL_LESSON_SLUG } from "@/content/steps";
+import { JOURNEY_LIVE, firstLiveConceptSlug } from "@/content/journey";
 import { OnboardingFlow } from "@/components/onboarding/OnboardingFlow";
 
 // Mimo/Duolingo-style personalized onboarding. Deliberately outside the
@@ -26,5 +27,12 @@ export default async function OnboardingPage() {
   const firstLessonHref =
     trialLesson?.status === "active" ? `/lessons/${trialLesson.slug}` : trackHref;
 
-  return <OnboardingFlow firstLessonHref={firstLessonHref} />;
+  // The essential road opens first; the campaign stays one tap away.
+  const journeyHref = JOURNEY_LIVE
+    ? `/journey/${firstLiveConceptSlug()}`
+    : firstLessonHref;
+
+  return (
+    <OnboardingFlow firstLessonHref={firstLessonHref} journeyHref={journeyHref} />
+  );
 }

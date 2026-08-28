@@ -1,5 +1,6 @@
 import type { LabScenario } from "./types";
 import { walletOnboarding } from "./wallet-onboarding";
+import { scpSimulator } from "./scp-simulator";
 
 // The Forge Labs catalog. Order = display order on /labs. A "soon" entry is
 // meta-only (empty steps) — it renders as a roadmap card and has no player
@@ -19,6 +20,7 @@ const soon = (
 
 export const labs: LabScenario[] = [
   walletOnboarding,
+  scpSimulator,
 
   soon({
     slug: "oz-token-wizard",
@@ -35,14 +37,6 @@ export const labs: LabScenario[] = [
     difficulty: "adept",
     estMinutes: 10,
     glyph: "🛡",
-  }),
-  soon({
-    slug: "scp-simulator",
-    title: "SCP: The Council of Nodes",
-    tagline: "Build quorums, watch consensus converge, break it on purpose.",
-    difficulty: "novice",
-    estMinutes: 10,
-    glyph: "🕸",
   }),
   soon({
     slug: "treasure-chest",

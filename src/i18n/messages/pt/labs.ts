@@ -31,6 +31,16 @@ export const labs = {
     adept: "adepto",
     master: "mestre",
   },
+  sim: {
+    propose: "Propor um ledger",
+    reset: "Reiniciar o conselho",
+    running: "o conselho delibera…",
+    closed: "Ledger {n} fechado ✓",
+    stalled: "{count} assento(s) esperam seu conselho — segurança antes de vivacidade.",
+    halted: "Nenhum quórum se forma — a rede espera em vez de bifurcar.",
+    hint: "Aperte propor e veja a aceitação se propagar. Clique num nó para derrubá-lo (ou reerguê-lo).",
+    ledgers: "ledgers fechados: {n}",
+  },
   player: {
     exit: "Sair do lab",
     wallet: {

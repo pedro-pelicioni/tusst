@@ -44,15 +44,9 @@ export async function POST(req: Request) {
     address?: unknown;
     artifacts?: unknown;
   };
-  if (typeof labSlug !== "string" || typeof address !== "string") {
+  if (typeof labSlug !== "string") {
     return NextResponse.json(
-      { error: "Expected { labSlug: string, address: string }." },
-      { status: 400 },
-    );
-  }
-  if (!ADDRESS_RE.test(address)) {
-    return NextResponse.json(
-      { error: "Not a Stellar account address." },
+      { error: "Expected { labSlug: string }." },
       { status: 400 },
     );
   }
@@ -62,25 +56,41 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Lab not found." }, { status: 404 });
   }
 
-  let verdict;
-  try {
-    verdict = await verifyOnChain(address, lab.verify);
-  } catch {
+  // Sim-only labs (empty verify[]) have nothing on-chain to check — the
+  // claim is honor-based, like sealing a journey chapter. Every lab that
+  // touches the chain requires a valid account address.
+  const needsChain = lab.verify.length > 0;
+  if (needsChain && (typeof address !== "string" || !ADDRESS_RE.test(address))) {
     return NextResponse.json(
-      { error: "Could not reach the testnet — try again in a moment." },
-      { status: 503 },
+      { error: "Not a Stellar account address." },
+      { status: 400 },
     );
   }
-  if (!verdict.passed) {
-    return NextResponse.json(
-      { completed: false, failed: verdict.failed },
-      { status: 422 },
-    );
+
+  if (needsChain) {
+    let verdict;
+    try {
+      verdict = await verifyOnChain(address as string, lab.verify);
+    } catch {
+      return NextResponse.json(
+        { error: "Could not reach the testnet — try again in a moment." },
+        { status: 503 },
+      );
+    }
+    if (!verdict.passed) {
+      return NextResponse.json(
+        { completed: false, failed: verdict.failed },
+        { status: 422 },
+      );
+    }
   }
 
   // Keep only the artifact shape we defined; ignore anything else the
   // client sent. Verification above is the trust anchor, not this blob.
-  const cleanArtifacts: LabArtifacts = { address, txHashes: {} };
+  const cleanArtifacts: LabArtifacts = {
+    address: typeof address === "string" ? address : undefined,
+    txHashes: {},
+  };
   if (artifacts && typeof artifacts === "object") {
     const tx = (artifacts as { txHashes?: unknown }).txHashes;
     if (tx && typeof tx === "object") {

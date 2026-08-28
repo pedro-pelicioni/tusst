@@ -1,0 +1,105 @@
+import type { Concept } from "../types";
+
+// Chapter II — the Stellar Consensus Protocol, taught by breaking it.
+// The scp-sim widget is the heart: build intuition by killing nodes and
+// watching the council stall (safety) or close ledgers anyway (liveness).
+
+export const theRealmOfStellar: Concept = {
+  meta: {
+    slug: "the-realm-of-stellar",
+    title: "The Realm of Stellar",
+    tagline: "How thousands of machines agree without a king.",
+    numeral: "II",
+    status: "live",
+    estMinutes: 12,
+    sigil: "/v2/journey/sigils/2.webp",
+    glyph: "🕸",
+  },
+  steps: [
+    {
+      kind: "theory",
+      body: `## Agreement without a king
+
+Every blockchain answers one question: **how do strangers agree on the next page of the ledger?**
+
+- Proof-of-Work answers with *electricity* — whoever burns the most, writes.
+- Proof-of-Stake answers with *locked capital* — whoever stakes the most, writes.
+- **Stellar answers with trust**: every node names the nodes it believes, and agreement ripples through those declarations. No mining, no staking — the **Stellar Consensus Protocol (SCP)**.
+
+The result: ledgers close in ~5 seconds, fees cost fractions of a cent, and the network runs on machines a university can afford.`,
+    },
+    {
+      kind: "theory",
+      body: `## Quorum slices: "my council"
+
+Each node declares a **quorum slice** — a small council of nodes it refuses to move without:
+
+> "I accept a ledger when **enough of my council** accepts it."
+
+Councils overlap: your council members have councils of their own, and those chains of trust knit the whole network together. A **quorum** is a set of nodes that contains a satisfied council *for every member* — once a quorum agrees, the ledger closes.
+
+No global list. No admission office. Trust is declared locally and becomes agreement globally — the same way human institutions federate.`,
+    },
+    {
+      kind: "widget",
+      component: "scp-sim",
+      body: `## The Council of Nodes
+
+Seven validators, each trusting a small council. **Propose a ledger** and watch acceptance ripple through the slices. Then do what every good engineer does to a consensus protocol: **click nodes to strike them down** and see what the survivors do.
+
+Try to find the point where the network *stalls* — and notice that it stalls rather than splits.`,
+    },
+    {
+      kind: "quiz",
+      question: `In SCP, when does a single node accept a ledger?`,
+      options: [
+        "When enough of its own quorum slice has accepted it",
+        "When 51% of all nodes on Earth have accepted it",
+        "When it solves a cryptographic puzzle first",
+      ],
+      answer: 0,
+      explain: `Everything is local: a node moves when its *council* moves. Global agreement emerges from overlapping councils — no node ever needs a census of the whole network.`,
+    },
+    {
+      kind: "theory",
+      body: `## Safety over liveness
+
+You saw it in the simulator: strike down too much of a council and the network **waits**. It does not guess. It does not split into two histories.
+
+That is a deliberate trade, and it has a name:
+
+- **Safety** — the network never confirms two conflicting ledgers.
+- **Liveness** — the network keeps confirming *something*.
+
+When forced to choose, SCP **halts instead of forking**. For a network that moves money — salaries, remittances, treasuries — a paused payment beats a payment that later *un-happens*.`,
+    },
+    {
+      kind: "quiz",
+      question: `A third of the validators in your node's quorum slice go offline. What does your node do?`,
+      options: [
+        "Stalls — it refuses to confirm ledgers until its slice can be satisfied again",
+        "Forks off and keeps its own version of history",
+        "Switches to mining until they return",
+      ],
+      answer: 0,
+      explain: `Halt, don't fork. Your node waits for its council; if the rest of the network still contains working quorums, *they* keep closing ledgers and your node catches up when its council returns.`,
+    },
+    {
+      kind: "theory",
+      body: `## What this buys builders
+
+Because agreement is cheap, the network can afford to be **fast and small-fee by default**:
+
+- Ledgers close about every **5 seconds** — a payment is *final*, not "probably final after 6 blocks".
+- The base fee is **100 stroops** (0.00001 XLM) — spam is expensive at scale, humans barely notice it.
+- Finality is real: once in the ledger, there is no re-org to fear.
+
+Every lab in the Forge runs on top of this rhythm — you already felt it if you watched a transaction confirm in the wallet lab.`,
+    },
+    {
+      kind: "rustBranch",
+      lessonSlug: "stellar-101-1",
+      body: `The Campaign's Act VI — **The Constellation Gate** — walks this same sky hands-on: network passphrases, horizons, and your first star-charts. Optional, and worth the detour when you want the map behind the theory.`,
+    },
+  ],
+};

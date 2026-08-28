@@ -56,7 +56,13 @@ const LANGUAGE_OPTIONS = LOCALES.map((l) => ({
 // language · welcome · goal · profile · xp · social proof · plan
 const TOTAL_SCREENS = 7;
 
-export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string }) {
+export function OnboardingFlow({
+  firstLessonHref,
+  journeyHref,
+}: {
+  firstLessonHref: string;
+  journeyHref: string;
+}) {
   const router = useRouter();
   const { locale, messages } = useI18n();
   const m = messages.onboarding;
@@ -235,6 +241,9 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
             ? fmt(m.unlocksPaths, { count: UNLOCKED_BY_XP[xp] })
             : m.firstPath}
         </p>
+        <p className="mt-3 max-w-md text-center text-[12.5px] leading-relaxed text-accent-soft/90">
+          {m.planJourneyNote}
+        </p>
         <div className="mt-8 w-full max-w-md">
           {localizedActs.map((act, i) => {
             const unlocked = i < UNLOCKED_BY_XP[xp];
@@ -321,14 +330,23 @@ export function OnboardingFlow({ firstLessonHref }: { firstLessonHref: string })
       {!isQuestion && (
         <div className="mt-10 flex flex-col items-center gap-4 pb-4">
           {screen === TOTAL_SCREENS - 1 ? (
-            <button
-              type="button"
-              onClick={() => router.push(firstLessonHref)}
-              className={primaryBtn}
-              style={primaryStyle}
-            >
-              {m.startLearning}
-            </button>
+            <>
+              <button
+                type="button"
+                onClick={() => router.push(journeyHref)}
+                className={primaryBtn}
+                style={primaryStyle}
+              >
+                {m.startJourney}
+              </button>
+              <button
+                type="button"
+                onClick={() => router.push(firstLessonHref)}
+                className="text-sm text-muted2 transition hover:text-fg"
+              >
+                {m.orCampaign}
+              </button>
+            </>
           ) : (
             <button type="button" onClick={next} className={primaryBtn} style={primaryStyle}>
               {screen === 1 ? m.begin : m.continue}

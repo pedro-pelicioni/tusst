@@ -58,11 +58,15 @@ export const onboarding = {
   planHeading: "Forgeborn — de Rust à Soroban",
   unlocksPaths: "Ton expérience déverrouille les {count} premières voies.",
   firstPath: "Toute légende commence à la première voie.",
+  planJourneyNote:
+    "Ces actes sont ta route de maîtrise optionnelle. Ta route essentielle — le Voyage du Builder — commence maintenant.",
 
   // Buttons & links.
   begin: "Commencer",
   continue: "Continuer",
   startLearning: "Commencer à apprendre",
+  startJourney: "Commencer le Voyage",
+  orCampaign: "tu préfères Rust d'abord ? commence la Campagne",
   haveAccount: "J'ai déjà un compte",
 
   // Aria labels.

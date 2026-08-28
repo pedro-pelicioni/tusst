@@ -11,6 +11,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Markdown } from "@/components/Markdown";
+import { ScpSim } from "@/components/labs/sims/ScpSim";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
 import { labBySlug } from "@/content/labs";
@@ -239,7 +240,9 @@ export function LabPlayer({
 
   const claimXp = async () => {
     const address = wallet?.address ?? run.artifacts.address;
-    if (!address) {
+    // Sim-only labs (empty verify[]) have no wallet — the claim is
+    // honor-based, like sealing a journey chapter.
+    if (!address && lab.verify.length > 0) {
       setClaim({ s: "failed", checks: ["account-exists"] });
       return;
     }
@@ -499,10 +502,14 @@ export function LabPlayer({
         )}
 
         {step.kind === "sim" && (
-          <div className="mx-auto w-full max-w-xl">
-            {step.body && <Markdown>{step.body}</Markdown>}
-            <div className="mt-6 grid place-items-center rounded-xl border border-dashed border-line px-6 py-16 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-              {m.labs.card.soon}
+          <div className="mx-auto w-full max-w-2xl">
+            {step.body && (
+              <div className="mx-auto max-w-xl">
+                <Markdown>{step.body}</Markdown>
+              </div>
+            )}
+            <div className="mt-6">
+              {step.component === "scp-sim" && <ScpSim />}
             </div>
           </div>
         )}
