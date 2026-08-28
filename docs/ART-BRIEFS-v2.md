@@ -4,6 +4,14 @@ Masters go into `art-src/v2/` (gitignored) with the exact filenames below,
 then `npm run assets:v2` cuts/compresses them into `public/v2/`. Every slot
 has a CSS/glyph stand-in, so ship art in any order — nothing blocks.
 
+> **Status 2026-08-28:** all 14 masters generated via the connected
+> Higgsfield MCP (model `cinematic_studio_2_5`, 2K; cutouts through its
+> background remover) and processed into `public/v2/`. To redo any slot,
+> regenerate with the prompt below (or any tool), drop the master into
+> `art-src/v2/`, and re-run `npm run assets:v2`. Note for keyed layers:
+> if props touch the top edge, give that JOB `key: { bgCenter: true }` in
+> `scripts/v2-assets.mjs` — background sampling moves to mid-height.
+
 ## Shared style preamble (paste before every prompt)
 
 > Painterly dark-fantasy D&D illustration, cinematic wide shot, night palette

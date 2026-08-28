@@ -7,8 +7,18 @@ export const journey = {
   kicker: "the essential road",
   title: "Builder's Journey",
   intro:
-    "Eight disciplines the AI era demands and won't hand you — each one practiced on Stellar, each one with an optional door into the Rust campaign when you want the metal itself.",
+    "Two arcs, one road. The Craft: the engineering disciplines the AI era demands and won't hand you. The Realm: the Stellar ecosystem end to end, from consensus to the privacy frontier. Short chapters, real depth — and every door into Rust stays optional.",
   mapHeading: "// chapters",
+  arcs: {
+    craft: {
+      title: "Arc I — The Craft",
+      blurb: "Engineering in the AI era: specs, tests, borders, architecture — and how to command the golem.",
+    },
+    realm: {
+      title: "Arc II — The Realm",
+      blurb: "Stellar end to end: consensus, transactions, assets, anchors, contracts, smart wallets, privacy, and the living protocol.",
+    },
+  },
   recommended: "recommended next",
   chapter: {
     minutes: "{minutes} min",

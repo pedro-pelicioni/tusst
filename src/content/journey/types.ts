@@ -37,6 +37,12 @@ export interface ConceptMeta {
   tagline: string;
   /** roman numeral shown on the map rail */
   numeral: string;
+  /**
+   * The two great things a builder learns here, interleaved on one road:
+   * craft = being a formidable dev in the AI era; realm = Stellar, end to
+   * end. Rendered as a badge on the map card.
+   */
+  arc: "craft" | "realm";
   status: "live" | "soon";
   estMinutes: number;
   /** public/ path for the chapter sigil art; glyph is the stand-in */

@@ -7,8 +7,18 @@ export const journey = {
   kicker: "el camino esencial",
   title: "Viaje del Builder",
   intro:
-    "Ocho disciplinas que la era de la IA exige y no te regala — cada una practicada en Stellar, cada una con una puerta opcional a la campaña de Rust cuando quieras el metal en sí.",
+    "Dos arcos, un camino. El Oficio: las disciplinas de ingeniería que la era de la IA exige y no te regala. El Reino: el ecosistema Stellar de punta a punta, del consenso a la frontera de la privacidad. Capítulos cortos, profundidad real — y cada puerta a Rust sigue siendo opcional.",
   mapHeading: "// capítulos",
+  arcs: {
+    craft: {
+      title: "Arco I — El Oficio",
+      blurb: "Ingeniería en la era de la IA: specs, tests, fronteras, arquitectura — y cómo comandar al gólem.",
+    },
+    realm: {
+      title: "Arco II — El Reino",
+      blurb: "Stellar de punta a punta: consenso, transacciones, assets, anclas, contratos, smart wallets, privacidad y el protocolo vivo.",
+    },
+  },
   recommended: "siguiente recomendado",
   chapter: {
     minutes: "{minutes} min",

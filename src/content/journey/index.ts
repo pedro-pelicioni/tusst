@@ -1,71 +1,82 @@
-import type { Concept, ConceptMeta } from "./types";
+import type { Concept } from "./types";
+// ── Arc I · The Craft — engineering in the AI era ─────────────────────
 import { thinkBeforeYouForge } from "./concepts/think-before-you-forge";
+import { theRedGreenRite } from "./concepts/the-red-green-rite";
+import { bordersOfTheRealm } from "./concepts/borders-of-the-realm";
+import { theCleanKeep } from "./concepts/the-clean-keep";
+import { tamingTheGolem } from "./concepts/taming-the-golem";
+import { wordsOfPower } from "./concepts/words-of-power";
+import { theEndlessLoop } from "./concepts/the-endless-loop";
+import { weavingTheGraph } from "./concepts/weaving-the-graph";
+// ── Arc II · The Realm — the Stellar ecosystem, end to end ────────────
 import { theRealmOfStellar } from "./concepts/the-realm-of-stellar";
 import { anatomyOfATransaction } from "./concepts/anatomy-of-a-transaction";
+import { accountsTrustAndAssets } from "./concepts/accounts-trust-and-assets";
+import { riversOfValue } from "./concepts/rivers-of-value";
+import { gatesOfTheRealm } from "./concepts/gates-of-the-realm";
+import { theLivingContracts } from "./concepts/the-living-contracts";
+import { walletsWithoutSeeds } from "./concepts/wallets-without-seeds";
+import { theVeiledLedger } from "./concepts/the-veiled-ledger";
+import { theProtocolsEdge } from "./concepts/the-protocols-edge";
 
-// The Builder's Journey — the essential road. Positional array = display
-// order on the map, but progression is FREE-ROAM: any live concept is
-// playable; the map only highlights the recommended next one. Nothing here
-// touches the campaign's unlock machinery.
+// The Builder's Journey — the essential road, in two arcs:
+//   craft — the disciplines an AI won't carry for you (specs, TDD, DDD,
+//           clean architecture, harness/prompt/loop/graph engineering);
+//   realm — the Stellar ecosystem end to end, from SCP to the privacy
+//           frontier and the living protocol.
+// Positional order inside each arc = display order on the map, but
+// progression is FREE-ROAM: any live concept is playable; the map only
+// highlights the recommended next one per arc. Nothing here touches the
+// campaign's unlock machinery.
 
 export const JOURNEY_LIVE = true;
 
-const soon = (
-  meta: Omit<ConceptMeta, "status" | "sigil">,
-): Concept => ({
-  meta: { status: "soon", sigil: `/v2/journey/sigils/${meta.numeral}.webp`, ...meta },
-  steps: [],
-});
-
-export const journeyChapters: Concept[] = [
-  thinkBeforeYouForge,
-  theRealmOfStellar,
-  anatomyOfATransaction,
-
-  soon({
-    slug: "the-red-green-rite",
-    title: "The Red-Green Rite",
-    tagline: "TDD: tests first, forge second — against the real runner.",
-    numeral: "IV",
-    estMinutes: 15,
-    glyph: "🟥",
-  }),
-  soon({
-    slug: "borders-of-the-realm",
-    title: "Borders of the Realm",
-    tagline: "DDD & bounded contexts, mapped on Stellar's own domain.",
-    numeral: "V",
-    estMinutes: 15,
-    glyph: "🗺",
-  }),
-  soon({
-    slug: "the-clean-keep",
-    title: "The Clean Keep",
-    tagline: "Clean & hexagonal architecture — where each piece lives.",
-    numeral: "VI",
-    estMinutes: 15,
-    glyph: "🏰",
-  }),
-  soon({
-    slug: "taming-the-golem",
-    title: "Taming the Golem",
-    tagline: "Harness engineering: context, prompts, loops, graphs, evals.",
-    numeral: "VII",
-    estMinutes: 18,
-    glyph: "🗿",
-  }),
-  soon({
+// The capstone needs the Phase-C mentor/runner machinery — declared, not
+// yet forgeable.
+const theCapstoneForging: Concept = {
+  meta: {
     slug: "the-capstone-forging",
     title: "The Capstone Forging",
     tagline: "Spec + tests + an AI at your side → a deployed contract.",
-    numeral: "VIII",
+    numeral: "IX",
+    arc: "craft",
+    status: "soon",
     estMinutes: 25,
+    sigil: "/v2/journey/sigils/the-capstone-forging.webp",
     glyph: "⚔️",
-  }),
+  },
+  steps: [],
+};
+
+export const journeyChapters: Concept[] = [
+  // craft
+  thinkBeforeYouForge,
+  theRedGreenRite,
+  bordersOfTheRealm,
+  theCleanKeep,
+  tamingTheGolem,
+  wordsOfPower,
+  theEndlessLoop,
+  weavingTheGraph,
+  theCapstoneForging,
+  // realm
+  theRealmOfStellar,
+  anatomyOfATransaction,
+  accountsTrustAndAssets,
+  riversOfValue,
+  gatesOfTheRealm,
+  theLivingContracts,
+  walletsWithoutSeeds,
+  theVeiledLedger,
+  theProtocolsEdge,
 ];
 
 export function conceptBySlug(slug: string): Concept | undefined {
   return journeyChapters.find((c) => c.meta.slug === slug);
+}
+
+export function chaptersByArc(arc: "craft" | "realm"): Concept[] {
+  return journeyChapters.filter((c) => c.meta.arc === arc);
 }
 
 export function firstLiveConceptSlug(): string {

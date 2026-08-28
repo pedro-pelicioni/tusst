@@ -33,11 +33,18 @@ async function grayKey(file, opts = {}) {
     .raw()
     .toBuffer({ resolveWithObject: true });
 
-  const sample = (x) => {
-    const i = (4 * info.width + x) * 4;
+  const sample = (x, y) => {
+    const i = (y * info.width + x) * 4;
     return [data[i], data[i + 1], data[i + 2]];
   };
-  const points = [sample(6), sample(Math.floor(info.width / 2)), sample(info.width - 7)];
+  // Default: top-row sampling (landing convention — subjects clear of the
+  // top edge). bgCenter: sample mid-height instead, for masters whose props
+  // touch the top edge but keep the center empty.
+  const y = opts.bgCenter ? Math.floor(info.height / 2) : 4;
+  const xs = opts.bgCenter
+    ? [Math.floor(info.width * 0.4), Math.floor(info.width * 0.5), Math.floor(info.width * 0.6)]
+    : [6, Math.floor(info.width / 2), info.width - 7];
+  const points = xs.map((x) => sample(x, y));
   const bg = [0, 1, 2].map((c) => points.reduce((acc, p) => acc + p[c], 0) / points.length);
 
   for (let i = 0; i < data.length; i += 4) {
@@ -112,24 +119,27 @@ async function grayKey(file, opts = {}) {
 /** @type {{src: string, out: string, kind: "scene"|"key"|"alpha", budgetKB: number, resize?: {width: number, height?: number}, key?: object, alphaQuality?: number, trim?: boolean}[]} */
 const JOBS = [
   // ── The Hall (home at /path) ──────────────────────────────────────
-  { src: "hall-bg.png", out: "home/hall-bg.webp", kind: "scene", budgetKB: 380 },
-  { src: "hall-mid-raw.png", out: "home/hall-mid.webp", kind: "key", budgetKB: 400, resize: { width: 3840 }, alphaQuality: 90, key: { erode: true } },
+  { src: "hall-bg.png", out: "home/hall-bg.webp", kind: "scene", budgetKB: 380, resize: { width: 2560 } },
+  // Painterly gray backdrops carry ±20 shades of texture — key harder than
+  // the landing default or the whole canvas keeps alpha slivers and the
+  // webp balloons (first run: 2.2MB).
+  { src: "hall-mid-raw.png", out: "home/hall-mid.webp", kind: "key", budgetKB: 400, resize: { width: 3840 }, alphaQuality: 85, key: { erode: true, keyStart: 30, keyFull: 92, bgCenter: true } },
   { src: "door-journey.png", out: "home/door-journey.webp", kind: "scene", budgetKB: 220, resize: { width: 1200 } },
   { src: "door-campaign.png", out: "home/door-campaign.webp", kind: "scene", budgetKB: 220, resize: { width: 1200 } },
   { src: "forge-vignette.png", out: "home/forge-vignette.webp", kind: "scene", budgetKB: 220, resize: { width: 1200 } },
 
   // ── The Forge (labs index + player backdrops) ─────────────────────
-  { src: "forge-bg.png", out: "labs/forge-bg.webp", kind: "scene", budgetKB: 380 },
+  { src: "forge-bg.png", out: "labs/forge-bg.webp", kind: "scene", budgetKB: 380, resize: { width: 2560 } },
   { src: "emblem-wallet-onboarding.png", out: "labs/emblems/wallet-onboarding.webp", kind: "alpha", budgetKB: 120, resize: { width: 800 }, alphaQuality: 90, trim: true },
   { src: "emblem-oz-token-wizard.png", out: "labs/emblems/oz-token-wizard.webp", kind: "alpha", budgetKB: 120, resize: { width: 800 }, alphaQuality: 90, trim: true },
-  { src: "emblem-passkey-smart-wallet.png", out: "labs/emblems/passkey-smart-wallet.webp", kind: "alpha", budgetKB: 120, resize: { width: 800 }, alphaQuality: 90, trim: true },
+  { src: "emblem-passkey-smart-wallet.png", out: "labs/emblems/passkey-smart-wallet.webp", kind: "alpha", budgetKB: 160, resize: { width: 800 }, alphaQuality: 90, trim: true },
   { src: "emblem-scp-simulator.png", out: "labs/emblems/scp-simulator.webp", kind: "alpha", budgetKB: 120, resize: { width: 800 }, alphaQuality: 90, trim: true },
 
-  // ── The Journey (map — Phase B surfaces, slots ready now) ─────────
-  { src: "journey-bg.png", out: "journey/map-bg.webp", kind: "scene", budgetKB: 380 },
-  { src: "sigil-1.png", out: "journey/sigils/1.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
-  { src: "sigil-2.png", out: "journey/sigils/2.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
-  { src: "sigil-3.png", out: "journey/sigils/3.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  // ── The Journey (map + chapter sigils, slug-named) ────────────────
+  { src: "journey-bg.png", out: "journey/map-bg.webp", kind: "scene", budgetKB: 380, resize: { width: 2560 } },
+  { src: "sigil-1.png", out: "journey/sigils/think-before-you-forge.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-2.png", out: "journey/sigils/the-realm-of-stellar.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-3.png", out: "journey/sigils/anatomy-of-a-transaction.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
 ];
 
 async function run() {

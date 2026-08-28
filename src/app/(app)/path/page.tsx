@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getCampaignProgress } from "@/lib/campaign-progress";
 import { acts } from "@/content/campaign";
+import { JOURNEY_LIVE } from "@/content/journey";
 import { getMessages } from "@/i18n/server";
 import { fmt } from "@/i18n/format";
 import { progressToNext } from "@/lib/xp";
@@ -16,8 +17,7 @@ import { SceneParticles } from "@/components/scene/SceneParticles";
 // landing, so the URL stays; the campaign rail this page used to hold now
 // lives at /campaign). Two roads — the Journey (essential) and the Campaign
 // (optional) — plus the Forge, which is not a road: it's where you practice.
-// The Journey door flips live in Phase B.
-const JOURNEY_LIVE = false;
+// The Journey door follows the registry's JOURNEY_LIVE flag.
 
 export async function generateMetadata(): Promise<Metadata> {
   const m = await getMessages();

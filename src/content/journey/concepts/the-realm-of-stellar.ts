@@ -9,10 +9,11 @@ export const theRealmOfStellar: Concept = {
     slug: "the-realm-of-stellar",
     title: "The Realm of Stellar",
     tagline: "How thousands of machines agree without a king.",
-    numeral: "II",
+    numeral: "I",
+    arc: "realm",
     status: "live",
     estMinutes: 12,
-    sigil: "/v2/journey/sigils/2.webp",
+    sigil: "/v2/journey/sigils/the-realm-of-stellar.webp",
     glyph: "🕸",
   },
   steps: [

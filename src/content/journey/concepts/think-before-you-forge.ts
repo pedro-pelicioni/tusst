@@ -13,9 +13,10 @@ export const thinkBeforeYouForge: Concept = {
     title: "Think Before You Forge",
     tagline: "Specs are the skill AI can't do for you.",
     numeral: "I",
+    arc: "craft",
     status: "live",
     estMinutes: 12,
-    sigil: "/v2/journey/sigils/1.webp",
+    sigil: "/v2/journey/sigils/think-before-you-forge.webp",
     glyph: "📜",
   },
   steps: [

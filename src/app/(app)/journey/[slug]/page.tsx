@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { conceptBySlug, journeyChapters } from "@/content/journey";
+import { chaptersByArc, conceptBySlug } from "@/content/journey";
 import { labBySlug } from "@/content/labs";
 import { acts } from "@/content/campaign";
 import { getActLocalized } from "@/content/i18n";
@@ -103,8 +103,8 @@ export default async function ConceptPage({
     }
   }
 
-  // Next live chapter after this one (for the done screen).
-  const liveSlugs = journeyChapters
+  // Next live chapter within the same arc (for the done screen).
+  const liveSlugs = chaptersByArc(concept.meta.arc)
     .filter((c) => c.meta.status === "live")
     .map((c) => c.meta.slug);
   const nextSlug = liveSlugs[liveSlugs.indexOf(slug) + 1] ?? null;

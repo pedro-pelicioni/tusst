@@ -9,10 +9,11 @@ export const anatomyOfATransaction: Concept = {
     slug: "anatomy-of-a-transaction",
     title: "Anatomy of a Transaction",
     tagline: "Envelope, operations, fees, signatures — dissected live.",
-    numeral: "III",
+    numeral: "II",
+    arc: "realm",
     status: "live",
     estMinutes: 10,
-    sigil: "/v2/journey/sigils/3.webp",
+    sigil: "/v2/journey/sigils/anatomy-of-a-transaction.webp",
     glyph: "✉️",
   },
   steps: [

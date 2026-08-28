@@ -7,8 +7,18 @@ export const journey = {
   kicker: "la route essentielle",
   title: "Voyage du Builder",
   intro:
-    "Huit disciplines que l'ère de l'IA exige sans te les offrir — chacune pratiquée sur Stellar, chacune avec une porte optionnelle vers la campagne Rust quand tu veux le métal lui-même.",
+    "Deux arcs, une route. L'Art : les disciplines d'ingénierie que l'ère de l'IA exige sans te les offrir. Le Royaume : l'écosystème Stellar de bout en bout, du consensus à la frontière de la vie privée. Chapitres courts, vraie profondeur — et chaque porte vers Rust reste optionnelle.",
   mapHeading: "// chapitres",
+  arcs: {
+    craft: {
+      title: "Arc I — L'Art",
+      blurb: "L'ingénierie à l'ère de l'IA : specs, tests, frontières, architecture — et l'art de commander le golem.",
+    },
+    realm: {
+      title: "Arc II — Le Royaume",
+      blurb: "Stellar de bout en bout : consensus, transactions, assets, ancres, contrats, smart wallets, vie privée et protocole vivant.",
+    },
+  },
   recommended: "prochain recommandé",
   chapter: {
     minutes: "{minutes} min",
