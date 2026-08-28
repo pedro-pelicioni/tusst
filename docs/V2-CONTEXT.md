@@ -4,10 +4,9 @@
 > pegue este trabalho. Ele assume ZERO contexto sobre a v2 e existe para que ninguém precise
 > reconstruir decisões por arqueologia de commits. Regra do dono: **"não perca nada"**.
 >
-> **Data de referência:** 28/08/2026. As Fases A e B estão commitadas; a **Fase C está em
-> andamento na working tree neste exato momento** (uma sessão paralela está escrevendo código
-> enquanto este documento é gerado — a seção 12 traz o snapshot datado). Antes de mexer,
-> rode `git status` e leia as seções 12 e 14.
+> **Data de referência:** 28/08/2026. As Fases A, B e C estão commitadas; o incremento
+> pós-C abre o lab de passkey com deploy real e verificação do código on-chain. Antes de
+> mexer, rode `git status` e leia as seções 12 e 14.
 
 ---
 
@@ -16,13 +15,13 @@
 1. A v2 é uma **reestruturação completa do TUSST** (poupando apenas a landing), decidida em 28/08/2026 após o Kaan (SDF) recusar o pitch do TUSST como sucessor do Stellar Quest.
 2. O produto deixa de ser "campanha Rust de 8 atos" e vira **dois caminhos de aprendizado + a Forge expandida**: a **Jornada do Builder** (essencial, `/journey`) e a **Campanha Rust** (opcional, `/campaign`), com os **Labs guiados on-chain** morando na marca Forge (`/labs`) ao lado do IDE livre (`/ide`).
 3. A Jornada ensina **duas grandes coisas em dois arcos**: *The Craft* (ser um dev foda na era da IA — specs, TDD, DDD, clean arch, harness/prompt/loop/graph engineering) e *The Realm* (o ecossistema Stellar de ponta a ponta, do SCP à fronteira de privacidade e ao protocolo vivo).
-4. **17 capítulos** (16 live + capstone "soon"), **3 labs live** (wallet, SCP, OZ Token Wizard) + 4 cards "soon", **XP vivo** com ledger anti-replay e retroativo aplicado.
-5. Estado: **Fase A e Fase B commitadas e verificadas e2e** (3 commits de 28/08); **Fase C na working tree, sem commit** (wizard OZ live, extração do transporte NDJSON, exercício spec-write via mentor, fix do SceneRoot); Fase D não iniciada.
+4. **17 capítulos** (16 live + capstone "soon"), **4 labs live** (wallet, SCP, OZ Token Wizard, Passkey Smart Wallet) + 3 cards "soon", **XP vivo** com ledger anti-replay e retroativo aplicado.
+5. Estado: **Fases A, B e C commitadas e verificadas** (4 commits de 28/08); o incremento de passkey está implementado e verificado até o limite headless (a cerimônia WebAuthn ainda exige teste no dispositivo real do Pedro); Fase D ampla não iniciada.
 6. As **14 artes v2** foram geradas pelo MCP do Higgsfield (modelo `cinematic_studio_2_5`) e já estão processadas e commitadas em `public/v2/`.
 7. Toda conclusão de lab on-chain é **verificada pelo servidor lendo a própria chain** antes de pagar XP — o cliente nunca "afirma" nada.
 8. Invariantes críticas (seção 14): P2002 FORA da `$transaction`, conteúdo é dado puro, kit `sc-` é cópia (nunca import) da landing, seed append-only, **nunca `git push`**, autoria Pedro + trailer Nearx.
 9. Fatos de fronteira do currículo são datados e verificados (Protocol 28 "Adapter": testnet 27/08/2026 → mainnet 16/09/2026; js-sdk v17 = P28 — o repo está em ^16.2.0, bump pendente com janela até 16/09).
-10. Decisão em aberto do Pedro: **estratégia de relayer/fee-sponsorship do lab de passkey** (spike da Fase C).
+10. Decisão do lab de passkey v1: **sem relayer** — a conta G local e fundada paga o deploy como `deployerSecret` dedicado, mas não vira signer da smart account. Fee sponsorship continua como evolução posterior.
 
 ---
 
@@ -48,13 +47,14 @@ Disso saiu a meta da v2 — **duas grandes coisas** que o produto entrega juntas
   últimas tecnologias: privacy pools, confidential tokens, Stellar Private Payments,
   js-sdk v17 / Protocol 28.
 
-### Os três commits da v2 (todos de 28/08/2026)
+### Os quatro commits da v2 (todos de 28/08/2026)
 
 | Commit | Título | Conteúdo |
 |---|---|---|
 | `29d639e` | feat(v2): the Hall, the expanded Forge with on-chain labs, and live XP | **Fase A**: home "The Hall", `/campaign`, engine de labs + lab wallet-onboarding, `classic.ts`, verificação on-chain, XP vivo (XpEvent + backfill), kit `sc-`, pipeline `assets:v2`, i18n home/labs ×4 |
 | `0b3a10e` | feat(v2): the Builder's Journey — chapters, SCP simulator, chapter XP | **Fase B**: modelo de conteúdo da Jornada, 3 capítulos autorais, ScpSim, ConceptPlayer, `/journey`, `api/journey/complete` (+30 XP), lab scp-simulator live, onboarding → Jornada, i18n journey ×4 |
 | `10a960e` | feat(v2): full two-arc curriculum and the Higgsfield art drop | **Expansão**: Jornada de 3 → 17 capítulos em 2 arcos, numeração por arco, fatos de fronteira datados, 14 artes Higgsfield processadas em `public/v2/`, `bgCenter` no pipeline, porta da Jornada segue `JOURNEY_LIVE` do registry |
+| `ead9ca4` | feat(v2): the OZ Token Wizard forges real tokens, and the examiner grades real specs | **Fase C**: Wizard OZ live e2e, transporte NDJSON compartilhado, deploy/invoke/verificação de saldo, exercício spec-write via mentor, fix do SceneRoot |
 
 (O commit anterior, `8204076`, é só da landing — a "adventuring party" no hero — e não faz
 parte da reestruturação.)
@@ -98,8 +98,9 @@ Todas tomadas/travadas pelo Pedro em 28/08/2026. Plano aprovado completo em
    (commitado). Toda superfície funciona em gradiente/glyph antes de a arte existir.
 10. **Campanha permanece byte-compatível**: `unlock.ts`, `campaign-progress.ts`, o ratchet
     `maxUnlockedAct`, o cookie de onboarding e os 4 gates `findIndex < count` não mudam.
-11. **Decisão em aberto:** fee-sponsorship do lab de passkey (relayer próprio fino vs
-    serviço externo vs adiar o lab) — a ser decidida pelo Pedro no spike da Fase C.
+11. **Passkey v1 sem relayer.** O `smart-account-kit@0.6.2` permite um deployer dedicado;
+    o lab reutiliza a conta G local já fundada como fonte de fee/salt e instala somente a
+    passkey como signer da smart account. Relayer/fee sponsorship fica para uma evolução.
 
 ---
 
@@ -128,7 +129,7 @@ Jornada** (`firstLiveConceptSlug()`), com a campanha a um toque.
 
 **Rotas de API novas**: `api/labs/complete` (verificação on-chain + XP),
 `api/journey/complete` (selo do capítulo + XP), `api/journey/exercise` (examinador de spec
-via mentor — Fase C, working tree). `api/submissions` ganhou +25 XP dentro da `$transaction`
+via mentor — Fase C). `api/submissions` ganhou +25 XP dentro da `$transaction`
 existente do ouro.
 
 ---
@@ -201,16 +202,18 @@ puras sobre `LabRunCtx` (`{ walletAddress, state, artifacts }`).
   {tx} {contract} {name} {symbol}` + link de explorer) | `sim` (componente `scp-sim`) |
   `checkpoint` (claim).
 - **`LabAction`**: `generate-keypair` (target `wallet` ou `state`) | `friendbot` |
-  `classic-op` | **`contract-build` | `contract-deploy` | `contract-invoke`** (Fase C).
-  Pendentes do spike: `passkey-create` | `passkey-connect`.
+  `classic-op` | **`contract-build` | `contract-deploy` | `contract-invoke`** (Fase C) |
+  **`passkey-create` | `passkey-connect`** (pós-C; WebAuthn + smart-account-kit).
 - **`VerifySpec`** (data-only, o servidor interpreta): `account-exists` | `trustline` |
   `payment-sent` | **`token-balance-positive`** (Fase C — simula `func(address)` no
-  contractId via RPC e exige > 0). **`verify: []` = lab honor-based** (sim-only).
+  contractId via RPC e exige > 0) | **`smart-account-code`** (baixa o Wasm do contrato,
+  recalcula SHA-256 e exige a identidade canônica). **`verify: []` = lab honor-based**
+  (sim-only).
 
 ### Engine ([`../src/lib/labs/engine.ts`](../src/lib/labs/engine.ts))
 
 `runLabAction` mapeia ação → executor real na testnet, emitindo fases
-(`prepare|queued|building|sign|submit|confirm`) para o stepper ao vivo do botão (o padrão
+(`prepare|passkey|queued|building|sign|submit|confirm`) para o stepper ao vivo do botão (o padrão
 `DeployStep` do DeployPanel, generalizado). `LabActionError { retryable }`; retry automático
 1× para friendbot congestionado e `tx_bad_seq` (o rebuild parte de sequence fresca, então o
 retry é seguro por construção). O `contract-deploy` registra o deployment no
@@ -248,16 +251,16 @@ prova on-chain continua exigida.
 | Lab | Status | Dificuldade / XP | Chain | Verify |
 |---|---|---|---|---|
 | `wallet-onboarding` — Your First Wallet | **live** (Fase A) | novice / 75 | classic, client puro | account-exists + trustline USDC + payment-sent |
-| `oz-token-wizard` — OpenZeppelin Token Wizard | **live** (Fase C, working tree) | adept / 100 | build no runner + deploy/invoke | account-exists + token-balance-positive(`balance`) |
+| `oz-token-wizard` — OpenZeppelin Token Wizard | **live** (Fase C) | adept / 100 | build no runner + deploy/invoke | account-exists + token-balance-positive(`balance`) |
 | `scp-simulator` — SCP: The Council of Nodes | **live** (Fase B) | novice / 75 | nenhuma | `[]` (honor) |
-| `passkey-smart-wallet` | soon (aguarda spike + decisão do relayer) | adept | invokes | — |
+| `passkey-smart-wallet` — Passkey Smart Wallet | **live** (pós-C) | adept / 100 | WebAuthn + deploy + transfer Soroban | account-exists + smart-account-code + native balance |
 | `treasure-chest` (claimable balances) | soon | novice | classic | — |
 | `guild-vault` (multisig) | soon | adept | classic | — |
 | `confidential-tokens` | soon | master | fronteira | — |
 
 O roadmap completo do plano é maior (patrono/sponsored reserves + fee-bump, emissão de
 token + SAC, path payments/AMM, preconditions, Blend, Reflector, KALE, Soroswap, x402,
-âncora SEP-24, state archival) — os 4 "soon" acima são os cards visíveis escolhidos.
+âncora SEP-24, state archival) — os 3 "soon" acima são os cards visíveis restantes.
 Regra dos labs de protocolo: **invocar contratos deployados; NUNCA buildar SDKs sdk-25
 (Blend/sep-41) junto dos pins OZ sdk-26** do runner.
 
@@ -280,6 +283,14 @@ Regra dos labs de protocolo: **invocar contratos deployados; NUNCA buildar SDKs 
   decimals fixo em 7; name/symbol/supply viajam como **args do constructor**, não no código)
   → `mint` extra via invoke (spec lida da chain, simulate-then-sign) → claim com simulação
   server-side de `balance(you) > 0`.
+- **passkey-smart-wallet** ([`../src/content/labs/passkey-smart-wallet.ts`](../src/content/labs/passkey-smart-wallet.ts)):
+  conta G local → Friendbot → cria passkey WebAuthn real → usa essa conta G como
+  `deployerSecret` dedicado do `smart-account-kit@0.6.2` (paga fees/salt; **não** vira
+  signer) → deploya e funda a smart account P27 via RPC → reconecta a credential e faz
+  uma transferência real de 1 XLM assinada pela passkey (`__check_auth` + verifier
+  secp256r1 executam on-chain) → claim busca o Wasm pela C-address, recalcula SHA-256
+  contra `1b5f…785a` e exige saldo XLM positivo no contrato. Credencial/sessão ficam em IndexedDB
+  `tusst-smart-accounts-v1`; nenhum segredo cruza o servidor.
 - **scp-simulator**: 100% client, compartilha o `ScpSim` com o capítulo "The Realm of
   Stellar". Fluxo: fechar ledgers → quebrar de propósito → quizzes de safety/recovery.
 
@@ -298,7 +309,7 @@ como props). `JourneyStep`:
 - `labLink` (handoff cinematográfico para um lab da Forge, com estado live/completed);
 - `rustBranch` ("**See it in Rust**" → `/lessons/[slug]` da campanha; se o ato estiver
   trancado, o card renderiza "destrava com o Ato N" — **nunca link para 404**);
-- `exercise` (`mode: "spec-write"`, com `brief` + `rubric` — Fase C, working tree).
+- `exercise` (`mode: "spec-write"`, com `brief` + `rubric` — Fase C).
 
 Meta: `slug, title, tagline, numeral` (romano **por arco**), `arc: "craft" | "realm"`,
 `status: "live" | "soon"`, `estMinutes`, `sigil` (arte), `glyph` (stand-in).
@@ -313,7 +324,7 @@ Helpers: `conceptBySlug`, `chaptersByArc`, `firstLiveConceptSlug`.
 
 | # | Slug | Capítulo | Uma linha | Min | Steps especiais |
 |---|---|---|---|---|---|
-| I | `think-before-you-forge` | Think Before You Forge | Spec-driven: a spec é a habilidade que a IA não faz por você; exercício de spec-review curado | 12 | `exercise` spec-write (working tree) |
+| I | `think-before-you-forge` | Think Before You Forge | Spec-driven: a spec é a habilidade que a IA não faz por você; exercício de spec-review curado | 12 | `exercise` spec-write |
 | II | `the-red-green-rite` | The Red-Green Rite | TDD: teste primeiro, forja depois | 12 | rustBranch |
 | III | `borders-of-the-realm` | Borders of the Realm | DDD & bounded contexts, mapeados no próprio domínio da Stellar | 13 | — |
 | IV | `the-clean-keep` | The Clean Keep | Clean/hexagonal architecture — cada peça no seu lugar | 13 | — |
@@ -333,7 +344,7 @@ Helpers: `conceptBySlug`, `chaptersByArc`, `firstLiveConceptSlug`.
 | IV | `rivers-of-value` | Rivers of Value | Payments, path payments, o DEX e os AMMs | 12 | — |
 | V | `gates-of-the-realm` | Gates of the Realm | Âncoras & SEPs — onde o ledger encontra o mundo real | 12 | — |
 | VI | `the-living-contracts` | The Living Contracts | Soroban: Wasm, storage que expira (TTL/state archival), fees que fazem sentido | 13 | labLink → oz-token-wizard, rustBranch |
-| VII | `wallets-without-seeds` | Wallets Without Seeds | Smart accounts, passkeys e fees patrocinadas (incl. Protocol 27 Zipper / CAP-0071) | 12 | labLink → passkey-smart-wallet (soon) |
+| VII | `wallets-without-seeds` | Wallets Without Seeds | Smart accounts, passkeys e fees patrocinadas (incl. Protocol 27 Zipper / CAP-0071) | 12 | labLink → passkey-smart-wallet |
 | VIII | `the-veiled-ledger` | The Veiled Ledger | Confidential tokens, private payments — privacidade com espinha de compliance | 13 | labLink → confidential-tokens (soon) |
 | IX | `the-protocols-edge` | The Protocol's Edge | CAPs, SEPs, upgrades nomeados — cavalgando um protocolo vivo | 11 | rustBranch |
 
@@ -363,7 +374,7 @@ final posta em [`../src/app/api/journey/complete/route.ts`](../src/app/api/journ
 client-validados como na campanha — stakes de 30 XP, trade-off aceito, anti-replay pelo
 ledger).
 
-### Exercício spec-write (Fase C, working tree)
+### Exercício spec-write (Fase C)
 
 [`../src/app/api/journey/exercise/route.ts`](../src/app/api/journey/exercise/route.ts):
 o aluno escreve uma **spec comportamental** (o brief atual: "Guild Tip Jar" em
@@ -481,9 +492,16 @@ Tudo em dev local (`AUTH_DEV_LOGIN=true`) contra a **testnet real**, via preview
 **Estático (toda fase):** `npx tsc --noEmit` (prova os 4 locales), `npm run lint`,
 `npm run check:forge-pins` — verdes.
 
-**Fase C (em andamento):** o e2e do wizard OZ contra o runner real estava **em execução**
-no momento da escrita deste documento — não tratar como verificado até constar aqui ou no
-commit da Fase C.
+**Fase C — Wizard + exercício:** e2e completo no commit `ead9ca4`: Wizard OZ compilou no
+runner real, deployou `CCVAG…NP6X`, executou constructor, mintou +25 FGOLD, o servidor
+simulou `balance(você)` e o ledger fechou em 300 XP. Exercício spec-write provou spec fraca
+→ objeção e spec forte → aceite/+20 XP. Checks estáticos verdes.
+
+**Pós-C — Passkey Smart Wallet:** `tsc`, lint, pins e build Next via Webpack verdes. A
+verificação server-side foi exercitada contra o smart account oficial
+`CCKO2…G4YP`: 41.855 bytes, SHA-256 `1b5f…785a`, match verdadeiro. A cerimônia WebAuthn
+real (biometria/PIN do dispositivo) é intencionalmente a única pendência de e2e; não é
+simulável com honestidade no runner headless.
 
 ---
 
@@ -510,45 +528,33 @@ commit da Fase C.
 6. **Batch de edits via `perl` mojibakou os 4 labs.ts** (latin-1 vs UTF-8): arquivos com
    acentos corrompidos em massa. Restaurados do git e reaplicados com ferramenta UTF-8-safe.
    **Lição: nunca editar arquivos com acentos via perl in-place sem camada utf8.**
+7. **Wallets Kit com dois nomes de pacote**: o app ainda importava o escopo npm legado
+   `@creit.tech`, mas o `smart-account-kit` declara peer no escopo JSR atual
+   `@creit-tech`. Isso produzia warnings de módulo ausente no bundle. Migração: `.npmrc`
+   aponta `@jsr:registry=https://npm.jsr.io`, dependência aliasada pelo JSR e imports no
+   escopo novo. O warning de peer do plugin Trezor (`sdk ^13.3.0`) é upstream do Wallets
+   Kit; o bundle usa uma única instância `stellar-sdk@16.2.0` e fica verde.
 
 ---
 
 ## 12. Pendências (o que falta)
 
-### Fase C — em andamento AGORA na working tree (snapshot de 28/08, sem commit)
+### Incremento passkey — implementado, falta o dispositivo real
 
-Já escrito (não commitado; a working tree é um alvo móvel — `git status` antes de tudo):
-
-- Fix do `SceneRoot` (bug 4);
-- Extração do transporte NDJSON para
-  [`../src/lib/soroban/run-stream.ts`](../src/lib/soroban/run-stream.ts) —
-  `use-forge-run.ts` virou wrapper fino do IDE (comportamento idêntico), e o engine dos
-  labs usa o mesmo cliente contra `/api/soroban/compile`;
-- DSL: step **`input`** + ações **`contract-build`/`contract-deploy`/`contract-invoke`** +
-  verify **`token-balance-positive`** (simulação server-side via RPC);
-- **Lab `oz-token-wizard` live** (+ `oz-token-files.ts` com o `CURATED_CARGO_TOML`
-  importado — triângulo de pins intacto; deploy compartilhado com o painel Interact do IDE
-  via forge-store);
-- `LabPlayer` com input/fases de build/claim com contractId; `api/labs/complete` validando
-  contractId; i18n labs ×4 (fases `queued`/`building`, erros de forge);
-- **Exercício spec-write ao vivo**: kind `exercise` nos types, step "Guild Tip Jar" em
-  think-before-you-forge, ConceptPlayer com textarea + draft, rota nova
-  `api/journey/exercise` (mentor como examinador, quota `MentorHint kind:"journey"`,
-  +20 XP); i18n journey ×4.
-
-Ainda pendente na C:
-
-- [ ] **E2E do wizard OZ** contra o runner real (estava em execução) — incluir o caso
-  "runner fora do ar → retry amigável" e o token aparecendo no Interact do `/ide`;
-- [ ] E2E do exercício spec-write (verdito, quota, XP, replay);
-- [ ] **Spike do passkey**: `stellar/smart-account-kit@0.6.2` (peer `stellar-sdk >=16`,
-  npm ok) — conferir infra testnet do kit (factory/verifier) e levar ao Pedro a **decisão
-  em aberto do relayer de fee-sponsorship** (relayer próprio fino vs serviço externo vs
-  adiar o lab) → então ações `passkey-create`/`passkey-connect` + lab;
-- [ ] `tsc`/lint/check-forge-pins + commit da Fase C;
-- [ ] Incidental: a working tree **remove** a entrada `[mcp_servers.stellar-raven]` de
-  `.codex/config.toml` (backup em `.codex/config.toml.bak-raven`) — decidir se entra no
-  commit ou é revertida (é config de ferramenta local, não de produto).
+- [x] `smart-account-kit@0.6.2` fixado (peer `stellar-sdk >=16`) e artefatos P27 testnet
+  conferidos no repositório oficial;
+- [x] Wallets Kit migrado do escopo npm legado `@creit.tech` para o pacote JSR v2
+  `@creit-tech` (mesma versão 2.5.0; `.npmrc` aponta o scope `@jsr`);
+- [x] Ações `passkey-create`/`passkey-connect`, lab live, handoff do capítulo VII e i18n
+  de chrome ×4;
+- [x] Sem relayer no v1: a conta G local fundada é deployer dedicado e paga o RPC direto;
+- [x] Claim verifica a conta G, a identidade do código C e saldo XLM nativo positivo;
+- [x] `tsc`/lint/check-forge-pins/build verdes e hash provado contra contrato testnet real;
+- [ ] **E2E no browser do Pedro**: aprovar criação e autenticação da passkey com
+  Touch ID/Face ID/PIN, confirmar o C-address e reivindicar os +100 XP;
+- [ ] Incidental preservado: a working tree remove a entrada
+  `[mcp_servers.stellar-raven]` de `.codex/config.toml` (backup `.bak-raven`). Continua
+  fora dos commits de produto até decisão do Pedro.
 
 ### Bump do SDK 17 — item da Fase C com **janela dura**
 
@@ -570,7 +576,8 @@ fluxos de deploy/invoke/classic) **antes de 16/09**.
 
 ### Riscos verify-first (do plano)
 
-smart-account-kit (infra testnet + relayer); Blend invoke-only (conferir endereços antes de
+Passkeys/WebAuthn dependem de dispositivo real e contexto seguro (HTTPS/localhost);
+fee-sponsorship/relayer segue fora do v1; Blend invoke-only (conferir endereços antes de
 agendar); Confidential Tokens segue roadmap (dev preview); x402/KALE dependem de endpoints
 do ecossistema; custo do mentor nos exercícios (monitorar `MentorHint`).
 
@@ -595,14 +602,19 @@ npm run dev                 # http://localhost:3000
   Em host serverless o wizard usa `NEXT_PUBLIC_FORGE_RUNNER_URL`.
 - **Checks estáticos**: `npx tsc --noEmit` (prova os 4 locales) · `npm run lint` ·
   `npm run check:forge-pins`.
+- **Passkey**: requer HTTPS ou `localhost` e um dispositivo/navegador WebAuthn. O lab usa
+  IndexedDB `tusst-smart-accounts-v1`; apagar os dados do site apaga a associação local.
+  O pacote `smart-account-kit` está fixado em **0.6.2** porque código/artefatos testnet são
+  tratados como um conjunto verificado.
 - **Assets**: `npm run assets:v2` (precisa dos masters em `art-src/v2/`; slots ausentes são
   ok). `npm run assets:landing` é da landing e não se mistura.
 - **XP retroativo**: `npm run xp:backfill` (local); **no Neon é manual do Pedro**.
 - **Roteiro de smoke v2**: `/` intocada → Hall em `/path` (portas + vinheta da Forge +
   faixa de XP) → `/journey` (2 arcos, próximo recomendado) → jogar um capítulo e selar
   (+30) → `/labs` → wallet-onboarding na testnet real até o claim (+75; replay =
-  `already:true`) → `/campaign` (paridade do trilho, gate 1/3/6 por cookie, submit credita
-  ouro 1× + 1 XpEvent) → language switcher nas páginas novas.
+  `already:true`) → passkey-smart-wallet num dispositivo real (+100; contrato C com hash
+  canônico) → `/campaign` (paridade do trilho, gate 1/3/6 por cookie, submit credita ouro
+  1× + 1 XpEvent) → language switcher nas páginas novas.
 - **Gotchas de ambiente** (detalhes na memória `tusst-stack-gotchas`): Prisma 7 exige
   driver-adapter (`@prisma/adapter-pg`); `prisma migrate reset` **bloqueado para IA**;
   numa sessão com preview MCP, o submit de forms precisa de `requestSubmit`; o preview MCP
@@ -662,6 +674,13 @@ npm run dev                 # http://localhost:3000
     premia nem reprova; quota via `MentorHint kind:"journey"`.
 14. **Verificação on-chain é no claim**: nunca re-verificar retroativamente conclusões
     persistidas (resets da testnet apagariam o histórico dos alunos).
+15. **Passkey**: `smart-account-kit` + artefatos P27 formam uma unidade — versão 0.6.2,
+    account Wasm `1b5f…785a`, verifier `CC7E…OM3F`. O deployer G dedicado paga fee/salt,
+    mas **nunca é signer da smart account**. Credenciais/sessões ficam em IndexedDB; nunca
+    persistir credential ID no servidor nem expor o `deployerSecret`. O claim verifica o
+    hash do Wasm + saldo nativo via RPC, não um booleano do cliente. A prova interativa
+    é uma transferência real: sucesso significa que verifier + `__check_auth` aceitaram a
+    assinatura da passkey on-chain.
 
 ---
 
@@ -677,14 +696,16 @@ npm run dev                 # http://localhost:3000
 | [`../src/content/labs/types.ts`](../src/content/labs/types.ts) | DSL dos labs (steps, ações, verify) |
 | [`../src/content/labs/index.ts`](../src/content/labs/index.ts) | Catálogo da Forge (live + soon) |
 | [`../src/content/labs/wallet-onboarding.ts`](../src/content/labs/wallet-onboarding.ts) | Lab 1 (+ constante `USDC_TESTNET`) |
-| [`../src/content/labs/oz-token-wizard.ts`](../src/content/labs/oz-token-wizard.ts) | Lab wizard OZ (working tree) |
+| [`../src/content/labs/oz-token-wizard.ts`](../src/content/labs/oz-token-wizard.ts) | Lab wizard OZ |
 | [`../src/content/labs/oz-token-files.ts`](../src/content/labs/oz-token-files.ts) | Gerador de Rust do wizard (importa `CURATED_CARGO_TOML`) |
+| [`../src/content/labs/passkey-smart-wallet.ts`](../src/content/labs/passkey-smart-wallet.ts) | Lab passkey + identidade canônica dos artefatos P27 testnet |
 | [`../src/content/labs/scp-simulator.ts`](../src/content/labs/scp-simulator.ts) | Lab SCP (honor-based) |
 | [`../src/lib/labs/engine.ts`](../src/lib/labs/engine.ts) | Interpretador de ações (client) com fases e retries |
 | [`../src/lib/labs/verify.ts`](../src/lib/labs/verify.ts) | Verificação on-chain server-only (Horizon + RPC simulate) |
 | [`../src/lib/labs/store.ts`](../src/lib/labs/store.ts) | Runs em localStorage (anônimo + resume) |
 | [`../src/lib/stellar/classic.ts`](../src/lib/stellar/classic.ts) | Primeiras classic ops + result codes didáticos |
-| [`../src/lib/soroban/run-stream.ts`](../src/lib/soroban/run-stream.ts) | Transporte NDJSON compartilhado IDE/labs (working tree) |
+| [`../src/lib/stellar/smart-account.ts`](../src/lib/stellar/smart-account.ts) | Seam browser do smart-account-kit (WebAuthn + deploy/reconnect) |
+| [`../src/lib/soroban/run-stream.ts`](../src/lib/soroban/run-stream.ts) | Transporte NDJSON compartilhado IDE/labs |
 | [`../src/components/ide/use-forge-run.ts`](../src/components/ide/use-forge-run.ts) | Wrapper fino do IDE sobre o run-stream |
 | [`../src/content/journey/types.ts`](../src/content/journey/types.ts) | Modelo de conteúdo da Jornada (incl. `exercise`) |
 | [`../src/content/journey/index.ts`](../src/content/journey/index.ts) | Registry dos 17 capítulos, 2 arcos, `JOURNEY_LIVE` |
@@ -702,7 +723,7 @@ npm run dev                 # http://localhost:3000
 | `../src/app/(app)/campaign/page.tsx` | Trilho da campanha (verbatim do antigo /path) |
 | [`../src/app/api/labs/complete/route.ts`](../src/app/api/labs/complete/route.ts) | Claim de lab (verify on-chain → XP) |
 | [`../src/app/api/journey/complete/route.ts`](../src/app/api/journey/complete/route.ts) | Selo de capítulo (+30 XP) |
-| [`../src/app/api/journey/exercise/route.ts`](../src/app/api/journey/exercise/route.ts) | Examinador spec-write via mentor (working tree) |
+| [`../src/app/api/journey/exercise/route.ts`](../src/app/api/journey/exercise/route.ts) | Examinador spec-write via mentor |
 | `../src/app/api/submissions/route.ts` | Grading da campanha (+ ouro + 25 XP na mesma transaction) |
 | `../src/content/soroban-templates.ts` | `CURATED_CARGO_TOML` (fonte única dos pins) |
 | `../src/lib/forge-store.ts` | Deployments compartilhados labs ↔ painel Interact do IDE |

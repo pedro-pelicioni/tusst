@@ -26,6 +26,7 @@ import { emptyRun, loadRun, saveRun, type LabRun } from "@/lib/labs/store";
 import { loadLocalWallet, type ForgeWallet } from "@/lib/stellar/wallet";
 import {
   explorerAccountUrl,
+  explorerContractUrl,
   explorerTxUrl,
 } from "@/lib/stellar/network";
 
@@ -231,6 +232,16 @@ export function LabPlayer({
           "forge-cold": m.labs.player.errors.forgeCold,
           "build-failed": m.labs.player.errors.buildFailed,
           "build-timeout": m.labs.player.errors.buildTimeout,
+          "local-wallet-required": m.labs.player.errors.localWalletRequired,
+          "passkey-unavailable": m.labs.player.errors.passkeyUnavailable,
+          "passkey-mismatch": m.labs.player.errors.passkeyMismatch,
+          "passkey-failed": m.labs.player.errors.passkeyFailed,
+          "smart-wallet-deploy-failed":
+            m.labs.player.errors.smartWalletDeployFailed,
+          "smart-wallet-fund-failed":
+            m.labs.player.errors.smartWalletFundFailed,
+          "passkey-transaction-failed":
+            m.labs.player.errors.passkeyTransactionFailed,
         };
         setAction({
           s: "error",
@@ -570,7 +581,9 @@ export function LabPlayer({
                     href={
                       step.explorer === "tx"
                         ? explorerTxUrl(run.artifacts.txHashes[step.id] ?? "")
-                        : explorerAccountUrl(vars.address)
+                        : step.explorer === "contract"
+                          ? explorerContractUrl(run.artifacts.contractId ?? "")
+                          : explorerAccountUrl(vars.address)
                     }
                     target="_blank"
                     rel="noreferrer"
@@ -578,7 +591,9 @@ export function LabPlayer({
                   >
                     {step.explorer === "tx"
                       ? m.labs.player.viewTx
-                      : m.labs.player.viewAccount}{" "}
+                      : step.explorer === "contract"
+                        ? m.labs.player.viewContract
+                        : m.labs.player.viewAccount}{" "}
                     ↗
                   </a>
                 )}

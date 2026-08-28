@@ -55,8 +55,20 @@ export type LabAction =
       type: "contract-invoke";
       func: string;
       argsFrom: (ctx: LabRunCtx) => Record<string, string>;
+    }
+  | {
+      type: "passkey-create";
+      appName: string;
+      accountWasmHash: string;
+      webauthnVerifierAddress: string;
+      nativeTokenContract: string;
+    }
+  | {
+      type: "passkey-connect";
+      accountWasmHash: string;
+      webauthnVerifierAddress: string;
+      nativeTokenContract: string;
     };
-// Phase C (passkey spike pending): passkey-create | passkey-connect
 
 export type LabStep =
   | { kind: "narrate"; id: string; body: string; art?: string }
@@ -97,7 +109,7 @@ export type LabStep =
       action: LabAction;
       /** may interpolate {address}, {companion}, {balance}, {tx} */
       successBody: string;
-      explorer?: "tx" | "account";
+      explorer?: "tx" | "account" | "contract";
     }
   | { kind: "sim"; id: string; component: "scp-sim"; body?: string }
   | { kind: "checkpoint"; id: string; body: string };
@@ -109,7 +121,11 @@ export type VerifySpec =
   | { check: "trustline"; assetCode: string; assetIssuer: string }
   | { check: "payment-sent" }
   /** simulate `func(address)` on artifacts.contractId; passes when > 0 */
-  | { check: "token-balance-positive"; func: string };
+  | { check: "token-balance-positive"; func: string }
+  /** fetch the deployed contract Wasm and bind it to a known code identity */
+  | { check: "smart-account-code"; wasmHash: string }
+  /** query the native SAC balance of artifacts.contractId; passes when > 0 */
+  | { check: "smart-account-native-balance"; nativeTokenContract: string };
 
 export interface LabScenario {
   meta: LabMeta;

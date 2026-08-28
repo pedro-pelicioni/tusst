@@ -51,6 +51,7 @@ export const labs = {
     },
     phases: {
       prepare: "preparing",
+      passkey: "waiting for your passkey",
       queued: "in the forge queue",
       building: "compiling rust → wasm",
       sign: "signing",
@@ -59,6 +60,7 @@ export const labs = {
     },
     viewTx: "See the transaction on the explorer",
     viewAccount: "See your account on the explorer",
+    viewContract: "See the smart wallet on the explorer",
     retry: "Strike again",
     errors: {
       testnetBusy: "The testnet spirits are busy — strike again in a moment.",
@@ -67,6 +69,20 @@ export const labs = {
       forgeCold: "The forge is cold — the runner is unreachable. Try again in a moment.",
       buildFailed: "The compile failed — the runner rejected this contract. Strike again.",
       buildTimeout: "The compile ran out of time — the forge was crowded. Strike again.",
+      localWalletRequired:
+        "This rite needs the Forge's local testnet key to pay deployment fees — forge it in the previous step.",
+      passkeyUnavailable:
+        "Passkeys need a secure browser context and WebAuthn support. Open this lab over HTTPS on a passkey-capable device.",
+      passkeyMismatch:
+        "That passkey belongs to a different smart wallet. Try again and choose the credential you just forged.",
+      passkeyFailed:
+        "The passkey ceremony did not finish. Approve the device prompt and strike again.",
+      smartWalletDeployFailed:
+        "The passkey was created, but its smart wallet did not land on testnet. Strike again in a moment.",
+      smartWalletFundFailed:
+        "The smart wallet landed, but Friendbot could not fund it for the signing trial. Strike again in a moment.",
+      passkeyTransactionFailed:
+        "The passkey-signed transfer did not land on testnet. Approve the device prompt and strike again.",
     },
     checkpoint: {
       title: "Claim your reward",
@@ -82,6 +98,8 @@ export const labs = {
         trustline: "the USDC trustline",
         "payment-sent": "a sent payment",
         "token-balance-positive": "a token balance on your contract",
+        "smart-account-code": "the canonical smart-account contract",
+        "smart-account-native-balance": "native XLM in the smart wallet",
       },
     },
     done: {

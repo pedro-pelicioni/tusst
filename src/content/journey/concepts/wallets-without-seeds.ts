@@ -114,9 +114,9 @@ Translation for builders: multi-device wallets, guardian recovery and policy-hea
     {
       kind: "labLink",
       labSlug: "passkey-smart-wallet",
-      body: `The Forge has this lab on its anvil: **Passkey Smart Wallet**, where you'll enroll a real passkey and watch your own secure enclave sign a testnet transaction. Its card still reads *being forged* — when it opens, bring this chapter with you.
+      body: `The Forge is ready: enter **Passkey Smart Wallet**, enroll a real passkey, deploy its smart-account contract to testnet, and answer a fresh WebAuthn challenge with your own device.
 
-Until then, the road bends somewhere stranger: a ledger where the *amounts themselves* wear a veil.`,
+When the ledger confirms that the deployed code is the canonical smart-account Wasm, return to the road. It bends somewhere stranger: a ledger where the *amounts themselves* wear a veil.`,
     },
   ],
 };

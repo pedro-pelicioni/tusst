@@ -88,8 +88,8 @@ let kitReady = false;
 
 async function loadKit() {
   const [mod, moduleUtils] = await Promise.all([
-    import("@creit.tech/stellar-wallets-kit"),
-    import("@creit.tech/stellar-wallets-kit/modules/utils"),
+    import("@creit-tech/stellar-wallets-kit"),
+    import("@creit-tech/stellar-wallets-kit/modules/utils"),
   ]);
   if (!kitReady) {
     mod.StellarWalletsKit.init({

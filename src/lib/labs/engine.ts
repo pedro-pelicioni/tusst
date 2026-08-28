@@ -12,6 +12,7 @@ import {
   fundWithFriendbot,
   generateLocalWallet,
   loadLocalWallet,
+  exportLocalSecret,
   type ForgeWallet,
 } from "@/lib/stellar/wallet";
 import { ClassicSubmitError, runClassicOps } from "@/lib/stellar/classic";
@@ -28,6 +29,7 @@ import type { LabAction, LabRunCtx } from "@/content/labs/types";
 
 export type LabPhase =
   | "prepare"
+  | "passkey"
   | "queued"
   | "building"
   | "sign"
@@ -42,6 +44,9 @@ export function phasesFor(action: LabAction): LabPhase[] {
     case "contract-deploy":
     case "contract-invoke":
       return ["prepare", "sign", "submit", "confirm"];
+    case "passkey-create":
+    case "passkey-connect":
+      return ["prepare", "passkey", "confirm"];
     case "friendbot":
       return ["submit", "confirm"];
     case "generate-keypair":
@@ -224,6 +229,105 @@ export async function runLabAction(
       } catch (e) {
         throw new LabActionError(
           e instanceof Error ? e.message.slice(0, 200) : "invoke failed",
+          true,
+        );
+      }
+    }
+
+    case "passkey-create": {
+      if (!wallet) throw new LabActionError("wallet-required", false);
+      if (wallet.kind !== "local") {
+        throw new LabActionError("local-wallet-required", false);
+      }
+      const deployerSecret = exportLocalSecret();
+      if (!deployerSecret) {
+        throw new LabActionError("local-wallet-required", false);
+      }
+      onPhase("prepare");
+      try {
+        const { createPasskeyWallet } = await import(
+          "@/lib/stellar/smart-account"
+        );
+        onPhase("passkey");
+        const result = await createPasskeyWallet({
+          deployerSecret,
+          appName: action.appName,
+          userName: wallet.address,
+          config: {
+            accountWasmHash: action.accountWasmHash,
+            webauthnVerifierAddress: action.webauthnVerifierAddress,
+            nativeTokenContract: action.nativeTokenContract,
+          },
+        });
+        onPhase("confirm");
+        return {
+          contractId: result.contractId,
+          txHash: result.txHash,
+          stateDelta: {
+            passkeyCredentialId: result.credentialId,
+            passkeyAuthenticated: "no",
+          },
+        };
+      } catch (e) {
+        const message = e instanceof Error ? e.message : "passkey-failed";
+        const known = new Set([
+          "passkey-unavailable",
+          "passkey-mismatch",
+          "smart-wallet-deploy-failed",
+        ]);
+        throw new LabActionError(
+          known.has(message) ? message : "passkey-failed",
+          true,
+        );
+      }
+    }
+
+    case "passkey-connect": {
+      if (!wallet) throw new LabActionError("wallet-required", false);
+      if (wallet.kind !== "local") {
+        throw new LabActionError("local-wallet-required", false);
+      }
+      const deployerSecret = exportLocalSecret();
+      const credentialId = ctx.state.passkeyCredentialId;
+      const contractId = ctx.artifacts.contractId;
+      if (!deployerSecret) {
+        throw new LabActionError("local-wallet-required", false);
+      }
+      if (!credentialId || !contractId) {
+        throw new LabActionError("missing-state", false);
+      }
+      onPhase("prepare");
+      try {
+        const { provePasskeyWallet } = await import(
+          "@/lib/stellar/smart-account"
+        );
+        onPhase("passkey");
+        const txHash = await provePasskeyWallet({
+          deployerSecret,
+          credentialId,
+          contractId,
+          recipient: wallet.address,
+          config: {
+            accountWasmHash: action.accountWasmHash,
+            webauthnVerifierAddress: action.webauthnVerifierAddress,
+            nativeTokenContract: action.nativeTokenContract,
+          },
+        });
+        onPhase("confirm");
+        return {
+          txHash,
+          stateDelta: { passkeyAuthenticated: "yes" },
+        };
+      } catch (e) {
+        const message = e instanceof Error ? e.message : "passkey-failed";
+        const known = new Set([
+          "passkey-unavailable",
+          "passkey-mismatch",
+          "smart-wallet-fund-failed",
+          "passkey-transaction-failed",
+        ]);
+        throw new LabActionError(
+          known.has(message) ? message : "passkey-failed",
           true,
         );
       }

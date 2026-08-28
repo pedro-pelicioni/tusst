@@ -1,5 +1,6 @@
 import "server-only";
 
+import { createHash } from "node:crypto";
 import {
   Address,
   BASE_FEE,
@@ -83,6 +84,38 @@ async function tokenBalancePositive(
   }
 }
 
+async function smartAccountCodeMatches(
+  contractId: string,
+  expectedWasmHash: string,
+): Promise<boolean> {
+  try {
+    const server = new rpc.Server(TESTNET.rpcUrl);
+    const wasm = await server.getContractWasmByContractId(contractId);
+    const actual = createHash("sha256").update(wasm).digest("hex");
+    return actual === expectedWasmHash.toLowerCase();
+  } catch {
+    return false;
+  }
+}
+
+async function smartAccountNativeBalancePositive(
+  contractId: string,
+  nativeTokenContract: string,
+): Promise<boolean> {
+  try {
+    const server = new rpc.Server(TESTNET.rpcUrl);
+    const { result } = await server.queryContract<bigint>(
+      nativeTokenContract,
+      "balance",
+      { id: contractId },
+      TESTNET.passphrase,
+    );
+    return BigInt(result) > BigInt(0);
+  } catch {
+    return false;
+  }
+}
+
 export async function verifyOnChain(
   address: string,
   specs: VerifySpec[],
@@ -121,6 +154,25 @@ export async function verifyOnChain(
         const ok =
           !!contractId &&
           (await tokenBalancePositive(address, contractId, spec.func));
+        if (!ok) failed.push(spec.check);
+        break;
+      }
+      case "smart-account-code": {
+        const contractId = artifacts?.contractId;
+        const ok =
+          !!contractId &&
+          (await smartAccountCodeMatches(contractId, spec.wasmHash));
+        if (!ok) failed.push(spec.check);
+        break;
+      }
+      case "smart-account-native-balance": {
+        const contractId = artifacts?.contractId;
+        const ok =
+          !!contractId &&
+          (await smartAccountNativeBalancePositive(
+            contractId,
+            spec.nativeTokenContract,
+          ));
         if (!ok) failed.push(spec.check);
         break;
       }

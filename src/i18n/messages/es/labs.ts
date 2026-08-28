@@ -51,6 +51,7 @@ export const labs = {
     },
     phases: {
       prepare: "preparando",
+      passkey: "esperando tu passkey",
       queued: "en la cola de la fragua",
       building: "compilando rust → wasm",
       sign: "firmando",
@@ -59,6 +60,7 @@ export const labs = {
     },
     viewTx: "Ver la transacción en el explorer",
     viewAccount: "Ver tu cuenta en el explorer",
+    viewContract: "Ver la smart wallet en el explorer",
     retry: "Golpear de nuevo",
     errors: {
       testnetBusy: "Los espíritus de la testnet están ocupados — golpea de nuevo en un momento.",
@@ -67,6 +69,20 @@ export const labs = {
       forgeCold: "La fragua está fría — el runner está inaccesible. Inténtalo de nuevo en un momento.",
       buildFailed: "La compilación falló — el runner rechazó este contrato. Golpea de nuevo.",
       buildTimeout: "La compilación agotó el tiempo — la fragua estaba llena. Golpea de nuevo.",
+      localWalletRequired:
+        "Este rito necesita la clave testnet local de la Forja para pagar el despliegue — fórjala en el paso anterior.",
+      passkeyUnavailable:
+        "Las passkeys necesitan un contexto seguro y soporte WebAuthn. Abre este lab por HTTPS en un dispositivo compatible.",
+      passkeyMismatch:
+        "Esa passkey pertenece a otra smart wallet. Inténtalo de nuevo y elige la credencial que acabas de forjar.",
+      passkeyFailed:
+        "La ceremonia de la passkey no terminó. Aprueba la solicitud del dispositivo y golpea de nuevo.",
+      smartWalletDeployFailed:
+        "La passkey fue creada, pero su smart wallet no llegó a testnet. Golpea de nuevo en un momento.",
+      smartWalletFundFailed:
+        "La smart wallet llegó, pero Friendbot no pudo fondearla para la prueba de firma. Golpea de nuevo en un momento.",
+      passkeyTransactionFailed:
+        "La transferencia firmada por la passkey no llegó a testnet. Aprueba la solicitud del dispositivo y golpea de nuevo.",
     },
     checkpoint: {
       title: "Reclama tu recompensa",
@@ -82,6 +98,8 @@ export const labs = {
         trustline: "la trustline de USDC",
         "payment-sent": "un pago enviado",
         "token-balance-positive": "un saldo de token en tu contrato",
+        "smart-account-code": "el contrato canónico de smart account",
+        "smart-account-native-balance": "XLM nativo en la smart wallet",
       },
     },
     done: {
