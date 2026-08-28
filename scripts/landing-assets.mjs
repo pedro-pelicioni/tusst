@@ -136,6 +136,9 @@ const JOBS = [
   { src: "hero-far-raw.png", out: "hero/far.webp", kind: "key", budgetKB: 250, resize: { width: 1600 }, alphaQuality: 60, key: { keyStart: 30, keyFull: 115, alphaSteps: 6 } },
   { src: "hero-mid-raw.png", out: "hero/mid.webp", kind: "key", budgetKB: 450, resize: { width: 3840 }, alphaQuality: 90, key: { erode: true } },
   { src: "hero-fg-raw.png", out: "hero/fg.webp", kind: "key", budgetKB: 450, resize: { width: 3840 }, alphaQuality: 90 },
+  // adventuring party sprite: saliency-cut (the characters ARE the
+  // subject, unlike the rock layers), tight-trimmed, placed by HeroScene
+  { src: "hero-party-cut.png", out: "hero/party.webp", kind: "alpha", budgetKB: 200, resize: { width: 1400 }, alphaQuality: 90, trim: true },
   { src: "intro-scene.png", out: "intro/scene.webp", kind: "scene", budgetKB: 350 },
   { src: "intro-character-cut.png", out: "intro/character.webp", kind: "alpha", budgetKB: 250, resize: { width: 1200 } },
   { src: "carousel-bg.png", out: "carousel/bg.webp", kind: "scene", budgetKB: 250 },
@@ -160,6 +163,11 @@ async function run() {
     await mkdir(path.dirname(outPath), { recursive: true });
 
     let img = job.kind === "key" ? await grayKey(srcPath, job.key) : sharp(srcPath);
+    if (job.trim) {
+      // materialize first — sharp reorders chained ops, and trim must see
+      // the keyed alpha
+      img = sharp(await img.png().toBuffer()).trim({ threshold: 12 });
+    }
     if (job.resize) {
       img = img.resize({
         width: job.resize.width,

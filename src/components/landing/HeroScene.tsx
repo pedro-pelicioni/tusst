@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Messages } from "@/i18n/messages";
 import { Particles } from "./Particles";
-import { SceneLayers } from "./SceneLayers";
+import { SceneLayers, hasLandingAsset } from "./SceneLayers";
 
 export function HeroScene({
   m,
@@ -23,6 +23,34 @@ export function HeroScene({
           { src: "/landing/hero/sky.webp", plx: 0.05, mouse: 0.25, priority: true, quality: 75 },
           { src: "/landing/hero/far.webp", plx: 0.12, mouse: 0.45, eager: true },
           { src: "/landing/hero/mid.webp", plx: 0.2, mouse: 0.7, priority: true, quality: 75 },
+        ]}
+      />
+
+      {/* the party marches toward the citadel between the crag and the
+          foreground rocks — same parallax factor as the rocks so their
+          feet stay planted on them */}
+      {hasLandingAsset("/landing/hero/party.webp") && (
+        <div
+          aria-hidden
+          data-plx={0.3}
+          className="ld-plx pointer-events-none absolute bottom-[20%] left-[3%] hidden w-[clamp(240px,24vw,410px)] md:block"
+        >
+          <div data-plx-mouse={1.1}>
+            <Image
+              src="/landing/hero/party.webp"
+              alt=""
+              width={1400}
+              height={895}
+              quality={75}
+              sizes="400px"
+              className="h-auto w-full drop-shadow-[0_16px_26px_rgba(0,0,0,0.6)]"
+            />
+          </div>
+        </div>
+      )}
+
+      <SceneLayers
+        layers={[
           { src: "/landing/hero/fg.webp", plx: 0.3, mouse: 1.1, eager: true, quality: 75, className: "object-bottom" },
         ]}
       />
