@@ -31,13 +31,16 @@ model User {
   gold         Int     @default(0)
   goldRevealed Boolean @default(false)
 
-  accounts    Account[]
-  sessions    Session[]
-  character   Character?
-  submissions Submission[]
-  progress    Progress[]
-  inventory   Inventory[]
-  mentorHints MentorHint[]
+  accounts        Account[]
+  sessions        Session[]
+  character       Character?
+  submissions     Submission[]
+  progress        Progress[]
+  inventory       Inventory[]
+  mentorHints     MentorHint[]
+  labProgress     LabProgress[]
+  journeyProgress JourneyProgress[]
+  xpEvents        XpEvent[]
 }
 
 model Account {
@@ -261,4 +264,56 @@ model Inventory {
   equipped   Boolean  @default(false)
 
   @@unique([userId, skinId])
+}
+
+// ----------------------------------------------------------------------------
+// v2 — Forge Labs, Builder's Journey, XP ledger
+// Labs and journey concepts are pure TS content (src/content/labs,
+// src/content/journey) keyed by slug — same content-identity rule as lessons.
+// These tables only track per-user state; nothing here touches the campaign
+// unlock machinery (Character.maxUnlockedAct, Progress).
+// ----------------------------------------------------------------------------
+
+// Guided on-chain lab runs. `artifacts` carries the on-chain evidence the
+// completion endpoint verified ({ address, txHashes: {stepId: hash},
+// contractId? }) so a completion is always re-checkable.
+model LabProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  labSlug     String
+  stepsDone   Int       @default(0)
+  artifacts   Json?
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+
+  @@unique([userId, labSlug])
+}
+
+model JourneyProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conceptSlug String
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+
+  @@unique([userId, conceptSlug])
+}
+
+// XP ledger. The unique constraint IS the anti-replay guard: one award per
+// (user, source, sourceKey), where source is "lesson" | "lab" | "journey" and
+// sourceKey the content slug. Character.xp/level are denormalized aggregates
+// written in the same transaction (src/lib/xp-award.ts).
+model XpEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount    Int
+  source    String
+  sourceKey String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, source, sourceKey])
+  @@index([userId, createdAt])
 }

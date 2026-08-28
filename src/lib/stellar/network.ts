@@ -16,3 +16,7 @@ export function explorerContractUrl(contractId: string): string {
 export function explorerTxUrl(txHash: string): string {
   return `https://stellar.expert/explorer/testnet/tx/${txHash}`;
 }
+
+export function explorerAccountUrl(address: string): string {
+  return `https://stellar.expert/explorer/testnet/account/${address}`;
+}

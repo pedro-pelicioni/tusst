@@ -8,9 +8,11 @@ import { useMessages } from "@/i18n/client";
 /** Profile avatar that opens a dropdown with the nav links and sign out. */
 export function NavMenu({
   name,
+  journeyLive = false,
   signOutAction,
 }: {
   name: string;
+  journeyLive?: boolean;
   signOutAction: () => Promise<void>;
 }) {
   const m = useMessages();
@@ -18,10 +20,12 @@ export function NavMenu({
   const ref = useRef<HTMLDivElement>(null);
 
   const links = [
-    { href: "/path", label: m.common.nav.path },
+    { href: "/path", label: m.common.nav.hall },
+    ...(journeyLive ? [{ href: "/journey", label: m.common.nav.journey }] : []),
+    { href: "/labs", label: m.common.nav.forge },
+    { href: "/campaign", label: m.common.nav.campaign },
     { href: "/cards", label: m.common.nav.cards },
-    { href: "/ide", label: m.common.nav.forge },
-  ] as const;
+  ];
 
   useEffect(() => {
     if (!open) return;

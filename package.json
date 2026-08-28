@@ -17,7 +17,9 @@
     "db:reset": "prisma migrate reset",
     "runner:build": "docker build -t tusst-runner:latest runner",
     "runner:soroban:build": "docker build -t tusst-soroban-runner:latest runner-soroban",
-    "assets:landing": "node scripts/landing-assets.mjs"
+    "assets:landing": "node scripts/landing-assets.mjs",
+    "assets:v2": "node scripts/v2-assets.mjs",
+    "xp:backfill": "node scripts/backfill-xp.mjs"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.3",

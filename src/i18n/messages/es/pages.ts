@@ -1,5 +1,11 @@
-// App pages: path, cards, tracks/[slug], profile.
+// App pages: path (el Salón usa `home`), campaign, cards, tracks/[slug], profile.
 export const pages = {
+  campaign: {
+    kicker: "el camino opcional",
+    title: "Campaña de Rust — Forgeborn",
+    optionalNote:
+      "La senda de maestría. Cada acto es opcional — y cada acto te afila más. El Viaje enlaza aquí cuando quieras el Rust detrás de un concepto.",
+  },
   path: {
     kicker: "senda de campaña",
     title: "Forgeborn — de Rust a Soroban",

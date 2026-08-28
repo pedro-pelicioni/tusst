@@ -1,0 +1,209 @@
+/* ════════════════════════════════════════════════════════════════════
+   SCENE KIT — the landing's cinematic language, generalized for the v2
+   surfaces (hall, forge labs, journey). Namespace `sc-`, scoped under
+   [data-scene-root]. Deliberately a sibling of landing.css, never an
+   import of it: the landing stays untouched and independently tunable.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Reveal gate ─────────────────────────────────────────────────────
+   SceneRoot stamps `data-js` with a render-blocking inline script during
+   HTML parse. Without JS the content is simply visible (fail-safe); with
+   it, reveals start hidden and SceneMotion toggles `is-revealed`. */
+[data-scene-root][data-js] [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-scene-root][data-js] [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+[data-scene-root][data-js] [data-reveal="2"] { transition-delay: 0.12s; }
+[data-scene-root][data-js] [data-reveal="3"] { transition-delay: 0.24s; }
+[data-scene-root][data-js] [data-reveal="4"] { transition-delay: 0.36s; }
+[data-scene-root][data-js] [data-reveal="5"] { transition-delay: 0.48s; }
+
+/* ── Keyframes (transform/opacity only) ────────────────────────────── */
+
+@keyframes sc-rise {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  6% { opacity: var(--mote-peak, 0.9); }
+  85% { opacity: var(--mote-peak, 0.9); }
+  100% { transform: translate3d(0, -112vh, 0); opacity: 0; }
+}
+
+@keyframes sc-sway {
+  from { transform: translateX(calc(var(--sway, 16px) * -1)); }
+  to { transform: translateX(var(--sway, 16px)); }
+}
+
+@keyframes sc-flicker {
+  0%, 100% { opacity: 0.85; }
+  8% { opacity: 0.62; }
+  12% { opacity: 0.9; }
+  34% { opacity: 0.7; }
+  41% { opacity: 1; }
+  67% { opacity: 0.66; }
+  72% { opacity: 0.92; }
+}
+
+@keyframes sc-ray-pulse {
+  0%, 100% { opacity: 0.22; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes sc-float {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-11px) rotate(var(--tilt, 0deg)); }
+}
+
+@keyframes sc-glow {
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(143, 123, 255, 0.55)); }
+  50% { filter: drop-shadow(0 0 26px rgba(143, 123, 255, 0.95)); }
+}
+
+@keyframes sc-ember-glow {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(217, 185, 106, 0.45)); }
+  50% { filter: drop-shadow(0 0 24px rgba(217, 185, 106, 0.85)); }
+}
+
+.sc-glow { animation: sc-glow 3.4s ease-in-out infinite; }
+.sc-ember { animation: sc-ember-glow 3.8s ease-in-out infinite; }
+.sc-float { animation: sc-float 7s ease-in-out infinite; }
+.sc-flicker { animation: sc-flicker 4.6s steps(1, end) infinite; }
+
+/* ── Scenes ──────────────────────────────────────────────────────────
+   Each modifier paints a CSS-gradient stand-in for its illustration, so
+   every surface reads as designed before (or without) the Higgsfield art. */
+.sc-scene {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The Hall — warm keep interior: hearth gold low, violet night high. */
+.sc-scene--hall {
+  background:
+    radial-gradient(95% 70% at 50% 96%, rgba(217, 185, 106, 0.14), transparent 58%),
+    radial-gradient(80% 60% at 78% 10%, rgba(143, 123, 255, 0.13), transparent 60%),
+    radial-gradient(60% 50% at 14% 24%, rgba(120, 46, 46, 0.16), transparent 58%),
+    linear-gradient(180deg, #0b0716 0%, #110b20 52%, #07050e 100%);
+}
+
+/* The Forge — teal starlight over ember heat (labs index + players). */
+.sc-scene--forge {
+  background:
+    radial-gradient(90% 80% at 74% 60%, rgba(69, 214, 196, 0.1), transparent 58%),
+    radial-gradient(70% 60% at 40% 88%, rgba(217, 185, 106, 0.14), transparent 55%),
+    linear-gradient(180deg, #060409 0%, #0c0916 55%, #07050e 100%);
+}
+
+/* The Journey — open night road, violet into deep blue. */
+.sc-scene--journey {
+  background:
+    radial-gradient(85% 75% at 30% 30%, rgba(143, 123, 255, 0.14), transparent 60%),
+    radial-gradient(70% 55% at 82% 78%, rgba(106, 168, 255, 0.1), transparent 58%),
+    linear-gradient(180deg, #07050e 0%, #0d0a1b 55%, #060409 100%);
+}
+
+/* Lab player backdrop — quiet vignette so the steps carry the light. */
+.sc-scene--lab {
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(143, 123, 255, 0.08), transparent 60%),
+    radial-gradient(90% 60% at 50% 100%, rgba(217, 185, 106, 0.07), transparent 55%),
+    linear-gradient(180deg, #08060f 0%, #0b0814 60%, #07050e 100%);
+}
+
+/* readability scrim between the art and the copy */
+.sc-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(5, 4, 9, 0.62) 0%, rgba(5, 4, 9, 0.12) 30%, rgba(5, 4, 9, 0.14) 62%, rgba(5, 4, 9, 0.78) 100%);
+}
+
+/* parallax layers get bleed so translation never exposes an edge */
+.sc-layer {
+  position: absolute;
+  inset: -6%;
+}
+
+.sc-plx {
+  will-change: transform;
+}
+
+/* ── Light rays ────────────────────────────────────────────────────── */
+.sc-ray {
+  position: absolute;
+  top: -12%;
+  width: clamp(60px, 7vw, 120px);
+  height: 130%;
+  transform: skewX(-16deg);
+  background: linear-gradient(180deg, rgba(217, 185, 106, 0.16), rgba(217, 185, 106, 0.05) 55%, transparent 85%);
+  filter: blur(2px);
+  animation: sc-ray-pulse 7s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  pointer-events: none;
+}
+
+/* ── Particles ─────────────────────────────────────────────────────── */
+.sc-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sc-mote {
+  position: absolute;
+  bottom: -4%;
+  left: var(--x, 50%);
+  animation: sc-rise var(--dur, 16s) linear var(--delay, 0s) infinite;
+  opacity: 0;
+}
+
+.sc-mote-dot {
+  display: block;
+  width: var(--sz, 5px);
+  height: var(--sz, 5px);
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--clr, rgba(207, 195, 255, 0.95)) 0%, transparent 72%);
+  animation: sc-sway var(--sway-dur, 5s) ease-in-out infinite alternate;
+}
+
+/* ── Doors (the Hall's two paths) ──────────────────────────────────── */
+.sc-door {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+.sc-door:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(143, 123, 255, 0.18);
+}
+
+/* ── Reduced motion: everything static, everything visible ─────────── */
+@media (prefers-reduced-motion: reduce) {
+  [data-scene-root] [class^="sc-"],
+  [data-scene-root] [class*=" sc-"] {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  [data-scene-root][data-js] [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  [data-scene-root] .sc-mote {
+    display: none;
+  }
+}

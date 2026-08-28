@@ -1,0 +1,112 @@
+# v2 Art Briefs — Higgsfield prompt pack
+
+Masters go into `art-src/v2/` (gitignored) with the exact filenames below,
+then `npm run assets:v2` cuts/compresses them into `public/v2/`. Every slot
+has a CSS/glyph stand-in, so ship art in any order — nothing blocks.
+
+## Shared style preamble (paste before every prompt)
+
+> Painterly dark-fantasy D&D illustration, cinematic wide shot, night palette
+> of deep violets (#0b0716, #120b22) with warm gold accents (#d9b96a) and
+> ember reds, dramatic rim light, volumetric god rays, soft film grain,
+> matte-painting detail, no text, no letters, no watermark, no UI.
+
+Rules that keep the pipeline happy:
+
+- **matte scene** slots: full-bleed art, edge-to-edge, no border/frame.
+- **keyed layer** slots: paint the subject on a **flat light-gray backdrop
+  (#d4d4d4, perfectly even)** — the script cuts it by color distance. Subjects
+  must not touch the top edge.
+- **transparent** slots (emblems, sigils): export with the background already
+  removed (PNG alpha). The script only trims and compresses.
+- Respect the safe areas noted per slot — scrims darken top and bottom ~25%.
+
+## The Hall — home (`/path`)
+
+| # | file in `art-src/v2/` | master size | kind |
+|---|---|---|---|
+| 1 | `hall-bg.png` | 2560×1440 | matte scene |
+| 2 | `hall-mid-raw.png` | 3840 wide | keyed layer |
+| 3 | `door-journey.png` | 1200×1500 | matte scene |
+| 4 | `door-campaign.png` | 1200×1500 | matte scene |
+| 5 | `forge-vignette.png` | 1200×900 | matte scene |
+
+**1 · hall-bg** — Interior of a great keep's hall at night: a long stone
+gallery lit by a distant hearth, banners with abstract sigils (no letters),
+two colossal archways side by side in the far wall glowing faintly — one
+violet-blue, one warm gold — and to the right, lower, the mouth of a forge
+workshop breathing ember light. Left third relatively calm/dark (safe area
+for headline text).
+
+**2 · hall-mid-raw** — On flat light-gray: a foreground row of hall props to
+parallax over the backdrop — a stone column edge on the left, a hanging iron
+chandelier chain, drifting hearth sparks. Sparse, mostly empty center.
+
+**3 · door-journey** — A tall archway seen straight on, violet-blue light
+spilling through; beyond it a winding night road under a shattered
+constellation sky, waymarker stones glowing faintly. Mood: invitation,
+clarity. Bottom 30% calm for the card's text block.
+
+**4 · door-campaign** — Twin archway of #3, warm gold/ember light; beyond it
+a battlefield ridge with eight distant banners planted along a switchback
+trail up a rusted citadel. Mood: challenge, glory. Bottom 30% calm.
+
+**5 · forge-vignette** — Not a door: an open smithy alcove — a massive anvil
+on a stone plinth, teal-flame forge behind it (teal #45d6c4 flame accents
+over gold coals), tongs and contract-scroll props. Mood: workshop, hands-on.
+
+## The Forge — labs index (`/labs`)
+
+| # | file | master size | kind |
+|---|---|---|---|
+| 6 | `forge-bg.png` | 2560×1440 | matte scene |
+| 7 | `emblem-wallet-onboarding.png` | 800×800 | transparent |
+| 8 | `emblem-oz-token-wizard.png` | 800×800 | transparent |
+| 9 | `emblem-passkey-smart-wallet.png` | 800×800 | transparent |
+| 10 | `emblem-scp-simulator.png` | 800×800 | transparent |
+
+**6 · forge-bg** — A vast dwarven forge-hall at night: rows of anvil
+stations under a star-pierced vaulted ceiling, one great teal-flamed furnace
+as the focal point, gold sparks rising like the site's particles. Top-left
+quadrant calmer (headline safe area).
+
+**7 · emblem: wallet** — An ornate skeleton key fused with a wax-sealed coin
+pouch, faint violet glow, isometric-ish 3/4 view, painted-relic style.
+
+**8 · emblem: OZ wizard** — A blacksmith's hammer striking a glowing token
+coin on an anvil, tiny gear-rune ring around the coin (nod to OpenZeppelin),
+ember sparks.
+
+**9 · emblem: passkey** — A rounded shield with a fingerprint whorl engraved
+in glowing teal, no seed-phrase scroll — a snapped quill beneath it.
+
+**10 · emblem: SCP** — A council circle of five rune-stones connected by
+glowing threads of light (a quorum graph), one stone dimmed.
+
+## The Journey — map (`/journey`, Phase B surfaces, slots ready now)
+
+| # | file | master size | kind |
+|---|---|---|---|
+| 11 | `journey-bg.png` | 2560×1440 | matte scene |
+| 12 | `sigil-1.png` | 640×640 | transparent |
+| 13 | `sigil-2.png` | 640×640 | transparent |
+| 14 | `sigil-3.png` | 640×640 | transparent |
+
+**11 · journey-bg** — A night road winding through highlands toward the
+horizon, waymarker obelisks at intervals each glowing a different soft color,
+the shattered-constellation sky above (the landing's sky language). Center
+column calm for the chapter rail.
+
+**12 · sigil-1 (spec-driven)** — A quill crossing a blueprint scroll, violet
+ink glow. **13 · sigil-2 (SCP)** — Miniature of emblem #10, simplified.
+**14 · sigil-3 (tx anatomy)** — An envelope-shaped rune split open showing
+three orbiting op-glyphs.
+
+## After generating
+
+```bash
+npm run assets:v2
+```
+
+The script reports each slot (missing masters are fine), enforces per-file
+KB budgets, and writes to `public/v2/`. Commit only `public/v2/` outputs.

@@ -6,6 +6,8 @@ import { gradeSubmission } from "@/lib/validate";
 import { TRIAL_LESSON_SLUG } from "@/content/steps";
 import { acts } from "@/content/campaign";
 import { getUnlockedActCount } from "@/lib/unlock";
+import { awardXp, type XpAwardOutcome } from "@/lib/xp-award";
+import { XP_LESSON } from "@/lib/xp";
 
 const MAX_CODE_BYTES = 64 * 1024;
 const MAX_BODY_BYTES = 80 * 1024; // code + JSON envelope
@@ -131,6 +133,7 @@ export async function POST(req: Request) {
   let firstCompletion = false;
   let goldOutcome: { earned: number; total: number; firstReveal: boolean } | null =
     null;
+  let xpOutcome: XpAwardOutcome | null = null;
   if (verdict.passed) {
     // Atomic against concurrent passing submissions (double ⌘⏎, parallel
     // POSTs): the conditional updateMany re-evaluates its WHERE under the row
@@ -173,14 +176,26 @@ export async function POST(req: Request) {
           data: { gold: { increment: lesson.goldReward }, goldRevealed: true },
           select: { gold: true },
         });
+        // XP rides the same first-completion transaction as gold; the
+        // XpEvent unique constraint is a second replay guard on its own.
+        const xp = await awardXp(tx, {
+          userId,
+          amount: XP_LESSON,
+          source: "lesson",
+          sourceKey: lessonSlug,
+        });
         return {
-          earned: lesson.goldReward,
-          total: after.gold,
-          firstReveal: !before.goldRevealed,
+          gold: {
+            earned: lesson.goldReward,
+            total: after.gold,
+            firstReveal: !before.goldRevealed,
+          },
+          xp,
         };
       });
       firstCompletion = outcome !== null;
-      goldOutcome = outcome;
+      goldOutcome = outcome?.gold ?? null;
+      xpOutcome = outcome?.xp ?? null;
     } catch (e) {
       if (
         e instanceof Prisma.PrismaClientKnownRequestError &&
@@ -203,5 +218,6 @@ export async function POST(req: Request) {
     // Present only when this pass credited the reward (goldRevealed is now
     // guaranteed true — the economy stays hidden for anonymous/unrevealed).
     gold: goldOutcome ?? undefined,
+    xp: xpOutcome && xpOutcome.awarded ? xpOutcome : undefined,
   });
 }

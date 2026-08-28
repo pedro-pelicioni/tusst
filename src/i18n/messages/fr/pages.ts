@@ -1,5 +1,11 @@
-// App pages: path, cards, tracks/[slug], profile.
+// App pages: path (le Hall utilise `home`), campaign, cards, tracks/[slug], profile.
 export const pages = {
+  campaign: {
+    kicker: "la route optionnelle",
+    title: "Campagne Rust — Forgeborn",
+    optionalNote:
+      "La voie de la maîtrise. Chaque acte est optionnel — et chaque acte t'aiguise. Le Voyage pointe ici dès que tu veux le Rust derrière un concept.",
+  },
   path: {
     kicker: "voie de campagne",
     title: "Forgeborn — de Rust à Soroban",

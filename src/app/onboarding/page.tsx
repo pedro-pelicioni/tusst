@@ -6,9 +6,11 @@ import { OnboardingFlow } from "@/components/onboarding/OnboardingFlow";
 
 // Mimo/Duolingo-style personalized onboarding. Deliberately outside the
 // (app) group: no nav, no footer — a full-screen focused flow. Signed-in
-// players skip straight to the campaign.
+// players skip straight to the Hall.
 export default async function OnboardingPage() {
   const session = await auth();
+
+  if (session?.user) redirect("/path");
 
   const firstActive = await prisma.track.findFirst({
     where: { status: "active" },
@@ -16,8 +18,6 @@ export default async function OnboardingPage() {
     select: { slug: true },
   });
   const trackHref = firstActive ? `/tracks/${firstActive.slug}` : "/cards";
-
-  if (session?.user) redirect(trackHref);
 
   const trialLesson = await prisma.lesson.findUnique({
     where: { slug: TRIAL_LESSON_SLUG },

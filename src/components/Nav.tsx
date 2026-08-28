@@ -5,6 +5,7 @@ import { auth, signOut } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getMessages } from "@/i18n/server";
 import { fmt } from "@/i18n/format";
+import { JOURNEY_LIVE } from "@/content/journey";
 
 export async function Nav() {
   const session = await auth();
@@ -16,14 +17,26 @@ export async function Nav() {
     await signOut({ redirectTo: "/" });
   }
 
-  // The pouch stays hidden until the Phase 5 reveal — the first completed
-  // lesson flips goldRevealed, and only then does the coin counter appear.
+  // The pouch stays hidden until the hidden-gold reveal; the level chip stays
+  // hidden until the first XP lands — same philosophy, no zero-noise.
   const pouch = user?.id
     ? await prisma.user.findUnique({
         where: { id: user.id },
-        select: { gold: true, goldRevealed: true },
+        select: {
+          gold: true,
+          goldRevealed: true,
+          character: { select: { level: true, xp: true } },
+        },
       })
     : null;
+
+  // The two roads + the workshop. Same set signed-in and signed-out; the
+  // Journey joins once its first chapters go live (Phase B).
+  const links = [
+    ...(JOURNEY_LIVE ? [{ href: "/journey", label: m.common.nav.journey }] : []),
+    { href: "/labs", label: m.common.nav.forge },
+    { href: "/campaign", label: m.common.nav.campaign },
+  ];
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur">
@@ -42,9 +55,31 @@ export async function Nav() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-3 sm:gap-7">
+        <nav className="flex items-center gap-3 sm:gap-6">
           {user ? (
             <>
+              <span className="hidden items-center gap-6 md:flex">
+                {links.map((l) => (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </span>
+              {(pouch?.character?.xp ?? 0) > 0 && (
+                <Link
+                  href="/profile"
+                  title={fmt(m.common.nav.lvl, {
+                    level: pouch?.character?.level ?? 1,
+                  })}
+                  className="flex items-center rounded-full border border-accent/35 bg-accent/10 px-2.5 py-1 font-mono text-[11px] font-semibold text-accent-soft transition hover:border-accent/70 hover:bg-accent/20"
+                >
+                  {fmt(m.common.nav.lvl, { level: pouch?.character?.level ?? 1 })}
+                </Link>
+              )}
               {pouch?.goldRevealed && (
                 <Link
                   href="/profile"
@@ -64,28 +99,23 @@ export async function Nav() {
                 </Link>
               )}
               <LanguageSwitcher />
-              <NavMenu name={user.name ?? "guardian"} signOutAction={handleSignOut} />
+              <NavMenu
+                name={user.name ?? "guardian"}
+                journeyLive={JOURNEY_LIVE}
+                signOutAction={handleSignOut}
+              />
             </>
           ) : (
             <>
-              <Link
-                href="/path"
-                className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-              >
-                {m.common.nav.path}
-              </Link>
-              <Link
-                href="/cards"
-                className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-              >
-                {m.common.nav.cards}
-              </Link>
-              <Link
-                href="/ide"
-                className="-my-2 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg"
-              >
-                {m.common.nav.forge}
-              </Link>
+              {links.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="-my-2 hidden py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2 transition hover:text-fg sm:block"
+                >
+                  {l.label}
+                </Link>
+              ))}
               <LanguageSwitcher />
               <Link
                 href="/login"

@@ -1,189 +1,273 @@
 import Link from "next/link";
+import Image from "next/image";
+import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
-import { getUnlockedActs } from "@/lib/onboarding";
+import { prisma } from "@/lib/db";
 import { getCampaignProgress } from "@/lib/campaign-progress";
 import { acts } from "@/content/campaign";
-import { getActLocalized, getCardLocalized } from "@/content/i18n";
-import { getLocale, getMessages } from "@/i18n/server";
+import { getMessages } from "@/i18n/server";
 import { fmt } from "@/i18n/format";
-import { ProgressBar } from "@/components/ProgressBar";
+import { progressToNext } from "@/lib/xp";
+import { SceneRoot } from "@/components/scene/SceneRoot";
+import { SceneArt, hasV2Asset } from "@/components/scene/SceneArt";
+import { SceneParticles } from "@/components/scene/SceneParticles";
 
-// Campaign path — the Mimo-style "career plan" view. One vertical rail of
-// acts; locks come from the onboarding answers (cookie) plus real progress.
-export default async function PathPage() {
+// The Hall — the home every login funnels into (/path is hardcoded by the
+// landing, so the URL stays; the campaign rail this page used to hold now
+// lives at /campaign). Two roads — the Journey (essential) and the Campaign
+// (optional) — plus the Forge, which is not a road: it's where you practice.
+// The Journey door flips live in Phase B.
+const JOURNEY_LIVE = false;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const m = await getMessages();
+  return { title: m.home.metaTitle, description: m.home.metaDescription };
+}
+
+function DoorArt({
+  src,
+  glyph,
+  tone,
+}: {
+  src: string;
+  glyph: string;
+  tone: "journey" | "campaign";
+}) {
+  if (hasV2Asset(src)) {
+    return (
+      <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+        <Image src={src} alt="" fill sizes="(min-width: 768px) 40vw, 90vw" className="object-cover" />
+      </div>
+    );
+  }
+  return (
+    <div
+      className={`grid aspect-[4/3] place-items-center rounded-xl border border-line ${
+        tone === "journey"
+          ? "bg-[radial-gradient(80%_80%_at_50%_30%,rgba(143,123,255,0.16),transparent_70%)]"
+          : "bg-[radial-gradient(80%_80%_at_50%_30%,rgba(217,185,106,0.13),transparent_70%)]"
+      }`}
+    >
+      <span className="text-6xl opacity-80" aria-hidden>
+        {glyph}
+      </span>
+    </div>
+  );
+}
+
+export default async function HallPage() {
   const session = await auth();
   const userId = session?.user?.id;
-
-  const [{ rows, unlockedActCount, cardsClaimed }, unlockedByOnboarding] =
-    await Promise.all([getCampaignProgress(userId), getUnlockedActs()]);
-
-  const locale = await getLocale();
   const m = await getMessages();
 
-  // An act is unlocked by the onboarding answer, or by the ratcheted
-  // unlockedActCount (finishing every act before it, or having earned it
-  // before — see getCampaignProgress).
-  const unlockedCount = Math.max(unlockedByOnboarding, unlockedActCount);
+  const [{ rows, cardsClaimed }, character, labsDone] = await Promise.all([
+    getCampaignProgress(userId),
+    userId
+      ? prisma.character.findUnique({
+          where: { userId },
+          select: { xp: true, level: true },
+        })
+      : Promise.resolve(null),
+    userId
+      ? prisma.labProgress.count({ where: { userId, completed: true } })
+      : Promise.resolve(0),
+  ]);
 
-  const cardsPercent = Math.round((cardsClaimed / acts.length) * 100);
-
-  // CTA: first unlocked act with an incomplete playable skirmish.
-  const current = rows.find(
-    (r, i) => i < unlockedCount && r.nextLessonSlug !== null,
-  );
-  const ctaHref = current?.nextLessonSlug
+  const current = rows.find((r) => r.nextLessonSlug !== null);
+  const continueHref = current?.nextLessonSlug
     ? `/lessons/${current.nextLessonSlug}`
-    : "/cards";
+    : null;
+  const level = character ? progressToNext(character.xp) : null;
 
   return (
-    <div className="mx-auto max-w-2xl px-5 pb-32 pt-12">
-      <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-muted">
-        {m.pages.path.kicker}
-      </p>
-      <h1 className="mt-3 font-display text-3xl font-extrabold tracking-wide text-[#f4f2fb]">
-        {m.pages.path.title}
-      </h1>
+    <SceneRoot id="hall">
+      <section
+        data-scene
+        className="sc-scene sc-scene--hall -mb-px flex min-h-[calc(100dvh-56px)] flex-col"
+      >
+        <SceneArt
+          layers={[
+            { src: "/v2/home/hall-bg.webp", priority: true, quality: 75 },
+            { src: "/v2/home/hall-mid.webp", plx: 0.06, mouse: 0.4 },
+          ]}
+        />
+        <div className="sc-scrim" />
+        <SceneParticles tone="hall" />
 
-      {/* champion cards summary (Mimo's certificates strip) */}
-      <div className="mt-8 flex items-center gap-4 rounded-2xl border border-line bg-bg-elev px-5 py-4">
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-accent/30 bg-accent/10 font-mono text-lg text-accent">
-          Ø
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-fg">
-            {m.pages.path.championCards}
-          </p>
-          <div className="mt-2">
-            <ProgressBar percent={cardsPercent} />
+        <div className="relative mx-auto w-full max-w-5xl flex-1 px-5 pb-20 pt-14">
+          {/* ─── hero ─── */}
+          <div data-reveal>
+            <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-gold/80">
+              {m.home.kicker}
+            </p>
+            <h1 className="mt-3 max-w-2xl font-display text-4xl font-extrabold tracking-wide text-[#f4f2fb] sm:text-5xl">
+              {m.home.title}
+            </h1>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted2">
+              {m.home.intro}
+            </p>
           </div>
-          <div className="mt-1.5 flex justify-between font-mono text-[11px] text-muted">
-            <span>{fmt(m.pages.path.claimed, { percent: cardsPercent })}</span>
-            <span>
-              {cardsClaimed}/{acts.length}
-            </span>
-          </div>
-        </div>
-      </div>
 
-      {/* rail */}
-      <div className="mt-10">
-        {rows.map(({ act: rawAct, cleared: complete, percent, playable }, i) => {
-          const act = getActLocalized(rawAct.trackSlug, locale) ?? rawAct;
-          const unlocked = i < unlockedCount;
-          const isCurrent = current ? rows[i] === current : false;
-          const reward = act.cardId
-            ? getCardLocalized(act.cardId, locale)
-            : undefined;
-          const hasContent = playable.length > 0;
-
-          const body = (
+          {/* ─── level strip + continue (signed-in only) ─── */}
+          {userId && (level || continueHref) && (
             <div
-              className={`flex-1 rounded-2xl px-4 py-3 transition ${
-                isCurrent
-                  ? "border border-accent/30 bg-accent/[0.07]"
-                  : unlocked
-                    ? "hover:bg-white/[0.03]"
-                    : ""
-              }`}
+              data-reveal="2"
+              className="mt-8 flex flex-col gap-4 rounded-2xl border border-line bg-bg/60 px-5 py-4 backdrop-blur sm:flex-row sm:items-center"
             >
-              <p
-                className={`font-display text-[16px] font-bold ${
-                  unlocked ? "text-fg" : "text-muted2"
-                }`}
-              >
-                {i + 1}. {act.title}
-              </p>
-              <p className="mt-1 text-[12.5px] leading-relaxed text-muted">
-                {act.territory}
-                {act.overlord ? ` · ${act.overlord}` : ""}
-              </p>
-
-              {/* act reward — Mimo's "section project" card */}
-              {reward && (
-                <div
-                  className={`mt-3 rounded-xl border px-4 py-3 ${
-                    unlocked ? "border-line bg-bg" : "border-line/60 bg-bg/50"
-                  }`}
-                >
-                  <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
-                    {m.pages.path.actReward}
-                  </p>
-                  <p className={`mt-1 text-sm ${unlocked ? "text-fg" : "text-muted2"}`}>
-                    {reward.name}
-                    {reward.epithet ? ` — ${reward.epithet}` : ""}
-                  </p>
-                  <p className="font-mono text-[11px] text-muted">
-                    {fmt(m.pages.path.rewardStats, {
-                      type: reward.type,
-                      power: reward.power,
-                    })}
-                  </p>
+              {level && (
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-baseline justify-between font-mono text-[11px] text-muted">
+                    <span className="uppercase tracking-[0.25em] text-accent-soft">
+                      {fmt(m.home.level, { level: level.level })}
+                    </span>
+                    <span>
+                      {fmt(m.home.xpToNext, {
+                        into: level.into,
+                        span: level.span,
+                        next: level.level + 1,
+                      })}
+                    </span>
+                  </div>
+                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        width: `${Math.max(level.percent, 3)}%`,
+                        background: "linear-gradient(90deg, #8f7bff, #cfc3ff)",
+                        boxShadow: "0 0 12px rgba(143,123,255,0.6)",
+                      }}
+                    />
+                  </div>
                 </div>
               )}
+              {continueHref && (
+                <Link
+                  href={continueHref}
+                  className="shrink-0 rounded-full px-6 py-3 text-center font-display text-[12px] font-bold uppercase tracking-[0.14em] text-[#0b0817] transition-transform hover:-translate-y-[2px]"
+                  style={{
+                    background: "linear-gradient(180deg, #cfc3ff, #8f7bff)",
+                    boxShadow: "0 0 24px rgba(143,123,255,0.4)",
+                  }}
+                >
+                  {m.home.continueCta}
+                </Link>
+              )}
+            </div>
+          )}
 
-              {unlocked && !hasContent && (
-                <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                  {m.pages.path.skirmishesForgingSoon}
+          {/* ─── the two roads ─── */}
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
+            {/* Journey door */}
+            <div
+              data-reveal="3"
+              className={`sc-door rounded-2xl border border-accent/25 bg-bg/70 p-5 backdrop-blur ${
+                JOURNEY_LIVE ? "" : "opacity-90"
+              }`}
+            >
+              <DoorArt
+                src="/v2/home/door-journey.webp"
+                glyph="🧭"
+                tone="journey"
+              />
+              <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.3em] text-accent-soft">
+                {m.home.doors.journey.label}
+              </p>
+              <h2 className="mt-1.5 font-display text-2xl font-bold tracking-wide text-fg">
+                {m.home.doors.journey.title}
+              </h2>
+              <p className="mt-2 text-[13px] leading-relaxed text-muted2">
+                {m.home.doors.journey.blurb}
+              </p>
+              {JOURNEY_LIVE ? (
+                <Link
+                  href="/journey"
+                  className="mt-4 inline-block rounded-full px-6 py-2.5 font-display text-[12px] font-bold uppercase tracking-[0.14em] text-[#0b0817]"
+                  style={{ background: "linear-gradient(180deg, #cfc3ff, #8f7bff)" }}
+                >
+                  {m.home.doors.journey.cta}
+                </Link>
+              ) : (
+                <p className="mt-4 inline-block rounded-full border border-line px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+                  {m.home.doors.journey.soon}
                 </p>
               )}
             </div>
-          );
 
-          return (
-            <div key={act.numeral} className="flex gap-4">
-              {/* rail marker */}
-              <div className="flex flex-col items-center">
-                <span
-                  className={`grid h-11 w-11 shrink-0 place-items-center rounded-full border font-display text-sm font-bold ${
-                    complete
-                      ? "border-pop/60 bg-pop/15 text-pop"
-                      : isCurrent
-                        ? "border-accent bg-accent/20 text-accent"
-                        : unlocked
-                          ? "border-accent/50 bg-accent/10 text-accent"
-                          : "border-line bg-bg-elev text-muted"
-                  }`}
+            {/* Campaign door */}
+            <div
+              data-reveal="4"
+              className="sc-door rounded-2xl border border-gold/25 bg-bg/70 p-5 backdrop-blur"
+            >
+              <DoorArt
+                src="/v2/home/door-campaign.webp"
+                glyph="⚔️"
+                tone="campaign"
+              />
+              <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.3em] text-gold/80">
+                {m.home.doors.campaign.label}
+              </p>
+              <h2 className="mt-1.5 font-display text-2xl font-bold tracking-wide text-fg">
+                {m.home.doors.campaign.title}
+              </h2>
+              <p className="mt-2 text-[13px] leading-relaxed text-muted2">
+                {m.home.doors.campaign.blurb}
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/campaign"
+                  className="inline-block rounded-full border border-gold/50 bg-gold/10 px-6 py-2.5 font-display text-[12px] font-bold uppercase tracking-[0.14em] text-gold transition hover:bg-gold/20"
                 >
-                  {complete ? "✓" : unlocked ? (isCurrent ? `${percent}%` : act.numeral) : "🔒"}
+                  {m.home.doors.campaign.cta}
+                </Link>
+                <span className="font-mono text-[11px] text-muted">
+                  {fmt(m.home.doors.campaign.progress, {
+                    done: cardsClaimed,
+                    total: acts.length,
+                  })}
                 </span>
-                {i < acts.length - 1 && (
-                  <span
-                    className={`w-px flex-1 ${
-                      i < unlockedCount - 1 ? "bg-accent/40" : "bg-white/[0.08]"
-                    }`}
-                  />
-                )}
               </div>
+            </div>
+          </div>
 
-              <div className="flex-1 pb-8">
-                {unlocked ? (
-                  <Link href={`/tracks/${act.trackSlug}`} className="block">
-                    {body}
-                  </Link>
-                ) : (
-                  <div className="opacity-70">{body}</div>
+          {/* ─── the Forge (not a road — the workshop) ─── */}
+          <div
+            data-reveal="5"
+            className="sc-door mt-6 overflow-hidden rounded-2xl border border-accent2/25 bg-bg/70 backdrop-blur"
+          >
+            <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center">
+              <div className="grid h-20 w-20 shrink-0 place-items-center rounded-2xl border border-accent2/30 bg-[radial-gradient(70%_70%_at_50%_40%,rgba(69,214,196,0.16),transparent_75%)]">
+                <span className="sc-ember text-4xl" aria-hidden>
+                  ⚒️
+                </span>
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent2/90">
+                  {m.home.doors.forge.label}
+                </p>
+                <h2 className="mt-1 font-display text-2xl font-bold tracking-wide text-fg">
+                  {m.home.doors.forge.title}
+                </h2>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-muted2">
+                  {m.home.doors.forge.blurb}
+                </p>
+              </div>
+              <div className="flex shrink-0 flex-col items-start gap-2 sm:items-end">
+                <Link
+                  href="/labs"
+                  className="rounded-full border border-accent2/50 bg-accent2/10 px-6 py-2.5 font-display text-[12px] font-bold uppercase tracking-[0.14em] text-accent2 transition hover:bg-accent2/20"
+                >
+                  {m.home.doors.forge.cta}
+                </Link>
+                {userId && (
+                  <span className="font-mono text-[11px] text-muted">
+                    {fmt(m.home.doors.forge.progress, { done: labsDone })}
+                  </span>
                 )}
               </div>
             </div>
-          );
-        })}
-      </div>
-
-      {/* sticky CTA */}
-      <div className="fixed inset-x-0 bottom-0 border-t border-line bg-bg/90 px-5 py-4 backdrop-blur">
-        <div className="mx-auto max-w-2xl">
-          <Link
-            href={ctaHref}
-            className="block w-full rounded-full px-8 py-4 text-center font-display text-sm font-bold uppercase tracking-[0.16em] text-[#0b0817] transition-transform hover:-translate-y-[2px]"
-            style={{
-              background: "linear-gradient(180deg, #cfc3ff, #8f7bff)",
-              boxShadow: "0 0 40px rgba(143,123,255,0.45), 0 10px 30px rgba(0,0,0,0.6)",
-            }}
-          >
-            {current ? m.pages.path.startLearning : m.pages.path.viewChampions}
-          </Link>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </SceneRoot>
   );
 }

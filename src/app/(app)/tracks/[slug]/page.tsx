@@ -74,7 +74,7 @@ export default async function TrackPage({
   return (
     <div className="mx-auto max-w-3xl px-5 py-16">
       <Link
-        href="/path"
+        href="/campaign"
         className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted transition hover:text-fg"
       >
         ‹ {t.backToPath}
@@ -159,7 +159,7 @@ export default async function TrackPage({
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted2">
               {t.forgingBefore}{" "}
-              <Link href="/path" className="text-accent hover:underline">
+              <Link href="/campaign" className="text-accent hover:underline">
                 {t.forgingLink}
               </Link>{" "}
               {t.forgingAfter}
