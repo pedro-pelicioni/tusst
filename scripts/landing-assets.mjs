@@ -17,8 +17,8 @@ const ROOT = process.cwd();
 const SRC = path.join(ROOT, "art-src", "landing");
 const OUT = path.join(ROOT, "public", "landing");
 
-const KEY_START = 14; // color distance where alpha starts
-const KEY_FULL = 46; // color distance that is fully opaque
+const KEY_START = 12; // color distance where alpha starts
+const KEY_FULL = 64; // color distance that is fully opaque (wide ramp = soft edge)
 
 async function grayKey(file, opts = {}) {
   const keyStart = opts.keyStart ?? KEY_START;
@@ -57,9 +57,15 @@ async function grayKey(file, opts = {}) {
 
     // defringe: edge pixels are contaminated by the light-gray backdrop;
     // pull semi-transparent colors toward the scene's dark violet so the
-    // fringe disappears against the night art
+    // fringe disappears against the night art. Fully transparent pixels
+    // get the same dark color, so the alpha blur below never reveals the
+    // gray backdrop as a halo.
     const alpha = data[i + 3];
-    if (alpha > 0 && alpha < 255) {
+    if (alpha === 0) {
+      data[i] = 10;
+      data[i + 1] = 7;
+      data[i + 2] = 20;
+    } else if (alpha < 255) {
       const blend = (1 - alpha / 255) * 0.85;
       data[i] = Math.round(data[i] * (1 - blend) + 10 * blend);
       data[i + 1] = Math.round(data[i + 1] * (1 - blend) + 7 * blend);
@@ -67,7 +73,59 @@ async function grayKey(file, opts = {}) {
     }
   }
 
-  return sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } });
+  // clean the matte edge in three sequential passes (each materialized —
+  // sharp reorders chained ops internally):
+  //   1. blur wide, 2. steep ramp centered ABOVE mid-gray → erodes the
+  //   contour ~1px inward, discarding the outermost opaque ring that is
+  //   still contaminated by the gray backdrop (the visible pale fringe),
+  //   3. tiny blur → smooth antialiased silhouette.
+  const dims = { width: info.width, height: info.height };
+  const raw1 = { raw: { ...dims, channels: 1 } };
+  const rgb = await sharp(data, { raw: { ...dims, channels: 4 } })
+    .removeAlpha()
+    .raw()
+    .toBuffer();
+  const original = await sharp(data, { raw: { ...dims, channels: 4 } })
+    .extractChannel(3)
+    .raw()
+    .toBuffer();
+  // NOTE: a 1-channel raw INPUT comes back 3-channel from .raw() unless
+  // the pipeline is pinned to b-w — hence toColourspace + the asserts.
+  const blur1ch = async (buffer, sigma) => {
+    const out = await sharp(buffer, raw1).blur(sigma).toColourspace("b-w").raw().toBuffer();
+    if (out.length !== dims.width * dims.height) {
+      throw new Error(`1ch blur returned ${out.length} bytes, expected ${dims.width * dims.height}`);
+    }
+    return out;
+  };
+
+  let alphaSmooth;
+  if (opts.erode) {
+    // eroded hard matte: blur + steep ramp centered above mid-gray pulls
+    // the opaque contour ~1px inward, discarding the outermost opaque
+    // ring still contaminated by the gray backdrop (the pale fringe).
+    // Only for hard-silhouette layers — it destroys soft mist/glow.
+    const eroded = await blur1ch(original, 1.4);
+    for (let i = 0; i < eroded.length; i++) {
+      const v = (eroded[i] - 168) * 3.4 + 128;
+      eroded[i] = v < 0 ? 0 : v > 255 ? 255 : Math.round(v);
+    }
+    alphaSmooth = Buffer.alloc(original.length);
+    for (let i = 0; i < original.length; i++) {
+      alphaSmooth[i] = original[i] >= 200 ? Math.min(original[i], eroded[i]) : original[i];
+    }
+  } else {
+    alphaSmooth = original;
+  }
+  alphaSmooth = await blur1ch(alphaSmooth, 0.6);
+
+  // materialize before returning: joinChannel silently disables a
+  // later .resize() on the same pipeline, so hand back a fresh instance
+  const joined = await sharp(rgb, { raw: { ...dims, channels: 3 } })
+    .joinChannel(alphaSmooth, { raw: { ...dims, channels: 1 } })
+    .png()
+    .toBuffer();
+  return sharp(joined);
 }
 
 /** @type {{src: string, out: string, kind: "scene"|"key"|"alpha", budgetKB: number, resize?: {width: number, height?: number}, jpeg?: boolean}[]} */
@@ -76,8 +134,8 @@ const JOBS = [
   // distant blurry layer: half resolution reads identically and the huge
   // soft-alpha mist region is what costs bytes
   { src: "hero-far-raw.png", out: "hero/far.webp", kind: "key", budgetKB: 250, resize: { width: 1600 }, alphaQuality: 60, key: { keyStart: 30, keyFull: 115, alphaSteps: 6 } },
-  { src: "hero-mid-raw.png", out: "hero/mid.webp", kind: "key", budgetKB: 300 },
-  { src: "hero-fg-raw.png", out: "hero/fg.webp", kind: "key", budgetKB: 300 },
+  { src: "hero-mid-raw.png", out: "hero/mid.webp", kind: "key", budgetKB: 450, resize: { width: 3840 }, alphaQuality: 90, key: { erode: true } },
+  { src: "hero-fg-raw.png", out: "hero/fg.webp", kind: "key", budgetKB: 450, resize: { width: 3840 }, alphaQuality: 90 },
   { src: "intro-scene.png", out: "intro/scene.webp", kind: "scene", budgetKB: 350 },
   { src: "intro-character-cut.png", out: "intro/character.webp", kind: "alpha", budgetKB: 250, resize: { width: 1200 } },
   { src: "carousel-bg.png", out: "carousel/bg.webp", kind: "scene", budgetKB: 250 },
@@ -107,6 +165,7 @@ async function run() {
         width: job.resize.width,
         height: job.resize.height,
         fit: job.resize.height ? "cover" : "inside",
+        withoutEnlargement: !job.resize.height,
       });
     }
 
