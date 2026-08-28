@@ -1,3 +1,5 @@
+import { passkeySmartWalletContent } from "../en/labs";
+
 // La Forja — índice /labs (labs guiados + card del IDE libre) y el chrome del
 // player de lab. El contenido de los pasos vive en src/content/labs (EN-first).
 export const labs = {
@@ -40,6 +42,9 @@ export const labs = {
     halted: "Ningún quórum puede formarse — la red espera en vez de bifurcarse.",
     hint: "Pulsa proponer y mira la aceptación propagarse. Haz clic en un nodo para derribarlo (o levantarlo).",
     ledgers: "ledgers cerrados: {n}",
+  },
+  content: {
+    "passkey-smart-wallet": passkeySmartWalletContent,
   },
   player: {
     exit: "Salir del lab",

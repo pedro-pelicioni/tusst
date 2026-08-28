@@ -15,6 +15,10 @@ import { ScpSim } from "@/components/labs/sims/ScpSim";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
 import { labBySlug } from "@/content/labs";
+import {
+  localizeLab,
+  type LabTextOverlay,
+} from "@/content/labs/localize";
 import type { LabStep } from "@/content/labs/types";
 import {
   LabActionError,
@@ -104,7 +108,16 @@ export function LabPlayer({
   signedIn: boolean;
 }) {
   const m = useMessages();
-  const lab = labBySlug(labSlug);
+  const baseLab = labBySlug(labSlug);
+  const contentBySlug = m.labs.content as Record<
+    string,
+    LabTextOverlay | undefined
+  >;
+  const labOverlay = contentBySlug[labSlug];
+  const lab = useMemo(
+    () => (baseLab ? localizeLab(baseLab, labOverlay) : undefined),
+    [baseLab, labOverlay],
+  );
 
   const [run, setRun] = useState<LabRun>(emptyRun);
   const [wallet, setWallet] = useState<ForgeWallet | null>(null);

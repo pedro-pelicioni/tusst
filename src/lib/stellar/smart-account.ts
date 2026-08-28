@@ -62,7 +62,13 @@ export async function createPasskeyWallet(input: {
 }): Promise<{ contractId: string; credentialId: string; txHash: string }> {
   assertWebAuthn();
   const kit = await createKit(input.config, input.deployerSecret);
-  const result = await kit.createWallet(input.appName, input.userName, {
+  // smart-account-kit adds a timestamp and random suffix to this value before
+  // using it as WebAuthn's user.id. A 56-character Stellar G-address therefore
+  // exceeds WebAuthn's 64-byte limit and is rejected before the native prompt
+  // can open. Keep the display identifier short; authority comes from the new
+  // credential itself, not from this label.
+  const passkeyUserName = `tusst-${input.userName.slice(-12)}`;
+  const result = await kit.createWallet(input.appName, passkeyUserName, {
     autoSubmit: true,
     autoFund: true,
     nativeTokenContract: input.config.nativeTokenContract,

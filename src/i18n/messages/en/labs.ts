@@ -1,5 +1,11 @@
 // The Forge — /labs index (guided labs + free-mode IDE card) and the lab
 // player chrome. Step content itself lives in src/content/labs (EN-first).
+import { passkeySmartWallet } from "@/content/labs/passkey-smart-wallet";
+import { labTextFromScenario } from "@/content/labs/localize";
+
+export const passkeySmartWalletContent =
+  labTextFromScenario(passkeySmartWallet);
+
 export const labs = {
   metaTitle: "The Forge — TUSST",
   metaDescription:
@@ -40,6 +46,9 @@ export const labs = {
     halted: "No quorum can form — the network waits rather than fork.",
     hint: "Press propose and watch acceptance ripple. Click a node to strike it down (or raise it back).",
     ledgers: "ledgers closed: {n}",
+  },
+  content: {
+    "passkey-smart-wallet": passkeySmartWalletContent,
   },
   player: {
     exit: "Leave the lab",
