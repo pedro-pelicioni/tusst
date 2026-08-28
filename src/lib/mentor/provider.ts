@@ -27,6 +27,7 @@ const REQUEST_TIMEOUT_MS = 20_000;
 
 export async function chatCompletion(
   messages: MentorMessage[],
+  opts: { maxTokens?: number } = {},
 ): Promise<MentorCompletion> {
   const apiKey = process.env.MENTOR_API_KEY;
   if (!apiKey) return { ok: false, reason: "unavailable" };
@@ -47,7 +48,11 @@ export async function chatCompletion(
       body: JSON.stringify({
         model: mentorModel(),
         messages,
-        max_tokens: 400,
+        // Reasoning models (e.g. gpt-oss on Groq) spend completion tokens on
+        // their hidden reasoning channel BEFORE the visible content — a cap
+        // that is comfortable for plain hints can truncate structured
+        // verdicts mid-JSON. Callers with structured outputs raise this.
+        max_tokens: opts.maxTokens ?? 400,
         temperature: 0.4,
       }),
       signal: controller.signal,

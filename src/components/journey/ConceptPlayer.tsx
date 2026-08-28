@@ -25,6 +25,11 @@ type ClaimStatus =
   | { s: "idle" }
   | { s: "saving" }
   | { s: "done"; earned: number; total: number; level: number; leveledUp: boolean; already: boolean };
+type ExerciseStatus =
+  | { s: "idle" }
+  | { s: "checking" }
+  | { s: "error" }
+  | { s: "verdict"; meets: boolean; feedback: string; xpEarned?: number };
 
 export interface LabLinkState {
   live: boolean;
@@ -40,6 +45,7 @@ export interface BranchState {
 }
 
 const doneKey = (slug: string) => `tusst:journey-steps:${slug}`;
+const draftKey = (slug: string) => `tusst:journey-ex:${slug}`;
 
 function hashString(s: string): number {
   let h = 2166136261;
@@ -119,6 +125,19 @@ export function ConceptPlayer({
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [atSeal, setAtSeal] = useState(false);
   const [claim, setClaim] = useState<ClaimStatus>({ s: "idle" });
+  const [exSpec, setExSpec] = useState("");
+  const [exStatus, setExStatus] = useState<ExerciseStatus>({ s: "idle" });
+
+  // Restore an unsent spec draft on mount — same sync-from-localStorage
+  // pattern (and lint carve-out) as the lab player's run hydration.
+  /* eslint-disable react-hooks/set-state-in-effect */
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(draftKey(conceptSlug));
+      if (saved) setExSpec(saved);
+    } catch {}
+  }, [conceptSlug]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const total = steps.length;
   const step = steps[Math.min(index, total - 1)];
@@ -161,10 +180,12 @@ export function ConceptPlayer({
     setIndex((i) => Math.min(i + 1, maxIndex));
   }, [maxIndex]);
 
-  // Enter advances confirmed feedback / plain-continue steps.
+  // Enter advances confirmed feedback / plain-continue steps (never the
+  // exercise — Enter belongs to its textarea).
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Enter") return;
+      if (step.kind === "exercise") return;
       if (feedback?.correct) advance();
       else if (
         (step.kind === "theory" ||
@@ -178,6 +199,35 @@ export function ConceptPlayer({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [feedback, step, atSeal, advance]);
+
+  const submitSpec = async () => {
+    if (step.kind !== "exercise") return;
+    setExStatus({ s: "checking" });
+    try {
+      const res = await fetch("/api/journey/exercise", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ conceptSlug, spec: exSpec }),
+      });
+      if (!res.ok) {
+        setExStatus({ s: "error" });
+        return;
+      }
+      const body = (await res.json()) as {
+        meets: boolean;
+        feedback: string;
+        xp?: { awarded: boolean; earned: number };
+      };
+      setExStatus({
+        s: "verdict",
+        meets: body.meets,
+        feedback: body.feedback,
+        xpEarned: body.xp?.awarded ? body.xp.earned : undefined,
+      });
+    } catch {
+      setExStatus({ s: "error" });
+    }
+  };
 
   const sealChapter = async () => {
     setClaim({ s: "saving" });
@@ -508,6 +558,129 @@ export function ConceptPlayer({
               </div>
             )}
 
+            {step.kind === "exercise" && (
+              <div className="mx-auto w-full max-w-xl">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold/80">
+                  {m.journey.player.exercise.kicker}
+                </p>
+                <div className="mt-3">
+                  <Markdown>{step.brief}</Markdown>
+                </div>
+                <div className="mt-4 rounded-xl border border-line bg-bg-elev px-4 py-3">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted">
+                    {m.journey.player.exercise.rubricLabel}
+                  </p>
+                  <div className="mt-2 text-[12.5px] leading-relaxed text-muted2">
+                    <Markdown>{step.rubric}</Markdown>
+                  </div>
+                </div>
+
+                {signedIn ? (
+                  <>
+                    <textarea
+                      value={exSpec}
+                      rows={9}
+                      maxLength={6000}
+                      placeholder={m.journey.player.exercise.placeholder}
+                      onChange={(e) => {
+                        setExSpec(e.target.value);
+                        if (exStatus.s === "verdict" && !exStatus.meets)
+                          setExStatus({ s: "idle" });
+                        try {
+                          window.localStorage.setItem(
+                            draftKey(conceptSlug),
+                            e.target.value,
+                          );
+                        } catch {}
+                      }}
+                      className="mt-5 w-full resize-y rounded-xl border border-line bg-bg-elev px-4 py-3 font-mono text-[13px] leading-relaxed text-fg outline-none transition placeholder:text-muted/50 focus:border-gold/50"
+                    />
+                    {exStatus.s === "error" && (
+                      <p className="mt-4 rounded-xl border border-red-400/40 bg-red-400/[0.06] px-5 py-3 text-sm text-red-300">
+                        {m.journey.player.exercise.unavailable}
+                      </p>
+                    )}
+                    {exStatus.s === "verdict" && (
+                      <div
+                        className={`mt-4 rounded-xl border px-5 py-4 ${
+                          exStatus.meets
+                            ? "border-pop/50 bg-pop/[0.07]"
+                            : "border-red-400/40 bg-red-400/[0.06]"
+                        }`}
+                      >
+                        <p
+                          className={`font-mono text-[10px] uppercase tracking-[0.25em] ${
+                            exStatus.meets ? "text-pop" : "text-red-300"
+                          }`}
+                        >
+                          {exStatus.meets
+                            ? m.journey.player.exercise.passKicker
+                            : m.journey.player.exercise.failKicker}
+                          {exStatus.xpEarned
+                            ? ` · ${fmt(m.journey.player.done.xpEarned, { xp: exStatus.xpEarned })}`
+                            : ""}
+                        </p>
+                        <p className="mt-2 text-sm leading-relaxed text-muted2">
+                          {exStatus.feedback}
+                        </p>
+                      </div>
+                    )}
+                    <div className="mt-5 flex flex-wrap gap-3">
+                      {exStatus.s === "verdict" && exStatus.meets ? (
+                        <button
+                          type="button"
+                          onClick={advance}
+                          className="rounded-full px-7 py-3 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-[#0b0817]"
+                          style={{ background: "linear-gradient(180deg, #cfc3ff, #8f7bff)" }}
+                        >
+                          {m.lesson.continueLabel}
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled={
+                            exStatus.s === "checking" ||
+                            exSpec.length < (step.minChars ?? 80)
+                          }
+                          onClick={submitSpec}
+                          className="rounded-full px-7 py-3 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-[#241d06] transition-transform enabled:hover:-translate-y-[1px] disabled:opacity-50"
+                          style={{ background: "linear-gradient(180deg, #ecd9a6, #d9b96a)" }}
+                        >
+                          {exStatus.s === "checking"
+                            ? m.journey.player.exercise.checking
+                            : exStatus.s === "verdict"
+                              ? m.journey.player.exercise.revise
+                              : m.journey.player.exercise.submit}
+                        </button>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div className="mt-6 rounded-xl border border-line bg-bg-elev px-5 py-5">
+                    <p className="text-sm leading-relaxed text-muted2">
+                      {m.journey.player.claim.signedOut}
+                    </p>
+                    <Link
+                      href="/login"
+                      className="mt-4 inline-block rounded-full px-7 py-3 font-display text-[12px] font-bold uppercase tracking-[0.14em] text-[#0b0817]"
+                      style={{ background: "linear-gradient(180deg, #cfc3ff, #8f7bff)" }}
+                    >
+                      {m.journey.player.claim.signIn}
+                    </Link>
+                    <div className="mt-4">
+                      <button
+                        type="button"
+                        onClick={advance}
+                        className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted transition hover:text-fg"
+                      >
+                        {m.lesson.continueLabel} →
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {step.kind === "rustBranch" && (
               <div className="mx-auto w-full max-w-xl">
                 <Markdown>{step.body}</Markdown>
@@ -549,8 +722,8 @@ export function ConceptPlayer({
         )}
       </div>
 
-      {/* ─── bottom action / feedback sheet ─── */}
-      {!atSeal && (
+      {/* ─── bottom action / feedback sheet (the exercise owns its buttons) ─── */}
+      {!atSeal && step.kind !== "exercise" && (
         <div className="sticky bottom-0 -mx-5 mt-10 border-t border-line bg-bg/90 px-5 py-4 backdrop-blur">
           {feedback ? (
             <div className="mx-auto flex max-w-xl flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">

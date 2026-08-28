@@ -7,6 +7,7 @@
 // the registry to read `verify`, which is data-only by construction.
 
 import type { ClassicOpSpec } from "@/lib/stellar/classic";
+import type { SorobanFileMap } from "@/lib/soroban/types";
 
 export type LabDifficulty = "novice" | "adept" | "master";
 
@@ -29,6 +30,8 @@ export interface LabArtifacts {
   /** on-chain evidence per action step id */
   txHashes: Record<string, string>;
   contractId?: string;
+  /** compiled wasm from a contract-build step (base64) */
+  wasmB64?: string;
 }
 
 export interface LabRunCtx {
@@ -41,8 +44,19 @@ export interface LabRunCtx {
 export type LabAction =
   | { type: "generate-keypair"; target: "wallet" | "state"; stateKey?: string }
   | { type: "friendbot" }
-  | { type: "classic-op"; ops: (ctx: LabRunCtx) => ClassicOpSpec[] };
-// Phase C adds: contract-build | contract-deploy | contract-invoke | passkey-*
+  | { type: "classic-op"; ops: (ctx: LabRunCtx) => ClassicOpSpec[] }
+  | { type: "contract-build"; files: (ctx: LabRunCtx) => SorobanFileMap }
+  | {
+      type: "contract-deploy";
+      /** constructor arg values by name; the engine converts via the wasm spec */
+      argsFrom: (ctx: LabRunCtx) => Record<string, string>;
+    }
+  | {
+      type: "contract-invoke";
+      func: string;
+      argsFrom: (ctx: LabRunCtx) => Record<string, string>;
+    };
+// Phase C (passkey spike pending): passkey-create | passkey-connect
 
 export type LabStep =
   | { kind: "narrate"; id: string; body: string; art?: string }
@@ -61,6 +75,17 @@ export type LabStep =
       prompt: string;
       stateKey: string;
       options: { label: string; value: string; blurb?: string }[];
+    }
+  | {
+      kind: "input";
+      id: string;
+      prompt: string;
+      stateKey: string;
+      placeholder: string;
+      /** regex source the value must fully match before Continue enables */
+      pattern?: string;
+      maxLength?: number;
+      hint?: string;
     }
   | {
       kind: "action";
@@ -82,7 +107,9 @@ export type LabStep =
 export type VerifySpec =
   | { check: "account-exists" }
   | { check: "trustline"; assetCode: string; assetIssuer: string }
-  | { check: "payment-sent" };
+  | { check: "payment-sent" }
+  /** simulate `func(address)` on artifacts.contractId; passes when > 0 */
+  | { check: "token-balance-positive"; func: string };
 
 export interface LabScenario {
   meta: LabMeta;

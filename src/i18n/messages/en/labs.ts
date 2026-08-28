@@ -51,6 +51,8 @@ export const labs = {
     },
     phases: {
       prepare: "preparing",
+      queued: "in the forge queue",
+      building: "compiling rust → wasm",
       sign: "signing",
       submit: "submitting to the network",
       confirm: "confirming on the ledger",
@@ -62,6 +64,9 @@ export const labs = {
       testnetBusy: "The testnet spirits are busy — strike again in a moment.",
       walletRequired: "Forge your keys first — step back one screen.",
       missingState: "A previous step was skipped — step back and complete it.",
+      forgeCold: "The forge is cold — the runner is unreachable. Try again in a moment.",
+      buildFailed: "The compile failed — the runner rejected this contract. Strike again.",
+      buildTimeout: "The compile ran out of time — the forge was crowded. Strike again.",
     },
     checkpoint: {
       title: "Claim your reward",
@@ -76,6 +81,7 @@ export const labs = {
         "account-exists": "a living account",
         trustline: "the USDC trustline",
         "payment-sent": "a sent payment",
+        "token-balance-positive": "a token balance on your contract",
       },
     },
     done: {

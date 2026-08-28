@@ -3,12 +3,14 @@
 import { useCallback, useRef, useState } from "react";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
-import type { ForgeEvent, ForgeMode, SorobanFileMap } from "@/lib/soroban/types";
+import { runForgeStream } from "@/lib/soroban/run-stream";
+import type { ForgeMode, SorobanFileMap } from "@/lib/soroban/types";
 
-// Client half of the NDJSON streaming contract: POST the live editor
-// snapshot, parse ForgeEvents line by line, surface console lines + status +
-// the compiled wasm. One run at a time; a new run cancels nothing (the button
-// disables), but `cancel` aborts the fetch which kills the container.
+// IDE half of the NDJSON streaming contract: the transport lives in
+// src/lib/soroban/run-stream.ts (shared with the labs engine); this hook
+// translates its events into console lines + status for the Forge UI.
+// One run at a time; a new run cancels nothing (the button disables), but
+// `cancel` aborts the fetch which kills the container.
 
 export type ForgeRunStatus =
   | "idle"
@@ -27,28 +29,11 @@ export interface ConsoleLine {
 }
 
 const MAX_CLIENT_LINES = 2_500;
-// The sandbox needs a host with Docker. Same-origin by default (dev, VPS
-// deploys); on serverless hosts set NEXT_PUBLIC_FORGE_RUNNER_URL to a
-// runner instance (same app deployed on a Docker-capable box with
-// FORGE_CORS_ORIGIN allowing this site). Inlined at build time.
-const RUNNER_BASE = (process.env.NEXT_PUBLIC_FORGE_RUNNER_URL ?? "").replace(/\/+$/, "");
-const ENDPOINT: Record<ForgeMode, string> = {
-  build: `${RUNNER_BASE}/api/soroban/compile`,
-  test: `${RUNNER_BASE}/api/soroban/test`,
-  audit: `${RUNNER_BASE}/api/soroban/audit`,
-};
 const RUNNING_STATUS: Record<ForgeMode, ForgeRunStatus> = {
   build: "building",
   test: "testing",
   audit: "auditing",
 };
-
-function decodeBase64(b64: string): Uint8Array {
-  const bin = atob(b64);
-  const bytes = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  return bytes;
-}
 
 export function useForgeRun() {
   const m = useMessages();
@@ -73,105 +58,56 @@ export function useForgeRun() {
     setLines([]);
     if (runMode === "build") setWasm(null);
 
-    const pushLines = (batch: ConsoleLine[]) => {
-      if (batch.length === 0) return;
-      setLines((prev) => [...prev, ...batch].slice(-MAX_CLIENT_LINES));
+    const pushLine = (line: ConsoleLine) => {
+      setLines((prev) => [...prev, line].slice(-MAX_CLIENT_LINES));
     };
 
     try {
-      const res = await fetch(ENDPOINT[runMode], {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ files }),
-        signal: abort.signal,
-      });
+      const result = await runForgeStream(
+        runMode,
+        files,
+        {
+          onQueued: (position) => {
+            setStatus("queued");
+            pushLine({ kind: "info", text: fmt(m.ide.run.queued, { position }) });
+          },
+          onPhase: (name) => {
+            if (name !== "prepare") setStatus(RUNNING_STATUS[runMode]);
+            pushLine({ kind: "info", text: fmt(m.ide.run.phase, { name }) });
+          },
+          onLog: (line) => pushLine({ kind: "log", text: line }),
+        },
+        abort.signal,
+      );
 
-      if (res.headers.get("content-type")?.includes("application/json")) {
-        const data = await res.json().catch(() => null);
-        pushLines([
-          { kind: "error", text: (data as { error?: string })?.error ?? m.ide.run.genericError },
-        ]);
+      if (result.aborted) {
+        pushLine({ kind: "info", text: m.ide.run.cancelled });
+        setStatus("idle");
+        return;
+      }
+      if (result.preStreamError) {
+        pushLine({ kind: "error", text: result.preStreamError ?? m.ide.run.genericError });
         setStatus("err");
         return;
       }
-      if (!res.ok || !res.body) {
-        pushLines([{ kind: "error", text: m.ide.run.forgeCold }]);
+      if (result.networkError) {
+        pushLine({ kind: "error", text: m.ide.run.networkError });
+        setStatus("err");
+        return;
+      }
+      if (result.infraError && !result.ok) {
+        // Covers rejected/failed streams and streams that ended without a
+        // done event — the forge is cold or the run died under it.
+        if (!result.timedOut) pushLine({ kind: "error", text: m.ide.run.infraError });
         setStatus("infra");
         return;
       }
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let pending = "";
-      let finished = false;
-
-      const handleEvent = (event: ForgeEvent, batch: ConsoleLine[]) => {
-        switch (event.t) {
-          case "queued":
-            setStatus("queued");
-            batch.push({
-              kind: "info",
-              text: fmt(m.ide.run.queued, { position: event.position }),
-            });
-            break;
-          case "phase":
-            if (event.name !== "prepare") setStatus(RUNNING_STATUS[runMode]);
-            batch.push({ kind: "info", text: fmt(m.ide.run.phase, { name: event.name }) });
-            break;
-          case "log":
-            batch.push({ kind: "log", text: event.line });
-            break;
-          case "wasm":
-            try {
-              setWasm(decodeBase64(event.b64));
-            } catch {
-              batch.push({ kind: "error", text: m.ide.run.wasmDecodeError });
-            }
-            break;
-          case "done":
-            finished = true;
-            if (!event.ok && event.timedOut) {
-              batch.push({ kind: "error", text: m.ide.run.timedOut });
-            } else if (!event.ok && event.infraError) {
-              batch.push({ kind: "error", text: m.ide.run.infraError });
-            }
-            setStatus(
-              event.ok ? "ok" : event.timedOut ? "timeout" : event.infraError ? "infra" : "err",
-            );
-            break;
-          case "ping":
-            break;
-        }
-      };
-
-      for (;;) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        pending += decoder.decode(value, { stream: true });
-        const batch: ConsoleLine[] = [];
-        for (;;) {
-          const nl = pending.indexOf("\n");
-          if (nl === -1) break;
-          const raw = pending.slice(0, nl);
-          pending = pending.slice(nl + 1);
-          if (!raw.trim()) continue;
-          try {
-            handleEvent(JSON.parse(raw) as ForgeEvent, batch);
-          } catch {
-            // tolerate a malformed line
-          }
-        }
-        pushLines(batch);
+      if (runMode === "build" && result.wasm) setWasm(result.wasm);
+      if (!result.ok && result.timedOut) {
+        pushLine({ kind: "error", text: m.ide.run.timedOut });
       }
-      if (!finished) setStatus("infra");
-    } catch {
-      if (!abort.signal.aborted) {
-        pushLines([{ kind: "error", text: m.ide.run.networkError }]);
-        setStatus("err");
-      } else {
-        pushLines([{ kind: "info", text: m.ide.run.cancelled }]);
-        setStatus("idle");
-      }
+      setStatus(result.ok ? "ok" : result.timedOut ? "timeout" : "err");
     } finally {
       inFlightRef.current = false;
       abortRef.current = null;

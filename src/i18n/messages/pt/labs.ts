@@ -51,6 +51,8 @@ export const labs = {
     },
     phases: {
       prepare: "preparando",
+      queued: "na fila da forja",
+      building: "compilando rust → wasm",
       sign: "assinando",
       submit: "enviando à rede",
       confirm: "confirmando no ledger",
@@ -62,6 +64,9 @@ export const labs = {
       testnetBusy: "Os espíritos da testnet estão ocupados — malhe de novo em instantes.",
       walletRequired: "Forje suas chaves primeiro — volte uma tela.",
       missingState: "Um passo anterior ficou para trás — volte e complete.",
+      forgeCold: "A forja está fria — o runner está inacessível. Tente de novo em instantes.",
+      buildFailed: "A compilação falhou — o runner rejeitou este contrato. Malhe de novo.",
+      buildTimeout: "A compilação estourou o tempo — a forja estava lotada. Malhe de novo.",
     },
     checkpoint: {
       title: "Reivindique sua recompensa",
@@ -76,6 +81,7 @@ export const labs = {
         "account-exists": "uma conta viva",
         trustline: "a trustline de USDC",
         "payment-sent": "um pagamento enviado",
+        "token-balance-positive": "um saldo de token no seu contrato",
       },
     },
     done: {

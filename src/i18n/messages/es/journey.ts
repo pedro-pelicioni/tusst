@@ -42,6 +42,17 @@ export const journey = {
       cta: "Abrir el lab",
       soon: "este lab aún está en la fragua",
     },
+    exercise: {
+      kicker: "la prueba del examinador",
+      rubricLabel: "la rúbrica que lo juzgará",
+      placeholder: "Escribe tu spec aquí — comportamiento, invariantes, bordes…",
+      submit: "Enviar al examinador",
+      checking: "el examinador lee…",
+      passKicker: "spec aceptada",
+      failKicker: "el examinador objeta",
+      revise: "Revisar y reenviar",
+      unavailable: "El examinador está inaccesible ahora — inténtalo de nuevo en un momento.",
+    },
     claim: {
       title: "Sellar el capítulo",
       body: "El camino recuerda lo que anduviste. Séllalo, y el XP del capítulo es tuyo.",

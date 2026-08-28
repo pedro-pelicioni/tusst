@@ -127,6 +127,23 @@ Whose bug is it?`,
       explain: `This is the deal of AI-era engineering: the machine forges to the letter of the spec, so the letter of the spec is your responsibility. Tighten the spec, re-forge, and both readings disappear.`,
     },
     {
+      kind: "exercise",
+      mode: "spec-write",
+      brief: `## The examiner's trial: spec a Guild Tip Jar
+
+Time to forge a spec of your own. The commission:
+
+> The guild wants an on-chain **tip jar**. Anyone may drop tips into it. Only the guild's **keeper** may collect what's inside. The guild is paranoid about two things: the keeper somehow taking *more* than the jar holds, and tips getting stuck forever if the keeper vanishes.
+
+Write the spec — **behavior only**, the way this chapter taught: what must happen, what must never happen, and the edges. An AI examiner will judge it against the rubric below (and it grades exactly like the golem forges: to the letter).`,
+      rubric: `1. Behavior only — no storage layouts, crates, or function signatures.
+2. The deposit rule and the collect rule are each stated unambiguously (who may act, on what).
+3. At least one **invariant** that must hold at all times.
+4. At least one **edge case** is addressed (zero-amount tip, empty-jar collect, exact-balance collect…).
+5. The "keeper vanishes" concern is resolved by a stated behavior (any reasonable design is accepted — the rubric demands a decision, not a specific one).`,
+      minChars: 120,
+    },
+    {
       kind: "theory",
       body: `## Your road from here
 

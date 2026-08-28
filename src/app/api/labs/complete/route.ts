@@ -67,10 +67,22 @@ export async function POST(req: Request) {
     );
   }
 
+  // contractId rides along for contract checks (validated shape only — the
+  // on-chain simulation below is the trust anchor).
+  const claimedContractId =
+    artifacts &&
+    typeof artifacts === "object" &&
+    typeof (artifacts as { contractId?: unknown }).contractId === "string" &&
+    /^C[A-Z2-7]{55}$/.test((artifacts as { contractId: string }).contractId)
+      ? (artifacts as { contractId: string }).contractId
+      : undefined;
+
   if (needsChain) {
     let verdict;
     try {
-      verdict = await verifyOnChain(address as string, lab.verify);
+      verdict = await verifyOnChain(address as string, lab.verify, {
+        contractId: claimedContractId,
+      });
     } catch {
       return NextResponse.json(
         { error: "Could not reach the testnet — try again in a moment." },
@@ -89,6 +101,7 @@ export async function POST(req: Request) {
   // client sent. Verification above is the trust anchor, not this blob.
   const cleanArtifacts: LabArtifacts = {
     address: typeof address === "string" ? address : undefined,
+    contractId: claimedContractId,
     txHashes: {},
   };
   if (artifacts && typeof artifacts === "object") {

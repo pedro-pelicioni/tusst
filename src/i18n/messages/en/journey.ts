@@ -42,6 +42,17 @@ export const journey = {
       cta: "Open the lab",
       soon: "this lab is still being forged",
     },
+    exercise: {
+      kicker: "the examiner's trial",
+      rubricLabel: "the rubric it will be graded against",
+      placeholder: "Write your spec here — behavior, invariants, edges…",
+      submit: "Submit to the examiner",
+      checking: "the examiner reads…",
+      passKicker: "spec accepted",
+      failKicker: "the examiner objects",
+      revise: "Revise & resubmit",
+      unavailable: "The examiner is unreachable right now — try again in a moment.",
+    },
     claim: {
       title: "Seal the chapter",
       body: "The road remembers what you've walked. Seal it, and the chapter's XP is yours.",

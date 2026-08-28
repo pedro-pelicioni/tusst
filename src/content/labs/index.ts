@@ -1,6 +1,7 @@
 import type { LabScenario } from "./types";
 import { walletOnboarding } from "./wallet-onboarding";
 import { scpSimulator } from "./scp-simulator";
+import { ozTokenWizard } from "./oz-token-wizard";
 
 // The Forge Labs catalog. Order = display order on /labs. A "soon" entry is
 // meta-only (empty steps) — it renders as a roadmap card and has no player
@@ -20,16 +21,9 @@ const soon = (
 
 export const labs: LabScenario[] = [
   walletOnboarding,
+  ozTokenWizard,
   scpSimulator,
 
-  soon({
-    slug: "oz-token-wizard",
-    title: "OpenZeppelin Token Wizard",
-    tagline: "Pick extensions, forge real Rust, deploy your own token.",
-    difficulty: "adept",
-    estMinutes: 15,
-    glyph: "⚒",
-  }),
   soon({
     slug: "passkey-smart-wallet",
     title: "Passkey Smart Wallet",

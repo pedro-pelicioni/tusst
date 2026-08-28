@@ -1,5 +1,13 @@
 import "server-only";
 
+import {
+  Address,
+  BASE_FEE,
+  Contract,
+  TransactionBuilder,
+  rpc,
+  scValToNative,
+} from "@stellar/stellar-sdk";
 import { TESTNET } from "@/lib/stellar/network";
 import type { VerifySpec } from "@/content/labs/types";
 
@@ -43,9 +51,42 @@ export interface VerifyOutcome {
   failed: string[];
 }
 
+// Simulate `func(address)` on the contract and check the result is > 0.
+// The contractId is client-provided, but a positive token balance for the
+// claimant's own address on a real deployed contract is exactly the deed
+// being verified — same trust shape as the Horizon transaction checks.
+async function tokenBalancePositive(
+  address: string,
+  contractId: string,
+  func: string,
+): Promise<boolean> {
+  try {
+    const server = new rpc.Server(TESTNET.rpcUrl);
+    const account = await server.getAccount(address);
+    const tx = new TransactionBuilder(account, {
+      fee: BASE_FEE,
+      networkPassphrase: TESTNET.passphrase,
+    })
+      .addOperation(
+        new Contract(contractId).call(func, new Address(address).toScVal()),
+      )
+      .setTimeout(60)
+      .build();
+    const sim = await server.simulateTransaction(tx);
+    if (rpc.Api.isSimulationError(sim)) return false;
+    const retval = (sim as rpc.Api.SimulateTransactionSuccessResponse).result?.retval;
+    if (!retval) return false;
+    const value = scValToNative(retval) as bigint | number;
+    return BigInt(value) > BigInt(0);
+  } catch {
+    return false;
+  }
+}
+
 export async function verifyOnChain(
   address: string,
   specs: VerifySpec[],
+  artifacts?: { contractId?: string },
 ): Promise<VerifyOutcome> {
   const failed: string[] = [];
   const account = await fetchAccount(address);
@@ -72,6 +113,14 @@ export async function verifyOnChain(
         const ok = page?._embedded?.records?.some(
           (r) => r.type === "payment" && r.from === address,
         );
+        if (!ok) failed.push(spec.check);
+        break;
+      }
+      case "token-balance-positive": {
+        const contractId = artifacts?.contractId;
+        const ok =
+          !!contractId &&
+          (await tokenBalancePositive(address, contractId, spec.func));
         if (!ok) failed.push(spec.check);
         break;
       }

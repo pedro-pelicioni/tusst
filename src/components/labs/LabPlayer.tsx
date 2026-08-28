@@ -18,6 +18,7 @@ import { labBySlug } from "@/content/labs";
 import type { LabStep } from "@/content/labs/types";
 import {
   LabActionError,
+  phasesFor,
   runLabAction,
   type LabPhase,
 } from "@/lib/labs/engine";
@@ -35,7 +36,7 @@ const RUNE_ARROW = "/rune-arrow.png";
 type Feedback = { correct: boolean; text: string } | null;
 type ActionStatus =
   | { s: "idle" }
-  | { s: "running"; phase: LabPhase }
+  | { s: "running"; phase: LabPhase; detail?: string }
   | { s: "error"; message: string; retryable: boolean };
 type ClaimStatus =
   | { s: "idle" }
@@ -93,7 +94,6 @@ function ArrowButton({
   );
 }
 
-const PHASE_ORDER: LabPhase[] = ["prepare", "sign", "submit", "confirm"];
 
 export function LabPlayer({
   labSlug,
@@ -156,6 +156,10 @@ export function LabPlayer({
       companion: run.state.companion ?? "…",
       balance: run.state.balance ?? "10000",
       tx: step ? (run.artifacts.txHashes[step.id] ?? "…") : "…",
+      contract: run.artifacts.contractId ?? "…",
+      name: run.state.tokenName ?? "…",
+      symbol: run.state.tokenSymbol ?? "…",
+      supply: run.state.tokenSupply ?? "…",
     }),
     [wallet, run, step],
   );
@@ -197,8 +201,8 @@ export function LabPlayer({
         state: run.state,
         artifacts: run.artifacts,
       };
-      const result = await runLabAction(step.action, wallet, ctx, (phase) =>
-        setAction({ s: "running", phase }),
+      const result = await runLabAction(step.action, wallet, ctx, (phase, detail) =>
+        setAction({ s: "running", phase, detail }),
       );
 
       const next: LabRun = {
@@ -213,6 +217,8 @@ export function LabPlayer({
       }
       if (result.balance) next.state.balance = result.balance;
       if (result.txHash) next.artifacts.txHashes[step.id] = result.txHash;
+      if (result.wasmB64) next.artifacts.wasmB64 = result.wasmB64;
+      if (result.contractId) next.artifacts.contractId = result.contractId;
       persist(next);
       setMaxIndex((mx) => Math.max(mx, index + 1));
       setAction({ s: "idle" });
@@ -222,6 +228,9 @@ export function LabPlayer({
           "wallet-required": m.labs.player.errors.walletRequired,
           "missing-state": m.labs.player.errors.missingState,
           "friendbot-failed": m.labs.player.errors.testnetBusy,
+          "forge-cold": m.labs.player.errors.forgeCold,
+          "build-failed": m.labs.player.errors.buildFailed,
+          "build-timeout": m.labs.player.errors.buildTimeout,
         };
         setAction({
           s: "error",
@@ -501,6 +510,30 @@ export function LabPlayer({
           </div>
         )}
 
+        {step.kind === "input" && (
+          <div className="mx-auto w-full max-w-xl">
+            <Markdown>{step.prompt}</Markdown>
+            <input
+              type="text"
+              value={run.state[step.stateKey] ?? ""}
+              maxLength={step.maxLength}
+              placeholder={step.placeholder}
+              onChange={(e) =>
+                persist({
+                  ...run,
+                  state: { ...run.state, [step.stateKey]: e.target.value },
+                })
+              }
+              className="mt-6 w-full rounded-xl border border-line bg-bg-elev px-5 py-4 font-mono text-[15px] text-fg outline-none transition placeholder:text-muted/60 focus:border-accent2/60"
+            />
+            {step.hint && (
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+                {step.hint}
+              </p>
+            )}
+          </div>
+        )}
+
         {step.kind === "sim" && (
           <div className="mx-auto w-full max-w-2xl">
             {step.body && (
@@ -566,30 +599,36 @@ export function LabPlayer({
                   {action.s === "running" ? (
                     <span className="sc-flicker">⚒ …</span>
                   ) : (
-                    step.cta
+                    fmt(step.cta, vars)
                   )}
                 </button>
 
-                {/* phase stepper */}
+                {/* phase stepper (sequence depends on the action type) */}
                 {action.s === "running" && (
-                  <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-mono text-[10px] uppercase tracking-[0.2em]">
-                    {PHASE_ORDER.map((p) => (
-                      <span
-                        key={p}
-                        className={
-                          p === action.phase
-                            ? "text-accent2"
-                            : PHASE_ORDER.indexOf(p) <
-                                PHASE_ORDER.indexOf(action.phase)
-                              ? "text-muted2"
-                              : "text-muted/50"
-                        }
-                      >
-                        {p === action.phase ? "» " : ""}
-                        {m.labs.player.phases[p]}
-                      </span>
-                    ))}
-                  </div>
+                  <>
+                    <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-mono text-[10px] uppercase tracking-[0.2em]">
+                      {phasesFor(step.action).map((p, pi, order) => (
+                        <span
+                          key={p}
+                          className={
+                            p === action.phase
+                              ? "text-accent2"
+                              : pi < order.indexOf(action.phase)
+                                ? "text-muted2"
+                                : "text-muted/50"
+                          }
+                        >
+                          {p === action.phase ? "» " : ""}
+                          {m.labs.player.phases[p]}
+                        </span>
+                      ))}
+                    </div>
+                    {action.detail && (
+                      <p className="mt-2 truncate text-center font-mono text-[10px] text-muted/70">
+                        {action.detail}
+                      </p>
+                    )}
+                  </>
                 )}
 
                 {action.s === "error" && (
@@ -676,6 +715,7 @@ export function LabPlayer({
       {(step.kind === "narrate" ||
         step.kind === "quiz" ||
         step.kind === "choice" ||
+        step.kind === "input" ||
         step.kind === "sim" ||
         (step.kind === "action" && stepCleared)) && (
         <div className="sticky bottom-0 -mx-5 mt-10 border-t border-line bg-bg/90 px-5 py-4 backdrop-blur">
@@ -747,7 +787,13 @@ export function LabPlayer({
               ) : (
                 <button
                   type="button"
-                  disabled={step.kind === "choice" && !run.state[step.stateKey]}
+                  disabled={
+                    (step.kind === "choice" && !run.state[step.stateKey]) ||
+                    (step.kind === "input" &&
+                      !new RegExp(step.pattern ?? "^.+$").test(
+                        run.state[step.stateKey] ?? "",
+                      ))
+                  }
                   onClick={advance}
                   className="w-full rounded-full px-7 py-3.5 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-[#0b0817] transition-transform hover:-translate-y-[1px] disabled:opacity-40 sm:w-auto"
                   style={{

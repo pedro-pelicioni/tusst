@@ -28,7 +28,16 @@ export type JourneyStep =
     }
   | { kind: "widget"; component: "scp-sim"; body?: string }
   | { kind: "labLink"; labSlug: string; body: string }
-  | { kind: "rustBranch"; lessonSlug: string; body: string };
+  | { kind: "rustBranch"; lessonSlug: string; body: string }
+  | {
+      kind: "exercise";
+      mode: "spec-write";
+      /** the assignment, shown to the student (markdown) */
+      brief: string;
+      /** grading criteria — shown to the student AND given to the examiner */
+      rubric: string;
+      minChars?: number;
+    };
 
 export interface ConceptMeta {
   slug: string;
