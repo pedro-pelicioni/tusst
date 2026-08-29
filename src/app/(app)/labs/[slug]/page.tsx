@@ -46,7 +46,9 @@ export default async function LabPage({
 
   return (
     <SceneRoot id="lab-player">
-      <section data-scene className="sc-scene sc-scene--lab min-h-[calc(100dvh-56px)]">
+      {/* 140px = nav (57) + app footer (82); sizing to 100dvh−nav alone
+          leaves exactly the footer's height overflowing below the scene. */}
+      <section data-scene className="sc-scene sc-scene--lab min-h-[calc(100dvh-140px)]">
         <div className="relative">
           <LabPlayer labSlug={slug} signedIn={!!session?.user?.id} />
         </div>

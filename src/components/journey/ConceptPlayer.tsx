@@ -342,7 +342,7 @@ export function ConceptPlayer({
   }
 
   return (
-    <div className="mx-auto flex min-h-[calc(100dvh-120px)] max-w-3xl flex-col px-5 py-6">
+    <div className="mx-auto flex min-h-[calc(100dvh-140px)] max-w-3xl flex-col px-5 py-6">
       {/* ─── top bar ─── */}
       <div className="flex items-center gap-3">
         <Link

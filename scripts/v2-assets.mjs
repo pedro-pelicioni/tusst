@@ -136,7 +136,7 @@ const JOBS = [
   { src: "emblem-scp-simulator.png", out: "labs/emblems/scp-simulator.webp", kind: "alpha", budgetKB: 120, resize: { width: 800 }, alphaQuality: 90, trim: true },
 
   // ── The Journey (map + chapter sigils, slug-named) ────────────────
-  { src: "journey-bg.png", out: "journey/map-bg.webp", kind: "scene", budgetKB: 380, resize: { width: 2560 } },
+  { src: "journey-bg.png", out: "journey/map-bg-v2.webp", kind: "scene", budgetKB: 380, resize: { width: 2560 } },
   { src: "sigil-1.png", out: "journey/sigils/think-before-you-forge.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
   { src: "sigil-2.png", out: "journey/sigils/the-realm-of-stellar.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
   { src: "sigil-3.png", out: "journey/sigils/anatomy-of-a-transaction.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },

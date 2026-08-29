@@ -209,7 +209,7 @@ export default async function JourneyPage() {
         className="sc-scene sc-scene--journey min-h-[calc(100dvh-56px)]"
       >
         <SceneArt
-          layers={[{ src: "/v2/journey/map-bg.webp", priority: true, quality: 75 }]}
+          layers={[{ src: "/v2/journey/map-bg-v2.webp", priority: true, quality: 75 }]}
         />
         <div className="sc-scrim" />
         <SceneParticles tone="journey" />

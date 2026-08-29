@@ -136,14 +136,27 @@ export default async function ConceptPage({
     <SceneRoot id="concept-player">
       <section
         data-scene
-        className="sc-scene sc-scene--journey min-h-[calc(100dvh-56px)]"
+        // 140px = the nav (57) plus the app footer (82). Sizing to
+        // 100dvh−nav alone overshot by exactly the footer's height, which
+        // then showed up as a black band with a hard rule under the lesson.
+        className="sc-scene sc-scene--journey min-h-[calc(100dvh-140px)]"
       >
         {/* Reading surface: art stays a backdrop, never a distraction. No
             data-reveal anywhere inside — the player swaps steps without
             remounting, and SceneMotion only ever observes what existed at
             mount, so a later step would be held at opacity:0 forever. */}
+        {/* Atmosphere, not scenery — the reading column sits on top of it, so
+            the art is held back a little and the scene's own dark centre does
+            the rest. */}
         <SceneArt
-          layers={[{ src: "/v2/journey/map-bg.webp", priority: true, quality: 60 }]}
+          layers={[
+            {
+              src: "/v2/journey/map-bg-v2.webp",
+              priority: true,
+              quality: 60,
+              className: "opacity-60",
+            },
+          ]}
         />
         <div className="sc-scrim" />
         <SceneParticles tone="journey" count={8} />
