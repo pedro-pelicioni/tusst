@@ -8,19 +8,19 @@ export const conceptText = {
       kind: "theory",
       body: `## Ancrages : les portes
 
-Les rivières du chapitre précédent déplacent les actifs *ledger*. Mais ton salaire reste dans une banque. Le pont est un **ancrage** : une entreprise réglementée qui **émet des actifs adossés à la monnaie fiduciaire** et gère les **rampe d’entrée/sortie**.
+Les rivières du chapitre précédent déplacent les actifs *sur le registre*. Mais ton salaire se trouve encore dans une banque. Le pont est une **ancre** : une entreprise réglementée qui **émet des actifs adossés à des monnaies fiduciaires** et gère les **rampes d'entrée et de sortie**.
 
-Donne des dollars à un ancrage et il te verse l’équivalent en jetons depuis son compte émetteur — la même mécanique que tu as apprise il y a deux chapitres : un émetteur, des trustlines, des drapeaux d’authentification pour la conformité. Récupère les jetons et il te renvoie les dollars.
+Confie des dollars à une ancre et elle te verse l’équivalent en jetons depuis son compte émetteur — le même mécanisme qu'il y a deux chapitres : un émetteur, des lignes de confiance et des indicateurs d’autorisation pour la conformité. Rends les jetons et elle te restitue les dollars.
 
-Chaque actif fiduciaire sérieux sur Stellar est derrière une porte comme celle‑ci. Les ancrages sont là où le grand livre touche le sol.`,
+Chaque actif fiduciaire sérieux sur Stellar passe par une porte de ce type. Les ancres sont le point de contact entre le registre et l'économie réelle.`,
     },
     {
       kind: "theory",
       body: `## SEPs : la langue commune
 
-Il existe de nombreux portefeuilles et de nombreux ancrages. Sans normes, chaque paire aurait besoin d’une intégration sur mesure — N×M, pour toujours.
+Il existe de nombreux portefeuilles et de nombreuses ancres. Sans normes, chaque paire aurait besoin d’une intégration sur mesure — soit N×M intégrations à maintenir indéfiniment.
 
-La réponse de Stellar est le **SEP** : *Stellar Ecosystem Proposal*. Les SEPs sont des normes publiques définissant exactement comment portefeuilles, ancrages et services communiquent. Implémente un SEP une fois et ton portefeuille fonctionnera avec **tout ancrage** qui l’implémente aussi — flux de dépôt, authentification, identité, tout.
+La réponse de Stellar tient dans les **SEP**, les *Stellar Ecosystem Proposals*. Ces normes publiques définissent précisément la manière dont portefeuilles, ancres et services communiquent. Implémente une SEP une fois et ton portefeuille fonctionnera avec **toute ancre** qui la respecte également — dépôt, authentification, identité et le reste.
 
 Cette culture d’interopérabilité avant tout est l’une des superpuissances silencieuses de Stellar : les utilisateurs choisissent n’importe quelle porte, et toutes les portes partagent une même forme de clé.`,
     },
@@ -31,27 +31,27 @@ Cette culture d’interopérabilité avant tout est l’une des superpuissances 
 Deux petites normes portent toute la porte :
 
 - **SEP-1** — chaque domaine sérieux publie un \`stellar.toml\` : sa **carte d’identité on‑chain**. Quels actifs il émet, quels comptes sont officiels, où vivent ses services. Les portefeuilles le lisent pour distinguer le véritable émetteur d’un imposteur portant le même code d’actif.
-- **SEP-10** — **authentification web** : l’ancrage envoie une *transaction de défi*, tu la signes avec la clé de ton compte et la renvoies. Propriété prouvée, session accordée — et le défi **n’est jamais soumis** au grand livre.
+- **SEP-10** — **authentification web** : l’ancre envoie une *transaction de défi*, tu la signes avec la clé de ton compte et la lui renvoies. La possession du compte est prouvée, la session est accordée — et le défi **n’est jamais soumis** au registre.
 
 Connecte‑toi avec une signature : pas de mot de passe, pas d’e‑mail.`,
     },
     {
       kind: "quiz",
-      question: `Que prouve exactement l’authentification web SEP-10 à un ancrage ?`,
+      question: `Que prouve exactement l’authentification web SEP-10 à une ancre ?`,
       options: [
         "Que tu contrôles la clé secrète du compte — en signant une transaction de défi qui ne touche jamais le grand livre",
         "Ta véritable identité légale — SEP-10 effectue lui‑même la vérification KYC",
-        "Que ton compte possède assez de XLM pour payer les frais de l’ancrage",
+        "Que ton compte possède assez de XLM pour payer les frais de l’ancre",
       ],
       answer: 0,
-      explain: `SEP-10 est purement la possession de clé. L’identité légale est une norme distincte (SEP-12) que les ancrages exécutent *après* que tu sois authentifié — signature d’abord, papiers ensuite.`,
+      explain: `SEP-10 prouve uniquement la possession de la clé. L’identité légale relève d'une norme distincte, SEP-12, que les ancres appliquent *après* l'authentification — signature d’abord, justificatifs ensuite.`,
     },
     {
       kind: "theory",
       body: `## Les portes fonctionnelles : 24, 31, 41
 
-- **SEP-24** — dépôt et retrait *interactifs*. Ton portefeuille ouvre la vue web hébergée par l’ancrage ; l’ancrage gère les formulaires KYC et les détails bancaires ; les jetons arrivent quand le virement est clair. La rampe quotidienne pour les humains.
-- **SEP-31** — paiements transfrontaliers entre *entreprises* : un ancrage expéditeur et un ancrage récepteur se règlent sur Stellar tout en gérant chacun ses rails locaux.
+- **SEP-24** — dépôt et retrait *interactifs*. Ton portefeuille ouvre l'interface web hébergée par l’ancre ; celle-ci gère les formulaires KYC et les coordonnées bancaires ; les jetons arrivent une fois le virement validé. C'est la rampe d'accès quotidienne destinée aux utilisateurs.
+- **SEP-31** — paiements transfrontaliers entre *entreprises* : une ancre d'origine et une ancre de destination règlent la transaction sur Stellar tout en gérant chacune son infrastructure locale.
 - **SEP-41** — un vieux compagnon : l’interface **token** standard pour les contrats Soroban, celui que tout Stellar Asset Contract utilise.
 
 Rampes pour les gens, rails pour les institutions, un dialecte de jeton pour les contrats.`,
@@ -73,13 +73,13 @@ Rampes pour les gens, rails pour les institutions, un dialecte de jeton pour les
     },
     {
       kind: "theory",
-      body: `## Une remise, porte à porte
+      body: `## Un transfert de bout en bout
 
 Regarde Ana à Chicago payer sa mère à Lisbonne :
 
-1. Le portefeuille d’Ana lit le \`stellar.toml\` de l’ancrage US (SEP-1), s’authentifie (SEP-10), et ouvre un dépôt (SEP-24). Ses dollars deviennent USDC sur‑ledger.
+1. Le portefeuille d’Ana lit le \`stellar.toml\` de l’ancre américaine (SEP-1), s’authentifie (SEP-10) et ouvre un dépôt (SEP-24). Ses dollars deviennent des USDC sur le registre.
 2. Un **paiement de chemin** traverse la rivière : USDC sort, EURC arrive — secondes, frais sous cent.
-3. Le portefeuille de la mère retire via un ancrage européen (encore SEP-24). Les euros arrivent sur son compte bancaire.
+3. Le portefeuille de sa mère effectue un retrait auprès d'une ancre européenne, toujours via SEP-24. Les euros arrivent sur son compte bancaire.
 
 Deux portes réglementées, un passage de rivière atomique au milieu. La chaîne n’a jamais vu un « dollar » — seulement des actifs que les portes promettent d’honorer.`,
     },
@@ -87,8 +87,8 @@ Deux portes réglementées, un passage de rivière atomique au milieu. La chaîn
       kind: "quiz",
       question: `Dans cette remise porte à porte, quel élément a effectué la conversion de devise ?`,
       options: [
-        "Le paiement de chemin — acheminant USDC vers EURC via les carnets d’ordres et pools sur‑ledger",
-        "Le bureau FX interne de l’ancrage expéditeur, hors du grand livre",
+        "Le paiement par chemin — il convertit les USDC en EURC via les carnets d’ordres et les pools du registre",
+        "Le service de change interne de l’ancre d'origine, hors du registre",
         "Un contrat de pont qui verrouillait l'USDC et frappait l'EURC",
       ],
       answer: 0,
@@ -98,7 +98,7 @@ Deux portes réglementées, un passage de rivière atomique au milieu. La chaîn
       kind: "theory",
       body: `## Portes pratiques : testanchor
 
-Tu n’as pas besoin d’une licence bancaire pour construire contre tout ça. Le SDF exécute **testanchor** sur testnet — un ancrage entièrement fonctionnel parlant SEP-1, SEP-10 et SEP-24 avec de l’argent de démonstration. Oriente ton code portefeuille vers lui et répète toute la danse dépôt‑et‑retrait avant qu’un seul dollar réel ne soit impliqué.
+Tu n’as pas besoin d’une licence bancaire pour développer cette intégration. La SDF exploite **testanchor** sur testnet — une ancre entièrement fonctionnelle qui prend en charge SEP-1, SEP-10 et SEP-24 avec de l’argent fictif. Oriente ton code de portefeuille vers elle et répète tout le parcours de dépôt et de retrait avant d'engager le moindre dollar réel.
 
 Portes, rivières, confiance — tout jusqu’à présent a été le *royaume classique*, la machinerie intégrée dans le protocole. Le prochain chapitre nous fait passer à la partie que tu programmes toi‑même : **Soroban**, où les contrats sont vivants et même le stockage a un battement de cœur.`,
     },

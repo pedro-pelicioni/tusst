@@ -6,29 +6,29 @@ export const conceptText = {
   steps: [
     {
       kind: "theory",
-      body: `## La spécification qui croît des dents
+      body: `## La spécification se dote de dents
 
-Dans le chapitre I, tu as appris à écrire ce que *c’est bien*. Un **test** est cette phrase rendue exécutable — une spécification que la machine re-vérifie en millisecondes, à chaque fois, pour toujours.
+Dans le chapitre I, tu as appris à définir ce que signifie *être correct*. Un **test** rend cette définition exécutable : la machine peut vérifier la spécification en quelques millisecondes, à chaque forge.
 
 C’est plus important avec l’IA, pas moins. Un golem peut débattre avec ta prose, réinterpréter ton intention, « améliorer » tes exigences. Il ne peut pas débattre avec \`assert_eq!\`. **Les tests sont la spécification que la machine ne peut pas contester** — le seul endroit où une réponse plausible et une réponse correcte ne sont plus confondues.
 
-Écris-les **d’abord**, et chaque forge qui suit est notée dès la naissance.`,
+Écris-les **d’abord** : chaque forge suivante disposera ainsi de critères d'évaluation dès sa naissance.`,
     },
     {
       kind: "theory",
-      body: `## Le rite : rouge, vert, refactor
+      body: `## Le rite : rouge, vert, refactorisation
 
 Le TDD est un rite à trois temps, et l’ordre est le point :
 
 1. **Rouge** — écris un petit test pour un comportement qui n’existe pas encore. Lance‑le. **Regarde‑le échouer.**
 2. **Vert** — écris le code le plus simple qui le fait passer. Pas le plus astucieux. Le plus simple.
-3. **Refactor** — maintenant, avec le filet en place, rends‑le propre. Les tests protègent ton dos pendant que tu bouges les choses.
+3. **Refactorisation** — le filet est désormais en place ; améliore le code. Les tests te protègent pendant que tu réorganises les éléments.
 
 Le rouge prouve que le test peut attraper le bug qu’il protège. Le vert prouve que le comportement existe. Le refactor est l’endroit où le bon code est réellement créé — *en toute sécurité*.`,
     },
     {
       kind: "quiz",
-      question: `Ton partenaire IA livre une fonctionnalité *et* un nouveau test pour elle. Tu lances la suite : tout est vert dès la première tentative. Que dois‑tu encore rendre au rite ?`,
+      question: `Ton partenaire IA livre une fonctionnalité *et* son nouveau test. Tu lances la suite : tout est vert dès la première tentative. Que dois-tu encore restituer au rite ?`,
       options: [
         "Annuler la fonctionnalité (ou la rétablir) et regarder le nouveau test devenir rouge — un test qui n’a jamais échoué peut ne rien tester",
         "Rien — vert dès le premier passage est le meilleur résultat possible",
@@ -39,13 +39,13 @@ Le rouge prouve que le test peut attraper le bug qu’il protège. Le vert prouv
     },
     {
       kind: "theory",
-      body: `## Anatomie d’un bon essai
+      body: `## Anatomie d’un bon test
 
-Un bon test unitaire se lit en trois mouvements — **arranger, agir, affirmer** :
+Un bon test unitaire se lit en trois temps — **préparer, agir, vérifier** :
 
-- **Arranger** — construis le monde : un dépôt d’entiercement qui détient un dépôt, une date limite déjà dépassée.
+- **Préparer** — construis le contexte : un contrat d’entiercement contenant un dépôt et une date limite déjà dépassée.
 - **Agir** — fais *une* chose : l’acheteur appelle le remboursement.
-- **Affirmer** — vérifie *un* comportement : le solde de l’acheteur a augmenté du dépôt.
+- **Vérifier** — contrôle *un* comportement : le solde de l’acheteur a augmenté du montant du dépôt.
 
 Un comportement par test, et un nom qui le décrit : \`refund_after_deadline_returns_deposit\`. Quand ce test échoue, l’échec *est* le diagnostic — pas d’archéologie nécessaire.`,
     },
@@ -64,23 +64,23 @@ Un comportement par test, et un nom qui le décrit : \`refund_after_deadline_ret
       kind: "theory",
       body: `## De l’exemple aux invariants
 
-Un test d’exemple fixe un point : *cette* entrée, *cette* sortie. **La pensée de type propriété** fixe une loi : quelque chose qui doit rester vrai pour *toute* entrée.
+Un test fondé sur un exemple vérifie un point précis : *cette* entrée produit *cette* sortie. **Le raisonnement par propriétés** établit une loi qui doit rester vraie pour *toute* entrée.
 
 Tes invariants du chapitre I sont exactement ces lois :
 
 > solde de l’entiercement = dépôts − libérations − remboursements
 
-Affirme‑le après *chaque* opération que tes tests effectuent — dépôt, libération, remboursement, ordres étranges — et tu as construit un fil de sécurité à travers tout l’espace d’état, pas une clôture autour d’un seul exemple. Chaque invariant de ta spécification mérite au moins une assertion qui ne cesse jamais d’être vérifiée.`,
+Vérifie-le après *chaque* opération effectuée par tes tests — dépôt, libération, remboursement, ordres inhabituels — et tu obtiens un filet de sécurité couvrant tout l’espace d’état, pas une simple clôture autour d’un exemple. Chaque invariant de ta spécification mérite au moins une assertion vérifiée en permanence.`,
     },
     {
       kind: "fill",
-      prompt: `Transforme l’invariant du chapitre I en un essai exécutable :`,
+      prompt: `Transforme l’invariant du chapitre I en un test exécutable :`,
       file: "escrow_test.rs",
       before: `assert_eq!(escrow.balance(), deposits - releases - `,
       after: `);`,
       choices: ["refunds", "fees", "interest", "gas"],
       answer: 0,
-      explain: `Le même anneau de fer du chapitre I, maintenant avec des dents : l’argent quitte l’entiercement uniquement comme libérations ou remboursements. Écrit comme une assertion, la machine le re‑vérifie à chaque forge — gratuit, pour toujours.`,
+      explain: `Le même anneau de fer qu'au chapitre I, désormais doté de dents : l’argent ne quitte l’entiercement que sous forme de libération ou de remboursement. Formulé comme une assertion, il est vérifié automatiquement à chaque forge.`,
     },
     {
       kind: "theory",
@@ -90,7 +90,7 @@ Voici le gain. Une IA te remet 300 lignes. Sans tests, tes options sont *lire ch
 
 Avec une suite écrite d’abord, l’acceptation est mécanique : **rouge — rejeter**, avec l’échec comme retour. **Vert — accepter**, et lire pour le style à ton rythme.
 
-Le même filet rend le refactoring sans peur — le tien *et* celui du golem. « Réécris ce module, garde les tests verts » est une instruction sûre *seulement parce que* les essais existent et que le golem n’a pas eu la chance de les écrire pour s’adapter à son propre code.`,
+Le même filet permet de refactoriser sans crainte — qu'il s'agisse de ton travail ou de celui du golem. « Réécris ce module en gardant les tests au vert » n'est une instruction sûre *que parce que* les tests existaient déjà et que le golem n'a pas pu les adapter à son propre code.`,
     },
     {
       kind: "quiz",
@@ -106,7 +106,7 @@ Le même filet rend le refactoring sans peur — le tien *et* celui du golem. «
     {
       kind: "rustBranch",
       lessonSlug: "rust-fundamentals-1",
-      body: `Un secret sur la Campagne : **chaque escarmouche est notée par des essais cachés** — tu forges, les essais jugent, rouge ou vert. La Campagne *est* le TDD joué comme un jeu, et tu es dans le rite depuis ta première escarmouche. La prochaine discipline : dessiner les frontières où un mot change de sens — la carte sur laquelle chaque spécification dépend.`,
+      body: `Un secret sur la Campagne : **chaque escarmouche est évaluée par des tests cachés** — tu forges, les tests jugent, rouge ou vert. La Campagne transforme le TDD en jeu, et tu participes au rite depuis ta première escarmouche. Prochaine discipline : tracer les frontières où les mots changent de sens — la carte dont dépend chaque spécification.`,
     },
   ],
 } satisfies JourneyConceptText;

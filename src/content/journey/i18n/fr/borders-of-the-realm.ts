@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
   title: "Frontières du royaume",
-  tagline: "DDD & context limités, cartographiés sur Stellar lui‑même.",
+  tagline: "DDD et contextes délimités, appliqués à Stellar lui-même.",
   steps: [
     {
       kind: "theory",
@@ -14,17 +14,17 @@ Demande à trois équipes de Stellar ce qu’est un **Account** :
 - L’équipe *anchor* : "un sujet KYC — quelqu’un qu’on doit identifier avant de déplacer de l’argent."
 - L’équipe *exchange* : "un participant au carnet d’ordres — quelqu’un avec des offres ouvertes."
 
-Même mot. Même G‑adresse, même. **Trois modèles différents.** La plupart des bugs de « mauvaise communication » sont exactement ça : deux personnes utilisent un mot pour deux concepts, chacune convaincue que l’autre est d’accord.
+Même mot. Même adresse G. **Trois modèles différents.** La plupart des bugs attribués à une « mauvaise communication » viennent précisément de là : deux personnes utilisent le même mot pour désigner deux concepts, chacune persuadée que l’autre parle de la même chose.
 
-Le Design Orienté Domaine commence ici : rend la langue précise *à dessein*.`,
+La conception pilotée par le domaine, ou DDD, commence ici : rends le langage précis *délibérément*.`,
     },
     {
       kind: "theory",
-      body: `## Langage omniprésent, contextes limités
+      body: `## Langage ubiquitaire, contextes délimités
 
-Au sein d’une équipe et d’une partie du système, le DDD exige un **langage omniprésent** : un mot, une seule signification, utilisé *partout* — conversation, spécification et code. Si la spécification dit « release », la fonction est \`release\`, pas \`transfer_out\`.
+Au sein d’une équipe et d’une partie du système, le DDD exige un **langage ubiquitaire** : un mot, une seule signification, utilisée *partout* — dans les conversations, la spécification et le code. Si la spécification dit « release », la fonction s'appelle \`release\`, pas \`transfer_out\`.
 
-Mais aucune langue ne règle tout le royaume. Un **contexte limité** est la frontière où la signification d’un mot est autorisée à changer : dans *Payments*, un Account est un détenteur de solde ; en traversant vers *Compliance*, la même adresse devient un sujet KYC.
+Mais aucun langage ne peut régir tout le royaume. Un **contexte délimité** marque la frontière à laquelle le sens d’un mot peut changer : dans *Payments*, un Account désigne un détenteur de solde ; dans *Compliance*, la même adresse représente un sujet soumis au KYC.
 
 La frontière n’est pas un échec de conception. **La frontière est la conception.**`,
     },
@@ -37,7 +37,7 @@ La frontière n’est pas un échec de conception. **La frontière est la concep
         "Ajoute les champs mais les marque optionnels, pour que le code Payments puisse simplement les ignorer",
       ],
       answer: 0,
-      explain: `Un modèle partagé agrandit les champs et règles de chaque contexte jusqu’à ce que aucun contexte ne puisse évoluer sans casser un autre. Deux modèles légers qui partagent un ID ne sont pas une duplication — ce sont deux vérités sur une même adresse, chacune possédée là où elle est comprise.`,
+      explain: `Un modèle partagé accumule les champs et les règles de tous les contextes jusqu’à ce qu’aucun ne puisse évoluer sans en casser un autre. Deux modèles légers partageant un identifiant ne constituent pas une duplication : ce sont deux représentations d’une même adresse, chacune détenue par le contexte qui la comprend.`,
     },
     {
       kind: "theory",
@@ -46,7 +46,7 @@ La frontière n’est pas un échec de conception. **La frontière est la concep
 Deux sortes de choses vivent dans tout contexte :
 
 - Une **entité** possède une identité qui survit au changement. Un **Account** Stellar est le même compte après mille paiements — son adresse est son identité ; ses soldes ne sont que l’état.
-- Un **objet de valeur** *est* sa valeur. Un **Asset** Stellar est un code plus un émetteur : deux \`USDC\` du même émetteur sont interchangeables — indistinguables, en fait. Change l’émetteur et tu n’as pas modifié l’actif ; tu détiens un *différent* actif.
+- Un **objet-valeur** *est* défini par sa valeur. Un **Asset** Stellar associe un code à un émetteur : deux \`USDC\` du même émetteur sont interchangeables — en réalité, ils sont indiscernables. Change l’émetteur et tu n’as pas modifié l’actif ; tu obtiens un *autre* actif.
 
 Les entités sont suivies. Les valeurs sont comparées. Mélanger les deux est la naissance des bugs fantômes.`,
     },
@@ -65,7 +65,7 @@ Les entités sont suivies. Les valeurs sont comparées. Mélanger les deux est l
       kind: "theory",
       body: `## Agrégats : la règle de l’enveloppe
 
-Certains objets n’ont de sens **qu’ensemble**, protégés par une racine qui applique les règles. Ce cluster est un **agrégat**.
+Certains objets n’ont de sens **qu’ensemble**, protégés par une racine qui fait respecter les règles. Cet ensemble forme un **agrégat**.
 
 Stellar te donne un spécimen parfait : l’**enveloppe de transaction**. Les opérations vivent *à l’intérieur* d’une transaction — signées ensemble, séquencées ensemble, et elles **réussissent ou échouent ensemble**. Tu ne peux pas extraire l’opération #3 et l’appliquer seule ; l’enveloppe est la seule porte, et elle contient les signatures et le numéro de séquence.
 
@@ -88,7 +88,12 @@ C’est le modèle d’agrégat en production : la cohérence est imposée *à
       file: "NOTES.md",
       before: `Ops dans une enveloppe réussissent ou échouent `,
       after: ` — la transaction est l’unité de cohérence.`,
-      choices: ["ensemble", "indépendamment", "dans l’ordre des frais", "par poids de signature"],
+      choices: [
+        "ensemble",
+        "indépendamment",
+        "dans l’ordre des frais",
+        "par poids de signature",
+      ],
       answer: 0,
       explain: `L’atomicité est la promesse globale de l’agrégat. L’ordre des frais et le poids de signature sont des concepts réels de Stellar — mais ils décident *si et quand* une enveloppe s’applique, jamais *quelles parties* de celle‑ci.`,
     },
@@ -98,7 +103,7 @@ C’est le modèle d’agrégat en production : la cohérence est imposée *à
 
 Les contextes doivent encore communiquer. **La cartographie de contexte** consiste à nommer les frontières et à construire des ponts délibérés — traduction à la limite, pour que la langue d’une partie ne fuit pas dans l’autre.
 
-Les **ancres** Stellar sont ce modèle avec un modèle métier. D’un côté : le *contexte bancaire* — IBANs, jours ouvrés, conformité. De l’autre : le *contexte grand‑livre* — trustlines, actifs, finalité de 5 s. L’ancre **traduire** : un virement entrant devient des jetons émis ; un jeton racheté devient un paiement bancaire.
+Les **ancres** Stellar incarnent ce modèle dans un véritable métier. D’un côté se trouve le *contexte bancaire* — IBAN, jours ouvrés, conformité. De l’autre, le *contexte du registre* — lignes de confiance, actifs, finalité en cinq secondes. L’ancre assure la **traduction** : un virement entrant devient une émission de jetons ; le rachat d'un jeton devient un paiement bancaire.
 
 Aucun des deux mondes n’a dû adopter le modèle de l’autre. C’est une frontière saine : traversée par traduction, jamais par fuite.`,
     },
@@ -106,11 +111,11 @@ Aucun des deux mondes n’a dû adopter le modèle de l’autre. C’est une fro
       kind: "theory",
       body: `## Pourquoi le golem a besoin de ta carte
 
-Un LLM a lu un million de bases de code où « account », « transfer » et « balance » signifiaient tous choses différentes. Laisse tes frontières non déclarées et il **mélangera les vocabulaires à mi‑fichier** — une règle KYC dérivant dans ton modèle de paiements, l’idée d’Account d’une bourse se superposant à celle de ton portefeuille — chaque ligne localement plausible.
+Un LLM a lu un million de bases de code où « account », « transfer » et « balance » désignaient des choses différentes. Si tu ne déclares pas tes frontières, il **mélangera les vocabulaires au milieu d'un fichier** : une règle KYC dérivera dans ton modèle de paiements et la notion d'Account d'une plateforme d'échange se superposera à celle de ton portefeuille — chaque ligne paraissant pourtant plausible isolément.
 
-Alors, écris la frontière sur le banc : *« Nous sommes dans le contexte Payments. Account signifie détenteur de solde. Compliance est un modèle séparé — référence‑le par adresse uniquement. »* Un contexte déclaré est une clôture que le golem respecte.
+Inscris donc clairement la frontière sur l'établi : *« Nous sommes dans le contexte Payments. Account désigne un détenteur de solde. Compliance possède un modèle distinct ; référence-le uniquement par son adresse. »* Un contexte explicite forme une clôture que le golem peut respecter.
 
-La prochaine discipline : dans un même contexte, où chaque pièce *vit* ? Entrez le garde.`,
+Prochaine discipline : dans un même contexte, où chaque pièce doit-elle *vivre* ? Entre dans le bastion.`,
     },
   ],
 } satisfies JourneyConceptText;

@@ -2,17 +2,18 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
   title: "Pense avant de forger",
-  tagline: "Les spécifications sont la compétence que l’IA ne peut pas faire pour toi.",
+  tagline:
+    "Les spécifications sont la compétence que l’IA ne peut pas exercer à ta place.",
   steps: [
     {
       kind: "theory",
       body: `## Le piège du code à l'instinct
 
-Une IA peut forger un contrat qui semble fonctionnel en trente secondes. Il compile. Il s'exécute. Il *démontre* même bien.
+Une IA peut forger en trente secondes un contrat qui semble fonctionner. Il compile. Il s'exécute. La *démo* est même convaincante.
 
 Et c'est exactement le piège : quand le code est bon marché, **"semble correct" et "est correct" deviennent indiscernables** — à moins que tu n'aies écrit, avant de commencer à forger, ce que signifie *correct*.
 
-Cette chose écrite est une **spécification**. À l'ère des co-programmeurs IA, la spécification est la partie de l'ingénierie qui reste la tienne.`,
+Cette définition couchée par écrit est une **spécification**. À l'ère des co-programmeurs IA, la spécification est la part de l'ingénierie qui reste entre tes mains.`,
     },
     {
       kind: "theory",
@@ -22,9 +23,9 @@ Une spécification décrit **le comportement**, pas l'implémentation :
 
 - **Ce qui doit se produire** — "le déposant peut récupérer les fonds après la date limite."
 - **Ce qui ne doit jamais se produire** — "le solde du contrat ne doit jamais tomber en dessous de la somme des dépôts ouverts."
-- **Les bords** — "et si la date limite est exactement *maintenant* ? et si le montant est zéro ?"
+- **Les cas limites** — "et si la date limite tombe exactement *maintenant* ? et si le montant est nul ?"
 
-Elle ne dit **pas** quel boucle, quel clé de stockage ou quel crate. Deux implémentations très différentes peuvent toutes deux respecter la même spécification — cette liberté est ce qui rend les spécifications durables et compatibles IA.`,
+Elle ne précise volontairement **pas** quelle boucle, quelle clé de stockage ni quel crate utiliser. Deux implémentations très différentes peuvent respecter la même spécification — cette liberté rend les spécifications durables et adaptées au travail avec l'IA.`,
     },
     {
       kind: "quiz",
@@ -43,39 +44,39 @@ Elle ne dit **pas** quel boucle, quel clé de stockage ou quel crate. Deux impl�
 
 Prenons une exigence apparemment innocente :
 
-> "Le vendeur est remboursé après la date limite."
+> "L'acheteur est remboursé après la date limite."
 
 Trois ingénieurs — ou trois exécutions IA — le liront de trois façons :
 
-1. Remboursé **automatiquement**, ou remboursé **lorsqu'ils demandent** ?
-2. Après que la date limite **s'est passée**, ou **à** la date limite exactement ?
+1. Est-il remboursé **automatiquement** ou **lorsqu'il le demande** ?
+2. Le remboursement est-il possible une fois la date limite **dépassée**, ou **dès l'instant précis** où elle arrive ?
 3. Le **montant total**, ou moins les frais ?
 
-Aucune de ces lectures n'est une erreur de codage. Ce sont des **trous de spécification** — et chacun d'eux arrive comme un bug portant une suite de tests verte.`,
+Aucune de ces interprétations n'est une erreur de programmation. Ce sont des **lacunes dans la spécification** — et chacune peut finir en production sous la forme d'un bug malgré une suite de tests au vert.`,
     },
     {
       kind: "quiz",
       question: `Voici une spécification, et trois implémentations forgées. **Laquelle respecte la spécification ?**
 
 **SPEC — Escrow v1**
-1. Le vendeur dépose une fois ; le montant est fixé à la création.
-2. Les fonds sont libérés au vendeur uniquement lorsque **les deux** parties ont approuvé.
-3. Après la date limite, **le vendeur** peut retirer les fonds **si la libération n'a pas eu lieu**.
+1. L'acheteur effectue un seul dépôt ; le montant est fixé à la création.
+2. Les fonds ne sont libérés au vendeur que lorsque **l'acheteur et le vendeur** ont tous deux donné leur accord.
+3. Après la date limite, **l'acheteur** peut retirer les fonds **si leur libération n'a pas encore eu lieu**.
 
 ---
 
-**A** — libère au vendeur quand *l'une* des parties approuve ; après la date limite, le vendeur peut retirer.
+**A** — libère les fonds au vendeur dès que *l'une* des parties donne son accord ; après la date limite, l'acheteur peut les retirer.
 
-**B** — libère au vendeur uniquement quand les deux approuvent ; après la date limite, *quiconque* peut déclencher le retrait, et les fonds vont au vendeur.
+**B** — ne libère les fonds au vendeur que lorsque les deux parties donnent leur accord ; après la date limite, *n'importe qui* peut déclencher le retrait, mais les fonds reviennent à l'acheteur.
 
-**C** — libère uniquement quand les deux approuvent ; après la date limite, le vendeur peut retirer — *même si la libération a déjà eu lieu*, en utilisant le solde restant du contrat.`,
+**C** — ne libère les fonds que lorsque les deux parties donnent leur accord ; après la date limite, l'acheteur peut les retirer — *même s'ils ont déjà été libérés* — en puisant dans le solde restant du contrat.`,
       options: [
-        "B — libération à deux parties honorée, et le remboursement atteint le vendeur selon la règle de la date limite",
+        "B — l'accord des deux parties est respecté et le remboursement revient bien à l'acheteur selon la règle de la date limite",
         "A — ça semble plus pratique pour le vendeur",
-        "C — le vendeur devrait toujours pouvoir sortir",
+        "C — l'acheteur devrait toujours pouvoir récupérer les fonds",
       ],
       answer: 0,
-      explain: `A viole la règle 2 (l'un ≠ les deux). C viole la garde de la règle 3 ("si la libération n'a pas eu lieu") — il double dépense l'entiercement. B change *qui peut déclencher* le remboursement, ce que la spécification n'a jamais limité — les fonds atteignent toujours le vendeur, donc la spécification est honorée. Noter cette dernière distinction est toute la compétence.`,
+      explain: `A enfreint la règle 2 (l'un ≠ les deux). C enfreint la condition de la règle 3 ("si leur libération n'a pas encore eu lieu") et dépense deux fois les fonds sous séquestre. B change *qui peut déclencher* le remboursement, ce que la spécification ne limite pas ; les fonds reviennent toujours à l'acheteur, donc la spécification est respectée. Savoir repérer cette dernière nuance est précisément la compétence travaillée ici.`,
     },
     {
       kind: "theory",
@@ -85,7 +86,7 @@ Les lignes les plus fortes d'une spécification sont les **invariants** — déc
 
 > solde de l'entiercement = dépôts ouverts − libérations − remboursements
 
-Un invariant ne se soucie pas de la créativité de l'implémentation. S'il se rompt une fois, le code est incorrect. Quand tu rencontreras plus tard le **TDD** (chapitres suivants), tu transformeras ces lignes en tests exécutables — une spécification que la machine re-vérifie à chaque forge.`,
+Un invariant ne se soucie pas de l'ingéniosité de l'implémentation. S'il est violé ne serait-ce qu'une fois, le code est incorrect. Lorsque tu aborderas le **TDD** dans les prochains chapitres, tu transformeras ces lignes en tests exécutables — une spécification que la machine vérifie à nouveau à chaque forge.`,
     },
     {
       kind: "fill",
@@ -95,45 +96,45 @@ Un invariant ne se soucie pas de la créativité de l'implémentation. S'il se r
       after: ``,
       choices: ["remboursements", "frais", "bénéfice", "gas"],
       answer: 0,
-      explain: `L'argent quitte l'entiercement exactement de deux façons — libérations au vendeur, remboursements au vendeur. Si ces trois termes ne s'équilibrent pas, quelqu'un a forgé un trou.`,
+      explain: `L'argent quitte le séquestre de deux façons exactement : par une libération au vendeur ou par un remboursement à l'acheteur. Si ces trois termes ne s'équilibrent pas, quelqu'un a laissé une faille dans la forge.`,
     },
     {
       kind: "quiz",
-      question: `Ton IA partenaire a implémenté la spécification parfaitement. Tous les tests passent. En production, un vendeur retire *pendant* la transaction de libération et l'entiercement paie deux fois — un cas que ta spécification n'a jamais mentionné.
+      question: `Ton IA partenaire a parfaitement implémenté la spécification. Tous les tests passent. En production, un acheteur retire les fonds *pendant* la transaction de libération et le séquestre paie deux fois — un cas que ta spécification n'a jamais mentionné.
 
 À qui revient le bug ?`,
       options: [
-        "Le bug de la spécification — et donc le tien : l'artefact que tu possèdes avait un trou",
-        "Le bug de l'IA — elle aurait dû deviner la règle manquante",
+        "C'est un bug de la spécification — et donc le tien : l'artefact dont tu es responsable comportait une lacune",
+        "C'est un bug de l'IA — elle aurait dû deviner la règle manquante",
         "À personne — le comportement indéfini est acceptable",
       ],
       answer: 0,
-      explain: `C'est le deal de l'ingénierie à l'ère IA : la machine forge à la lettre de la spécification, donc la lettre de la spécification est ta responsabilité. Renforce la spécification, reforge, et les deux lectures disparaissent.`,
+      explain: `Voici le contrat de l'ingénierie à l'ère de l'IA : la machine forge à la lettre de la spécification ; le contenu de cette spécification relève donc de ta responsabilité. Précise-la, forge à nouveau et les deux interprétations disparaissent.`,
     },
     {
       kind: "exercise",
       mode: "spec-write",
-      brief: `## Le procès de l'examinateur : spécifie un pot de pourboires de guilde
+      brief: `## L'épreuve de l'examinateur : rédige la spécification d'une cagnotte de pourboires de guilde
 
-Il est temps de forger une spécification de ta propre main. La commission :
+Il est temps de forger ta propre spécification. Voici la commande :
 
 > La guilde veut un **pot de pourboires** sur chaîne. N'importe qui peut y déposer des pourboires. Seul le **gardien** de la guilde peut récupérer ce qui est à l'intérieur. La guilde est paranoïaque à propos de deux choses : que le gardien prenne *plus* que le pot contient, et que les pourboires restent bloqués pour toujours si le gardien disparaît.
 
-Écris la spécification — **seulement le comportement**, comme ce chapitre l'a enseigné : ce qui doit se produire, ce qui ne doit jamais se produire, et les bords. Un examinateur IA l'évaluera selon la grille ci-dessous (et elle note exactement comme le golem forge : à la lettre).`,
-      rubric: `1. Seul le comportement — pas de dispositions de stockage, de crates ou de signatures de fonction.
+Rédige la spécification en décrivant **uniquement le comportement**, comme ce chapitre te l'a appris : ce qui doit se produire, ce qui ne doit jamais se produire et les cas limites. Un examinateur IA l'évaluera selon la grille ci-dessous — il corrige exactement comme le golem forge : à la lettre.`,
+      rubric: `1. Uniquement le comportement — aucun agencement de stockage, crate ou signature de fonction.
 2. La règle de dépôt et la règle de collecte sont chacune énoncées sans ambiguïté (qui peut agir, sur quoi).
 3. Au moins un **invariant** qui doit rester vrai en tout temps.
 4. Au moins un **cas limite** est abordé (pourboire à zéro, collecte de pot vide, collecte à solde exact…).
-5. La préoccupation du "gardien disparaît" est résolue par un comportement déclaré (tout design raisonnable est accepté — la grille exige une décision, pas une spécificité).`,
+5. La crainte de voir le gardien disparaître est résolue par un comportement explicite (toute conception raisonnable est acceptée — la grille exige une décision, pas une solution particulière).`,
       minChars: 120,
     },
     {
       kind: "theory",
       body: `## Ta route à partir d'ici
 
-Chaque chapitre de ce Voyage fonctionne comme celui-ci : une discipline que l'IA ne portera pas pour toi, pratiquée sur **Stellar** — un vrai réseau avec une vraie machinerie.
+Chaque chapitre de ce Voyage suit le même principe : tu pratiques sur **Stellar** — un véritable réseau doté de mécanismes bien réels — une discipline que l'IA ne peut pas exercer à ta place.
 
-Et chaque fois qu'un concept te pousse à curieux du métal lui-même, cherche la porte **"Voir en Rust"** : elle mène à la Campagne optionnelle, où les mêmes idées sont forgées à la main, affrontement par affrontement.
+Et chaque fois qu'un concept éveille ta curiosité pour le métal sous la surface, cherche la porte **"Voir en Rust"** : elle mène à la Campagne facultative, où les mêmes idées sont forgées à la main, affrontement après affrontement.
 
 Ensuite : le royaume que tu vas construire — et comment des milliers de machines s'accordent sans un roi.`,
     },

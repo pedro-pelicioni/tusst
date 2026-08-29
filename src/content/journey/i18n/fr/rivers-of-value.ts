@@ -10,7 +10,7 @@ export const conceptText = {
 
 Tu as déjà décortiqué un simple \`payment\` : un actif, A vers B, final en ~5 secondes. C’est un canal — droit, utile, ennuyeux.
 
-La partie intéressante, c’est que le grand livre de Stellar n’est pas qu’un coffre de soldes. Il porte un **échange de devises complet à l’intérieur du protocole** : carnets d’ordres, pools de liquidité et opérations de paiement qui *échangent pendant qu’ils voyagent*.
+Mais le registre Stellar n’est pas qu'un coffre contenant des soldes. Il intègre un **marché de change complet directement dans le protocole** : carnets d’ordres, pools de liquidité et opérations de paiement capables d'effectuer une conversion *en cours de route*.
 
 Pas d’échange externe, pas de pont, pas de détour enveloppé — la conversion est une puissance native du grand livre. Ce chapitre suit l’eau : d’abord les offres, puis les pools, puis l’opération qui fait que les transferts semblent magiques.`,
     },
@@ -22,20 +22,20 @@ Le **DEX Stellar** n’est pas un contrat que quelqu’un a déployé — c’es
 
 - \`manage_sell_offer\` / \`manage_buy_offer\` placent une offre : *"Je donne X, je veux Y, à ce prix."*
 - Chaque offre est une **entrée du grand livre**, située dans le carnet d’ordres comme tout autre état.
-- **Le matching se produit à la clôture du grand livre** : quand les offres se croisent, le protocole exécute l’échange dans le cadre du consensus lui‑même.
+- **L'appariement a lieu à la clôture du registre** : lorsque les offres se croisent, le protocole exécute l’échange dans le cadre du consensus lui-même.
 
-Chaque paire d’actifs obtient un carnet d’ordres automatiquement — pas de listes, pas de permission d’un opérateur de marché. Deux trustlines et une offre, et tu *es* le marché.`,
+Chaque paire d’actifs dispose automatiquement d'un carnet d’ordres — aucune inscription ni autorisation d'un opérateur de marché. Deux lignes de confiance et une offre suffisent pour *faire* le marché.`,
     },
     {
       kind: "quiz",
       question: `Qui associe une offre d’achat à une offre de vente sur le DEX Stellar ?`,
       options: [
-        "Le protocole lui‑même, à la clôture du grand livre — les offres sont des entrées du grand livre et le matching fait partie du consensus",
-        "Un contrat intelligent d’engine de matching maintenu par la SDF",
+        "Le protocole lui-même, à la clôture du registre — les offres sont des entrées du registre et leur appariement fait partie du consensus",
+        "Un contrat intelligent servant de moteur d'appariement et maintenu par la SDF",
         "Des relayers hors chaîne qui soumettent des paires appariées pour une commission",
       ],
       answer: 0,
-      explain: `C’est la rare chaîne où l’échange vit *dans* le protocole. Pas de matcher déployé signifie pas de matcher à pirater, à soudoyer ou à arnaquer — et les échanges se règlent avec la même finalité que les paiements.`,
+      explain: `Stellar fait partie des rares réseaux où le marché vit *dans* le protocole. Sans moteur d'appariement déployé séparément, aucun intermédiaire de ce type ne peut être piraté, soudoyé ou manipulé ; les échanges bénéficient de la même finalité que les paiements.`,
     },
     {
       kind: "theory",
@@ -54,7 +54,7 @@ Les carnets et les pools coexistent sur un pied d’égalité, et — comme tu e
       question: `En quoi les pools de liquidité natives de Stellar diffèrent-ils des AMM de style Uniswap ?`,
       options: [
         "Ils sont des fonctionnalités du protocole — des entrées du grand livre gérées par des opérations, pas de contrats déployés",
-        "Ils utilisent un matching interne de carnet d’ordres au lieu d’une courbe de prix",
+        "Ils utilisent un appariement interne par carnet d’ordres plutôt qu’une courbe de prix",
         "Ils ne supportent que les paires qui incluent XLM",
       ],
       answer: 0,
@@ -97,7 +97,7 @@ Deux variantes :
         "mettre le paiement aux enchères auprès de bots market makers",
       ],
       answer: 0,
-      explain: `Le routage est sur‑ledger et atomique : le protocole parcourt les offres et les pools pour trouver la livraison, et soit tout le chemin s’exécute à la clôture du grand livre, soit rien ne se passe.`,
+      explain: `Le routage s'effectue sur le registre de manière atomique : le protocole parcourt les offres et les pools pour trouver un chemin jusqu'à l'actif de destination. Soit tout le chemin s’exécute lors de la clôture du registre, soit rien ne se passe.`,
     },
     {
       kind: "theory",
@@ -113,9 +113,9 @@ La conversion FX — historiquement l’étape coûteuse et opaque — devient u
       kind: "theory",
       body: `## La couche au-dessus de la rivière
 
-Au-dessus de la machinerie native, l’écosystème intègre Soroban : **Soroswap**, **Phoenix** et **Aquarius** exécutent des protocoles AMM comme contrats intelligents, et les agrégateurs routent chaque échange à travers les carnets natifs, les pools natifs et les pools de contrats à la recherche du meilleur prix. Tu n’as pas besoin de leurs internals encore — sache simplement que la rivière a à la fois une roche de fond et un port animé construit dessus.
+Au-dessus des mécanismes natifs, l’écosystème intègre Soroban : **Soroswap**, **Phoenix** et **Aquarius** exécutent des protocoles AMM sous forme de contrats intelligents, tandis que les agrégateurs recherchent le meilleur prix dans les carnets natifs, les pools natifs et les pools gérés par contrat. Tu n’as pas encore besoin d'en connaître le fonctionnement interne : retiens simplement que la rivière possède à la fois un socle rocheux et un port animé construit au-dessus.
 
-Une question reste ouverte : où les *vrais* dollars et euros entrent et sortent ? C’est le business des ancres — les portes du royaume, et le prochain chapitre.`,
+Une question demeure : par où les *véritables* dollars et euros entrent-ils et sortent-ils ? C’est le rôle des ancres — les portes du royaume et le sujet du prochain chapitre.`,
     },
   ],
 } satisfies JourneyConceptText;

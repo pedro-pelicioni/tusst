@@ -2,7 +2,8 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
   title: "La boucle sans fin",
-  tagline: "Boucles agentiques : agir, observer, corriger — et savoir quand s’arrêter.",
+  tagline:
+    "Boucles agentiques : agir, observer, corriger — et savoir quand s’arrêter.",
   steps: [
     {
       kind: "theory",
@@ -12,21 +13,21 @@ Un prompt unique est un souhait : décrire, recevoir, espérer. La **boucle agen
 
 > **agir → observer → corriger → agir à nouveau**
 
-Le golem écrit du code, *exécute* le, lit la plainte du compilateur, corrige, exécute à nouveau — la façon dont tu travailles, au tempo de la machine. La qualité d’un prompt unique n’est plus intéressante dès que le golem peut voir ses propres résultats.
+Le golem écrit du code, *l'exécute*, lit le message d'erreur du compilateur, corrige puis recommence — comme toi, mais au rythme de la machine. La qualité du prompt initial n'est plus le seul enjeu dès lors que le golem peut observer ses propres résultats.
 
-Mais une boucle est de la machinerie, pas de la magie. Elle a des parties qui peuvent être bien ou mal conçues — et chaque écran suivant est l’une de ces parties.`,
+Mais une boucle est un mécanisme, pas de la magie. Chacun de ses composants peut être bien ou mal conçu — et les écrans suivants vont les examiner un par un.`,
     },
     {
       kind: "theory",
       body: `## Observation : les yeux de la boucle
 
-Une boucle ne s’améliore que dans la mesure où ses **observations** sont vraies. La correction a besoin d’un signal pour corriger *vers* :
+Une boucle ne peut s’améliorer que si ses **observations** sont fiables. Pour corriger sa trajectoire, elle a besoin de repères précis :
 
 - **codes de sortie** — la commande a-t-elle échoué ?
-- **sortie de test** — quel essai, quelle assertion, quelle ligne ?
-- **état en chaîne** — que contient réellement le registre après l’exécution ?
+- **sortie des tests** — quel test, quelle assertion, quelle ligne ?
+- **état on-chain** — que contient réellement le registre après l’exécution ?
 
-Signaux, pas vibrations. « La sortie semble raisonnable » ne corrige rien, car elle ne peut jamais être fausse. Chaque vérificateur que tu as intégré dans le cadre gagne maintenant des intérêts : intégré à la boucle, il devient les yeux que le golem utilise — **à chaque itération**.`,
+Il faut des signaux, pas des impressions. « Le résultat semble raisonnable » ne guide aucune correction, car cette appréciation ne peut jamais être réfutée. Chaque vérificateur intégré au harnais prend ici toute sa valeur : branché dans la boucle, il devient les yeux du golem — **à chaque itération**.`,
     },
     {
       kind: "quiz",
@@ -37,7 +38,7 @@ Signaux, pas vibrations. « La sortie semble raisonnable » ne corrige rien,
         "Le fait que le code se soit compilé à la première tentative — preuve forte que la logique est correcte",
       ],
       answer: 0,
-      explain: `Compiler signifie que les types s’alignent, pas que le comportement est souhaité — et un résumé de soi est l’esprit qui note son propre devoir. Un signal de direction doit être externe, précis et capable d’être une mauvaise nouvelle. « 1 échoué, ligne 41 » est un titre ; « tout semble correct » est le temps.`,
+      explain: `Une compilation réussie prouve que les types concordent, pas que le comportement répond au besoin. Quant à l'auto-évaluation, elle revient à laisser l'élève noter sa propre copie. Un signal utile doit être externe, précis et capable d'annoncer une mauvaise nouvelle. « 1 test échoué, ligne 41 » est un diagnostic exploitable ; « tout semble correct » n'est qu'une impression.`,
     },
     {
       kind: "theory",
@@ -54,14 +55,14 @@ La règle du royaume : ne commence jamais une boucle sans avoir décidé comme
     },
     {
       kind: "quiz",
-      question: `Itération 40, et la boucle a rencontré la même évaluation échouée avec le même message d’erreur depuis l’itération 12. Que doit faire le cadre ?`,
+      question: `À l'itération 40, la boucle rencontre toujours la même évaluation en échec et le même message d'erreur depuis l'itération 12. Que doit faire le harnais ?`,
       options: [
         "S’arrêter et escalader à un humain — répéter sans progrès est une condition d’arrêt, pas de persistance",
-        "Continuer — l’itération est le but même d’une boucle, et l’essai 41 pourrait être celui",
+        "Continuer — l’itération est le but même d’une boucle, et la tentative 41 sera peut-être la bonne",
         "Augmenter la température du modèle pour qu’il soit plus créatif sur la correction",
       ],
       answer: 0,
-      explain: `Vingt‑huit échecs identiques sont un message : la boucle manque de quelque chose — contexte, permission, spécification correcte — que plus d’itérations ne peuvent fournir. Randomiser plus dur ne fait que disperser les erreurs au même prix. Détecte le non-progrès, arrête, et remets la trace à un humain.`,
+      explain: `Vingt-huit échecs identiques transmettent un message clair : il manque à la boucle quelque chose — contexte, permission ou spécification correcte — que de nouvelles itérations ne fourniront pas. Ajouter davantage d'aléatoire ne fait que disperser les erreurs pour le même coût. Détecte l'absence de progrès, arrête la boucle et transmets la trace à un humain.`,
     },
     {
       kind: "fill",
@@ -69,7 +70,12 @@ La règle du royaume : ne commence jamais une boucle sans avoir décidé comme
       file: "loop.rs",
       before: `while !evals.pass() && iterations < `,
       after: ` {`,
-      choices: ["budget.max_iterations", "usize::MAX", "evals.len()", "iterations + 1"],
+      choices: [
+        "budget.max_iterations",
+        "usize::MAX",
+        "evals.len()",
+        "iterations + 1",
+      ],
       answer: 0,
       explain: `usize::MAX est « pas de frein — on en parlera sur la facture ». Une borne qui évolue avec le compteur (iterations + 1) ne s’applique jamais. Et evals.len() confond le nombre de vérifications avec la durée à continuer. Le plafond est un budget que tu as choisi délibérément.`,
     },
@@ -77,11 +83,11 @@ La règle du royaume : ne commence jamais une boucle sans avoir décidé comme
       kind: "theory",
       body: `## Evals : la boussole
 
-Comment savoir que l’itération 7 a battu l’itération 6 ? Pas par le sentiment. **Evals** sont un ensemble *fixe* de vérifications — tests, lint, build, une assertion en chaîne — exécutées **chaque itération**, donc chaque tentative est mesurée contre la même règle.
+Comment savoir si l’itération 7 est meilleure que l’itération 6 ? Certainement pas au ressenti. Les **évaluations** forment un ensemble *fixe* de vérifications — tests, lint, build, assertion on-chain — exécutées **à chaque itération**. Toutes les tentatives sont ainsi mesurées selon les mêmes règles.
 
-*Fixe* est le mot porteur de charge. Si les vérifications changent entre les tentatives, « progrès » devient inmesurable — tu compares des scores d’examens différents.
+Le mot essentiel est *fixe*. Si les vérifications changent d'une tentative à l'autre, le « progrès » devient impossible à mesurer : tu compares les notes d'examens différents.
 
-Avec une boussole, la boucle sait *pour un fait* si elle a bougé : 4 verts sur 7 deviennent 6 sur 7. Sans, elle ne sait que qu’elle a bougé. Le progrès est **mesuré, pas ressenti**.`,
+Avec cette boussole, la boucle sait objectivement si elle avance : 4 vérifications réussies sur 7 deviennent 6 sur 7. Sans elle, la boucle sait seulement qu'elle a changé quelque chose. Le progrès est **mesuré, pas ressenti**.`,
     },
     {
       kind: "theory",
@@ -89,28 +95,28 @@ Avec une boussole, la boucle sait *pour un fait* si elle a bougé : 4 verts su
 
 Un test qui échoue aléatoirement — timing, ordre, port partagé — est une nuisance pour les humains. On soupire et on relance. Pour une boucle, c’est **empoisonnement**, car la boucle *agit sur chaque signal*.
 
-Un rouge fantôme arrive → le golem « corrige » du code qui n’était jamais cassé → le changement arrive → prochaine itération, un nouveau fantôme → une autre correction. La boucle apprend maintenant des superstitions, chacune s’accumulant, toutes du bruit.
+Un échec fantôme survient → le golem « corrige » un code qui n’était pas défectueux → la modification est conservée → à l’itération suivante, un autre fantôme apparaît → nouvelle correction. La boucle accumule alors des superstitions, autrement dit du bruit.
 
-La règle : **rends les retours déterministes avant de les brancher dans une boucle.** Un essai instable est pire qu’aucun essai — le silence ne trompe personne ; le bruit trompe sans relâche.`,
+La règle : **rends les retours déterministes avant de les brancher dans une boucle.** Un test instable est pire que l'absence de test : le silence ne trompe personne, tandis que le bruit induit sans cesse en erreur.`,
     },
     {
       kind: "quiz",
-      question: `Un test échoue aléatoirement une fois sur cinq, pour des raisons de timing. Pour un humain, c’est une nuisance. Que devient‑c‑à pour une boucle ?`,
+      question: `Un test échoue aléatoirement une fois sur cinq à cause d'un problème de timing. Pour un humain, c’est une nuisance. Que devient-il pour une boucle ?`,
       options: [
         "Empoisonnement — la boucle considère chaque échec fantôme comme vérité et « corrige » un code sain, accumulant l’erreur à chaque passage",
         "La même nuisance — à travers de nombreuses itérations, le hasard s’égalise",
         "Légèrement utile — les échecs supplémentaires appliquent une pression supplémentaire pour rendre le code plus robuste",
       ],
       answer: 0,
-      explain: `Rien ne s’égalise, car chaque signal faux déclenche un vrai changement de code que la prochaine itération construit. Les humains discountent le bruit ; les boucles l’agissent. La détermination n’est pas un luxe du cadre ; c’est une précondition pour boucler.`,
+      explain: `Rien ne s’équilibre, car chaque faux signal déclenche une véritable modification sur laquelle l’itération suivante s'appuie. Les humains savent filtrer le bruit ; les boucles l'appliquent aveuglément. Le déterminisme n’est pas un luxe du harnais, mais une condition préalable à toute boucle fiable.`,
     },
     {
       kind: "theory",
       body: `## La bonne altitude
 
-Où se tient l’humain pendant que la boucle tourne ? Pas à l’intérieur — revoir chaque frappe signifie *tu* es la boucle, au tempo du golem. Et pas non plus au-dessus des nuages, en tamponnant ce qui arrive.
+Où se place l’humain pendant que la boucle tourne ? Pas à l’intérieur : relire chaque frappe signifie que *tu* es la boucle, au rythme du golem. Mais pas non plus au-dessus des nuages, à approuver aveuglément tout ce qui arrive.
 
-La bonne altitude est la **frontière** : révise le *diff* par rapport à la *spécification*. Les evals ont-ils passé ? Le changement respecte‑t‑il les règles du Chapitre I ? Quelque chose a-t‑il bougé sans raison ? Fais confiance aux instruments de la boucle pour les petits détails ; garde le jugement humain pour ce que les instruments ne voient pas.
+La bonne altitude est la **frontière** : examine le *diff* à la lumière de la *spécification*. Les évaluations sont-elles toutes réussies ? La modification respecte-t-elle les règles du chapitre I ? Quelque chose a-t-il changé sans raison ? Appuie-toi sur les instruments de la boucle pour les détails mécaniques et réserve le jugement humain à ce qu'ils ne peuvent pas voir.
 
 Prochaine discipline : quand une boucle ne suffit pas — plusieurs petits golems, un plan tissé.`,
     },

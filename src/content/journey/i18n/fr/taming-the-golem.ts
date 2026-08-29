@@ -1,24 +1,24 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
-  title: "Domptage du Golem",
-  tagline: "Ingénierie de la prise : donne à l’IA un banc, pas un vœu.",
+  title: "Dompter le golem",
+  tagline: "Ingénierie du harnais : donne à l’IA un établi, pas un simple vœu.",
   steps: [
     {
       kind: "theory",
       body: `## Un esprit dans le vide
 
-Enlevez tout et un LLM ne fait qu’une seule chose : **texte en, texte sorti**. Il ne peut pas exécuter de code, lire ton dépôt ou vérifier la chaîne. Seul, c’est un esprit dans le vide — brillant, aveugle et désarmé.
+Retire-lui tout et un LLM ne fait plus qu’une chose : **du texte entre, du texte sort**. Il ne peut ni exécuter du code, ni lire ton dépôt, ni vérifier la chaîne. Seul, c’est un esprit dans le vide — brillant, aveugle et désarmé.
 
-Tout ce qui transforme cet esprit en *travailleur* est la **prise** : les outils qu’il peut appeler, les fichiers qu’il peut toucher, le bac à sable qui le contient, les vérificateurs qui jugent son résultat.
+Tout ce qui transforme cet esprit en *travailleur* constitue son **harnais** : les outils qu’il peut appeler, les fichiers qu’il peut modifier, le bac à sable qui le contient et les vérificateurs qui jugent son résultat.
 
-Et voici la partie que la plupart des gens oublient : le modèle est loué. **La prise est de l’ingénierie — et elle est à toi.**`,
+Et voici ce que beaucoup oublient : le modèle est loué. **Le harnais, lui, relève de l’ingénierie — et il t’appartient.**`,
     },
     {
       kind: "theory",
-      body: `## Anatomie d’une prise
+      body: `## Anatomie d’un harnais
 
-Une prise fonctionnelle a des parties nommées :
+Un harnais efficace se compose d'éléments clairement identifiés :
 
 - **Modèle** — l’esprit.
 - **Ensemble d’outils** — ce qu’il peut *faire* : exécuter des tests, éditer des fichiers, interroger un RPC Stellar.
@@ -27,18 +27,18 @@ Une prise fonctionnelle a des parties nommées :
 - **Exécuteur de tests** — le juge que son résultat doit affronter.
 - **Étape de relecture** — où un humain (ou un autre golem) inspecte le diff.
 
-Deux équipes avec le même modèle et des prises différentes obtiennent des résultats *extrêmement* différents. Quand la qualité du résultat change, les ingénieurs déboguent la prise — pas l’horoscope.`,
+Deux équipes utilisant le même modèle avec des harnais différents obtiennent des résultats *radicalement* différents. Lorsque la qualité change, les ingénieurs déboguent le harnais — pas l’horoscope.`,
     },
     {
       kind: "quiz",
-      question: `Même modèle, même type de tâche — mais les résultats de ce mois sont bien plus mauvais que ceux du mois dernier. Où un ingénieur de prise regarde-t-il en premier ?`,
+      question: `Même modèle, même type de tâche — mais les résultats de ce mois sont nettement moins bons que ceux du mois dernier. Que vérifie en premier l'ingénieur responsable du harnais ?`,
       options: [
         "Ce qui entoure le modèle — le contexte qui lui a été donné, les outils qu’il pouvait exécuter, les vérifications qui bloquent son résultat",
         "Les poids du modèle — ils s’usent sous un usage intensif, comme une machine",
         "Nulle part — le hasard de l’échantillonnage explique toute fluctuation, donc rien n’est actionnable",
       ],
       answer: 0,
-      explain: `Les poids ne s’usent pas, et le hasard explique rarement une baisse soutenue. Les parties de la prise dérivent constamment — un fichier déplacé, un exécuteur de tests silencieux, une permission élargie — et chacune d’elles est inspectable, diffable et corrigible. C’est pourquoi posséder la prise compte.`,
+      explain: `Les poids ne s’usent pas, et le hasard explique rarement une baisse durable. Les composants du harnais dérivent constamment — fichier déplacé, runner de tests devenu silencieux, permission élargie — mais chacun peut être inspecté, comparé et corrigé. Voilà pourquoi il est essentiel de maîtriser son harnais.`,
     },
     {
       kind: "theory",
@@ -46,10 +46,10 @@ Deux équipes avec le même modèle et des prises différentes obtiennent des r�
 
 Le trait le plus dangereux du golem n’est pas l’ignorance — c’est **la confiance quand il se trompe**. Il annonce le succès dans le même ton chaleureux que si le déploiement avait fonctionné ou n’avait jamais eu lieu. La confiance est un *style*, pas un signal.
 
-Donc une prise ne fait jamais confiance ; elle **re-vérifie**, en utilisant des juges qui ne peuvent pas être flattés :
+Un bon harnais ne se contente donc jamais de croire : il **vérifie à nouveau**, à l'aide de juges insensibles à la flatterie :
 
 - le **compilateur** — construit‑il vraiment ?
-- l’**ensemble de tests** — tes essais du Rite, rouges ou verts
+- la **suite de tests** — les tests du Rite, rouges ou verts
 - le **linter** — les standards ont-ils été respectés ?
 - la **chaîne elle‑même** — le registre dit-il ce que le golem dit ?
 
@@ -57,9 +57,9 @@ Les affirmations sont des données. Les vérificateurs sont la vérité.`,
     },
     {
       kind: "quiz",
-      question: `Le golem rapporte : « Contrat déployé et initialisé avec succès. » Que fait une prise bien construite avec cette phrase ?`,
+      question: `Le golem annonce : « Contrat déployé et initialisé avec succès. » Que fait un harnais bien conçu de cette affirmation ?`,
       options: [
-        "La traite comme une affirmation — lit la chaîne, récupère le contrat, appelle une fonction vue, et croit au registre",
+        "Il la traite comme une hypothèse — lit la chaîne, récupère le contrat, appelle une fonction de lecture et fait confiance au registre",
         "L’accepte — les modèles sont entraînés à être véridiques, et celui‑ci a été fiable jusqu’ici",
         "Demande au golem de vérifier soigneusement son propre travail dans la même session",
       ],
@@ -74,10 +74,10 @@ Un golem avec \`rm -rf\` disponible est un golem qui l’exécutera *à terme* �
 
 - Accorde des outils pour *cette tâche*, pas des outils en général.
 - Privilégie l’accès **lecture‑seule** partout où l’écriture n’est pas la mission.
-- Limite‑le à un répertoire ; sandbox tout ce qui s’exécute.
+- Limite-le à un répertoire ; exécute chaque commande dans un bac à sable.
 - Donne‑lui **les clés testnet uniquement** — jamais une clé dont la perte te ferait réellement mal.
 
-Le pouvoir accordé « juste au cas où » est la façon dont les incidents commencent. Chaque outil est un rayon d’explosion ; accorde‑le en conséquence.`,
+Les incidents commencent souvent par un pouvoir accordé « au cas où ». Chaque outil élargit le rayon d'impact ; accorde-le en conséquence.`,
     },
     {
       kind: "fill",
@@ -93,14 +93,14 @@ Le pouvoir accordé « juste au cas où » est la façon dont les incidents comm
       kind: "theory",
       body: `## Concevoir le chemin de l’échec
 
-Les amateurs conçoivent ce qui se passe quand le golem a raison. Les ingénieurs conçoivent ce qui se passe quand il a **faux** — parce qu’il le sera parfois.
+Les amateurs conçoivent ce qui se passe lorsque le golem a raison. Les ingénieurs conçoivent ce qui se passe lorsqu’il a **tort** — parce que cela arrivera.
 
-- Une vérification échouée **bloque la fusion** ; elle ne logge pas un avertissement dans le vide.
+- Une vérification qui échoue **bloque la fusion** ; elle ne se contente pas de consigner un avertissement ignoré.
 - Les tentatives ont un **budget**, donc un golem bloqué devient un golem arrêté, pas une facture.
 - Un humain examine **un diff avec contexte**, jamais un fait accompli déjà en production.
-- Le rollback est un chemin testé, pas une prière.
+- Le retour arrière suit une procédure testée, pas une prière.
 
-Pour chaque étape de la prise, pose une question : *« quand c’est faux, qu’est‑ce qui le capture ? »* Si la réponse est « on espère qu’aucun problème ne survient » — c’est un vœu, pas une conception.`,
+À chaque étape du harnais, pose-toi cette question : *« si le résultat est faux, qu'est-ce qui le détecte ? »* Si la réponse est « espérons qu'aucun problème ne survienne », tu as formulé un vœu, pas conçu un système.`,
     },
     {
       kind: "quiz",
@@ -111,19 +111,19 @@ Pour chaque étape de la prise, pose une question : *« quand c’est faux, qu
         "La boucle réessaie la même tâche, sans limite, jusqu’à ce que la sortie passe enfin",
       ],
       answer: 0,
-      explain: `Les instructions sont des espoirs — utiles, mais rien ne *capture* quoi‑que‑ce‑soit. Les tentatives illimitées sont une facture sans plafond (un chapitre suivant nomme la solution). Un chemin conçu a un tripwire, un arrêt, et un humain avec assez de contexte pour agir.`,
+      explain: `Les instructions expriment une intention — elles sont utiles, mais ne *détectent* aucun échec. Des tentatives illimitées produisent une facture sans plafond (un prochain chapitre présentera la solution). Un chemin d'échec bien conçu comporte un mécanisme de détection, un arrêt et un humain disposant d'assez de contexte pour agir.`,
     },
     {
       kind: "theory",
-      body: `## Tu as été dedans depuis le début
+      body: `## Tu l'utilises depuis le début
 
-Regarde autour : **TUSST est une prise.**
+Regarde autour de toi : **TUSST est un harnais.**
 
-Le runner gradué de la Forge est une prise de vérification — ta solution s’exécute dans un bac à sable, des essais cachés la jugent, et aucune quantité de prose confiante ne transforme un rouge en vert. Les laboratoires on‑chain vont plus loin : ils ne demandent pas *si tu dis* que tu as déployé — ils **lisent la chaîne** et vérifient.
+Le runner d'évaluation de la Forge est un harnais de vérification : ta solution s’exécute dans un bac à sable, des tests cachés la jugent et aucune déclaration pleine d'assurance ne transforme un échec en réussite. Les laboratoires on-chain vont plus loin : ils ne te demandent pas d'affirmer que tu as déployé — ils **lisent la chaîne** et le vérifient.
 
-C’est la discipline en une image : construis le banc pour que l’erreur soit *détectable* et la réussite soit *prouvable* — pour les golems et pour les humains.
+C’est toute la discipline en une image : construis l'établi de façon à rendre l’erreur *détectable* et la réussite *démontrable* — pour les golems comme pour les humains.
 
-La prochaine discipline : les mots eux‑mêmes — ce que le golem voit réellement sur le banc.`,
+La prochaine discipline porte sur les mots eux-mêmes — ce que le golem voit réellement sur l'établi.`,
     },
   ],
 } satisfies JourneyConceptText;

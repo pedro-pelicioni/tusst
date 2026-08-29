@@ -38,7 +38,8 @@ Le \`!\` signifie que c'est une *macro*, pas une fonction — tu apprendras plus
         "La ligne ne peut jamais échouer",
       ],
       answer: 0,
-      explain: "Le `!` marque l'invocation d'une macro — println! est la plus célèbre de Rust.",
+      explain:
+        "Le `!` marque l'invocation d'une macro — println! est la plus célèbre de Rust.",
     },
     {
       kind: "fill",
@@ -53,9 +54,14 @@ Le \`!\` signifie que c'est une *macro*, pas une fonction — tu apprendras plus
     {
       kind: "quiz",
       question: "En Rust, les instructions se terminent par…",
-      options: ["un point-virgule ;", "un point .", "rien — les sauts de ligne suffisent"],
+      options: [
+        "un point-virgule ;",
+        "un point .",
+        "rien — les sauts de ligne suffisent",
+      ],
       answer: 0,
-      explain: "Le phare est pointilleux : chaque instruction se termine par `;`.",
+      explain:
+        "Le phare est pointilleux : chaque instruction se termine par `;`.",
     },
     {
       kind: "editor",
@@ -96,14 +102,16 @@ Le compilateur — ton allié le plus intransigeant — refusera de forger ceci.
     },
     {
       kind: "quiz",
-      question: "Que se passe-t-il quand tu compiles ceci ?\n\n`let x = 5; x = 10;`",
+      question:
+        "Que se passe-t-il quand tu compiles ceci ?\n\n`let x = 5; x = 10;`",
       options: [
         "Erreur de compilation — x est immuable",
         "x devient 10",
         "x devient 15",
       ],
       answer: 0,
-      explain: "Une fois forgée, jamais changée — sauf si tu en déclares autrement.",
+      explain:
+        "Une fois forgée, jamais changée — sauf si tu en déclares autrement.",
     },
     {
       kind: "theory",
@@ -179,13 +187,19 @@ Le motif est toujours le même : \`let name: type = value;\` — l'étiquette vi
     {
       kind: "quiz",
       question: "Quel type convient à la valeur `4.5` ?",
-      options: ["f64 — un nombre décimal", "i32 — un nombre entier", "bool — une valeur oui/non"],
+      options: [
+        "f64 — un nombre décimal",
+        "i32 — un nombre entier",
+        "bool — une valeur oui/non",
+      ],
       answer: 0,
-      explain: "Tout ce qui a une virgule décimale demande un type à virgule flottante comme f64.",
+      explain:
+        "Tout ce qui a une virgule décimale demande un type à virgule flottante comme f64.",
     },
     {
       kind: "fill",
-      prompt: "Étiquette la fiole : `is_open` contient `true` — une valeur oui/non.",
+      prompt:
+        "Étiquette la fiole : `is_open` contient `true` — une valeur oui/non.",
       file: "main.rs",
       before: "let is_open: ",
       after: " = true;",
@@ -196,7 +210,11 @@ Le motif est toujours le même : \`let name: type = value;\` — l'étiquette vi
     {
       kind: "quiz",
       question: "Où va l'étiquette de type ?\n\n`let age ___ = 12;`",
-      options: [": i32 — après le nom, derrière un deux-points", "i32: — avant le nom", "as i32 — après la valeur"],
+      options: [
+        ": i32 — après le nom, derrière un deux-points",
+        "i32: — avant le nom",
+        "as i32 — après la valeur",
+      ],
       answer: 0,
     },
     {
@@ -245,14 +263,16 @@ Et le secret de la dernière ligne : \`x * 2\` n'a **pas de point-virgule**. En 
     },
     {
       kind: "quiz",
-      question: "Dans `fn double(x: i32) -> i32 { x * 2 }`, pourquoi `x * 2` n'a-t-il pas de point-virgule ?",
+      question:
+        "Dans `fn double(x: i32) -> i32 { x * 2 }`, pourquoi `x * 2` n'a-t-il pas de point-virgule ?",
       options: [
         "C'est la valeur de retour — les expressions sans ; sont renvoyées",
         "Les points-virgules sont optionnels en Rust",
         "C'est une coquille",
       ],
       answer: 0,
-      explain: "La dernière expression sans point-virgule est ce que la fonction renvoie.",
+      explain:
+        "La dernière expression sans point-virgule est ce que la fonction renvoie.",
     },
     {
       kind: "fill",
@@ -262,12 +282,18 @@ Et le secret de la dernière ligne : \`x * 2\` n'a **pas de point-virgule**. En 
       after: " i32 {\n    a + b\n}",
       choices: ["->", "=>", ":"],
       answer: 0,
-      explain: "-> déclare le type de retour. (=> appartient aux bras de match.)",
+      explain:
+        "-> déclare le type de retour. (=> appartient aux bras de match.)",
     },
     {
       kind: "quiz",
-      question: "Comment appelles-tu la recette `add` avec 2 et 3, en stockant le résultat ?",
-      options: ["let sum = add(2, 3);", "let sum = add 2 3;", "call add(2, 3) into sum;"],
+      question:
+        "Comment appelles-tu la recette `add` avec 2 et 3, en stockant le résultat ?",
+      options: [
+        "let sum = add(2, 3);",
+        "let sum = add 2 3;",
+        "call add(2, 3) into sum;",
+      ],
       answer: 0,
     },
     {
@@ -316,14 +342,16 @@ Ce n'est pas de la cruauté — c'est ainsi que Rust sait exactement qui doit ne
     },
     {
       kind: "quiz",
-      question: "Après `let b = a;` (où `a` est une String), que peux-tu faire avec `a` ?",
+      question:
+        "Après `let b = a;` (où `a` est une String), que peux-tu faire avec `a` ?",
       options: [
         "Rien — la possession est passée à b",
         "L'utiliser normalement",
         "La lire, mais pas la modifier",
       ],
       answer: 0,
-      explain: "La valeur s'est déplacée. Tends la main vers a et les sceaux te brûleront — à la compilation.",
+      explain:
+        "La valeur s'est déplacée. Tends la main vers a et les sceaux te brûleront — à la compilation.",
     },
     {
       kind: "theory",
@@ -337,13 +365,15 @@ let b = a.clone();   // ✅ deux Strings, deux propriétaires
     },
     {
       kind: "fill",
-      prompt: "Garde les deux noms utilisables : fais de `copy` une vraie copie plutôt qu'un déplacement.",
+      prompt:
+        "Garde les deux noms utilisables : fais de `copy` une vraie copie plutôt qu'un déplacement.",
       file: "main.rs",
-      before: "let sword = String::from(\"blade\");\nlet copy = sword",
+      before: 'let sword = String::from("blade");\nlet copy = sword',
       after: ";",
       choices: [".clone()", ".copy()", ".dup()"],
       answer: 0,
-      explain: "clone() forge une String indépendante — les deux propriétaires survivent.",
+      explain:
+        "clone() forge une String indépendante — les deux propriétaires survivent.",
     },
     {
       kind: "editor",
@@ -395,14 +425,16 @@ println!("{}", gem);         // ✅ toujours à toi
         "Faire une copie complète de gem",
       ],
       answer: 0,
-      explain: "Une référence emprunte. La possession ne quitte jamais tes mains.",
+      explain:
+        "Une référence emprunte. La possession ne quitte jamais tes mains.",
     },
     {
       kind: "fill",
-      prompt: "Corrige la recette pour qu'elle *emprunte* le nom au lieu de le prendre.",
+      prompt:
+        "Corrige la recette pour qu'elle *emprunte* le nom au lieu de le prendre.",
       file: "main.rs",
       before: "fn greet(who: ",
-      after: ") {\n    println!(\"welcome, {}\", who);\n}",
+      after: ') {\n    println!("welcome, {}", who);\n}',
       choices: ["&String", "String", "clone String"],
       answer: 0,
       explain: "&String emprunte — main garde la possession du nom.",
@@ -466,13 +498,15 @@ Exactement une des deux portes s'ouvre. Jamais les deux, jamais aucune.`,
     },
     {
       kind: "fill",
-      prompt: "Complète la condition : n'entre dans la chambre forte que si `keys` est supérieur à 0.",
+      prompt:
+        "Complète la condition : n'entre dans la chambre forte que si `keys` est supérieur à 0.",
       file: "main.rs",
       before: "if keys ",
-      after: " 0 {\n    println!(\"enter\");\n}",
+      after: ' 0 {\n    println!("enter");\n}',
       choices: [">", "=", "=>"],
       answer: 0,
-      explain: "> demande « plus grand que ? ». Un seul = est une assignation, pas une question.",
+      explain:
+        "> demande « plus grand que ? ». Un seul = est une assignation, pas une question.",
     },
     {
       kind: "editor",
@@ -536,11 +570,12 @@ let word = match number {
       kind: "fill",
       prompt: "Complète le bras : la porte `2` mène au centre.",
       file: "main.rs",
-      before: "let path = match door {\n    1 => \"left\",\n    2 ",
-      after: " \"center\",\n    _ => \"no door\",\n};",
+      before: 'let path = match door {\n    1 => "left",\n    2 ',
+      after: ' "center",\n    _ => "no door",\n};',
       choices: ["=>", "->", ":"],
       answer: 0,
-      explain: "Les bras de match utilisent => (les fonctions utilisent -> pour le type de retour).",
+      explain:
+        "Les bras de match utilisent => (les fonctions utilisent -> pour le type de retour).",
     },
     {
       kind: "editor",
@@ -600,7 +635,8 @@ Remarque \`==\` (une question : « égal ? ») contre \`=\` (un ordre : « stock
         "Le compilateur ajoute un break automatiquement",
       ],
       answer: 0,
-      explain: "Les voyageurs qui l'arpentent pour toujours finissent par faire partie du mur.",
+      explain:
+        "Les voyageurs qui l'arpentent pour toujours finissent par faire partie du mur.",
     },
     {
       kind: "fill",
@@ -644,7 +680,8 @@ while floors > 0 {
     },
     {
       kind: "quiz",
-      question: "Avec `let mut floors = 0;`, combien de fois `while floors > 0 { ... }` s'exécute-t-il ?",
+      question:
+        "Avec `let mut floors = 0;`, combien de fois `while floors > 0 { ... }` s'exécute-t-il ?",
       options: [
         "Zéro — la condition est vérifiée avant le premier passage",
         "Une fois, puis il s'arrête",
@@ -670,7 +707,8 @@ while floors > 0 {
       prompt: "Continue de descendre tant qu'il reste des étages.",
       file: "main.rs",
       before: "",
-      after: " floors > 0 {\n    println!(\"floor {}\", floors);\n    floors -= 1;\n}",
+      after:
+        ' floors > 0 {\n    println!("floor {}", floors);\n    floors -= 1;\n}',
       choices: ["while", "until", "if"],
       answer: 0,
       explain: "while répète ; if ne décide qu'une seule fois.",
@@ -728,7 +766,7 @@ L'erreur de décalage d'un (off-by-one) est le plus vieux piège du labyrinthe. 
       prompt: "Marche sur les pierres 1 à 5 — 5 **inclus**.",
       file: "main.rs",
       before: "for n in 1",
-      after: "5 {\n    println!(\"step {}\", n);\n}",
+      after: '5 {\n    println!("step {}", n);\n}',
       choices: ["..=", "..", "to"],
       answer: 0,
       explain: "..= inclut la dernière pierre.",
@@ -782,7 +820,11 @@ Donc \`n % 3 == 0\` demande : *« n est-il divisible par 3 ? »* — la façon c
     {
       kind: "quiz",
       question: "Combien vaut `10 % 3` ?",
-      options: ["1 — le reste de 10 ÷ 3", "3 — le résultat de la division", "0 — la division est exacte"],
+      options: [
+        "1 — le reste de 10 ÷ 3",
+        "3 — le résultat de la division",
+        "0 — la division est exacte",
+      ],
       answer: 0,
       explain: "10 = 3×3 + 1. L'opérateur % te tend ce 1.",
     },
@@ -791,7 +833,7 @@ Donc \`n % 3 == 0\` demande : *« n est-il divisible par 3 ? »* — la façon c
       prompt: "Pose la question : `n` est-il divisible par 3 ?",
       file: "main.rs",
       before: "if n % 3 ",
-      after: " 0 {\n    println!(\"mirror\");\n}",
+      after: ' 0 {\n    println!("mirror");\n}',
       choices: ["==", "=", "%"],
       answer: 0,
       explain: "== compare. Un seul = tenterait d'assigner.",
@@ -850,17 +892,23 @@ Et la règle des anciens dieux : les positions comptent **à partir de zéro**. 
     },
     {
       kind: "quiz",
-      question: "Après `let mut v = vec![10, 20]; v.push(30);` — combien vaut `v[0]` ?",
-      options: ["10 — les positions comptent à partir de zéro", "30 — push le met en premier", "20 — le deuxième élément"],
+      question:
+        "Après `let mut v = vec![10, 20]; v.push(30);` — combien vaut `v[0]` ?",
+      options: [
+        "10 — les positions comptent à partir de zéro",
+        "30 — push le met en premier",
+        "20 — le deuxième élément",
+      ],
       answer: 0,
-      explain: "push ajoute à la FIN ; l'indexation commence à 0, comme les anciens dieux l'ont voulu.",
+      explain:
+        "push ajoute à la FIN ; l'indexation commence à 0, comme les anciens dieux l'ont voulu.",
     },
     {
       kind: "fill",
-      prompt: "Fais grandir le sac : ajoute `\"map\"` à la fin.",
+      prompt: 'Fais grandir le sac : ajoute `"map"` à la fin.',
       file: "main.rs",
-      before: "let mut satchel = vec![\"torch\", \"rope\"];\nsatchel.",
-      after: "(\"map\");",
+      before: 'let mut satchel = vec!["torch", "rope"];\nsatchel.',
+      after: '("map");',
       choices: ["push", "add", "append_one"],
       answer: 0,
       explain: "push ajoute un élément à la fin d'un Vec.",
@@ -906,14 +954,16 @@ L'étiquette de type \`: i32\` sur \`total\` dit à \`.sum()\` quoi produire —
     },
     {
       kind: "quiz",
-      question: "Que fait `coins.iter()` **tout seul**, sans `.sum()` derrière ?",
+      question:
+        "Que fait `coins.iter()` **tout seul**, sans `.sum()` derrière ?",
       options: [
         "Rien pour l'instant — les itérateurs sont paresseux jusqu'à la collecte",
         "Il additionne immédiatement les pièces",
         "Il copie tout le Vec",
       ],
       answer: 0,
-      explain: "Ils ne lèvent pas le petit doigt avant la collecte. Cette paresse est ce qui rend les chaînes peu coûteuses.",
+      explain:
+        "Ils ne lèvent pas le petit doigt avant la collecte. Cette paresse est ce qui rend les chaînes peu coûteuses.",
     },
     {
       kind: "fill",
@@ -982,7 +1032,7 @@ Cette réponse \`Some / None\` est une \`Option\` — ton premier aperçu du Mar
       prompt: "Demande la case 5 **poliment** — interdiction de planter.",
       file: "main.rs",
       before: "let tool = vault.",
-      after: "(5).unwrap_or(&\"nothing\");",
+      after: '(5).unwrap_or(&"nothing");',
       choices: ["get", "[]", "grab"],
       answer: 0,
       explain: "get(5) renvoie une Option ; unwrap_or fournit le repli.",
@@ -1035,24 +1085,27 @@ Les entrées ne gardent **aucun ordre particulier** — l'enchantement échange 
     },
     {
       kind: "quiz",
-      question: "Que se passe-t-il si tu fais `insert(\"gold\", 999)` alors que \"gold\" existe déjà ?",
+      question:
+        'Que se passe-t-il si tu fais `insert("gold", 999)` alors que "gold" existe déjà ?',
       options: [
         "L'ancienne valeur est remplacée — une valeur par clé",
         "La map garde les deux valeurs",
         "Ça plante avec une erreur de doublon",
       ],
       answer: 0,
-      explain: "Une clé se lie à exactement une valeur ; insérer à nouveau l'écrase.",
+      explain:
+        "Une clé se lie à exactement une valeur ; insérer à nouveau l'écrase.",
     },
     {
       kind: "fill",
-      prompt: "Consigne le trésor : lie `\"gold\"` à `100`.",
+      prompt: 'Consigne le trésor : lie `"gold"` à `100`.',
       file: "main.rs",
       before: "ledger.",
-      after: "(\"gold\", 100);",
+      after: '("gold", 100);',
       choices: ["insert", "push", "set"],
       answer: 0,
-      explain: "Les HashMaps font insert(clé, valeur) — push appartient au Vec.",
+      explain:
+        "Les HashMaps font insert(clé, valeur) — push appartient au Vec.",
     },
     {
       kind: "editor",
@@ -1094,7 +1147,8 @@ Il fonctionne **exactement** comme \`println!\` — mêmes emplacements \`{}\` �
     },
     {
       kind: "quiz",
-      question: "Quelle est la différence entre `println!(\"The {}\", s)` et `format!(\"The {}\", s)` ?",
+      question:
+        'Quelle est la différence entre `println!("The {}", s)` et `format!("The {}", s)` ?',
       options: [
         "println! l'affiche ; format! renvoie la String à la place",
         "format! est plus rapide",
@@ -1105,10 +1159,10 @@ Il fonctionne **exactement** comme \`println!\` — mêmes emplacements \`{}\` �
     },
     {
       kind: "fill",
-      prompt: "Fais grandir l'inscription : ajoute `\" of the Vaults\"`.",
+      prompt: 'Fais grandir l\'inscription : ajoute `" of the Vaults"`.',
       file: "main.rs",
-      before: "let mut title = String::from(\"Keeper\");\ntitle.",
-      after: "(\" of the Vaults\");",
+      before: 'let mut title = String::from("Keeper");\ntitle.',
+      after: '(" of the Vaults");',
       choices: ["push_str", "push", "append"],
       answer: 0,
       explain: "push_str ajoute du texte ; push ajoute un seul caractère.",
@@ -1144,7 +1198,7 @@ Aucune copie n'est faite. Le \`&\` la marque comme un emprunt — tu contemples 
     },
     {
       kind: "theory",
-      body: `Attention aux bords — même règle que les plages de \`for\` :
+      body: `Attention aux limites — elles suivent la même règle que les plages de \`for\` :
 
 - \`1..4\` → cases 1, 2, 3 (**exclut** la fin)
 - \`1..=4\` → cases 1, 2, 3, 4 (l'inclut)
@@ -1158,19 +1212,25 @@ println!("{:?}", window);   // [2, 3, 4]
     {
       kind: "quiz",
       question: "Pour `vec![10, 20, 30, 40]`, que vaut `&v[0..2]` ?",
-      options: ["[10, 20] — la fin est exclue", "[10, 20, 30] — la fin est incluse", "[20, 30]"],
+      options: [
+        "[10, 20] — la fin est exclue",
+        "[10, 20, 30] — la fin est incluse",
+        "[20, 30]",
+      ],
       answer: 0,
       explain: "0..2 couvre les cases 0 et 1. La fenêtre exclut sa fin.",
     },
     {
       kind: "fill",
-      prompt: "Affiche la fenêtre — les slices ont besoin du marqueur de debug.",
+      prompt:
+        "Affiche la fenêtre — les slices ont besoin du marqueur de debug.",
       file: "main.rs",
-      before: "println!(\"",
-      after: "\", window);",
+      before: 'println!("',
+      after: '", window);',
       choices: ["{:?}", "{}", "{window}"],
       answer: 0,
-      explain: "{:?} est le marqueur de debug — les collections s'affichent avec lui.",
+      explain:
+        "{:?} est le marqueur de debug — les collections s'affichent avec lui.",
     },
     {
       kind: "editor",

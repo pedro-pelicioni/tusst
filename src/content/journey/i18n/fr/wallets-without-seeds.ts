@@ -2,17 +2,18 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
   title: "Portefeuilles sans phrases secrètes",
-  tagline: "Comptes intelligents, passkeys et frais sponsorisés par quelqu’un d’autre.",
+  tagline:
+    "Comptes intelligents, passkeys et frais sponsorisés par quelqu’un d’autre.",
   steps: [
     {
       kind: "theory",
       body: `## Le problème des vingt-quatre mots
 
-Les portefeuilles traditionnels accueillent un nouvel utilisateur avec un rituel : *écris ces 24 mots ; si tu les perds, ton argent disparaît pour toujours ; montre-les à n’importe qui et c’est encore plus vite.*\n\nLes gens réels échouent à ce test sans cesse — captures d’écran, notes dans le tiroir, sauvegardes qui n’ont jamais eu lieu. Des fortunes entières ont disparu à cause d’une note adhésive perdue. Et la plupart des utilisateurs n’atteignent même pas ce stade : **l’onboarding meurt à l’écran de phrase secrète**.\n\nSi les rails de la chaîne doivent transporter salaires et courses, la cérémonie de clé doit disparaître. Sur Stellar, c’est possible — car un compte n’a pas besoin d’être un simple couple clé/valeur.`,
+Les portefeuilles traditionnels accueillent chaque nouvel utilisateur avec un rituel : *écris ces 24 mots ; si tu les perds, ton argent disparaît pour toujours ; si tu les montres à quelqu’un, il disparaît encore plus vite.*\n\nDans la réalité, ce test échoue sans cesse : captures d’écran, notes au fond d’un tiroir, sauvegardes jamais effectuées. Des fortunes entières se sont envolées avec un simple pense-bête égaré. Et la plupart des utilisateurs ne vont même pas jusque-là : **l'inscription s'arrête à l'écran de la phrase secrète**.\n\nSi les infrastructures blockchain doivent servir à verser des salaires ou payer des courses, ce rituel doit disparaître. Sur Stellar, c’est possible : un compte n’est pas forcément une simple paire de clés.`,
     },
     {
       kind: "theory",
-      body: `## Comptes qui sont des contrats\n\nUn compte classique s’authentifie d’une seule façon : le protocole vérifie les signatures ed25519 contre sa liste de signataires. Logique fixe, pour toujours.\n\nUn **compte intelligent** est différent : il *est* un contrat Soroban, et lorsqu’une transaction revendique son autorité, le protocole appelle la fonction \`__check_auth\` du contrat et demande : *« accepte‑tu ? »*\n\nLa règle de signature devient **le code que tu as écrit**. Vérifie une courbe différente. Exige deux appareils au-dessus d’un seuil. Tourne les clés après une brèche sans changer l’adresse. Quelle que soit la politique que tu peux exprimer en Rust, c’est maintenant une forme de signature.`,
+      body: `## Des comptes qui sont aussi des contrats\n\nUn compte classique s’authentifie d’une seule façon : le protocole compare les signatures ed25519 à sa liste de signataires. Cette logique reste figée.\n\nUn **compte intelligent** fonctionne autrement : c'est un contrat Soroban. Lorsqu’une transaction revendique son autorité, le protocole appelle la fonction \`__check_auth\` du contrat et lui demande : *« acceptes-tu ? »*\n\nLa règle de signature devient **le code que tu as écrit**. Tu peux vérifier une autre courbe, exiger deux appareils au-delà d’un certain montant ou remplacer les clés après une compromission sans changer d’adresse. Toute politique exprimable en Rust peut désormais faire office de règle de signature.`,
     },
     {
       kind: "theory",
@@ -27,29 +28,29 @@ Les portefeuilles traditionnels accueillent un nouvel utilisateur avec un rituel
         "L’ancre, qui garde la phrase secrète pour toi en custodie",
       ],
       answer: 0,
-      explain: `La clé privée ne quitte jamais l’enclave et n’a jamais été montrée à personne — il n’y a rien à écrire, à photographier ou à phishing. La récupération devient une question de politique (signataires supplémentaires, appareil gardien), pas un test de mémoire.`,
+      explain: `La clé privée ne quitte jamais l’enclave et n’est jamais montrée à personne : rien à écrire, à photographier ni à exposer à une tentative d'hameçonnage. La récupération devient une question de politique (signataires supplémentaires, appareil gardien), pas un test de mémoire.`,
     },
     {
       kind: "theory",
-      body: `## Politiques : signatures avec opinion\n\nUne fois la règle d’authentification en code, un signataire peut porter une **politique** :\n\n- **Limites de dépenses** — la passkey seule approuve jusqu’à 50 USDC par jour ; au-delà, un second facteur doit co‑signer.\n- **Contrats autorisés** — un signataire qui ne peut *que* parler à ton jeu, jamais au DEX.\n- **Clés de session** — accorde à une dapp sa propre clé limitée pour la soirée ; elle expire d’elle‑même.\n\nC’est ce que « programmable » achète réellement aux utilisateurs : des garde‑fous imposés par le registre, pas par une promesse dans les conditions d’utilisation de l’application.`,
+      body: `## Politiques : des signatures qui appliquent tes règles\n\nUne fois la règle d’authentification inscrite dans le code, chaque signataire peut être soumis à une **politique** :\n\n- **Limites de dépenses** — la passkey seule approuve jusqu’à 50 USDC par jour ; au-delà, un second facteur doit cosigner.\n- **Contrats autorisés** — un signataire qui ne peut interagir *qu'avec* ton jeu, jamais avec le DEX.\n- **Clés de session** — accorde à une dapp sa propre clé, limitée à une soirée ; elle expire d’elle-même.\n\nVoilà ce que la programmabilité apporte réellement aux utilisateurs : des garde-fous imposés par le registre, et non une simple promesse dans les conditions d’utilisation de l’application.`,
     },
     {
       kind: "fill",
       prompt: `Quelle courbe permet à la chaîne de vérifier une signature d’enclave sécurisée de téléphone ?`,
       file: "auth-stack.txt",
       before: `Face ID  →  l’enclave sécurisée signe avec  `,
-      after: `  →  vérifiée nativement sur le ledger`,
+      after: `  →  vérifiée nativement sur le registre`,
       choices: ["secp256r1", "secp256k1", "ed25519", "curve25519"],
       answer: 0,
       explain: `ed25519 est la courbe classique de Stellar et secp256k1 appartient à Bitcoin et Ethereum. Le matériel WebAuthn parle secp256r1 (a.k.a. P‑256), et le protocole le vérifie nativement — pas d’émulation lourde en‑contrat, pas d’explosion de coût.`,
     },
     {
       kind: "theory",
-      body: `## Frais que quelqu’un d’autre paie\n\nUn mur reste : un nouvel utilisateur possède zéro XLM, et les transactions coûtent (minimes) des frais. Le dire « d’abord, achète XLM sur un échange » tue la magie.\n\nLa réponse de Stellar est **le sponsoring de frais** : un autre compte — généralement celui de l’application — enveloppe la transaction de l’utilisateur et **paie son frais**, et peut aussi sponsoriser les réserves. La première action on‑chain de l’utilisateur ne lui coûte rien et ne nécessite aucun financement préalable.\n\nPasskey + sponsoring : tape « créer compte », regarde Face ID, et tu effectues des transactions sur un registre public — pas de visite à l’échange, pas de cérémonie de phrase, pas de XLM en vue.`,
+      body: `## Des frais payés par quelqu’un d’autre\n\nUn obstacle demeure : un nouvel utilisateur ne possède aucun XLM, alors que chaque transaction entraîne des frais, même minimes. Lui dire « commence par acheter des XLM sur une plateforme d'échange » brise toute la magie.\n\nStellar répond avec le **parrainage des frais** : un autre compte — généralement celui de l’application — enveloppe la transaction de l’utilisateur, **paie ses frais** et peut également parrainer les réserves. La première action on-chain de l’utilisateur ne coûte donc rien et ne nécessite aucun financement préalable.\n\nPasskey + parrainage : appuie sur « Créer un compte », valide avec Face ID et te voilà en train d'effectuer des transactions sur un registre public — sans passer par une plateforme d'échange, sans rituel de phrase secrète et sans avoir besoin de XLM.`,
     },
     {
       kind: "theory",
-      body: `## Protocole 27 « Zipper » : la délégation arrive\n\nLes comptes intelligents sont jeunes, et le protocole les pave activement. **Protocole 27 — « Zipper »**, en direct sur mainnet depuis **juillet 2026**, a livré **CAP‑71 : délégation d’authentification** pour les comptes intelligents.\n\nLa délégation permet à une autorité de confier le pouvoir de signature à une autre proprement, au niveau du protocole — ce qui **simplifie les configurations multisig** et **réduit les coûts de transaction** pour exactement les modèles de compte décrits dans ce chapitre.\n\nTraduction pour les bâtisseurs : portefeuilles multi‑appareils, récupération par gardien et conceptions lourdes en politique deviennent moins chers et plus simples à exécuter. Le protocole penche *vers* les comptes intelligents, pas seulement à les tolérer.`,
+      body: `## Protocole 27 « Zipper » : la délégation arrive\n\nLes comptes intelligents sont encore jeunes, et le protocole évolue activement pour mieux les prendre en charge. **Le Protocole 27 — « Zipper »**, actif sur le réseau principal depuis **juillet 2026**, a introduit la **CAP‑71 : délégation d’authentification** pour les comptes intelligents.\n\nLa délégation permet à une autorité de transmettre proprement son pouvoir de signature à une autre, directement au niveau du protocole. Elle **simplifie les configurations multisignatures** et **réduit le coût des transactions** pour les modèles de compte décrits dans ce chapitre.\n\nConcrètement pour les bâtisseurs : portefeuilles multi-appareils, récupération par gardien et politiques d'autorisation complexes deviennent moins coûteux et plus simples à mettre en œuvre. Le protocole favorise désormais les comptes intelligents au lieu de simplement les tolérer.`,
     },
     {
       kind: "quiz",
@@ -60,12 +61,12 @@ Les portefeuilles traditionnels accueillent un nouvel utilisateur avec un rituel
         "Il a remplacé ed25519 par secp256r1 sur tout le réseau",
       ],
       answer: 0,
-      explain: `La délégation relève de l’infrastructure, pas des feux d’artifice : moins de signatures à transporter, auth multi‑parties moins cher. Les comptes classiques ed25519 continuent de fonctionner exactement comme avant — les deux styles de compte coexistent.`,
+      explain: `La délégation est une amélioration d'infrastructure, pas un effet spectaculaire : moins de signatures à transporter et une authentification multipartite moins coûteuse. Les comptes ed25519 classiques continuent de fonctionner comme avant ; les deux modèles coexistent.`,
     },
     {
       kind: "labLink",
       labSlug: "passkey-smart-wallet",
-      body: `La Forge est prête : entre **Passkey Smart Wallet**, inscris une vraie passkey, déploie son contrat de compte intelligent sur testnet, et réponds à un nouveau défi WebAuthn avec ton propre appareil.\n\nLorsque le registre confirme que le code déployé est le Wasm canonique du compte intelligent, reviens sur la route. Elle se courbe quelque part de plus étrange : un registre où *les montants eux‑mêmes* portent un voile.`,
+      body: `La Forge est prête : ouvre **Passkey Smart Wallet**, enregistre une véritable passkey, déploie son contrat de compte intelligent sur testnet et réponds à un nouveau défi WebAuthn avec ton propre appareil.\n\nLorsque le registre aura confirmé que le code déployé correspond au Wasm canonique du compte intelligent, reprends la route. Elle mène vers un territoire encore plus étrange : un registre où *les montants eux-mêmes* se couvrent d'un voile.`,
     },
   ],
 } satisfies JourneyConceptText;

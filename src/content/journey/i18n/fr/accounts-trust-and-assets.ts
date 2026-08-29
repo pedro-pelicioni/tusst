@@ -8,7 +8,7 @@ export const conceptText = {
       kind: "theory",
       body: `## Un compte est une entrée de registre
 
-Enlevez l'interface du portefeuille et un **compte Stellar** n'est qu'une ligne dans le registre répliqué : une clé publique, un solde XLM, quelques drapeaux — et le **numéro de séquence** que tu as rencontré en décortiquant les enveloppes (le compteur anti-replay).
+Retire l'interface du portefeuille : un **compte Stellar** n'est plus qu'une entrée du registre répliqué — une clé publique, un solde XLM, quelques indicateurs et le **numéro de séquence** rencontré en décortiquant les enveloppes, qui empêche le rejeu des transactions.
 
 Les lignes ne sont pas gratuites. Chaque validateur stocke chaque entrée, donc chaque entrée doit bloquer une **réserve de base** en XLM — actuellement 0,5 XLM, avec un nouveau compte qui doit détenir au moins deux (1 XLM) qu'il ne peut pas dépenser. Supprime les entrées et la réserve revient.
 

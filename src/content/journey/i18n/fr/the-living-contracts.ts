@@ -1,18 +1,18 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
-  title: "Les Contrats Vivants",
-  tagline: "Soroban : Wasm, stockage qui expire, frais qui ont du sens.",
+  title: "Les contrats vivants",
+  tagline: "Soroban : Wasm, stockage à durée limitée et frais prévisibles.",
   steps: [
     {
       kind: "theory",
       body: `## Les contrats entrent dans le royaume
 
-**Soroban** est la plateforme de contrats intelligents de Stellar. Un contrat est **Rust compilé en WebAssembly**, téléversé sur le registre et exécuté dans un hôte sandboxé — chaque pouvoir qu’il possède (stockage, cryptographie, appel d’autres contrats) arrive via les **fonctions d’hôte** fournies par le protocole.
+**Soroban** est la plateforme de contrats intelligents de Stellar. Un contrat est écrit en **Rust, compilé en WebAssembly**, téléversé sur le registre puis exécuté dans un environnement isolé. Toutes ses capacités — stockage, cryptographie, appel d’autres contrats — passent par les **fonctions hôtes** fournies par le protocole.
 
 Et voici la partie élégante : appeler un contrat ne nécessite aucun nouveau format de transaction. L’enveloppe que tu as décortiquée contient une seule opération — \`invoke_host_function\` — et à l’intérieur se trouve l’appel : quel contrat, quelle fonction, quels arguments.
 
-Même enveloppe, mêmes signatures, même ~5‑secondes de clôture. Le royaume classique et le royaume du contrat partagent un même flux sanguin.`,
+Même enveloppe, mêmes signatures, même clôture en cinq secondes environ. Le monde classique et celui des contrats partagent le même système circulatoire.`,
     },
     {
       kind: "theory",
@@ -20,11 +20,11 @@ Même enveloppe, mêmes signatures, même ~5‑secondes de clôture. Le royaume 
 
 Soroban donne à un contrat trois niveaux de stockage — choisis par entrée, tarifés différemment :
 
-- **Temporaire** — bon marché, éphémère, disparaît à jamais une fois expiré. Devises, nonces, état limité dans le temps.
-- **Persistant** — l’archive réelle : soldes utilisateurs, registres de propriété. Survient à l’expiration grâce à l’*archivage* (étape suivante).
+- **Temporaire** — peu coûteux et éphémère, il disparaît définitivement à expiration. Il convient aux devis, aux nonces et aux états limités dans le temps.
+- **Persistant** — destiné aux soldes utilisateurs et aux registres de propriété. Il survit à l’expiration grâce à l’*archivage* présenté à l'étape suivante.
 - **Instance** — petit état attaché au contrat lui‑même : adresse d’administration, configuration, métadonnées nécessaires à chaque appel.
 
-Choisir la mauvaise étagère est une taxe de débutant classique : le gonflement d’instance fait que chaque appel doit le porter, et les soldes temporaires disparaissent simplement. L’étagère *est* partie intégrante du design.`,
+Choisir la mauvaise étagère est une erreur de débutant coûteuse : un stockage d'instance trop volumineux alourdit chaque appel, tandis qu'un solde placé en stockage temporaire finit tout simplement par disparaître. Le choix de l'étagère fait partie intégrante de la conception.`,
     },
     {
       kind: "theory",
@@ -48,7 +48,7 @@ C’est l’**archivage d’état**, et aucune autre grande chaîne ne le fait. 
         "Instance — les soldes appartiennent au contrat, donc ils voyagent avec lui",
       ],
       answer: 0,
-      explain: `La suppression temporaire est *permanente* — un solde disparu est un pull rug par négligence. Et le stockage d’instance se charge à chaque appel, donc mettre des données par utilisateur là‑là fait payer tout le monde.`,
+      explain: `La suppression du stockage temporaire est *définitive* : perdre un solde de cette manière revient à provoquer un rug pull par négligence. Le stockage d’instance est chargé à chaque appel ; y placer les données de chaque utilisateur fait donc payer tout le monde.`,
     },
     {
       kind: "fill",
@@ -58,13 +58,13 @@ C’est l’**archivage d’état**, et aucune autre grande chaîne ne le fait. 
       after: `().set(&user, &balance);`,
       choices: ["persistent", "temporary", "instance", "eternal"],
       answer: 0,
-      explain: `Le soroban-sdk reflète les niveaux un à un : \`env.storage().persistent()\`, \`.temporary()\`, \`.instance()\`. Il n’y a pas de \`eternal\` — c’est le point central du design du loyer.`,
+      explain: `Le soroban-sdk expose directement les trois niveaux : \`env.storage().persistent()\`, \`.temporary()\` et \`.instance()\`. Il n’existe pas de niveau \`eternal\` : c’est précisément le principe du système de loyer.`,
     },
     {
       kind: "theory",
       body: `## Des frais mesurés, pas enchéris
 
-Sur les chaînes à enchère de gaz tu *enchères* pour l’espace de bloc et pries ; une seule offre peut multiplier les coûts de tout le monde.
+Sur les chaînes où le gas se négocie aux enchères, tu dois surenchérir pour obtenir de l'espace dans un bloc et espérer que tout se passe bien ; une seule opération très demandée peut faire grimper les coûts pour tous.
 
 Soroban **mesure** à la place. Une transaction déclare ses **ressources** — instructions CPU, mémoire, lectures/écritures de registre, octets — et les frais sont *calculés* à partir de ces besoins mesurés, plus le loyer pour le stockage touché. Déclare honnêtement (la simulation le fait pour toi) et la partie remboursable de tout excès revient.
 
@@ -77,8 +77,8 @@ Le résultat est un coût que tu peux citer à l’avance : « cette action co
 Chaque client Soroban suit un même rythme :
 
 1. **Simule** l’appel contre un nœud RPC — pas de signature, pas de coût.
-2. La simulation renvoie le **empreinte** — précisément quelles entrées de registre l’appel lira et écrira — plus les estimations de ressources et l’authentification nécessaire.
-3. Tu **signe exactement ce que tu as simulé** et soumets.
+2. La simulation renvoie l'**empreinte** — les entrées du registre que l’appel va lire ou écrire — ainsi que l'estimation des ressources et les autorisations nécessaires.
+3. Tu **signes exactement ce que tu as simulé**, puis tu soumets la transaction.
 
 La transaction signée porte son empreinte, donc les validateurs connaissent son univers complet avant de l’exécuter ; rien en dehors de l’empreinte ne peut être touché. Saute la simulation et tu devines des nombres que le réseau rejettera simplement.`,
     },
@@ -97,23 +97,23 @@ La transaction signée porte son empreinte, donc les validateurs connaissent son
       kind: "theory",
       body: `## L’interface voyage avec le contrat
 
-Un contrat Soroban compilé n’est pas un blob mystérieux. La build y intègre un **spec de contrat** dans le Wasm lui‑même : chaque fonction, argument et type, lisible par machine.
+Un contrat Soroban compilé n’est pas un objet binaire mystérieux. Le build intègre sa **spécification** directement dans le Wasm : chaque fonction, argument et type devient lisible par la machine.
 
-Les outils en tirent directement — le CLI peut afficher l’interface d’un contrat déployé, et les clients **auto‑génèrent des liaisons entièrement typées** à partir du Wasm en chaîne. Pas de chasse aux fichiers ABI JSON, pas de dérive de version entre le contrat et ses docs : le registre *est* la documentation.
+Les outils l'exploitent directement : la CLI peut afficher l’interface d’un contrat déployé, et les clients **génèrent automatiquement des liaisons entièrement typées** à partir du Wasm on-chain. Plus besoin de rechercher un fichier ABI JSON, ni de craindre un écart de version entre le contrat et sa documentation : le registre *est* la documentation.
 
-Appelle un contrat que tu n’as jamais vu, avec des types vérifiés à la compilation. C’est l’expérience développeur que le spec offre.`,
+Tu peux ainsi appeler un contrat que tu n’as jamais vu avec des types vérifiés à la compilation. Voilà l’expérience de développement offerte par cette spécification embarquée.`,
     },
     {
       kind: "labLink",
       labSlug: "oz-token-wizard",
-      body: `La Forge propose déjà un lab pour cela : ouvre l’**OpenZeppelin Token Wizard**, configure un véritable contrat de token OZ et compile-le dans le runner Soroban de la Forge — spec, étagères de stockage et tout. Lorsque le runner te rendra ton Wasm, ce chapitre sera la théorie qui sous-tend chaque octet.`,
+      body: `La Forge propose déjà un laboratoire pour cela : ouvre l’**OpenZeppelin Token Wizard**, configure un véritable contrat de jeton OZ et compile-le dans le runner Soroban de la Forge — spécification et étagères de stockage comprises. Lorsque le runner te rendra le Wasm, tu comprendras la théorie qui sous-tend chacun de ses octets.`,
     },
     {
       kind: "rustBranch",
       lessonSlug: "soroban-smart-contracts-1",
-      body: `Acte VII de la Campagne met le vérificateur de prêt à l’œuvre sur tout ça — tu écris le Rust, compile le Wasm, et vois \`invoke_host_function\` porter *ton* code sur le registre. L’immersion complète est là chaque fois que tu le veux.
+      body: `L'acte VII de la Campagne met le vérificateur de la Forge à l’œuvre sur tous ces concepts : tu écris le Rust, compiles le Wasm et observes \`invoke_host_function\` transporter *ton* code jusqu'au registre. Cette immersion complète t'attend quand tu le souhaites.
 
-Chapitre suivant, un twist : des contrats si capables qu’ils arrêtent d’être des apps — et deviennent le **compte lui‑même**.`,
+Au chapitre suivant, changement de perspective : certains contrats deviennent si puissants qu'ils cessent d'être de simples applications pour devenir **le compte lui-même**.`,
     },
   ],
 } satisfies JourneyConceptText;

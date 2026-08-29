@@ -1,16 +1,17 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
-  title: "Mots de Pouvoir",
-  tagline: "Ingénierie de prompt & contexte — ce que le golem voit réellement.",
+  title: "Mots de pouvoir",
+  tagline:
+    "Ingénierie des prompts et du contexte — ce que le golem voit réellement.",
   steps: [
     {
       kind: "theory",
-      body: `## Le banc est le monde entier
+      body: `## L'établi est son monde entier
 
 Le golem ne connaît pas ton dépôt. Il ne se souvient pas d’hier, et il ne voit pas le fichier que tu *n’as pas* attaché. Son univers complet est la **fenêtre de contexte** — le texte qui se trouve devant lui en ce moment.
 
-C’est la règle la plus profonde du prompting, et ce n’est pas mystique : **tu décides ce qui existe.** Tout ce qui est sur le banc est le monde ; tout ce qui est hors du banc n’a jamais eu lieu.
+C’est la règle fondamentale de l'art du prompt, sans rien de mystique : **tu décides ce qui existe.** Ce qui se trouve sur l'établi constitue son monde ; ce qui n'y figure pas n'a jamais existé pour lui.
 
 Donc la question derrière chaque prompt n’est pas « comment formuler ? » mais *« qu’est-ce que le golem doit voir pour bien faire ? »*`,
     },
@@ -18,12 +19,12 @@ Donc la question derrière chaque prompt n’est pas « comment formuler ?�
       kind: "theory",
       body: `## Anatomie d’un prompt
 
-Un prompt fonctionnel est un petit document d’ingénierie en quatre parties :
+Un prompt efficace est un petit document d’ingénierie composé de quatre parties :
 
 1. **Rôle & instructions** — quel travail est effectué, et comment : « Tu implémentes un cas d’usage dans un domaine de paiements. »
-2. **Contraintes** — les musts et must-nots : « API publique inchangée. Pas de nouvelles dépendances. Pas de panique. »
-3. **Exemples** — un échantillon *bon*, afin que la qualité soit montrée plutôt que décrite.
-4. **La demande** — la tâche réelle, énoncée en dernier, précise et unique.
+2. **Contraintes** — ce qui est obligatoire et ce qui est interdit : « API publique inchangée. Aucune nouvelle dépendance. Aucun panic. »
+3. **Exemples** — un exemple de *bon résultat*, afin de montrer la qualité au lieu de la décrire.
+4. **Demande** — la tâche réelle, énoncée en dernier, précise et unique.
 
 La plupart des mauvais prompts ne sont pas mal *formulés* — ils **manquent une partie**, généralement les contraintes ou l’exemple.`,
     },
@@ -36,7 +37,7 @@ La plupart des mauvais prompts ne sont pas mal *formulés* — ils **manquent 
         "Tu es le meilleur programmeur qui ait jamais vécu — code en conséquence",
       ],
       answer: 0,
-      explain: `Le golem ne peut pas échouer « high-quality » — chaque sortie peut plausiblement répondre à ce critère. Il *peut* échouer « never panic », et c’est le point : les critères d’acceptation créent la possibilité d’être incorrect, ce qui guide un modèle. La spécificité l’emporte sur la politesse — et la flatterie.`,
+      explain: `Le golem ne peut pas échouer au critère « haute qualité » : presque n'importe quel résultat peut prétendre y répondre. Il *peut* en revanche violer « ne jamais paniquer ». C'est précisément le but : les critères d’acceptation rendent l'erreur identifiable et guident ainsi le modèle. La précision l’emporte sur la politesse — et sur la flatterie.`,
     },
     {
       kind: "theory",
@@ -46,45 +47,45 @@ Les adjectifs décrivent la qualité ; **les exemples la définissent.** Un ex
 
 Tu veux des tests dans ton style ? Colle **un test idéal** et dis « comme ça. » Tu veux des messages d’erreur qui portent un code et un indice de remédiation ? Montre *un*.
 
-Le chapitre I t’a appris que les exigences en prose fuient l’ambiguïté. Le même principe s’applique sur le banc : un exemple est une petite spécification qui est *copiée* plutôt que interprétée — et copier perd beaucoup moins que l’interprétation.`,
+Le chapitre I t’a appris que les exigences rédigées en prose laissent filtrer l’ambiguïté. Le même principe s’applique sur l'établi : un exemple est une petite spécification qui peut être *imitée* plutôt qu'interprétée — et l'imitation perd beaucoup moins d'information que l'interprétation.`,
     },
     {
       kind: "theory",
       body: `## Ingénierie de contexte : curation, pas accumulation
 
-L’ingénierie de prompt demande *comment formuler*. **L’ingénierie de contexte** pose la question plus importante : *qu’est‑ce qui se trouve sur le banc ?*
+L’ingénierie des prompts demande *comment formuler*. **L’ingénierie du contexte** pose une question plus importante : *qu'est-ce qui doit réellement se trouver sur l'établi ?*
 
 Pour un bug dans le chemin de remboursement, le golem a besoin :
 
 - du **module de remboursement** — le code réellement en jeu,
-- de la **spécification** des remboursements — l’artifact du chapitre I,
-- du **test échoué** — l’artifact du Rite, nommant exactement ce que « fixé » signifie.
+- de la **spécification** des remboursements — l’artefact du chapitre I,
+- du **test en échec** — l’artefact du Rite, qui définit exactement ce que signifie « corrigé ».
 
-Pas tout le dépôt. Pas les notes de migration du mois dernier. La compétence est *sélection *: les deux cents bonnes lignes l’emportent sur les œuvres complètes de ta base de code.`,
+Pas de tout le dépôt. Pas des notes de migration du mois dernier. La compétence réside dans la *sélection* : les deux cents lignes pertinentes valent mieux que l'intégralité de la base de code.`,
     },
     {
       kind: "theory",
       body: `## Pourriture de contexte
 
-Voici la partie contre-intuitive : un contexte inutile ne gaspille pas seulement de l’espace — il **nuise activement**.
+Voici ce qui paraît contre-intuitif : un contexte inutile ne gaspille pas seulement de la place — il **nuit activement**.
 
 - Un fichier distrayant invite le golem à « aider » à le toucher.
-- Des vocabulaires mixtes entraînent le mauvais modèle de compte — la nuitée du chapitre III, auto‑inflictée.
+- Des vocabulaires mélangés activent le mauvais modèle de compte — le cauchemar du chapitre III, provoqué par toi-même.
 - Des docs obsolètes et du code mort enseignent un vieux comportement comme s’il était actuel.
-- Et plus le banc est long, plus l’attention est fine : ta contrainte cruciale se bat maintenant avec dix mille tokens de bruit.
+- Et plus l'établi est encombré, plus l’attention se disperse : ta contrainte essentielle doit désormais rivaliser avec dix mille tokens de bruit.
 
-La curation coupe les deux sens. **Enlever du banc est aussi puissant que d’y ajouter.**`,
+La sélection fonctionne dans les deux sens. **Retirer un élément de l'établi peut être aussi puissant qu'en ajouter un.**`,
     },
     {
       kind: "quiz",
-      question: `Tu envoies le golem pour corriger un bug dans le chemin de remboursement. Que mets‑tu sur le banc ?`,
+      question: `Tu charges le golem de corriger un bug dans le parcours de remboursement. Que places-tu sur l'établi ?`,
       options: [
-        "Le module de remboursement, les règles de remboursement de la spécification, et le test échoué — et peu d’autre",
+        "Le module de remboursement, les règles correspondantes de la spécification et le test en échec — presque rien d'autre",
         "Tout le dépôt, afin qu’aucun détail potentiellement pertinent ne manque",
         "Seulement le message d’erreur — tout contexte de code biaiserait sa perspective fraîche",
       ],
       answer: 0,
-      explain: `La faim et l’étouffement sont tous deux des modes d’échec : trop peu de contexte force la supposition, tandis qu’un contexte indiscriminé entoure le signal et invite des modifications que tu n’as jamais demandées. La curation — le module pertinent, la spécification, l’essai — est le métier lui‑même.`,
+      explain: `La famine et l'étouffement sont deux causes d'échec : trop peu de contexte oblige le modèle à deviner, tandis qu'un contexte indiscriminé noie le signal et invite des modifications non demandées. Sélectionner le module pertinent, la spécification et le test constitue le cœur du métier.`,
     },
     {
       kind: "fill",
@@ -94,17 +95,17 @@ La curation coupe les deux sens. **Enlever du banc est aussi puissant que d’y 
       after: ` en échec, sans changer ses assertions.`,
       choices: ["test", "build", "demo", "deploy"],
       answer: 0,
-      explain: `Un test qui échoue est un critère d’acceptation exécutable — comportement, bords et achèvement dans une forme qui ne peut être mal interprétée. Les builds, les démos et les déploiements peuvent échouer aussi, mais seul un test porte des assertions : ta spécification avec des dents, maintenant en sous‑emploi comme prompt.`,
+      explain: `Un test en échec est un critère d’acceptation exécutable : il exprime le comportement, les cas limites et la définition du résultat attendu sous une forme impossible à mal interpréter. Les builds, démos et déploiements peuvent eux aussi échouer, mais seul un test contient des assertions : ta spécification s'est dotée de dents et sert désormais aussi de prompt.`,
     },
     {
       kind: "theory",
       body: `## L’itération est le resserrement de la spécification
 
-La première sortie est fausse. Pas de problème — c’est des données. Le mouvement amateur est de relancer les dés ; le mouvement de l’ingénieur est **de lire l’échec et de trouver l’instruction manquante**.
+Le premier résultat est incorrect. Ce n'est pas grave : **c'est une donnée**. L'amateur relance les dés ; l'ingénieur **lit l'échec et recherche l'instruction manquante**.
 
-Le golem a ignoré un cas limite ? Tes contraintes ne l’ont jamais mentionné. Mauvais style ? Tu as dit au lieu de montrer. Touché des fichiers qu’il ne devait pas ? Le banc était encombré, ou la frontière n’était pas déclarée.
+Le golem a ignoré un cas limite ? Tes contraintes ne le mentionnaient pas. Le style est mauvais ? Tu as décrit au lieu de montrer. Il a modifié des fichiers interdits ? L'établi était encombré ou la frontière n’était pas clairement définie.
 
-Chaque échec nomme un trou dans tes mots — répare le *prompt*, pas seulement la sortie, exactement comme le chapitre I t’a appris à resserrer une spécification.
+Chaque échec révèle une lacune dans tes mots : corrige le *prompt*, pas seulement le résultat, exactement comme le chapitre I t’a appris à préciser une spécification.
 
 La prochaine discipline : mettre les mots en mouvement — la boucle qui agit, observe et corrige.`,
     },

@@ -150,7 +150,7 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-standard-library-6": {
     title: "Une Fenêtre sur le Trésor",
     intro:
-      "L'Amasseur ne te laissera pas emporter le trésor — mais il te laissera regarder. Une slice est une fenêtre sur une portion du trésor : pas de copie, pas de vol, juste une vue d'ici à là. Prends garde aux bords ; la fenêtre inclut son début et exclut sa fin.",
+      "L'Amasseur ne te laissera pas emporter le trésor — mais il te laissera regarder. Une slice est une fenêtre ouverte sur une portion du trésor : aucune copie, aucun vol, seulement une vue d'ici à là. Attention aux limites : la fenêtre inclut son début et exclut sa fin.",
   },
   "rust-standard-library-7": {
     title: "Le Plan de la Chambre la Plus Profonde",

@@ -16,13 +16,13 @@ Tout ce qui change le grand livre Stellar voyage dans une seule forme — une **
 - **Opérations** — les verbes réels (de 1 à 100).
 - **Signatures** — preuve que le compte source (et toute autre personne requise) a accepté.
 
-Maîtrise cette forme unique et chaque page d’explorateur, appel SDK et erreur de transaction échouée sur Stellar deviendront lisibles.`,
+Maîtrise cette structure et tu sauras lire chaque page d’explorateur, chaque appel de SDK et chaque erreur de transaction Stellar.`,
     },
     {
       kind: "theory",
       body: `## Opérations : les verbes
 
-Une **opération** est un verbe atomique : \`payment\`, \`create_account\`, \`change_trust\`, \`manage_sell_offer\`, \`invoke_host_function\` (celle qui appelle les contrats intelligents)… il y en a ~26.
+Une **opération** est un verbe atomique : \`payment\`, \`create_account\`, \`change_trust\`, \`manage_sell_offer\`, \`invoke_host_function\` (qui appelle les contrats intelligents)… il en existe environ 26.
 
 Une seule enveloppe peut contenir **plusieurs opérations**, et elles se déroulent **atomiquement** : créer un compte *et* le financer *et* ouvrir sa ligne de confiance en un seul coup — ou rien ne se passe du tout.`,
     },
@@ -44,28 +44,28 @@ Une seule enveloppe peut contenir **plusieurs opérations**, et elles se déroul
     },
     {
       kind: "theory",
-      body: `## Numéros de séquence : pas de rejouages, pas de courses
+      body: `## Numéros de séquence : ni rejeu ni concurrence
 
 Chaque compte possède un compteur. Une transaction doit indiquer \`current + 1\`, et le grand livre l’incrémente à l’inclusion — donc :
 
 - une transaction signée ne peut **jamais** être rejouée (son numéro est dépensé),
 - deux transactions du même compte **ne peuvent pas** se concurrencer pour le même créneau.
 
-Cette erreur « tx_bad_seq » que tout développeur Stellar rencontre un jour ? Cela signifie simplement que *quelqu’un d’autre a déplacé ton compteur en premier — reconstruit et resigné.*`,
+Cette erreur \`tx_bad_seq\`, que tout développeur Stellar finit par rencontrer, signifie simplement que *quelqu'un d'autre a fait avancer ton compteur avant toi : reconstruis la transaction et signe-la de nouveau.*`,
     },
     {
       kind: "fill",
       prompt: `Place la chaîne de vie dans l’ordre — que se passe-t-il entre la construction et la soumission ?`,
       file: "lifecycle.txt",
       before: `construire l’enveloppe  →  `,
-      after: `  →  soumettre  →  clôture du ledger`,
+      after: `  →  soumettre  →  clôture du registre`,
       choices: ["la signer", "la miner", "la faire certifier", "la staker"],
       answer: 0,
-      explain: `Construire, **signer**, soumettre, fermer — environ cinq secondes de bout en bout. Pas de minage, pas d’attente de confirmations : un seul arrêt du grand livre est la finalité.`,
+      explain: `Construire, **signer**, soumettre, clôturer — environ cinq secondes de bout en bout. Ni minage ni attente de confirmations multiples : une seule clôture du registre apporte la finalité.`,
     },
     {
       kind: "quiz",
-      question: `Pourquoi le réseau facture un frais (100 stroops = 0,00001 XLM) par opération ?`,
+      question: `Pourquoi le réseau facture-t-il des frais (100 stroops = 0,00001 XLM) pour chaque opération ?`,
       options: [
         "Pour rendre le spam coûteux à grande échelle tout en restant invisible aux humains",
         "Pour payer les validateurs un salaire — c’est leur modèle économique",
