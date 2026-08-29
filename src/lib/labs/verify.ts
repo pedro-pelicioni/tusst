@@ -23,6 +23,18 @@ interface HorizonAccount {
     asset_code?: string;
     asset_issuer?: string;
   }>;
+  signers?: Array<{ key: string; weight: number }>;
+  thresholds?: {
+    low_threshold: number;
+    med_threshold: number;
+    high_threshold: number;
+  };
+}
+
+interface HorizonOperationsPage {
+  _embedded?: {
+    records?: Array<{ type: string; source_account?: string }>;
+  };
 }
 
 interface HorizonPaymentsPage {
@@ -147,6 +159,27 @@ export async function verifyOnChain(
           (r) => r.type === "payment" && r.from === address,
         );
         if (!ok) failed.push(spec.check);
+        break;
+      }
+      case "claimable-balance-created": {
+        const page = await horizonJson<HorizonOperationsPage>(
+          `/accounts/${encodeURIComponent(address)}/operations?order=desc&limit=100`,
+        );
+        const ok = page?._embedded?.records?.some(
+          (r) => r.type === "create_claimable_balance",
+        );
+        if (!ok) failed.push(spec.check);
+        break;
+      }
+      case "account-thresholds": {
+        // The signer count and the threshold together are the deed: either
+        // alone is meaningless (a second signer at weight 0 changes nothing,
+        // and a raised threshold with one signer just locks you out).
+        const signers = account?.signers?.length ?? 0;
+        const med = account?.thresholds?.med_threshold ?? 0;
+        if (signers < spec.minSigners || med < spec.minMedThreshold) {
+          failed.push(spec.check);
+        }
         break;
       }
       case "token-balance-positive": {

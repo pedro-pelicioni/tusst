@@ -6,6 +6,12 @@ import { labText as ozPt } from "./oz-token-wizard.pt";
 import { labText as passkeyEs } from "./passkey-smart-wallet.es";
 import { labText as passkeyFr } from "./passkey-smart-wallet.fr";
 import { labText as passkeyPt } from "./passkey-smart-wallet.pt";
+import { labText as chestEs } from "./treasure-chest.es";
+import { labText as chestFr } from "./treasure-chest.fr";
+import { labText as chestPt } from "./treasure-chest.pt";
+import { labText as vaultEs } from "./guild-vault.es";
+import { labText as vaultFr } from "./guild-vault.fr";
+import { labText as vaultPt } from "./guild-vault.pt";
 import { labText as scpEs } from "./scp-simulator.es";
 import { labText as scpFr } from "./scp-simulator.fr";
 import { labText as scpPt } from "./scp-simulator.pt";
@@ -21,20 +27,8 @@ export const LAB_TEXT = {
     "oz-token-wizard": ozPt,
     "passkey-smart-wallet": passkeyPt,
     "scp-simulator": scpPt,
-    "treasure-chest": {
-      meta: {
-        title: "O Baú do Tesouro",
-        tagline:
-          "Tranque ouro em um saldo reivindicável que se abre à meia-noite.",
-      },
-    },
-    "guild-vault": {
-      meta: {
-        title: "O Cofre da Guilda",
-        tagline:
-          "Limiares de múltiplas assinaturas: um tesouro que exige dois oficiais.",
-      },
-    },
+    "treasure-chest": chestPt,
+    "guild-vault": vaultPt,
     "confidential-tokens": {
       meta: {
         title: "Tokens Confidenciais",
@@ -47,20 +41,8 @@ export const LAB_TEXT = {
     "oz-token-wizard": ozEs,
     "passkey-smart-wallet": passkeyEs,
     "scp-simulator": scpEs,
-    "treasure-chest": {
-      meta: {
-        title: "El Cofre del Tesoro",
-        tagline:
-          "Bloquea oro en un saldo reclamable que se abre a medianoche.",
-      },
-    },
-    "guild-vault": {
-      meta: {
-        title: "La Bóveda del Gremio",
-        tagline:
-          "Umbrales multifirma: una tesorería que necesita a dos responsables.",
-      },
-    },
+    "treasure-chest": chestEs,
+    "guild-vault": vaultEs,
     "confidential-tokens": {
       meta: {
         title: "Tokens Confidenciales",
@@ -73,20 +55,8 @@ export const LAB_TEXT = {
     "oz-token-wizard": ozFr,
     "passkey-smart-wallet": passkeyFr,
     "scp-simulator": scpFr,
-    "treasure-chest": {
-      meta: {
-        title: "Le Coffre au trésor",
-        tagline:
-          "Verrouille de l'or dans un solde réclamable qui s'ouvre à minuit.",
-      },
-    },
-    "guild-vault": {
-      meta: {
-        title: "Le Coffre de la guilde",
-        tagline:
-          "Seuils multisignatures : une trésorerie qui exige deux responsables.",
-      },
-    },
+    "treasure-chest": chestFr,
+    "guild-vault": vaultFr,
     "confidential-tokens": {
       meta: {
         title: "Tokens confidentiels",

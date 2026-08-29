@@ -126,7 +126,16 @@ export type VerifySpec =
   /** fetch the deployed contract Wasm and bind it to a known code identity */
   | { check: "smart-account-code"; wasmHash: string }
   /** query the native SAC balance of artifacts.contractId; passes when > 0 */
-  | { check: "smart-account-native-balance"; nativeTokenContract: string };
+  | { check: "smart-account-native-balance"; nativeTokenContract: string }
+  /**
+   * Scans the account's operation history for a create_claimable_balance it
+   * signed. Deliberately NOT a lookup of the balance itself: a lab that ends
+   * by claiming the chest would have destroyed that entry, and the deed we
+   * are verifying is the creation.
+   */
+  | { check: "claimable-balance-created" }
+  /** the account carries at least this many signers, at this med threshold */
+  | { check: "account-thresholds"; minSigners: number; minMedThreshold: number };
 
 export interface LabScenario {
   meta: LabMeta;

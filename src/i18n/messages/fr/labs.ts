@@ -105,6 +105,8 @@ export const labs = {
         "token-balance-positive": "un solde de token sur ton contrat",
         "smart-account-code": "le contrat canonique de smart account",
         "smart-account-native-balance": "du XLM natif dans le smart wallet",
+        "claimable-balance-created": "un coffre que vous avez verrouillé",
+        "account-thresholds": "un coffre-fort exigeant deux signatures",
       },
     },
     done: {

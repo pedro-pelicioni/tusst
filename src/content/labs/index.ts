@@ -3,6 +3,8 @@ import { walletOnboarding } from "./wallet-onboarding";
 import { scpSimulator } from "./scp-simulator";
 import { ozTokenWizard } from "./oz-token-wizard";
 import { passkeySmartWallet } from "./passkey-smart-wallet";
+import { treasureChest } from "./treasure-chest";
+import { guildVault } from "./guild-vault";
 
 // The Forge Labs catalog. Order = display order on /labs. A "soon" entry is
 // meta-only (empty steps) — it renders as a roadmap card and has no player
@@ -25,22 +27,8 @@ export const labs: LabScenario[] = [
   ozTokenWizard,
   passkeySmartWallet,
   scpSimulator,
-  soon({
-    slug: "treasure-chest",
-    title: "The Treasure Chest",
-    tagline: "Lock gold in a claimable balance that opens at midnight.",
-    difficulty: "novice",
-    estMinutes: 8,
-    glyph: "🧰",
-  }),
-  soon({
-    slug: "guild-vault",
-    title: "The Guild Vault",
-    tagline: "Multisig thresholds — a treasury that needs two officers.",
-    difficulty: "adept",
-    estMinutes: 12,
-    glyph: "🏛",
-  }),
+  treasureChest,
+  guildVault,
   soon({
     slug: "confidential-tokens",
     title: "Confidential Tokens",

@@ -103,6 +103,8 @@ export const labs = {
         "token-balance-positive": "um saldo de token no seu contrato",
         "smart-account-code": "o contrato canônico de smart account",
         "smart-account-native-balance": "XLM nativo na smart wallet",
+        "claimable-balance-created": "um baú que você trancou",
+        "account-thresholds": "um cofre que exige duas assinaturas",
       },
     },
     done: {
