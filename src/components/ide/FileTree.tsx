@@ -24,12 +24,17 @@ export function FileTree({
   onSelect,
   onAdd,
   onDelete,
+  onCollapse,
+  collapseTitle,
 }: {
   files: string[];
   activeFile: string;
   onSelect: (path: string) => void;
   onAdd: (path: string) => void;
   onDelete: (path: string) => void;
+  /** collapses the pane; omitted on layouts where the pane can't collapse */
+  onCollapse?: () => void;
+  collapseTitle?: string;
 }) {
   const m = useMessages();
   const [adding, setAdding] = useState(false);
@@ -62,17 +67,30 @@ export function FileTree({
         <span className="font-mono text-[11px] uppercase tracking-wider text-muted">
           {m.ide.fileTree.title}
         </span>
-        <button
-          type="button"
-          onClick={() => {
-            setAdding((v) => !v);
-            setError("");
-          }}
-          className="rounded border border-line px-1.5 font-mono text-[11px] text-muted2 transition hover:border-line-strong hover:text-fg"
-          title={m.ide.fileTree.newFileTitle}
-        >
-          +
-        </button>
+        <span className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => {
+              setAdding((v) => !v);
+              setError("");
+            }}
+            className="rounded border border-line px-1.5 font-mono text-[11px] text-muted2 transition hover:border-line-strong hover:text-fg"
+            title={m.ide.fileTree.newFileTitle}
+          >
+            +
+          </button>
+          {onCollapse && (
+            <button
+              type="button"
+              onClick={onCollapse}
+              title={collapseTitle}
+              aria-label={collapseTitle}
+              className="rounded border border-line px-1.5 font-mono text-[11px] text-muted2 transition hover:border-line-strong hover:text-fg"
+            >
+              ‹
+            </button>
+          )}
+        </span>
       </div>
 
       {adding && (
@@ -113,7 +131,8 @@ export function FileTree({
               <button
                 type="button"
                 onClick={() => onDelete(path)}
-                className="hidden rounded px-1 font-mono text-[11px] text-muted2 transition hover:text-red-400 group-hover:block"
+                aria-label={fmt(m.ide.fileTree.deleteFileTitle, { path })}
+                className="rounded px-1 font-mono text-[11px] text-muted2 opacity-0 transition hover:text-red-400 focus-visible:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100"
                 title={fmt(m.ide.fileTree.deleteFileTitle, { path })}
               >
                 ×

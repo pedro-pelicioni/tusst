@@ -198,3 +198,59 @@ export function setMobileNoticeSeen(): void {
     // Private mode — the modal just shows again next time.
   }
 }
+
+// ── Workbench layout ──────────────────────────────────────────────────
+// Which panes are open, how wide/tall they are, and which tab each strip
+// rests on. Persisted so the smithy reopens the way it was left; every
+// field is optional on read so an older payload (or a partial write) still
+// hydrates, falling back to IDE_LAYOUT_DEFAULTS.
+
+const LAYOUT_KEY = `${PREFIX}:layout`;
+
+export interface IdeLayoutState {
+  filesOpen: boolean;
+  panelOpen: boolean;
+  consoleOpen: boolean;
+  /** px — clamped by the shell against the live viewport, not stored clamped */
+  filesW: number;
+  panelW: number;
+  consoleH: number;
+  panelTab: string;
+  mobileTab: "editor" | "console";
+}
+
+export const IDE_LAYOUT_DEFAULTS: IdeLayoutState = {
+  filesOpen: true,
+  panelOpen: true,
+  consoleOpen: true,
+  filesW: 208,
+  panelW: 360,
+  consoleH: 224,
+  panelTab: "deploy",
+  mobileTab: "editor",
+};
+
+export function loadIdeLayout(): IdeLayoutState {
+  const stored = read<Partial<IdeLayoutState>>(LAYOUT_KEY);
+  if (!stored) return IDE_LAYOUT_DEFAULTS;
+  return { ...IDE_LAYOUT_DEFAULTS, ...stored };
+}
+
+export function saveIdeLayout(state: IdeLayoutState): void {
+  write(LAYOUT_KEY, state);
+}
+
+// ── Last built envelope ───────────────────────────────────────────────
+// The Anvil writes the unsigned XDR it just assembled here so the Rune Reader
+// can pick it up: "show me exactly what I am about to sign" is the whole
+// reason the preview exists, and the two panels never talk directly.
+
+const LAST_ENVELOPE_KEY = `${PREFIX}:lastEnvelope`;
+
+export function setLastEnvelope(xdr: string): void {
+  write(LAST_ENVELOPE_KEY, xdr);
+}
+
+export function getLastEnvelope(): string | null {
+  return read<string>(LAST_ENVELOPE_KEY);
+}

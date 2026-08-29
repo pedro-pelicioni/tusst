@@ -7,6 +7,12 @@ import { useMessages } from "@/i18n/client";
 // Multi-file Monaco pane. The `path` prop keys one Monaco model per file, so
 // switching files preserves undo history and view state per model. Theme and
 // options match the lesson player's editor for a consistent look.
+//
+// `onReady` hands the editor instance back to the shell. `automaticLayout`
+// already covers container resizes, but a pane that collapses through a CSS
+// transition (or unhides from `display:none`) needs one explicit `.layout()`
+// once the transition settles, and `.focus()` when it reappears — neither is
+// reachable without a handle.
 
 function languageFor(path: string): string {
   if (path.endsWith(".rs")) return "rust";
@@ -14,12 +20,15 @@ function languageFor(path: string): string {
   return "plaintext";
 }
 
+export type ForgeEditor = Parameters<OnMount>[0];
+
 export function EditorPane({
   path,
   value,
   onChange,
   onRun,
   onSave,
+  onReady,
   fontSize = 13,
 }: {
   path: string;
@@ -29,6 +38,8 @@ export function EditorPane({
   onRun: () => void;
   /** ⌘S — flush the draft to storage. */
   onSave: () => void;
+  /** Receives the editor instance once Monaco mounts (and `null` on unmount). */
+  onReady?: (editor: ForgeEditor | null) => void;
   /** The compact (mobile) shell passes 16 — anything smaller makes iOS Safari zoom in when the editor focuses. */
   fontSize?: number;
 }) {
@@ -37,10 +48,14 @@ export function EditorPane({
   // registered once in onMount; state inside them would go stale).
   const runRef = useRef(onRun);
   const saveRef = useRef(onSave);
+  const readyRef = useRef(onReady);
   useEffect(() => {
     runRef.current = onRun;
     saveRef.current = onSave;
-  }, [onRun, onSave]);
+    readyRef.current = onReady;
+  }, [onRun, onSave, onReady]);
+
+  useEffect(() => () => readyRef.current?.(null), []);
 
   const onMount: OnMount = (editor, monaco) => {
     monaco.editor.defineTheme("tusst", {
@@ -59,6 +74,7 @@ export function EditorPane({
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () =>
       saveRef.current(),
     );
+    readyRef.current?.(editor);
   };
 
   return (

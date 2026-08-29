@@ -27,6 +27,12 @@ interface FnState {
   outcome: { readOnly: boolean; text: string; txHash?: string } | null;
 }
 
+/** A contract id plus the human name we know it by, when we know one. */
+export interface ContractSuggestion {
+  value: string;
+  label?: string;
+}
+
 export function ContractWorkbench({
   wallet,
   prefillContractId = null,
@@ -36,7 +42,7 @@ export function ContractWorkbench({
 }: {
   wallet: ForgeWallet | null;
   prefillContractId?: string | null;
-  suggestions: string[];
+  suggestions: ContractSuggestion[];
   datalistId: string;
   onSpecLoaded?: (contractId: string) => void;
 }) {
@@ -139,8 +145,8 @@ export function ContractWorkbench({
           className="rounded border border-line bg-bg px-2 py-1.5 font-mono text-[11px] text-fg outline-none focus:border-accent/60"
         />
         <datalist id={datalistId}>
-          {suggestions.map((id) => (
-            <option key={id} value={id} />
+          {suggestions.map((s) => (
+            <option key={s.value} value={s.value} label={s.label} />
           ))}
         </datalist>
         <button

@@ -21,7 +21,7 @@ export function ExplorePanel({ wallet }: { wallet: ForgeWallet | null }) {
   return (
     <ContractWorkbench
       wallet={wallet}
-      suggestions={history}
+      suggestions={history.map((value) => ({ value }))}
       datalistId="forge-explored"
       onSpecLoaded={(id) => {
         addExplored(id);

@@ -8,19 +8,30 @@ import { contract, xdr } from "@stellar/stellar-sdk";
 // SDK's spec.funcArgsToScVals does the final (nested-aware) ScVal conversion.
 
 export type FieldKind =
+  // ── contract spec kinds (produced by kindOf) ──
   | "bool"
   | "number" // u32 / i32
   | "bigint" // u64…i256, timepoint, duration
   | "bytes" // hex input
   | "text" // string / symbol
   | "address"
-  | "json"; // vec / map / tuple / option / udt / anything nested
+  | "json" // vec / map / tuple / option / udt / anything nested
+  // ── classic-operation kinds (authored by hand in ops.ts) ──
+  // kindOf never returns these — a contract spec cannot express them — but
+  // they ride the same SpecField shape so SpecArgsFields renders classic
+  // operation forms with no second form layer.
+  | "amount" // a Stellar amount: decimal string, up to 7 places
+  | "asset"; // "native" or "CODE:ISSUER", edited as one composite control
 
 export interface SpecField {
   name: string;
   typeLabel: string;
   kind: FieldKind;
   placeholder: string;
+  /** classic ops only — contract arguments are always required */
+  optional?: boolean;
+  /** classic ops only — one line of teaching copy under the input */
+  help?: string;
 }
 
 export interface SpecFunctionDescriptor {
@@ -78,6 +89,8 @@ const PLACEHOLDER: Record<FieldKind, string> = {
   text: "…",
   address: "G… or C…",
   json: 'JSON, e.g. ["a","b"] or {"k":1}',
+  amount: "0.0000000",
+  asset: "native",
 };
 
 /**
@@ -171,6 +184,12 @@ function parseField(field: SpecField, raw: string): unknown {
       } catch {
         throw new Error(`${field.name}: invalid JSON`);
       }
+    case "amount":
+    case "asset":
+      // Unreachable from a contract spec — kindOf cannot produce these. The
+      // cases exist so this switch stays exhaustive over FieldKind, which is
+      // what makes adding a kind a compile error rather than a silent hole.
+      throw new Error(`${field.name}: ${field.kind} is not a contract type`);
   }
 }
 

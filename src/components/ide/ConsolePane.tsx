@@ -25,9 +25,14 @@ const STATUS_STYLE: Record<ForgeRunStatus, string> = {
 export function ConsolePane({
   lines,
   status,
+  onCollapse,
+  collapseTitle,
 }: {
   lines: ConsoleLine[];
   status: ForgeRunStatus;
+  /** collapses the pane to its status rail; omitted on the compact layout */
+  onCollapse?: () => void;
+  collapseTitle?: string;
 }) {
   const m = useMessages();
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -42,10 +47,23 @@ export function ConsolePane({
     <div className="flex h-full min-h-0 flex-col bg-bg-elev">
       <div className="flex items-center justify-between border-b border-line px-4 py-2">
         <span className="font-mono text-[11px] text-muted">{m.ide.console.title}</span>
-        <span
-          className={`font-mono text-[11px] uppercase tracking-wider ${STATUS_STYLE[status]}`}
-        >
-          {m.ide.console.status[status]}
+        <span className="flex items-center gap-3">
+          <span
+            className={`font-mono text-[11px] uppercase tracking-wider ${STATUS_STYLE[status]}`}
+          >
+            {m.ide.console.status[status]}
+          </span>
+          {onCollapse && (
+            <button
+              type="button"
+              onClick={onCollapse}
+              title={collapseTitle}
+              aria-label={collapseTitle}
+              className="font-mono text-[11px] text-muted transition hover:text-fg"
+            >
+              ⌄
+            </button>
+          )}
         </span>
       </div>
       <div
