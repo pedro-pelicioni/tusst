@@ -99,6 +99,24 @@ glowing threads of light (a quorum graph), one stone dimmed.
 | 12 | `sigil-1.png` | 640×640 | transparent |
 | 13 | `sigil-2.png` | 640×640 | transparent |
 | 14 | `sigil-3.png` | 640×640 | transparent |
+| 15 | `sigil-4.png` | 640×640 | transparent |
+| 16 | `sigil-5.png` | 640×640 | transparent |
+| 17 | `sigil-6.png` | 640×640 | transparent |
+| 18 | `sigil-7.png` | 640×640 | transparent |
+| 19 | `sigil-8.png` | 640×640 | transparent |
+| 20 | `sigil-9.png` | 640×640 | transparent |
+| 21 | `sigil-10.png` | 640×640 | transparent |
+| 22 | `sigil-11.png` | 640×640 | transparent |
+| 23 | `sigil-12.png` | 640×640 | transparent |
+| 24 | `sigil-13.png` | 640×640 | transparent |
+| 25 | `sigil-14.png` | 640×640 | transparent |
+| 26 | `sigil-15.png` | 640×640 | transparent |
+| 27 | `sigil-16.png` | 640×640 | transparent |
+| 28 | `sigil-17.png` | 640×640 | transparent |
+| 29 | `sigil-18.png` | 640×640 | transparent |
+| 30 | `sigil-19.png` | 640×640 | transparent |
+| 31 | `sigil-20.png` | 640×640 | transparent |
+| 32 | `sigil-21.png` | 640×640 | transparent |
 
 **11 · journey-bg** — A night road winding through highlands toward the
 horizon, waymarker obelisks at intervals each glowing a different soft color,
@@ -109,6 +127,48 @@ column calm for the chapter rail.
 ink glow. **13 · sigil-2 (SCP)** — Miniature of emblem #10, simplified.
 **14 · sigil-3 (tx anatomy)** — An envelope-shaped rune split open showing
 three orbiting op-glyphs.
+
+The Foundations trio (level 0) follows the same emblem language — one object,
+centred, nothing else in frame:
+**15 · sigil-4 (the ledger)** — A heavy open tome on a stone lectern, its two
+pages formed of interlocking chain links glowing teal, violet ink-light rising
+from the spine. **16 · sigil-5 (keys)** — An ornate antique key crossed over a
+round wax seal stamped with an abstract rune, teal aura ring behind.
+**17 · sigil-6 (contracts)** — A stone-and-brass clockwork gear ring enclosing
+a small rolled oath-scroll, teal flame between the teeth.
+
+The remaining fifteen chapters (29/08/2026), same emblem language — one
+object, centred, nothing else in frame:
+**18 · sigil-7 (accounts & assets)** — A gold coin standing on edge on a stone
+ledger slab, three fine chains radiating to empty coin-sockets.
+**19 · sigil-8 (bounded contexts)** — An unrolled map with three territories
+divided by glowing violet/teal/gold boundaries, brass dividers across it.
+**20 · sigil-9 (anchors)** — A lone stone gateway arch on a cliff edge, gold
+light pouring through, sea mist below.
+**21 · sigil-10 (payments & DEX)** — A river of liquid light forking into three
+glowing channels through dark stone.
+**22 · sigil-11 (harness)** — A stone golem's open hand on a workbench, a
+leather harness of straps and brass rings buckled at the wrist.
+**23 · sigil-12 (capstone)** — A finished blade across an anvil, edge still
+glowing gold, tongs and a rolled scroll beside it.
+**24 · sigil-13 (clean architecture)** — A cutaway keep from above, four
+concentric ring walls, gold at the core cooling to violet outward.
+**25 · sigil-14 (agentic loops)** — An ouroboros of brass gears biting its own
+tail, teal flame running the inside of the ring.
+**26 · sigil-15 (Soroban)** — A stone reliquary box, lid ajar, teal light and
+embers breathing from the seam, brass clockwork on its face.
+**27 · sigil-16 (protocol upgrades)** — Violet lightning striking a menhir
+mid-transformation, older carvings visible beneath newer ones.
+**28 · sigil-17 (TDD)** — Two runestones on an anvil, one ember-red and one
+green, a taut thread of light strung between them.
+**29 · sigil-18 (privacy)** — A lit candle behind a gauzy veil, flame legible
+but softened, violet smoke curling above.
+**30 · sigil-19 (passkeys)** — A dark steel shield with a fingerprint whorl
+etched into the boss, violet light tracing the ridges.
+**31 · sigil-20 (graph engineering)** — A loom of taut silver threads crossing
+into a node-and-edge web, a violet light at each crossing.
+**32 · sigil-21 (prompt engineering)** — A feather quill upright in a stone
+inkwell, luminous violet script spiralling out of the nib.
 
 ## After generating
 

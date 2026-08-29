@@ -140,6 +140,27 @@ const JOBS = [
   { src: "sigil-1.png", out: "journey/sigils/think-before-you-forge.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
   { src: "sigil-2.png", out: "journey/sigils/the-realm-of-stellar.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
   { src: "sigil-3.png", out: "journey/sigils/anatomy-of-a-transaction.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  // Level 0 · Foundations — the ground floor's three chapters.
+  { src: "sigil-4.png", out: "journey/sigils/the-book-no-one-can-erase.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-5.png", out: "journey/sigils/the-key-and-the-seal.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-6.png", out: "journey/sigils/machines-that-keep-promises.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  // The remaining chapters — one sigil per slug, so the map lights up as
+  // masters land rather than all at once.
+  { src: "sigil-7.png", out: "journey/sigils/accounts-trust-and-assets.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-8.png", out: "journey/sigils/borders-of-the-realm.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-9.png", out: "journey/sigils/gates-of-the-realm.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-10.png", out: "journey/sigils/rivers-of-value.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 72, trim: true },
+  { src: "sigil-11.png", out: "journey/sigils/taming-the-golem.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-12.png", out: "journey/sigils/the-capstone-forging.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-13.png", out: "journey/sigils/the-clean-keep.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-14.png", out: "journey/sigils/the-endless-loop.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-15.png", out: "journey/sigils/the-living-contracts.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-16.png", out: "journey/sigils/the-protocols-edge.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-17.png", out: "journey/sigils/the-red-green-rite.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-18.png", out: "journey/sigils/the-veiled-ledger.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-19.png", out: "journey/sigils/wallets-without-seeds.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+  { src: "sigil-20.png", out: "journey/sigils/weaving-the-graph.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 58, trim: true },
+  { src: "sigil-21.png", out: "journey/sigils/words-of-power.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
 ];
 
 async function run() {
