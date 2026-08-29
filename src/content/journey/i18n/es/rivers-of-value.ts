@@ -7,6 +7,7 @@ export const riversOfValue: Concept = {
     tagline: "Pagos, pagos encadenados, el DEX y los AMM.",
     numeral: "IV",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/rivers-of-value.webp",
@@ -81,6 +82,42 @@ Dos variantes:
 
 - **Strict send** — fijar lo que pagas; el destinatario recibe lo que la ruta produce (por encima de tu mínimo).
 - **Strict receive** — fijar lo que recibe; pagas lo que cuesta (por debajo de tu máximo).`,
+    },
+    {
+      kind: "diagram",
+      body: "Un pago, tres monedas, una transacción atómica:",
+      caption: "Si algún salto no cierra al precio que fijaste, no pasa nada — ningún dinero a medio convertir varado por el camino.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "send",
+            label: "tú envías BRL",
+            note: "Nunca tocas las monedas intermedias, y nunca las tienes.",
+            tone: "accent",
+          },
+          {
+            id: "hop1",
+            label: "BRL → XLM",
+            note: "El libro de órdenes cierra este salto a lo que ofrezca el mercado ahora.",
+            tone: "teal",
+          },
+          {
+            id: "hop2",
+            label: "XLM → EURC",
+            note: "Y el siguiente, en el mismo instante, dentro de la misma transacción.",
+            tone: "teal",
+          },
+          {
+            id: "recv",
+            label: "recibe EURC",
+            note: "Cantidad garantizada, o todo revierte. No hay llegada parcial.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

@@ -7,6 +7,7 @@ export const theEndlessLoop: Concept = {
     tagline: "Bucles agenticos: actuar, observar, corregir — y saber cuándo detenerse.",
     numeral: "VII",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/the-endless-loop.webp",
@@ -36,6 +37,42 @@ Un bucle mejora solo en la medida en que sus **observaciones** sean verdaderas. 
 - **estado on‑chain** — ¿qué contiene realmente el libro mayor después de la ejecución?
 
 Señales, no vibraciones. “La salida parece razonable” no corrige nada, porque nunca puede ser falsa. Cada verificador que incorporaste al harness ahora gana interés: conectado al bucle, se convierte en los ojos con los que el gólem se guía — **en cada iteración**.`,
+    },
+    {
+      kind: "diagram",
+      body: "El bucle, y la única salida que importa:",
+      caption: "Un bucle sin regla de parada no es autonomía: es presupuesto ardiendo.",
+      view: {
+        kind: "flow",
+        layout: "cycle",
+        play: true,
+        nodes: [
+          {
+            id: "act",
+            label: "actuar",
+            note: "Da el paso más pequeño que el plan permita, luego para y mira.",
+            tone: "accent",
+          },
+          {
+            id: "observe",
+            label: "observar",
+            note: "Lee lo que respondió el mundo. No lo que esperabas que respondiera.",
+            tone: "teal",
+          },
+          {
+            id: "correct",
+            label: "corregir",
+            note: "Ajusta el plan, no solo el último movimiento.",
+            tone: "gold",
+          },
+          {
+            id: "stop",
+            label: "¿parar?",
+            note: "Listo, bloqueado o sin presupuesto. Decídelo explícitamente en cada vuelta.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

@@ -24,7 +24,7 @@ Una especificación describe **comportamiento**, no implementación:
 - **Qué nunca debe ocurrir** — «el saldo del contrato nunca baja de la suma de los depósitos abiertos».
 - **Los casos límite** — «¿qué pasa si el plazo vence exactamente *ahora*? ¿y si el importe es cero?».
 
-Deliberadamente **no** indica qué bucle, qué clave de almacenamiento ni qué crate usar. Dos implementaciones muy distintas pueden cumplir la misma especificación; esa libertad es lo que hace que las especificaciones sean duraderas y funcionen bien con la IA.`,
+Deliberadamente **no** indica qué bucle, qué formato de almacenamiento ni qué biblioteca usar. Dos implementaciones muy distintas pueden cumplir la misma especificación; esa libertad es lo que hace que las especificaciones sean duraderas y funcionen bien con la IA.`,
     },
     {
       kind: "quiz",
@@ -32,12 +32,73 @@ Deliberadamente **no** indica qué bucle, qué clave de almacenamiento ni qué c
         "Estás escribiendo la especificación de un contrato de depósito en garantía. ¿Qué frase **pertenece a la especificación**?",
       options: [
         "Los fondos solo pueden liberarse cuando ambas partes hayan firmado.",
-        "Guarda el depósito en un mapa persistente indexado por un contador u64.",
-        "Usa soroban-sdk 26 y la extensión pausable de OpenZeppelin.",
+        "Numera cada depósito y guárdalos en el orden en que llegan.",
+        "Constrúyelo con la versión más reciente del kit de contratos y su botón de pausa ya listo.",
       ],
       answer: 0,
       explain:
-        "El comportamiento entra; la implementación queda fuera. Los diseños de almacenamiento y la elección de crates son asunto de la *forja*; la especificación determina qué debe ser verdad.",
+        "El comportamiento entra; la implementación queda fuera. Los formatos de almacenamiento y la elección de herramientas son asunto de la *forja*; la especificación determina qué debe ser verdad.",
+    },
+    {
+      kind: "diagram",
+      body: "La línea que acaba de trazar ese quiz, en general:",
+      caption: "Dos implementaciones de la misma especificación pueden no parecerse en nada. Esa libertad es justo el punto.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "spec",
+            label: "pertenece a la especificación",
+            tone: "good",
+          },
+          {
+            id: "forge",
+            label: "pertenece a la forja",
+            tone: "neutral",
+          },
+        ],
+        rows: [
+          {
+            label: "un ejemplo",
+            cells: [
+              {
+                text: "los fondos se liberan solo cuando ambas partes firmaron",
+                tone: "good",
+              },
+              {
+                text: "guardar los depósitos en una lista numerada",
+                tone: "neutral",
+              },
+            ],
+          },
+          {
+            label: "de quién es",
+            cells: [
+              {
+                text: "tuya — y sobrevive a cada reescritura",
+                tone: "good",
+              },
+              {
+                text: "de quien forje, esta vez",
+                tone: "neutral",
+              },
+            ],
+          },
+          {
+            label: "cuándo cambia",
+            cells: [
+              {
+                text: "cuando el comportamiento debe cambiar",
+                tone: "good",
+              },
+              {
+                text: "cada vez que aparece una forma más rápida",
+                tone: "neutral",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "theory",
@@ -125,7 +186,7 @@ Ha llegado el momento de forjar tu propia especificación. Este es el encargo:
 > El gremio quiere una **hucha de propinas** on-chain. Cualquiera puede depositar propinas. Solo el **guardián** del gremio puede recoger lo que contiene. Al gremio le preocupan dos cosas: que el guardián consiga retirar *más* de lo que hay y que las propinas queden bloqueadas para siempre si el guardián desaparece.
 
 Escribe la especificación — **solo comportamiento**, como enseña este capítulo: qué debe ocurrir, qué nunca debe ocurrir y cuáles son los casos límite. Un examinador de IA la evaluará con la rúbrica siguiente (y calificará como los gólems de la forja: al pie de la letra).`,
-      rubric: `1. Solo comportamiento: nada de diseños de almacenamiento, crates ni firmas de funciones.
+      rubric: `1. Solo comportamiento: nada de formatos de almacenamiento, bibliotecas ni firmas de funciones.
 2. La regla de depósito y la regla de recogida están expresadas sin ambigüedad (quién puede actuar y sobre qué).
 3. Al menos un **invariante** que deba cumplirse en todo momento.
 4. Se aborda al menos un **caso límite** (propina de valor cero, recogida con la hucha vacía, recogida del saldo exacto…).

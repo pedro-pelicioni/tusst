@@ -7,6 +7,7 @@ export const theEndlessLoop: Concept = {
     tagline: "Loops agentes: agir, observar, corrigir — e saber quando parar.",
     numeral: "VII",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/the-endless-loop.webp",
@@ -36,6 +37,42 @@ Um loop melhora apenas na medida em que suas **observações** são verdadeiras.
 - **estado on‑chain** — o que o ledger realmente contém após a execução?
 
 Sinais, não vibrações. “A saída parece razoável” não corrige nada, porque nunca pode ser falsa. Cada verificador que você incorporou ao harness agora rende juros: conectado ao loop, ele se torna os olhos pelos quais o golem se orienta — **em cada iteração**.`,
+    },
+    {
+      kind: "diagram",
+      body: "O laço, e a única saída que importa:",
+      caption: "Um laço sem regra de parada não é autonomia — é orçamento queimando.",
+      view: {
+        kind: "flow",
+        layout: "cycle",
+        play: true,
+        nodes: [
+          {
+            id: "act",
+            label: "agir",
+            note: "Dê o menor passo que o plano permite, depois pare e olhe.",
+            tone: "accent",
+          },
+          {
+            id: "observe",
+            label: "observar",
+            note: "Leia o que o mundo respondeu. Não o que você esperava que respondesse.",
+            tone: "teal",
+          },
+          {
+            id: "correct",
+            label: "corrigir",
+            note: "Ajuste o plano, não só o último movimento.",
+            tone: "gold",
+          },
+          {
+            id: "stop",
+            label: "parar?",
+            note: "Pronto, travado, ou sem orçamento. Decida explicitamente, a cada volta.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

@@ -7,6 +7,7 @@ export const anatomyOfATransaction: Concept = {
     tagline: "Sobre, operaciones, comisiones, firmas — diseccionadas en vivo.",
     numeral: "II",
     arc: "realm",
+    level: 1,
     status: "live",
     estMinutes: 10,
     sigil: "/v2/journey/sigils/anatomy-of-a-transaction.webp",
@@ -26,6 +27,60 @@ Todo lo que alguna vez cambia el libro mayor de Stellar viaja dentro de una úni
 - **Firmas** — prueba de que el origen (y cualquiera más requerido) está de acuerdo.
 
 Aprende esta única forma y cada página del explorador, llamada SDK y error de transacción fallida en Stellar se volverán legibles.`,
+    },
+    {
+      kind: "diagram",
+      body: "El envelope, abierto:",
+      caption: "La firma cubre el envelope entero. Cambia un byte ahí dentro y todas las firmas dejan de coincidir.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "source",
+            label: "cuenta de origen",
+            note: "Quién paga la comisión, y de quién avanza el número de secuencia.",
+            tone: "neutral",
+          },
+          {
+            id: "fee",
+            label: "comisión",
+            note: "100 stroops por operación: una cienmilésima de XLM cada una.",
+            tone: "gold",
+          },
+          {
+            id: "seq",
+            label: "número de secuencia",
+            note: "Usado exactamente una vez, para siempre. Eso hace imposible un replay.",
+            tone: "accent",
+          },
+          {
+            id: "ops",
+            label: "operaciones",
+            note: "Hasta 100, aplicadas en orden. Entran todas, o no entra ninguna.",
+            tone: "teal",
+            bands: [
+              {
+                id: "op1",
+                label: "pago",
+                note: "Mueve un activo de una cuenta a otra.",
+                tone: "teal",
+              },
+              {
+                id: "op2",
+                label: "abrir trustline",
+                note: "Abre la línea de confianza que permite al destino tenerlo.",
+                tone: "teal",
+              },
+            ],
+          },
+          {
+            id: "sigs",
+            label: "firmas",
+            note: "Una por firmante exigido. Cualquiera las comprueba contra la dirección de origen; nadie las falsifica.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "theory",

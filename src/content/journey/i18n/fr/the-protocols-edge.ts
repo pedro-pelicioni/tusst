@@ -26,6 +26,42 @@ Le changement passe par deux canaux, et cette distinction mérite d'être retenu
 La loi de la chaîne face aux usages du commerce. La CAP-59 t'a apporté les courbes ZK ; la SEP-24, les parcours de dépôt. Deux courants différents, tous deux publics et façonnés par des discussions ouvertes.`,
     },
     {
+      kind: "diagram",
+      body: "Comment un changement atteint le registre sur lequel vous construisez :",
+      caption: "Personne ne met à jour votre code à votre place — mais personne ne change non plus les règles sous vos pieds du jour au lendemain.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "draft",
+            label: "un CAP est rédigé",
+            note: "N'importe qui peut en écrire un. Il plaide pour un changement du protocole lui-même.",
+            tone: "neutral",
+          },
+          {
+            id: "review",
+            label: "revue à ciel ouvert",
+            note: "Discuté, révisé, et souvent rejeté. C'est la partie lente, délibérément.",
+            tone: "accent",
+          },
+          {
+            id: "vote",
+            label: "les validateurs votent",
+            note: "Le réseau ne se met à jour que si assez de validateurs acceptent de l'exécuter.",
+            tone: "teal",
+          },
+          {
+            id: "you",
+            label: "à vous",
+            note: "Montez le SDK, rejouez vos tests, redéployez. La date est publique des mois à l'avance.",
+            tone: "gold",
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `Tu veux (a) une nouvelle fonction hôte dans le protocole et (b) un nouveau parcours entre un wallet et un anchor. Quels documents dois-tu rédiger ?`,
       options: [

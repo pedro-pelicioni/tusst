@@ -20,6 +20,8 @@ import {
   type BranchState,
   type LabLinkState,
 } from "@/components/journey/ConceptPlayer";
+import { SceneArt, hasV2Asset } from "@/components/scene/SceneArt";
+import { SceneParticles } from "@/components/scene/SceneParticles";
 import { SceneRoot } from "@/components/scene/SceneRoot";
 
 // One journey chapter. Concept steps are pure data, so the server enriches
@@ -118,8 +120,14 @@ export default async function ConceptPage({
     }
   }
 
-  // Next live chapter within the same arc (for the done screen).
-  const liveSlugs = chaptersByArc(concept.meta.arc)
+  // Next live chapter for the done screen: within the same arc, except on the
+  // ground floor — level 0 exists to hand the reader over, so its trail runs
+  // straight into the Craft road instead of dead-ending on its last chapter.
+  const trail =
+    concept.meta.arc === "foundations"
+      ? [...chaptersByArc("foundations"), ...chaptersByArc("craft")]
+      : chaptersByArc(concept.meta.arc);
+  const liveSlugs = trail
     .filter((c) => c.meta.status === "live")
     .map((c) => c.meta.slug);
   const nextSlug = liveSlugs[liveSlugs.indexOf(slug) + 1] ?? null;
@@ -130,11 +138,24 @@ export default async function ConceptPage({
         data-scene
         className="sc-scene sc-scene--journey min-h-[calc(100dvh-56px)]"
       >
+        {/* Reading surface: art stays a backdrop, never a distraction. No
+            data-reveal anywhere inside — the player swaps steps without
+            remounting, and SceneMotion only ever observes what existed at
+            mount, so a later step would be held at opacity:0 forever. */}
+        <SceneArt
+          layers={[{ src: "/v2/journey/map-bg.webp", priority: true, quality: 60 }]}
+        />
+        <div className="sc-scrim" />
+        <SceneParticles tone="journey" count={8} />
+
         <div className="relative">
           <ConceptPlayer
             conceptSlug={slug}
             title={concept.meta.title}
             numeral={concept.meta.numeral}
+            sigilSrc={
+              hasV2Asset(concept.meta.sigil) ? concept.meta.sigil : null
+            }
             steps={concept.steps}
             xp={XP_CONCEPT}
             signedIn={!!userId}

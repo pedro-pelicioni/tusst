@@ -7,6 +7,7 @@ export const accountsTrustAndAssets: Concept = {
     tagline: "Reservas, líneas de confianza y cómo nace cualquier activo.",
     numeral: "III",
     arc: "realm",
+    level: 1,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/accounts-trust-and-assets.webp",
@@ -32,6 +33,71 @@ En muchas cadenas cualquiera puede lanzar tokens basura a tu dirección. En Stel
 Una línea de confianza dice: *"Acepto el activo X del emisor Y, hasta este **límite**."* Se crea con la operación \`change_trust\`, es su propia entrada en el libro mayor — por lo que bloquea **una reserva base** — y mientras no exista, los pagos de ese activo a ti simplemente fallan.
 
 Opt‑in por diseño: tu balance solo contiene lo que aceptaste mantener.`,
+    },
+    {
+      kind: "diagram",
+      body: "Un activo emitido, y quién puede tocarlo:",
+      caption: "Las líneas discontinuas son trustlines: opt-in y reversibles. La sólida existe solo porque sus dos extremos aceptaron.",
+      view: {
+        kind: "graph",
+        nodes: [
+          {
+            id: "issuer",
+            label: "EMISOR",
+            x: 50,
+            y: 12,
+            tone: "gold",
+            shape: "box",
+            note: "Trae el activo a la existencia simplemente pagando con él. No hay mint ni tabla de oferta.",
+          },
+          {
+            id: "ana",
+            label: "ANA",
+            x: 16,
+            y: 45,
+            tone: "accent",
+            shape: "box",
+            note: "Abrió una trustline: ese opt-in es lo que le permite tener el activo.",
+          },
+          {
+            id: "bruno",
+            label: "BRUNO",
+            x: 50,
+            y: 45,
+            tone: "accent",
+            shape: "box",
+            note: "También aceptó, así que Ana puede pagarle. Ambos extremos necesitan trustline.",
+          },
+          {
+            id: "caio",
+            label: "CAIO",
+            x: 84,
+            y: 45,
+            tone: "neutral",
+            shape: "box",
+            note: "Nunca abrió una. Nadie puede enviarle este activo, por mucho que lo intente.",
+          },
+        ],
+        edges: [
+          {
+            from: "issuer",
+            to: "ana",
+            label: "trustline",
+            style: "dashed",
+          },
+          {
+            from: "issuer",
+            to: "bruno",
+            style: "dashed",
+          },
+          {
+            from: "ana",
+            to: "bruno",
+            label: "pago",
+            style: "solid",
+          },
+        ],
+      },
     },
     {
       kind: "labLink",

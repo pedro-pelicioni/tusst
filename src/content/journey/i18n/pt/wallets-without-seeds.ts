@@ -7,6 +7,7 @@ export const walletsWithoutSeeds: Concept = {
     tagline: "Contas inteligentes, chaves de acesso e taxas patrocinadas por terceiros.",
     numeral: "VII",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/wallets-without-seeds.webp",
@@ -42,6 +43,80 @@ Seu telefone já contém um cofre: o **secure enclave**, hardware que assina com
 O Stellar verifica secp256r1 **nativamente**, então uma conta inteligente pode aceitar o enclave do seu telefone como signatário diretamente: o hardware biométrico assina, a cadeia verifica a assinatura da chave de acesso por conta própria.
 
 Nenhuma frase‑semente existe em nenhum momento. A “carteira” é o mesmo hardware que já protege seu app bancário — agora assinando transações no ledger.`,
+    },
+    {
+      kind: "diagram",
+      body: "A mesma conta, dois jeitos de guardá-la:",
+      caption: "A passkey nunca sai do hardware seguro do aparelho — que é exatamente por que não dá para arrancá-la de você por phishing.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "seed",
+            label: "vinte e quatro palavras",
+            tone: "bad",
+          },
+          {
+            id: "passkey",
+            label: "uma passkey",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "onde vive",
+            cells: [
+              {
+                text: "um print, um app de notas, uma gaveta",
+                tone: "bad",
+              },
+              {
+                text: "o enclave seguro do aparelho",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "como se perde",
+            cells: [
+              {
+                text: "uma foto do papel já basta",
+                tone: "bad",
+              },
+              {
+                text: "não dá para copiar para fora",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "para assinar",
+            cells: [
+              {
+                text: "digitar ou colar tudo",
+                tone: "bad",
+              },
+              {
+                text: "uma digital",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "se o aparelho morrer",
+            cells: [
+              {
+                text: "não importa — as palavras são a conta",
+                tone: "neutral",
+              },
+              {
+                text: "cadastre um segundo signatário antes desse dia",
+                tone: "gold",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

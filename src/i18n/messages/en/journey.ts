@@ -7,9 +7,19 @@ export const journey = {
   kicker: "the essential road",
   title: "Builder's Journey",
   intro:
-    "Two arcs, one road. The Craft: the engineering disciplines the AI era demands and won't hand you. The Realm: the Stellar ecosystem end to end, from consensus to the privacy frontier. Short chapters, real depth — and every door into Rust stays optional.",
+    "A ground floor and two arcs, one road. Level 0: what a ledger, a key and a contract actually are — no code, no acronyms. The Craft: the engineering disciplines the AI era demands and won't hand you. The Realm: the Stellar ecosystem end to end, from consensus to the privacy frontier. Short chapters, real depth — and every door into Rust stays optional.",
   mapHeading: "// chapters",
+  levels: {
+    legend: "The road climbs in three tiers — start at level 0, where nothing is assumed.",
+    foundations: "level 0 · foundations",
+    essential: "level 1 · essential",
+    advanced: "level 2 · advanced",
+  },
   arcs: {
+    foundations: {
+      title: "Level 0 — Foundations",
+      blurb: "The ground floor: what a ledger is, what a key is, what a contract is. No code, no acronyms, nothing assumed. Three short chapters and the rest of the road stops being intimidating.",
+    },
     craft: {
       title: "Arc I — The Craft",
       blurb: "Engineering in the AI era: specs, tests, borders, architecture — and how to command the golem.",
@@ -20,7 +30,9 @@ export const journey = {
     },
   },
   recommended: "recommended next",
+  startHere: "start here",
   chapter: {
+    requires: "builds on {chapters}",
     minutes: "{minutes} min",
     xp: "{xp} xp",
     soon: "being forged",

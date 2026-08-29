@@ -11,6 +11,7 @@ export const anatomyOfATransaction: Concept = {
     tagline: "Envelope, operações, taxas, assinaturas — dissecados ao vivo.",
     numeral: "II",
     arc: "realm",
+    level: 1,
     status: "live",
     estMinutes: 10,
     sigil: "/v2/journey/sigils/anatomy-of-a-transaction.webp",
@@ -30,6 +31,60 @@ Tudo que altera o ledger Stellar viaja dentro de uma única forma — um **envel
 - **Assinaturas** — prova de que a origem (e quem mais for necessário) concordou.
 
 Aprenda essa única forma e cada página do Explorer, chamada de SDK e erro de transação falha no Stellar se tornarão legíveis.`,
+    },
+    {
+      kind: "diagram",
+      body: "O envelope, aberto:",
+      caption: "A assinatura cobre o envelope inteiro. Mude um byte lá dentro e todas as assinaturas param de bater.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "source",
+            label: "conta de origem",
+            note: "Quem paga a taxa, e de quem o número de sequência avança.",
+            tone: "neutral",
+          },
+          {
+            id: "fee",
+            label: "taxa",
+            note: "100 stroops por operação — um centésimo de milésimo de XLM cada.",
+            tone: "gold",
+          },
+          {
+            id: "seq",
+            label: "número de sequência",
+            note: "Usado exatamente uma vez, para sempre. É isso que torna um replay impossível.",
+            tone: "accent",
+          },
+          {
+            id: "ops",
+            label: "operações",
+            note: "Até 100, aplicadas em ordem. Todas entram, ou nenhuma entra.",
+            tone: "teal",
+            bands: [
+              {
+                id: "op1",
+                label: "pagamento",
+                note: "Move um ativo de uma conta para outra.",
+                tone: "teal",
+              },
+              {
+                id: "op2",
+                label: "abrir trustline",
+                note: "Abre a linha de confiança que deixa o destino guardar o ativo.",
+                tone: "teal",
+              },
+            ],
+          },
+          {
+            id: "sigs",
+            label: "assinaturas",
+            note: "Uma por signatário exigido. Qualquer um confere contra o endereço de origem — ninguém falsifica.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "theory",

@@ -3,19 +3,28 @@ import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getJourneyChaptersLocalized } from "@/content/journey/i18n";
-import type { Concept } from "@/content/journey/types";
+import type { Concept, ConceptLevel } from "@/content/journey/types";
 import type { Messages } from "@/i18n/messages/en";
 import { getLocale, getMessages } from "@/i18n/server";
 import { fmt } from "@/i18n/format";
 import { XP_CONCEPT } from "@/lib/xp";
 import { SceneRoot } from "@/components/scene/SceneRoot";
-import { SceneArt } from "@/components/scene/SceneArt";
+import Image from "next/image";
+import { SceneArt, hasV2Asset } from "@/components/scene/SceneArt";
 import { SceneParticles } from "@/components/scene/SceneParticles";
 
-// The Builder's Journey map — the essential road, in two arcs: the Craft
-// (AI-era engineering) and the Realm (Stellar end to end). Free-roam: every
-// live chapter is playable; each arc highlights its recommended next one.
-// The campaign's unlock machinery is never consulted here.
+// The Builder's Journey map — the essential road, read as a trail: level 0
+// (Foundations) is the entrance, then the two arcs, the Craft (AI-era
+// engineering) and the Realm (Stellar end to end). Free-roam is unchanged:
+// every live chapter is playable, `requires` is DRAWN and never enforced, and
+// each arc highlights its own recommended next one. The campaign's unlock
+// machinery is never consulted here.
+
+const LEVEL_KEY = ["foundations", "essential", "advanced"] as const;
+
+function levelLabel(level: ConceptLevel, m: Messages["journey"]) {
+  return m.levels[LEVEL_KEY[level]];
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const m = await getMessages();
@@ -25,10 +34,16 @@ export async function generateMetadata(): Promise<Metadata> {
 function ArcRail({
   chapters,
   completed,
+  titles,
+  startHere = false,
   m,
 }: {
   chapters: Concept[];
   completed: Set<string>;
+  /** slug → localized title, for rendering the trail's prerequisite edges */
+  titles: Map<string, string>;
+  /** level 0 labels its next chapter "start here" until the tier is entered */
+  startHere?: boolean;
   m: Messages["journey"];
 }) {
   const recommended = chapters.find(
@@ -42,10 +57,19 @@ function ArcRail({
         const live = meta.status === "live";
         const done = completed.has(meta.slug);
         const isNext = meta.slug === recommended;
+        // Advisory edges only — a chapter whose prerequisites are unwalked is
+        // still a link, never a lock.
+        const requires = (meta.requires ?? [])
+          .map((slug) => titles.get(slug))
+          .filter((title): title is string => Boolean(title));
+
+        // hasV2Asset is an fs check, so this stays on the server; a chapter
+        // whose master has not landed simply keeps the art-free layout.
+        const sigil = hasV2Asset(meta.sigil) ? meta.sigil : null;
 
         const body = (
           <div
-            className={`flex-1 rounded-2xl border px-5 py-4 backdrop-blur transition ${
+            className={`flex flex-1 gap-4 rounded-2xl border px-5 py-4 backdrop-blur transition ${
               isNext
                 ? "border-accent/40 bg-accent/[0.08]"
                 : live
@@ -53,7 +77,20 @@ function ArcRail({
                   : "border-line/60 bg-bg/40 opacity-70"
             }`}
           >
-            <div className="flex flex-wrap items-center gap-2">
+            {sigil && (
+              <div className="relative hidden h-14 w-14 shrink-0 self-start sm:block">
+                <Image
+                  src={sigil}
+                  alt=""
+                  fill
+                  sizes="56px"
+                  quality={75}
+                  className={`object-contain ${live ? "" : "opacity-50 grayscale"}`}
+                />
+              </div>
+            )}
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-2">
               <p
                 className={`font-display text-[17px] font-bold tracking-wide ${
                   live ? "text-fg" : "text-muted2"
@@ -68,14 +105,22 @@ function ArcRail({
               )}
               {isNext && !done && (
                 <span className="rounded-full border border-accent/50 bg-accent/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.2em] text-accent-soft">
-                  {m.recommended}
+                  {startHere ? m.startHere : m.recommended}
                 </span>
               )}
             </div>
             <p className="mt-1 text-[12.5px] leading-relaxed text-muted">
               {meta.tagline}
             </p>
+            {requires.length > 0 && (
+              <p className="mt-2 font-mono text-[9.5px] uppercase tracking-[0.16em] text-muted2">
+                {fmt(m.chapter.requires, { chapters: requires.join(" · ") })}
+              </p>
+            )}
             <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+              <span className="rounded-full border border-line bg-white/[0.03] px-2 py-0.5 text-[9px] tracking-[0.16em] text-muted2">
+                {levelLabel(meta.level, m)}
+              </span>
               {live ? (
                 <>
                   <span>
@@ -91,6 +136,7 @@ function ArcRail({
               ) : (
                 <span>{m.chapter.soon}</span>
               )}
+              </div>
             </div>
           </div>
         );
@@ -147,8 +193,14 @@ export default async function JourneyPage() {
   const completed = new Set(completedRows.map((r) => r.conceptSlug));
 
   const chapters = getJourneyChaptersLocalized(locale);
+  const foundations = chapters.filter(
+    (chapter) => chapter.meta.arc === "foundations",
+  );
   const craft = chapters.filter((chapter) => chapter.meta.arc === "craft");
   const realm = chapters.filter((chapter) => chapter.meta.arc === "realm");
+  const titles = new Map(chapters.map((c) => [c.meta.slug, c.meta.title]));
+  // "start here" survives only until the ground floor is entered.
+  const untouched = !foundations.some((c) => completed.has(c.meta.slug));
 
   return (
     <SceneRoot id="journey-map">
@@ -173,28 +225,76 @@ export default async function JourneyPage() {
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted2">
               {m.journey.intro}
             </p>
+
+            {/* ─── the trail's three tiers, in one line ─── */}
+            <p className="mt-6 max-w-2xl text-[12.5px] leading-relaxed text-muted">
+              {m.journey.levels.legend}
+            </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+              {([0, 1, 2] as const).map((level, i) => (
+                <span key={level} className="flex items-center gap-2">
+                  {i > 0 && <span className="text-muted2/70">→</span>}
+                  <span
+                    className={`rounded-full border px-3 py-1 ${
+                      level === 0
+                        ? "border-accent/40 bg-accent/[0.08] text-accent-soft"
+                        : "border-line bg-bg/50"
+                    }`}
+                  >
+                    {levelLabel(level, m.journey)}
+                  </span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* ─── Level 0 · Foundations — the entrance ─── */}
+          <div data-reveal="2" className="mt-12">
+            <h2 className="font-display text-xl font-bold tracking-wide text-fg">
+              {m.journey.arcs.foundations.title}
+            </h2>
+            <p className="mt-1 max-w-2xl text-[12.5px] leading-relaxed text-muted">
+              {m.journey.arcs.foundations.blurb}
+            </p>
+            <ArcRail
+              chapters={foundations}
+              completed={completed}
+              titles={titles}
+              startHere={untouched}
+              m={m.journey}
+            />
           </div>
 
           {/* ─── Arc I · The Craft ─── */}
-          <div data-reveal="2" className="mt-12">
+          <div data-reveal="3" className="mt-14">
             <h2 className="font-display text-xl font-bold tracking-wide text-fg">
               {m.journey.arcs.craft.title}
             </h2>
             <p className="mt-1 max-w-2xl text-[12.5px] leading-relaxed text-muted">
               {m.journey.arcs.craft.blurb}
             </p>
-            <ArcRail chapters={craft} completed={completed} m={m.journey} />
+            <ArcRail
+              chapters={craft}
+              completed={completed}
+              titles={titles}
+              m={m.journey}
+            />
           </div>
 
           {/* ─── Arc II · The Realm ─── */}
-          <div data-reveal="3" className="mt-14">
+          <div data-reveal="4" className="mt-14">
             <h2 className="font-display text-xl font-bold tracking-wide text-fg">
               {m.journey.arcs.realm.title}
             </h2>
             <p className="mt-1 max-w-2xl text-[12.5px] leading-relaxed text-muted">
               {m.journey.arcs.realm.blurb}
             </p>
-            <ArcRail chapters={realm} completed={completed} m={m.journey} />
+            <ArcRail
+              chapters={realm}
+              completed={completed}
+              titles={titles}
+              m={m.journey}
+            />
           </div>
         </div>
       </section>

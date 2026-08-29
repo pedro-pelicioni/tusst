@@ -11,8 +11,9 @@ export const riversOfValue: Concept = {
     tagline: "Payments, path payments, the DEX and the AMMs.",
     numeral: "IV",
     arc: "realm",
+    level: 2,
     status: "live",
-    estMinutes: 12,
+    estMinutes: 13,
     sigil: "/v2/journey/sigils/rivers-of-value.webp",
     glyph: "🌊",
   },
@@ -85,6 +86,42 @@ Two flavors:
 
 - **Strict send** — fix what you pay; the destination receives what the route yields (above your minimum).
 - **Strict receive** — fix what they get; you pay what it costs (below your maximum).`,
+    },
+    {
+      kind: "diagram",
+      body: "One payment, three currencies, one atomic transaction:",
+      caption: "If any hop cannot fill at the price you set, nothing happens at all — no half-converted money stranded in the middle.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "send",
+            label: "you send BRL",
+            note: "You never touch the currencies in between, and never hold them.",
+            tone: "accent",
+          },
+          {
+            id: "hop1",
+            label: "BRL → XLM",
+            note: "The order book fills this hop at whatever the market offers right now.",
+            tone: "teal",
+          },
+          {
+            id: "hop2",
+            label: "XLM → EURC",
+            note: "And the next one, in the same instant, inside the same transaction.",
+            tone: "teal",
+          },
+          {
+            id: "recv",
+            label: "they receive EURC",
+            note: "Guaranteed amount, or the whole thing reverts. There is no partial arrival.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

@@ -25,18 +25,79 @@ Une spécification décrit **le comportement**, pas l'implémentation :
 - **Ce qui ne doit jamais se produire** — "le solde du contrat ne doit jamais tomber en dessous de la somme des dépôts ouverts."
 - **Les cas limites** — "et si la date limite tombe exactement *maintenant* ? et si le montant est nul ?"
 
-Elle ne précise volontairement **pas** quelle boucle, quelle clé de stockage ni quel crate utiliser. Deux implémentations très différentes peuvent respecter la même spécification — cette liberté rend les spécifications durables et adaptées au travail avec l'IA.`,
+Elle ne précise volontairement **pas** quelle boucle, quel format de stockage ni quelle bibliothèque utiliser. Deux implémentations très différentes peuvent respecter la même spécification — cette liberté rend les spécifications durables et adaptées au travail avec l'IA.`,
     },
     {
       kind: "quiz",
       question: `Tu écris la spécification pour un contrat d'entiercement. Quelle phrase **appartient à la spécification** ?`,
       options: [
         "Les fonds ne peuvent être libérés que lorsque les deux parties ont signé.",
-        "Stocke le dépôt dans une carte persistante indexée par un compteur u64.",
-        "Utilise soroban-sdk 26 et l'extension pausable d'OpenZeppelin.",
+        "Numérote chaque dépôt et conserve-les dans leur ordre d'arrivée.",
+        "Construis-le avec la version la plus récente du kit de contrats et son bouton de pause déjà prêt.",
       ],
       answer: 0,
-      explain: `Le comportement appartient à la spécification ; l’implémentation reste en dehors. L’organisation du stockage et le choix des crates relèvent de l’implémentation ; la spécification décrit ce qui doit être vrai.`,
+      explain: `Le comportement appartient à la spécification ; l’implémentation reste en dehors. L’organisation du stockage et le choix des outils relèvent de l’implémentation ; la spécification décrit ce qui doit être vrai.`,
+    },
+    {
+      kind: "diagram",
+      body: "La ligne que ce quiz vient de tracer, en général :",
+      caption: "Deux implémentations de la même spécification peuvent n'avoir aucun air de famille. Cette liberté est précisément l'intérêt.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "spec",
+            label: "appartient à la spécification",
+            tone: "good",
+          },
+          {
+            id: "forge",
+            label: "appartient à la forge",
+            tone: "neutral",
+          },
+        ],
+        rows: [
+          {
+            label: "un exemple",
+            cells: [
+              {
+                text: "les fonds ne sont libérés que si les deux parties ont signé",
+                tone: "good",
+              },
+              {
+                text: "garder les dépôts dans une liste numérotée",
+                tone: "neutral",
+              },
+            ],
+          },
+          {
+            label: "à qui elle est",
+            cells: [
+              {
+                text: "à vous — elle survit à chaque réécriture",
+                tone: "good",
+              },
+              {
+                text: "à celui qui forge, cette fois-ci",
+                tone: "neutral",
+              },
+            ],
+          },
+          {
+            label: "quand elle change",
+            cells: [
+              {
+                text: "quand le comportement doit changer",
+                tone: "good",
+              },
+              {
+                text: "dès qu'une voie plus rapide apparaît",
+                tone: "neutral",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "theory",
@@ -121,7 +182,7 @@ Il est temps de forger ta propre spécification. Voici la commande :
 > La guilde veut un **pot de pourboires** sur chaîne. N'importe qui peut y déposer des pourboires. Seul le **gardien** de la guilde peut récupérer ce qui est à l'intérieur. La guilde est paranoïaque à propos de deux choses : que le gardien prenne *plus* que le pot contient, et que les pourboires restent bloqués pour toujours si le gardien disparaît.
 
 Rédige la spécification en décrivant **uniquement le comportement**, comme ce chapitre te l'a appris : ce qui doit se produire, ce qui ne doit jamais se produire et les cas limites. Un examinateur IA l'évaluera selon la grille ci-dessous — il corrige exactement comme le golem forge : à la lettre.`,
-      rubric: `1. Uniquement le comportement — aucun agencement de stockage, crate ou signature de fonction.
+      rubric: `1. Uniquement le comportement — aucun agencement de stockage, bibliothèque ou signature de fonction.
 2. La règle de dépôt et la règle de collecte sont chacune énoncées sans ambiguïté (qui peut agir, sur quoi).
 3. Au moins un **invariant** qui doit rester vrai en tout temps.
 4. Au moins un **cas limite** est abordé (pourboire à zéro, collecte de pot vide, collecte à solde exact…).

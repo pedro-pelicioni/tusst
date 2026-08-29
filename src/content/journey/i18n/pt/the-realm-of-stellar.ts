@@ -7,6 +7,7 @@ export const theRealmOfStellar: Concept = {
     tagline: "Como milhares de máquinas concordam sem um rei.",
     numeral: "I",
     arc: "realm",
+    level: 1,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/the-realm-of-stellar.webp",
@@ -69,6 +70,67 @@ Isso é um trade‑off deliberado, e tem um nome:
 - **Vivacidade** — a rede continua confirmando *algo*.
 
 Quando forçada a escolher, o SCP **para ao invés de bifurcar**. Para uma rede que movimenta dinheiro — salários, remessas, tesouros — um pagamento pausado vale mais que um pagamento que depois *desfaz* algo.`,
+    },
+    {
+      kind: "diagram",
+      body: "Dois jeitos de uma rede falhar — e só um deles toma seu dinheiro de volta:",
+      caption: "Segurança acima de vivacidade: o SCP prefere travar a discordar de si mesmo.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "fork",
+            label: "redes que bifurcam",
+            tone: "bad",
+          },
+          {
+            id: "scp",
+            label: "Stellar",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "quando não há acordo",
+            cells: [
+              {
+                text: "duas histórias seguem lado a lado",
+                tone: "bad",
+              },
+              {
+                text: "o ledger simplesmente para de fechar",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "o que você espera",
+            cells: [
+              {
+                text: "confirmações suficientes para estar provavelmente seguro",
+                tone: "bad",
+              },
+              {
+                text: "nada — um ledger fechado é final",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "o pior caso",
+            cells: [
+              {
+                text: "um pagamento é desfeito horas depois",
+                tone: "bad",
+              },
+              {
+                text: "um pagamento atrasa",
+                tone: "good",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

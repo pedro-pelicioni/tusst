@@ -7,6 +7,7 @@ export const theCleanKeep: Concept = {
     tagline: "Arquitectura limpia y hexagonal — cada pieza en su lugar.",
     numeral: "IV",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 13,
     sigil: "/v2/journey/sigils/the-clean-keep.webp",
@@ -32,6 +33,40 @@ Porque los dos anillos envejecen de forma distinta. Los frameworks cambian: apar
 Si tu dominio importa el SDK de la cadena, cada cambio mayor del SDK se convierte en una *migración del dominio* — tu código que cambia más despacio queda rehén de tu dependencia que cambia más rápido. Apunta las flechas hacia adentro y el desgaste queda en el anillo externo, donde es barato.
 
 La fortaleza es el punto. Los frameworks son el mobiliario.`,
+    },
+    {
+      kind: "diagram",
+      body: "El fuerte, de fuera hacia dentro:",
+      caption: "Cada flecha apunta hacia dentro. El dominio nunca se entera del nombre de una base de datos.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "infra",
+            label: "infraestructura",
+            note: "Postgres, Horizon, el sistema de archivos, el reloj. Reemplazables por definición.",
+            tone: "neutral",
+          },
+          {
+            id: "adapters",
+            label: "adaptadores",
+            note: "Traducen el mundo exterior a las formas que el interior ya habla.",
+            tone: "teal",
+          },
+          {
+            id: "app",
+            label: "aplicación",
+            note: "Casos de uso: la secuencia de movimientos del dominio que responde a una petición.",
+            tone: "accent",
+          },
+          {
+            id: "domain",
+            label: "dominio",
+            note: "Las reglas que seguirían siendo ciertas en papel. No importa nada.",
+            tone: "gold",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

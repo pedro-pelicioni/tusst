@@ -11,6 +11,7 @@ export const walletsWithoutSeeds: Concept = {
     tagline: "Cuentas inteligentes, claves de paso y tarifas que paga otro.",
     numeral: "VII",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/wallets-without-seeds.webp",
@@ -46,6 +47,80 @@ Tu teléfono ya contiene una bóveda: el **secure enclave**, hardware que firma 
 Stellar verifica secp256r1 **nativamente**, así que una cuenta inteligente puede aceptar directamente el enclave de tu teléfono como firmante: el hardware biométrico firma, la cadena verifica la firma de la clave de paso por sí misma.
 
 En ningún momento existe una frase semilla. La "cartera" es el mismo hardware que ya protege tu app bancaria — ahora firmando transacciones del libro mayor.`,
+    },
+    {
+      kind: "diagram",
+      body: "La misma cuenta, dos formas de guardarla:",
+      caption: "La passkey nunca sale del hardware seguro del dispositivo, y por eso no se te puede sacar con phishing.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "seed",
+            label: "veinticuatro palabras",
+            tone: "bad",
+          },
+          {
+            id: "passkey",
+            label: "una passkey",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "dónde vive",
+            cells: [
+              {
+                text: "una captura, una app de notas, un cajón",
+                tone: "bad",
+              },
+              {
+                text: "el enclave seguro del dispositivo",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "cómo se pierde",
+            cells: [
+              {
+                text: "basta una foto del papel",
+                tone: "bad",
+              },
+              {
+                text: "no se puede copiar hacia fuera",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "para firmar",
+            cells: [
+              {
+                text: "teclear o pegar todo",
+                tone: "bad",
+              },
+              {
+                text: "una huella",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "si muere el dispositivo",
+            cells: [
+              {
+                text: "da igual: las palabras son la cuenta",
+                tone: "neutral",
+              },
+              {
+                text: "añade un segundo firmante antes de ese día",
+                tone: "gold",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

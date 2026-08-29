@@ -6,6 +6,7 @@
 // and pure functions over LabRunCtx. The server (api/labs/complete) imports
 // the registry to read `verify`, which is data-only by construction.
 
+import type { WidgetComponent } from "@/content/visuals/types";
 import type { ClassicOpSpec } from "@/lib/stellar/classic";
 import type { SorobanFileMap } from "@/lib/soroban/types";
 
@@ -111,7 +112,7 @@ export type LabStep =
       successBody: string;
       explorer?: "tx" | "account" | "contract";
     }
-  | { kind: "sim"; id: string; component: "scp-sim"; body?: string }
+  | { kind: "sim"; id: string; component: WidgetComponent; body?: string }
   | { kind: "checkpoint"; id: string; body: string };
 
 // Data-only — interpreted server-side against Horizon/RPC, never executed

@@ -7,6 +7,7 @@ export const theCleanKeep: Concept = {
     tagline: "Arquitetura limpa e hexagonal — cada peça em seu lugar.",
     numeral: "IV",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 13,
     sigil: "/v2/journey/sigils/the-clean-keep.webp",
@@ -32,6 +33,40 @@ Porque os dois anéis envelhecem de forma diferente. Frameworks giram: versões 
 Se seu domínio importa o SDK da cadeia, toda mudança quebradora do SDK vira uma migração *do domínio* — seu código que muda mais devagar fica refém da sua dependência que muda mais rápido. Aponte as setas para dentro e a rotatividade fica no anel externo, onde é barata.
 
 A fortaleza é o ponto. Frameworks são mobília.`,
+    },
+    {
+      kind: "diagram",
+      body: "O forte, de fora para dentro:",
+      caption: "Toda seta aponta para dentro. O domínio nunca fica sabendo o nome de um banco de dados.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "infra",
+            label: "infraestrutura",
+            note: "Postgres, Horizon, o sistema de arquivos, o relógio. Substituíveis por definição.",
+            tone: "neutral",
+          },
+          {
+            id: "adapters",
+            label: "adaptadores",
+            note: "Traduzem o mundo de fora para as formas que o de dentro já fala.",
+            tone: "teal",
+          },
+          {
+            id: "app",
+            label: "aplicação",
+            note: "Casos de uso: a sequência de movimentos do domínio que responde a um pedido.",
+            tone: "accent",
+          },
+          {
+            id: "domain",
+            label: "domínio",
+            note: "As regras que continuariam verdadeiras no papel. Ele não importa nada.",
+            tone: "gold",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

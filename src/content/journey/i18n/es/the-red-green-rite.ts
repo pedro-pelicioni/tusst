@@ -12,6 +12,7 @@ export const theRedGreenRite: Concept = {
     tagline: "TDD: pruebas primero, forja después.",
     numeral: "II",
     arc: "craft",
+    level: 1,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/the-red-green-rite.webp",
@@ -39,6 +40,36 @@ TDD es un rito de tres tiempos, y el orden es el punto clave:
 3. **Refactorizar** — ahora, con la red en marcha, límpialo. Las pruebas te cubren la espalda mientras mueves las cosas.
 
 Rojo demuestra que la prueba puede atrapar el error que protege. Verde demuestra que el comportamiento existe. Refactorizar es donde el buen código realmente se crea — *de forma segura*.`,
+    },
+    {
+      kind: "diagram",
+      body: "Tres movimientos, para siempre:",
+      caption: "El orden ES la disciplina: una prueba escrita después del código solo demuestra que el código hace lo que hace.",
+      view: {
+        kind: "flow",
+        layout: "cycle",
+        play: true,
+        nodes: [
+          {
+            id: "red",
+            label: "rojo",
+            note: "Escribe la prueba primero y mírala fallar. Una prueba que nunca falló no demuestra nada.",
+            tone: "bad",
+          },
+          {
+            id: "green",
+            label: "verde",
+            note: "El cambio más pequeño que la hace pasar. No el elegante — el más pequeño.",
+            tone: "good",
+          },
+          {
+            id: "refactor",
+            label: "refactorizar",
+            note: "Ahora hazlo bien, con la prueba sujetando el comportamiento mientras mueves cosas.",
+            tone: "accent",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

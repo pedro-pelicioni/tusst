@@ -23,6 +23,40 @@ function check(condition: unknown, message: string) {
   if (!condition) errors.push(message);
 }
 
+// A diagram's `view` is an OBJECT, so it cannot ride the flat stable-field
+// list below — a === comparison would always fail. Instead we compare its
+// SKELETON: every prose string collapses to "§", while the strings that are
+// really structure (kinds, ids, edge endpoints, tones) and every number
+// (coordinates, weights) are kept verbatim. A translator may rewrite labels
+// freely; dropping a node, renaming an edge target or switching the diagram
+// type fails the build.
+const STRUCTURAL_KEYS = new Set([
+  "kind",
+  "id",
+  "from",
+  "to",
+  "tone",
+  "style",
+  "shape",
+  "layout",
+  "component",
+]);
+
+function skeleton(value: unknown, key?: string): unknown {
+  if (typeof value === "string") {
+    return key && STRUCTURAL_KEYS.has(key) ? value : "§";
+  }
+  if (Array.isArray(value)) return value.map((item) => skeleton(item));
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([k, v]) => [k, skeleton(v, k)]),
+    );
+  }
+  return value;
+}
+
 function keys(value: object): string[] {
   return Object.keys(value).sort();
 }
@@ -106,6 +140,16 @@ for (const [locale, translated] of Object.entries(translatedJourneys)) {
         `${label}: kind changed (${targetStep.kind} vs ${sourceStep.kind})`,
       );
       checkPlaceholders(sourceStep, targetStep, label);
+
+      if ("view" in sourceStep) {
+        const sourceView = (sourceStep as { view: unknown }).view;
+        const targetView = (targetStep as { view?: unknown }).view;
+        check(
+          JSON.stringify(skeleton(sourceView)) ===
+            JSON.stringify(skeleton(targetView)),
+          `${label}: diagram structure changed`,
+        );
+      }
 
       for (const field of [
         "answer",

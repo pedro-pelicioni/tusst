@@ -11,8 +11,9 @@ export const theProtocolsEdge: Concept = {
     tagline: "CAPs, SEPs, named upgrades — riding a living protocol.",
     numeral: "IX",
     arc: "realm",
+    level: 2,
     status: "live",
-    estMinutes: 11,
+    estMinutes: 12,
     sigil: "/v2/journey/sigils/the-protocols-edge.webp",
     glyph: "⚡",
   },
@@ -37,6 +38,42 @@ Change flows through two channels, and the split is worth memorizing:
 - **SEPs** — *Stellar Ecosystem Proposals* — the standards **around** the chain: wallet-anchor flows, token interfaces, stellar.toml. Adopted by implementation, not by vote.
 
 Chain law versus trade custom. CAP-59 gave you ZK curves; SEP-24 gave you deposit flows. Different rivers, both public, both shaped in open discussion.`,
+    },
+    {
+      kind: "diagram",
+      body: "How a change reaches the ledger you are building on:",
+      caption: "Nobody upgrades your code for you — but nobody changes the rules under you overnight either.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "draft",
+            label: "a CAP is drafted",
+            note: "Anyone may write one. It argues for a change to the protocol itself.",
+            tone: "neutral",
+          },
+          {
+            id: "review",
+            label: "review in the open",
+            note: "Discussed, revised, and often rejected. This is the slow part, deliberately.",
+            tone: "accent",
+          },
+          {
+            id: "vote",
+            label: "validators vote",
+            note: "The network upgrades only when enough validators agree to run it.",
+            tone: "teal",
+          },
+          {
+            id: "you",
+            label: "your turn",
+            note: "Bump the SDK, re-run your tests, redeploy. The date is public months ahead.",
+            tone: "gold",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

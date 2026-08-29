@@ -7,6 +7,7 @@ export const riversOfValue: Concept = {
     tagline: "Pagamentos, pagamentos encadeados, a DEX e os AMMs.",
     numeral: "IV",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/rivers-of-value.webp",
@@ -81,6 +82,42 @@ Dois sabores:
 
 - **Strict send** — fixa o que você paga; o destino recebe o que o caminho gera (acima do seu mínimo).
 - **Strict receive** — fixa o que eles recebem; você paga o que for necessário (abaixo do seu máximo).`,
+    },
+    {
+      kind: "diagram",
+      body: "Um pagamento, três moedas, uma transação atômica:",
+      caption: "Se qualquer salto não fechar no preço que você definiu, nada acontece — nenhum dinheiro meio convertido preso no meio do caminho.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "send",
+            label: "você envia BRL",
+            note: "Você nunca toca nas moedas do meio, e nunca as segura.",
+            tone: "accent",
+          },
+          {
+            id: "hop1",
+            label: "BRL → XLM",
+            note: "O livro de ofertas fecha este salto pelo que o mercado oferecer agora.",
+            tone: "teal",
+          },
+          {
+            id: "hop2",
+            label: "XLM → EURC",
+            note: "E o próximo, no mesmo instante, dentro da mesma transação.",
+            tone: "teal",
+          },
+          {
+            id: "recv",
+            label: "ele recebe EURC",
+            note: "Valor garantido, ou tudo reverte. Não existe chegada parcial.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

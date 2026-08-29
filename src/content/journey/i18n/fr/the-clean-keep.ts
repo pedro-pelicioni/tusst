@@ -25,6 +25,40 @@ Si ton domaine importe le SDK de la chaîne, chaque évolution majeure du SDK de
 Le bastion est le point. Les frameworks sont le mobilier.`,
     },
     {
+      kind: "diagram",
+      body: "Le donjon, de l'extérieur vers l'intérieur :",
+      caption: "Chaque flèche pointe vers l'intérieur. Le domaine n'apprend jamais le nom d'une base de données.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "infra",
+            label: "infrastructure",
+            note: "Postgres, Horizon, le système de fichiers, l'horloge. Remplaçables par définition.",
+            tone: "neutral",
+          },
+          {
+            id: "adapters",
+            label: "adaptateurs",
+            note: "Traduisent le monde extérieur dans les formes que l'intérieur parle déjà.",
+            tone: "teal",
+          },
+          {
+            id: "app",
+            label: "application",
+            note: "Cas d'usage : la séquence de mouvements du domaine qui répond à une requête.",
+            tone: "accent",
+          },
+          {
+            id: "domain",
+            label: "domaine",
+            note: "Les règles qui resteraient vraies sur papier. Il n'importe rien.",
+            tone: "gold",
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `Voici trois imports d'une dApp Stellar. Lequel **viole la règle de dépendance** ?`,
       options: [

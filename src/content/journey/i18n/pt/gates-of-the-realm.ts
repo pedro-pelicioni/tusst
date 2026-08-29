@@ -7,6 +7,7 @@ export const gatesOfTheRealm: Concept = {
     tagline: "Âncoras & SEPs — onde o ledger encontra o mundo real.",
     numeral: "V",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/gates-of-the-realm.webp",
@@ -91,6 +92,42 @@ Observe Ana, em Chicago, pagando sua mãe em Lisboa:
 3. A carteira da mãe retira através de uma âncora europeia (SEP-24 novamente). Euros chegam na conta bancária dela.
 
 Dois portões regulados, um cruzamento atômico no meio. A cadeia nunca viu um “dólar” — apenas ativos que os portões prometem honrar.`,
+    },
+    {
+      kind: "diagram",
+      body: "Dinheiro de banco entra, dinheiro de banco sai — o ledger só segura o meio:",
+      caption: "As duas portas nunca se encontram. Cada uma só precisa confiar no ledger entre elas.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "in",
+            label: "a porta de saída",
+            note: "Uma âncora recebe dinheiro de verdade e emite um token lastreado nele.",
+            tone: "gold",
+          },
+          {
+            id: "ledger",
+            label: "o ledger",
+            note: "Cinco segundos, uma fração de centavo, e nenhum banco correspondente à vista.",
+            tone: "accent",
+          },
+          {
+            id: "out",
+            label: "a porta de chegada",
+            note: "Outra âncora queima o token e paga em moeda local.",
+            tone: "gold",
+          },
+          {
+            id: "done",
+            label: "dinheiro na mão",
+            note: "Quem recebeu nunca instalou carteira, e nunca ouviu a palavra ledger.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

@@ -7,6 +7,7 @@ export const tamingTheGolem: Concept = {
     tagline: "Engenharia de harness: dê ao IA um banco de testes, não um desejo.",
     numeral: "V",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 13,
     sigil: "/v2/journey/sigils/taming-the-golem.webp",
@@ -37,6 +38,42 @@ Um harness funcional tem partes nomeadas:
 - **Reviewer step** — onde um humano (ou outro golem) inspeciona o diff.
 
 Duas equipes com o mesmo modelo e harnesses diferentes obtêm resultados *extremamente* diferentes. Quando a qualidade da saída muda, os engenheiros depuram o harness — não o horóscopo.`,
+    },
+    {
+      kind: "diagram",
+      body: "Uma bancada, em quatro partes:",
+      caption: "Troque o modelo e isto sobrevive. É por isso que a bancada é o ativo, não o prompt.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "context",
+            label: "o que ele enxerga",
+            note: "Os arquivos, a documentação, a saída que falhou. Curado — não tudo que você tem.",
+            tone: "accent",
+          },
+          {
+            id: "tools",
+            label: "o que ele pode fazer",
+            note: "Um conjunto limitado de verbos. Cada um que falta é um erro que ele não comete.",
+            tone: "teal",
+          },
+          {
+            id: "run",
+            label: "deixe agir",
+            note: "Ele se move, e a bancada responde com honestidade em vez de concordar por educação.",
+            tone: "neutral",
+          },
+          {
+            id: "verify",
+            label: "confira o trabalho",
+            note: "Testes, tipos, um linter. Verificação é o que transforma saída em resultado.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

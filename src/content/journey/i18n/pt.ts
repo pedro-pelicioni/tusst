@@ -26,7 +26,7 @@ Uma spec descreve **comportamento**, não implementação:
 - **O que nunca pode acontecer** — “o saldo do contrato nunca fica abaixo da soma dos depósitos abertos”.
 - **Os casos de borda** — “e se o prazo for exatamente *agora*? e se o valor for zero?”.
 
-Ela propositalmente **não** diz qual loop, qual chave de armazenamento ou qual crate usar. Duas implementações muito diferentes podem respeitar a mesma spec — essa liberdade é o que torna specs duráveis e adequadas para trabalhar com IA.`,
+Ela propositalmente **não** diz qual loop, qual formato de armazenamento ou qual biblioteca usar. Duas implementações muito diferentes podem respeitar a mesma spec — essa liberdade é o que torna specs duráveis e adequadas para trabalhar com IA.`,
       },
       {
         kind: "quiz",
@@ -34,12 +34,73 @@ Ela propositalmente **não** diz qual loop, qual chave de armazenamento ou qual 
           "Você está escrevendo a spec de um contrato de custódia. Qual frase **pertence à spec**?",
         options: [
           "Os fundos só podem ser liberados quando as duas partes tiverem assinado.",
-          "Armazene o depósito em um mapa persistente indexado por um contador u64.",
-          "Use soroban-sdk 26 e a extensão pausable da OpenZeppelin.",
+          "Numere cada depósito e guarde-os na ordem em que chegam.",
+          "Construa com a versão mais recente do kit de contratos e o botão de pausa que já vem pronto.",
         ],
         answer: 0,
         explain:
-          "Comportamento entra; implementação fica de fora. Layouts de armazenamento e escolhas de crates são assunto da *forja*; a spec determina o que precisa ser verdade.",
+          "Comportamento entra; implementação fica de fora. Formatos de armazenamento e escolhas de ferramenta são assunto da *forja*; a spec determina o que precisa ser verdade.",
+      },
+      {
+        kind: "diagram",
+        body: "A linha que aquele quiz traçou, no geral:",
+        caption: "Duas implementações da mesma spec podem não se parecer em nada. Essa liberdade é justamente o ponto.",
+        view: {
+          kind: "compare",
+          columns: [
+            {
+              id: "spec",
+              label: "pertence à spec",
+              tone: "good",
+            },
+            {
+              id: "forge",
+              label: "pertence à forja",
+              tone: "neutral",
+            },
+          ],
+          rows: [
+            {
+              label: "um exemplo",
+              cells: [
+                {
+                  text: "os fundos só são liberados quando as duas partes assinaram",
+                  tone: "good",
+                },
+                {
+                  text: "guardar os depósitos numa lista numerada",
+                  tone: "neutral",
+                },
+              ],
+            },
+            {
+              label: "de quem é",
+              cells: [
+                {
+                  text: "sua — e sobrevive a toda reescrita",
+                  tone: "good",
+                },
+                {
+                  text: "de quem forjar, desta vez",
+                  tone: "neutral",
+                },
+              ],
+            },
+            {
+              label: "quando muda",
+              cells: [
+                {
+                  text: "quando o comportamento precisa mudar",
+                  tone: "good",
+                },
+                {
+                  text: "sempre que aparecer um jeito mais rápido",
+                  tone: "neutral",
+                },
+              ],
+            },
+          ],
+        },
       },
       {
         kind: "theory",
@@ -127,7 +188,7 @@ Chegou a hora de forjar sua própria spec. A encomenda é esta:
 > A guilda quer um **cofre de gorjetas** on-chain. Qualquer pessoa pode depositar gorjetas nele. Somente o **guardião** da guilda pode recolher o que estiver dentro. A guilda teme duas coisas: o guardião conseguir retirar *mais* do que o cofre possui e as gorjetas ficarem presas para sempre caso o guardião desapareça.
 
 Escreva a spec — **somente comportamento**, como este capítulo ensinou: o que deve acontecer, o que nunca pode acontecer e os casos de borda. Um examinador de IA vai avaliá-la usando a rubrica abaixo (e ele corrige exatamente como os golems da forja: ao pé da letra).`,
-        rubric: `1. Somente comportamento — nada de layouts de armazenamento, crates ou assinaturas de funções.
+        rubric: `1. Somente comportamento — nada de formatos de armazenamento, bibliotecas ou assinaturas de funções.
 2. A regra de depósito e a regra de coleta estão declaradas sem ambiguidade (quem pode agir e sobre o quê).
 3. Pelo menos uma **invariante** que precisa ser verdadeira em todos os momentos.
 4. Pelo menos um **caso de borda** é tratado (gorjeta de valor zero, coleta com cofre vazio, coleta do saldo exato…).

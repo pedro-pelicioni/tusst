@@ -7,6 +7,7 @@ export const theProtocolsEdge: Concept = {
     tagline: "CAPs, SEPs y actualizaciones con nombre: navegar un protocolo vivo.",
     numeral: "IX",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 11,
     sigil: "/v2/journey/sigils/the-protocols-edge.webp",
@@ -33,6 +34,42 @@ El cambio fluye por dos canales, y vale la pena memorizar la diferencia:
 - **SEPs** — *Stellar Ecosystem Proposals* — son los estándares **alrededor** de la cadena: flujos entre wallets y anchors, interfaces de tokens y stellar.toml. Se adoptan mediante implementaciones, no por votación.
 
 La ley de la cadena frente a las costumbres del comercio. La CAP-59 aportó las curvas ZK; la SEP-24, los flujos de depósito. Ríos distintos, ambos públicos y moldeados en debates abiertos.`,
+    },
+    {
+      kind: "diagram",
+      body: "Cómo un cambio llega al ledger sobre el que construyes:",
+      caption: "Nadie actualiza tu código por ti, pero tampoco nadie cambia las reglas bajo tus pies de la noche a la mañana.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "draft",
+            label: "se redacta un CAP",
+            note: "Cualquiera puede escribirlo. Defiende un cambio en el propio protocolo.",
+            tone: "neutral",
+          },
+          {
+            id: "review",
+            label: "revisión en abierto",
+            note: "Discutido, revisado y a menudo rechazado. Esa es la parte lenta, a propósito.",
+            tone: "accent",
+          },
+          {
+            id: "vote",
+            label: "los validadores votan",
+            note: "La red se actualiza solo cuando suficientes validadores aceptan ejecutarlo.",
+            tone: "teal",
+          },
+          {
+            id: "you",
+            label: "tu turno",
+            note: "Sube el SDK, vuelve a pasar tus pruebas, redespliega. La fecha es pública con meses de antelación.",
+            tone: "gold",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

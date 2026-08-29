@@ -12,8 +12,9 @@ export const tamingTheGolem: Concept = {
     tagline: "Harness engineering: give the AI a bench, not a wish.",
     numeral: "V",
     arc: "craft",
+    level: 2,
     status: "live",
-    estMinutes: 13,
+    estMinutes: 14,
     sigil: "/v2/journey/sigils/taming-the-golem.webp",
     glyph: "🗿",
   },
@@ -42,6 +43,42 @@ A working harness has named parts:
 - **Reviewer step** — where a human (or another golem) inspects the diff.
 
 Two teams with the same model and different harnesses get *wildly* different results. When output quality shifts, engineers debug the harness — not the horoscope.`,
+    },
+    {
+      kind: "diagram",
+      body: "A harness, in four parts:",
+      caption: "Swap the model and this survives. That is why the harness is the asset, not the prompt.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "context",
+            label: "what it can see",
+            note: "The files, the docs, the failing output. Curated — not everything you own.",
+            tone: "accent",
+          },
+          {
+            id: "tools",
+            label: "what it can do",
+            note: "A bounded set of verbs. Every one it lacks is a mistake it cannot make.",
+            tone: "teal",
+          },
+          {
+            id: "run",
+            label: "let it act",
+            note: "It moves, and the bench answers honestly instead of agreeing politely.",
+            tone: "neutral",
+          },
+          {
+            id: "verify",
+            label: "check the work",
+            note: "Tests, types, a linter. Verification is what turns output into a result.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

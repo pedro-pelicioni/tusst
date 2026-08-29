@@ -12,8 +12,10 @@ export const theEndlessLoop: Concept = {
     tagline: "Agentic loops: act, observe, correct — and know when to stop.",
     numeral: "VII",
     arc: "craft",
+    level: 2,
+    requires: ["think-before-you-forge"],
     status: "live",
-    estMinutes: 12,
+    estMinutes: 13,
     sigil: "/v2/journey/sigils/the-endless-loop.webp",
     glyph: "🔁",
   },
@@ -41,6 +43,42 @@ A loop improves only as far as its **observations** are true. Correction needs a
 - **on-chain state** — what does the ledger actually hold after the run?
 
 Signals, not vibes. "The output looks reasonable" corrects nothing, because it can never be false. Every verifier you built into the harness now earns interest: wired into the loop, it becomes the eyes the golem steers by — **on every single iteration**.`,
+    },
+    {
+      kind: "diagram",
+      body: "The loop, and the only exit that matters:",
+      caption: "A loop without a stopping rule is not autonomy — it is a burning budget.",
+      view: {
+        kind: "flow",
+        layout: "cycle",
+        play: true,
+        nodes: [
+          {
+            id: "act",
+            label: "act",
+            note: "Take the smallest step the plan allows, then stop and look.",
+            tone: "accent",
+          },
+          {
+            id: "observe",
+            label: "observe",
+            note: "Read what the world answered. Not what you hoped it would.",
+            tone: "teal",
+          },
+          {
+            id: "correct",
+            label: "correct",
+            note: "Adjust the plan, not just the last move.",
+            tone: "gold",
+          },
+          {
+            id: "stop",
+            label: "stop?",
+            note: "Done, blocked, or out of budget. Decide it explicitly, every turn.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

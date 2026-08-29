@@ -1,4 +1,9 @@
 import { conceptTextFromConcept } from "../types";
+// Level 0 ships as text-only overlays (the shape the loader actually wants);
+// the older chapters below are still full Concepts whose meta gets discarded.
+import { conceptText as theBookNoOneCanErase } from "./the-book-no-one-can-erase";
+import { conceptText as theKeyAndTheSeal } from "./the-key-and-the-seal";
+import { conceptText as machinesThatKeepPromises } from "./machines-that-keep-promises";
 import { accountsTrustAndAssets } from "./accounts-trust-and-assets";
 import { anatomyOfATransaction } from "./anatomy-of-a-transaction";
 import { bordersOfTheRealm } from "./borders-of-the-realm";
@@ -35,9 +40,14 @@ const translatedConceptSources = {
   "words-of-power": wordsOfPower,
 };
 
-export const translatedConcepts = Object.fromEntries(
-  Object.entries(translatedConceptSources).map(([slug, concept]) => [
-    slug,
-    conceptTextFromConcept(concept),
-  ]),
-);
+export const translatedConcepts = {
+  ...Object.fromEntries(
+    Object.entries(translatedConceptSources).map(([slug, concept]) => [
+      slug,
+      conceptTextFromConcept(concept),
+    ]),
+  ),
+  "the-book-no-one-can-erase": theBookNoOneCanErase,
+  "the-key-and-the-seal": theKeyAndTheSeal,
+  "machines-that-keep-promises": machinesThatKeepPromises,
+};

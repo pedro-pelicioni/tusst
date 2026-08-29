@@ -12,8 +12,9 @@ export const theCleanKeep: Concept = {
     tagline: "Clean & hexagonal architecture — every piece in its place.",
     numeral: "IV",
     arc: "craft",
+    level: 2,
     status: "live",
-    estMinutes: 13,
+    estMinutes: 14,
     sigil: "/v2/journey/sigils/the-clean-keep.webp",
     glyph: "🏰",
   },
@@ -37,6 +38,40 @@ Because the two rings age differently. Frameworks churn: SDK majors land, UI lib
 If your domain imports the chain SDK, every SDK breaking change becomes a *domain* migration — your slowest-changing code held hostage by your fastest-changing dependency. Point the arrows inward and churn stays in the outer ring, where it's cheap.
 
 The keep is the point. Frameworks are furniture.`,
+    },
+    {
+      kind: "diagram",
+      body: "The keep, from the outside in:",
+      caption: "Every arrow points inward. The domain never learns the name of a database.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "infra",
+            label: "infrastructure",
+            note: "Postgres, Horizon, the filesystem, the clock. Replaceable by definition.",
+            tone: "neutral",
+          },
+          {
+            id: "adapters",
+            label: "adapters",
+            note: "Translate the outside world into the shapes the inside already speaks.",
+            tone: "teal",
+          },
+          {
+            id: "app",
+            label: "application",
+            note: "Use cases: the sequence of domain moves that answers one request.",
+            tone: "accent",
+          },
+          {
+            id: "domain",
+            label: "domain",
+            note: "The rules that would still be true on paper. It imports nothing.",
+            tone: "gold",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

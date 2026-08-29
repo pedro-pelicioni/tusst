@@ -12,8 +12,9 @@ export const theVeiledLedger: Concept = {
     tagline: "Confidential tokens, private payments — privacy with a compliance spine.",
     numeral: "VIII",
     arc: "realm",
+    level: 2,
     status: "live",
-    estMinutes: 13,
+    estMinutes: 14,
     sigil: "/v2/journey/sigils/the-veiled-ledger.webp",
     glyph: "🕯️",
   },
@@ -31,6 +32,80 @@ For finance that is often *the* selling point — auditable reserves, verifiable
 - Move treasury and the market front-runs your intent.
 
 Serious money needs *selective* silence. The question is how a public ledger can keep secrets without becoming one.`,
+    },
+    {
+      kind: "diagram",
+      body: "The same payment, seen from two sides:",
+      caption: "Nothing here is encrypted today. Every line is public by design — which is the feature, and the leak.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "explorer",
+            label: "what anyone can read",
+            tone: "bad",
+          },
+          {
+            id: "you",
+            label: "what you meant to share",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "the amount",
+            cells: [
+              {
+                text: "the exact figure, forever",
+                tone: "bad",
+              },
+              {
+                text: "that a payment happened",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "the counterparty",
+            cells: [
+              {
+                text: "their address, and everything else it ever did",
+                tone: "bad",
+              },
+              {
+                text: "nothing about them",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "your payroll",
+            cells: [
+              {
+                text: "every salary, comparable side by side",
+                tone: "bad",
+              },
+              {
+                text: "nobody's business",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "your runway",
+            cells: [
+              {
+                text: "your balance, to the stroop",
+                tone: "bad",
+              },
+              {
+                text: "nobody's business",
+                tone: "good",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "theory",

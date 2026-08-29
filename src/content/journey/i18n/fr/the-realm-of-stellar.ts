@@ -62,6 +62,67 @@ C’est un compromis délibéré, et il a un nom :
 Quand il faut choisir, le SCP **s’arrête plutôt que de bifurquer**. Pour un réseau qui déplace de l’argent — salaires, transferts, trésoreries — un paiement suspendu vaut mieux qu’un paiement qui se *défait* plus tard.`,
     },
     {
+      kind: "diagram",
+      body: "Deux façons pour un réseau d'échouer — une seule vous reprend votre argent :",
+      caption: "La sûreté avant la vivacité : SCP préfère se bloquer que se contredire.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "fork",
+            label: "réseaux qui bifurquent",
+            tone: "bad",
+          },
+          {
+            id: "scp",
+            label: "Stellar",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "quand l'accord échoue",
+            cells: [
+              {
+                text: "deux histoires continuent côte à côte",
+                tone: "bad",
+              },
+              {
+                text: "le registre cesse simplement de se fermer",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "ce que vous attendez",
+            cells: [
+              {
+                text: "assez de confirmations pour être probablement en sécurité",
+                tone: "bad",
+              },
+              {
+                text: "rien — un registre fermé est définitif",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "le pire cas",
+            cells: [
+              {
+                text: "un paiement est annulé des heures plus tard",
+                tone: "bad",
+              },
+              {
+                text: "un paiement est retardé",
+                tone: "good",
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `Un tiers des validateurs de la tranche de quorum de ton nœud passe hors ligne. Que fait ton nœud ?`,
       options: [

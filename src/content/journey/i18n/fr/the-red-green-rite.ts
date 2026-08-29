@@ -27,6 +27,36 @@ Le TDD est un rite à trois temps, et l’ordre est le point :
 Le rouge prouve que le test peut attraper le bug qu’il protège. Le vert prouve que le comportement existe. Le refactor est l’endroit où le bon code est réellement créé — *en toute sécurité*.`,
     },
     {
+      kind: "diagram",
+      body: "Trois mouvements, pour toujours :",
+      caption: "L'ordre EST la discipline : un test écrit après le code prouve seulement que le code fait ce qu'il fait.",
+      view: {
+        kind: "flow",
+        layout: "cycle",
+        play: true,
+        nodes: [
+          {
+            id: "red",
+            label: "rouge",
+            note: "Écrivez l'épreuve d'abord et regardez-la échouer. Un test qui n'a jamais échoué ne prouve rien.",
+            tone: "bad",
+          },
+          {
+            id: "green",
+            label: "vert",
+            note: "Le plus petit changement qui la fait passer. Pas l'élégant — le plus petit.",
+            tone: "good",
+          },
+          {
+            id: "refactor",
+            label: "refactoriser",
+            note: "Maintenant rendez-le bon, l'épreuve tenant le comportement immobile pendant que vous déplacez.",
+            tone: "accent",
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `Ton partenaire IA livre une fonctionnalité *et* son nouveau test. Tu lances la suite : tout est vert dès la première tentative. Que dois-tu encore restituer au rite ?`,
       options: [

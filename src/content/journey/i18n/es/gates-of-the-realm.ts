@@ -7,6 +7,7 @@ export const gatesOfTheRealm: Concept = {
     tagline: "Anclajes y SEPs — donde el libro contable se encuentra con el mundo real.",
     numeral: "V",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/gates-of-the-realm.webp",
@@ -91,6 +92,42 @@ Observa a Ana en Chicago pagar a su madre en Lisboa:
 3. La cartera de su madre retira a través de un anclaje europeo (SEP-24 nuevamente). Los euros llegan a su cuenta bancaria.
 
 Dos puertas reguladas, un cruce atómico en el medio. La cadena nunca vio un "dólar" — solo activos que las puertas prometen honrar.`,
+    },
+    {
+      kind: "diagram",
+      body: "Dinero de banco entra, dinero de banco sale — el ledger solo sostiene el medio:",
+      caption: "Las dos puertas nunca se encuentran. Cada una solo debe confiar en el ledger que hay entre ellas.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "in",
+            label: "la puerta de salida",
+            note: "Un ancla recibe dinero real y emite un token respaldado por él.",
+            tone: "gold",
+          },
+          {
+            id: "ledger",
+            label: "el ledger",
+            note: "Cinco segundos, una fracción de céntimo, y ningún banco corresponsal a la vista.",
+            tone: "accent",
+          },
+          {
+            id: "out",
+            label: "la puerta de llegada",
+            note: "Otra ancla quema el token y paga en moneda local.",
+            tone: "gold",
+          },
+          {
+            id: "done",
+            label: "dinero en mano",
+            note: "Quien recibe nunca instaló una cartera, ni oyó la palabra ledger.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

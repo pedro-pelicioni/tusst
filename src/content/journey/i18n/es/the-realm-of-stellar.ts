@@ -7,6 +7,7 @@ export const theRealmOfStellar: Concept = {
     tagline: "Cómo miles de máquinas llegan a un acuerdo sin un rey.",
     numeral: "I",
     arc: "realm",
+    level: 1,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/the-realm-of-stellar.webp",
@@ -69,6 +70,67 @@ Ese es un intercambio deliberado, y tiene un nombre:
 - **Disponibilidad** — la red sigue confirmando *algo*.
 
 Cuando se ve obligada a elegir, SCP **se detiene en lugar de bifurcarse**. Para una red que mueve dinero — salarios, remesas, tesoros — una pausa en el pago supera a un pago que después *desaparece*.`,
+    },
+    {
+      kind: "diagram",
+      body: "Dos formas de fallar una red — y solo una te quita el dinero de vuelta:",
+      caption: "Seguridad por encima de vivacidad: el SCP prefiere detenerse a contradecirse.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "fork",
+            label: "redes que bifurcan",
+            tone: "bad",
+          },
+          {
+            id: "scp",
+            label: "Stellar",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "cuando no hay acuerdo",
+            cells: [
+              {
+                text: "dos historias siguen en paralelo",
+                tone: "bad",
+              },
+              {
+                text: "el ledger simplemente deja de cerrar",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "qué esperas",
+            cells: [
+              {
+                text: "confirmaciones suficientes para estar probablemente seguro",
+                tone: "bad",
+              },
+              {
+                text: "nada: un ledger cerrado es definitivo",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "el peor caso",
+            cells: [
+              {
+                text: "un pago se deshace horas después",
+                tone: "bad",
+              },
+              {
+                text: "un pago se retrasa",
+                tone: "good",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

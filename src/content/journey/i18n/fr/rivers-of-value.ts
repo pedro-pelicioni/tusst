@@ -74,6 +74,42 @@ Deux variantes :
 - **Strict receive** — fixe ce qu’ils reçoivent ; tu paies ce que ça coûte (en dessous de ton maximum).`,
     },
     {
+      kind: "diagram",
+      body: "Un paiement, trois monnaies, une transaction atomique :",
+      caption: "Si un saut ne se remplit pas au prix fixé, rien ne se passe — aucun argent à moitié converti échoué en chemin.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "send",
+            label: "vous envoyez des BRL",
+            note: "Vous ne touchez jamais aux monnaies intermédiaires, et ne les détenez jamais.",
+            tone: "accent",
+          },
+          {
+            id: "hop1",
+            label: "BRL → XLM",
+            note: "Le carnet d'ordres remplit ce saut à ce que le marché propose à l'instant.",
+            tone: "teal",
+          },
+          {
+            id: "hop2",
+            label: "XLM → EURC",
+            note: "Et le suivant, au même instant, dans la même transaction.",
+            tone: "teal",
+          },
+          {
+            id: "recv",
+            label: "il reçoit des EURC",
+            note: "Montant garanti, ou tout est annulé. Il n'y a pas d'arrivée partielle.",
+            tone: "good",
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `Une facture est exactement de 900 EURC et ton trésor détient USDC. Quelle opération convient ?`,
       options: [

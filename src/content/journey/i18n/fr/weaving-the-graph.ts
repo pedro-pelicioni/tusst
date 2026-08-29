@@ -31,6 +31,93 @@ L'indépendance est le mot préféré du planificateur.
 La discipline consiste à repérer la véritable indépendance : les travaux parallèles ne doivent partager **aucun état**. Des nœuds qui se précipitent tous pour modifier le même fichier ne forment pas un graphe, mais une mêlée. C'est le même raisonnement sur les dépendances que tu appliques déjà aux pipelines de données, transposé ici aux esprits.`,
     },
     {
+      kind: "diagram",
+      body: "Un plan, trois ouvriers, un verdict :",
+      caption: "Chaque ouvrier démarre propre. Cet isolement est l'intérêt — un mauvais tour chez l'un n'empoisonne jamais les autres.",
+      view: {
+        kind: "graph",
+        nodes: [
+          {
+            id: "plan",
+            label: "PLAN",
+            x: 50,
+            y: 12,
+            tone: "accent",
+            shape: "box",
+            note: "Découpe le travail en morceaux qui n'ont pas besoin de se parler.",
+          },
+          {
+            id: "a",
+            label: "A",
+            x: 18,
+            y: 36,
+            tone: "teal",
+            shape: "box",
+            note: "Contexte propre, budget propre. Il ne voit jamais les erreurs de B.",
+          },
+          {
+            id: "b",
+            label: "B",
+            x: 50,
+            y: 36,
+            tone: "teal",
+            shape: "box",
+            note: "Tourne en même temps, sur le même brief, sur un autre morceau.",
+          },
+          {
+            id: "c",
+            label: "C",
+            x: 82,
+            y: 36,
+            tone: "teal",
+            shape: "box",
+            note: "Trois tentatives bon marché valent mieux qu'une chère que vous ne pouvez pas vérifier.",
+          },
+          {
+            id: "judge",
+            label: "JUGE",
+            x: 50,
+            y: 56,
+            tone: "gold",
+            shape: "box",
+            note: "Lit les trois et décide. C'est de là que vient réellement la qualité.",
+          },
+        ],
+        edges: [
+          {
+            from: "plan",
+            to: "a",
+            style: "solid",
+          },
+          {
+            from: "plan",
+            to: "b",
+            style: "solid",
+          },
+          {
+            from: "plan",
+            to: "c",
+            style: "solid",
+          },
+          {
+            from: "a",
+            to: "judge",
+            style: "dashed",
+          },
+          {
+            from: "b",
+            to: "judge",
+            style: "dashed",
+          },
+          {
+            from: "c",
+            to: "judge",
+            style: "dashed",
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `Quel ensemble de sous-tâches peut être réparti sans risque en parallèle ?`,
       options: [

@@ -7,9 +7,19 @@ export const journey = {
   kicker: "el camino esencial",
   title: "Viaje del Constructor",
   intro:
-    "Dos arcos, un camino. El Oficio: las disciplinas de ingeniería que la era de la IA exige y no te regala. El Reino: el ecosistema Stellar de punta a punta, del consenso a la frontera de la privacidad. Capítulos cortos, profundidad real — y cada puerta a Rust sigue siendo opcional.",
+    "Una planta baja y dos arcos, un camino. Nivel 0: qué son de verdad un libro mayor, una clave y un contrato — sin código, sin siglas. El Oficio: las disciplinas de ingeniería que la era de la IA exige y no te regala. El Reino: el ecosistema Stellar de punta a punta, del consenso a la frontera de la privacidad. Capítulos cortos, profundidad real — y cada puerta a Rust sigue siendo opcional.",
   mapHeading: "// capítulos",
+  levels: {
+    legend: "El camino sube en tres niveles — empieza en el nivel 0, donde no se da nada por sabido.",
+    foundations: "nivel 0 · fundamentos",
+    essential: "nivel 1 · esencial",
+    advanced: "nivel 2 · avanzado",
+  },
   arcs: {
+    foundations: {
+      title: "Nivel 0 — Fundamentos",
+      blurb: "La planta baja: qué es un libro mayor, qué es una clave, qué es un contrato. Sin código, sin siglas, sin nada por sabido. Tres capítulos cortos y el resto del camino deja de intimidar.",
+    },
     craft: {
       title: "Arco I — El Oficio",
       blurb: "Ingeniería en la era de la IA: specs, tests, fronteras, arquitectura — y cómo comandar al gólem.",
@@ -20,7 +30,9 @@ export const journey = {
     },
   },
   recommended: "siguiente recomendado",
+  startHere: "empieza aquí",
   chapter: {
+    requires: "se apoya en {chapters}",
     minutes: "{minutes} min",
     xp: "{xp} xp",
     soon: "en la fragua",

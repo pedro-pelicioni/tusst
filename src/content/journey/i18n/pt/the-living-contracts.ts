@@ -7,6 +7,7 @@ export const theLivingContracts: Concept = {
     tagline: "Soroban: Wasm, armazenamento que expira, taxas que fazem sentido.",
     numeral: "VI",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 13,
     sigil: "/v2/journey/sigils/the-living-contracts.webp",
@@ -34,6 +35,34 @@ Soroban oferece ao contrato três camadas de armazenamento — escolhidas por en
 - **Instance** — pequeno estado colado ao próprio contrato: endereço do admin, configuração, os metadados que toda chamada precisa.
 
 Escolher a prateleira errada é um clássico erro de iniciante: inchaço de instância faz com que cada chamada carregue esse peso, e saldos temporários simplesmente desaparecem. A prateleira *é* parte do design.`,
+    },
+    {
+      kind: "diagram",
+      body: "Três prateleiras, três tempos de vida:",
+      caption: "Estado é alugado, não possuído. Um contrato em que ninguém toca uma hora para de pagar aluguel e os dados esfriam.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "instance",
+            label: "instância",
+            note: "As configurações do próprio contrato, que vivem e morrem com ele.",
+            tone: "gold",
+          },
+          {
+            id: "persistent",
+            label: "persistente",
+            note: "Saldos de usuário e tudo que precisa sobreviver. Arquivado se o aluguel vencer — recuperável, não perdido.",
+            tone: "accent",
+          },
+          {
+            id: "temporary",
+            label: "temporário",
+            note: "Barato e de vida curta, para o que pode sumir: nonces, sessões, limites de taxa.",
+            tone: "teal",
+          },
+        ],
+      },
     },
     {
       kind: "theory",

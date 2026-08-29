@@ -11,8 +11,10 @@ export const theLivingContracts: Concept = {
     tagline: "Soroban: Wasm, storage that expires, fees that make sense.",
     numeral: "VI",
     arc: "realm",
+    level: 2,
+    requires: ["machines-that-keep-promises", "gates-of-the-realm"],
     status: "live",
-    estMinutes: 13,
+    estMinutes: 14,
     sigil: "/v2/journey/sigils/the-living-contracts.webp",
     glyph: "📦",
   },
@@ -38,6 +40,34 @@ Soroban gives a contract three storage tiers — chosen per entry, priced differ
 - **Instance** — small state glued to the contract itself: admin address, configuration, the metadata every call needs.
 
 Choosing the wrong shelf is a classic rookie tax: instance bloat makes every single call carry it, and temporary balances simply vanish. The shelf *is* part of the design.`,
+    },
+    {
+      kind: "diagram",
+      body: "Three shelves, three lifetimes:",
+      caption: "State is rented, not owned. A contract nobody touches eventually stops paying rent and its data goes cold.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "instance",
+            label: "instance",
+            note: "The contract's own settings, living and dying with the contract itself.",
+            tone: "gold",
+          },
+          {
+            id: "persistent",
+            label: "persistent",
+            note: "User balances and anything that must survive. Archived if its rent lapses — recoverable, not lost.",
+            tone: "accent",
+          },
+          {
+            id: "temporary",
+            label: "temporary",
+            note: "Cheap and short-lived, for things that are allowed to vanish: nonces, sessions, rate limits.",
+            tone: "teal",
+          },
+        ],
+      },
     },
     {
       kind: "theory",

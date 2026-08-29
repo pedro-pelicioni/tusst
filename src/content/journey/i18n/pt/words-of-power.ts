@@ -7,6 +7,7 @@ export const wordsOfPower: Concept = {
     tagline: "Prompt & engenharia de contexto — o que o golem realmente vê.",
     numeral: "VI",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/words-of-power.webp",
@@ -70,6 +71,67 @@ Para um bug no caminho de reembolso, o golem precisa de:
 - o **teste que falha** — artefato do Rite, nomeando exatamente o que "corrigido" significa.
 
 Não do repositório inteiro. Não das notas de migração do mês passado. A habilidade é *seleção*: duas centenas de linhas certas valem mais que a obra completa do seu código.`,
+    },
+    {
+      kind: "diagram",
+      body: "O que você acha que mandou, e o que de fato chegou:",
+      caption: "Contexto é orçamento, não recipiente. Tudo que você acrescenta compete com tudo que já estava lá.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "you",
+            label: "o que você quis dizer",
+            tone: "neutral",
+          },
+          {
+            id: "model",
+            label: "o que ele recebeu",
+            tone: "accent",
+          },
+        ],
+        rows: [
+          {
+            label: "a tarefa",
+            cells: [
+              {
+                text: "\"conserta o bug\"",
+                tone: "neutral",
+              },
+              {
+                text: "três palavras, nenhuma saída de erro, nenhum arquivo",
+                tone: "accent",
+              },
+            ],
+          },
+          {
+            label: "o código",
+            cells: [
+              {
+                text: "\"tá tudo no repositório\"",
+                tone: "neutral",
+              },
+              {
+                text: "o que coube — em geral a metade errada",
+                tone: "accent",
+              },
+            ],
+          },
+          {
+            label: "o padrão",
+            cells: [
+              {
+                text: "\"você conhece nosso estilo\"",
+                tone: "neutral",
+              },
+              {
+                text: "nada; ele nunca viu os seus comentários de review",
+                tone: "accent",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "theory",

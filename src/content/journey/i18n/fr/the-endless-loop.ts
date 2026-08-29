@@ -30,6 +30,42 @@ Une boucle ne peut s’améliorer que si ses **observations** sont fiables. Pour
 Il faut des signaux, pas des impressions. « Le résultat semble raisonnable » ne guide aucune correction, car cette appréciation ne peut jamais être réfutée. Chaque vérificateur intégré au harnais prend ici toute sa valeur : branché dans la boucle, il devient les yeux du golem — **à chaque itération**.`,
     },
     {
+      kind: "diagram",
+      body: "La boucle, et la seule sortie qui compte :",
+      caption: "Une boucle sans règle d'arrêt n'est pas de l'autonomie — c'est un budget qui brûle.",
+      view: {
+        kind: "flow",
+        layout: "cycle",
+        play: true,
+        nodes: [
+          {
+            id: "act",
+            label: "agir",
+            note: "Faites le plus petit pas que le plan autorise, puis arrêtez et regardez.",
+            tone: "accent",
+          },
+          {
+            id: "observe",
+            label: "observer",
+            note: "Lisez ce que le monde a répondu. Pas ce que vous espériez.",
+            tone: "teal",
+          },
+          {
+            id: "correct",
+            label: "corriger",
+            note: "Ajustez le plan, pas seulement le dernier mouvement.",
+            tone: "gold",
+          },
+          {
+            id: "stop",
+            label: "arrêter ?",
+            note: "Terminé, bloqué, ou hors budget. Décidez-le explicitement, à chaque tour.",
+            tone: "good",
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `Quelle observation peut réellement guider une boucle ?`,
       options: [

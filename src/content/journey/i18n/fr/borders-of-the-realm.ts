@@ -29,6 +29,60 @@ Mais aucun langage ne peut régir tout le royaume. Un **contexte délimité** ma
 La frontière n’est pas un échec de conception. **La frontière est la conception.**`,
     },
     {
+      kind: "diagram",
+      body: "Le même mot, trois frontières :",
+      caption: "Les lignes pointillées sont des traductions, pas du code partagé. Un contexte qui importe le modèle d'un autre n'a plus de frontière.",
+      view: {
+        kind: "graph",
+        nodes: [
+          {
+            id: "pay",
+            label: "PAIEMENTS",
+            x: 22,
+            y: 20,
+            tone: "accent",
+            shape: "box",
+            note: "Ici un « compte » est une source, un numéro de séquence et un budget de frais.",
+          },
+          {
+            id: "trade",
+            label: "TRADING",
+            x: 78,
+            y: 20,
+            tone: "teal",
+            shape: "box",
+            note: "Ici c'est un ensemble d'offres ouvertes et les actifs qui les libellent.",
+          },
+          {
+            id: "custody",
+            label: "GARDE",
+            x: 50,
+            y: 50,
+            tone: "gold",
+            shape: "box",
+            note: "Et ici c'est un ensemble de signataires avec des seuils. Même mot, trois sens.",
+          },
+        ],
+        edges: [
+          {
+            from: "pay",
+            to: "trade",
+            style: "dashed",
+          },
+          {
+            from: "pay",
+            to: "custody",
+            style: "dashed",
+          },
+          {
+            from: "trade",
+            to: "custody",
+            style: "dashed",
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `L’équipe Compliance te demande d’ajouter \`kyc_status\` et \`risk_score\` au modèle Account du contexte Payments — « c’est le même compte, après tout ». Quelle est la lecture DDD ?`,
       options: [

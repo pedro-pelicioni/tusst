@@ -11,8 +11,10 @@ export const gatesOfTheRealm: Concept = {
     tagline: "Anchors & SEPs — where the ledger meets the real world.",
     numeral: "V",
     arc: "realm",
+    level: 2,
+    requires: ["rivers-of-value"],
     status: "live",
-    estMinutes: 12,
+    estMinutes: 13,
     sigil: "/v2/journey/sigils/gates-of-the-realm.webp",
     glyph: "⛩️",
   },
@@ -95,6 +97,42 @@ Watch Ana in Chicago pay her mother in Lisbon:
 3. Her mother's wallet withdraws through a European anchor (SEP-24 again). Euros land in her bank account.
 
 Two regulated gates, one atomic river crossing in the middle. The chain never saw a "dollar" — only assets that gates promise to honor.`,
+    },
+    {
+      kind: "diagram",
+      body: "Bank money in, bank money out — the ledger only holds the middle:",
+      caption: "The two gates never meet. Each one only has to trust the ledger between them.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "in",
+            label: "the sending gate",
+            note: "An anchor takes real money in and issues a token backed by it.",
+            tone: "gold",
+          },
+          {
+            id: "ledger",
+            label: "the ledger",
+            note: "Five seconds, a fraction of a cent, and no correspondent bank in sight.",
+            tone: "accent",
+          },
+          {
+            id: "out",
+            label: "the receiving gate",
+            note: "Another anchor burns the token and pays out in local money.",
+            tone: "gold",
+          },
+          {
+            id: "done",
+            label: "cash in hand",
+            note: "The recipient never installed a wallet, and never heard the word ledger.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

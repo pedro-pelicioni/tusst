@@ -7,6 +7,7 @@ export const bordersOfTheRealm: Concept = {
     tagline: "DDD y contextos limitados, mapeados sobre Stellar mismo.",
     numeral: "III",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 13,
     sigil: "/v2/journey/sigils/borders-of-the-realm.webp",
@@ -36,6 +37,60 @@ Dentro de un equipo y una parte del sistema, DDD exige un **lenguaje ubicuo**: u
 Pero ningún lenguaje rige todo el reino. Un **contexto limitado** es la frontera donde el significado de una palabra puede cambiar: dentro de *Payments*, una Cuenta es un titular de saldo; al cruzar a *Compliance*, la misma dirección es un sujeto KYC.
 
 La frontera no es un fallo de diseño. **La frontera es el diseño.**`,
+    },
+    {
+      kind: "diagram",
+      body: "La misma palabra, tres fronteras:",
+      caption: "Las líneas discontinuas son traducciones, no código compartido. Un contexto que importa el modelo de otro no tiene frontera alguna.",
+      view: {
+        kind: "graph",
+        nodes: [
+          {
+            id: "pay",
+            label: "PAGOS",
+            x: 22,
+            y: 20,
+            tone: "accent",
+            shape: "box",
+            note: "Aquí una \"cuenta\" es un origen, un número de secuencia y un presupuesto de comisión.",
+          },
+          {
+            id: "trade",
+            label: "TRADING",
+            x: 78,
+            y: 20,
+            tone: "teal",
+            shape: "box",
+            note: "Aquí es un conjunto de ofertas abiertas y los activos en que están denominadas.",
+          },
+          {
+            id: "custody",
+            label: "CUSTODIA",
+            x: 50,
+            y: 50,
+            tone: "gold",
+            shape: "box",
+            note: "Y aquí es un conjunto de firmantes con umbrales. Misma palabra, tres sentidos.",
+          },
+        ],
+        edges: [
+          {
+            from: "pay",
+            to: "trade",
+            style: "dashed",
+          },
+          {
+            from: "pay",
+            to: "custody",
+            style: "dashed",
+          },
+          {
+            from: "trade",
+            to: "custody",
+            style: "dashed",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

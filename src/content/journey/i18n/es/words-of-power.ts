@@ -7,6 +7,7 @@ export const wordsOfPower: Concept = {
     tagline: "Ingeniería de prompts y contexto — lo que realmente ve el gólem.",
     numeral: "VI",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/words-of-power.webp",
@@ -70,6 +71,67 @@ Para un error en la ruta de reembolso, el gólem necesita:
 - la **prueba que falla** — artefacto del Rite, que nombra exactamente qué significa "corregido".
 
 No todo el repositorio. No las notas de migración del mes pasado. La habilidad es *selección*: las doscientas líneas correctas superan a la obra completa de tu base de código.`,
+    },
+    {
+      kind: "diagram",
+      body: "Lo que crees que enviaste, y lo que de verdad llegó:",
+      caption: "El contexto es un presupuesto, no un recipiente. Todo lo que añades compite con lo que ya pusiste.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "you",
+            label: "lo que querías decir",
+            tone: "neutral",
+          },
+          {
+            id: "model",
+            label: "lo que recibió",
+            tone: "accent",
+          },
+        ],
+        rows: [
+          {
+            label: "la tarea",
+            cells: [
+              {
+                text: "\"arregla el bug\"",
+                tone: "neutral",
+              },
+              {
+                text: "tres palabras, ninguna salida de error, ningún archivo",
+                tone: "accent",
+              },
+            ],
+          },
+          {
+            label: "el código",
+            cells: [
+              {
+                text: "\"está todo en el repo\"",
+                tone: "neutral",
+              },
+              {
+                text: "lo que cupo, normalmente la mitad equivocada",
+                tone: "accent",
+              },
+            ],
+          },
+          {
+            label: "el estándar",
+            cells: [
+              {
+                text: "\"ya conoces nuestro estilo\"",
+                tone: "neutral",
+              },
+              {
+                text: "nada; nunca ha visto tus comentarios de revisión",
+                tone: "accent",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "theory",

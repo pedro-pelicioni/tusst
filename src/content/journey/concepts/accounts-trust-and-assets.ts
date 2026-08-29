@@ -11,8 +11,10 @@ export const accountsTrustAndAssets: Concept = {
     tagline: "Reserves, trustlines, and how any asset is born.",
     numeral: "III",
     arc: "realm",
+    level: 1,
+    requires: ["anatomy-of-a-transaction"],
     status: "live",
-    estMinutes: 12,
+    estMinutes: 13,
     sigil: "/v2/journey/sigils/accounts-trust-and-assets.webp",
     glyph: "🪙",
   },
@@ -36,6 +38,71 @@ On many chains, anyone can airdrop junk tokens into your address. On Stellar the
 A trustline says: *"I accept asset X from issuer Y, up to this **limit**."* It is created with the \`change_trust\` operation, it is its own ledger entry — so it locks **one base reserve** — and until it exists, payments of that asset to you simply fail.
 
 Opt-in by design: your balance sheet contains only what you agreed to hold.`,
+    },
+    {
+      kind: "diagram",
+      body: "An issued asset, and who is allowed to touch it:",
+      caption: "The dashed lines are trustlines — opt-in, and reversible. The solid one exists only because both of its ends opted in.",
+      view: {
+        kind: "graph",
+        nodes: [
+          {
+            id: "issuer",
+            label: "ISSUER",
+            x: 50,
+            y: 12,
+            tone: "gold",
+            shape: "box",
+            note: "Brings the asset into existence simply by paying it out. There is no mint and no supply table.",
+          },
+          {
+            id: "ana",
+            label: "ANA",
+            x: 16,
+            y: 45,
+            tone: "accent",
+            shape: "box",
+            note: "Opened a trustline — that opt-in is what lets her hold any of the asset at all.",
+          },
+          {
+            id: "bruno",
+            label: "BRUNO",
+            x: 50,
+            y: 45,
+            tone: "accent",
+            shape: "box",
+            note: "Also opted in, so Ana can pay him. Both ends need a trustline.",
+          },
+          {
+            id: "caio",
+            label: "CAIO",
+            x: 84,
+            y: 45,
+            tone: "neutral",
+            shape: "box",
+            note: "Never opened one. Nobody can send him this asset, however hard they try.",
+          },
+        ],
+        edges: [
+          {
+            from: "issuer",
+            to: "ana",
+            label: "trustline",
+            style: "dashed",
+          },
+          {
+            from: "issuer",
+            to: "bruno",
+            style: "dashed",
+          },
+          {
+            from: "ana",
+            to: "bruno",
+            label: "payment",
+            style: "solid",
+          },
+        ],
+      },
     },
     {
       kind: "labLink",

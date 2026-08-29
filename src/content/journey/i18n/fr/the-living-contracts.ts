@@ -27,6 +27,34 @@ Soroban donne à un contrat trois niveaux de stockage — choisis par entrée, t
 Choisir la mauvaise étagère est une erreur de débutant coûteuse : un stockage d'instance trop volumineux alourdit chaque appel, tandis qu'un solde placé en stockage temporaire finit tout simplement par disparaître. Le choix de l'étagère fait partie intégrante de la conception.`,
     },
     {
+      kind: "diagram",
+      body: "Trois étagères, trois durées de vie :",
+      caption: "L'état est loué, pas possédé. Un contrat que personne ne touche finit par ne plus payer son loyer et ses données refroidissent.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "instance",
+            label: "instance",
+            note: "Les réglages du contrat lui-même, qui vivent et meurent avec lui.",
+            tone: "gold",
+          },
+          {
+            id: "persistent",
+            label: "persistant",
+            note: "Soldes des utilisateurs et tout ce qui doit survivre. Archivé si le loyer expire — récupérable, pas perdu.",
+            tone: "accent",
+          },
+          {
+            id: "temporary",
+            label: "temporaire",
+            note: "Bon marché et éphémère, pour ce qui a le droit de disparaître : nonces, sessions, limites de débit.",
+            tone: "teal",
+          },
+        ],
+      },
+    },
+    {
       kind: "theory",
       body: `## L’état a un battement de cœur
 

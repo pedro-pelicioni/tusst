@@ -11,8 +11,10 @@ export const theRealmOfStellar: Concept = {
     tagline: "How thousands of machines agree without a king.",
     numeral: "I",
     arc: "realm",
+    level: 1,
+    requires: ["the-book-no-one-can-erase"],
     status: "live",
-    estMinutes: 12,
+    estMinutes: 13,
     sigil: "/v2/journey/sigils/the-realm-of-stellar.webp",
     glyph: "🕸",
   },
@@ -73,6 +75,67 @@ That is a deliberate trade, and it has a name:
 - **Liveness** — the network keeps confirming *something*.
 
 When forced to choose, SCP **halts instead of forking**. For a network that moves money — salaries, remittances, treasuries — a paused payment beats a payment that later *un-happens*.`,
+    },
+    {
+      kind: "diagram",
+      body: "Two ways a network can fail — and only one of them takes your money back:",
+      caption: "Safety over liveness: SCP would rather stall than disagree with itself.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "fork",
+            label: "networks that fork",
+            tone: "bad",
+          },
+          {
+            id: "scp",
+            label: "Stellar",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "when agreement fails",
+            cells: [
+              {
+                text: "two histories continue side by side",
+                tone: "bad",
+              },
+              {
+                text: "the ledger simply stops closing",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "what you wait for",
+            cells: [
+              {
+                text: "enough confirmations to be probably safe",
+                tone: "bad",
+              },
+              {
+                text: "nothing — a closed ledger is final",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "the worst case",
+            cells: [
+              {
+                text: "a payment is undone hours later",
+                tone: "bad",
+              },
+              {
+                text: "a payment is delayed",
+                tone: "good",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

@@ -84,6 +84,42 @@ Regarde Ana à Chicago payer sa mère à Lisbonne :
 Deux portes réglementées, un passage de rivière atomique au milieu. La chaîne n’a jamais vu un « dollar » — seulement des actifs que les portes promettent d’honorer.`,
     },
     {
+      kind: "diagram",
+      body: "De l'argent bancaire entre, de l'argent bancaire sort — le registre ne tient que le milieu :",
+      caption: "Les deux portes ne se rencontrent jamais. Chacune n'a qu'à faire confiance au registre entre elles.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "in",
+            label: "la porte de départ",
+            note: "Une ancre reçoit de l'argent réel et émet un jeton adossé à celui-ci.",
+            tone: "gold",
+          },
+          {
+            id: "ledger",
+            label: "le registre",
+            note: "Cinq secondes, une fraction de centime, et aucune banque correspondante en vue.",
+            tone: "accent",
+          },
+          {
+            id: "out",
+            label: "la porte d'arrivée",
+            note: "Une autre ancre brûle le jeton et paie en monnaie locale.",
+            tone: "gold",
+          },
+          {
+            id: "done",
+            label: "de l'argent en main",
+            note: "Le destinataire n'a jamais installé de portefeuille ni entendu le mot registre.",
+            tone: "good",
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `Dans cette remise porte à porte, quel élément a effectué la conversion de devise ?`,
       options: [

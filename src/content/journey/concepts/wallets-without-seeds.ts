@@ -11,8 +11,10 @@ export const walletsWithoutSeeds: Concept = {
     tagline: "Smart accounts, passkeys, and fees someone else sponsors.",
     numeral: "VII",
     arc: "realm",
+    level: 2,
+    requires: ["the-living-contracts"],
     status: "live",
-    estMinutes: 12,
+    estMinutes: 13,
     sigil: "/v2/journey/sigils/wallets-without-seeds.webp",
     glyph: "🛡️",
   },
@@ -46,6 +48,80 @@ Your phone already contains a vault: the **secure enclave**, hardware that signs
 Stellar verifies secp256r1 **natively**, so a smart account can accept your phone's enclave as a signer directly: the biometric hardware signs, the chain checks the passkey signature itself.
 
 No seed phrase exists at any point. The "wallet" is the same hardware that already guards your banking app — now signing ledger transactions.`,
+    },
+    {
+      kind: "diagram",
+      body: "The same account, two ways to hold it:",
+      caption: "The passkey never leaves the device's secure hardware — which is exactly why it cannot be phished out of you.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "seed",
+            label: "twenty-four words",
+            tone: "bad",
+          },
+          {
+            id: "passkey",
+            label: "a passkey",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "where it lives",
+            cells: [
+              {
+                text: "a screenshot, a notes app, a drawer",
+                tone: "bad",
+              },
+              {
+                text: "the device's secure enclave",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "how it's lost",
+            cells: [
+              {
+                text: "one photo of the paper is enough",
+                tone: "bad",
+              },
+              {
+                text: "it cannot be copied out at all",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "signing in",
+            cells: [
+              {
+                text: "type or paste the whole thing",
+                tone: "bad",
+              },
+              {
+                text: "a fingerprint",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "if the device dies",
+            cells: [
+              {
+                text: "irrelevant — the words are the account",
+                tone: "neutral",
+              },
+              {
+                text: "add a second signer before that day",
+                tone: "gold",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

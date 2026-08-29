@@ -7,6 +7,7 @@ export const theVeiledLedger: Concept = {
     tagline: "Tokens confidenciales, pagos privados — privacidad con un respaldo de cumplimiento.",
     numeral: "VIII",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 13,
     sigil: "/v2/journey/sigils/the-veiled-ledger.webp",
@@ -26,6 +27,80 @@ Para las finanzas eso suele ser *el* punto de venta — reservas auditables, ví
 - Mueves la tesorería y el mercado anticipa tu intención.
 
 El dinero serio necesita *silencio selectivo*. La pregunta es cómo un libro público puede guardar secretos sin convertirse en uno.`,
+    },
+    {
+      kind: "diagram",
+      body: "El mismo pago, visto desde dos lados:",
+      caption: "Nada de esto está cifrado hoy. Cada línea es pública por diseño: esa es la función, y la fuga.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "explorer",
+            label: "lo que cualquiera lee",
+            tone: "bad",
+          },
+          {
+            id: "you",
+            label: "lo que querías compartir",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "el importe",
+            cells: [
+              {
+                text: "la cifra exacta, para siempre",
+                tone: "bad",
+              },
+              {
+                text: "que hubo un pago",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "la contraparte",
+            cells: [
+              {
+                text: "su dirección, y todo lo demás que hizo",
+                tone: "bad",
+              },
+              {
+                text: "nada sobre ella",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "tu nómina",
+            cells: [
+              {
+                text: "cada sueldo, comparable lado a lado",
+                tone: "bad",
+              },
+              {
+                text: "no es asunto de nadie",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "tu caja",
+            cells: [
+              {
+                text: "tu saldo, hasta el stroop",
+                tone: "bad",
+              },
+              {
+                text: "no es asunto de nadie",
+                tone: "good",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "theory",

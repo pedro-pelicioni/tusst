@@ -19,6 +19,60 @@ Tout ce qui change le grand livre Stellar voyage dans une seule forme — une **
 Maîtrise cette structure et tu sauras lire chaque page d’explorateur, chaque appel de SDK et chaque erreur de transaction Stellar.`,
     },
     {
+      kind: "diagram",
+      body: "L'enveloppe, ouverte :",
+      caption: "La signature couvre toute l'enveloppe. Changez un octet à l'intérieur et toutes les signatures cessent de correspondre.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "source",
+            label: "compte source",
+            note: "Qui paie les frais, et de qui le numéro de séquence avance.",
+            tone: "neutral",
+          },
+          {
+            id: "fee",
+            label: "frais",
+            note: "100 stroops par opération — un cent-millième de XLM chacun.",
+            tone: "gold",
+          },
+          {
+            id: "seq",
+            label: "numéro de séquence",
+            note: "Utilisé exactement une fois, pour toujours. C'est ce qui rend un rejeu impossible.",
+            tone: "accent",
+          },
+          {
+            id: "ops",
+            label: "opérations",
+            note: "Jusqu'à 100, appliquées dans l'ordre. Toutes passent, ou aucune.",
+            tone: "teal",
+            bands: [
+              {
+                id: "op1",
+                label: "paiement",
+                note: "Déplace un actif d'un compte vers un autre.",
+                tone: "teal",
+              },
+              {
+                id: "op2",
+                label: "ouvrir une trustline",
+                note: "Ouvre la ligne de confiance qui permet à la destination de le détenir.",
+                tone: "teal",
+              },
+            ],
+          },
+          {
+            id: "sigs",
+            label: "signatures",
+            note: "Une par signataire requis. N'importe qui les vérifie face à l'adresse source — personne ne les falsifie.",
+            tone: "good",
+          },
+        ],
+      },
+    },
+    {
       kind: "theory",
       body: `## Opérations : les verbes
 

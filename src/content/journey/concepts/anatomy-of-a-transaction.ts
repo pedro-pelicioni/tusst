@@ -11,8 +11,10 @@ export const anatomyOfATransaction: Concept = {
     tagline: "Envelope, operations, fees, signatures — dissected live.",
     numeral: "II",
     arc: "realm",
+    level: 1,
+    requires: ["the-key-and-the-seal", "the-realm-of-stellar"],
     status: "live",
-    estMinutes: 10,
+    estMinutes: 11,
     sigil: "/v2/journey/sigils/anatomy-of-a-transaction.webp",
     glyph: "✉️",
   },
@@ -30,6 +32,60 @@ Everything that ever changes the Stellar ledger travels inside one shape — a *
 - **Signatures** — proof the source (and anyone else required) agreed.
 
 Learn this one shape and every explorer page, SDK call and failed-transaction error on Stellar becomes readable.`,
+    },
+    {
+      kind: "diagram",
+      body: "The envelope, opened:",
+      caption: "Signing covers the whole envelope. Change one byte anywhere inside and every signature stops matching.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "source",
+            label: "source account",
+            note: "Who pays the fee, and whose sequence number advances.",
+            tone: "neutral",
+          },
+          {
+            id: "fee",
+            label: "fee",
+            note: "100 stroops per operation — a hundred-thousandth of an XLM each.",
+            tone: "gold",
+          },
+          {
+            id: "seq",
+            label: "sequence number",
+            note: "Used exactly once, ever. This is what makes a replay impossible.",
+            tone: "accent",
+          },
+          {
+            id: "ops",
+            label: "operations",
+            note: "Up to 100, applied in order. All of them land, or none of them do.",
+            tone: "teal",
+            bands: [
+              {
+                id: "op1",
+                label: "payment",
+                note: "Move an asset from one account to another.",
+                tone: "teal",
+              },
+              {
+                id: "op2",
+                label: "change trust",
+                note: "Open the trustline that lets the destination hold it.",
+                tone: "teal",
+              },
+            ],
+          },
+          {
+            id: "sigs",
+            label: "signatures",
+            note: "One per required signer. Anyone can check them against the source's address — nobody can forge one.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "theory",

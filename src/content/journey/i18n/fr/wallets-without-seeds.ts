@@ -20,6 +20,80 @@ Les portefeuilles traditionnels accueillent chaque nouvel utilisateur avec un ri
       body: `## Passkeys : la clé que tu ne peux pas perdre\n\nTon téléphone contient déjà un coffre‑fort : l’**enclave sécurisée**, un matériel qui signe avec des clés qui ne quittent jamais la puce, déverrouillé par Face ID ou une empreinte digitale. La norme web pour cela est **WebAuthn** — passkeys — et elle utilise la courbe **secp256r1**.\n\nStellar vérifie secp256r1 **nativement**, donc un compte intelligent peut accepter l’enclave de ton téléphone comme signataire directement : le matériel biométrique signe, la chaîne vérifie la signature passkey elle‑même.\n\nAucune phrase secrète n’existe à aucun moment. Le « portefeuille » est le même matériel qui protège déjà ton application bancaire — maintenant il signe les transactions du registre.`,
     },
     {
+      kind: "diagram",
+      body: "Le même compte, deux façons de le détenir :",
+      caption: "La passkey ne quitte jamais le matériel sécurisé de l'appareil — c'est précisément pourquoi on ne peut pas vous l'hameçonner.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "seed",
+            label: "vingt-quatre mots",
+            tone: "bad",
+          },
+          {
+            id: "passkey",
+            label: "une passkey",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "où elle vit",
+            cells: [
+              {
+                text: "une capture, une appli de notes, un tiroir",
+                tone: "bad",
+              },
+              {
+                text: "l'enclave sécurisée de l'appareil",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "comment on la perd",
+            cells: [
+              {
+                text: "une photo du papier suffit",
+                tone: "bad",
+              },
+              {
+                text: "elle ne peut pas être copiée vers l'extérieur",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "pour signer",
+            cells: [
+              {
+                text: "taper ou coller le tout",
+                tone: "bad",
+              },
+              {
+                text: "une empreinte",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "si l'appareil meurt",
+            cells: [
+              {
+                text: "peu importe — les mots sont le compte",
+                tone: "neutral",
+              },
+              {
+                text: "ajoutez un second signataire avant ce jour-là",
+                tone: "gold",
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `Dans un portefeuille intelligent passkey, qu’est‑ce qui remplace la phrase secrète ?`,
       options: [

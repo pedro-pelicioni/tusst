@@ -30,6 +30,42 @@ Un harnais efficace se compose d'éléments clairement identifiés :
 Deux équipes utilisant le même modèle avec des harnais différents obtiennent des résultats *radicalement* différents. Lorsque la qualité change, les ingénieurs déboguent le harnais — pas l’horoscope.`,
     },
     {
+      kind: "diagram",
+      body: "Un établi, en quatre parties :",
+      caption: "Changez de modèle et ceci survit. C'est pourquoi l'établi est l'actif, pas le prompt.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "context",
+            label: "ce qu'il voit",
+            note: "Les fichiers, la doc, la sortie en échec. Sélectionné — pas tout ce que vous possédez.",
+            tone: "accent",
+          },
+          {
+            id: "tools",
+            label: "ce qu'il peut faire",
+            note: "Un ensemble borné de verbes. Chacun qui manque est une erreur qu'il ne peut pas commettre.",
+            tone: "teal",
+          },
+          {
+            id: "run",
+            label: "laissez-le agir",
+            note: "Il bouge, et l'établi répond honnêtement au lieu d'acquiescer poliment.",
+            tone: "neutral",
+          },
+          {
+            id: "verify",
+            label: "vérifiez le travail",
+            note: "Tests, types, un linter. La vérification transforme une sortie en résultat.",
+            tone: "good",
+          },
+        ],
+      },
+    },
+    {
       kind: "quiz",
       question: `Même modèle, même type de tâche — mais les résultats de ce mois sont nettement moins bons que ceux du mois dernier. Que vérifie en premier l'ingénieur responsable du harnais ?`,
       options: [

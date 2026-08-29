@@ -7,6 +7,7 @@ export const theLivingContracts: Concept = {
     tagline: "Soroban: Wasm, almacenamiento que expira, tarifas que tienen sentido.",
     numeral: "VI",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 13,
     sigil: "/v2/journey/sigils/the-living-contracts.webp",
@@ -34,6 +35,34 @@ Soroban le da a un contrato tres niveles de almacenamiento — elegidos por entr
 - **Instancia** — pequeño estado pegado al propio contrato: dirección del administrador, configuración, los metadatos que necesita cada llamada.
 
 Elegir la estantería equivocada es un error clásico de novato: el inflado de instancia hace que cada llamada lo lleve consigo, y los saldos temporales simplemente desaparecen. La estantería *es* parte del diseño.`,
+    },
+    {
+      kind: "diagram",
+      body: "Tres estantes, tres vidas:",
+      caption: "El estado se alquila, no se posee. Un contrato que nadie toca deja de pagar alquiler y sus datos se enfrían.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "instance",
+            label: "instancia",
+            note: "La configuración del propio contrato, que vive y muere con él.",
+            tone: "gold",
+          },
+          {
+            id: "persistent",
+            label: "persistente",
+            note: "Saldos de usuario y todo lo que debe sobrevivir. Archivado si vence el alquiler: recuperable, no perdido.",
+            tone: "accent",
+          },
+          {
+            id: "temporary",
+            label: "temporal",
+            note: "Barato y de vida corta, para lo que puede desaparecer: nonces, sesiones, límites de tasa.",
+            tone: "teal",
+          },
+        ],
+      },
     },
     {
       kind: "theory",

@@ -7,6 +7,7 @@ export const weavingTheGraph: Concept = {
     tagline: "Engenharia de grafos: muitos pequenos golems, um plano entrelaçado.",
     numeral: "VIII",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/weaving-the-graph.webp",
@@ -37,6 +38,93 @@ Independência é a palavra favorita do escalonador.
 **Fan-in**: um nó de *síntese* recebe os três relatórios, pesa contra seus critérios e recomenda.
 
 A disciplina está em identificar a *verdadeira* independência: trabalho paralelo não deve compartilhar **nenhum estado** — nós competindo para editar o mesmo arquivo não são um grafo, são uma briga. É pensar em dependências, o tipo que você já aplica a pipelines de dados, agora aplicado às mentes.`,
+    },
+    {
+      kind: "diagram",
+      body: "Um plano, três trabalhadores, um veredito:",
+      caption: "Cada trabalhador começa limpo. Esse isolamento é o ponto — um passo ruim em um nunca envenena os outros.",
+      view: {
+        kind: "graph",
+        nodes: [
+          {
+            id: "plan",
+            label: "PLANO",
+            x: 50,
+            y: 12,
+            tone: "accent",
+            shape: "box",
+            note: "Divide o trabalho em pedaços que não precisam conversar entre si.",
+          },
+          {
+            id: "a",
+            label: "A",
+            x: 18,
+            y: 36,
+            tone: "teal",
+            shape: "box",
+            note: "Contexto próprio, orçamento próprio. Ele nunca vê os erros do B.",
+          },
+          {
+            id: "b",
+            label: "B",
+            x: 50,
+            y: 36,
+            tone: "teal",
+            shape: "box",
+            note: "Roda ao mesmo tempo, com o mesmo briefing, em outro pedaço.",
+          },
+          {
+            id: "c",
+            label: "C",
+            x: 82,
+            y: 36,
+            tone: "teal",
+            shape: "box",
+            note: "Três tentativas baratas valem mais que uma cara que você não consegue conferir.",
+          },
+          {
+            id: "judge",
+            label: "JUIZ",
+            x: 50,
+            y: 56,
+            tone: "gold",
+            shape: "box",
+            note: "Lê as três e decide. É daqui que a qualidade realmente vem.",
+          },
+        ],
+        edges: [
+          {
+            from: "plan",
+            to: "a",
+            style: "solid",
+          },
+          {
+            from: "plan",
+            to: "b",
+            style: "solid",
+          },
+          {
+            from: "plan",
+            to: "c",
+            style: "solid",
+          },
+          {
+            from: "a",
+            to: "judge",
+            style: "dashed",
+          },
+          {
+            from: "b",
+            to: "judge",
+            style: "dashed",
+          },
+          {
+            from: "c",
+            to: "judge",
+            style: "dashed",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

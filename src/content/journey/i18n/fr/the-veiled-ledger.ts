@@ -20,6 +20,80 @@ Dans la finance, c’est souvent l'argument décisif : des réserves auditable
 Les flux financiers importants ont besoin d’un *silence sélectif*. Toute la question est de savoir comment un registre public peut préserver certains secrets sans devenir lui-même opaque.`,
     },
     {
+      kind: "diagram",
+      body: "Le même paiement, vu des deux côtés :",
+      caption: "Rien n'est chiffré ici aujourd'hui. Chaque ligne est publique par conception — c'est la fonctionnalité, et la fuite.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "explorer",
+            label: "ce que n'importe qui lit",
+            tone: "bad",
+          },
+          {
+            id: "you",
+            label: "ce que vous vouliez partager",
+            tone: "good",
+          },
+        ],
+        rows: [
+          {
+            label: "le montant",
+            cells: [
+              {
+                text: "le chiffre exact, pour toujours",
+                tone: "bad",
+              },
+              {
+                text: "qu'un paiement a eu lieu",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "la contrepartie",
+            cells: [
+              {
+                text: "son adresse, et tout ce qu'elle a jamais fait",
+                tone: "bad",
+              },
+              {
+                text: "rien sur elle",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "votre paie",
+            cells: [
+              {
+                text: "chaque salaire, comparable côte à côte",
+                tone: "bad",
+              },
+              {
+                text: "cela ne regarde personne",
+                tone: "good",
+              },
+            ],
+          },
+          {
+            label: "votre trésorerie",
+            cells: [
+              {
+                text: "votre solde, au stroop près",
+                tone: "bad",
+              },
+              {
+                text: "cela ne regarde personne",
+                tone: "good",
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
       kind: "theory",
       body: `## Preuve sans divulgation
 

@@ -11,7 +11,8 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Markdown } from "@/components/Markdown";
-import { ScpSim } from "@/components/labs/sims/ScpSim";
+import { Diagram, DiagramFrame } from "@/components/visuals/Diagram";
+import { WidgetSlot } from "@/components/visuals/WidgetSlot";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
 import type { JourneyStep } from "@/content/journey/types";
@@ -104,6 +105,7 @@ export function ConceptPlayer({
   conceptSlug,
   title,
   numeral,
+  sigilSrc,
   steps,
   xp,
   signedIn,
@@ -114,6 +116,8 @@ export function ConceptPlayer({
   conceptSlug: string;
   title: string;
   numeral: string;
+  /** resolved by the server page; null while a chapter has no master yet */
+  sigilSrc: string | null;
   steps: JourneyStep[];
   xp: number;
   signedIn: boolean;
@@ -193,6 +197,7 @@ export function ConceptPlayer({
       else if (
         (step.kind === "theory" ||
           step.kind === "widget" ||
+          step.kind === "diagram" ||
           step.kind === "labLink" ||
           step.kind === "rustBranch") &&
         !atSeal
@@ -347,6 +352,14 @@ export function ConceptPlayer({
         >
           ✕
         </Link>
+        {sigilSrc && (
+          <img
+            src={sigilSrc}
+            alt=""
+            title={title}
+            className="hidden h-7 w-7 shrink-0 object-contain sm:block"
+          />
+        )}
         <ArrowButton
           direction="back"
           label={m.lesson.previousStep}
@@ -382,6 +395,14 @@ export function ConceptPlayer({
         {atSeal ? (
           /* seal screen */
           <div className="mx-auto w-full max-w-xl text-center">
+            {sigilSrc && (
+              <img
+                src={sigilSrc}
+                alt=""
+                className="mx-auto mb-6 h-28 w-28 object-contain"
+                style={{ filter: "drop-shadow(0 0 30px rgba(217,185,106,0.3))" }}
+              />
+            )}
             <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold/80">
               {m.journey.player.claim.title}
             </p>
@@ -445,7 +466,22 @@ export function ConceptPlayer({
                   </div>
                 )}
                 <div className="mt-6">
-                  {step.component === "scp-sim" && <ScpSim />}
+                  <WidgetSlot component={step.component} />
+                </div>
+              </div>
+            )}
+
+            {step.kind === "diagram" && (
+              <div className="mx-auto w-full max-w-2xl">
+                {step.body && (
+                  <div className="mx-auto max-w-xl">
+                    <Markdown>{step.body}</Markdown>
+                  </div>
+                )}
+                <div className="mt-6">
+                  <DiagramFrame caption={step.caption}>
+                    <Diagram view={step.view} />
+                  </DiagramFrame>
                 </div>
               </div>
             )}
@@ -740,7 +776,22 @@ export function ConceptPlayer({
 
       {/* ─── bottom action / feedback sheet (the exercise owns its buttons) ─── */}
       {!atSeal && step.kind !== "exercise" && (
-        <div className="sticky bottom-0 -mx-5 mt-10 border-t border-line bg-bg/90 px-5 py-4 backdrop-blur">
+        // The sheet used to be a flat `bg-bg/90` block the width of the
+        // reading column. That was invisible while the player had no backdrop
+        // — now that it sits on art, it read as a black rectangle floating
+        // mid-screen with hard left and right edges. The band is now
+        // full-bleed (clipped by `.sc-scene`'s overflow, so no scrollbar) and
+        // fades upward into the art instead of butting against it.
+        <div className="sticky bottom-0 z-10 -mx-5 mt-10">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-[-100vmax] bottom-0 top-0 -z-10 border-t border-line/60 bg-bg/80 backdrop-blur"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-[-100vmax] bottom-full -z-10 h-16 bg-gradient-to-t from-bg/80 to-transparent"
+          />
+          <div className="px-5 py-4">
           {feedback ? (
             <div className="mx-auto flex max-w-xl flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <div className="flex items-center gap-4 sm:flex-1">
@@ -821,6 +872,7 @@ export function ConceptPlayer({
               )}
             </div>
           )}
+          </div>
         </div>
       )}
     </div>

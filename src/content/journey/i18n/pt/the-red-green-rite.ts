@@ -7,6 +7,7 @@ export const theRedGreenRite: Concept = {
     tagline: "TDD: testes primeiro, forja depois.",
     numeral: "II",
     arc: "craft",
+    level: 1,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/the-red-green-rite.webp",
@@ -34,6 +35,36 @@ TDD é um rito de três batidas, e a ordem é o ponto crucial:
 3. **Refatorar** — agora, com a rede em verde, deixe o código limpo. Os testes protegem você enquanto faz as mudanças.
 
 Vermelho prova que o teste pode capturar o bug que ele protege. Verde prova que o comportamento existe. Refatorar é onde o código bom realmente nasce — *com segurança*.`,
+    },
+    {
+      kind: "diagram",
+      body: "Três movimentos, para sempre:",
+      caption: "A ordem É a disciplina: um teste escrito depois do código só prova que o código faz o que faz.",
+      view: {
+        kind: "flow",
+        layout: "cycle",
+        play: true,
+        nodes: [
+          {
+            id: "red",
+            label: "vermelho",
+            note: "Escreva a prova primeiro e veja ela falhar. Um teste que nunca falhou não prova nada.",
+            tone: "bad",
+          },
+          {
+            id: "green",
+            label: "verde",
+            note: "A menor mudança que faz passar. Não a elegante — a menor.",
+            tone: "good",
+          },
+          {
+            id: "refactor",
+            label: "refatorar",
+            note: "Agora deixe bom, com a prova segurando o comportamento parado enquanto você mexe.",
+            tone: "accent",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

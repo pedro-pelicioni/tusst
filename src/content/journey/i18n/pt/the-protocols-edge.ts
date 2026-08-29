@@ -7,6 +7,7 @@ export const theProtocolsEdge: Concept = {
     tagline: "CAPs, SEPs, upgrades nomeados — surfando um protocolo vivo.",
     numeral: "IX",
     arc: "realm",
+    level: 2,
     status: "live",
     estMinutes: 11,
     sigil: "/v2/journey/sigils/the-protocols-edge.webp",
@@ -33,6 +34,42 @@ A mudança flui por dois canais, e vale a pena memorizar a divisão:
 - **SEPs** — *Stellar Ecosystem Proposals* — são os padrões **ao redor** da cadeia: fluxos carteira‑âncora, interfaces de token, stellar.toml. São adotados por implementações, não por voto.
 
 Lei da cadeia versus costume comercial. CAP‑59 trouxe curvas ZK; SEP‑24 trouxe fluxos de depósito. Rios diferentes, ambos públicos, ambos moldados em discussão aberta.`,
+    },
+    {
+      kind: "diagram",
+      body: "Como uma mudança chega no ledger em que você está construindo:",
+      caption: "Ninguém atualiza seu código por você — mas também ninguém muda as regras debaixo de você da noite para o dia.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "draft",
+            label: "um CAP é escrito",
+            note: "Qualquer um pode escrever. Ele defende uma mudança no próprio protocolo.",
+            tone: "neutral",
+          },
+          {
+            id: "review",
+            label: "revisão aberta",
+            note: "Discutido, revisado e muitas vezes rejeitado. Essa é a parte lenta, de propósito.",
+            tone: "accent",
+          },
+          {
+            id: "vote",
+            label: "os validadores votam",
+            note: "A rede só atualiza quando validadores suficientes concordam em rodar aquilo.",
+            tone: "teal",
+          },
+          {
+            id: "you",
+            label: "sua vez",
+            note: "Suba o SDK, rode os testes de novo, faça o redeploy. A data é pública com meses de antecedência.",
+            tone: "gold",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

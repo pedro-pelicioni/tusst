@@ -7,6 +7,7 @@ export const tamingTheGolem: Concept = {
     tagline: "Ingeniería de arneses: dale a la IA una banca, no un deseo.",
     numeral: "V",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 13,
     sigil: "/v2/journey/sigils/taming-the-golem.webp",
@@ -37,6 +38,42 @@ Un arnés funcional tiene partes con nombre:
 - **Paso de revisión** — donde un humano (u otro golem) inspecciona el diff.
 
 Dos equipos con el mismo modelo y arneses diferentes obtienen resultados *drásticamente* distintos. Cuando la calidad de la salida cambia, los ingenieros depuran el arnés — no el horóscopo.`,
+    },
+    {
+      kind: "diagram",
+      body: "Un banco de trabajo, en cuatro partes:",
+      caption: "Cambia el modelo y esto sobrevive. Por eso el banco es el activo, no el prompt.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "context",
+            label: "lo que puede ver",
+            note: "Los archivos, la documentación, la salida que falló. Curado, no todo lo que tienes.",
+            tone: "accent",
+          },
+          {
+            id: "tools",
+            label: "lo que puede hacer",
+            note: "Un conjunto acotado de verbos. Cada uno que falta es un error que no puede cometer.",
+            tone: "teal",
+          },
+          {
+            id: "run",
+            label: "déjalo actuar",
+            note: "Se mueve, y el banco responde con honestidad en vez de asentir por cortesía.",
+            tone: "neutral",
+          },
+          {
+            id: "verify",
+            label: "comprueba el trabajo",
+            note: "Pruebas, tipos, un linter. La verificación convierte la salida en un resultado.",
+            tone: "good",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

@@ -12,8 +12,10 @@ export const theRedGreenRite: Concept = {
     tagline: "TDD: tests first, forge second.",
     numeral: "II",
     arc: "craft",
+    level: 1,
+    requires: ["think-before-you-forge"],
     status: "live",
-    estMinutes: 12,
+    estMinutes: 13,
     sigil: "/v2/journey/sigils/the-red-green-rite.webp",
     glyph: "🟥",
   },
@@ -39,6 +41,36 @@ TDD is a three-beat rite, and the order is the point:
 3. **Refactor** — now, with the net up, make it clean. The tests guard your back while you move things.
 
 Red proves the test can catch the bug it guards against. Green proves the behavior exists. Refactor is where good code actually gets made — *safely*.`,
+    },
+    {
+      kind: "diagram",
+      body: "Three moves, forever:",
+      caption: "The order IS the discipline: a test written after the code only proves the code does what it does.",
+      view: {
+        kind: "flow",
+        layout: "cycle",
+        play: true,
+        nodes: [
+          {
+            id: "red",
+            label: "red",
+            note: "Write the trial first and watch it fail. A test that never failed proves nothing.",
+            tone: "bad",
+          },
+          {
+            id: "green",
+            label: "green",
+            note: "The smallest change that makes it pass. Not the elegant one — the smallest.",
+            tone: "good",
+          },
+          {
+            id: "refactor",
+            label: "refactor",
+            note: "Now make it good, with the trial holding the behaviour still while you move things.",
+            tone: "accent",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

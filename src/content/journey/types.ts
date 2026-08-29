@@ -1,3 +1,5 @@
+import type { DiagramView, WidgetComponent } from "@/content/visuals/types";
+
 // Builder's Journey content model. Concepts are pure DATA (no functions),
 // so server pages can localize/enrich and pass steps straight to the client
 // player as props. Step kinds `theory | quiz | fill` mirror the campaign's
@@ -26,7 +28,12 @@ export type JourneyStep =
       answer: number;
       explain?: string;
     }
-  | { kind: "widget"; component: "scp-sim"; body?: string }
+  | { kind: "widget"; component: WidgetComponent; body?: string }
+  /**
+   * A declarative picture. Labels live in `view`, so the existing locale
+   * overlay translates them and check-i18n guards the structure around them.
+   */
+  | { kind: "diagram"; view: DiagramView; body?: string; caption?: string }
   | { kind: "labLink"; labSlug: string; body: string }
   | { kind: "rustBranch"; lessonSlug: string; body: string }
   | {
@@ -39,6 +46,10 @@ export type JourneyStep =
       minChars?: number;
     };
 
+export type ConceptArc = "foundations" | "craft" | "realm";
+
+export type ConceptLevel = 0 | 1 | 2;
+
 export interface ConceptMeta {
   slug: string;
   /** EN-first; locale overlays arrive with the content i18n phase */
@@ -47,11 +58,25 @@ export interface ConceptMeta {
   /** roman numeral shown on the map rail */
   numeral: string;
   /**
-   * The two great things a builder learns here, interleaved on one road:
-   * craft = being a formidable dev in the AI era; realm = Stellar, end to
-   * end. Rendered as a badge on the map card.
+   * The road's three stretches: foundations = the ground floor, where a
+   * newcomer starts and nothing is assumed; craft = being a formidable dev
+   * in the AI era; realm = Stellar, end to end. Rendered as a badge on the
+   * map card.
    */
-  arc: "craft" | "realm";
+  arc: ConceptArc;
+  /**
+   * Difficulty tier, and the reason the map reads as a trail: 0 assumes
+   * nothing at all (no code, no acronyms), 1 is the essential road, 2 is the
+   * deep end. Chapters are grouped by it so "where do I start?" answers
+   * itself.
+   */
+  level: ConceptLevel;
+  /**
+   * Chapters whose ideas this one leans on, by slug — the trail's edges.
+   * ADVISORY: the map draws them, nothing enforces them. Progression stays
+   * free-roam, so a curious builder can always jump ahead.
+   */
+  requires?: string[];
   status: "live" | "soon";
   estMinutes: number;
   /** public/ path for the chapter sigil art; glyph is the stand-in */

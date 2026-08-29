@@ -64,6 +64,67 @@ Pour un bug dans le chemin de remboursement, le golem a besoin :
 Pas de tout le dépôt. Pas des notes de migration du mois dernier. La compétence réside dans la *sélection* : les deux cents lignes pertinentes valent mieux que l'intégralité de la base de code.`,
     },
     {
+      kind: "diagram",
+      body: "Ce que vous croyez avoir envoyé, et ce qui est réellement arrivé :",
+      caption: "Le contexte est un budget, pas un récipient. Tout ce que vous ajoutez concurrence ce que vous y aviez déjà mis.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "you",
+            label: "ce que vous vouliez dire",
+            tone: "neutral",
+          },
+          {
+            id: "model",
+            label: "ce qu'il a reçu",
+            tone: "accent",
+          },
+        ],
+        rows: [
+          {
+            label: "la tâche",
+            cells: [
+              {
+                text: "« corrige le bug »",
+                tone: "neutral",
+              },
+              {
+                text: "trois mots, aucune sortie d'erreur, aucun fichier",
+                tone: "accent",
+              },
+            ],
+          },
+          {
+            label: "le code",
+            cells: [
+              {
+                text: "« tout est dans le dépôt »",
+                tone: "neutral",
+              },
+              {
+                text: "ce qui tenait — souvent la mauvaise moitié",
+                tone: "accent",
+              },
+            ],
+          },
+          {
+            label: "le standard",
+            cells: [
+              {
+                text: "« tu connais notre style »",
+                tone: "neutral",
+              },
+              {
+                text: "rien ; il n'a jamais vu vos commentaires de revue",
+                tone: "accent",
+              },
+            ],
+          },
+        ],
+      },
+    },
+    {
       kind: "theory",
       body: `## Pourriture de contexte
 

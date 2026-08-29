@@ -1,3 +1,6 @@
+import { conceptText as theBookNoOneCanErase } from "./the-book-no-one-can-erase";
+import { conceptText as theKeyAndTheSeal } from "./the-key-and-the-seal";
+import { conceptText as machinesThatKeepPromises } from "./machines-that-keep-promises";
 import { conceptText as accountsTrustAndAssets } from "./accounts-trust-and-assets";
 import { conceptText as anatomyOfATransaction } from "./anatomy-of-a-transaction";
 import { conceptText as bordersOfTheRealm } from "./borders-of-the-realm";
@@ -17,6 +20,9 @@ import { conceptText as weavingTheGraph } from "./weaving-the-graph";
 import { conceptText as wordsOfPower } from "./words-of-power";
 
 export const translatedConcepts = {
+  "the-book-no-one-can-erase": theBookNoOneCanErase,
+  "the-key-and-the-seal": theKeyAndTheSeal,
+  "machines-that-keep-promises": machinesThatKeepPromises,
   "accounts-trust-and-assets": accountsTrustAndAssets,
   "anatomy-of-a-transaction": anatomyOfATransaction,
   "borders-of-the-realm": bordersOfTheRealm,

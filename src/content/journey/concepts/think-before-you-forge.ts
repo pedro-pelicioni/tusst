@@ -14,8 +14,10 @@ export const thinkBeforeYouForge: Concept = {
     tagline: "Specs are the skill AI can't do for you.",
     numeral: "I",
     arc: "craft",
+    level: 1,
+    requires: ["machines-that-keep-promises"],
     status: "live",
-    estMinutes: 12,
+    estMinutes: 13,
     sigil: "/v2/journey/sigils/think-before-you-forge.webp",
     glyph: "📜",
   },
@@ -40,18 +42,79 @@ A spec describes **behavior**, not implementation:
 - **What must never happen** — "the contract's balance never drops below the sum of open deposits."
 - **The edges** — "what if the deadline is exactly *now*? what if the amount is zero?"
 
-It deliberately does **not** say which loop, which storage key, or which crate. Two very different implementations can both honor the same spec — that freedom is what makes specs durable and AI-friendly.`,
+It deliberately does **not** say which loop, which storage layout, or which library. Two very different implementations can both honor the same spec — that freedom is what makes specs durable and AI-friendly.`,
     },
     {
       kind: "quiz",
       question: `You're writing the spec for an escrow contract. Which sentence **belongs in the spec**?`,
       options: [
         "Funds can be released only when both parties have signed.",
-        "Store the deposit in a persistent map keyed by a u64 counter.",
-        "Use soroban-sdk 26 and the OpenZeppelin pausable extension.",
+        "Number every deposit and save them in the order they arrive.",
+        "Build it with the newest contract toolkit, plus its ready-made pause switch.",
       ],
       answer: 0,
-      explain: `Behavior in, implementation out. Storage layouts and crate choices are the *forge's* business; the spec owns what must be true.`,
+      explain: `Behavior in, implementation out. Storage layouts and tooling choices are the *forge's* business; the spec owns what must be true.`,
+    },
+    {
+      kind: "diagram",
+      body: "The line that quiz just drew, in general:",
+      caption: "Two implementations of the same spec can look nothing alike. That freedom is exactly the point.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "spec",
+            label: "belongs in the spec",
+            tone: "good",
+          },
+          {
+            id: "forge",
+            label: "belongs in the forge",
+            tone: "neutral",
+          },
+        ],
+        rows: [
+          {
+            label: "an example",
+            cells: [
+              {
+                text: "funds are released only when both parties signed",
+                tone: "good",
+              },
+              {
+                text: "keep the deposits in a numbered list",
+                tone: "neutral",
+              },
+            ],
+          },
+          {
+            label: "who owns it",
+            cells: [
+              {
+                text: "you — it outlives every rewrite",
+                tone: "good",
+              },
+              {
+                text: "whoever forges it, this time round",
+                tone: "neutral",
+              },
+            ],
+          },
+          {
+            label: "when it changes",
+            cells: [
+              {
+                text: "when the behaviour must change",
+                tone: "good",
+              },
+              {
+                text: "whenever a faster way turns up",
+                tone: "neutral",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "theory",
@@ -136,7 +199,7 @@ Time to forge a spec of your own. The commission:
 > The guild wants an on-chain **tip jar**. Anyone may drop tips into it. Only the guild's **keeper** may collect what's inside. The guild is paranoid about two things: the keeper somehow taking *more* than the jar holds, and tips getting stuck forever if the keeper vanishes.
 
 Write the spec — **behavior only**, the way this chapter taught: what must happen, what must never happen, and the edges. An AI examiner will judge it against the rubric below (and it grades exactly like the golem forges: to the letter).`,
-      rubric: `1. Behavior only — no storage layouts, crates, or function signatures.
+      rubric: `1. Behavior only — no storage layouts, libraries, or function signatures.
 2. The deposit rule and the collect rule are each stated unambiguously (who may act, on what).
 3. At least one **invariant** that must hold at all times.
 4. At least one **edge case** is addressed (zero-amount tip, empty-jar collect, exact-balance collect…).

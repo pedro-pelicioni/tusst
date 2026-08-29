@@ -7,6 +7,7 @@ export const weavingTheGraph: Concept = {
     tagline: "Ingeniería de grafos: muchos pequeños gólems, un plan tejido.",
     numeral: "VIII",
     arc: "craft",
+    level: 2,
     status: "live",
     estMinutes: 12,
     sigil: "/v2/journey/sigils/weaving-the-graph.webp",
@@ -37,6 +38,93 @@ La independencia es la palabra favorita del planificador.
 **Fan-in**: un nodo de *síntesis* recibe los tres informes, los pondera según tus criterios y recomienda.
 
 La disciplina consiste en detectar la *verdadera* independencia: el trabajo paralelo no debe compartir **ningún estado** — nodos que compiten por editar el mismo archivo no forman un grafo, son una pelea. Es pensar en dependencias, como ya lo haces con pipelines de datos, ahora aplicado a las mentes.`,
+    },
+    {
+      kind: "diagram",
+      body: "Un plan, tres trabajadores, un veredicto:",
+      caption: "Cada trabajador empieza limpio. Ese aislamiento es el punto: un mal paso en uno nunca envenena a los otros.",
+      view: {
+        kind: "graph",
+        nodes: [
+          {
+            id: "plan",
+            label: "PLAN",
+            x: 50,
+            y: 12,
+            tone: "accent",
+            shape: "box",
+            note: "Divide el trabajo en piezas que no necesitan hablar entre sí.",
+          },
+          {
+            id: "a",
+            label: "A",
+            x: 18,
+            y: 36,
+            tone: "teal",
+            shape: "box",
+            note: "Contexto propio, presupuesto propio. Nunca ve los errores de B.",
+          },
+          {
+            id: "b",
+            label: "B",
+            x: 50,
+            y: 36,
+            tone: "teal",
+            shape: "box",
+            note: "Corre a la vez, con el mismo encargo, sobre otra pieza.",
+          },
+          {
+            id: "c",
+            label: "C",
+            x: 82,
+            y: 36,
+            tone: "teal",
+            shape: "box",
+            note: "Tres intentos baratos valen más que uno caro que no puedes comprobar.",
+          },
+          {
+            id: "judge",
+            label: "JUEZ",
+            x: 50,
+            y: 56,
+            tone: "gold",
+            shape: "box",
+            note: "Lee los tres y decide. De aquí sale realmente la calidad.",
+          },
+        ],
+        edges: [
+          {
+            from: "plan",
+            to: "a",
+            style: "solid",
+          },
+          {
+            from: "plan",
+            to: "b",
+            style: "solid",
+          },
+          {
+            from: "plan",
+            to: "c",
+            style: "solid",
+          },
+          {
+            from: "a",
+            to: "judge",
+            style: "dashed",
+          },
+          {
+            from: "b",
+            to: "judge",
+            style: "dashed",
+          },
+          {
+            from: "c",
+            to: "judge",
+            style: "dashed",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",

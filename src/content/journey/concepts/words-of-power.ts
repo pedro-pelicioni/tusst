@@ -12,8 +12,10 @@ export const wordsOfPower: Concept = {
     tagline: "Prompt & context engineering — what the golem actually sees.",
     numeral: "VI",
     arc: "craft",
+    level: 2,
+    requires: ["think-before-you-forge"],
     status: "live",
-    estMinutes: 12,
+    estMinutes: 13,
     sigil: "/v2/journey/sigils/words-of-power.webp",
     glyph: "🪶",
   },
@@ -75,6 +77,67 @@ For a bug in the refund path, the golem needs:
 - the **failing test** — the Rite's artifact, naming exactly what "fixed" means.
 
 Not the whole repo. Not last month's migration notes. The skill is *selection*: the right two hundred lines beat the complete works of your codebase.`,
+    },
+    {
+      kind: "diagram",
+      body: "What you think you sent, and what actually arrived:",
+      caption: "Context is a budget, not a container. Everything you add competes with everything you already put there.",
+      view: {
+        kind: "compare",
+        columns: [
+          {
+            id: "you",
+            label: "what you meant",
+            tone: "neutral",
+          },
+          {
+            id: "model",
+            label: "what it received",
+            tone: "accent",
+          },
+        ],
+        rows: [
+          {
+            label: "the task",
+            cells: [
+              {
+                text: "\"fix the bug\"",
+                tone: "neutral",
+              },
+              {
+                text: "four words, no failing output, no file",
+                tone: "accent",
+              },
+            ],
+          },
+          {
+            label: "the codebase",
+            cells: [
+              {
+                text: "\"it's all in the repo\"",
+                tone: "neutral",
+              },
+              {
+                text: "whatever fit — usually the wrong half",
+                tone: "accent",
+              },
+            ],
+          },
+          {
+            label: "the standard",
+            cells: [
+              {
+                text: "\"you know our style\"",
+                tone: "neutral",
+              },
+              {
+                text: "nothing; it has never seen your review comments",
+                tone: "accent",
+              },
+            ],
+          },
+        ],
+      },
     },
     {
       kind: "theory",
