@@ -2,10 +2,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { chaptersByArc } from "@/content/journey";
+import { getJourneyChaptersLocalized } from "@/content/journey/i18n";
 import type { Concept } from "@/content/journey/types";
 import type { Messages } from "@/i18n/messages/en";
-import { getMessages } from "@/i18n/server";
+import { getLocale, getMessages } from "@/i18n/server";
 import { fmt } from "@/i18n/format";
 import { XP_CONCEPT } from "@/lib/xp";
 import { SceneRoot } from "@/components/scene/SceneRoot";
@@ -136,7 +136,7 @@ function ArcRail({
 export default async function JourneyPage() {
   const session = await auth();
   const userId = session?.user?.id;
-  const m = await getMessages();
+  const [m, locale] = await Promise.all([getMessages(), getLocale()]);
 
   const completedRows = userId
     ? await prisma.journeyProgress.findMany({
@@ -146,8 +146,9 @@ export default async function JourneyPage() {
     : [];
   const completed = new Set(completedRows.map((r) => r.conceptSlug));
 
-  const craft = chaptersByArc("craft");
-  const realm = chaptersByArc("realm");
+  const chapters = getJourneyChaptersLocalized(locale);
+  const craft = chapters.filter((chapter) => chapter.meta.arc === "craft");
+  const realm = chapters.filter((chapter) => chapter.meta.arc === "realm");
 
   return (
     <SceneRoot id="journey-map">

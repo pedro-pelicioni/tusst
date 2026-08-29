@@ -166,7 +166,12 @@ export function ScpSim() {
 
   return (
     <div className="rounded-2xl border border-line bg-bg-elev/80 p-4">
-      <svg viewBox="0 0 480 336" className="w-full" role="img" aria-label="SCP quorum simulator">
+      <svg
+        viewBox="0 0 480 336"
+        className="w-full"
+        role="img"
+        aria-label={m.ariaLabel}
+      >
         {/* slice edges */}
         {SLICES.map((slice, n) =>
           slice
@@ -203,7 +208,7 @@ export function ScpSim() {
               onClick={() => toggleNode(i)}
               className="cursor-pointer"
               role="button"
-              aria-label={`node ${NODE_LABELS[i]}`}
+              aria-label={fmt(m.nodeAria, { node: NODE_LABELS[i] })}
             >
               <circle
                 cx={p.x}

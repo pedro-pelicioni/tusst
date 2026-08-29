@@ -2,8 +2,13 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { labBySlug } from "@/content/labs";
+import {
+  localizeLab,
+  type LabTextOverlay,
+} from "@/content/labs/localize";
 import { LabPlayer } from "@/components/labs/LabPlayer";
 import { SceneRoot } from "@/components/scene/SceneRoot";
+import { getMessages } from "@/i18n/server";
 
 // One guided lab. Public like /ide — anonymous heroes play the whole flow;
 // only the XP claim asks them to sign in. The scenario itself is resolved
@@ -15,8 +20,13 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const lab = labBySlug(slug);
-  if (!lab) return {};
+  const baseLab = labBySlug(slug);
+  if (!baseLab) return {};
+  const m = await getMessages();
+  const lab = localizeLab(
+    baseLab,
+    (m.labs.content as Record<string, LabTextOverlay | undefined>)[slug],
+  );
   return {
     title: `${lab.meta.title} — TUSST`,
     description: lab.meta.tagline,

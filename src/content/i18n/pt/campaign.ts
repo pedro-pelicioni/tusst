@@ -146,6 +146,16 @@ export const skirmishText: Record<string, SkirmishText> = {
     intro:
       "O Acumulador não deixará você levar o tesouro embora — mas deixa você olhar. Um slice é uma janela para um trecho do tesouro: sem cópia, sem roubo, só uma vista daqui até ali. Cuidado com as bordas; a janela inclui o começo e exclui o fim.",
   },
+  "rust-standard-library-7": {
+    title: "O Molde no Cofre Mais Profundo",
+    intro:
+      "Depois dos livros-razão e da tinta viva, resta uma porta: a oficina do próprio Acumulador, onde todo tesouro começa como molde antes de se tornar algo. \"Uma `struct`\", diz ele, traçando a forma com uma garra, \"reúne muitas partes sob um só nome — uma forma que o cofre reconhecerá para sempre.\"",
+  },
+  "rust-standard-library-8": {
+    title: "O Rito que Desperta o Receptáculo",
+    intro:
+      "Um molde permanece inerte até receber um rito: alguém que o construa e uma voz que responda por ele. \"Um bloco `impl` ensina à forma o que ela pode fazer\", diz o Acumulador. \"Marque-a também com `derive`, para que revele seus próprios segredos quando você exigir vê-los.\"",
+  },
   "mastering-option-1": {
     title: "Some ou None?",
     intro:

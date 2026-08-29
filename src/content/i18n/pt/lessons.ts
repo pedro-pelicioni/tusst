@@ -1052,4 +1052,80 @@ __check_auth: signature verified, steward honored — the echo is silent ✓
 \`\`\`
 `,
   },
+
+  "rust-standard-library-7": {
+    instructions: `## Structs
+
+Uma **struct** reúne valores relacionados em um único tipo com nome. Você define o formato uma vez e cria quantas instâncias quiser:
+
+\`\`\`rust
+struct Player {
+    name: String,
+    hp: i32,
+}
+\`\`\`
+
+Crie uma instância com um **literal de struct**, atribuindo um valor a cada campo:
+
+\`\`\`rust
+let hero = Player { name: String::from("Ferrisia"), hp: 100 };
+\`\`\`
+
+Acesse os campos com a notação de ponto: \`hero.name\`, \`hero.hp\`.
+
+### Sua missão
+
+1. Defina uma struct \`Player\` com os campos \`name: String\` e \`hp: i32\` — nessa ordem.
+2. Crie um \`Player\` chamado \`hero\`, com \`name: String::from("Ferrisia")\` e \`hp: 100\`.
+3. Imprima exatamente: \`Ferrisia has 100 hp\`.
+
+### Dicas
+
+- A ordem dos campos na definição importa nesta lição: primeiro \`name\`, depois \`hp\`.
+- Use \`{} has {} hp\` com \`hero.name\` e \`hero.hp\`.
+`,
+  },
+
+  "rust-standard-library-8": {
+    instructions: `## impl e métodos
+
+Sozinha, uma struct apenas armazena dados. Um bloco \`impl\` associa comportamentos a ela — funções que sabem trabalhar com esse tipo.
+
+\`\`\`rust
+impl Player {
+    fn new(name: &str) -> Player {
+        Player { name: String::from(name), hp: 100 }
+    }
+
+    fn is_alive(&self) -> bool {
+        self.hp > 0
+    }
+}
+\`\`\`
+
+- \`new\` é uma **função associada** — não recebe \`self\` e é chamada como \`Player::new(...)\`.
+- \`is_alive\` é um **método** — recebe \`&self\` e é chamado como \`hero.is_alive()\`.
+
+Adicione \`#[derive(Debug)]\` acima da struct para o Rust gerar automaticamente uma representação de depuração, que pode ser impressa com \`{:?}\`:
+
+\`\`\`rust
+#[derive(Debug)]
+struct Player { /* ... */ }
+\`\`\`
+
+### Sua missão
+
+1. Adicione \`#[derive(Debug)]\` acima de \`Player\`.
+2. Dentro de \`impl Player\`, escreva \`new(name: &str) -> Player\`, criando um \`Player\` com o nome recebido e \`hp: 100\`.
+3. Escreva o método \`is_alive(&self) -> bool\`, que retorna \`self.hp > 0\`.
+4. Em \`main\`, crie \`hero\` com \`Player::new("Ferrisia")\`, imprima \`alive: {}\` com \`hero.is_alive()\` e depois imprima \`hero\` com \`{:?}\`.
+
+Saída esperada:
+
+\`\`\`text
+alive: true
+Player { name: "Ferrisia", hp: 100 }
+\`\`\`
+`,
+  },
 };

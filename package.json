@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "check:i18n": "tsx scripts/check-i18n.ts",
     "check:forge-pins": "node scripts/check-forge-pins.mjs",
     "postinstall": "prisma generate",
     "db:up": "docker compose up -d db",

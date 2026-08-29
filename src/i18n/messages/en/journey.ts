@@ -51,6 +51,10 @@ export const journey = {
       passKicker: "spec accepted",
       failKicker: "the examiner objects",
       revise: "Revise & resubmit",
+      notConfigured: "The examiner is not configured in this environment.",
+      rateLimited: "The examiner has reached its current usage limit — try again later.",
+      signedOut: "Your session expired — sign in again before submitting.",
+      invalid: "The specification could not be submitted. Review it and try again.",
       unavailable: "The examiner is unreachable right now — try again in a moment.",
     },
     claim: {

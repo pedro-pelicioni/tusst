@@ -1,6 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { LabScenario } from "@/content/labs/types";
+import {
+  localizeLab,
+  type LabTextOverlay,
+} from "@/content/labs/localize";
 import type { Messages } from "@/i18n/messages/en";
 import { fmt } from "@/i18n/format";
 import { hasV2Asset } from "@/components/scene/SceneArt";
@@ -18,7 +22,11 @@ export function LabCard({
   completed: boolean;
   m: Messages["labs"];
 }) {
-  const { meta } = lab;
+  const localizedLab = localizeLab(
+    lab,
+    (m.content as Record<string, LabTextOverlay | undefined>)[lab.meta.slug],
+  );
+  const { meta } = localizedLab;
   const live = meta.status === "live";
   const emblem = hasV2Asset(meta.emblem) ? (
     <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">

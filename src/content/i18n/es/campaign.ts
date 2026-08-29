@@ -145,7 +145,17 @@ export const skirmishText: Record<string, SkirmishText> = {
   "rust-standard-library-6": {
     title: "Una Ventana al Tesoro",
     intro:
-      "El Acaparador no te dejará sacar el tesoro — pero sí te dejará mirar. Un slice es una ventana a un tramo del tesoro: sin copia, sin robo, solo una vista de aquí hasta allá. Cuidado con los bordes; la ventana incluye su inicio y excluye su final.",
+      "El Acaparador no te dejará sacar el tesoro — pero sí te dejará mirar. Un slice es una ventana a un tramo del tesoro: sin copia, sin robo, solo una vista de aquí hasta allá. Cuidado con los límites; la ventana incluye su inicio y excluye su final.",
+  },
+  "rust-standard-library-7": {
+    title: "El Plano de la Bóveda Más Profunda",
+    intro:
+      "Más allá de los libros mayores y la tinta viva queda una puerta: el taller del propio Acaparador, donde cada tesoro empieza como un plano antes de convertirse en algo. «Una `struct`», dice mientras traza el molde con una garra, «reúne muchas partes bajo un solo nombre: una forma que la bóveda reconocerá para siempre». ",
+  },
+  "rust-standard-library-8": {
+    title: "El Rito que Despierta el Recipiente",
+    intro:
+      "Un plano permanece inerte hasta que recibe un rito: alguien que le dé forma y una voz que responda por él. «Un bloque `impl` enseña a la forma lo que puede hacer», dice el Acaparador. «Márcala también con `derive`, para que revele sus propios secretos cuando se lo pidas». ",
   },
   "mastering-option-1": {
     title: "¿Some o None?",

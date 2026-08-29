@@ -350,6 +350,16 @@ fn double_first() -> Result<i32, String> {
 Así es como el código Rust real se mantiene legible: los errores fluyen cuesta arriba, la lógica queda plana.`,
     },
     {
+      kind: "theory",
+      body: `Hay una runa más en el helper \`parse\` que ya recibes escrito:
+
+\`\`\`rust
+text.parse().map_err(|_| String::from("not a number"))
+\`\`\`
+
+\`|_| String::from("not a number")\` es una **closure**: una pequeña función anónima. El \`_\` significa “recibe el argumento, pero no necesito usarlo”; el cuerpo es el valor que devuelve la closure. Todavía no necesitas escribir una: basta con saber que \`map_err\` solo la llama cuando hay un \`Err\` que transformar.`,
+    },
+    {
       kind: "quiz",
       question: "¿Qué hace `?` cuando el Result es `Err`?",
       options: [
@@ -641,6 +651,20 @@ lumens flowing ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
+      body: `Antes de la Puerta, en la bóveda del Acumulador, aprendiste el rito de \`struct\` e \`impl\`: un molde y el artesano que le da vida. Más allá de la Puerta, la esencia no cambia.
+
+\`\`\`rust
+#[contract]
+pub struct HelloContract;
+
+#[contractimpl]
+impl HelloContract { /* ... */ }
+\`\`\`
+
+\`#[contract]\` y \`#[contractimpl]\` son marcas que el host del ledger lee sobre esa misma struct y ese mismo impl. No es sintaxis nueva: es la forma que ya conoces, ahora sellada para la red.`,
+    },
+    {
+      kind: "theory",
       body: `Forgeborn, las reglas cambian más allá de la Puerta. Un **contrato Soroban** es una biblioteca de Rust compilada a WASM y almacenada en el ledger de Stellar — donde cualquiera puede invocarlo.
 
 \`\`\`rust
@@ -1061,7 +1085,11 @@ crown delegated: steward honored ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `El truco del Espectro del Eco, en términos llanos — un **replay de firma**. Las auditorías de seguridad descubrieron que necesita tres cosas a la vez:
+      body: `Un **ataque de replay** es un truco antiguo con un nombre nuevo: tomar algo válido — una firma, un sello, un billete — y reutilizarlo donde nunca debía funcionar. El firmante no autorizó ese segundo uso. El sello no tiene memoria; por sí solo, no sabe que lo están presentando otra vez.`,
+    },
+    {
+      kind: "theory",
+      body: `La versión del Espectro del Eco necesita tres cosas a la vez:
 
 1. Un contrato estilo admin que **no nombra la dirección del firmante** en el payload firmado.
 2. El admin es **rotado** a una dirección distinta…
@@ -1162,7 +1190,7 @@ Renombra el import y la caravana sigue. El resto de las notas de migración vive
     },
     {
       kind: "theory",
-      body: `El checklist de migración del Forgeborn:
+      body: `La lista de verificación de la migración del Forgeborn:
 
 1. **Actualiza cada SDK** y biblioteca cliente.
 2. **Renombra** los imports de \`stellar-base\` a \`stellar-sdk\`.
@@ -1184,13 +1212,13 @@ La [guía de actualización](https://stellar.org/blog/foundation-news/stellar-zi
     },
     {
       kind: "fill",
-      prompt: "Arregla el import para que cruce la Puerta.",
-      file: "app.ts",
-      before: "import { xdr } from \"@stellar/stellar-",
+      prompt: "Completa en el manifiesto el paquete JavaScript que absorbió al antiguo stellar-base.",
+      file: "lib.rs",
+      before: "pub const JS_XDR_PACKAGE: &str = \"@stellar/stellar-",
       after: "\";",
       choices: ["sdk", "base", "core"],
       answer: 0,
-      explain: "stellar-base fue consolidado en stellar-sdk en las versiones del Protocol 27.",
+      explain: "@stellar/stellar-base fue consolidado en @stellar/stellar-sdk en las versiones del Protocol 27.",
     },
     {
       kind: "editor",

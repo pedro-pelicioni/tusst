@@ -68,6 +68,8 @@ export const lessonTitles: Record<string, string> = {
   "rust-standard-library-4": "HashMap",
   "rust-standard-library-5": "Manipulation de String",
   "rust-standard-library-6": "Slices",
+  "rust-standard-library-7": "Structs",
+  "rust-standard-library-8": "impl et Méthodes",
 
   // Mastering Option<T>
   "mastering-option-1": "Some ou None",

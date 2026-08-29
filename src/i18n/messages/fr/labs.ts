@@ -1,4 +1,4 @@
-import { passkeySmartWalletContent } from "../en/labs";
+import { LAB_TEXT } from "@/content/labs/i18n";
 
 // La Forge — index /labs (labs guidés + carte de l'IDE libre) et le chrome du
 // player de lab. Le contenu des étapes vit dans src/content/labs (EN-first).
@@ -17,7 +17,7 @@ export const labs = {
     blurb:
       "L'atelier Soroban complet dans ton navigateur : écris du Rust, compile, déploie sur testnet, invoque. Sans rails, sans murs.",
     cta: "Ouvrir l'IDE",
-    badge: "sans connexion · sans setup",
+    badge: "sans connexion · sans configuration",
   },
   card: {
     minutes: "{minutes} min",
@@ -34,6 +34,8 @@ export const labs = {
     master: "maître",
   },
   sim: {
+    ariaLabel: "Simulateur de quorum SCP",
+    nodeAria: "Nœud {node}",
     propose: "Proposer un ledger",
     reset: "Réinitialiser le concile",
     running: "le concile délibère…",
@@ -43,9 +45,7 @@ export const labs = {
     hint: "Appuie sur proposer et regarde l'acceptation se propager. Clique un nœud pour l'abattre (ou le relever).",
     ledgers: "ledgers clos : {n}",
   },
-  content: {
-    "passkey-smart-wallet": passkeySmartWalletContent,
-  },
+  content: LAB_TEXT.fr,
   player: {
     exit: "Quitter le lab",
     wallet: {
@@ -66,14 +66,14 @@ export const labs = {
     viewTx: "Voir la transaction sur l'explorer",
     viewAccount: "Voir ton compte sur l'explorer",
     viewContract: "Voir le smart wallet sur l'explorer",
-    retry: "Frapper encore",
+    retry: "Réessayer",
     errors: {
-      testnetBusy: "Les esprits du testnet sont occupés — frappe encore dans un instant.",
+      testnetBusy: "Le testnet est chargé ; réessaie dans un instant.",
       walletRequired: "Forge d'abord tes clés — reviens d'un écran.",
       missingState: "Une étape précédente manque — reviens et termine-la.",
       forgeCold: "La forge est froide — le runner est injoignable. Réessaie dans un instant.",
-      buildFailed: "La compilation a échoué — le runner a rejeté ce contrat. Frappe encore.",
-      buildTimeout: "La compilation a dépassé le temps — la forge était bondée. Frappe encore.",
+      buildFailed: "La compilation a échoué : le runner a rejeté ce contrat. Réessaie.",
+      buildTimeout: "La compilation a expiré : la forge était occupée. Réessaie.",
       localWalletRequired:
         "Ce rite a besoin de la clé testnet locale de la Forge pour payer le déploiement — forge-la à l'étape précédente.",
       passkeyUnavailable:
@@ -81,13 +81,13 @@ export const labs = {
       passkeyMismatch:
         "Cette passkey appartient à un autre smart wallet. Réessaie et choisis l'identifiant que tu viens de forger.",
       passkeyFailed:
-        "La cérémonie de passkey n'a pas abouti. Approuve la demande de l'appareil et frappe encore.",
+        "La cérémonie de passkey n'a pas abouti. Approuve la demande de l'appareil puis réessaie.",
       smartWalletDeployFailed:
-        "La passkey a été créée, mais son smart wallet n'a pas atteint le testnet. Frappe encore dans un instant.",
+        "La passkey a été créée, mais son smart wallet n'a pas atteint le testnet. Réessaie dans un instant.",
       smartWalletFundFailed:
-        "Le smart wallet existe, mais Friendbot n'a pas pu le financer pour l'épreuve de signature. Frappe encore dans un instant.",
+        "Le smart wallet a été déployé, mais Friendbot n'a pas pu le financer pour le test de signature. Réessaie dans un instant.",
       passkeyTransactionFailed:
-        "Le transfert signé par la passkey n'a pas atteint le testnet. Approuve la demande de l'appareil et frappe encore.",
+        "Le transfert signé avec la passkey n'a pas atteint le testnet. Approuve la demande de l'appareil puis réessaie.",
     },
     checkpoint: {
       title: "Réclame ta récompense",

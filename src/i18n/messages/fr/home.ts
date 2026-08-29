@@ -2,7 +2,7 @@
 export const home = {
   metaTitle: "Le Hall — TUSST",
   metaDescription:
-    "Choisis ta route : le Voyage du Builder, les labs guidés de la Forge ou la campagne Rust optionnelle.",
+    "Choisis ta route : le Voyage du Bâtisseur, les labs guidés de la Forge ou la campagne Rust optionnelle.",
   kicker: "le hall",
   title: "Choisis ta route, forgeborn",
   intro:
@@ -13,7 +13,7 @@ export const home = {
   doors: {
     journey: {
       label: "la route essentielle",
-      title: "Voyage du Builder",
+      title: "Voyage du Bâtisseur",
       blurb:
         "Spec-driven, TDD, clean architecture — et comment Stellar fonctionne vraiment. La discipline qu'une IA n'apprendra pas à ta place.",
       cta: "Suivre le Voyage",

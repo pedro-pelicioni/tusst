@@ -1,11 +1,11 @@
 // Le Voyage du Builder — carte /journey et chrome du player de concept.
 // Le contenu des étapes vit dans src/content/journey (EN-first).
 export const journey = {
-  metaTitle: "Voyage du Builder — TUSST",
+  metaTitle: "Voyage du Bâtisseur — TUSST",
   metaDescription:
     "La route essentielle : spec-driven, TDD, clean architecture et le vrai fonctionnement de Stellar — l'ingénierie qu'une IA n'apprendra pas à ta place.",
   kicker: "la route essentielle",
-  title: "Voyage du Builder",
+  title: "Voyage du Bâtisseur",
   intro:
     "Deux arcs, une route. L'Art : les disciplines d'ingénierie que l'ère de l'IA exige sans te les offrir. Le Royaume : l'écosystème Stellar de bout en bout, du consensus à la frontière de la vie privée. Chapitres courts, vraie profondeur — et chaque porte vers Rust reste optionnelle.",
   mapHeading: "// chapitres",
@@ -44,13 +44,17 @@ export const journey = {
     },
     exercise: {
       kicker: "l'épreuve de l'examinateur",
-      rubricLabel: "la grille qui la jugera",
-      placeholder: "Écris ta spec ici — comportement, invariants, bordures…",
+      rubricLabel: "critères d'évaluation",
+      placeholder: "Écris ta spécification ici — comportement, invariants, cas limites…",
       submit: "Soumettre à l'examinateur",
       checking: "l'examinateur lit…",
-      passKicker: "spec acceptée",
-      failKicker: "l'examinateur objecte",
-      revise: "Réviser & renvoyer",
+      passKicker: "spécification acceptée",
+      failKicker: "l'examinateur demande des ajustements",
+      revise: "Réviser et renvoyer",
+      notConfigured: "L'examinateur n'est pas configuré dans cet environnement.",
+      rateLimited: "L'examinateur a atteint sa limite d'utilisation actuelle ; réessaie plus tard.",
+      signedOut: "Ta session a expiré ; reconnecte-toi avant d'envoyer ta réponse.",
+      invalid: "La spécification n'a pas pu être envoyée. Relis-la puis réessaie.",
       unavailable: "L'examinateur est injoignable pour l'instant — réessaie dans un moment.",
     },
     claim: {

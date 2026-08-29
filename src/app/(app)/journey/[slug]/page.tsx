@@ -2,8 +2,14 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { chaptersByArc, conceptBySlug } from "@/content/journey";
+import { chaptersByArc } from "@/content/journey";
+import { getConceptLocalized } from "@/content/journey/i18n";
 import { labBySlug } from "@/content/labs";
+import { LAB_TEXT } from "@/content/labs/i18n";
+import {
+  localizeLab,
+  type LabTextOverlay,
+} from "@/content/labs/localize";
 import { acts } from "@/content/campaign";
 import { getActLocalized } from "@/content/i18n";
 import { getLocale } from "@/i18n/server";
@@ -27,7 +33,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const concept = conceptBySlug(slug);
+  const locale = await getLocale();
+  const concept = getConceptLocalized(slug, locale);
   if (!concept) return {};
   return {
     title: `${concept.meta.title} — TUSST`,
@@ -41,12 +48,12 @@ export default async function ConceptPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const concept = conceptBySlug(slug);
+  const locale = await getLocale();
+  const concept = getConceptLocalized(slug, locale);
   if (!concept || concept.meta.status !== "live") notFound();
 
   const session = await auth();
   const userId = session?.user?.id;
-  const locale = await getLocale();
 
   // Enrich labLink steps with live/completed state.
   const labSlugs = concept.steps.flatMap((s) =>
@@ -64,8 +71,16 @@ export default async function ConceptPage({
   );
   const labState: Record<string, LabLinkState> = {};
   for (const labSlug of labSlugs) {
-    const lab = labBySlug(labSlug);
-    if (!lab) continue;
+    const baseLab = labBySlug(labSlug);
+    if (!baseLab) continue;
+    const lab = localizeLab(
+      baseLab,
+      locale === "en"
+        ? undefined
+        : (LAB_TEXT[locale] as Record<string, LabTextOverlay | undefined>)[
+            labSlug
+          ],
+    );
     labState[labSlug] = {
       live: lab.meta.status === "live",
       completed: labDone.has(labSlug),

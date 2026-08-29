@@ -1144,7 +1144,7 @@ No se hace ninguna copia. El \`&\` lo marca como préstamo — estás mirando el
     },
     {
       kind: "theory",
-      body: `Cuidado con los bordes — la misma regla que los rangos de \`for\`:
+      body: `Cuidado con los límites — la misma regla que los rangos de \`for\`:
 
 - \`1..4\` → ranuras 1, 2, 3 (**excluye** el final)
 - \`1..=4\` → ranuras 1, 2, 3, 4 (lo incluye)

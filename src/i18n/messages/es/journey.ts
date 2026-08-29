@@ -1,11 +1,11 @@
 // El Viaje del Builder — mapa /journey y chrome del player de concepto.
 // El contenido de los pasos vive en src/content/journey (EN-first).
 export const journey = {
-  metaTitle: "Viaje del Builder — TUSST",
+  metaTitle: "Viaje del Constructor — TUSST",
   metaDescription:
     "El camino esencial: spec-driven, TDD, clean architecture y cómo funciona Stellar de verdad — la ingeniería que una IA no aprenderá por ti.",
   kicker: "el camino esencial",
-  title: "Viaje del Builder",
+  title: "Viaje del Constructor",
   intro:
     "Dos arcos, un camino. El Oficio: las disciplinas de ingeniería que la era de la IA exige y no te regala. El Reino: el ecosistema Stellar de punta a punta, del consenso a la frontera de la privacidad. Capítulos cortos, profundidad real — y cada puerta a Rust sigue siendo opcional.",
   mapHeading: "// capítulos",
@@ -44,13 +44,17 @@ export const journey = {
     },
     exercise: {
       kicker: "la prueba del examinador",
-      rubricLabel: "la rúbrica que lo juzgará",
-      placeholder: "Escribe tu spec aquí — comportamiento, invariantes, bordes…",
+      rubricLabel: "criterios de evaluación",
+      placeholder: "Escribe aquí tu especificación — comportamiento, invariantes, casos límite…",
       submit: "Enviar al examinador",
       checking: "el examinador lee…",
-      passKicker: "spec aceptada",
-      failKicker: "el examinador objeta",
+      passKicker: "especificación aceptada",
+      failKicker: "el examinador pide ajustes",
       revise: "Revisar y reenviar",
+      notConfigured: "El examinador no está configurado en este entorno.",
+      rateLimited: "El examinador alcanzó su límite de uso actual; inténtalo de nuevo más tarde.",
+      signedOut: "Tu sesión caducó; inicia sesión de nuevo antes de enviar.",
+      invalid: "No se pudo enviar la especificación. Revísala e inténtalo de nuevo.",
       unavailable: "El examinador está inaccesible ahora — inténtalo de nuevo en un momento.",
     },
     claim: {

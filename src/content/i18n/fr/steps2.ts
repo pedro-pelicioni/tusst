@@ -350,6 +350,16 @@ fn double_first() -> Result<i32, String> {
 C'est ainsi que le vrai code Rust reste lisible : les erreurs remontent vers l'appelant, la logique reste plate.`,
     },
     {
+      kind: "theory",
+      body: `Une rune supplémentaire se trouve dans le helper \`parse\` qui t'est fourni :
+
+\`\`\`rust
+text.parse().map_err(|_| String::from("not a number"))
+\`\`\`
+
+\`|_| String::from("not a number")\` est une **closure** : une petite fonction anonyme. Le \`_\` signifie « reçois l'argument, mais je n'ai pas besoin de l'utiliser » ; le corps est la valeur renvoyée par la closure. Tu n'as pas encore à en écrire une : retiens simplement que \`map_err\` ne l'appelle que lorsqu'il faut transformer un \`Err\`.`,
+    },
+    {
       kind: "quiz",
       question: "Que fait `?` quand le Result est `Err` ?",
       options: [
@@ -641,6 +651,20 @@ lumens flowing ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
+      body: `Avant la Porte, dans la réserve de l'Accumulateur, tu as appris le rite de \`struct\` et \`impl\` — un moule et l'artisan qui lui donne vie. Au-delà de la Porte, leur nature ne change pas.
+
+\`\`\`rust
+#[contract]
+pub struct HelloContract;
+
+#[contractimpl]
+impl HelloContract { /* ... */ }
+\`\`\`
+
+\`#[contract]\` et \`#[contractimpl]\` sont des marques que l'hôte du ledger lit sur cette même struct et ce même impl. Ce n'est pas une nouvelle syntaxe : c'est la forme que tu connais déjà, désormais scellée pour le réseau.`,
+    },
+    {
+      kind: "theory",
       body: `Forgeborn, au-delà de la Porte, les règles changent. Un **contrat Soroban** est une bibliothèque Rust compilée en WASM et stockée sur le ledger Stellar — où n'importe qui peut l'invoquer.
 
 \`\`\`rust
@@ -1061,7 +1085,11 @@ crown delegated: steward honored ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Le tour du Spectre de l'Écho, en termes simples — un **replay de signature**. Les audits de sécurité ont montré qu'il exige trois choses à la fois :
+      body: `Une **attaque par rejeu** est un vieux tour sous un nom neuf : prendre quelque chose de valide — une signature, un sceau, un billet — et le réutiliser là où il ne devait jamais fonctionner. Le signataire n'a pas autorisé ce second usage. Le sceau n'a pas de mémoire ; seul, il ne sait pas qu'on le présente une deuxième fois.`,
+    },
+    {
+      kind: "theory",
+      body: `La version du Spectre de l'Écho exige trois éléments à la fois :
 
 1. Un contrat de type admin qui **ne nomme pas l'adresse du signataire** dans le payload signé.
 2. L'admin est **remplacé** par une autre adresse…
@@ -1162,7 +1190,7 @@ Renomme l'import, et la caravane repart. Le reste des notes de migration vit dan
     },
     {
       kind: "theory",
-      body: `La checklist de migration du Forgeborn :
+      body: `La liste de contrôle de la migration du Forgeborn :
 
 1. **Mets à niveau chaque SDK** et bibliothèque cliente.
 2. **Renomme** les imports \`stellar-base\` en \`stellar-sdk\`.
@@ -1184,13 +1212,13 @@ Le [guide de mise à niveau](https://stellar.org/blog/foundation-news/stellar-zi
     },
     {
       kind: "fill",
-      prompt: "Corrige l'import pour qu'il franchisse la Porte.",
-      file: "app.ts",
-      before: "import { xdr } from \"@stellar/stellar-",
+      prompt: "Complète dans le manifeste le paquet JavaScript qui a absorbé l'ancien stellar-base.",
+      file: "lib.rs",
+      before: "pub const JS_XDR_PACKAGE: &str = \"@stellar/stellar-",
       after: "\";",
       choices: ["sdk", "base", "core"],
       answer: 0,
-      explain: "stellar-base a été consolidé dans stellar-sdk dans les releases Protocol 27.",
+      explain: "@stellar/stellar-base a été consolidé dans @stellar/stellar-sdk dans les releases Protocol 27.",
     },
     {
       kind: "editor",

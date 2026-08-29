@@ -119,7 +119,7 @@ Call a contract you have never seen, with types checked at compile time. That is
     {
       kind: "labLink",
       labSlug: "oz-token-wizard",
-      body: `The Forge is raising a lab for exactly this: the **OpenZeppelin Token Wizard**, where you'll configure a real OZ token contract and compile it through the Forge's own Soroban runner — spec, storage shelves and all. Its card still reads *being forged*; when it lights up, this chapter is the theory you'll be standing on.`,
+      body: `The Forge has a live lab for exactly this: open the **OpenZeppelin Token Wizard**, configure a real OZ token contract, and compile it through the Forge's own Soroban runner — spec, storage shelves and all. When the runner returns your Wasm, this chapter is the theory underneath every byte.`,
     },
     {
       kind: "rustBranch",

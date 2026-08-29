@@ -28,7 +28,10 @@ type ClaimStatus =
 type ExerciseStatus =
   | { s: "idle" }
   | { s: "checking" }
-  | { s: "error" }
+  | {
+      s: "error";
+      reason: "notConfigured" | "rateLimited" | "signedOut" | "invalid" | "unavailable";
+    }
   | { s: "verdict"; meets: boolean; feedback: string; xpEarned?: number };
 
 export interface LabLinkState {
@@ -210,7 +213,20 @@ export function ConceptPlayer({
         body: JSON.stringify({ conceptSlug, spec: exSpec }),
       });
       if (!res.ok) {
-        setExStatus({ s: "error" });
+        const body = (await res.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        const reason =
+          body?.error === "mentor_not_configured"
+            ? "notConfigured"
+            : body?.error === "rate_limited"
+              ? "rateLimited"
+              : res.status === 401
+                ? "signedOut"
+                : res.status === 400 || res.status === 422
+                  ? "invalid"
+                  : "unavailable";
+        setExStatus({ s: "error", reason });
         return;
       }
       const body = (await res.json()) as {
@@ -225,7 +241,7 @@ export function ConceptPlayer({
         xpEarned: body.xp?.awarded ? body.xp.earned : undefined,
       });
     } catch {
-      setExStatus({ s: "error" });
+      setExStatus({ s: "error", reason: "unavailable" });
     }
   };
 
@@ -597,7 +613,7 @@ export function ConceptPlayer({
                     />
                     {exStatus.s === "error" && (
                       <p className="mt-4 rounded-xl border border-red-400/40 bg-red-400/[0.06] px-5 py-3 text-sm text-red-300">
-                        {m.journey.player.exercise.unavailable}
+                        {m.journey.player.exercise[exStatus.reason]}
                       </p>
                     )}
                     {exStatus.s === "verdict" && (

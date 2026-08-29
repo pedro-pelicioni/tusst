@@ -2,6 +2,9 @@
 // Brand strings (TUSST, the tagline, the motto and champion names) stay
 // in English across locales on purpose.
 export const landing = {
+  metaDescription:
+    "Hands-on, gamified coding challenges. Master Rust first, then ship real Soroban smart contracts on Stellar. No setup — just code.",
+  metaImageAlt: "TUSST — forge your path from Rust to Stellar",
   nav: {
     campaign: "Campaign",
     champions: "Champions",

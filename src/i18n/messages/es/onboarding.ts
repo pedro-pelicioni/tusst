@@ -59,7 +59,7 @@ export const onboarding = {
   unlocksPaths: "Tu experiencia desbloquea las primeras {count} sendas.",
   firstPath: "Toda leyenda comienza en la primera senda.",
   planJourneyNote:
-    "Estos actos son tu camino de maestría opcional. Tu camino esencial — el Viaje del Builder — empieza ahora.",
+    "Estos actos son tu camino de maestría opcional. Tu camino esencial — el Viaje del Constructor — empieza ahora.",
 
   // Buttons & links.
   begin: "Comenzar",

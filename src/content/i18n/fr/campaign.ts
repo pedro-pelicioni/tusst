@@ -152,6 +152,16 @@ export const skirmishText: Record<string, SkirmishText> = {
     intro:
       "L'Amasseur ne te laissera pas emporter le trésor — mais il te laissera regarder. Une slice est une fenêtre sur une portion du trésor : pas de copie, pas de vol, juste une vue d'ici à là. Prends garde aux bords ; la fenêtre inclut son début et exclut sa fin.",
   },
+  "rust-standard-library-7": {
+    title: "Le Plan de la Chambre la Plus Profonde",
+    intro:
+      "Au-delà des ledgers et de l’encre vivante, il reste une porte : l’atelier de l’Accumulateur, où chaque trésor commence par un plan. « Une `struct`, explique-t-il en traçant le moule d’une griffe, rassemble plusieurs parties sous un seul nom — une forme que la chambre forte reconnaîtra pour toujours. »",
+  },
+  "rust-standard-library-8": {
+    title: "Le Rite qui Éveille le Réceptacle",
+    intro:
+      "Un plan reste inerte tant qu’il n’a pas reçu un rite : une façon de le créer et une voix pour répondre en son nom. « Un bloc `impl` apprend à la forme ce qu’elle sait faire, dit l’Accumulateur. Ajoute aussi `derive`, afin qu’elle révèle ses propres secrets quand tu le lui demandes. »",
+  },
 
   // Act IV — The Vanishing Marsh
   "mastering-option-1": {

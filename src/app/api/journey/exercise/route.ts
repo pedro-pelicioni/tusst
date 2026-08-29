@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getLocale } from "@/i18n/server";
-import { conceptBySlug } from "@/content/journey";
+import { getConceptLocalized } from "@/content/journey/i18n";
 import {
   chatCompletion,
   mentorConfigured,
@@ -83,7 +83,8 @@ export async function POST(req: Request) {
     );
   }
 
-  const concept = conceptBySlug(conceptSlug);
+  const locale = await getLocale();
+  const concept = getConceptLocalized(conceptSlug, locale);
   const exercise = concept?.steps.find(
     (s): s is Extract<typeof s, { kind: "exercise" }> => s.kind === "exercise",
   );
@@ -92,7 +93,10 @@ export async function POST(req: Request) {
   }
 
   if (!mentorConfigured()) {
-    return NextResponse.json({ error: "mentor_unavailable" }, { status: 503 });
+    return NextResponse.json(
+      { error: "mentor_not_configured" },
+      { status: 503 },
+    );
   }
   const quota = await checkMentorQuota(userId, null);
   if (!quota.allowed) {
@@ -102,7 +106,6 @@ export async function POST(req: Request) {
     );
   }
 
-  const locale = await getLocale();
   const messages: MentorMessage[] = [
     {
       role: "system",

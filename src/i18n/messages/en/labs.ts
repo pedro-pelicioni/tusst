@@ -1,10 +1,11 @@
 // The Forge — /labs index (guided labs + free-mode IDE card) and the lab
 // player chrome. Step content itself lives in src/content/labs (EN-first).
-import { passkeySmartWallet } from "@/content/labs/passkey-smart-wallet";
+import { labs as labScenarios } from "@/content/labs";
 import { labTextFromScenario } from "@/content/labs/localize";
 
-export const passkeySmartWalletContent =
-  labTextFromScenario(passkeySmartWallet);
+export const englishLabContent = Object.fromEntries(
+  labScenarios.map((lab) => [lab.meta.slug, labTextFromScenario(lab)]),
+);
 
 export const labs = {
   metaTitle: "The Forge — TUSST",
@@ -38,6 +39,8 @@ export const labs = {
     master: "master",
   },
   sim: {
+    ariaLabel: "SCP quorum simulator",
+    nodeAria: "Node {node}",
     propose: "Propose a ledger",
     reset: "Reset the council",
     running: "the council deliberates…",
@@ -47,9 +50,7 @@ export const labs = {
     hint: "Press propose and watch acceptance ripple. Click a node to strike it down (or raise it back).",
     ledgers: "ledgers closed: {n}",
   },
-  content: {
-    "passkey-smart-wallet": passkeySmartWalletContent,
-  },
+  content: englishLabContent,
   player: {
     exit: "Leave the lab",
     wallet: {
@@ -70,14 +71,14 @@ export const labs = {
     viewTx: "See the transaction on the explorer",
     viewAccount: "See your account on the explorer",
     viewContract: "See the smart wallet on the explorer",
-    retry: "Strike again",
+    retry: "Try again",
     errors: {
-      testnetBusy: "The testnet spirits are busy — strike again in a moment.",
+      testnetBusy: "The testnet is busy — try again in a moment.",
       walletRequired: "Forge your keys first — step back one screen.",
       missingState: "A previous step was skipped — step back and complete it.",
       forgeCold: "The forge is cold — the runner is unreachable. Try again in a moment.",
-      buildFailed: "The compile failed — the runner rejected this contract. Strike again.",
-      buildTimeout: "The compile ran out of time — the forge was crowded. Strike again.",
+      buildFailed: "Compilation failed — the runner rejected this contract. Try again.",
+      buildTimeout: "Compilation timed out — the forge was busy. Try again.",
       localWalletRequired:
         "This rite needs the Forge's local testnet key to pay deployment fees — forge it in the previous step.",
       passkeyUnavailable:
@@ -85,13 +86,13 @@ export const labs = {
       passkeyMismatch:
         "That passkey belongs to a different smart wallet. Try again and choose the credential you just forged.",
       passkeyFailed:
-        "The passkey ceremony did not finish. Approve the device prompt and strike again.",
+        "The passkey ceremony did not finish. Approve the device prompt and try again.",
       smartWalletDeployFailed:
-        "The passkey was created, but its smart wallet did not land on testnet. Strike again in a moment.",
+        "The passkey was created, but its smart wallet did not reach testnet. Try again in a moment.",
       smartWalletFundFailed:
-        "The smart wallet landed, but Friendbot could not fund it for the signing trial. Strike again in a moment.",
+        "The smart wallet was deployed, but Friendbot could not fund it for the signing test. Try again in a moment.",
       passkeyTransactionFailed:
-        "The passkey-signed transfer did not land on testnet. Approve the device prompt and strike again.",
+        "The passkey-signed transfer did not reach testnet. Approve the device prompt and try again.",
     },
     checkpoint: {
       title: "Claim your reward",

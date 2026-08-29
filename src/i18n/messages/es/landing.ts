@@ -2,6 +2,9 @@
 // Las cadenas de marca (TUSST, tagline, lema y nombres de campeones) se
 // quedan en inglés en todos los idiomas, a propósito.
 export const landing = {
+  metaDescription:
+    "Desafíos prácticos y gamificados de programación. Domina Rust y después publica contratos Soroban reales en Stellar. Sin configuración: solo programa.",
+  metaImageAlt: "TUSST — forja tu camino de Rust a Stellar",
   nav: {
     campaign: "Campaña",
     champions: "Campeones",
@@ -29,12 +32,12 @@ export const landing = {
     badgeRust: "Rust primero",
     badgeSoroban: "Contratos Soroban",
     badgeBrowser: "corre en el navegador",
-    badgeFree: "gratis · sin setup",
+    badgeFree: "gratis · sin configuración",
   },
   carousel: {
     kicker: "La Colección",
     heading: "Campeones del Reino",
-    body: "Ocho cartas pintadas para ocho actos. Supera el final de un acto y su campeón se une a tu colección — las partidas impecables otorgan impresiones raras.",
+    body: "Ocho cartas pintadas para ocho actos. Supera el combate final de un acto y su campeón se une a tu colección — los recorridos impecables otorgan versiones raras.",
     previous: "Anterior",
     next: "Siguiente",
     cards: {
@@ -53,7 +56,7 @@ export const landing = {
       eyebrow: "La Campaña",
       titleTop: "Ocho Actos.",
       titleBottom: "Un Cielo por Reencender.",
-      body: "De la Ciudadela Oxidada al Cielo Reescrito: los actos se desbloquean en orden y las escaramuzas admiten reintentos para siempre. Marcha desde los fundamentos de Rust, por la lore de Stellar, hasta contratos desplegados en la testnet viva.",
+      body: "De la Ciudadela Oxidada al Cielo Reescrito: los actos se desbloquean en orden y las escaramuzas admiten intentos ilimitados. Avanza desde los fundamentos de Rust, por la historia de Stellar, hasta contratos desplegados en la testnet activa.",
       cta: "Comenzar en el Acto I ›",
     },
     boss: {
@@ -64,10 +67,10 @@ export const landing = {
       note: "su carta no es recompensa. es trofeo.",
     },
     forge: {
-      eyebrow: "sin login · sin setup",
+      eyebrow: "sin login · sin configuración",
       titleTop: "La Forja",
       titleBottom: "Está Abierta",
-      body: "Una herrería Soroban completa en tu navegador: escribe, compila, prueba y despliega contratos reales en la testnet — con el Cuervo, explorador del cielo reescrito, graznando pistas cada vez que un run falla.",
+      body: "Una herrería Soroban completa en tu navegador: escribe, compila, prueba y despliega contratos reales en la testnet — con el Cuervo, explorador del cielo reescrito, graznando pistas cada vez que una ejecución falla.",
       cta: "Abrir la Forja",
       ctaBadge: "sin login",
     },

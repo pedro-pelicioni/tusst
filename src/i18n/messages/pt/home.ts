@@ -2,7 +2,7 @@
 export const home = {
   metaTitle: "O Salão — TUSST",
   metaDescription:
-    "Escolha sua estrada: a Jornada do Builder, os labs guiados da Forja ou a campanha opcional de Rust.",
+    "Escolha sua estrada: a Jornada do Construtor, os labs guiados da Forja ou a campanha opcional de Rust.",
   kicker: "o salão",
   title: "Escolha sua estrada, forgeborn",
   intro:
@@ -13,7 +13,7 @@ export const home = {
   doors: {
     journey: {
       label: "a estrada essencial",
-      title: "Jornada do Builder",
+      title: "Jornada do Construtor",
       blurb:
         "Spec-driven, TDD, clean architecture — e como a Stellar funciona de verdade. A disciplina que uma IA não aprende por você.",
       cta: "Trilhar a Jornada",

@@ -51,7 +51,7 @@ export const onboarding = {
   // Prova social.
   proofHeading: "Os anciões já forjaram muitos aprendizes",
   proofBody:
-    "Nossa missão é transformar Forgeborn em mestres da arte rúnica — código de verdade, julgado por provas ocultas, direto no seu navegador. Sem setup. Sem desculpas.",
+    "Nossa missão é transformar Forgeborn em mestres da arte rúnica — código de verdade, julgado por provas ocultas, direto no seu navegador. Sem configuração. Sem desculpas.",
 
   // Plano de campanha.
   planKicker: "Seu plano de campanha",
@@ -59,7 +59,7 @@ export const onboarding = {
   unlocksPaths: "Sua experiência desbloqueia as primeiras {count} trilhas.",
   firstPath: "Toda lenda começa na primeira trilha.",
   planJourneyNote:
-    "Estes atos são sua estrada de maestria opcional. Sua estrada essencial — a Jornada do Builder — começa agora.",
+    "Estes atos são sua estrada de maestria opcional. Sua estrada essencial — a Jornada do Construtor — começa agora.",
 
   // Botões e links.
   begin: "Começar",
