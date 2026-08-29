@@ -10,5 +10,6 @@ import { landing } from "./landing";
 import { lesson } from "./lesson";
 import { onboarding } from "./onboarding";
 import { pages } from "./pages";
+import { visuals } from "./visuals";
 
-export const fr: Messages = { auth, common, home, ide, journey, labs, landing, lesson, onboarding, pages };
+export const fr: Messages = { auth, common, home, ide, journey, labs, landing, lesson, onboarding, pages, visuals };

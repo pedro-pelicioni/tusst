@@ -1,0 +1,65 @@
+/* Lesson-visual motion.
+ *
+ * Every animated class is `sc-`-prefixed ON PURPOSE: scene.css's reduced-motion
+ * kill switch is `[data-scene-root] [class^="sc-"] { animation: none !important }`,
+ * so anything named otherwise escapes the guard the whole app relies on.
+ *
+ * The campaign's lesson page has no [data-scene-root] wrapper, so the guard is
+ * repeated unscoped at the bottom — belt and braces, and it costs three lines. */
+
+@keyframes sc-dg-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sc-dg-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(143, 123, 255, 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(143, 123, 255, 0.55));
+  }
+}
+
+@keyframes sc-dg-break {
+  0% {
+    transform: none;
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+.sc-dg-in {
+  animation: sc-dg-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.sc-dg-pulse {
+  animation: sc-dg-pulse 1.6s ease-in-out infinite;
+}
+
+.sc-dg-break {
+  animation: sc-dg-break 0.3s ease-in-out 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-dg-in,
+  .sc-dg-pulse,
+  .sc-dg-break {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -9,6 +9,7 @@ import { landing } from "./landing";
 import { lesson } from "./lesson";
 import { onboarding } from "./onboarding";
 import { pages } from "./pages";
+import { visuals } from "./visuals";
 
 // Spanish translation: mirrors the file structure of ../en.
-export const es: Messages = { auth, common, home, ide, journey, labs, landing, lesson, onboarding, pages };
+export const es: Messages = { auth, common, home, ide, journey, labs, landing, lesson, onboarding, pages, visuals };
