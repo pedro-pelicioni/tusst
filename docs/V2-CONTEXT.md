@@ -14,10 +14,10 @@
 
 1. A v2 é uma **reestruturação completa do TUSST** (poupando apenas a landing), decidida em 28/08/2026 após o Kaan (SDF) recusar o pitch do TUSST como sucessor do Stellar Quest.
 2. O produto deixa de ser "campanha Rust de 8 atos" e vira **dois caminhos de aprendizado + a Forge expandida**: a **Jornada do Builder** (essencial, `/journey`) e a **Campanha Rust** (opcional, `/campaign`), com os **Labs guiados on-chain** morando na marca Forge (`/labs`) ao lado do IDE livre (`/ide`).
-3. A Jornada ensina **duas grandes coisas em dois arcos**: *The Craft* (ser um dev foda na era da IA — specs, TDD, DDD, clean arch, harness/prompt/loop/graph engineering) e *The Realm* (o ecossistema Stellar de ponta a ponta, do SCP à fronteira de privacidade e ao protocolo vivo).
-4. **17 capítulos** (16 live + capstone "soon"), **4 labs live** (wallet, SCP, OZ Token Wizard, Passkey Smart Wallet) + 3 cards "soon", **XP vivo** com ledger anti-replay e retroativo aplicado.
+3. A Jornada abre num **Nível 0 · Fundamentos** (o térreo: livro-razão, chaves, contratos — sem código e sem siglas) e então ensina **duas grandes coisas em dois arcos**: *The Craft* (ser um dev foda na era da IA — specs, TDD, DDD, clean arch, harness/prompt/loop/graph engineering) e *The Realm* (o ecossistema Stellar de ponta a ponta, do SCP à fronteira de privacidade e ao protocolo vivo).
+4. **20 capítulos** (19 live + capstone "soon"), sendo 3 no Nível 0, **4 labs live** (wallet, SCP, OZ Token Wizard, Passkey Smart Wallet) + 3 cards "soon", **XP vivo** com ledger anti-replay e retroativo aplicado.
 5. Estado: **Fases A, B e C commitadas e verificadas** (4 commits de 28/08); o incremento de passkey está implementado e verificado até o limite headless (a cerimônia WebAuthn ainda exige teste no dispositivo real do Pedro); Fase D ampla não iniciada.
-6. As **14 artes v2** foram geradas pelo MCP do Higgsfield (modelo `cinematic_studio_2_5`) e já estão processadas e commitadas em `public/v2/`.
+6. As **17 artes v2** foram geradas pelo MCP do Higgsfield (modelo `cinematic_studio_2_5`) e já estão processadas e commitadas em `public/v2/` — as 14 originais mais os 3 sigilos do Nível 0 (29/08/2026).
 7. Toda conclusão de lab on-chain é **verificada pelo servidor lendo a própria chain** antes de pagar XP — o cliente nunca "afirma" nada.
 8. Invariantes críticas (seção 14): P2002 FORA da `$transaction`, conteúdo é dado puro, kit `sc-` é cópia (nunca import) da landing, seed append-only, **nunca `git push`**, autoria Pedro + trailer Nearx.
 9. Fatos de fronteira do currículo são datados e verificados (Protocol 28 "Adapter": testnet 27/08/2026 → mainnet 16/09/2026; js-sdk v17 = P28 — o repo está em ^16.2.0, bump pendente com janela até 16/09).
@@ -101,6 +101,18 @@ Todas tomadas/travadas pelo Pedro em 28/08/2026. Plano aprovado completo em
 11. **Passkey v1 sem relayer.** O `smart-account-kit@0.6.2` permite um deployer dedicado;
     o lab reutiliza a conta G local já fundada como fonte de fee/salt e instala somente a
     passkey como signer da smart account. Relayer/fee sponsorship fica para uma evolução.
+12. **Nível 0 · Fundamentos e o modelo de trilha (29/08/2026).** Feedback do Pedro
+    olhando a primeira lição: o quiz de abertura do Cap. I do Ofício oferecia
+    *"mapa persistente indexado por contador u64"* e *"soroban-sdk 26 + pausable da
+    OpenZeppelin"* como distratores — corretos pedagogicamente, aterrorizantes para
+    quem chega. Duas respostas: (a) um **arco `foundations`** de 3 capítulos sem uma
+    linha de código antes do Ofício e do Reino, e (b) `level: 0 | 1 | 2` + `requires: string[]`
+    no `ConceptMeta`, no modelo de progressão de trilhas da Nearx (entrada de
+    fundamentos → pré-requisitos visíveis → especializações). O jargão saiu do Cap. I
+    nos 4 idiomas. **`requires` é desenhado, nunca aplicado** — free-roam (decisão 5)
+    continua intacto; a única exceção de navegação é o Nível 0, cujo "próximo capítulo"
+    atravessa para o Ofício em vez de terminar em beco sem saída.
+
 
 ---
 
@@ -110,7 +122,7 @@ Todas tomadas/travadas pelo Pedro em 28/08/2026. Plano aprovado completo em
 |---|---|---|
 | `/` | intocada | Landing cinematográfica (D&D dark-fantasy) |
 | `/path` | reescrita | **The Hall** — home pública: cena cinematográfica com 2 portas (Jornada em destaque, Campanha) + a **Forge como vinheta distinta** (bigorna/oficina — é onde se pratica, não um caminho), "continue de onde parou", faixa XP/nível. A porta da Jornada segue `JOURNEY_LIVE` do registry |
-| `/journey` | nova | Mapa da Jornada em **2 arcos** com trilho por arco, estado de conclusão e "próximo recomendado" por arco |
+| `/journey` | nova | Mapa da Jornada como **trilha**: Nível 0 · Fundamentos e depois os 2 arcos, com faixa de níveis (0 → 1 → 2), chip de nível e arestas "apoia-se em" por card, estado de conclusão e "próximo recomendado" por arco ("comece aqui" no Nível 0 enquanto ele estiver intocado) |
 | `/journey/[slug]` | nova | `ConceptPlayer` — o servidor enriquece os steps (estado do lab p/ `labLink`, lock da campanha p/ `rustBranch`) e passa tudo como props |
 | `/labs` | nova | **Casa da Forge expandida**: labs guiados live + cards "soon" do catálogo + card destacado do modo livre → `/ide`. Pública como `/ide`: anônimo joga; o claim de XP vem após login |
 | `/labs/[slug]` | nova | `LabPlayer` |
