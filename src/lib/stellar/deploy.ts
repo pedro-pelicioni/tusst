@@ -105,9 +105,13 @@ export async function deployContract({
   const uploadSigned = await wallet.signTransaction(uploadTx.toXDR());
   onStep("upload-confirm");
   const uploadRes = await submitAndConfirm(server, uploadSigned);
-  const wasmHash: Buffer = uploadRes.returnValue
-    ? (scValToNative(uploadRes.returnValue) as Buffer)
-    : hash(wasmBuffer);
+  // sdk 17 returns Uint8Array where 16 returned Buffer; normalise once here
+  // so the rest of the flow keeps its Buffer contract.
+  const wasmHash: Buffer = Buffer.from(
+    uploadRes.returnValue
+      ? (scValToNative(uploadRes.returnValue) as Uint8Array)
+      : hash(wasmBuffer),
+  );
 
   // 2 — instantiate the contract from the uploaded code.
   onStep("create-sign");

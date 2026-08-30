@@ -40,7 +40,7 @@ export interface SpecFunctionDescriptor {
 }
 
 function kindOf(type: xdr.ScSpecTypeDef): { kind: FieldKind; label: string } {
-  const name = type.switch().name;
+  const name = type.type;
   switch (name) {
     case "scSpecTypeBool":
       return { kind: "bool", label: "bool" };
@@ -99,29 +99,27 @@ const PLACEHOLDER: Record<FieldKind, string> = {
  * nested generics degrade to the base name rather than an unreadable tower.
  */
 export function typeHint(type: xdr.ScSpecTypeDef, depth = 0): string {
-  const name = type.switch().name;
+  const name = type.type;
   if (depth >= 3) return name.replace("scSpecType", "").toLowerCase();
   switch (name) {
     case "scSpecTypeVec":
-      return `vec<${typeHint(type.vec().elementType(), depth + 1)}>`;
+      return `vec<${typeHint((type as xdr.ScSpecTypeDefVec).vec.elementType, depth + 1)}>`;
     case "scSpecTypeMap":
-      return `map<${typeHint(type.map().keyType(), depth + 1)}, ${typeHint(type.map().valueType(), depth + 1)}>`;
+      return `map<${typeHint((type as xdr.ScSpecTypeDefMap).map.keyType, depth + 1)}, ${typeHint((type as xdr.ScSpecTypeDefMap).map.valueType, depth + 1)}>`;
     case "scSpecTypeTuple": {
-      const inner = type
-        .tuple()
-        .valueTypes()
+      const inner = (type as xdr.ScSpecTypeDefTuple).tuple.valueTypes
         .map((t) => typeHint(t, depth + 1))
         .join(", ");
       return `(${inner})`;
     }
     case "scSpecTypeOption":
-      return `option<${typeHint(type.option().valueType(), depth + 1)}>`;
+      return `option<${typeHint((type as xdr.ScSpecTypeDefOption).option.valueType, depth + 1)}>`;
     case "scSpecTypeResult":
-      return `result<${typeHint(type.result().okType(), depth + 1)}, ${typeHint(type.result().errorType(), depth + 1)}>`;
+      return `result<${typeHint((type as xdr.ScSpecTypeDefResult).result.okType, depth + 1)}, ${typeHint((type as xdr.ScSpecTypeDefResult).result.errorType, depth + 1)}>`;
     case "scSpecTypeBytesN":
-      return `bytes${type.bytesN().n()}`;
+      return `bytes${(type as xdr.ScSpecTypeDefBytesN).bytesN.n}`;
     case "scSpecTypeUdt":
-      return type.udt().name().toString();
+      return (type as xdr.ScSpecTypeDefUdt).udt.name.toString();
     default:
       return kindOf(type).label;
   }
@@ -129,12 +127,12 @@ export function typeHint(type: xdr.ScSpecTypeDef, depth = 0): string {
 
 export function describeFunction(fn: xdr.ScSpecFunctionV0): SpecFunctionDescriptor {
   return {
-    name: fn.name().toString(),
-    fields: fn.inputs().map((input) => {
-      const { kind } = kindOf(input.type());
-      const label = typeHint(input.type());
+    name: fn.name.toString(),
+    fields: fn.inputs.map((input) => {
+      const { kind } = kindOf(input.type);
+      const label = typeHint(input.type);
       return {
-        name: input.name().toString(),
+        name: input.name.toString(),
         typeLabel: label,
         kind,
         placeholder: kind === "json" ? `JSON — ${label}` : PLACEHOLDER[kind],

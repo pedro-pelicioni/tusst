@@ -110,14 +110,16 @@ export function decodeEnvelope(base64: string): DecodedEnvelope {
   }
 
   const signatures = parsed.signatures.map((s) => ({
-    hint: Buffer.from(s.hint()).toString("hex"),
-    signature: Buffer.from(s.signature()).toString("hex"),
+    // sdk 17 wraps these in BytesValue, whose toString() honours a per-type
+    // declared encoding — go through toBytes() so both stay hex regardless.
+    hint: Buffer.from(s.hint.toBytes()).toString("hex"),
+    signature: Buffer.from(s.signature.toBytes()).toString("hex"),
   }));
 
   if (parsed instanceof FeeBumpTransaction) {
     return {
       kind: "fee-bump",
-      hash: parsed.hash().toString("hex"),
+      hash: Buffer.from(parsed.hash()).toString("hex"),
       source: parsed.feeSource,
       fee: parsed.fee,
       operations: decodeOperations(parsed.innerTransaction),
@@ -127,7 +129,7 @@ export function decodeEnvelope(base64: string): DecodedEnvelope {
 
   return {
     kind: "transaction",
-    hash: parsed.hash().toString("hex"),
+    hash: Buffer.from(parsed.hash()).toString("hex"),
     source: parsed.source,
     fee: parsed.fee,
     sequence: parsed.sequence,
@@ -147,7 +149,7 @@ export function decodeEnvelope(base64: string): DecodedEnvelope {
 export function decodeScVal(base64: string): unknown {
   try {
     const value = xdr.ScVal.fromXDR(base64.trim(), "base64");
-    return plain(value.value());
+    return plain(value.value);
   } catch (e) {
     throw new XdrDecodeError(
       e instanceof Error ? e.message : "not a valid ScVal",
@@ -160,8 +162,8 @@ export function decodeTransactionResult(base64: string): unknown {
   try {
     const result = xdr.TransactionResult.fromXDR(base64.trim(), "base64");
     return {
-      feeCharged: result.feeCharged().toString(),
-      result: result.result().switch().name,
+      feeCharged: result.feeCharged.toString(),
+      result: result.result.type,
     };
   } catch (e) {
     throw new XdrDecodeError(

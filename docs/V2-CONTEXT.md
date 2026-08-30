@@ -20,7 +20,7 @@
 6. As **17 artes v2** foram geradas pelo MCP do Higgsfield (modelo `cinematic_studio_2_5`) e já estão processadas e commitadas em `public/v2/` — as 14 originais mais os 3 sigilos do Nível 0 (29/08/2026).
 7. Toda conclusão de lab on-chain é **verificada pelo servidor lendo a própria chain** antes de pagar XP — o cliente nunca "afirma" nada.
 8. Invariantes críticas (seção 14): P2002 FORA da `$transaction`, conteúdo é dado puro, kit `sc-` é cópia (nunca import) da landing, seed append-only, **nunca `git push`**, autoria Pedro + trailer Nearx.
-9. Fatos de fronteira do currículo são datados e verificados (Protocol 28 "Adapter": testnet 27/08/2026 → mainnet 16/09/2026; js-sdk v17 = P28 — o repo está em ^16.2.0, bump pendente com janela até 16/09).
+9. Fatos de fronteira do currículo são datados e verificados (Protocol 28 "Adapter": testnet 27/08/2026 → mainnet 16/09/2026). **js-sdk bumpado para ^17.0.1 = P28 em 29/08/2026** — feito antes da janela.
 10. Decisão do lab de passkey v1: **sem relayer** — a conta G local e fundada paga o deploy como `deployerSecret` dedicado, mas não vira signer da smart account. Fee sponsorship continua como evolução posterior.
 
 ---
@@ -568,12 +568,40 @@ simulável com honestidade no runner headless.
   `[mcp_servers.stellar-raven]` de `.codex/config.toml` (backup `.bak-raven`). Continua
   fora dos commits de produto até decisão do Pedro.
 
-### Bump do SDK 17 — item da Fase C com **janela dura**
+### Bump do SDK 17 — FEITO em 29/08/2026
 
-O repo está em `@stellar/stellar-sdk` **^16.2.0**; existe branch do Dependabot parado
-(`dependabot/npm_and_yarn/stellar/stellar-sdk-17.0.0`). **js-sdk v17 = Protocol 28**, que
-entra na **mainnet em 16/09/2026** (testnet desde 27/08). Fazer o bump (e o teste dos
-fluxos de deploy/invoke/classic) **antes de 16/09**.
+`@stellar/stellar-sdk` **^16.2.0 → ^17.0.1** (v17 = Protocol 28, mainnet 16/09/2026).
+
+A v17 **regerou a camada XDR inteira** e deixou de depender de `@stellar/stellar-base`
+(passou a embutir os próprios tipos — o `stellar-base@14.1.0` que ainda aparece na árvore
+é transitivo do plugin Trezor, e não é o que o nosso código resolve). As uniões XDR
+viraram classes concretas e **todo acessor virou propriedade**:
+
+| v16 | v17 |
+|---|---|
+| `type.switch().name` | `type.type` (mesmas strings; agora estreita a união num `switch`) |
+| `type.vec().elementType()` | `type.vec.elementType` |
+| `fn.name().toString()` / `fn.inputs()` | `fn.name.toString()` / `fn.inputs` |
+| `sig.hint()` / `sig.signature()` | `sig.hint` / `sig.signature` (`BytesValue`, use `.toBytes()`) |
+| `scVal.value()` | `scVal.value` |
+| `result.feeCharged()` / `result.result().switch().name` | `result.feeCharged` / `result.result.type` |
+| `transactionData.build().resources().footprint()` | `.build().resources.footprint` |
+| `hash()` devolvia `Buffer` | devolve `Uint8Array` — normalizar na fronteira |
+
+25 erros de tipo, **todos dentro de `src/lib/stellar/`** — que é exatamente o motivo de
+concentrar o SDK ali. Nenhum componente, rota ou conteúdo precisou mudar.
+
+Verificado ao vivo na testnet P28 (o RPC responde `protocolVersion: 28`): spec de
+contrato lida da chain e descrita pelo `spec-form`, invoke de leitura (`decimals` → 7,
+classificado corretamente como leitura sem assinatura), operação clássica assinada e
+aplicada (`set-options`), decodificação de XDR com hash idêntico ao de antes do bump,
+`account.ts` e `explore.ts` contra Horizon e RPC.
+
+**Não exercitado ao vivo** (sem runner Docker local): `deploy.ts` — a única mudança é
+normalizar `hash()` para `Buffer`; e as checagens de `verify.ts` que dependem do SDK
+(`token-balance-positive`, `smart-account-*`), que usam as mesmas primitivas já provadas
+pelo caminho de invoke. `smart-account.ts` precisa de WebAuthn em dispositivo real.
+O `smart-account-kit@0.6.2` declara peer `>=16.0.0`, então não precisou de override.
 
 ### Fase D — amplitude (não iniciada)
 

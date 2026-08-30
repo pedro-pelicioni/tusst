@@ -72,11 +72,8 @@ export async function invokeFunction({
   const success = sim as rpc.Api.SimulateTransactionSuccessResponse;
 
   const authCount = success.result?.auth?.length ?? 0;
-  const writes = success.transactionData
-    .build()
-    .resources()
-    .footprint()
-    .readWrite().length;
+  const writes = success.transactionData.build().resources.footprint.readWrite
+    .length;
 
   if (authCount === 0 && writes === 0) {
     const retval = success.result?.retval;
