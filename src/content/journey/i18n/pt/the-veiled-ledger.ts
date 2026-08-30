@@ -9,7 +9,7 @@ export const theVeiledLedger: Concept = {
     arc: "realm",
     level: 2,
     status: "live",
-    estMinutes: 13,
+    estMinutes: 16,
     sigil: "/v2/journey/sigils/the-veiled-ledger.webp",
     glyph: "🕯️",
   },
@@ -159,6 +159,43 @@ Em vez de envolver um token, os usuários **depositam ativos em um pool comparti
 Onde Tokens Confidenciais atendem partes que se conhecem, o SPP cobre casos em que *quem pagou quem* é o próprio segredo — doações, relações sensíveis com fornecedores, finanças pessoais em trilhas públicas.`,
     },
     {
+      kind: "diagram",
+      body: "Acompanhe um pagamento atravessando o pool e veja o que o explorer guarda:",
+      caption:
+        "As bordas são públicas por construção. Tudo o que o pool protege acontece entre elas.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "deposit",
+            label: "Depósito",
+            tone: "gold",
+            note: "Visível. O explorer registra que esta conta colocou fundos no pool, e quanto. Nada está escondido aqui — e nada precisa estar.",
+          },
+          {
+            id: "inside",
+            label: "Dentro do pool",
+            tone: "accent",
+            note: "Oculto. Transferências entre participantes do pool não precisam aparecer on-chain: sem remetente, sem destinatário, sem valor. É esta a parte que o véu cobre.",
+          },
+          {
+            id: "withdraw",
+            label: "Saque",
+            tone: "gold",
+            note: "Visível de novo. Alguém sai do pool com um valor — mas ligar ESTA saída àQUELA entrada é exatamente o que o pool quebra.",
+          },
+          {
+            id: "observer",
+            label: "O que sobra para o observador",
+            tone: "neutral",
+            note: "Duas bordas públicas e uma multidão no meio. Quanto maior o pool, mais fraco o vínculo entre qualquer entrada e qualquer saída.",
+          },
+        ],
+      },
+    },
+    {
       kind: "theory",
       body: `## A espinha de conformidade
 
@@ -167,6 +204,10 @@ Onde Tokens Confidenciais atendem partes que se conhecem, o SPP cobre casos em q
 - **Participação condicionada a KYC** — entrar no pool requer identidade verificada.
 - **Controles de acesso ao nível de identidade** — permissões vinculadas a *quem você é*, não apenas à chave que possui.
 - **Capacidade de congelamento ao nível de conta** — atores maliciosos podem ser parados mesmo dentro do véu.
+
+Essas três salvaguardas são aplicadas por uma peça que vale conhecer pelo nome: o **Association Set Provider (ASP)**. Um ASP publica um *conjunto* de depósitos pelos quais ele responde — uma allow list — ou aqueles pelos quais ele se recusa a responder — uma deny list. Para sacar, você prova que seus fundos remontam a algum depósito dentro desse conjunto, **sem revelar qual**. O SPP constrói isso sobre um association set baseado em chaves, apoiado por um registro público de chaves para que os participantes possam sequer ser referenciados.
+
+Repare na consequência, porque ela é o truque inteiro: **o mesmo saque é privado e auditável ao mesmo tempo**. Privado, porque o vínculo com o seu depósito específico nunca é publicado. Auditável, porque você não poderia ter sacado sem provar pertencimento a um conjunto avalizado. ASPs diferentes podem atender jurisdições diferentes — e você escolhe de quem carrega o aval.
 
 O objetivo em uma frase: **privacidade para usuários, não para crimes**. Transferências confidenciais *e* compatíveis em trilhas públicas — essa combinação, não o segredo bruto, é o que as instituições esperavam.`,
     },

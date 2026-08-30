@@ -9,7 +9,7 @@ export const theVeiledLedger: Concept = {
     arc: "realm",
     level: 2,
     status: "live",
-    estMinutes: 13,
+    estMinutes: 16,
     sigil: "/v2/journey/sigils/the-veiled-ledger.webp",
     glyph: "🕯️",
   },
@@ -159,6 +159,43 @@ En lugar de envolver un token, los usuarios **depositan activos en un pool compa
 Donde los Tokens Confidenciales sirven a partes que se conocen, SPP cubre casos donde *quién pagó a quién* es el propio secreto — donaciones, relaciones sensibles con proveedores, finanzas personales en vías públicas.`,
     },
     {
+      kind: "diagram",
+      body: "Sigue un pago a través del pool y mira qué se queda el explorador:",
+      caption:
+        "Los bordes son públicos por construcción. Todo lo que el pool protege ocurre entre ellos.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "deposit",
+            label: "Depósito",
+            tone: "gold",
+            note: "Visible. El explorador registra que esta cuenta puso fondos en el pool, y cuánto. Aquí no se oculta nada — ni hace falta.",
+          },
+          {
+            id: "inside",
+            label: "Dentro del pool",
+            tone: "accent",
+            note: "Oculto. Las transferencias entre miembros del pool no necesitan aparecer on-chain: sin emisor, sin receptor, sin monto. Esta es la parte que cubre el velo.",
+          },
+          {
+            id: "withdraw",
+            label: "Retiro",
+            tone: "gold",
+            note: "Visible otra vez. Alguien sale del pool con un valor — pero unir ESTA salida con AQUELLA entrada es justo lo que el pool rompe.",
+          },
+          {
+            id: "observer",
+            label: "Lo que le queda al observador",
+            tone: "neutral",
+            note: "Dos bordes públicos y una multitud en medio. Cuanto mayor sea el pool, más débil es el vínculo entre cualquier entrada y cualquier salida.",
+          },
+        ],
+      },
+    },
+    {
       kind: "theory",
       body: `## La columna vertebral de cumplimiento
 
@@ -167,6 +204,10 @@ Donde los Tokens Confidenciales sirven a partes que se conocen, SPP cubre casos 
 - **Participación gated por KYC** — unirse al pool requiere identidad verificada.
 - **Controles de acceso a nivel de identidad** — los permisos se asignan a *quién eres*, no solo a qué clave posees.
 - **Capacidad de congelar a nivel de cuenta** — los actores malintencionados pueden ser detenidos incluso dentro del velo.
+
+Esas tres salvaguardas las aplica una pieza que conviene conocer por su nombre: el **Association Set Provider (ASP)**. Un ASP publica un *conjunto* de depósitos por los que responde — una allow list — o aquellos por los que se niega a responder — una deny list. Para retirar, demuestras que tus fondos se remontan a algún depósito dentro de ese conjunto, **sin revelar cuál**. El SPP lo construye sobre un association set basado en claves, respaldado por un registro público de claves para que los participantes puedan siquiera ser referenciados.
+
+Detente en la consecuencia, porque es todo el truco: **el mismo retiro es privado y auditable a la vez**. Privado, porque el vínculo con tu depósito concreto nunca se publica. Auditable, porque no habrías podido retirar sin demostrar pertenencia a un conjunto avalado. Distintos ASP pueden atender distintas jurisdicciones — y tú eliges de quién llevas el aval.
 
 El objetivo en una frase: **privacidad para los usuarios, no para el crimen**. Transferencias confidenciales *y* compatibles en vías públicas — esa combinación, no el secreto absoluto, es lo que las instituciones estaban esperando.`,
     },

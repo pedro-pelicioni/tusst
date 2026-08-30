@@ -14,7 +14,7 @@ export const theVeiledLedger: Concept = {
     arc: "realm",
     level: 2,
     status: "live",
-    estMinutes: 14,
+    estMinutes: 17,
     sigil: "/v2/journey/sigils/the-veiled-ledger.webp",
     glyph: "🕯️",
   },
@@ -164,6 +164,43 @@ Instead of wrapping a token, users **deposit assets into a shared pool**. Transf
 Where Confidential Tokens suit parties who know each other, SPP covers cases where *who paid whom* is itself the secret — donations, sensitive vendor relationships, personal finance on public rails.`,
     },
     {
+      kind: "diagram",
+      body: "Follow one payment through the pool, and watch what the explorer keeps:",
+      caption:
+        "The edges are public by construction. Everything the pool protects happens between them.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "deposit",
+            label: "Deposit",
+            tone: "gold",
+            note: "Visible. The explorer records that this account moved funds into the pool, and how much. Nothing is hidden here — and nothing needs to be.",
+          },
+          {
+            id: "inside",
+            label: "Inside the pool",
+            tone: "accent",
+            note: "Hidden. Transfers between pool members need not surface on-chain at all: no sender, no receiver, no amount. This is the part the veil covers.",
+          },
+          {
+            id: "withdraw",
+            label: "Withdrawal",
+            tone: "gold",
+            note: "Visible again. Someone leaves the pool with a value — but tying THIS exit to THAT entry is exactly what the pool breaks.",
+          },
+          {
+            id: "observer",
+            label: "What the observer keeps",
+            tone: "neutral",
+            note: "Two public edges and a crowd in between. The bigger the pool, the weaker the link between any entry and any exit.",
+          },
+        ],
+      },
+    },
+    {
       kind: "theory",
       body: `## The compliance spine
 
@@ -172,6 +209,10 @@ Where Confidential Tokens suit parties who know each other, SPP covers cases whe
 - **KYC-gated participation** — joining the pool requires verified identity.
 - **Identity-level access controls** — permissions attach to *who you are*, not just which key you hold.
 - **Account-level freeze capability** — bad actors can be stopped even inside the veil.
+
+Those three safeguards are enforced by a piece worth knowing by name: the **Association Set Provider (ASP)**. An ASP publishes a *set* of deposits it vouches for — an allow list — or the ones it refuses to vouch for — a deny list. To withdraw, you prove your funds trace back to some deposit inside that set, **without revealing which one**. SPP builds this on a key-based association set, backed by a public key registry so participants can be referenced at all.
+
+Sit with the consequence, because it is the whole trick: **the same withdrawal is private and auditable at once**. Private, because the link to your particular deposit is never published. Auditable, because you could not have withdrawn without proving membership of a vouched-for set. Different ASPs can serve different jurisdictions — and you choose whose blessing you carry.
 
 The goal in one line: **privacy for users, not for crime**. Confidential *and* compliant transfers on public rails — that combination, not raw secrecy, is what institutions were waiting for.`,
     },

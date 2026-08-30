@@ -150,6 +150,43 @@ Au lieu d’envelopper un jeton, les utilisateurs **déposent des actifs dans un
 Alors que les jetons confidentiels conviennent aux parties qui se connaissent, SPP répond aux cas où *l'identité de celui qui paie et de celui qui reçoit* doit elle aussi rester secrète : dons, relations sensibles avec des fournisseurs ou finances personnelles sur une infrastructure publique.`,
     },
     {
+      kind: "diagram",
+      body: "Suis un paiement à travers le pool et regarde ce que l'explorateur conserve :",
+      caption:
+        "Les bords sont publics par construction. Tout ce que le pool protège se passe entre eux.",
+      view: {
+        kind: "flow",
+        layout: "row",
+        play: true,
+        nodes: [
+          {
+            id: "deposit",
+            label: "Dépôt",
+            tone: "gold",
+            note: "Visible. L'explorateur enregistre que ce compte a versé des fonds dans le pool, et combien. Rien n'est masqué ici — et rien n'a besoin de l'être.",
+          },
+          {
+            id: "inside",
+            label: "Dans le pool",
+            tone: "accent",
+            note: "Masqué. Les transferts entre membres du pool n'ont pas besoin d'apparaître on-chain : ni émetteur, ni destinataire, ni montant. C'est la part que le voile recouvre.",
+          },
+          {
+            id: "withdraw",
+            label: "Retrait",
+            tone: "gold",
+            note: "Visible à nouveau. Quelqu'un sort du pool avec une valeur — mais relier CETTE sortie à CETTE entrée-là est précisément ce que le pool casse.",
+          },
+          {
+            id: "observer",
+            label: "Ce qu'il reste à l'observateur",
+            tone: "neutral",
+            note: "Deux bords publics et une foule entre les deux. Plus le pool est grand, plus le lien entre une entrée et une sortie est faible.",
+          },
+        ],
+      },
+    },
+    {
       kind: "theory",
       body: `## La colonne vertébrale de conformité
 
@@ -158,6 +195,10 @@ Une confidentialité sans limites serait le cauchemar d’un responsable des san
 - **Participation conditionnée KYC** — rejoindre le pool nécessite une identité vérifiée.
 - **Contrôles d’accès liés à l'identité** — les permissions s’attachent à *qui tu es*, pas seulement à la clé que tu possèdes.
 - **Capacité de gel au niveau compte** — les mauvais acteurs peuvent être arrêtés même à l’intérieur du voile.
+
+Ces trois garde-fous sont appliqués par une pièce qu’il vaut la peine de connaître par son nom : l’**Association Set Provider (ASP)**. Un ASP publie un *ensemble* de dépôts dont il se porte garant — une allow list — ou ceux dont il refuse de se porter garant — une deny list. Pour retirer, tu prouves que tes fonds remontent à un dépôt situé dans cet ensemble, **sans révéler lequel**. SPP construit cela sur un association set fondé sur des clés, adossé à un registre public de clés pour que les participants puissent seulement être désignés.
+
+Arrête-toi sur la conséquence, car c’est toute l’astuce : **le même retrait est à la fois privé et auditable**. Privé, parce que le lien avec ton dépôt précis n’est jamais publié. Auditable, parce que tu n’aurais pas pu retirer sans prouver ton appartenance à un ensemble cautionné. Des ASP différents peuvent servir des juridictions différentes — et c’est toi qui choisis la caution que tu portes.
 
 L’objectif tient en une phrase : **la confidentialité pour les utilisateurs, pas pour le crime**. Des transferts à la fois confidentiels et conformes sur une infrastructure publique — c’est cette combinaison, et non le secret absolu, que les institutions attendaient.`,
     },
