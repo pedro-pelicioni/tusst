@@ -96,14 +96,3 @@ export function isPastArchiveDate(
   if (!contract?.archivesOn) return false;
   return now >= new Date(`${contract.archivesOn}T00:00:00Z`);
 }
-
-/**
- * Soroban answers a read against archived state with an entry-not-found style
- * error rather than anything self-explanatory. Recognising it lets the panel
- * say "this preview expired" instead of "could not load the contract".
- */
-export function looksArchived(message: string): boolean {
-  return /archiv|restor|entry not found|no such (ledger )?entry|MissingValue/i.test(
-    message,
-  );
-}

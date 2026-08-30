@@ -11,9 +11,9 @@ import {
   fetchContractSpec,
   invokeFunction,
 } from "@/lib/stellar/invoke";
+import { errorInfo, errorText } from "@/lib/stellar/errors";
 import {
   isPastArchiveDate,
-  looksArchived,
   lookupKnownContract,
   type KnownContract,
 } from "@/lib/stellar/known-contracts";
@@ -115,18 +115,19 @@ export function ContractWorkbench({
       setFunctions(describeFunctions(loaded));
       onSpecLoaded?.(id);
     } catch (e) {
-      const message =
-        e instanceof Error ? e.message.slice(0, 300) : m.ide.workbench.loadFailed;
+      const { message, code } = errorInfo(e, m.ide.workbench.loadFailed);
       const expiring = lookupKnownContract(id);
-      if (expiring?.archivesOn && looksArchived(message)) {
-        // A known preview whose TTL ran out reads as "not found"; say what
-        // actually happened instead of blaming the id.
+      // A 404 means the ledger entry is not there. For an id we curated
+      // ourselves the id is not in question, so the entry was archived —
+      // say that instead of blaming the learner's typing.
+      if (expiring?.archivesOn && code === 404) {
         setLoadError(fmt(m.ide.known.archived, { date: expiring.archivesOn }));
       } else {
+        const trimmed = message.slice(0, 300);
         setLoadError(
-          /wasm|entry|not found/i.test(message)
-            ? fmt(m.ide.workbench.noSpecSuffix, { message })
-            : message,
+          /wasm|entry|not found|contract instance/i.test(trimmed)
+            ? fmt(m.ide.workbench.noSpecSuffix, { message: trimmed })
+            : trimmed,
         );
       }
     } finally {
@@ -161,9 +162,7 @@ export function ContractWorkbench({
         error:
           e instanceof WalletRequiredError
             ? m.ide.workbench.connectToInvoke
-            : e instanceof Error
-              ? e.message.slice(0, 300)
-              : m.ide.workbench.invocationFailed,
+            : errorText(e, m.ide.workbench.invocationFailed).slice(0, 300),
       });
     }
   };
