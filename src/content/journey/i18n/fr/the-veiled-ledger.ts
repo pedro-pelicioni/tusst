@@ -224,6 +224,34 @@ L’objectif tient en une phrase : **la confidentialité pour les utilisateurs
       explain: `Le standard d’interface de jeton est l’ancrage : tout ce qui parle SEP‑41 peut être enveloppé — y compris les actifs classiques comme USDC via leur contrat d’actif Stellar. La couche de confidentialité se compose avec tout ce que tu connais déjà.`,
     },
     {
+      kind: "theory",
+      body: `## Va regarder à l'intérieur
+
+Tout ce qui précède est vérifiable maintenant, sur un pool qui existe réellement. Le developer preview de Nethermind est vivant sur testnet, et ses fonctions de lecture répondent **sans portefeuille et sans signature**. Tu n'es pas client de cette chose — tu es spectateur, et regarder est gratuit.
+
+Ouvre la [Forge](/ide), va dans **Explore** et choisis **pool de confidentialité SPP · XLM** parmi les contrats connus. Puis demande-lui, dans cet ordre :
+
+- \`get_policy_flags()\` — comment ce pool est configuré. Il répond **2** : blocklist appliquée, pas d'allowlist.
+- \`get_root()\` — la racine de Merkle qui engage chaque note jamais déposée là. Un seul nombre pour tout l'ensemble d'anonymat.
+- \`is_known_root(<ce nombre>)\` — **true**. Change maintenant un seul chiffre et redemande : **false**. Tu viens de parcourir l'anneau de racines dont le pool se souvient.
+- \`is_spent(<n'importe quel nombre>)\` — **false**. C'est l'ensemble des nullifiers : la défense du pool contre la double dépense, et à peu près la seule chose qu'un retrait publie sur lui-même.
+
+Lis-les dans l'ordre et remarque ce qui *manque*. Aucune de ces réponses ne contient d'adresse, de montant ni de contrepartie. La chaîne te dit l'exacte vérité et ne te dit rien.
+
+**Deux avertissements, car la spec d'un contrat ne peut pas t'avertir sur elle-même.** Ce pool expose cinq fonctions résiduelles — \`balance\`, \`transfer\`, \`approve\` et compagnie — qui répondent poliment et ne veulent rien dire ; la Forge les marque *leurre* pour qu'elles ne te trompent pas. Et l'état de l'aperçu **est archivé le 2026-09-02**, après quoi ces lectures cessent de répondre jusqu'à ce que quelqu'un paie pour les restaurer. Ce n'est pas la Forge qui échoue : c'est le state rent de Soroban, sous lequel vit chaque contrat de ce réseau.`,
+    },
+    {
+      kind: "quiz",
+      question: `Tu appelles \`get_asp_non_membership_root()\` sur le pool vivant et il répond **0**. Qu'est-ce que cela t'apprend vraiment ?`,
+      options: [
+        "La blocklist est vide — et 0 est la valeur à laquelle le contrat compare chaque retrait, donc une liste vide est une politique appliquée, pas une politique absente",
+        "L'appel a échoué et est retombé sur une valeur par défaut : une racine de Merkle n'est jamais légitimement nulle",
+        "La blocklist est confidentielle, donc le contrat renvoie 0 à quiconque n'est pas un ASP",
+      ],
+      answer: 0,
+      explain: `Un arbre vide a quand même une vraie racine, et pour cette blocklist elle vaut littéralement 0 — autrement dit « personne n'est banni » est activement appliqué à chaque dépense plutôt que laissé indéfini. Essaie maintenant sa voisine : \`get_asp_membership_root()\` répond 2302223575749844940221218608817648865122641281382153518325924961250440546344, un nombre impressionnant pour un arbre **lui aussi vide**. C'est le zero-hash d'arbre vide. Le lire comme « l'allowlist a des membres » est l'erreur la plus facile de tout ce sujet, et tu viens de l'éviter.`,
+    },
+    {
       kind: "labLink",
       labSlug: "confidential-tokens",
       body: `Sur l’enclume de la Forge : un laboratoire **Jetons confidentiels**, où tu envelopperas un jeton testnet et verras les montants disparaître de l’explorateur tandis que les transferts continuent de se régler correctement. Sa carte indique *en cours de forge* — cette frontière est en train d’être martelée pendant que tu lis.

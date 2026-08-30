@@ -14,7 +14,7 @@ export const theVeiledLedger: Concept = {
     arc: "realm",
     level: 2,
     status: "live",
-    estMinutes: 17,
+    estMinutes: 21,
     sigil: "/v2/journey/sigils/the-veiled-ledger.webp",
     glyph: "🕯️",
   },
@@ -236,6 +236,34 @@ The goal in one line: **privacy for users, not for crime**. Confidential *and* c
       choices: ["SEP-41", "SEP-24", "SEP-10", "SEP-1"],
       answer: 0,
       explain: `The token interface standard is the hook: anything speaking SEP-41 can be wrapped — including classic assets like USDC through their Stellar Asset Contract. The privacy layer composes with everything you already know.`,
+    },
+    {
+      kind: "theory",
+      body: `## Go and look inside one
+
+Everything above is checkable right now, on a pool that actually exists. Nethermind's developer preview is live on testnet, and its read functions answer **without a wallet and without a signature**. You are not a customer of this thing — you are a spectator, and spectating is free.
+
+Open the [Forge](/ide), switch to **Explore**, and pick **SPP privacy pool · XLM** from the known contracts. Then ask it, in this order:
+
+- \`get_policy_flags()\` — how this pool is configured. It answers **2**: blocklist enforced, no allowlist.
+- \`get_root()\` — the Merkle root committing to every note ever deposited here. One number standing in for the entire anonymity set.
+- \`is_known_root(<that number>)\` — **true**. Now change a single digit and ask again: **false**. You just walked the pool's own ring of remembered roots.
+- \`is_spent(<any number>)\` — **false**. This is the nullifier set: the pool's defence against double-spending, and very nearly the only thing a withdrawal publishes about itself.
+
+Read them in order and notice what is *missing*. Not one of those answers contains an address, an amount or a counterparty. The chain is telling you the exact truth and telling you nothing.
+
+**Two warnings, because a contract's spec cannot warn you about itself.** This pool exposes five leftover functions — \`balance\`, \`transfer\`, \`approve\` and friends — that answer politely and mean nothing at all; the Forge marks them *decoy* so they cannot fool you. And the preview's state **archives on 2026-09-02**, after which those reads stop answering until somebody pays to restore them. That is not the Forge failing: it is Soroban state rent, which every contract on this network lives under.`,
+    },
+    {
+      kind: "quiz",
+      question: `You call \`get_asp_non_membership_root()\` on the live pool and it answers **0**. What does that actually tell you?`,
+      options: [
+        "The blocklist is empty — and 0 is the value the contract checks every withdrawal against, so an empty list is an enforced policy, not a missing one",
+        "The call failed and fell back to a default: a Merkle root is never legitimately zero",
+        "The blocklist is confidential, so the contract returns 0 to anyone who is not an ASP",
+      ],
+      answer: 0,
+      explain: `An empty tree still has a real root, and for this blocklist it is literally 0 — so "nobody is barred" is being actively enforced on every spend rather than left unset. Now try its neighbour: \`get_asp_membership_root()\` answers 2302223575749844940221218608817648865122641281382153518325924961250440546344, an impressive-looking number for a tree that is **also empty**. That one is the empty-tree zero-hash. Reading it as "the allowlist has members" is the easiest mistake in this whole subject, and you just avoided it.`,
     },
     {
       kind: "labLink",
