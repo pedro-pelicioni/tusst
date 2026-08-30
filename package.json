@@ -10,6 +10,7 @@
     "lint": "eslint",
     "check:i18n": "tsx scripts/check-i18n.ts",
     "check:forge-pins": "node scripts/check-forge-pins.mjs",
+    "check:spp": "tsx scripts/check-spp-liveness.ts",
     "postinstall": "prisma generate",
     "db:up": "docker compose up -d db",
     "db:migrate": "prisma migrate dev",
