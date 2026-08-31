@@ -36,7 +36,7 @@ yarn-error.log*
 
 # local tooling
 .claude/
-
+.codex
 # vercel
 .vercel
 
