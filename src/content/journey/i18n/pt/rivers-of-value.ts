@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const riversOfValue: Concept = {
-  meta: {
-    slug: "rivers-of-value",
-    title: "Rios de Valor",
-    tagline: "Pagamentos, pagamentos encadeados, a DEX e os AMMs.",
-    numeral: "IV",
-    arc: "realm",
-    level: 2,
-    status: "live",
-    estMinutes: 12,
-    sigil: "/v2/journey/sigils/rivers-of-value.webp",
-    glyph: "🌊",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Rios de Valor",
+  tagline: "Uma casa de câmbio morando dentro do próprio protocolo.",
   steps: [
     {
       kind: "theory",
@@ -60,6 +50,22 @@ Livros de ofertas precisam de traders ativos cotando preços. **Pools de liquide
 Livros e pools coexistem em pé de igualdade e — como você verá em breve — um único pagamento pode beber de ambos.`,
     },
     {
+      kind: "theory",
+      body: `## A mesma ordem, dois lugares
+
+Livros e pools não são rivais com um vencedor. Eles falham em direções opostas, e o ledger carrega os dois de propósito.
+
+Digamos que você quer 5.000 USDC em XLM.
+
+**O livro de ofertas** te preenche contra o que as pessoas de fato postaram. Se um formador de mercado está cotando apertado, você leva um preço que ninguém bateria — ofertas reais, preços reais, sem curva. Se ninguém está olhando aquele par nesta manhã, o livro está raso ou vazio, e você preenche mal ou não preenche. A qualidade de um livro é a atenção de alguém.
+
+**O pool** sempre cota. Ele não tem opinião, não tem horário e não tira folga — a curva precifica sua ordem esteja alguém acordado ou não. O que ele cobra por essa confiabilidade é slippage: você paga pelo privilégio de conseguir negociar às três da manhã contra ninguém.
+
+Então o resumo honesto é sem graça: **o livro é melhor quando tem alguém cuidando dele, e o pool é melhor quando não tem.** É exatamente por isso que agregadores existem, e por que você não deveria estar escolhendo o lugar na mão.`,
+    },
+    { kind: "widget", component: "amm-pool",
+      body: `A curva se sente melhor do que se lê. **Venda para dentro do pool** — depois mova a mesma ordem para um pool mais raso e veja o que o preço faz com você.` },
+    {
       kind: "quiz",
       question: `Como os pools de liquidez nativos da Stellar diferem dos AMMs estilo Uniswap?`,
       options: [
@@ -70,98 +76,30 @@ Livros e pools coexistem em pé de igualdade e — como você verá em breve —
       answer: 0,
       explain: `Mesma matemática de produto constante, mas lar diferente: o pool vive no próprio protocolo, qualquer par de ativos é bem‑vindo. AMMs baseados em contrato também existem, uma camada acima — você conhecerá seus nomes em breve.`,
     },
-    {
-      kind: "theory",
-      body: `## Pagamentos encadeados: a funcionalidade matadora
-
-\`path_payment_strict_send\` faz algo que quase nenhuma outra cadeia faz nativamente: **enviar um ativo e entregar outro** — atomicamente, em uma única operação.
-
-Você envia USDC. A rede o encaminha por livros de ofertas e pools de liquidez — talvez USDC → XLM → EURC — e sua avó recebe EURC. Uma transação. Se nenhum caminho puder entregar dentro dos seus limites, **nada acontece**: nenhum fundo fica preso no meio do swap.
-
-Dois sabores:
-
-- **Strict send** — fixa o que você paga; o destino recebe o que o caminho gera (acima do seu mínimo).
-- **Strict receive** — fixa o que eles recebem; você paga o que for necessário (abaixo do seu máximo).`,
-    },
-    {
-      kind: "diagram",
-      body: "Um pagamento, três moedas, uma transação atômica:",
-      caption: "Se qualquer salto não fechar no preço que você definiu, nada acontece — nenhum dinheiro meio convertido preso no meio do caminho.",
-      view: {
-        kind: "flow",
-        layout: "row",
-        play: true,
-        nodes: [
-          {
-            id: "send",
-            label: "você envia BRL",
-            note: "Você nunca toca nas moedas do meio, e nunca as segura.",
-            tone: "accent",
-          },
-          {
-            id: "hop1",
-            label: "BRL → XLM",
-            note: "O livro de ofertas fecha este salto pelo que o mercado oferecer agora.",
-            tone: "teal",
-          },
-          {
-            id: "hop2",
-            label: "XLM → EURC",
-            note: "E o próximo, no mesmo instante, dentro da mesma transação.",
-            tone: "teal",
-          },
-          {
-            id: "recv",
-            label: "ele recebe EURC",
-            note: "Valor garantido, ou tudo reverte. Não existe chegada parcial.",
-            tone: "good",
-          },
-        ],
-      },
-    },
-    {
-      kind: "quiz",
-      question: `Uma fatura é exatamente 900 EURC e seu tesouro possui USDC. Qual operação se encaixa?`,
-      options: [
-        "path_payment_strict_receive — fixa os 900 EURC entregues, limita o USDC que você gastará",
-        "path_payment_strict_send — envia cerca de 900 USDC e espera que a taxa fique quase equilibrada",
-        "Duas transações: troca USDC por EURC na DEX, depois um pagamento simples",
-      ],
+    { kind: "fill",
+      prompt: `Complete o que um pool de produto constante de fato promete:`,
+      file: "NOTES.md",
+      before: `Um pool sempre vai te cotar um preço. O que ele não promete é que o preço fica parado — quanto maior a sua ordem em relação ao pool, `,
+      after: ` .`,
+      choices: ["pior o preço que você acaba pagando", "menor a taxa que te cobram", "mais demorada a liquidação", "mais provável a ordem ser recusada"],
       answer: 0,
-      explain: `Strict receive existe exatamente para casos em que “a conta está fixa”. E uma operação atômica supera swap‑então‑envio: sem deriva de preço entre etapas, sem poeira residual, sem estado parcialmente concluído para limpar.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Desenhe o rio — o que acontece entre o envio e a entrega em um pagamento encadeado?`,
-      file: "remittance.txt",
-      before: `envia 100 USDC  →  `,
-      after: `  →  entrega EURC — uma transação atômica`,
-      choices: [
-        "roteia por livros de ofertas e pools de liquidez",
-        "faz ponte por tokens encapsulados em outra cadeia",
-        "fila na mesa de FX de um anchor para conversão",
-        "leilão o pagamento para bots market‑maker",
-      ],
-      answer: 0,
-      explain: `O roteamento é on‑ledger e atômico: o protocolo percorre ofertas e pools para encontrar a entrega, e ou todo o caminho executa no fechamento do ledger ou nenhum deles ocorre.`,
-    },
-    {
-      kind: "theory",
-      body: `## Por que construtores de remessa vêm aqui
+      explain: `O pool não pode acabar e não pode te recusar — é esse o ponto inteiro da curva. O que ele faz no lugar é te cobrar mais por cada unidade conforme você drena um dos lados, então uma ordem grande num pool pequeno se completa perfeitamente e caro.` },
+    { kind: "theory", body: `## Você nunca vai fazer isso na mão
 
-Os trilhos antigos: uma transferência transfronteiriça salta entre bancos correspondentes por **2–5 dias** e perde alguns por cento em taxas ao longo do caminho.
+Agora você sabe que existe um mercado dentro do ledger: livros que casam no fechamento, pools que cotam a partir de uma curva, e um preço que se move quando você se apoia nele.
 
-O rio: dólares se tornam USDC em uma ponta, um **pagamento encadeado** converte e entrega EURC em cerca de **cinco segundos** por uma taxa medida em frações de centavo, e euros saem pela outra ponta.
+E aqui está a parte que torna isso útil: **você quase nunca vai interagir com nada disso diretamente.** Você não vai colocar uma oferta, percorrer o livro nem escolher um pool. Você vai declarar o que está enviando e o que precisa chegar — e outra coisa faz as compras.
 
-A conversão FX — historicamente o caro e opaco meio‑termo — torna‑se um salto transparente através de livros de ofertas e pools públicos. Liquidação cross‑currency em segundos é o caso de uso que a Stellar mirou desde o primeiro dia.`,
-    },
-    {
-      kind: "theory",
-      body: `## A camada acima do rio
-
- Sobre a maquinaria nativa, o ecossistema constrói em Soroban: **Soroswap**, **Phoenix** e **Aquarius** rodam protocolos AMM como contratos inteligentes, e agregadores roteiam cada trade entre livros nativos, pools nativos e pools de contrato buscando o melhor preço. Você ainda não precisa dos detalhes internos — basta saber que o rio tem tanto um leito sólido quanto um porto movimentado construído em cima.
-
-Uma pergunta ainda fica aberta: onde os *verdadeiros* dólares e euros entram e saem? Essa é a tarefa dos anchors — os portões do reino, e o próximo capítulo.`,
-    },
+**A seguir:** a operação que gasta essa máquina inteira em seu nome, num único passo atômico.` },
+  ],
+  testOut: [
+    { question: `Quem casa uma oferta de compra com uma de venda na DEX da Stellar?`,
+      options: ["O próprio protocolo, no fechamento do ledger — ofertas são entradas do ledger e o casamento faz parte do consenso","Um contrato de motor de casamento mantido pela SDF","Relayers fora da chain que submetem pares casados por uma fatia"], answer: 0 },
+    { question: `O que é preciso para criar mercado para um novo par de ativos na DEX?`,
+      options: ["Duas trustlines e uma oferta — todo par ganha um livro automaticamente, sem listagem e sem permissão","Uma solicitação à SDF, que faz a curadoria dos pares negociáveis","Publicar um contrato de mercado para aquele par"], answer: 0 },
+    { question: `Um livro de ofertas precisa de traders ativos cotando preços. Do que um pool de liquidez precisa no lugar?`,
+      options: ["Só de depósitos — a curva de produto constante cota um preço a cada instante sem ninguém olhando","De um bot formador de mercado, que o pool paga com as taxas","De um oráculo alimentando o preço externo atual"], answer: 0 },
+    { question: `Sua ordem é grande em relação ao pool. O que acontece?`,
+      options: ["Ela se completa, a um preço progressivamente pior — a curva cobra mais por cada unidade conforme você drena um lado","Ela é recusada, porque o pool não consegue cobri-la","Ela entra numa fila até depositarem liquidez suficiente"], answer: 0 },
   ],
 };

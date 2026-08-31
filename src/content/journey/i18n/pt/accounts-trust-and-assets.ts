@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const accountsTrustAndAssets: Concept = {
-  meta: {
-    slug: "accounts-trust-and-assets",
-    title: "Contas, Confiança e Ativos",
-    tagline: "Reservas, linhas de confiança e como nasce qualquer ativo.",
-    numeral: "III",
-    arc: "realm",
-    level: 1,
-    status: "live",
-    estMinutes: 12,
-    sigil: "/v2/journey/sigils/accounts-trust-and-assets.webp",
-    glyph: "🪙",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Contas, Confiança e Ativos",
+  tagline: "Reservas, trustlines, e por que um ativo é opt-in.",
   steps: [
     {
       kind: "theory",
@@ -100,96 +90,53 @@ Opt‑in por design: seu balanço contém apenas o que você concordou em segura
       },
     },
     {
+      kind: "theory",
+      body: `## A reserva, contada
+
+Regras abstratas sobre reserva ficam óbvias no instante em que você soma uma. Eis uma conta comum, em uso:
+
+- **A própria conta** — 2 reservas-base.
+- **Três trustlines** — USDC, EURC e o token local de um anchor: mais 3.
+- **Uma oferta aberta** na DEX — mais 1.
+
+Seis entradas a **0,5 XLM cada: 3 XLM travados.** Se a conta tem 3,4 XLM, o saldo gastável é 0,4 — e um pagamento de 1 XLM vai falhar, com um saldo que claramente parece cobrir.
+
+Esse erro tem nome em toda fila de suporte da Stellar: *"eu tenho fundos mas o pagamento diz sem fundos."* Os fundos estão lá. Eles só não estão **disponíveis**, porque disponibilidade é total menos reserva, e a reserva cresceu toda vez que a conta concordou em guardar algo novo.
+
+A boa notícia é que nada disso foi gasto. Feche a oferta e 0,5 XLM volta. Feche uma trustline que você não usa mais e volta outra. A reserva é um depósito por espaço no ledger, devolvido no instante em que você para de ocupá-lo.`,
+    },
+    { kind: "theory", body: `## O que o opt-in está de fato evitando
+
+A trustline parece burocracia até você imaginar o ledger sem ela.
+
+Numa chain onde qualquer um pode empurrar um token para qualquer endereço, sua carteira é uma caixa de entrada pública em que estranhos escrevem. Tokens caem sem pedir licença — uns como marketing, outros nomeados para se passar por um ativo real, outros desenhados para que interagir com eles te custe alguma coisa. Aí toda carteira precisa de um filtro, todo filtro precisa de uma lista, e toda lista é o julgamento de alguém sobre o que você tem permissão de ver.
+
+A Stellar desce essa decisão uma camada, para dentro do protocolo: **um ativo não pode cair numa conta que não abriu uma trustline para ele.** Ninguém coloca nada na sua conta sem o seu consentimento prévio, explícito e registrado no ledger.
+
+A reserva é o que torna esse consentimento honesto. Cada trustline trava 0,5 XLM, então abrir uma é um ato pequeno e deliberado em vez de algo que um script faz dez mil vezes — e fechar devolve a reserva.
+
+A fricção era o ponto.` },
+    {
       kind: "labLink",
       labSlug: "wallet-onboarding",
       body: `Você já fez isso com as próprias mãos: o laboratório **Sua Primeira Carteira** da Forja envia \`change_trust\` com sua assinatura na testnet ativa — o momento em que um novo ativo apareceu no seu saldo foi o nascimento de uma linha de confiança. Se você pulou esse laboratório, este capítulo é a oportunidade perfeita para abrir uma de verdade.`,
     },
-    {
-      kind: "theory",
-      body: `## Emitindo um ativo: basta pagá‑lo
+    { kind: "theory", body: `## Guardar, e criar
 
-Não existe um ritual de “deploy de token” no Stellar clássico. Um **ativo é um par**: um código curto mais o **endereço do emissor** — \`USDC\` da conta da Circle e \`USDC\` de um estranho são ativos diferentes.
+Você já consegue ler qualquer conta do ledger: quanto ela custa para existir, quanto cada entrada acrescenta a esse custo, e quais ativos ela concordou em guardar.
 
-Para emitir, o emissor simplesmente **paga** o ativo de sua própria conta para alguém que tenha aberto uma linha de confiança. Esse primeiro pagamento *é* a cunhagem. O suprimento é tudo que o emissor pagou e ainda não recebeu de volta — o livro‑razão rastreia isso automaticamente entre as linhas de confiança.
+Tudo até aqui foi pelo lado de quem guarda. Vire a moeda e aparece outro conjunto de perguntas: como um ativo passa a existir, quem tem permissão de criar um, e — a pergunta que todo emissor regulado precisa responder — o emissor consegue controlar quem o guarda depois?
 
-Qualquer conta pode emitir. A escassez de confiança, não permissão, é o que faz um ativo valer.`,
-    },
-    {
-      kind: "quiz",
-      question: `O que é necessário para trazer um ativo totalmente novo à existência no Stellar clássico?`,
-      options: [
-        "O emissor paga para uma conta que abriu uma linha de confiança — o primeiro pagamento é a cunhagem",
-        "Deploy e verificação de um contrato de token, depois registro do ticker no SDF",
-        "Stake de XLM proporcional ao suprimento pretendido",
-      ],
-      answer: 0,
-      explain: `Um ativo é identificado por código + emissor, então ele “existe” no momento em que se move pela primeira vez. Contratos só entram na história quando você quer comportamento programável — ou a ponte SAC que espera no final deste capítulo.`,
-    },
-    {
-      kind: "theory",
-      body: `## Duas contas, um ativo: higiene do emissor
-
-Emissores sérios separam os papéis:
-
-- A **conta emissora** assina quase nada. Ela cunha pagando a conta de distribuição, depois volta a dormir — chaves frias, superfície de ataque mínima.
-- A **conta de distribuição** detém o suprimento em circulação e faz o tráfego diário: clientes, exchanges, caminhos quentes.
-
-Se as chaves de distribuição vazarem, você perde um saldo — não a prensa de impressão. Um emissor pode ir além: bloquear os signatários da conta emissora para que *ninguém* jamais possa emitir novamente, fixando o suprimento máximo para sempre. O próprio livro‑razão torna‑se a auditoria.`,
-    },
-    {
-      kind: "theory",
-      body: `## Flags de autorização: emissor como porteiro
-
-Ativos do mundo real carregam leis do mundo real, então um emissor pode definir flags em si mesmo:
-
-- **Auth required** — linhas de confiança começam não autorizadas; o emissor aprova cada detentor (portões KYC).
-- **Auth revocable** — o emissor pode congelar uma linha de confiança autorizada, parando aquele saldo frio.
-- **Clawback** — o emissor pode recolher o ativo totalmente (ordens judiciais, fundos roubados, pagamentos com erro de digitação).
-
-Essas flags explicam por que instituições reguladas podem emitir em um livro‑razão público: a conformidade é imposta *pelo protocolo*, não por uma promessa em PDF.`,
-    },
-    {
-      kind: "quiz",
-      question: `Um emissor regulado descobre que a conta de um detentor foi hackeada. Qual flag permite parar esse saldo de se mover — agora mesmo?`,
-      options: [
-        "Auth revocable — revoga a autorização da linha de confiança e o saldo fica congelado no lugar",
-        "Auth required — bloqueia retroativamente os depósitos anteriores do hacker",
-        "Auth immutable — bloqueia todo o ativo para todos",
-      ],
-      answer: 0,
-      explain: `Auth required só controla *novas* linhas de confiança, e auth immutable apenas garante que as flags nunca mudarão. Congelar impede a movimentação; **clawback** vai um passo além e recolhe o ativo de volta ao emissor.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Complete a identidade de um ativo clássico — o que faz o USDC ser *o verdadeiro* USDC?`,
-      file: "asset-identity.txt",
-      before: `asset  =  asset code  +  `,
-      after: `   (mesmo código, emissor diferente → ativo diferente)`,
-      choices: [
-        "o endereço da conta do emissor",
-        "o hash Wasm do contrato",
-        "um registro global de tickers",
-        "a URL da página inicial do anchor",
-      ],
-      answer: 0,
-      explain: `Não há namespace para ocupar. Carteiras resolvem qual \`USDC\` é real via o endereço do emissor — e, como você verá nos Portões do Reino, esse emissor prova sua identidade com um arquivo em seu próprio domínio.`,
-    },
-    {
-      kind: "theory",
-      body: `## O Stellar Asset Contract
-
-Ativos clássicos e contratos inteligentes compartilham um mesmo reino, e a ponte é o **Stellar Asset Contract (SAC)**. Qualquer ativo clássico — XLM incluído — pode ser *invocado* como um contrato: um deploy, zero código para escrever, e o ativo agora fala **SEP‑41**, a interface padrão de token Soroban.
-
-Mesmo ativo, mesmo suprimento, um único balanço — mas agora contratos podem mantê‑lo, movê‑lo e construir sobre ele. USDC em um pool de empréstimos e USDC na linha de confiança da avó são o *mesmo USDC*.
-
-Todo protocolo Soroban sério depende dessa ponte diariamente.`,
-    },
-    {
-      kind: "rustBranch",
-      lessonSlug: "stellar-101-1",
-      body: `O Ato VI da Campanha — **O Portão da Constelação** — percorre o mesmo terreno a partir de Rust: contas, saldos e linhas de confiança consultados e forjados em código ao invés de prosa. Faça o desvio quando quiser colocar os dedos nas próprias entradas do livro‑razão.
-
-Próximo na jornada: ativos em *movimento* — pagamentos que cruzam moedas no meio do caminho, e uma exchange incorporada ao próprio protocolo.`,
-    },
+**A seguir:** o outro lado da trustline.` },
+  ],
+  testOut: [
+    { question: `O que é uma conta na Stellar, estruturalmente?`,
+      options: ["Uma entrada do ledger com saldo, número de sequência e signatários — que custa uma reserva mínima para continuar existindo","Um registro dentro de um contrato de sistema que o protocolo aciona","Uma chave pública; o ledger não guarda nada até a chave ser usada"], answer: 0 },
+    { question: `Por que cada entrada adicional do ledger aumenta o saldo mínimo de uma conta?`,
+      options: ["Toda entrada custa armazenamento de todo validador, então a reserva precifica esse custo contínuo — e volta quando a entrada é removida","É uma taxa que financia a operação dos validadores","Desencoraja contas a guardarem mais de um ativo"], answer: 0 },
+    { question: `Alguém te manda um ativo do qual você nunca ouviu falar. O que acontece?`,
+      options: ["O pagamento falha — um ativo não pode cair numa conta que não abriu trustline para ele","Ele chega e aparece nos seus saldos até você removê-lo","Fica retido pelo protocolo até você aceitar ou recusar"], answer: 0 },
+    { question: `Abrir uma trustline te compromete com o quê, de fato?`,
+      options: ["Travar uma reserva e consentir, no ledger, em guardar aquele ativo específico daquele emissor específico","Confiar que o emissor não vai congelar seu saldo","Pagar uma taxa recorrente enquanto guardar o ativo"], answer: 0 },
   ],
 };

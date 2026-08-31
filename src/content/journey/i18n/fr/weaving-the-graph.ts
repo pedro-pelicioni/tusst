@@ -1,9 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
-export const conceptText = {
-  title: "Tisser le graphe",
-  tagline:
-    "Ingénierie des graphes : de nombreux petits golems au service d’un même plan.",
+export const conceptText: JourneyConceptText = {
+  title: "Tisser le Graphe",
+  tagline: "Beaucoup de petits golems, chacun sur son établi, un plan tissé.",
   steps: [
     {
       kind: "theory",
@@ -117,6 +116,8 @@ La discipline consiste à repérer la véritable indépendance : les travaux p
         ],
       },
     },
+    { kind: "widget", component: "fan-out",
+      body: `Quatre tâches, deux étapes chacune, trois façons de les ordonnancer. **Changez les durées** et regardez quels deux ordonnancements cessent d'être la même chose.` },
     {
       kind: "quiz",
       question: `Quel ensemble de sous-tâches peut être réparti sans risque en parallèle ?`,
@@ -128,6 +129,15 @@ La discipline consiste à repérer la véritable indépendance : les travaux p
       answer: 0,
       explain: `Exécuter avant que les données soient prêtes viole une dépendance, et modifier un fichier partagé multiplie les conflits de fusion. Le test est simple et fiable : si le nœud A ne lit ni la sortie ni l'état du nœud B, ils peuvent s'exécuter en parallèle.`,
     },
+    { kind: "quiz",
+      question: `Cinq nœuds produisent chacun un constat, et chaque constat doit ensuite être vérifié. Quand est-il juste d'attendre **les cinq** constats avant de commencer **la moindre** vérification ?`,
+      options: [
+        "Uniquement quand l'étape de vérification a réellement besoin de l'ensemble d'un coup — pour dédupliquer entre constats, par exemple, ou pour tout sauter si le compte est nul",
+        "Toujours — une frontière d'étape nette rend le pipeline plus facile à raisonner",
+        "Jamais — attendre est toujours du temps perdu dans un système parallèle",
+      ],
+      answer: 0,
+      explain: `Une barrière est un vrai outil avec un vrai coût : elle dépense le temps du nœud le plus lent sans rien faire des quatre autres. Elle mérite ce coût quand l'étape suivante porte vraiment sur l'*ensemble* — déduplication, sortie anticipée à zéro, comparaison entre résultats. « Ça se lit mieux » n'en est pas, et « je dois d'abord aplatir la liste » non plus.` },
     {
       kind: "theory",
       body: `## Le forgeron et le réfuteur
@@ -148,58 +158,22 @@ La mission confiée au nœud compte. « Relis ça » invite à un simple acq
       answer: 0,
       explain: `Un vérificateur chargé d'approuver trouvera toujours un moyen d'approuver. « Résumer » produit de la prose, pas une inspection ; « réécrire » ne fait qu'ajouter un second forgeron avec ses propres angles morts. Seule la réfutation oriente réellement le nœud vers les failles.`,
     },
-    {
-      kind: "theory",
-      body: `## Orchestration et autonomie
+    { kind: "theory", body: `## Une forme n'est pas encore un système
 
-Sépare clairement les deux rôles du graphe :
+Vous savez désormais prendre une quête trop grande pour un seul établi et la découper en nœuds assez petits pour être bien faits — et vous savez confier la vérification à un second esprit qui ne s'est jamais attaché aux choix du premier.
 
-- **Les arêtes sont déterministes.** Du code simple décide ce qui s'exécute, à quel moment, ce qui circule et comment relancer une étape — un flux de contrôle que tu peux lire, tester et rejouer.
-- **Le jugement réside dans les nœuds.** Dans sa propre boîte, le modèle consacre toutes ses capacités à une seule tâche.
+Ce que vous avez est une forme. Ce que vous n'avez pas encore est une machine sur laquelle quelqu'un peut compter. Qui décide quel nœud vient ensuite ? Qu'arrive-t-il aux autres nœuds quand l'un d'eux échoue ? Et — la question qui économise le plus d'argent — quand ne faut-il **pas** construire de graphe du tout ?
 
-Si tu brouilles cette séparation — en laissant le modèle improviser l'étape suivante — les échecs cessent d'être reproductibles : chaque exécution emprunte un graphe différent. Garde une structure prévisible et des esprits bien délimités : **un squelette fiable, des organes intelligents.**`,
-    },
-    {
-      kind: "quiz",
-      question: `Dans un graphe bien construit, où s'exerce le jugement du modèle ?`,
-      options: [
-        "À l'intérieur des nœuds — tandis que les arêtes entre eux restent du code déterministe que tu peux tester et rejouer",
-        "Dans les arêtes — laisser le modèle improviser quel nœud tourne ensuite garde le système flexible",
-        "Nulle part — un pipeline sérieux est déterministe de bout en bout, sinon ce n'est pas de l'ingénierie",
-      ],
-      answer: 0,
-      explain: `Un flux de contrôle improvisé produit des échecs impossibles à reproduire : tu ne peux pas déboguer un chemin qui change à chaque exécution. À l'inverse, un pipeline dépourvu de tout jugement n'avait pas besoin de golems. Squelette déterministe, organes capables de juger : chaque forme d'intelligence reste à sa place.`,
-    },
-    {
-      kind: "theory",
-      body: `## Des cloisons étanches pour le raisonnement
-
-L'un des avantages les plus discrets du graphe est **le confinement des erreurs**.
-
-Dans un prompt gigantesque, une confusion à la deuxième étape contamine tout ce qui suit : même contexte, aucune cloison étanche, et l'erreur s'accumule jusqu'à la fin.
-
-Dans un graphe, un nœud qui échoue **échoue seul**. Son contexte reste isolé ; ses propres évaluations détectent l'échec à *sa* frontière — la boussole du chapitre précédent, placée cette fois dans chaque nœud. L'orchestrateur peut alors le relancer ou le contourner. C'est précisément ce qu'apportent les pipelines et les outils multi-agents : des étapes nommées, des transferts typés et des relances maîtrisées. On retrouve, un niveau plus haut, la leçon du bastion sur le rayon d'impact.`,
-    },
-    {
-      kind: "quiz",
-      question: `La tâche : renommer une fonction et ses sites d'appel dans un seul fichier. Que prends‑tu ?`,
-      options: [
-        "Une boucle simple — voire seulement ton éditeur ; coordonner un graphe coûterait plus cher que la tâche elle-même",
-        "Un graphe — davantage de golems signifie toujours davantage de qualité, quelle que soit la taille de la tâche",
-        "Un graphe — les petites tâches sont l'endroit idéal pour s'entraîner aux grandes",
-      ],
-      answer: 0,
-      explain: `Chaque nœud demande une mise en place : sélectionner le contexte, définir les arêtes et acheminer les échecs. Pour une petite tâche, l'ossature dépasse le travail — comme convoquer un conseil de guerre pour chasser une mouche. Tâche simple, boucle simple ; le graphe ne justifie son coût que lorsque la décomposition apporte un réel bénéfice.`,
-    },
-    {
-      kind: "theory",
-      body: `## Le savoir-faire, assemblé
-
-Regarde les outils désormais accrochés à ta ceinture : des **spécifications** qui définissent ce qui est correct ; des **tests** qui le vérifient durablement ; des **frontières** qui préservent le sens des mots ; un **bastion** qui contient le changement ; un **environnement contrôlé** qui contient le golem ; des **mots** qui façonnent ce qu'il voit ; des **boucles** qui lui permettent de se corriger ; enfin, un **graphe** qui rassemble de nombreux esprits autour d'un même plan.
-
-Aucun de ces éléments ne sera pris en charge par l'IA à ta place. Ensemble, ils décuplent pourtant son efficacité.
-
-Prochaine étape : retour au royaume — apporte ce savoir-faire dans la Forge et mets-le à l'épreuve sur le véritable réseau.`,
-    },
+**Ensuite :** la partie qui rend la forme digne de confiance.` },
   ],
-} satisfies JourneyConceptText;
+  testOut: [
+    { question: `Pourquoi décomposer une grande quête en graphe de nœuds plutôt qu'en un long prompt ?`,
+      options: ["Chaque nœud reçoit son propre établi trié, si bien que la qualité ne se dilue pas entre des étapes sans rapport","Les modèles facturent moins plusieurs requêtes courtes qu'une longue","Cela laisse le modèle choisir son ordre de travail, ce qui améliore les résultats"], answer: 0 },
+    { question: `Quel est le test pour savoir si deux nœuds peuvent tourner en parallèle ?`,
+      options: ["Le nœud A ne lit pas la sortie du nœud B et ne touche pas à son état","On s'attend à ce que les deux nœuds prennent à peu près le même temps","Aucun des deux n'écrit sur le réseau"], answer: 0 },
+    { question: `Pourquoi donner au second golem l'objectif « réfuter » plutôt que « relire » ?`,
+      options: ["Un nœud à qui l'on demande d'approuver trouvera le moyen d'approuver — la réfutation est le seul objectif qui vise les trous","La réfutation produit une sortie plus courte, donc moins coûteuse","La relecture exige le contexte d'origine, la réfutation non"], answer: 0 },
+    { question: `Quatre tâches en parallèle, deux étapes chacune. Que coûte réellement d'attendre que toutes finissent l'étape un ?`,
+      options: ["Le temps d'étape un de la tâche la plus lente, dépensé à ne rien faire des autres — et de nouveau à l'étape deux","Rien, tant que les tâches tournent en parallèle au sein de chaque étape","Seulement la surcharge de coordination de l'ordonnanceur"], answer: 0 },
+  ],
+};

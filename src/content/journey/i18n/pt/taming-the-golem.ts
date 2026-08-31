@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const tamingTheGolem: Concept = {
-  meta: {
-    slug: "taming-the-golem",
-    title: "Domando o Golem",
-    tagline: "Engenharia de harness: dê ao IA um banco de testes, não um desejo.",
-    numeral: "V",
-    arc: "craft",
-    level: 2,
-    status: "live",
-    estMinutes: 13,
-    sigil: "/v2/journey/sigils/taming-the-golem.webp",
-    glyph: "🗿",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Domando o Golem",
+  tagline: "O modelo é alugado. O arreio é engenharia, e é seu.",
   steps: [
     {
       kind: "theory",
@@ -113,63 +103,39 @@ Reclamações são dados. Verificadores são a verdade.`,
       explain: `Auto‑revisão pelo mesmo modelo compartilha os mesmos pontos cegos — se ele acreditou que o deploy funcionou, acreditará novamente. Verificadores independentes não compartilham esses pontos cegos, e no Stellar uma leitura via RPC custa milissegundos. O ledger é o detector de mentiras mais barato que você terá.`,
     },
     {
-      kind: "theory",
-      body: `## Menor privilégio: menos dentes, por favor
-
-Um golem com \`rm -rf\` disponível é um golem que *eventualmente* o executará — não por malícia, mas por um plano confiante e errado às 2 da manhã. A solução é antiga e comprovada: **menor privilégio**.
-
-- Conceda ferramentas para *esta tarefa*, não ferramentas em geral.
-- Prefira acesso **somente leitura** sempre que escrita não for necessária.
-- Limite a um diretório; sandbox tudo que for executado.
-- Dê apenas **chaves de testnet** — nunca uma chave cuja perda realmente cause dano.
-
-Permissão concedida "por precaução" é como incidentes começam. Cada ferramenta tem um raio de explosão; conceda de acordo.`,
-    },
-    {
       kind: "fill",
-      prompt: `Delimite o poder do golem antes que ele comece a trabalhar:`,
-      file: "harness.toml",
-      before: `signing_keys = "`,
-      after: `"`,
-      choices: ["testnet", "mainnet", "all-networks", "treasury"],
+      prompt: `Complete a primeira jogada do engenheiro de arreio:`,
+      file: "NOTES.md",
+      before: `O golem diz que o deploy deu certo. Antes que essa frase mude qualquer coisa, o arreio `,
+      after: ` .`,
+      choices: ["lê a chain e confere", "pede ao golem que confirme", "registra a afirmação no log da execução", "refaz o deploy por garantia"],
       answer: 0,
-      explain: `Regra prática: um golem só deve possuir chaves cuja perda total você possa ignorar. Lumens de testnet são gratuitos via friendbot; uma chave de mainnet ou do tesouro dentro de um loop automatizado é um incidente com contagem regressiva.`,
+      explain: `Pedir à mesma mente que confirme o próprio trabalho te compra o mesmo ponto cego duas vezes. E uma afirmação escrita num log continua sendo uma afirmação — só ficou com cara de oficial. Na Stellar a conferência custa uma leitura de RPC, o que faz do ledger o detector de mentiras mais barato que você vai ter.`,
+    },
+    {
+      kind: "labLink",
+      labSlug: "guild-vault",
+      body: `Você pode ficar dentro de um arreio de verificação agora mesmo. O laboratório **O Cofre da Guilda** da Forja te faz elevar o limiar de assinatura de uma conta, para um tesouro exigir dois oficiais — e depois não acredita na sua palavra. O servidor lê o ledger e confere o conjunto de signatários ele mesmo. Dizer que você fez não é a conferência; a chain é.`,
     },
     {
       kind: "theory",
-      body: `## Projete o caminho de falha
+      body: `## A metade que é pulada
 
-Amadores projetam o que acontece quando o golem está *certo*. Engenheiros projetam o que acontece quando ele está **errado** — porque às vezes ele estará.
+Você já consegue nomear as peças de um arreio e, mais importante, se recusar a acreditar em qualquer coisa que o golem diga sobre o próprio trabalho.
 
-- Uma verificação falha **bloqueia o merge**; não registra um aviso no vazio.
-- Retries têm um **orçamento**, então um golem travado se torna um golem parado, não uma conta crescente.
-- Um humano revisa **um diff com contexto**, nunca um fato consumado já em produção.
-- Rollback é um caminho testado, não uma oração.
+Tudo até aqui foi sobre dar **mãos** a ele — ferramentas, um diretório, um runner. Nada até aqui fez a pergunta mais difícil: quais mãos, exatamente, e o que acontece no dia em que ele usar essas mãos num plano confiantemente errado.
 
-Para cada passo do harness, faça a pergunta: *"quando isso está errado, o que o captura?"* Se a resposta for "esperançosamente nada dá errado" — isso é um desejo, não um design.`,
+**A seguir:** quanto poder o trabalho de fato precisa, e a única pergunta a fazer de cada passo que você construir.`,
     },
-    {
-      kind: "quiz",
-      question: `Qual destes é um caminho de falha **projetado**?`,
-      options: [
-        "Uma suite de testes vermelha bloqueia o auto‑merge, e um humano recebe o diff junto com a saída falha",
-        "O prompt instrui firmemente o golem a ser extremamente cuidadoso e a revisar tudo duas vezes",
-        "O loop tenta a mesma tarefa, sem limite, até que a saída finalmente passe",
-      ],
-      answer: 0,
-      explain: `Instruções são esperanças — úteis, mas não *capturam* nada. Retries ilimitados são uma conta sem teto (um capítulo posterior nomeia a correção). Um caminho projetado tem um gatilho, uma parada e um humano com contexto suficiente para agir.`,
-    },
-    {
-      kind: "theory",
-      body: `## Você já esteve dentro de um o tempo todo
-
-Olhe ao redor: **TUSST é um harness.**
-
-O ambiente de avaliação da Forja é um mecanismo de verificação: sua solução roda isolada, testes ocultos a julgam, e nenhum texto convincente transforma um resultado vermelho em verde. Os laboratórios on‑chain vão além: eles não perguntam *se você disse* que implantou — eles **leem a cadeia** e conferem.
-
-Essa é a disciplina em uma imagem: construa o banco de forma que estar errado seja *detectável* e estar certo seja *comprovável* — para golems e para humanos.
-
-Próxima disciplina: as próprias palavras — o que o golem realmente vê no banco.`,
-    },
+  ],
+  testOut: [
+    { question: `O que é o arreio, e por que ele importa mais que o prompt?`,
+      options: ["Tudo em volta do modelo — ferramentas, permissões, diretório de trabalho, verificadores. O modelo é alugado; o arreio é seu e sobrevive a uma troca de modelo","O prompt de sistema e suas instruções, que é onde o comportamento é de fato definido","A infraestrutura do provedor, que determina latência e vazão"], answer: 0 },
+    { question: `Mesmo modelo, mesmas tarefas, e a saída deste mês está bem pior. Onde o engenheiro de arreio olha primeiro?`,
+      options: ["Para o que cerca o modelo — o contexto dado, as ferramentas disponíveis, as checagens que barram a saída","Para os pesos, que se degradam sob carga sustentada","Lugar nenhum — aleatoriedade de amostragem explica qualquer oscilação"], answer: 0 },
+    { question: `Qual é o traço mais perigoso do golem?`,
+      options: ["Confiança estando errado — ele relata sucesso no mesmo tom caloroso, tenha acontecido algo ou não","Ignorância — há coisas que ele simplesmente nunca viu","Lentidão em tarefas longas, o que tenta as pessoas a pular a revisão"], answer: 0 },
+    { question: `"Contrato publicado e inicializado com sucesso." O que um bom arreio faz com essa frase?`,
+      options: ["Trata como afirmação, lê a chain, chama uma função de leitura e acredita no ledger","Aceita — o modelo tem sido confiável até agora","Pede ao golem que confira o próprio trabalho na mesma sessão"], answer: 0 },
   ],
 };

@@ -108,4 +108,14 @@ Una cuenta es un par de claves. Una dirección es la mitad que se comparte. Una 
 **A continuación:** el libro puede guardar algo más que saldos. Puede guardar *reglas* — y esas reglas se ejecutan solas, sin nadie en medio decidiendo si las honra.`,
     },
   ],
+  testOut: [
+    { question: `¿Qué prueba realmente una firma?`,
+      options: ["Que quien tiene la clave privada aprobó exactamente este mensaje","Que el mensaje salió de un dispositivo de confianza","Que la red comprobó la identidad del remitente antes de aceptarlo"], answer: 0 },
+    { question: `Un desconocido tiene tu dirección pública. ¿Qué puede hacer con ella?`,
+      options: ["Enviarte valor y verificar tus firmas — nada más","Gastar de tu cuenta si además sabe cuándo firmaste por última vez","Deducir tu clave privada, con tiempo suficiente"], answer: 0 },
+    { question: `¿Por qué una clave no es solo una contraseña con pasos de más?`,
+      options: ["Una contraseña se le muestra a un servicio que la comprueba; una clave nunca sale de tu lado y produce una prueba en su lugar","Una clave es más larga, así que cuesta más adivinarla","Una contraseña la resetea el soporte, y una clave la resetea la red"], answer: 0 },
+    { question: `Cambias un carácter del mensaje después de firmarlo. ¿Qué ocurre?`,
+      options: ["La firma deja de coincidir — cubre el mensaje entero, no un trozo","Nada, mientras el cambio sea más pequeño que la firma","La firma se actualiza para cubrir el texto nuevo"], answer: 0 },
+  ],
 };

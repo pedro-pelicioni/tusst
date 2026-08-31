@@ -1,20 +1,20 @@
 import type { Concept } from "../types";
 
-// Chapter VIII (craft) — graph engineering: decomposing work into nodes with
-// curated contexts and deterministic edges. Fan-out/fan-in, adversarial
-// verifier nodes, orchestration vs autonomy, containment as bulkheads — and
-// the honesty to skip the graph when a simple loop will do.
+// Craft XIII — decomposition: nodes, edges, true independence, and the
+// adversarial pair. How to make the resulting machine reliable — deterministic
+// edges, per-node bulkheads, and knowing when NOT to build one — is Craft XIV.
 
 export const weavingTheGraph: Concept = {
   meta: {
     slug: "weaving-the-graph",
     title: "Weaving the Graph",
-    tagline: "Graph engineering: many small golems, one woven plan.",
-    numeral: "VIII",
+    tagline: "Many small golems, each on its own bench, one woven plan.",
+    numeral: "XIII",
     arc: "craft",
     level: 2,
+    requires: ["the-hand-on-the-brake"],
     status: "live",
-    estMinutes: 13,
+    estMinutes: 11,
     sigil: "/v2/journey/sigils/weaving-the-graph.webp",
     glyph: "🕸️",
   },
@@ -132,6 +132,11 @@ The discipline is spotting *true* independence: parallel work must share **no st
       },
     },
     {
+      kind: "widget",
+      component: "fan-out",
+      body: `Four tasks, two stages each, three ways to schedule them. **Flip the durations** and watch which two schedules stop being the same thing.`,
+    },
+    {
       kind: "quiz",
       question: `Which set of subtasks is safe to fan out in parallel?`,
       options: [
@@ -141,6 +146,17 @@ The discipline is spotting *true* independence: parallel work must share **no st
       ],
       answer: 0,
       explain: `Run-before-written violates a dependency, and shared-file editing is a merge-conflict factory with extra steps. The test is boring and reliable: if node A neither reads node B's output nor touches node B's state, they may run together.`,
+    },
+    {
+      kind: "quiz",
+      question: `Five nodes each produce a finding, and each finding then needs verifying. When is it right to wait for **all five** findings before starting **any** verification?`,
+      options: [
+        "Only when the verification step genuinely needs the whole set at once — to dedupe across findings, say, or to skip entirely if the count is zero",
+        "Always — a clean stage boundary makes the pipeline easier to reason about",
+        "Never — waiting is always wasted time in a parallel system",
+      ],
+      answer: 0,
+      explain: `A barrier is a real tool with a real cost: it spends the slowest node's time doing nothing with the other four. It earns that cost when the next stage is genuinely about the *set* — deduplication, an early exit on zero, a comparison across results. "It reads more cleanly" is not that, and neither is "I need to flatten the list first."`,
     },
     {
       kind: "theory",
@@ -164,56 +180,51 @@ The job description matters. "Review this" invites a shrug of approval. *"Find w
     },
     {
       kind: "theory",
-      body: `## Orchestration vs. autonomy
+      body: `## A shape is not yet a system
 
-Split the graph's two jobs cleanly:
+You can now take a quest too big for one bench and cut it into nodes that are each small enough to do well — and you know to hand the checking to a second mind that was never attached to the first one's choices.
 
-- **Edges are deterministic.** Plain code decides what runs when, what flows where, what a retry looks like — control flow you can read, test, and replay.
-- **Judgment lives inside nodes.** Within its box, the model brings full craft to its one task.
+What you have is a shape. What you do not yet have is a machine anyone can rely on. Who decides which node runs next? What happens to the other nodes when one of them fails? And — the question that saves the most money — when should you not build a graph at all?
 
-Blur the split — let the model improvise which step comes next — and failures stop being reproducible: every run is a new adventure through a different graph. Keep the structure boring and the minds contained: **reliability from the skeleton, intelligence from the organs.**`,
+**Next:** the part that makes the shape trustworthy.`,
     },
+  ],
+  testOut: [
     {
-      kind: "quiz",
-      question: `In a well-built graph, where does model judgment live?`,
+      question: `Why decompose a large quest into a graph of nodes instead of one long prompt?`,
       options: [
-        "Inside the nodes — while the edges between them stay deterministic code you can test and replay",
-        "In the edges — letting the model improvise which node runs next keeps the system flexible",
-        "Nowhere — a serious pipeline is deterministic end to end, or it isn't engineering",
+        "Each node gets its own curated bench, so quality does not dilute across steps that have nothing to do with each other",
+        "Models charge less for several short requests than for one long one",
+        "It lets the model choose its own order of work, which improves results",
       ],
       answer: 0,
-      explain: `Improvised control flow means unreproducible failures — you can't debug a path that never happens the same way twice. And a pipeline with no judgment anywhere didn't need golems at all. Deterministic skeleton, judging organs: each kind of reliability where it belongs.`,
     },
     {
-      kind: "theory",
-      body: `## Bulkheads for reasoning
-
-The graph's quietest gift is **containment**.
-
-In one giant prompt, a single confusion at step two poisons everything after it — same context, no bulkheads, the error compounding politely to the end.
-
-In a graph, a failed node **fails alone**. Its context is quarantined; its own evals catch the failure at *its* border — the last chapter's compass, now posted per node; the orchestrator retries it or routes around it. This is what pipeline and multi-agent tooling exists to give you — named steps, typed handoffs, retries — and it's the keep's blast-radius lesson again, one level up.`,
-    },
-    {
-      kind: "quiz",
-      question: `The task: rename one function and its call sites in a single file. What do you reach for?`,
+      question: `What is the test for whether two nodes may run in parallel?`,
       options: [
-        "A simple loop — or just your editor; a graph's coordination costs would exceed the task itself",
-        "A graph — more golems means more quality, on small tasks and large ones alike",
-        "A graph — small tasks are exactly the place to practice for the big ones",
+        "Node A neither reads node B's output nor touches its state",
+        "Both nodes are expected to take roughly the same amount of time",
+        "Neither node writes to the network",
       ],
       answer: 0,
-      explain: `Every node costs setup: context to curate, edges to define, failures to route. On a small task the scaffolding outweighs the work — a war council convened to swat a fly. Simple task, simple loop; the graph earns its keep only when decomposition does.`,
     },
     {
-      kind: "theory",
-      body: `## The craft, assembled
-
-Look at what's on your belt now: **specs** that say what right means; **trials** that check it forever; **borders** that keep words honest; a **keep** that contains change; a **harness** that contains the golem; **words** that shape what it sees; **loops** that let it correct itself; and a **graph** that weaves many minds into one plan.
-
-None of these will the AI carry for you. All of them make the AI worth ten of itself.
-
-Next on the road: back to the realm — carry the craft into the Forge and spend it on the real network.`,
+      question: `Why give the second golem the goal \"refute\" rather than \"review\"?`,
+      options: [
+        "A node told to approve will find a way to approve — refutation is the only goal that aims the mind at the holes",
+        "Refutation produces shorter output, which costs less",
+        "Review requires the original context, and refutation does not",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Four tasks fan out, each with two stages. What does waiting for every task to finish stage one actually cost?`,
+      options: [
+        "The slowest task's stage-one time, spent doing nothing with all the others — and again at stage two",
+        "Nothing, as long as the tasks run in parallel within each stage",
+        "Only the coordination overhead of the scheduler",
+      ],
+      answer: 0,
     },
   ],
 };

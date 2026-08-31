@@ -108,4 +108,42 @@ Uma conta é um par de chaves. Um endereço é a metade que se compartilha. Uma 
 **A seguir:** o livro guarda mais do que saldos. Ele guarda *regras* — e essas regras se executam sozinhas, sem ninguém no meio decidindo se vai honrá-las.`,
     },
   ],
+  testOut: [
+    {
+      question: `O que uma assinatura de fato prova?`,
+      options: [
+        "Que quem tem a chave privada aprovou exatamente esta mensagem",
+        "Que a mensagem partiu de um dispositivo confiável",
+        "Que a rede conferiu a identidade do remetente antes de aceitar",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Um estranho tem o seu endereço público. O que ele consegue fazer com isso?`,
+      options: [
+        "Te mandar valor e conferir suas assinaturas — nada além disso",
+        "Gastar da sua conta, se também souber quando você assinou pela última vez",
+        "Deduzir sua chave privada, com tempo suficiente",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Por que uma chave não é só uma senha com passos a mais?`,
+      options: [
+        "Uma senha é mostrada a um serviço que a confere; uma chave nunca sai do seu lado e produz uma prova no lugar",
+        "Uma chave é mais longa, então exige mais tentativas para adivinhar",
+        "Uma senha pode ser resetada pelo suporte, e uma chave é resetada pela rede",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Você muda um caractere da mensagem depois de assiná-la. O que acontece?`,
+      options: [
+        "A assinatura para de bater — ela cobre a mensagem inteira, não um pedaço",
+        "Nada, desde que a mudança seja menor que a assinatura",
+        "A assinatura se atualiza para cobrir o texto novo",
+      ],
+      answer: 0,
+    },
+  ],
 };

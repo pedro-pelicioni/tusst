@@ -217,4 +217,14 @@ And whenever a concept makes you curious about the metal itself, look for the **
 Next: the realm you'll be building in — and how thousands of machines agree without a king.`,
     },
   ],
+  testOut: [
+    { question: `Why is a spec the part of engineering that stays yours in the AI era?`,
+      options: ["When code is cheap, \"looks right\" and \"is right\" become indistinguishable unless you wrote down what right means first","Because models cannot read specifications, so a human must hold them","Because specs are faster to write than code, so they save time"], answer: 0 },
+    { question: `A spec describes what?`,
+      options: ["Behavior — what must happen, what must never happen, and the edges","The implementation, precisely enough that any developer produces the same code","The storage layout and the public function signatures"], answer: 0 },
+    { question: `Two very different implementations both satisfy your spec. What does that mean?`,
+      options: ["The spec is doing its job — it constrains behavior and leaves implementation free","The spec is too vague and needs implementation detail added","One of the two implementations must be wrong"], answer: 0 },
+    { question: `Which of these belongs in a spec?`,
+      options: ["\"The contract's balance never falls below the sum of open deposits\"","\"Store deposits in a persistent map keyed by address\"","\"Use the latest SDK and keep the code clean\""], answer: 0 },
+  ],
 };

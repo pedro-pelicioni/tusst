@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const accountsTrustAndAssets: Concept = {
-  meta: {
-    slug: "accounts-trust-and-assets",
-    title: "Cuentas, Confianza y Activos",
-    tagline: "Reservas, líneas de confianza y cómo nace cualquier activo.",
-    numeral: "III",
-    arc: "realm",
-    level: 1,
-    status: "live",
-    estMinutes: 12,
-    sigil: "/v2/journey/sigils/accounts-trust-and-assets.webp",
-    glyph: "🪙",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Cuentas, Confianza y Activos",
+  tagline: "Reservas, trustlines, y por qué un activo es opt-in.",
   steps: [
     {
       kind: "theory",
@@ -99,97 +89,51 @@ Opt‑in por diseño: tu balance solo contiene lo que aceptaste mantener.`,
         ],
       },
     },
+    { kind: "theory", body: `## La reserva, contada
+
+Las reglas abstractas sobre reservas se vuelven obvias en cuanto sumas una. Esta es una cuenta corriente en uso:
+
+- **La cuenta misma** — 2 reservas base.
+- **Tres trustlines** — USDC, EURC y el token local de un anchor: 3 más.
+- **Una oferta abierta** en el DEX — 1 más.
+
+Seis entradas a **0,5 XLM cada una: 3 XLM bloqueados.** Si la cuenta tiene 3,4 XLM, su saldo gastable es 0,4 — y un pago de 1 XLM fallará, con un saldo que a la vista parece cubrirlo de sobra.
+
+Ese error tiene nombre en todas las colas de soporte de Stellar: *"tengo fondos pero el pago dice sin fondos."* Los fondos están. Solo que no están **disponibles**, porque disponibilidad es total menos reserva, y la reserva creció cada vez que la cuenta aceptó guardar algo nuevo.
+
+La buena noticia es que nada de eso se gastó. Cierra la oferta y vuelven 0,5 XLM. Cierra una trustline que ya no usas y vuelve otra. La reserva es un depósito por espacio en el libro mayor, devuelto en cuanto dejas de ocuparlo.` },
+    { kind: "theory", body: `## Qué está evitando realmente el opt-in
+
+La trustline parece burocracia hasta que imaginas el libro mayor sin ella.
+
+En una cadena donde cualquiera puede empujar un token a cualquier dirección, tu billetera es un buzón público en el que escriben desconocidos. Llegan tokens sin pedir permiso — unos como marketing, otros nombrados para hacerse pasar por un activo real, otros diseñados para que interactuar con ellos te cueste algo. Entonces cada billetera necesita un filtro, cada filtro una lista, y cada lista es el criterio de alguien sobre lo que se te permite ver.
+
+Stellar baja esa decisión una capa, al protocolo: **un activo no puede aterrizar en una cuenta que no ha abierto una trustline hacia él.** Nadie mete nada en tu cuenta sin tu consentimiento previo, explícito y registrado en el libro mayor.
+
+La reserva es lo que hace honesto ese consentimiento. Cada trustline bloquea 0,5 XLM, así que abrir una es un acto pequeño y deliberado en vez de algo que un script hace diez mil veces — y cerrarla devuelve la reserva.
+
+La fricción era el punto.` },
     {
       kind: "labLink",
       labSlug: "wallet-onboarding",
       body: `Ya lo hiciste con tus propias manos: el laboratorio **Tu Primera Billetera** de la Forja envía \`change_trust\` con tu firma en la testnet activa — el momento en que un nuevo activo apareció en tu saldo fue el nacimiento de una línea de confianza. Si te saltaste ese laboratorio, este es el capítulo perfecto para abrir una ahora mismo.`,
     },
-    {
-      kind: "theory",
-      body: `## Emitir un activo: solo pagarlo
+    { kind: "theory", body: `## Guardar, y crear
 
-No hay un ritual de "desplegar un token" en Stellar clásico. Un **activo es un par**: un código corto más la **dirección del emisor** — \`USDC\` del cuenta de Circle y \`USDC\` de un desconocido son activos diferentes.
+Ya sabes leer cualquier cuenta del libro mayor: cuánto le cuesta existir, cuánto suma cada entrada a ese coste, y qué activos ha aceptado guardar.
 
-Para emitir, el emisor simplemente **paga** el activo desde su propia cuenta a alguien que tenga una línea de confianza. Ese primer pago *es* la acuñación. La oferta es lo que el emisor ha pagado y no ha recibido de vuelta — el libro mayor lo rastrea automáticamente a través de las líneas de confianza.
+Todo hasta aquí ha sido desde el lado de quien guarda. Dale la vuelta y aparece otro conjunto de preguntas: cómo llega a existir un activo, quién puede crear uno, y — la pregunta que todo emisor regulado debe responder — ¿puede el emisor controlar quién lo tiene después?
 
-Cualquier cuenta puede emitir. La escasez de confianza, no el permiso, es lo que hace que un activo importe.`,
-    },
-    {
-      kind: "quiz",
-      question: `¿Qué se necesita para crear un activo completamente nuevo en Stellar clásico?`,
-      options: [
-        "El emisor lo paga a una cuenta que abrió una línea de confianza — el primer pago es la acuñación",
-        "Desplegar y verificar un contrato de token, luego registrar el ticker con el SDF",
-        "Apostar XLM proporcional al suministro previsto",
-      ],
-      answer: 0,
-      explain: `Un activo se identifica por código + emisor, por lo que "existe" en el momento en que se mueve por primera vez. Los contratos solo aparecen en la historia cuando deseas comportamiento programable — o el puente SAC que espera al final de este capítulo.`,
-    },
-    {
-      kind: "theory",
-      body: `## Dos cuentas, un activo: higiene del emisor
-
-Los emisores serios separan los roles:
-
-- La **cuenta emisora** firma casi nada. Acuña al pagar a la cuenta de distribución, y luego vuelve a dormir — claves frías, superficie de ataque mínima.
-- La **cuenta de distribución** mantiene la oferta circulante y gestiona el tráfico diario: clientes, exchanges, rutas calientes.
-
-Si se filtran las claves de distribución, pierdes un saldo — no la imprenta. Un emisor puede ir más allá: bloquear a los firmantes de la cuenta emisora para que *nadie* pueda volver a emitir, fijando la oferta máxima para siempre. El propio libro mayor se convierte en la auditoría.`,
-    },
-    {
-      kind: "theory",
-      body: `## Banderas de autorización: el emisor como guardián
-
-Los activos del mundo real están sujetos a leyes reales, por lo que un emisor puede establecer banderas sobre sí mismo:
-
-- **Auth required** — las líneas de confianza comienzan sin autorización; el emisor aprueba a cada titular (puertas KYC).
-- **Auth revocable** — el emisor puede congelar una línea de confianza autorizada, deteniendo ese saldo en frío.
-- **Clawback** — el emisor puede recuperar el activo por completo (orden judicial, fondos robados, pagos por error).
-
-Estas banderas son la razón por la que instituciones reguladas pueden emitir en un libro mayor público: el cumplimiento se aplica *por el protocolo*, no por una promesa en PDF.`,
-    },
-    {
-      kind: "quiz",
-      question: `Un emisor regulado descubre que la cuenta de un titular fue hackeada. ¿Qué bandera le permite detener ese saldo de inmediato?`,
-      options: [
-        "Auth revocable — revocar la autorización de la línea de confianza y congelar el saldo en su lugar",
-        "Auth required — bloquea retroactivamente los depósitos previos del hacker",
-        "Auth immutable — bloquea todo el activo para todos",
-      ],
-      answer: 0,
-      explain: `Auth required solo controla *nuevas* líneas de confianza, y auth immutable solo garantiza que las banderas nunca cambien. Congelar detiene el movimiento; **clawback** va un paso más allá y recupera el activo al emisor.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Completa la identidad de un activo clásico — ¿qué hace que USDC sea *el* USDC real?`,
-      file: "asset-identity.txt",
-      before: `asset  =  asset code  +  `,
-      after: `   (mismo código, diferente emisor → activo diferente)`,
-      choices: [
-        "la dirección de la cuenta del emisor",
-        "el hash Wasm del contrato",
-        "un registro global de tickers",
-        "la URL de la página del ancla",
-      ],
-      answer: 0,
-      explain: `No hay un espacio de nombres que alguien pueda ocupar. Las billeteras resuelven cuál \`USDC\` es real mediante la dirección del emisor — y, como verás en las Puertas del Reino, ese emisor lo prueba con un archivo en su propio dominio.`,
-    },
-    {
-      kind: "theory",
-      body: `## El Stellar Asset Contract
-
-Los activos clásicos y los contratos inteligentes comparten un mismo reino, y el puente es el **Stellar Asset Contract (SAC)**. Cualquier activo clásico — incluido XLM — puede ser *invocado* como contrato: un despliegue, cero código que escribir, y el activo ahora habla **SEP‑41**, la interfaz estándar de tokens de Soroban.
-
-Mismo activo, misma oferta, una sola hoja de balance — pero ahora los contratos pueden poseerlo, moverlo y construir sobre él. USDC en un pool de préstamos y USDC en la línea de confianza de la abuela son el *mismo* USDC.
-
-Todo protocolo serio de Soroban se apoya en este puente a diario.`,
-    },
-    {
-      kind: "rustBranch",
-      lessonSlug: "stellar-101-1",
-      body: `El Acto VI de la Campaña — **La Puerta de la Constelación** — recorre este mismo terreno desde Rust: cuentas, saldos y líneas de confianza consultados y forjados en código en lugar de prosa. Toma el desvío cuando quieras tus dedos sobre las propias entradas del libro mayor.
-
-Lo siguiente en el camino: activos en *movimiento* — pagos que cruzan monedas en vuelo, y un intercambio incorporado al propio protocolo.`,
-    },
+**A continuación:** el otro lado de la trustline.` },
+  ],
+  testOut: [
+    { question: `¿Qué es una cuenta en Stellar, estructuralmente?`,
+      options: ["Una entrada del libro mayor con saldo, número de secuencia y firmantes — que cuesta una reserva mínima para seguir existiendo","Un registro dentro de un contrato de sistema al que el protocolo llama","Una clave pública; el libro mayor no guarda nada hasta que se usa"], answer: 0 },
+    { question: `¿Por qué cada entrada adicional eleva el saldo mínimo de una cuenta?`,
+      options: ["Cada entrada le cuesta almacenamiento a todo validador, así que la reserva tarifa ese coste continuo — y se devuelve al eliminarla","Es una comisión que financia la operación de los validadores","Desalienta que las cuentas tengan más de un activo"], answer: 0 },
+    { question: `Alguien te envía un activo del que nunca has oído hablar. ¿Qué pasa?`,
+      options: ["El pago falla — un activo no puede aterrizar en una cuenta que no ha abierto una trustline hacia él","Llega y aparece en tus saldos hasta que lo elimines","El protocolo lo retiene hasta que aceptes o rechaces"], answer: 0 },
+    { question: `¿A qué te compromete realmente abrir una trustline?`,
+      options: ["A bloquear una reserva y consentir, en el libro mayor, en guardar ese activo concreto de ese emisor concreto","A confiar en que el emisor no congelará tu saldo","A pagar una comisión recurrente mientras tengas el activo"], answer: 0 },
   ],
 };

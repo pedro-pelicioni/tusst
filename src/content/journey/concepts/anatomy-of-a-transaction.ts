@@ -1,20 +1,22 @@
 import type { Concept } from "../types";
 
-// Chapter III — the transaction, dissected. Hands off into the Forge's
-// wallet-onboarding lab so the anatomy is something the learner has
-// actually signed, not just read about.
+// Realm II — the envelope itself: what a transaction IS. Half the Realm
+// declares this chapter as a prerequisite, so it stays short and does one
+// job: the shape, the verbs inside it, and one worked envelope the reader
+// can picture. Everything that happens AFTER you press submit — sequence
+// numbers, the lifecycle, fees, rejected vs. failed — is the next chapter.
 
 export const anatomyOfATransaction: Concept = {
   meta: {
     slug: "anatomy-of-a-transaction",
     title: "Anatomy of a Transaction",
-    tagline: "Envelope, operations, fees, signatures — dissected live.",
+    tagline: "One shape carries everything that ever changes the ledger.",
     numeral: "II",
     arc: "realm",
     level: 1,
     requires: ["the-key-and-the-seal", "the-realm-of-stellar"],
     status: "live",
-    estMinutes: 11,
+    estMinutes: 9,
     sigil: "/v2/journey/sigils/anatomy-of-a-transaction.webp",
     glyph: "✉️",
   },
@@ -31,12 +33,13 @@ Everything that ever changes the Stellar ledger travels inside one shape — a *
 - **Operations** — the actual verbs (1 to 100 of them).
 - **Signatures** — proof the source (and anyone else required) agreed.
 
-Learn this one shape and every explorer page, SDK call and failed-transaction error on Stellar becomes readable.`,
+There is no second shape. A payment, a token issuance, a smart-contract call, a trade on the DEX — all of them are this envelope with different verbs inside. Learn it once and every explorer page and SDK call on Stellar becomes readable at the same moment.`,
     },
     {
       kind: "diagram",
       body: "The envelope, opened:",
-      caption: "Signing covers the whole envelope. Change one byte anywhere inside and every signature stops matching.",
+      caption:
+        "Signing covers the whole envelope. Change one byte anywhere inside and every signature stops matching.",
       view: {
         kind: "stack",
         bands: [
@@ -91,14 +94,15 @@ Learn this one shape and every explorer page, SDK call and failed-transaction er
       kind: "theory",
       body: `## Operations: the verbs
 
-An **operation** is one atomic verb: \`payment\`, \`create_account\`, \`change_trust\`, \`manage_sell_offer\`, \`invoke_host_function\` (the one that calls smart contracts)… there are ~26 of them.
+An **operation** is one atomic verb. There are ~26 of them, in a handful of families:
 
-A single envelope can carry **several operations**, and they land **atomically**: create an account *and* fund it *and* open its trustline in one stroke — or none of it happens at all.`,
-    },
-    {
-      kind: "labLink",
-      labSlug: "wallet-onboarding",
-      body: `You've met these verbs in the flesh — or you're about to. The Forge's **Your First Wallet** lab performs \`create_account\`, \`change_trust\` and \`payment\` with your own signature on the real testnet. Theory reads better with your own transaction hashes in it.`,
+- **Move value** — \`payment\`, \`path_payment_strict_send\`, \`create_account\`.
+- **Hold value** — \`change_trust\`, \`set_trust_line_flags\`, \`clawback\`.
+- **Trade** — \`manage_sell_offer\`, \`liquidity_pool_deposit\`.
+- **Govern the account** — \`set_options\`, \`manage_data\`, \`account_merge\`.
+- **Call code** — \`invoke_host_function\`, the one that reaches a smart contract.
+
+One detail most people miss for months: **each operation may name its own source account**, different from the envelope's. That single field is what makes the next page possible.`,
     },
     {
       kind: "quiz",
@@ -113,40 +117,96 @@ A single envelope can carry **several operations**, and they land **atomically**
     },
     {
       kind: "theory",
-      body: `## Sequence numbers: no replays, no races
+      body: `## One envelope, three verbs, two signers
 
-Every account carries a counter. A transaction must state \`current + 1\`, and the ledger increments it on inclusion — so:
+Ana wants to bring Bruno onto Stellar and hand him 50 USDC. Watch it fit into a single envelope:
 
-- a signed transaction can **never be replayed** (its number is spent),
-- two transactions from the same account **can't race** into the same slot.
+- **Source:** Ana. Her sequence number advances; she pays the fee.
+- **Op 1 —** \`create_account\`, destination Bruno, starting balance **2 XLM**.
+- **Op 2 —** \`change_trust\` for USDC, **source: Bruno**. A trustline belongs to whoever holds it, so this operation is Bruno's, not Ana's.
+- **Op 3 —** \`payment\`, 50 USDC to Bruno.
 
-That "tx_bad_seq" error every Stellar developer eventually meets? It just means *someone else moved your counter first — rebuild and resign.*`,
-    },
-    {
-      kind: "fill",
-      prompt: `Put the lifecycle in order — what happens between building and submitting?`,
-      file: "lifecycle.txt",
-      before: `build the envelope  →  `,
-      after: `  →  submit  →  ledger close`,
-      choices: ["sign it", "mine it", "notarize it", "stake it"],
-      answer: 0,
-      explain: `Build, **sign**, submit, close — about five seconds end to end. No mining, no waiting for confirmations-plural: one ledger close is finality.`,
+**Fee:** 3 operations × 100 stroops = **300 stroops**, or 0.00003 XLM.
+
+And Bruno's 2 XLM? An account costs 2 base reserves, a trustline costs 1 more, at 0.5 XLM each: **1.5 XLM locked**, 0.5 XLM free. Reserves are not a fee — they come back if he ever closes the trustline.`,
     },
     {
       kind: "quiz",
-      question: `Why does the network charge a fee (100 stroops = 0.00001 XLM) per operation at all?`,
+      question: `In that envelope, why does Bruno have to sign at all — he is only receiving?`,
       options: [
-        "To make spam expensive at scale while staying invisible to humans",
-        "To pay validators a salary — it's their business model",
-        "To subsidize the Friendbot",
+        "Because op 2 opens *his* trustline, and an operation is authorized by its own source account",
+        "Because every account named anywhere in a transaction must sign it",
+        "Because the payment is larger than his starting balance",
       ],
       answer: 0,
-      explain: `Fees on Stellar are a rate limiter, not a revenue stream — collected fees are recycled by the protocol. A million junk transactions cost real money; your payment costs a rounding error.`,
+      explain: `Receiving never requires your signature — but opening the trustline that lets you receive does. Send this envelope without Bruno's signature and the network answers \`tx_bad_auth\`: nothing happens at all, not even op 1.`,
     },
     {
-      kind: "rustBranch",
-      lessonSlug: "soroban-smart-contracts-1",
-      body: `In the Campaign's Act VII, the same envelope carries \`invoke_host_function\` — and the operation's payload is **your own Rust**. When you're ready to forge the verbs themselves, the door is here.`,
+      kind: "fill",
+      prompt: `Complete the rule that makes batching safe:`,
+      file: "NOTES.md",
+      before: `One envelope, up to 100 operations, applied in order — and if any single one of them fails, `,
+      after: ` .`,
+      choices: [
+        "none of them take effect",
+        "the rest still take effect",
+        "the failed one is skipped",
+        "the network retries it automatically",
+      ],
+      answer: 0,
+      explain: `All or nothing. This is why "create the account *and* open its trustline *and* fund it" is one envelope and not three hopeful steps — there is no state where Bruno exists but cannot hold what you sent him.`,
+    },
+    {
+      kind: "labLink",
+      labSlug: "wallet-onboarding",
+      body: `That envelope is not hypothetical. The Forge's **Your First Wallet** lab performs \`create_account\`, \`change_trust\` and \`payment\` with your own signature on the real testnet — the same three verbs, with your own transaction hash at the end.`,
+    },
+    {
+      kind: "theory",
+      body: `## What you can read now
+
+Source, sequence, fee, operations, signatures. You can look at any transaction on any Stellar explorer and name every part of it, and you know why a multi-step setup is safe to batch.
+
+**Next:** you can build a valid envelope — but what happens after you press submit is a story of its own. Why one transaction is turned away at the door, while another is written into history as a failure *and charged for the privilege*, is the next chapter.`,
+    },
+  ],
+  // Dedicated test-out bank — see the note in the-book-no-one-can-erase.
+  testOut: [
+    {
+      question: `How many different shapes can carry a change to the Stellar ledger?`,
+      options: [
+        "One — a payment, a trade and a contract call are the same envelope with different verbs",
+        "Three — one for payments, one for trades, one for contracts",
+        "One per operation type, around 26 of them",
+      ],
+      answer: 0,
+    },
+    {
+      question: `An operation inside your envelope names a source account different from the envelope's. What follows?`,
+      options: [
+        "That account has to sign the envelope too",
+        "The operation is applied on behalf of the envelope's source anyway",
+        "The envelope is rejected — operations must share the envelope's source",
+      ],
+      answer: 0,
+    },
+    {
+      question: `An envelope carries four operations and the third one fails. What lands on the ledger?`,
+      options: [
+        "None of the four take effect",
+        "The first two — the envelope stops where it broke",
+        "All four, with the third marked as a warning",
+      ],
+      answer: 0,
+    },
+    {
+      question: `What does the fee scale with?`,
+      options: [
+        "The number of operations in the envelope",
+        "The amount of value being moved",
+        "How long the envelope has been waiting to be included",
+      ],
+      answer: 0,
     },
   ],
 };

@@ -143,4 +143,14 @@ Les portefeuilles traditionnels accueillent chaque nouvel utilisateur avec un ri
       body: `La Forge est prête : ouvre **Passkey Smart Wallet**, enregistre une véritable passkey, déploie son contrat de compte intelligent sur testnet et réponds à un nouveau défi WebAuthn avec ton propre appareil.\n\nLorsque le registre aura confirmé que le code déployé correspond au Wasm canonique du compte intelligent, reprends la route. Elle mène vers un territoire encore plus étrange : un registre où *les montants eux-mêmes* se couvrent d'un voile.`,
     },
   ],
+  testOut: [
+    { question: `Quel problème un smart account résout-il qu'une paire de clés classique ne résout pas ?`,
+      options: ["L'autorisation devient programmable — le compte décide de ce qui vaut signature valide, au lieu qu'une clé soit l'unique réponse","Il supprime les frais de transaction pour le propriétaire du compte","Il permet à un compte de détenir des actifs sans trustline"], answer: 0 },
+    { question: `Que remplace une passkey, et que ne remplace-t-elle pas ?`,
+      options: ["Elle remplace la phrase de récupération qu'un humain doit mettre à l'abri ; elle ne supprime pas la nécessité pour le compte d'autoriser quelque chose","Elle remplace entièrement la signature du compte — un compte à passkey ne signe rien","Elle remplace les frais réseau, ces comptes étant parrainés par défaut"], answer: 0 },
+    { question: `Le parrainage des frais permet à une application de faire quoi ?`,
+      options: ["Payer les frais et réserves d'un utilisateur, pour que quelqu'un sans le moindre XLM puisse transiger","Abaisser les frais de base sous le minimum du protocole pour ses utilisateurs","Grouper les transactions de ses utilisateurs dans une enveloppe pour partager des frais"], answer: 0 },
+    { question: `Pourquoi « personne n'a à noter douze mots » est-il une décision produit et pas un simple confort ?`,
+      options: ["Les phrases de récupération sont la première source de perte irréversible pour les utilisateurs — les retirer supprime le mode de défaillance, pas seulement la friction","Parce que les listes de mots n'existent pas dans toutes les langues","Parce que conserver une phrase de récupération est interdit dans la plupart des juridictions"], answer: 0 },
+  ],
 } satisfies JourneyConceptText;

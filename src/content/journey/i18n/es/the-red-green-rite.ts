@@ -154,4 +154,14 @@ La misma red hace que refactorizar sea intrépido — tanto el tuyo como el del 
       body: `Un secreto de la Campaña: **cada escaramuza es calificada por pruebas ocultas** — forjas, las pruebas juzgan, rojo o verde. La Campaña *es* TDD jugado como un juego, y has estado dentro del rito desde tu primera escaramuza. Próxima disciplina: dibujar los límites donde una palabra cambia su significado — el mapa del que depende toda especificación.`,
     },
   ],
+  testOut: [
+    { question: `¿Por qué escribir la prueba que falla antes que el código?`,
+      options: ["Una prueba que nunca ha fallado nunca ha demostrado que puede — escribirla primero es como sabes que vigila lo correcto","Es más rápido, porque evitas reescribir la prueba después","Obliga a que la implementación sea más simple de lo que sería"], answer: 0 },
+    { question: `¿Qué le da una prueba en rojo a una pareja con IA que no le dan los requisitos en prosa?`,
+      options: ["Un criterio de aceptación que no puede malinterpretar, y una señal capaz de ser mala noticia","Un prompt más corto, que deja sitio a más contexto","Permiso para cambiar la API pública"], answer: 0 },
+    { question: `El golem hace pasar la prueba tratando como caso especial justo la entrada que la prueba usa. ¿Qué revela eso?`,
+      options: ["La prueba especificó de menos — nombró un ejemplo en vez de la regla","El golem actúa de mala fe y necesita instrucciones más estrictas","Nada; pasar la prueba es la definición de terminado"], answer: 0 },
+    { question: `Tu suite está en verde tras un cambio del que dudas. ¿Qué te ha dicho eso en realidad?`,
+      options: ["Que no se ha roto nada de lo que la suite vigila — que es solo hasta donde la suite resulta vigilar","Que el cambio es correcto","Que el cambio es seguro para desplegar"], answer: 0 },
+  ],
 };

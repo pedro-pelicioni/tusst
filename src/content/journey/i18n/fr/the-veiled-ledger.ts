@@ -1,9 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
-export const conceptText = {
-  title: "Le grand livre voilé",
-  tagline:
-    "Jetons confidentiels et paiements privés — la confidentialité assortie de garde-fous de conformité.",
+export const conceptText: JourneyConceptText = {
+  title: "Le Registre Voilé",
+  tagline: "Preuve sans divulgation — et le premier voile bâti dessus.",
   steps: [
     {
       kind: "theory",
@@ -139,80 +138,17 @@ Les **Jetons confidentiels**, créés par **OpenZeppelin et Nethermind**, sont a
 
 Ce modèle convient aux parties qui se connaissent mais doivent garder les montants confidentiels : salaires, factures fournisseurs et règlements B2B.`,
     },
-    {
-      kind: "theory",
-      body: `## Paiements privés Stellar : masquer les contreparties
+    { kind: "theory", body: `## Le voile que vous n'avez pas tiré
 
-Un voile de plus. **Paiements privés Stellar (SPP)**, créés par **Nethermind**, ont atteint la prévisualisation développeur sur testnet en **août 2026**.
+C'est ici qu'on se détend trop tôt. Vous avez enveloppé la paie dans un jeton confidentiel, les montants se sont éteints, et le problème paraît réglé.
 
-Au lieu d’envelopper un jeton, les utilisateurs **déposent des actifs dans un pool partagé**. Les transferts se font ensuite *à l’intérieur* du pool — et un observateur extérieur ne peut plus relier l’expéditeur au récepteur. Pas seulement les montants : les **contreparties elles‑mêmes sont cachées**.
+Regardez ce qu'un observateur possède encore. Une adresse paie quarante adresses. Elle le fait le premier de chaque mois, puis de nouveau le quinze. Deux de ces quarante ont cessé de recevoir en mars, et trois nouvelles ont commencé en avril. L'une d'elles reçoit de votre adresse et de celle d'une seconde entreprise.
 
-Alors que les jetons confidentiels conviennent aux parties qui se connaissent, SPP répond aux cas où *l'identité de celui qui paie et de celui qui reçoit* doit elle aussi rester secrète : dons, relations sensibles avec des fournisseurs ou finances personnelles sur une infrastructure publique.`,
-    },
-    {
-      kind: "diagram",
-      body: "Suis un paiement à travers le pool et regarde ce que l'explorateur conserve :",
-      caption:
-        "Les bords sont publics par construction. Tout ce que le pool protège se passe entre eux.",
-      view: {
-        kind: "flow",
-        layout: "row",
-        play: true,
-        nodes: [
-          {
-            id: "deposit",
-            label: "Dépôt",
-            tone: "gold",
-            note: "Visible. L'explorateur enregistre que ce compte a versé des fonds dans le pool, et combien. Rien n'est masqué ici — et rien n'a besoin de l'être.",
-          },
-          {
-            id: "inside",
-            label: "Dans le pool",
-            tone: "accent",
-            note: "Masqué. Les transferts entre membres du pool n'ont pas besoin d'apparaître on-chain : ni émetteur, ni destinataire, ni montant. C'est la part que le voile recouvre.",
-          },
-          {
-            id: "withdraw",
-            label: "Retrait",
-            tone: "gold",
-            note: "Visible à nouveau. Quelqu'un sort du pool avec une valeur — mais relier CETTE sortie à CETTE entrée-là est précisément ce que le pool casse.",
-          },
-          {
-            id: "observer",
-            label: "Ce qu'il reste à l'observateur",
-            tone: "neutral",
-            note: "Deux bords publics et une foule entre les deux. Plus le pool est grand, plus le lien entre une entrée et une sortie est faible.",
-          },
-        ],
-      },
-    },
-    {
-      kind: "theory",
-      body: `## La colonne vertébrale de conformité
+Personne n'a appris un seul salaire — et un observateur connaît désormais votre effectif, votre cycle de paie, votre attrition, vos embauches, et lesquels de vos salariés cumulent. **Les montants n'ont jamais été la seule chose que le registre disait.**
 
-Une confidentialité sans limites serait le cauchemar d’un responsable des sanctions ; ces systèmes refusent cette voie. SPP associe la confidentialité à des **garanties de conformité intégrées** :
+Ce n'est pas un défaut des jetons confidentiels ; c'est la forme de ce qu'ils promettent. Un voile couvre le champ que vous avez choisi, et chaque champ découvert continue de parler — l'horaire, la fréquence, et surtout le **graphe** de qui touche qui.
 
-- **Participation conditionnée KYC** — rejoindre le pool nécessite une identité vérifiée.
-- **Contrôles d’accès liés à l'identité** — les permissions s’attachent à *qui tu es*, pas seulement à la clé que tu possèdes.
-- **Capacité de gel au niveau compte** — les mauvais acteurs peuvent être arrêtés même à l’intérieur du voile.
-
-Ces trois garde-fous sont appliqués par une pièce qu’il vaut la peine de connaître par son nom : l’**Association Set Provider (ASP)**. Un ASP publie un *ensemble* de dépôts dont il se porte garant — une allow list — ou ceux dont il refuse de se porter garant — une deny list. Pour retirer, tu prouves que tes fonds remontent à un dépôt situé dans cet ensemble, **sans révéler lequel**. SPP construit cela sur un association set fondé sur des clés, adossé à un registre public de clés pour que les participants puissent seulement être désignés.
-
-Arrête-toi sur la conséquence, car c’est toute l’astuce : **le même retrait est à la fois privé et auditable**. Privé, parce que le lien avec ton dépôt précis n’est jamais publié. Auditable, parce que tu n’aurais pas pu retirer sans prouver ton appartenance à un ensemble cautionné. Des ASP différents peuvent servir des juridictions différentes — et c’est toi qui choisis la caution que tu portes.
-
-L’objectif tient en une phrase : **la confidentialité pour les utilisateurs, pas pour le crime**. Des transferts à la fois confidentiels et conformes sur une infrastructure publique — c’est cette combinaison, et non le secret absolu, que les institutions attendaient.`,
-    },
-    {
-      kind: "quiz",
-      question: `Un explorateur regarde un transfert de Jeton confidentiel et un transfert de pool SPP. Que voit‑il dans chacun ?`,
-      options: [
-        "CT : les deux adresses mais pas le montant ; SPP : pas même les contreparties — valeur déplacée dans le pool partagé",
-        "Les deux cachent montants et adresses de façon identique — SPP est juste le plus économique",
-        "CT cache les adresses mais montre les montants ; SPP montre tout aux spectateurs KYC",
-      ],
-      answer: 0,
-      explain: `Deux couches, deux voiles. Les jetons confidentiels cachent *combien* entre parties connues ; le pool partagé de SPP cache aussi *qui*. Choisis la couche qui correspond à ce que ton cas d’usage doit garder secret.`,
-    },
+C'est très exactement pourquoi un second système, plus profond, devait exister.` },
     {
       kind: "fill",
       prompt: `Qu’est‑ce qu’un Jeton confidentiel peut envelopper ?`,
@@ -223,40 +159,26 @@ L’objectif tient en une phrase : **la confidentialité pour les utilisateurs
       answer: 0,
       explain: `Le standard d’interface de jeton est l’ancrage : tout ce qui parle SEP‑41 peut être enveloppé — y compris les actifs classiques comme USDC via leur contrat d’actif Stellar. La couche de confidentialité se compose avec tout ce que tu connais déjà.`,
     },
-    {
-      kind: "theory",
-      body: `## Va regarder à l'intérieur
+    { kind: "rustBranch", lessonSlug: "stellar-protocol-27-1",
+      body: `Rien de tout cela n'était une bibliothèque publiée par quelqu'un. BLS12-381, BN254, Poseidon — chacun est arrivé comme un **CAP dans une version nommée du protocole**, et c'est pourquoi un contrat vérifie une preuve à vitesse native au lieu de payer une pénalité au millième pour faire de la cryptographie honnêtement. L'acte protocole de la Campagne est l'endroit où l'on voit une version atterrir pour de vrai.` },
+    { kind: "theory", body: `## La moitié qui semble impossible
 
-Tout ce qui précède est vérifiable maintenant, sur un pool qui existe réellement. Le developer preview de Nethermind est vivant sur testnet, et ses fonctions de lecture répondent **sans portefeuille et sans signature**. Tu n'es pas client de cette chose — tu es spectateur, et regarder est gratuit.
+Vous avez désormais un voile pour les nombres. Pour la paie, les factures, le règlement entre parties qui se connaissent déjà, c'est toute l'exigence — les chiffres étaient le secret.
 
-Ouvre la [Forge](/ide), va dans **Explore** et choisis **pool de confidentialité SPP · XLM** parmi les contrats connus. Puis demande-lui, dans cet ordre :
+Mais parfois les chiffres ne sont pas le secret. Parfois *qui a payé qui* est la partie sensible : un don, un fournisseur que vous préféreriez que vos concurrents ignorent, un virement personnel sur des rails publics.
 
-- \`get_policy_flags()\` — comment ce pool est configuré. Il répond **2** : blocklist appliquée, pas d'allowlist.
-- \`get_root()\` — la racine de Merkle qui engage chaque note jamais déposée là. Un seul nombre pour tout l'ensemble d'anonymat.
-- \`is_known_root(<ce nombre>)\` — **true**. Change maintenant un seul chiffre et redemande : **false**. Tu viens de parcourir l'anneau de racines dont le pool se souvient.
-- \`is_spent(<n'importe quel nombre>)\` — **false**. C'est l'ensemble des nullifiers : la défense du pool contre la double dépense, et à peu près la seule chose qu'un retrait publie sur lui-même.
+Masquer cela, c'est le voile le plus profond, et il arrive avec une objection évidente — celle que tout responsable conformité soulève dès la première minute, et qu'il vaut mieux prendre au sérieux que balayer d'un revers de main.
 
-Lis-les dans l'ordre et remarque ce qui *manque*. Aucune de ces réponses ne contient d'adresse, de montant ni de contrepartie. La chaîne te dit l'exacte vérité et ne te dit rien.
-
-**Deux avertissements, car la spec d'un contrat ne peut pas t'avertir sur elle-même.** Ce pool expose cinq fonctions résiduelles — \`balance\`, \`transfer\`, \`approve\` et compagnie — qui répondent poliment et ne veulent rien dire ; la Forge les marque *leurre* pour qu'elles ne te trompent pas. Et l'état de l'aperçu **est archivé le 2026-09-02**, après quoi ces lectures cessent de répondre jusqu'à ce que quelqu'un paie pour les restaurer. Ce n'est pas la Forge qui échoue : c'est le state rent de Soroban, sous lequel vit chaque contrat de ce réseau.`,
-    },
-    {
-      kind: "quiz",
-      question: `Tu appelles \`get_asp_non_membership_root()\` sur le pool vivant et il répond **0**. Qu'est-ce que cela t'apprend vraiment ?`,
-      options: [
-        "La blocklist est vide — et 0 est la valeur à laquelle le contrat compare chaque retrait, donc une liste vide est une politique appliquée, pas une politique absente",
-        "L'appel a échoué et est retombé sur une valeur par défaut : une racine de Merkle n'est jamais légitimement nulle",
-        "La blocklist est confidentielle, donc le contrat renvoie 0 à quiconque n'est pas un ASP",
-      ],
-      answer: 0,
-      explain: `Un arbre vide a quand même une vraie racine, et pour cette blocklist elle vaut littéralement 0 — autrement dit « personne n'est banni » est activement appliqué à chaque dépense plutôt que laissé indéfini. Essaie maintenant sa voisine : \`get_asp_membership_root()\` répond 2302223575749844940221218608817648865122641281382153518325924961250440546344, un nombre impressionnant pour un arbre **lui aussi vide**. C'est le zero-hash d'arbre vide. Le lire comme « l'allowlist a des membres » est l'erreur la plus facile de tout ce sujet, et tu viens de l'éviter.`,
-    },
-    {
-      kind: "labLink",
-      labSlug: "confidential-tokens",
-      body: `Sur l’enclume de la Forge : un laboratoire **Jetons confidentiels**, où tu envelopperas un jeton testnet et verras les montants disparaître de l’explorateur tandis que les transferts continuent de se régler correctement. Sa carte indique *en cours de forge* — cette frontière est en train d’être martelée pendant que tu lis.
-
-Remarque à quel point ces dates sont jeunes. Naviguer dans une technologie aussi fraîche signifie lire le pouls du protocole lui‑même — le dernier chapitre te montre comment.`,
-    },
+**Ensuite :** le second voile, et la réponse à cette objection.` },
   ],
-} satisfies JourneyConceptText;
+  testOut: [
+    { question: `Quel est le problème d'un registre entièrement transparent, pour une entreprise ?`,
+      options: ["Les soldes et les montants sont publics à jamais : n'importe qui déduit salaires, marges et conditions fournisseurs à partir de paiements ordinaires","Les transactions peuvent être retracées et annulées par des observateurs","Les données publiques rendent le registre plus lent à interroger à grande échelle"], answer: 0 },
+    { question: `Que permet de conclure à un vérificateur une preuve à divulgation nulle ?`,
+      options: ["Qu'une affirmation portant sur des valeurs masquées est vraie, sans rien apprendre d'autre sur ces valeurs","Que le prouveur est une partie de confiance, vérifiée par un tiers","Que les valeurs masquées tombent dans un intervalle choisi par le vérificateur"], answer: 0 },
+    { question: `Pourquoi ces primitives devaient-elles arriver comme fonctions hôtes du protocole ?`,
+      options: ["Pour que les contrats vérifient les preuves à vitesse native — les mêmes calculs en code de contrat coûteraient une pénalité écrasante","Parce que les contrats n'ont pas le droit de faire de la cryptographie","Pour que seuls les contrats audités puissent les utiliser"], answer: 0 },
+    { question: `Un jeton confidentiel enveloppe un jeton existant. Qu'est-ce qui change, et qu'est-ce qui ne change pas ?`,
+      options: ["Les soldes et les montants de transfert deviennent masqués ; les adresses qui transigent restent publiques","Les adresses deviennent masquées ; les montants restent publics","Les deux deviennent masqués, et c'est ce qui le rend confidentiel"], answer: 0 },
+  ],
+};

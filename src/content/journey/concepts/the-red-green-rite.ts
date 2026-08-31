@@ -155,4 +155,14 @@ The same net makes refactoring fearless — yours *and* the golem's. "Rewrite th
       body: `A secret about the Campaign: **every skirmish is graded by hidden trials** — you forge, the trials judge, red or green. The Campaign *is* TDD played as a game, and you've been inside the rite since your first skirmish. Next discipline: drawing the borders where a word changes its meaning — the map every spec depends on.`,
     },
   ],
+  testOut: [
+    { question: `Why write the failing test before the code?`,
+      options: ["A test that has never failed has never proved it can — writing it first is how you know it is watching the right thing","It is faster, because you avoid rewriting the test afterwards","It forces the implementation to be simpler than it otherwise would be"], answer: 0 },
+    { question: `What does a red test give an AI pair that prose requirements do not?`,
+      options: ["An acceptance criterion it cannot misread, and a signal that can be bad news","A shorter prompt, which fits more context","Permission to change the public API"], answer: 0 },
+    { question: `The golem makes the failing test pass by special-casing the exact input the test uses. What does that reveal?`,
+      options: ["The test under-specified the behavior — it named one example rather than the rule","The golem is behaving maliciously and needs stricter instructions","Nothing; passing the test is the definition of done"], answer: 0 },
+    { question: `Your suite is green after a change you are unsure about. What has that actually told you?`,
+      options: ["That nothing the suite watches has broken — which is only as much as the suite happens to watch","That the change is correct","That the change is safe to deploy"], answer: 0 },
+  ],
 };

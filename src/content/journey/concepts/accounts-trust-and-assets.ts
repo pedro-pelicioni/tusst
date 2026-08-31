@@ -1,20 +1,21 @@
 import type { Concept } from "../types";
 
-// Chapter III — the account as a ledger entry, trust as an opt-in, and the
-// birth of an asset. Ends at the Stellar Asset Contract: the drawbridge
-// between the classic realm and the smart-contract one.
+// Realm IV — the account and the trustline: what a ledger entry costs to keep,
+// and why holding an asset is something you opt into. Issuance, issuer hygiene
+// and the authorization flags are Realm V, because "how do I hold an asset"
+// and "how do I create one" are different jobs with different readers.
 
 export const accountsTrustAndAssets: Concept = {
   meta: {
     slug: "accounts-trust-and-assets",
     title: "Accounts, Trust & Assets",
-    tagline: "Reserves, trustlines, and how any asset is born.",
-    numeral: "III",
+    tagline: "Reserves, trustlines, and why an asset is opt-in.",
+    numeral: "IV",
     arc: "realm",
     level: 1,
-    requires: ["anatomy-of-a-transaction"],
+    requires: ["the-fate-of-an-envelope"],
     status: "live",
-    estMinutes: 13,
+    estMinutes: 11,
     sigil: "/v2/journey/sigils/accounts-trust-and-assets.webp",
     glyph: "🪙",
   },
@@ -105,96 +106,87 @@ Opt-in by design: your balance sheet contains only what you agreed to hold.`,
       },
     },
     {
+      kind: "theory",
+      body: `## The reserve, counted
+
+Abstract rules about reserves become obvious the moment you total one up. Here is an ordinary working account:
+
+- **The account itself** — 2 base reserves.
+- **Three trustlines** — USDC, EURC and one anchor's local token: 3 more.
+- **One open offer** on the DEX — 1 more.
+
+Six entries at **0.5 XLM each: 3 XLM locked.** If the account holds 3.4 XLM, its spendable balance is 0.4 — and a payment of 1 XLM will fail, with a balance that plainly looks like it should cover it.
+
+That error has a name in every support queue on Stellar: *"I have funds but the payment says underfunded."* The funds are there. They are just not **available**, because availability is total minus reserve, and the reserve grew every time the account agreed to hold something new.
+
+The good news is that none of it is spent. Close the offer and 0.5 XLM comes back. Close a trustline you no longer need and so does another. The reserve is a deposit on ledger space, refunded the moment you stop using it.`,
+    },
+    {
+      kind: "theory",
+      body: `## What the opt-in is actually preventing
+
+The trustline feels like friction until you picture the ledger without it.
+
+On a chain where anyone can push a token into any address, your wallet is a public inbox that strangers can write to. Airdropped tokens arrive unasked — some as marketing, some named to impersonate a real asset, some designed so that interacting with them costs you something. Every wallet then needs a filter, every filter needs a list, and every list is somebody's judgement about what you are allowed to see.
+
+Stellar moves that decision one layer down, into the protocol: **an asset cannot land in an account that has not opened a trustline to it.** Nobody can put anything in your account without your prior, explicit, on-ledger consent.
+
+The reserve is what makes that consent honest. Each trustline locks 0.5 XLM, so opening one is a small deliberate act rather than something a script does ten thousand times — and closing it gives the reserve back.
+
+Friction was the point.`,
+    },
+    {
       kind: "labLink",
       labSlug: "wallet-onboarding",
       body: `You have already done this with your own hands: the Forge's **Your First Wallet** lab submits \`change_trust\` with your signature on the live testnet — the moment a new asset appeared in your balance was a trustline being born. If you skipped that lab, this is the perfect chapter to go open one for real.`,
     },
     {
       kind: "theory",
-      body: `## Issuing an asset: just pay it out
+      body: `## Holding, and making
 
-There is no "deploy a token" ritual in classic Stellar. An **asset is a pair**: a short code plus the **issuer's address** — \`USDC\` from Circle's account and \`USDC\` from a stranger are different assets.
+You can now read any account on the ledger: what it costs to exist, what each entry adds to that cost, and which assets it has agreed to hold.
 
-To issue, the issuer simply **pays** the asset out of its own account to someone holding a trustline. That first payment *is* the mint. Supply is whatever the issuer has paid out and not received back — the ledger tracks it across trustlines automatically.
+Everything so far has been from the holder's side. Turn it around and a different set of questions appears: how does an asset come into existence at all, who is allowed to create one, and — the question every regulated issuer has to answer — can the issuer control who holds it afterwards?
 
-Any account can issue. Scarcity of trust, not permission, is what makes an asset matter.`,
+**Next:** the other side of the trustline.`,
     },
+  ],
+  testOut: [
     {
-      kind: "quiz",
-      question: `What does it take to bring a brand-new asset into existence on classic Stellar?`,
+      question: `What is an account on Stellar, structurally?`,
       options: [
-        "The issuer pays it to an account that opened a trustline — the first payment is the mint",
-        "Deploy and verify a token contract, then register the ticker with the SDF",
-        "Stake XLM proportional to the intended supply",
+        "A ledger entry with a balance, a sequence number and signers — which costs a minimum reserve to keep existing",
+        "A record inside a system contract that the protocol calls into",
+        "A public key; the ledger stores nothing until the key is used",
       ],
       answer: 0,
-      explain: `An asset is identified by code + issuer, so it "exists" the moment it first moves. Contracts only enter the story when you want programmable behavior — or the SAC bridge waiting at the end of this chapter.`,
     },
     {
-      kind: "theory",
-      body: `## Two accounts, one asset: issuer hygiene
-
-Serious issuers split the roles:
-
-- The **issuing account** signs almost nothing. It mints by paying the distribution account, then goes back to sleep — cold keys, minimal attack surface.
-- The **distribution account** holds working supply and does the daily traffic: customers, exchanges, hot paths.
-
-If distribution keys leak, you lose a balance — not the printing press. An issuer can go further still: lock the issuing account's signers so *no one* can ever issue again, fixing max supply forever. The ledger itself becomes the audit.`,
-    },
-    {
-      kind: "theory",
-      body: `## Authorization flags: issuer as gatekeeper
-
-Real-world assets carry real-world law, so an issuer can set flags on itself:
-
-- **Auth required** — trustlines start unauthorized; the issuer approves each holder (KYC gates).
-- **Auth revocable** — the issuer can freeze an authorized trustline, stopping that balance cold.
-- **Clawback** — the issuer can pull the asset back entirely (court orders, stolen funds, fat-fingered payouts).
-
-These flags are why regulated institutions can issue on a public ledger at all: compliance is enforced *by the protocol*, not by a promise in a PDF.`,
-    },
-    {
-      kind: "quiz",
-      question: `A regulated issuer learns one holder's account was hacked. Which flag lets it stop that balance from moving — right now?`,
+      question: `Why does each additional ledger entry raise an account's minimum balance?`,
       options: [
-        "Auth revocable — revoke the trustline's authorization and the balance is frozen in place",
-        "Auth required — it retroactively blocks the hacker's earlier deposits",
-        "Auth immutable — it locks the whole asset for everyone",
+        "Every entry costs every validator storage, so the reserve prices that ongoing cost — and it is returned when the entry is removed",
+        "It is a fee that funds validator operations",
+        "It discourages accounts from holding more than one asset",
       ],
       answer: 0,
-      explain: `Auth required only gates *new* trustlines, and auth immutable just promises the flags will never change. Freezing stops movement; **clawback** goes one step further and pulls the asset back to the issuer.`,
     },
     {
-      kind: "fill",
-      prompt: `Complete the identity of a classic asset — what makes USDC *the real* USDC?`,
-      file: "asset-identity.txt",
-      before: `asset  =  asset code  +  `,
-      after: `   (same code, different issuer → different asset)`,
-      choices: [
-        "the issuer's account address",
-        "the contract's Wasm hash",
-        "a global ticker registry",
-        "the anchor's homepage URL",
+      question: `Someone sends you an asset you have never heard of. What happens?`,
+      options: [
+        "The payment fails — an asset cannot land in an account that has not opened a trustline to it",
+        "It arrives and appears in your balances until you remove it",
+        "It is held by the protocol until you accept or reject it",
       ],
       answer: 0,
-      explain: `There is no namespace to squat. Wallets resolve which \`USDC\` is real via the issuer's address — and, as you'll see at the Gates of the Realm, that issuer proves itself with a file on its own domain.`,
     },
     {
-      kind: "theory",
-      body: `## The Stellar Asset Contract
-
-Classic assets and smart contracts share one realm, and the bridge is the **Stellar Asset Contract (SAC)**. Any classic asset — XLM included — can be *summoned* as a contract: one deploy, zero code to write, and the asset now speaks **SEP-41**, the standard Soroban token interface.
-
-Same asset, same supply, one balance sheet — but now contracts can hold it, move it, and build on it. USDC in a lending pool and USDC in grandma's trustline are the *same USDC*.
-
-Every serious Soroban protocol leans on this bridge daily.`,
-    },
-    {
-      kind: "rustBranch",
-      lessonSlug: "stellar-101-1",
-      body: `The Campaign's Act VI — **The Constellation Gate** — walks this same ground from Rust: accounts, balances and trustlines queried and forged in code instead of prose. Take the detour when you want your fingers on the ledger entries themselves.
-
-Next on the road: assets in *motion* — payments that cross currencies mid-flight, and an exchange built into the protocol itself.`,
+      question: `What does opening a trustline actually commit you to?`,
+      options: [
+        "Locking a reserve, and consenting on-ledger to hold that specific asset from that specific issuer",
+        "Trusting the issuer not to freeze your balance",
+        "Paying a recurring fee for as long as you hold the asset",
+      ],
+      answer: 0,
     },
   ],
 };

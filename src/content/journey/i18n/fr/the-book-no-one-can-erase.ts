@@ -138,4 +138,14 @@ Tout ce que vous rencontrerez plus loin — comptes, paiements, jetons, contrats
 **Ensuite :** si le livre est public et que n'importe qui peut y écrire, qu'est-ce qui empêche un inconnu de dépenser *votre* argent ? La réponse est une clé — et elle n'a rien d'un mot de passe.`,
     },
   ],
+  testOut: [
+    { question: `Douze amis gardent chacun leur propre copie du livre de la taverne. Qu'est-ce que cet arrangement leur apporte vraiment ?`,
+      options: ["Personne n'a besoin de faire confiance au tavernier — une modification discrète cesse de correspondre aux onze autres copies","Le livre devient impossible à perdre, mais le tavernier peut toujours le réécrire","Écrire devient plus rapide, puisque douze personnes se partagent le travail"], answer: 0 },
+    { question: `Chaque page porte en plus un bref résumé de la précédente. Qu'est-ce que cela ajoute que les copies seules n'apportent pas ?`,
+      options: ["Modifier une ANCIENNE page casse toutes celles qui ont suivi, au lieu de celle-là seule","Cela comprime le livre, donc les vieilles pages prennent moins de place","Cela permet de lire le livre à l'envers sans perdre sa place"], answer: 0 },
+    { question: `Pourquoi un livre partagé a-t-il besoin d'une règle sur qui écrit la page suivante ?`,
+      options: ["Des milliers d'inconnus reçoivent des mouvements en même temps et doivent finir avec le même livre, dans le même ordre","Parce que le papier coûte cher et que quelqu'un doit en répondre","Parce que seul celui qui a commencé le livre a le droit d'y ajouter"], answer: 0 },
+    { question: `Dans les termes de ce chapitre, qu'est-ce que Stellar ?`,
+      options: ["L'un de ces livres partagés, construit spécifiquement pour la valeur qui circule entre les gens","Une entreprise qui garde le livre et fait payer pour y écrire","Un ordinateur généraliste qui se trouve stocker un livre"], answer: 0 },
+  ],
 };

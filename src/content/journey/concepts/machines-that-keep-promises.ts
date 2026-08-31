@@ -129,6 +129,11 @@ What went wrong?`,
       explain: `Every expensive incident in this industry is a variation of this one line. Which is why the next stretch of the road doesn't start with code.`,
     },
     {
+      kind: "labLink",
+      labSlug: "treasure-chest",
+      body: `You can watch one of these machines keep a promise on the real testnet, right now. The Forge's **Treasure Chest** lab locks funds into a ledger entry that belongs to nobody — until the one named claimant takes it. No escrow agent, no company holding the money, no one who *could* change their mind. The rule releases it, or nothing does.`,
+    },
+    {
       kind: "theory",
       body: `## Why this is the last easy chapter
 
@@ -137,6 +142,45 @@ You now have the whole ground floor: a book nobody can quietly edit, a key that 
 Notice what that adds up to. If the machine does precisely what was written — and cannot be argued with, corrected, or undone — then **the writing is the job**. Not the typing: an AI will type faster than you and never tire. The deciding, the pinning-down, the "what must be true here, and what must never happen".
 
 **Next, on the Craft road:** how to write that down properly, before a single line of code exists. And on the Realm road: the machinery of Stellar itself, from how thousands of machines agree, to the contracts you just met — this time from the inside.`,
+    },
+  ],
+  // Dedicated test-out bank — see the note in the-book-no-one-can-erase.
+  testOut: [
+    {
+      question: `What makes a contract different from a promise kept by a person?`,
+      options: [
+        "It runs its own rules, with nobody choosing whether to honour them",
+        "It is written down, and a spoken promise is not",
+        "It can be enforced in court, and a promise cannot",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Who runs a published contract?`,
+      options: [
+        "Nobody in particular — thousands of machines execute it identically and agree on the result",
+        "The author, on a server they keep online for it",
+        "The network's operators, who take turns",
+      ],
+      answer: 0,
+    },
+    {
+      question: `When does a contract act?`,
+      options: [
+        "Only when somebody pokes it with a signed instruction",
+        "Continuously, checking its conditions in the background",
+        "Once a day, when the network sweeps its stored rules",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Can the author switch a published contract off?`,
+      options: [
+        "Not unless the contract's own published rules say so",
+        "Yes — the author always keeps an override",
+        "Only by asking the network's operators to remove it",
+      ],
+      answer: 0,
     },
   ],
 };

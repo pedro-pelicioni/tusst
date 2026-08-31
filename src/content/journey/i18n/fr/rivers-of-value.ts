@@ -1,8 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
-export const conceptText = {
+export const conceptText: JourneyConceptText = {
   title: "Rivières de Valeur",
-  tagline: "Paiements, paiements par chemin, le DEX et les AMM.",
+  tagline: "Un bureau de change qui vit dans le protocole lui-même.",
   steps: [
     {
       kind: "theory",
@@ -49,6 +49,19 @@ Les carnets d’ordres ont besoin de traders actifs qui quotent les prix. **Les 
 
 Les carnets et les pools coexistent sur un pied d’égalité, et — comme tu es sur le point de voir — un seul paiement peut boire des deux.`,
     },
+    { kind: "theory", body: `## Le même ordre, deux lieux
+
+Carnets et pools ne sont pas des rivaux avec un vainqueur. Ils échouent dans des directions opposées, et le registre porte les deux exprès.
+
+Disons que vous voulez 5 000 USDC de XLM.
+
+**Le carnet d'ordres** vous remplit contre ce que les gens ont réellement affiché. Si un teneur de marché cote serré, vous obtenez un prix que personne ne battrait — de vraies offres, de vrais prix, aucune courbe. Si personne ne regarde cette paire ce matin, le carnet est mince ou vide, et vous êtes mal rempli, ou pas du tout. La qualité d'un carnet, c'est l'attention de quelqu'un.
+
+**Le pool** cote toujours. Il n'a ni opinion, ni horaires, ni jour de congé — la courbe tarifie votre ordre que quelqu'un soit éveillé ou non. Ce qu'il facture pour cette fiabilité, c'est le slippage : vous payez le privilège de pouvoir échanger à trois heures du matin contre personne.
+
+Le résumé honnête est donc ennuyeux : **le carnet est meilleur quand quelqu'un s'en occupe, et le pool est meilleur quand personne ne s'en occupe.** C'est précisément pour cela que les agrégateurs existent, et pourquoi vous ne devriez pas choisir le lieu à la main.` },
+    { kind: "widget", component: "amm-pool",
+      body: `La courbe se ressent mieux qu'elle ne se lit. **Vendez dans le pool** — puis portez le même ordre dans un pool moins profond et regardez ce que le prix vous fait.` },
     {
       kind: "quiz",
       question: `En quoi les pools de liquidité natives de Stellar diffèrent-ils des AMM de style Uniswap ?`,
@@ -60,98 +73,30 @@ Les carnets et les pools coexistent sur un pied d’égalité, et — comme tu e
       answer: 0,
       explain: `Même mathématiques à produit constant, mais chez toi : le pool vit dans le protocole lui‑même, toute paire d’actifs est bienvenue. Les AMM basés sur contrat existent aussi, une couche au-dessus — tu rencontreras leurs noms bientôt.`,
     },
-    {
-      kind: "theory",
-      body: `## Paiements par chemin : la fonction décisive
-
-\`path_payment_strict_send\` fait quelque chose que presque aucune autre chaîne ne fait nativement : **envoyer un actif, livrer un autre** — atomiquement, en une seule opération.
-
-Tu envoies USDC. Le réseau le route à travers les carnets d’ordres et les pools de liquidité — peut‑être USDC → XLM → EURC — et ta grand-mère reçoit EURC. Une seule transaction. Si aucune route ne peut livrer dans tes limites, **rien ne se passe du tout** : aucun fonds n’est bloqué à mi‑swap.
-
-Deux variantes :
-
-- **Strict send** — fixe ce que tu paies ; la destination reçoit ce que la route fournit (au-dessus de ton minimum).
-- **Strict receive** — fixe ce qu’ils reçoivent ; tu paies ce que ça coûte (en dessous de ton maximum).`,
-    },
-    {
-      kind: "diagram",
-      body: "Un paiement, trois monnaies, une transaction atomique :",
-      caption: "Si un saut ne se remplit pas au prix fixé, rien ne se passe — aucun argent à moitié converti échoué en chemin.",
-      view: {
-        kind: "flow",
-        layout: "row",
-        play: true,
-        nodes: [
-          {
-            id: "send",
-            label: "vous envoyez des BRL",
-            note: "Vous ne touchez jamais aux monnaies intermédiaires, et ne les détenez jamais.",
-            tone: "accent",
-          },
-          {
-            id: "hop1",
-            label: "BRL → XLM",
-            note: "Le carnet d'ordres remplit ce saut à ce que le marché propose à l'instant.",
-            tone: "teal",
-          },
-          {
-            id: "hop2",
-            label: "XLM → EURC",
-            note: "Et le suivant, au même instant, dans la même transaction.",
-            tone: "teal",
-          },
-          {
-            id: "recv",
-            label: "il reçoit des EURC",
-            note: "Montant garanti, ou tout est annulé. Il n'y a pas d'arrivée partielle.",
-            tone: "good",
-          },
-        ],
-      },
-    },
-    {
-      kind: "quiz",
-      question: `Une facture est exactement de 900 EURC et ton trésor détient USDC. Quelle opération convient ?`,
-      options: [
-        "path_payment_strict_receive — fixer les 900 EURC livrés, plafonner l'USDC que tu vas dépenser",
-        "path_payment_strict_send — envoyer environ 900 USDC et espérer que le taux arrive près de l’équilibre",
-        "Deux transactions : échanger USDC contre EURC sur le DEX, puis un paiement simple",
-      ],
+    { kind: "fill",
+      prompt: `Complétez ce qu'un pool à produit constant promet réellement :`,
+      file: "NOTES.md",
+      before: `Un pool vous cotera toujours un prix. Ce qu'il ne promet pas, c'est que le prix reste immobile — plus votre ordre est gros face au pool, `,
+      after: ` .`,
+      choices: ["plus le prix que vous finissez par payer est mauvais", "plus les frais qu'on vous prend sont bas", "plus l'échange met de temps à se régler", "plus l'ordre risque d'être refusé"],
       answer: 0,
-      explain: `Strict receive existe exactement pour les cas où la facture est fixe. Et une opération atomique bat un swap‑puis‑envoi : pas de dérive de prix entre les étapes, pas de poussière restante, pas d’état à moitié terminé à nettoyer.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Trace la rivière — que se passe-t-il entre l’envoi et la livraison dans un paiement par chemin ?`,
-      file: "remittance.txt",
-      before: `envoyer 100 USDC  →  `,
-      after: `  →  livrer EURC — une transaction atomique`,
-      choices: [
-        "passer par des carnets d’ordres et des pools de liquidité",
-        "utiliser des tokens enveloppés sur une autre chaîne",
-        "attendre au bureau de change d’une ancre",
-        "mettre le paiement aux enchères auprès de bots market makers",
-      ],
-      answer: 0,
-      explain: `Le routage s'effectue sur le registre de manière atomique : le protocole parcourt les offres et les pools pour trouver un chemin jusqu'à l'actif de destination. Soit tout le chemin s’exécute lors de la clôture du registre, soit rien ne se passe.`,
-    },
-    {
-      kind: "theory",
-      body: `## Pourquoi les constructeurs de transferts viennent ici
+      explain: `Le pool ne peut ni s'épuiser ni vous refuser — c'est tout l'intérêt de la courbe. Ce qu'il fait à la place, c'est vous facturer davantage chaque unité à mesure que vous videz un côté : un gros ordre dans un petit pool s'exécute parfaitement, et cher.` },
+    { kind: "theory", body: `## Vous ne ferez jamais cela à la main
 
-Les rails anciens : un transfert transfrontalier saute entre des banques correspondantes pendant **2–5 jours** et perd quelques pourcentages en frais en cours de route.
+Vous savez maintenant qu'il y a un marché dans le registre : des carnets qui s'apparient à la clôture, des pools qui cotent depuis une courbe, et un prix qui bouge quand vous vous appuyez dessus.
 
-La rivière : les dollars deviennent USDC à une extrémité, un **paiement par chemin** convertit et livre EURC en environ **cinq secondes** pour un frais mesuré en fractions de cent, et les euros sortent de l’autre extrémité.
+Et voici ce qui rend tout cela utile : **vous n'interagirez presque jamais directement avec quoi que ce soit de tout ça.** Vous ne placerez pas d'offre, ne parcourrez pas le carnet, ne choisirez pas de pool. Vous énoncerez ce que vous envoyez et ce qui doit arriver — et autre chose fera les courses.
 
-La conversion FX — historiquement l’étape coûteuse et opaque — devient un saut transparent à travers des carnets d’ordres publics et des pools. Le règlement inter‑devise en secondes est le cas d’usage que Stellar visait dès le premier jour.`,
-    },
-    {
-      kind: "theory",
-      body: `## La couche au-dessus de la rivière
-
-Au-dessus des mécanismes natifs, l’écosystème intègre Soroban : **Soroswap**, **Phoenix** et **Aquarius** exécutent des protocoles AMM sous forme de contrats intelligents, tandis que les agrégateurs recherchent le meilleur prix dans les carnets natifs, les pools natifs et les pools gérés par contrat. Tu n’as pas encore besoin d'en connaître le fonctionnement interne : retiens simplement que la rivière possède à la fois un socle rocheux et un port animé construit au-dessus.
-
-Une question demeure : par où les *véritables* dollars et euros entrent-ils et sortent-ils ? C’est le rôle des ancres — les portes du royaume et le sujet du prochain chapitre.`,
-    },
+**Ensuite :** l'opération qui dépense toute cette machinerie en votre nom, en une seule étape atomique.` },
   ],
-} satisfies JourneyConceptText;
+  testOut: [
+    { question: `Qui apparie une offre d'achat et une offre de vente sur le DEX Stellar ?`,
+      options: ["Le protocole lui-même, à la clôture du registre — les offres sont des entrées du registre et l'appariement fait partie du consensus","Un contrat moteur d'appariement maintenu par la SDF","Des relais hors chaîne qui soumettent les paires appariées contre une commission"], answer: 0 },
+    { question: `Que faut-il pour créer un marché pour une nouvelle paire d'actifs sur le DEX ?`,
+      options: ["Deux trustlines et une offre — chaque paire obtient un carnet automatiquement, sans cotation ni permission","Une demande auprès de la SDF, qui sélectionne les paires échangeables","Déployer un contrat de marché pour cette paire"], answer: 0 },
+    { question: `Un carnet d'ordres a besoin de traders actifs qui cotent. De quoi un pool de liquidité a-t-il besoin à la place ?`,
+      options: ["De dépôts seulement — la courbe à produit constant cote un prix à chaque instant sans que personne ne surveille","D'un bot teneur de marché, que le pool rémunère sur les frais","D'un oracle qui lui fournit le prix externe courant"], answer: 0 },
+    { question: `Votre ordre est gros face au pool. Que se passe-t-il ?`,
+      options: ["Il s'exécute, à un prix de plus en plus mauvais — la courbe facture davantage chaque unité à mesure que vous videz un côté","Il est refusé, car le pool ne peut pas le couvrir","Il est mis en file jusqu'à ce qu'assez de liquidité soit déposée"], answer: 0 },
+  ],
+};

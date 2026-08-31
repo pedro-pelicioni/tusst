@@ -1,164 +1,102 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const theEndlessLoop: Concept = {
-  meta: {
-    slug: "the-endless-loop",
-    title: "El Bucle Infinito",
-    tagline: "Bucles agenticos: actuar, observar, corregir — y saber cuándo detenerse.",
-    numeral: "VII",
-    arc: "craft",
-    level: 2,
-    status: "live",
-    estMinutes: 12,
-    sigil: "/v2/journey/sigils/the-endless-loop.webp",
-    glyph: "🔁",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "El Bucle Infinito",
+  tagline: "Actuar, observar, corregir — y las señales que lo hacen subir.",
   steps: [
-    {
-      kind: "theory",
-      body: `## De un deseo a un bucle
+    { kind: "theory", body: `## Del deseo al bucle
 
-El prompting de un solo disparo es un deseo: describir, recibir, esperar. El **bucle agentico** reemplaza la esperanza por un ciclo:
+El prompting de un solo tiro es un deseo: describe, recibe, cruza los dedos. El **bucle agéntico** cambia los dedos cruzados por un ciclo:
 
 > **actuar → observar → corregir → actuar de nuevo**
 
-El gólem escribe código, lo *ejecuta*, lee la queja del compilador, lo arregla y lo vuelve a ejecutar — la forma en que trabajas, al ritmo de la máquina. La calidad de un solo disparo dejó de ser el número interesante en el momento en que el gólem pudo ver sus propios resultados.
+El golem escribe código, lo *ejecuta*, lee la queja del compilador, corrige, ejecuta otra vez — como trabajas tú, a ritmo de máquina. La calidad de un solo tiro dejó de ser el número interesante en cuanto el golem pudo ver sus propios resultados.
 
-Pero un bucle es maquinaria, no magia. Tiene partes que pueden diseñarse bien o mal — y cada una de las siguientes pantallas es una de esas partes.`,
-    },
-    {
-      kind: "theory",
-      body: `## Observación: los ojos del bucle
+Pero un bucle es maquinaria, no magia. Tiene piezas que pueden estar bien o mal diseñadas, y este capítulo trata de las dos que deciden si sube.` },
+    { kind: "diagram", body: "El bucle, y la única salida que importa:",
+      caption: "Tres de estos cuatro son este capítulo. El cuarto — decidir parar — es el siguiente, y es el que la gente se salta.",
+      view: { kind: "flow", layout: "cycle", play: true, nodes: [
+        { id: "act", label: "actuar", note: "Da el paso más pequeño que permita el plan, luego párate y mira.", tone: "accent" },
+        { id: "observe", label: "observar", note: "Lee lo que respondió el mundo. No lo que esperabas.", tone: "teal" },
+        { id: "correct", label: "corregir", note: "Ajusta el plan, no solo el último movimiento.", tone: "gold" },
+        { id: "stop", label: "¿parar?", note: "Hecho, bloqueado o sin presupuesto. Decídelo explícitamente, cada turno.", tone: "good" },
+      ] } },
+    { kind: "theory", body: `## Observación: los ojos del bucle
 
-Un bucle mejora solo en la medida en que sus **observaciones** sean verdaderas. La corrección necesita una señal para corregir *hacia*:
+Un bucle mejora solo hasta donde sus **observaciones** son verdaderas. Corregir necesita una señal *hacia la que* corregir:
 
 - **códigos de salida** — ¿falló el comando?
-- **salida de pruebas** — ¿qué prueba, qué aserción, qué línea?
-- **estado on‑chain** — ¿qué contiene realmente el libro mayor después de la ejecución?
+- **salida de las pruebas** — ¿qué prueba, qué aserción, qué línea?
+- **estado on-chain** — ¿qué contiene realmente el libro mayor tras la ejecución?
 
-Señales, no vibraciones. “La salida parece razonable” no corrige nada, porque nunca puede ser falsa. Cada verificador que incorporaste al harness ahora gana interés: conectado al bucle, se convierte en los ojos con los que el gólem se guía — **en cada iteración**.`,
-    },
-    {
-      kind: "diagram",
-      body: "El bucle, y la única salida que importa:",
-      caption: "Un bucle sin regla de parada no es autonomía: es presupuesto ardiendo.",
-      view: {
-        kind: "flow",
-        layout: "cycle",
-        play: true,
-        nodes: [
-          {
-            id: "act",
-            label: "actuar",
-            note: "Da el paso más pequeño que el plan permita, luego para y mira.",
-            tone: "accent",
-          },
-          {
-            id: "observe",
-            label: "observar",
-            note: "Lee lo que respondió el mundo. No lo que esperabas que respondiera.",
-            tone: "teal",
-          },
-          {
-            id: "correct",
-            label: "corregir",
-            note: "Ajusta el plan, no solo el último movimiento.",
-            tone: "gold",
-          },
-          {
-            id: "stop",
-            label: "¿parar?",
-            note: "Listo, bloqueado o sin presupuesto. Decídelo explícitamente en cada vuelta.",
-            tone: "good",
-          },
-        ],
-      },
-    },
-    {
-      kind: "quiz",
-      question: `¿Qué observación puede realmente guiar un bucle?`,
+Señales, no sensaciones. "La salida parece razonable" no corrige nada, porque nunca puede ser falso. Cada verificador que metiste en el arnés ahora da intereses: conectado al bucle, se convierte en los ojos con los que se guía el golem — **en cada iteración**.` },
+    { kind: "quiz", question: `¿Qué observación puede dirigir de verdad un bucle?`,
       options: [
-        "El informe del corredor de pruebas: 3 aprobados, 1 fallado — refund_after_deadline, aserción en la línea 41",
-        "El propio resumen final del gólem: todo parece correcto ahora",
-        "El hecho de que el código compiló en el primer intento — fuerte evidencia de que la lógica es correcta",
-      ],
-      answer: 0,
-      explain: `Compilar solo indica que los tipos coinciden, no que el comportamiento sea el deseado — y un auto‑resumen es la mente calificando su propia tarea. Una señal de dirección debe ser externa, específica y capaz de ser mala noticia. “1 falló, línea 41” es un encabezado; “parece correcto” es clima.`,
-    },
-    {
-      kind: "theory",
-      body: `## Todo bucle necesita un freno
+        "El informe del ejecutor de pruebas: 3 pasaron, 1 falló — refund_after_deadline, aserción en la línea 41",
+        "El resumen final del propio golem: ahora todo parece correcto",
+        "Que el código compilara a la primera — fuerte evidencia de que la lógica está bien",
+      ], answer: 0,
+      explain: `Compilar significa que los tipos encajan, no que el comportamiento sea el deseado — y un autorresumen es la mente corrigiendo sus propios deberes. Una señal de dirección debe ser externa, específica y capaz de ser mala noticia. "1 falló, línea 41" es un titular; "parece correcto" es meteorología.` },
+    { kind: "theory", body: `## Un turno, rastreado
 
-Un bucle sin vigilancia no converge — **gasta**. Un bucle sin parada es una factura, y ocasionalmente una caída del servicio. Instala los frenos *antes* de la primera vuelta:
+Es fácil asentir ante un ciclo en abstracto. Aquí tienes un único turno, con lo que realmente cruza el cable.
 
-- **Criterios de éxito** — las verificaciones que significan *listo*, decididas de antemano.
-- **Presupuesto** — tokens, minutos, dólares: lo que se agote primero.
-- **Máximo de iteraciones** — un techo rígido, siempre.
-- **Detección de falta de progreso** — el mismo error dos veces significa *cambiar de estrategia o escalar*, nunca “de nuevo, pero más fuerte”.
+**Actuar.** El golem edita \`refunds.rs\` — cambia la comparación de plazo de \`>\` a \`>=\`. Un solo cambio, porque un turno que cambia seis cosas no puede decirte cuál funcionó.
 
-La regla del reino: nunca inicies un bucle sin haber decidido cómo detenerlo.`,
-    },
-    {
-      kind: "quiz",
-      question: `Iteración 40, y el bucle ha estado encontrando la misma evaluación fallida con el mismo mensaje de error desde la iteración 12. ¿Qué debe hacer el harness?`,
-      options: [
-        "Detenerse y escalar a un humano — repetir sin progreso es una condición de parada, no persistencia",
-        "Seguir adelante — la iteración es el objetivo del bucle, y la 41 podría ser la correcta",
-        "Aumentar la temperatura del modelo para que sea más creativo con la solución",
-      ],
-      answer: 0,
-      explain: `Veintiocho fallos idénticos son un mensaje: al bucle le falta algo — contexto, un permiso, una especificación correcta — que más iteraciones no pueden proporcionar. Randomizar más duro solo genera más errores al mismo precio. Detecta la falta de progreso, detén el bucle y entrega la pista a un humano.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Instala el freno antes de que el bucle gire:`,
-      file: "loop.rs",
-      before: `while !evals.pass() && iterations < `,
-      after: ` {`,
-      choices: ["budget.max_iterations", "usize::MAX", "evals.len()", "iterations + 1"],
-      answer: 0,
-      explain: `usize::MAX es “sin freno — lo discutiremos en la factura”. Un límite que avanza con el contador (iterations + 1) nunca se aplica. Y evals.len() confunde cuántas verificaciones existen con cuánto tiempo seguir intentando. El techo es un presupuesto que elegiste a propósito.`,
-    },
-    {
-      kind: "theory",
-      body: `## Evaluaciones: la brújula
+**Observar.** El arnés ejecuta las evals fijas y devuelve exactamente esto:
 
-¿Cómo sabes que la iteración 7 superó a la 6? No por sensación. **Las evaluaciones** son un conjunto *fijo* de verificaciones — pruebas, lint, compilación, una aserción on‑chain — que se ejecutan **en cada iteración**, de modo que cada intento se mide contra la misma regla.
+> \`test_refund_after_deadline ... FAILED\`
+> \`assertion failed: balance == 0, left: 40, right: 0\`
+> \`4 passed, 3 failed\`
 
-*Fijo* es la palabra estructural. Si las verificaciones cambian entre intentos, el “progreso” se vuelve incalculable — estarías comparando puntuaciones de exámenes diferentes.
+No "sigue roto". Una línea, un número, y un recuento comparable con el del turno anterior.
 
-Con una brújula, el bucle sabe *con certeza* si se movió: 4 verdes de 7 pasaron a 6 de 7. Sin ella, solo sabe que se movió. El progreso es **medido, no sentido**.`,
-    },
-    {
-      kind: "theory",
-      body: `## La retroalimentación inestable envenena el bucle
+**Corregir.** Tres verdes pasaron a cuatro. Así que la comparación era *uno* de los bugs y no el único: el plazo está resuelto, el saldo no. El plan se actualiza — el siguiente turno va a por el saldo.
 
-Una prueba que falla aleatoriamente — por tiempo, orden, un puerto compartido — es una molestia para los humanos. Suspiramos y la volvemos a ejecutar. Para un bucle es **veneno**, porque el bucle *actúa sobre cada señal*.
+Fíjate en qué hizo que ese turno valiera algo. No fue el golem quien decidió que había mejorado. **Fue el recuento.**` },
+    { kind: "theory", body: `## Evals: la brújula
 
-Un rojo fantasma aparece → el gólem “arregla” código que nunca estuvo roto → el cambio se aplica → en la siguiente iteración, otro fantasma → otro arreglo. El bucle ahora aprende supersticiones, cada una se acumula, todo a partir del ruido.
+¿Cómo sabes que la iteración 7 superó a la 6? No por intuición. Las **evals** son un conjunto *fijo* de comprobaciones — pruebas, lint, build, una aserción on-chain — ejecutadas **en cada iteración**, para que cada intento se mida con la misma vara.
 
-La regla: **haz que la retroalimentación sea determinista antes de conectarla a un bucle.** Una prueba inestable es peor que ninguna prueba — el silencio no engaña a nadie; el ruido engaña incansablemente.`,
-    },
-    {
-      kind: "quiz",
-      question: `Una prueba falla aleatoriamente una de cada cinco ejecuciones, por razones de temporización. Para un humano es una molestia. ¿Qué es para un bucle?`,
-      options: [
-        "Veneno — el bucle trata cada fallo fantasma como verdad y “arregla” código sano, acumulando errores en cada pasada",
-        "La misma molestia — con muchas iteraciones la aleatoriedad se promedia",
-        "Levemente útil — fallos extra aplican presión adicional para robustecer el código",
-      ],
-      answer: 0,
-      explain: `Nada se promedia, porque cada señal falsa desencadena un cambio real de código que la siguiente iteración construye. Los humanos descartan el ruido; los bucles actúan obedientemente sobre él. La determinismo no es un lujo del harness — es una condición previa para cualquier bucle.`,
-    },
-    {
-      kind: "theory",
-      body: `## La altitud correcta
+*Fijo* es la palabra que lo sostiene todo. Si las comprobaciones cambian entre intentos, el "progreso" se vuelve imposible de medir — estás comparando notas de exámenes distintos.
 
-¿Dónde se sitúa el humano mientras el bucle gira? No dentro de él — revisar cada pulsación de tecla significa *que tú* eres el bucle, al ritmo del gólem. Y tampoco arriba de las nubes, aprobando sin cuestionar lo que llega.
+Con una brújula, el bucle sabe *de hecho* si se movió: 4 verdes de 7 pasaron a 6 de 7. Sin ella, solo sabe que se movió. El progreso se **mide, no se siente**.` },
+    { kind: "fill", prompt: `Completa la propiedad que hace de una brújula una brújula:`,
+      file: "NOTES.md",
+      before: `Las evals se ejecutan en cada iteración, y el conjunto de comprobaciones debe permanecer `,
+      after: ` — si no, dos intentos se están calificando con dos exámenes distintos.`,
+      choices: ["fijo", "aleatorizado", "opcional", "regenerado en cada intento"], answer: 0,
+      explain: `Una vara que se mueve no mide nada. Por eso también "deja que el golem escriba sus propias pruebas sobre la marcha" destruye la señal en silencio: el examen y el alumno dejan de ser cosas distintas.` },
+    { kind: "exercise", mode: "spec-write",
+      brief: `## La prueba del examinador: escribe un contrato de observación
 
-La altitud correcta es el **límite**: revisar el *diff* contra la *especificación*. ¿Pasaron las evaluaciones? ¿Respeta el cambio las reglas del Capítulo I? ¿Algo se movió sin razón? Confía en los instrumentos del bucle para lo pequeño; conserva el juicio humano para lo que los instrumentos no pueden ver.
+Un bucle está a punto de apuntarse a una tarea real:
 
-Próxima disciplina: cuando un bucle no basta — muchos gólems pequeños, un plan tejido.`,
-    },
+> Un contrato Soroban tiene un comportamiento defectuoso: los reembolsos se están pagando **después** de vencido el plazo. Vas a entregarle esto a un bucle agéntico y dejarlo trabajar sin supervisión un rato.
+
+Antes de que gire una sola vez, escribe su **contrato de observación**: por qué señales se va a guiar este bucle, y qué hace fiable a cada una. Solo comportamiento — sin código de arnés, sin nombres de bibliotecas.`,
+      rubric: `1. Nombra al menos dos señales concretas y externas (salida de pruebas, código de salida, estado on-chain, resultado de lint/build) — ni autoevaluación ni "parece bien".
+2. Para al menos una señal, dice qué la hace fiable — determinista, reproducible o independiente del código que se está cambiando.
+3. Dice qué cuenta como TERMINADO en términos de esas señales, no de la opinión del golem.
+4. Nombra al menos una señal en la que NO se debe confiar, y por qué (un autorresumen, una compilación exitosa, una prueba inestable…).
+5. Solo comportamiento — sin implementación del arnés, sin exigir herramientas ni bibliotecas concretas.`,
+      minChars: 140 },
+    { kind: "theory", body: `## Lo que este capítulo no te dio
+
+Ya sabes montar un bucle que ve con honestidad y mide su propio avance. Apúntalo a una tarea y subirá.
+
+Fíjate en lo que falta: aquí nada decide cuándo **para**. No cuándo está terminado — esa parte acabas de escribirla — sino cuándo está *atascado*, o cuándo ha gastado más de lo que valía la tarea. Un bucle con buenos ojos y sin freno no falla en voz alta. Falla en la factura.
+
+**A continuación:** los frenos, y la única ejecución en la que descubres para qué estaban.` },
+  ],
+  testOut: [
+    { question: `¿Qué sustituye un bucle agéntico, comparado con el prompting de un solo tiro?`,
+      options: ["La esperanza — el golem ve ahora el resultado de su propio trabajo y corrige contra él","La necesidad de una especificación, ya que el bucle descubre los requisitos sobre la marcha","El compilador, ya que el bucle revisa el código por sí mismo"], answer: 0 },
+    { question: `¿Por qué "la salida parece razonable" nunca puede dirigir un bucle?`,
+      options: ["Porque nunca puede ser falso — una señal que no puede ser mala noticia no lleva información","Porque llega demasiado tarde en la iteración para actuar sobre ella","Porque los modelos no están entrenados para evaluar juicios en lenguaje natural"], answer: 0 },
+    { question: `¿Por qué el conjunto de evals debe permanecer fijo entre iteraciones?`,
+      options: ["Si no, dos intentos se califican con exámenes distintos y el progreso es inmedible","Si no, el bucle se ralentiza con cada comprobación añadida","Si no, el modelo memoriza las comprobaciones y las burla"], answer: 0 },
+    { question: `Un bucle compila limpio a la primera. ¿Qué demuestra eso?`,
+      options: ["Que los tipos encajan — no que el comportamiento sea el que se quería","Que la lógica es muy probablemente correcta, ya que la mayoría de los bugs son de tipos","Nada en absoluto; compilar no tiene relación con la calidad del código"], answer: 0 },
   ],
 };

@@ -1,20 +1,22 @@
 import type { Concept } from "../types";
 
-// Chapter V (craft) — harness engineering: the model is rented, the harness is
-// yours. Anatomy of a harness, verification over trust, least-privilege tools,
-// designed failure paths — and TUSST's own graded runner unmasked as a
-// verification harness the learner has been inside all along.
+// Craft VII — what a harness IS, and the one habit that makes it worth
+// having: never believe the claim, re-check it. Least privilege and failure
+// paths are Craft VIII, because "how to give the golem hands" and "what
+// catches it when those hands are wrong" are separate lessons, and only the
+// second one is the one that gets skipped.
 
 export const tamingTheGolem: Concept = {
   meta: {
     slug: "taming-the-golem",
     title: "Taming the Golem",
-    tagline: "Harness engineering: give the AI a bench, not a wish.",
-    numeral: "V",
+    tagline: "The model is rented. The harness is engineering, and it is yours.",
+    numeral: "VII",
     arc: "craft",
     level: 2,
+    requires: ["the-keeps-own-doors"],
     status: "live",
-    estMinutes: 14,
+    estMinutes: 11,
     sigil: "/v2/journey/sigils/taming-the-golem.webp",
     glyph: "🗿",
   },
@@ -118,63 +120,72 @@ Claims are data. Verifiers are truth.`,
       explain: `Self-review by the same mind shares the same blind spots — if it believed the deploy worked, it will believe it again. Independent verifiers don't share anyone's blind spots, and on Stellar an RPC read costs milliseconds. The ledger is the cheapest lie detector you will ever own.`,
     },
     {
-      kind: "theory",
-      body: `## Least privilege: fewer teeth, please
-
-A golem with \`rm -rf\` available is a golem that will *eventually* run it — not out of malice, but out of a confident wrong plan at 2 a.m. The remedy is old and proven: **least privilege**.
-
-- Grant tools for *this task*, not tools in general.
-- Prefer **read-only** access wherever writing isn't the job.
-- Scope it to one directory; sandbox anything that executes.
-- Hand it **testnet keys only** — never a key whose loss would actually hurt.
-
-Power granted "just in case" is how incidents start. Every tool is a blast radius; grant accordingly.`,
-    },
-    {
       kind: "fill",
-      prompt: `Scope the golem's power before it starts work:`,
-      file: "harness.toml",
-      before: `signing_keys = "`,
-      after: `"`,
-      choices: ["testnet", "mainnet", "all-networks", "treasury"],
-      answer: 0,
-      explain: `The rule of thumb: a golem holds only keys whose total loss you can shrug at. Testnet lumens are free from friendbot; a mainnet or treasury key inside an automated loop is an incident with a countdown on it.`,
-    },
-    {
-      kind: "theory",
-      body: `## Design the failure path
-
-Amateurs design what happens when the golem is *right*. Engineers design what happens when it's **wrong** — because sometimes it will be.
-
-- A failed check **blocks the merge**; it doesn't log a warning into the void.
-- Retries have a **budget**, so a stuck golem becomes a stopped golem, not a bill.
-- A human reviews **a diff with context**, never a fait accompli already in production.
-- Rollback is a tested path, not a prayer.
-
-For every step of the harness, ask one question: *"when this is wrong, what catches it?"* If the answer is "hopefully nothing goes wrong" — that's a wish, not a design.`,
-    },
-    {
-      kind: "quiz",
-      question: `Which of these is a **designed** failure path?`,
-      options: [
-        "A red test suite blocks the auto-merge, and a human receives the diff plus the failing output",
-        "The prompt firmly instructs the golem to be extremely careful and to double-check everything",
-        "The loop retries the same task, without limit, until the output finally passes",
+      prompt: `Complete the harness engineer's first move:`,
+      file: "NOTES.md",
+      before: `The golem says the deploy succeeded. Before that sentence changes anything, the harness `,
+      after: ` .`,
+      choices: [
+        "reads the chain and checks",
+        "asks the golem to confirm it",
+        "records the claim in the run log",
+        "retries the deploy to be safe",
       ],
       answer: 0,
-      explain: `Instructions are hopes — useful, but nothing *catches* anything. Unlimited retries are a bill with no ceiling (a later chapter names the fix). A designed path has a tripwire, a stop, and a human with enough context to act.`,
+      explain: `Asking the same mind to confirm its own work buys you the same blind spot twice. And a claim written to a log is still a claim — it just looks official now. On Stellar the check costs one RPC read, which makes the ledger the cheapest lie detector you will ever own.`,
+    },
+    {
+      kind: "labLink",
+      labSlug: "guild-vault",
+      body: `You can stand inside a verification harness right now. The Forge's **Guild Vault** lab has you raise an account's signing threshold so a treasury needs two officers — and then it does not take your word for it. The server reads the ledger and checks the signer set itself. Saying you did it is not the check; the chain is.`,
     },
     {
       kind: "theory",
-      body: `## You've been inside one all along
+      body: `## The half that gets skipped
 
-Look around: **TUSST is a harness.**
+You can now name the parts of a harness and, more importantly, refuse to believe anything the golem says about its own work.
 
-The Forge's graded runner is a verification harness — your solution executes in a sandbox, hidden trials judge it, and no amount of confident prose turns a red into a green. The on-chain labs go further: they don't ask *whether you say* you deployed — they **read the chain** and check.
+Everything so far has been about giving it **hands** — tools, a directory, a runner. Nothing so far has asked the harder question: which hands, exactly, and what happens on the day it uses them on a confidently wrong plan.
 
-That's the discipline in one image: build the bench so that being wrong is *detectable* and being right is *provable* — for golems and for humans.
-
-Next discipline: the words themselves — what the golem actually sees on the bench.`,
+**Next:** how much power the work actually needs, and the one question to ask of every step you build.`,
+    },
+  ],
+  testOut: [
+    {
+      question: `What is the harness, and why does it matter more than the prompt?`,
+      options: [
+        "Everything around the model — tools, permissions, working directory, verifiers. The model is rented; the harness is yours and survives a model swap",
+        "The system prompt and its instructions, which is where behavior is actually set",
+        "The provider's infrastructure, which determines latency and throughput",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Same model, same tasks, and this month's output is far worse. Where does a harness engineer look first?`,
+      options: [
+        "At what surrounds the model — the context given, the tools available, the checks gating the output",
+        "At the weights, which degrade under sustained load",
+        "Nowhere — sampling randomness explains any swing",
+      ],
+      answer: 0,
+    },
+    {
+      question: `What is the golem's most dangerous trait?`,
+      options: [
+        "Confidence while wrong — it reports success in the same warm tone whether or not anything happened",
+        "Ignorance — there are things it has simply never seen",
+        "Slowness on long tasks, which tempts people to skip review",
+      ],
+      answer: 0,
+    },
+    {
+      question: `\"Contract deployed and initialized successfully.\" What does a good harness do with that sentence?`,
+      options: [
+        "Treats it as a claim, reads the chain, calls a view function, and believes the ledger",
+        "Accepts it — the model has been reliable so far",
+        "Asks the golem to double-check its own work in the same session",
+      ],
+      answer: 0,
     },
   ],
 };

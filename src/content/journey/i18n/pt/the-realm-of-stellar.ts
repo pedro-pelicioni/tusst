@@ -60,6 +60,18 @@ Tente encontrar o ponto onde a rede *trava* — e perceba que ela trava ao invé
     },
     {
       kind: "theory",
+      body: `## Ninguém te entrega a lista
+
+Aqui está a parte que soa como bug na primeira vez que você ouve: **não existe lista oficial de validadores.** Nenhum registro decide quem conta. Cada participante nomeia os outros de quem está disposto a depender, e é esse o processo de inscrição inteiro.
+
+O que levanta a objeção óbvia. Se cada um escolhe o próprio conselho, o que impede a rede de rachar em dois grupos que concordam internamente e discordam entre si?
+
+A resposta é **sobreposição**. Dois participantes só têm garantia de chegar à mesma conclusão se os círculos de confiança deles se cruzarem o bastante — e na prática cruzam, porque todo mundo acaba, de forma independente, nomeando o mesmo punhado de instituições bem operadas e publicamente responsáveis. A segurança da rede inteira é uma propriedade emergente de um monte de escolhas separadas e interessadas sobre em quem vale a pena depender.
+
+Isso é genuinamente diferente de "o protocolo escolhe", e a diferença corta dos dois lados. Ninguém consegue se acrescentar a uma lista para ganhar influência. E ninguém consegue te entregar uma configuração boa também — **escolher mal é uma coisa que você tem permissão de fazer.** É por isso que o conselho prático para quem roda um validador é sem graça e correto: parta de uma configuração publicada e bem analisada, e entenda qualquer desvio antes de fazê-lo.`,
+    },
+    {
+      kind: "theory",
       body: `## Segurança acima de vivacidade
 
 Você viu isso no simulador: derrube nós demais de um conselho e a rede **espera**. Ela não adivinha. Não se divide em duas histórias.
@@ -160,5 +172,15 @@ Todo laboratório da Forja roda nesse ritmo — você já sentiu isso se acompan
       lessonSlug: "stellar-101-1",
       body: `O Ato VI da Campanha — **O Portão da Constelação** — explora esse mesmo céu na prática: frases‑senha da rede, horizontes e seus primeiros mapas estelares. Opcional, e vale o desvio quando você quer o mapa por trás da teoria.`,
     },
+  ],
+  testOut: [
+    { question: `Como um participante decide de quem depende para concordar?`,
+      options: ["Ele nomeia a própria fatia de quórum — não existe lista oficial de validadores, e a inscrição é essa nomeação","O protocolo atribui um conjunto a ele com base em stake","A SDF publica o conjunto autoritativo de validadores a cada versão do protocolo"], answer: 0 },
+    { question: `Se cada um escolhe o próprio conselho, o que impede a rede de rachar?`,
+      options: ["Sobreposição — a segurança se sustenta quando os círculos de confiança se cruzam o bastante, e na prática cruzam porque os participantes nomeiam de forma independente as mesmas instituições bem operadas","Uma regra de desempate que o protocolo aplica quando grupos discordam","Um número mínimo de validadores que toda fatia precisa conter"], answer: 0 },
+    { question: `O SCP prefere segurança a liveness. O que isso significa quando a rede tem problema?`,
+      options: ["Ela para em vez de arriscar duas histórias conflitantes — parar é recuperável, discordar sobre o passado não é","Ela continua produzindo ledgers e reconcilia qualquer fork depois","Ela elege um líder temporário para quebrar o impasse"], answer: 0 },
+    { question: `O que consenso sem mineração dá a quem constrói, concretamente?`,
+      options: ["Um ledger a cada poucos segundos com taxa medida em frações de centavo, e um fechamento como finalização","Mais vazão ao custo de finalização mais lenta","Transações gratuitas, já que não há mineradores a pagar"], answer: 0 },
   ],
 };

@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const gatesOfTheRealm: Concept = {
-  meta: {
-    slug: "gates-of-the-realm",
-    title: "Portões do Reino",
-    tagline: "Âncoras & SEPs — onde o ledger encontra o mundo real.",
-    numeral: "V",
-    arc: "realm",
-    level: 2,
-    status: "live",
-    estMinutes: 12,
-    sigil: "/v2/journey/sigils/gates-of-the-realm.webp",
-    glyph: "⛩️",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Portões do Reino",
+  tagline: "Anchors — onde o ledger encosta no chão.",
   steps: [
     {
       kind: "theory",
@@ -24,63 +14,37 @@ Você entrega dólares a uma âncora e ela paga tokens equivalentes da sua conta
 
 Todo ativo fiat sério no Stellar está por trás de um portão como este. As âncoras são onde o ledger toca o chão.`,
     },
-    {
-      kind: "theory",
-      body: `## SEPs: a língua comum
+    { kind: "theory", body: `## O que "lastreado" está de fato prometendo
 
-Existem muitas carteiras e muitas âncoras. Sem padrões, cada par precisaria de uma integração customizada — encanamento N×M, para sempre.
+O token que um anchor emite não é dólar. É um **direito contra uma empresa** — e o edifício inteiro se apoia nessa empresa honrar o direito.
 
-A resposta do Stellar é o **SEP**: *Stellar Ecosystem Proposal*. SEPs são padrões públicos que definem exatamente como carteiras, âncoras e serviços se comunicam. Você implementa um SEP uma vez e sua carteira funciona com **toda âncora** que o implemente também — fluxos de depósito, autenticação, identidade, tudo.
+O que significa que as perguntas interessantes sobre qualquer ativo fiat não são técnicas:
 
-Essa cultura de interoperabilidade‑primeiro é um dos superpoderes silenciosos do Stellar: os usuários escolhem qualquer porta, e todas as portas compartilham a mesma forma de chave.`,
-    },
-    {
-      kind: "theory",
-      body: `## SEP-1 e SEP-10: identidade e prova
+- **Quem é o emissor, juridicamente?** Uma entidade regulada numa jurisdição, ou uma conta anônima?
+- **Onde está o dinheiro?** Custódia segregada, ou a mesma conta de onde saem os salários?
+- **Quem consegue provar?** Um laudo que dá para ler, ou uma promessa numa landing page?
+- **O que acontece se pararem?** Um caminho de resgate que sobrevive à empresa, ou um token que vira souvenir em silêncio?
 
-Dois padrões pequenos carregam todo o portão:
-
-- **SEP-1** — todo domínio sério publica um \`stellar.toml\`: seu **cartão de identidade on‑chain**. Quais ativos emite, quais contas são oficiais, onde seus serviços vivem. Carteiras leem isso para distinguir o emissor real de um impostor com o mesmo código de ativo.
-- **SEP-10** — **web auth**: a âncora envia uma *transação de desafio*, você a assina com a chave da sua conta e a devolve. Propriedade comprovada, sessão concedida — e o desafio **nunca é submetido** ao ledger.
-
-Login com assinatura: sem senha, sem e‑mail.`,
-    },
-    {
-      kind: "quiz",
-      question: `O que exatamente o web auth SEP-10 prova a uma âncora?`,
+O ledger é honesto sobre exatamente uma coisa aqui: ele te diz, com precisão e para sempre, *qual conta emitiu este ativo*. Tudo depois disso é diligência — e é por isso que um código de ativo sozinho não significa nada, e \`USDC\` do emissor errado é outro ativo que por acaso divide o nome.` },
+    { kind: "quiz",
+      question: `Uma carteira mostra saldo de \`USDC\`. O que o código do ativo sozinho te diz?`,
       options: [
-        "Que você controla a chave secreta da conta — assinando uma transação de desafio que nunca toca o ledger",
-        "Sua identidade legal — o SEP-10 realiza a verificação KYC por si só",
-        "Que sua conta possui XLM suficiente para pagar as taxas da âncora",
+        "Quase nada — um ativo é um código *mais o emissor dele*, e qualquer um pode emitir um código escrito USDC",
+        "Que é a stablecoin de dólar conhecida, já que códigos de ativo são únicos no ledger",
+        "Que alguma entidade regulada atestou o lastro",
       ],
       answer: 0,
-      explain: `SEP-10 é pura comprovação de propriedade da chave. Identidade legal é um padrão separado (SEP-12) que as âncoras utilizam *após* a autenticação — assinatura primeiro, documentação depois.`,
-    },
-    {
-      kind: "theory",
-      body: `## Os portões em funcionamento: 24, 31, 41
-
-- **SEP-24** — depósito e saque *interativo*. Sua carteira abre a webview hospedada pela âncora; a âncora cuida dos formulários KYC e dos dados bancários; os tokens chegam quando a transferência bancária é concluída. A rampa cotidiana para pessoas.
-- **SEP-31** — pagamentos transfronteiriços entre *empresas*: uma âncora remetente e uma âncora receptora liquidam via Stellar enquanto cada uma gerencia seus trilhos locais.
-- **SEP-41** — um velho amigo: a **interface de token** padrão para contratos Soroban, aquela que todo Stellar Asset Contract fala.
-
-Ramps para pessoas, trilhos para instituições, um dialeto de token para contratos.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Onde uma carteira encontra o cartão de identidade de um domínio?`,
-      file: "discovery.txt",
-      before: `https://anchor.example/`,
-      after: `  →  ativos, contas oficiais e endpoints de serviço`,
-      choices: [
-        ".well-known/stellar.toml",
-        "api/v2/anchor-manifest.json",
-        "stellar/config.xml",
-        "identity.pdf",
-      ],
+      explain: `Esta é a leitura errada mais cara do ecossistema, e o protocolo não tem culpa: códigos de ativo nunca foram únicos e nunca foram feitos para ser. O endereço do emissor é a identidade; o código é um rótulo. Uma carteira que te mostra um sem o outro está te mostrando um boato.` },
+    { kind: "fill",
+      prompt: `Complete o que um ativo de fato é:`,
+      file: "NOTES.md",
+      before: `Um ativo na Stellar é um código de ativo mais `,
+      after: ` — e dois ativos que dividem só o código são dois ativos diferentes.`,
+      choices: ["o endereço do emissor dele", "a quantidade em circulação", "o domínio do anchor", "um registro na lista de ativos da SDF"],
       answer: 0,
-      explain: `SEP-1, o padrão mais simples de todos: um arquivo TOML em um caminho bem‑conhecido. Prove que você possui o domínio, liste suas contas emissoras no arquivo, e as carteiras podem exibir “emitido por anchor.example” como fato, não como sensação.`,
-    },
+      explain: `O domínio chega perto e é genuinamente útil — é assim que um emissor publica quem é — mas é uma alegação em cima. A identidade que o próprio protocolo garante é a conta emissora, e é a única parte que ninguém consegue forjar.` },
+    { kind: "labLink", labSlug: "oz-token-wizard",
+      body: `Um anchor é uma empresa embrulhada em torno de um único ato técnico: **emitir um token**. Você consegue executar esse ato. O **Assistente de Token OZ** da Forja forja um token de verdade na testnet, com você de emissor — e o que ele não te dá é tudo aquilo que faz de um anchor um anchor: a licença, a custódia, as auditorias e a promessa de resgatar.` },
     {
       kind: "theory",
       body: `## Uma remessa, portão a portão
@@ -148,5 +112,22 @@ Você não precisa de licença bancária para programar contra tudo isso. O SDF 
 
 Portões, rios, confiança — tudo até agora tem sido o *clássico* reino, mecânica embutida no protocolo. No próximo capítulo cruzaremos para a parte que você programa: **Soroban**, onde contratos ganham vida e até o armazenamento tem um batimento cardíaco.`,
     },
+    { kind: "theory", body: `## As siglas por que você passou batido
+
+Você as viu na remessa da Ana e provavelmente deixou passar: SEP-1, SEP-10, SEP-24. Três padrões fazendo três trabalhos — *quem é este anchor*, *prove que é você*, e *execute o depósito*.
+
+Elas não eram acessórias. Sem elas, a carteira da Ana precisaria de uma integração sob medida com o anchor dela, a carteira da mãe precisaria de outra com o dela, e toda carteira nova começaria esse trabalho do zero. Dois portões só cooperaram porque já tinham combinado como falar.
+
+**A seguir:** o combinado em si — os padrões que deixam qualquer carteira chegar em qualquer portão.` },
+  ],
+  testOut: [
+    { question: `O que é um anchor?`,
+      options: ["Uma empresa regulada que emite ativos lastreados em fiat e opera as rampas de entrada e saída entre dinheiro de banco e o ledger","Um recurso do protocolo que converte fiat em ativos do ledger automaticamente","Um validador especializado em tráfego de pagamentos"], answer: 0 },
+    { question: `Uma carteira mostra \`USDC\`. O que o código do ativo sozinho estabelece?`,
+      options: ["Quase nada — um ativo é um código mais o emissor, e qualquer conta pode emitir esse código","Que é a stablecoin de dólar conhecida; códigos são únicos","Que alguém atestou o lastro"], answer: 0 },
+    { question: `Numa remessa de portão a portão, qual peça faz a conversão de moeda?`,
+      options: ["O path payment, roteando por livros e pools do ledger a um preço que qualquer um verifica","A mesa de câmbio interna do anchor emissor, fora do ledger","Um contrato de ponte que trava um ativo e emite o outro"], answer: 0 },
+    { question: `Por que dá para construir uma integração completa com anchor sem licença bancária?`,
+      options: ["A SDF roda o testanchor na testnet — um anchor funcional com dinheiro de brincadeira para ensaiar a dança inteira","Anchors publicam credenciais de produção para uso em desenvolvimento","Não dá; integração com anchor exige um contrato assinado antes"], answer: 0 },
   ],
 };

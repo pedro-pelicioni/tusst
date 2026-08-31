@@ -149,4 +149,14 @@ Meia hora por mês mantém você à frente de cada prazo neste capítulo. O dese
 E com isso, o reino está mapeado — consenso para contratos, portões para véus, borda para borda. O que resta é a melhor parte: **vá construir nele**. A Forge está aberta.`,
     },
   ],
+  testOut: [
+    { question: `O que é um CAP, e como ele difere de um SEP?`,
+      options: ["Um CAP muda o próprio protocolo e sai numa versão numerada; um SEP padroniza como serviços conversam e não exige mudança de protocolo","Um CAP é um rascunho e um SEP é a forma ratificada dele","Um CAP rege contratos e um SEP rege operações clássicas"], answer: 0 },
+    { question: `Por que importa que as atualizações de protocolo sejam numeradas e nomeadas?`,
+      options: ["Um recurso existe a partir de uma versão específica do protocolo, então \"a Stellar suporta isso?\" na verdade é \"em qual protocolo esta rede está?\"","A numeração determina a ordem em que validadores aplicam mudanças","Versões nomeadas são as únicas que a SDF suporta em produção"], answer: 0 },
+    { question: `Um recurso está no ar na testnet mas ainda não na mainnet. O que isso te diz?`,
+      options: ["A versão do protocolo chegou à testnet primeiro — construir contra ela tudo bem, colocar usuários reais não, até a mainnet acompanhar","O recurso foi recusado e a testnet é onde ele é aposentado","Nada; testnet e mainnet sempre rodam o mesmo protocolo"], answer: 0 },
+    { question: `Por que quem constrói deve ler o changelog do protocolo, e não só a documentação?`,
+      options: ["A documentação descreve o que é verdade agora; o changelog é onde você vê o que está prestes a ser verdade, a tempo de se preparar","Documentação costuma estar desatualizada, e o changelog a substitui","O changelog contém a única referência de API autoritativa"], answer: 0 },
+  ],
 };

@@ -1,174 +1,135 @@
 import type { JourneyConceptText } from "../types";
 
-export const conceptText = {
-  title: "Mots de pouvoir",
-  tagline:
-    "Ingénierie des prompts et du contexte — ce que le golem voit réellement.",
+export const conceptText: JourneyConceptText = {
+  title: "Mots de Pouvoir",
+  tagline: "Prompt engineering : les quatre parties de tout prompt qui fonctionne.",
   steps: [
     {
       kind: "theory",
-      body: `## L'établi est son monde entier
+      body: `## Vos mots sont tout ce qu'il a
 
-Le golem ne connaît pas ton dépôt. Il ne se souvient pas d’hier, et il ne voit pas le fichier que tu *n’as pas* attaché. Son univers complet est la **fenêtre de contexte** — le texte qui se trouve devant lui en ce moment.
+Le golem ne connaît pas votre dépôt. Il ne se souvient pas d'hier, et il ne voit pas le fichier que vous n'avez *pas* joint. Son univers entier, c'est le texte posé devant lui à cet instant.
 
-C’est la règle fondamentale de l'art du prompt, sans rien de mystique : **tu décides ce qui existe.** Ce qui se trouve sur l'établi constitue son monde ; ce qui n'y figure pas n'a jamais existé pour lui.
+C'est la règle la plus profonde du prompting, et elle n'a rien de mystique : **c'est vous qui décidez ce qui existe.** Ce que vous mettez devant lui est le monde ; ce que vous laissez de côté n'a jamais eu lieu.
 
-Donc la question derrière chaque prompt n’est pas « comment formuler ? » mais *« qu’est-ce que le golem doit voir pour bien faire ? »*`,
+La question derrière chaque prompt n'est donc pas « comment le formuler ? » mais *« de quoi le golem a-t-il besoin pour réussir ? »* Ce chapitre est la première moitié de la réponse — les mots eux-mêmes. Le suivant est la moitié difficile.`,
     },
     {
       kind: "theory",
-      body: `## Anatomie d’un prompt
+      body: `## Anatomie d'un prompt
 
-Un prompt efficace est un petit document d’ingénierie composé de quatre parties :
+Un prompt qui fonctionne est un petit document d'ingénierie en quatre parties :
 
-1. **Rôle & instructions** — quel travail est effectué, et comment : « Tu implémentes un cas d’usage dans un domaine de paiements. »
-2. **Contraintes** — ce qui est obligatoire et ce qui est interdit : « API publique inchangée. Aucune nouvelle dépendance. Aucun panic. »
-3. **Exemples** — un exemple de *bon résultat*, afin de montrer la qualité au lieu de la décrire.
-4. **Demande** — la tâche réelle, énoncée en dernier, précise et unique.
+1. **Rôle et instructions** — quel travail est fait, et comment : « Tu implémentes un cas d'usage dans un domaine de paiements. »
+2. **Contraintes** — les doit et les ne doit pas : « API publique inchangée. Aucune nouvelle dépendance. Aucun panic. »
+3. **Exemples** — un échantillon de ce qui est *bon*, pour montrer la qualité au lieu de la décrire.
+4. **La demande** — la tâche elle-même, énoncée en dernier, précise et unique.
 
-La plupart des mauvais prompts ne sont pas mal *formulés* — ils **manquent une partie**, généralement les contraintes ou l’exemple.`,
-    },
-    {
-      kind: "quiz",
-      question: `Quelle instruction améliore réellement le code du golem ?`,
-      options: [
-        "Valide le montant : rejette zéro et les négatifs avec une erreur typée ; ne panique jamais ; garde l’API publique inchangée",
-        "Écris un code vraiment propre, professionnel, de haute qualité, prêt pour la production",
-        "Tu es le meilleur programmeur qui ait jamais vécu — code en conséquence",
-      ],
-      answer: 0,
-      explain: `Le golem ne peut pas échouer au critère « haute qualité » : presque n'importe quel résultat peut prétendre y répondre. Il *peut* en revanche violer « ne jamais paniquer ». C'est précisément le but : les critères d’acceptation rendent l'erreur identifiable et guident ainsi le modèle. La précision l’emporte sur la politesse — et sur la flatterie.`,
-    },
-    {
-      kind: "theory",
-      body: `## Montre, ne raconte pas
-
-Les adjectifs décrivent la qualité ; **les exemples la définissent.** Un exemple fonctionnel l’emporte sur trois paragraphes d’adjectifs, car le golem est une machine de continuation de motifs — donne-lui donc un motif à poursuivre.
-
-Tu veux des tests dans ton style ? Colle **un test idéal** et dis « comme ça. » Tu veux des messages d’erreur qui portent un code et un indice de remédiation ? Montre *un*.
-
-Le chapitre I t’a appris que les exigences rédigées en prose laissent filtrer l’ambiguïté. Le même principe s’applique sur l'établi : un exemple est une petite spécification qui peut être *imitée* plutôt qu'interprétée — et l'imitation perd beaucoup moins d'information que l'interprétation.`,
-    },
-    {
-      kind: "theory",
-      body: `## Ingénierie de contexte : curation, pas accumulation
-
-L’ingénierie des prompts demande *comment formuler*. **L’ingénierie du contexte** pose une question plus importante : *qu'est-ce qui doit réellement se trouver sur l'établi ?*
-
-Pour un bug dans le chemin de remboursement, le golem a besoin :
-
-- du **module de remboursement** — le code réellement en jeu,
-- de la **spécification** des remboursements — l’artefact du chapitre I,
-- du **test en échec** — l’artefact du Rite, qui définit exactement ce que signifie « corrigé ».
-
-Pas de tout le dépôt. Pas des notes de migration du mois dernier. La compétence réside dans la *sélection* : les deux cents lignes pertinentes valent mieux que l'intégralité de la base de code.`,
+La plupart des mauvais prompts ne sont pas mal *rédigés* — il leur **manque une partie**, le plus souvent les contraintes ou l'exemple.`,
     },
     {
       kind: "diagram",
-      body: "Ce que vous croyez avoir envoyé, et ce qui est réellement arrivé :",
-      caption: "Le contexte est un budget, pas un récipient. Tout ce que vous ajoutez concurrence ce que vous y aviez déjà mis.",
+      body: "Les quatre parties, dans l'ordre qui leur revient :",
+      caption:
+        "La demande vient en dernier exprès : tout ce qui la précède est le cadre à travers lequel le golem lit la tâche.",
       view: {
-        kind: "compare",
-        columns: [
-          {
-            id: "you",
-            label: "ce que vous vouliez dire",
-            tone: "neutral",
-          },
-          {
-            id: "model",
-            label: "ce qu'il a reçu",
-            tone: "accent",
-          },
-        ],
-        rows: [
-          {
-            label: "la tâche",
-            cells: [
-              {
-                text: "« corrige le bug »",
-                tone: "neutral",
-              },
-              {
-                text: "trois mots, aucune sortie d'erreur, aucun fichier",
-                tone: "accent",
-              },
-            ],
-          },
-          {
-            label: "le code",
-            cells: [
-              {
-                text: "« tout est dans le dépôt »",
-                tone: "neutral",
-              },
-              {
-                text: "ce qui tenait — souvent la mauvaise moitié",
-                tone: "accent",
-              },
-            ],
-          },
-          {
-            label: "le standard",
-            cells: [
-              {
-                text: "« tu connais notre style »",
-                tone: "neutral",
-              },
-              {
-                text: "rien ; il n'a jamais vu vos commentaires de revue",
-                tone: "accent",
-              },
-            ],
-          },
+        kind: "stack",
+        bands: [
+          { id: "role", label: "rôle et instructions", note: "Quel travail est fait, et dans quel monde. Une ou deux lignes suffisent.", tone: "neutral" },
+          { id: "constraints", label: "contraintes", note: "Les doit et les ne doit pas. C'est la partie qui peut réellement être enfreinte — d'où son pouvoir de guider.", tone: "accent" },
+          { id: "examples", label: "exemples", note: "Un échantillon de ce qui est bon. Montre le standard au lieu de le décrire.", tone: "teal" },
+          { id: "ask", label: "la demande", note: "En dernier, précise et unique. Deux demandes dans un prompt font deux prompts.", tone: "gold" },
         ],
       },
     },
     {
+      kind: "quiz",
+      question: `Quelle instruction améliore réellement le code du golem ?`,
+      options: [
+        "Valide le montant : rejette zéro et les négatifs avec une erreur typée ; ne fais jamais de panic ; garde l'API publique inchangée",
+        "Écris s'il te plaît un code bien propre, professionnel, de très haute qualité, prêt pour la production",
+        "Tu es le meilleur programmeur ayant jamais existé — code en conséquence",
+      ],
+      answer: 0,
+      explain: `Le golem ne peut pas échouer à « haute qualité » — toute sortie se qualifie plausiblement. Il *peut* échouer à « ne fais jamais de panic », et c'est tout le propos : un critère d'acceptation crée la possibilité d'avoir tort, et c'est cela qui guide un modèle. La précision bat la politesse — et la flatterie.`,
+    },
+    {
       kind: "theory",
-      body: `## Pourriture de contexte
+      body: `## Montrez, ne décrivez pas
 
-Voici ce qui paraît contre-intuitif : un contexte inutile ne gaspille pas seulement de la place — il **nuit activement**.
+Les adjectifs décrivent la qualité ; **les exemples la définissent.** Un exemple travaillé pèse plus que trois paragraphes d'adjectifs, car le golem est une machine à continuer des motifs — alors donnez-lui un motif qui mérite d'être continué.
 
-- Un fichier distrayant invite le golem à « aider » à le toucher.
-- Des vocabulaires mélangés activent le mauvais modèle de compte — le cauchemar du chapitre III, provoqué par toi-même.
-- Des docs obsolètes et du code mort enseignent un vieux comportement comme s’il était actuel.
-- Et plus l'établi est encombré, plus l’attention se disperse : ta contrainte essentielle doit désormais rivaliser avec dix mille tokens de bruit.
+Vous voulez des tests dans le style maison ? Collez **un test idéal** et dites « comme ça ». Vous voulez des messages d'erreur portant un code et une piste de correction ? Montrez-en *un*.
 
-La sélection fonctionne dans les deux sens. **Retirer un élément de l'établi peut être aussi puissant qu'en ajouter un.**`,
+Le Chapitre I vous a appris que les exigences en prose laissent fuir de l'ambiguïté. C'est pareil ici : un exemple est une minuscule spécification qui se *copie* au lieu de s'interpréter — et copier perd bien moins qu'interpréter.`,
     },
     {
       kind: "quiz",
-      question: `Tu charges le golem de corriger un bug dans le parcours de remboursement. Que places-tu sur l'établi ?`,
+      question: `Votre équipe a une façon bien à elle d'écrire les messages d'erreur. Qu'est-ce qui la fait reproduire par le golem ?`,
       options: [
-        "Le module de remboursement, les règles correspondantes de la spécification et le test en échec — presque rien d'autre",
-        "Tout le dépôt, afin qu’aucun détail potentiellement pertinent ne manque",
-        "Seulement le message d’erreur — tout contexte de code biaiserait sa perspective fraîche",
+        "Coller un vrai message d'erreur du code et dire « comme ça »",
+        "Décrire la convention soigneusement en trois phrases",
+        "Lui dire de suivre le guide de style établi de l'équipe",
       ],
       answer: 0,
-      explain: `La famine et l'étouffement sont deux causes d'échec : trop peu de contexte oblige le modèle à deviner, tandis qu'un contexte indiscriminé noie le signal et invite des modifications non demandées. Sélectionner le module pertinent, la spécification et le test constitue le cœur du métier.`,
+      explain: `Il n'a jamais lu votre guide de style et ne voit pas votre code. Une description doit être interprétée ; un exemple n'a qu'à être continué — et continuer est la seule chose que cette machine sache faire.`,
     },
     {
       kind: "fill",
-      prompt: `Le prompt le plus tranchant que tu possèdes est celui que tu as déjà écrit :`,
+      prompt: `Le prompt le plus tranchant que vous possédez, vous l'avez déjà écrit :`,
       file: "prompt.md",
-      before: `Fais réussir ce `,
-      after: ` en échec, sans changer ses assertions.`,
-      choices: ["test", "build", "demo", "deploy"],
+      before: `Fais passer ce `,
+      after: ` qui échoue, sans modifier ses assertions.`,
+      choices: ["test", "build", "démo", "déploiement"],
       answer: 0,
-      explain: `Un test en échec est un critère d’acceptation exécutable : il exprime le comportement, les cas limites et la définition du résultat attendu sous une forme impossible à mal interpréter. Les builds, démos et déploiements peuvent eux aussi échouer, mais seul un test contient des assertions : ta spécification s'est dotée de dents et sert désormais aussi de prompt.`,
+      explain: `Un test qui échoue est un critère d'acceptation exécutable — comportement, cas limites et « terminé » sous une forme qu'on ne peut pas mal lire. Builds, démos et déploiements échouent aussi, mais seul un test porte des assertions : votre spécification avec des dents, désormais prompt à ses heures.`,
     },
     {
       kind: "theory",
-      body: `## L’itération est le resserrement de la spécification
+      body: `## Itérer, c'est resserrer la spécification
 
-Le premier résultat est incorrect. Ce n'est pas grave : **c'est une donnée**. L'amateur relance les dés ; l'ingénieur **lit l'échec et recherche l'instruction manquante**.
+La première sortie est fausse. Très bien — c'est une donnée. Le réflexe d'amateur est de relancer les dés ; celui de l'ingénieur est de **lire l'échec et de trouver l'instruction manquante**.
 
-Le golem a ignoré un cas limite ? Tes contraintes ne le mentionnaient pas. Le style est mauvais ? Tu as décrit au lieu de montrer. Il a modifié des fichiers interdits ? L'établi était encombré ou la frontière n’était pas clairement définie.
+Le golem a ignoré un cas limite ? Vos contraintes ne l'ont jamais mentionné. Mauvais style ? Vous avez décrit au lieu de montrer. Il a touché des fichiers interdits ? La frontière n'a pas été dite.
 
-Chaque échec révèle une lacune dans tes mots : corrige le *prompt*, pas seulement le résultat, exactement comme le chapitre I t’a appris à préciser une spécification.
+Chaque échec nomme un trou dans vos mots — rapiécez le *prompt*, pas seulement la sortie, exactement comme le Chapitre I vous a appris à resserrer une spécification.`,
+    },
+    {
+      kind: "exercise",
+      mode: "spec-write",
+      brief: `## L'épreuve de l'examinateur : écrivez le prompt
 
-La prochaine discipline : mettre les mots en mouvement — la boucle qui agit, observe et corrige.`,
+Voici la tâche que vous vous apprêtez à confier :
+
+> Un contrat de paiements possède une fonction \`refund\`. Elle laisse aujourd'hui n'importe qui l'appeler. Elle ne doit être appelable que par le payeur d'origine, uniquement avant l'échéance, et ne doit jamais laisser le contrat détenir moins que la somme de ses dépôts ouverts.
+
+Écrivez le **prompt** que vous enverriez — les quatre parties, dans l'ordre. N'écrivez pas l'implémentation, et n'écrivez pas la spécification en prose : écrivez ce que vous colleriez réellement sur l'établi.`,
+      rubric: `1. Les quatre parties sont présentes et distinctes : rôle/instructions, contraintes, au moins un exemple, et une demande unique en fin.
+2. Les contraintes sont formulées de manière à pouvoir être ENFREINTES — concrètes et vérifiables, pas « propre » ou « de haute qualité ».
+3. Comprend au moins un exemple travaillé (un test, une signature, un message d'erreur, un appel type) plutôt que la seule description du style voulu.
+4. La demande est unique et précise — une tâche, pas une liste de souhaits vaguement liés.
+5. C'est un prompt, ni une implémentation ni une spécification en prose.`,
+      minChars: 160,
+    },
+    {
+      kind: "theory",
+      body: `## La moitié la plus difficile
+
+Vous savez désormais écrire un prompt qui dit exactement ce qu'il veut. C'est la discipline facile, et la plupart des gens s'arrêtent là.
+
+La difficile consiste à décider **ce que le golem a le droit de voir** — quels fichiers, quelle spécification, quel test, et, bien plus important, quoi laisser dehors. Formuler est une compétence ; sélectionner est le métier.
+
+**Ensuite :** l'établi lui-même, et pourquoi y ajouter n'est pas gratuit.`,
     },
   ],
-} satisfies JourneyConceptText;
+  testOut: [
+    { question: `Un prompt qui fonctionne a quatre parties. Laquelle manque le plus souvent ?`,
+      options: ["Les contraintes — les doit et ne doit pas qui peuvent réellement être enfreints","Le rôle, qui dit au modèle qui il doit être","La salutation, qui installe un ton coopératif"], answer: 0 },
+    { question: `Pourquoi « ne fais jamais de panic » guide-t-il mieux qu'« écris du code de haute qualité » ?`,
+      options: ["Parce qu'on peut y échouer — un critère d'acceptation crée la possibilité d'avoir tort","Parce que c'est plus court, donc cela survit plus loin dans le contexte","Parce que cela emploie un impératif, que les modèles pondèrent davantage"], answer: 0 },
+    { question: `Vous voulez une sortie dans le style maison de votre équipe. Qu'est-ce qui marche ?`,
+      options: ["Coller un exemple réel et dire « comme ça »","Décrire le style soigneusement et en détail","Nommer le guide de style que suit l'équipe"], answer: 0 },
+    { question: `La première sortie revient fausse. Quel est le réflexe d'ingénieur ?`,
+      options: ["Lire l'échec, trouver l'instruction manquante et rapiécer le prompt","Relancer — le même prompt produit une sortie différente à chaque fois","Ajouter « sois prudent et réfléchis étape par étape » et réessayer"], answer: 0 },
+  ],
+};

@@ -194,4 +194,14 @@ Traducción para constructores: carteras multidispositivo, recuperación con gua
 Cuando el libro mayor confirme que el código desplegado es el Wasm canónico de la cuenta inteligente, vuelve al camino. Se curva en un lugar más extraño: un libro mayor donde *las cantidades mismas* llevan un velo.`,
     },
   ],
+  testOut: [
+    { question: `¿Qué problema resuelve una smart account que un par de claves clásico no?`,
+      options: ["La autorización se vuelve programable — la cuenta decide qué cuenta como firma válida, en vez de que una clave sea la única respuesta","Elimina las comisiones de transacción para el dueño de la cuenta","Permite que una cuenta tenga activos para los que no tiene trustline"], answer: 0 },
+    { question: `¿Qué sustituye una passkey y qué no?`,
+      options: ["Sustituye la frase semilla que un humano debe guardar a salvo; no elimina que la cuenta tenga que autorizar algo","Sustituye la firma de la cuenta por completo — las cuentas con passkey no firman nada","Sustituye la comisión de red, ya que esas cuentas están patrocinadas por defecto"], answer: 0 },
+    { question: `¿Qué permite hacer a una aplicación el patrocinio de comisiones?`,
+      options: ["Pagar las comisiones y reservas de un usuario, para que alguien sin nada de XLM pueda operar","Bajar la comisión base por debajo del mínimo del protocolo para sus usuarios","Agrupar las transacciones de sus usuarios en un sobre para compartir comisión"], answer: 0 },
+    { question: `¿Por qué \"nadie tiene que apuntar doce palabras\" es una decisión de producto y no solo comodidad?`,
+      options: ["Las frases semilla son la mayor fuente individual de pérdida irreversible de usuarios — quitarlas elimina el modo de fallo, no solo la fricción","Porque no hay listas de palabras en todos los idiomas","Porque guardar una frase semilla está prohibido en la mayoría de jurisdicciones"], answer: 0 },
+  ],
 };

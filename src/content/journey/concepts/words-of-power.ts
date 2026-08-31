@@ -1,34 +1,35 @@
 import type { Concept } from "../types";
 
-// Chapter VI (craft) — prompt & context engineering: the context window is the
-// golem's entire world. Prompt anatomy, specificity over politeness, worked
-// examples over adjectives, curation over accumulation, context rot, and the
-// spec/tests from earlier chapters revealed as the sharpest prompts you own.
+// Craft VI — prompt engineering alone: the anatomy of a working prompt,
+// specificity over politeness, examples over adjectives, and iteration as
+// spec-tightening. The other half of the old chapter — what goes on the
+// bench at all — is now Craft VII, because "how to phrase" and "what to
+// send" are different disciplines and one of them is the harder one.
 
 export const wordsOfPower: Concept = {
   meta: {
     slug: "words-of-power",
     title: "Words of Power",
-    tagline: "Prompt & context engineering — what the golem actually sees.",
-    numeral: "VI",
+    tagline: "Prompt engineering: the four parts every working prompt has.",
+    numeral: "IX",
     arc: "craft",
     level: 2,
     requires: ["think-before-you-forge"],
     status: "live",
-    estMinutes: 13,
+    estMinutes: 12,
     sigil: "/v2/journey/sigils/words-of-power.webp",
     glyph: "🪶",
   },
   steps: [
     {
       kind: "theory",
-      body: `## The bench is the whole world
+      body: `## Your words are all it has
 
-The golem does not know your repo. It does not remember yesterday, and it cannot see the file you *didn't* attach. Its entire universe is the **context window** — the text sitting in front of it right now.
+The golem does not know your repo. It does not remember yesterday, and it cannot see the file you *didn't* attach. Its entire universe is the text sitting in front of it right now.
 
-That is the deepest rule of prompting, and it isn't mystical: **you are deciding what exists.** Whatever is on the bench is the world; whatever is off the bench never happened.
+That is the deepest rule of prompting, and it isn't mystical: **you are deciding what exists.** Whatever you put in front of it is the world; whatever you leave out never happened.
 
-So the question behind every prompt is not "how do I phrase this?" but *"what does the golem need to see to get this right?"*`,
+So the question behind every prompt is not "how do I phrase this?" but *"what does the golem need in order to get this right?"* This chapter is the first half of that answer — the words themselves. The next one is the harder half.`,
     },
     {
       kind: "theory",
@@ -42,6 +43,41 @@ A working prompt is a small engineering document with four parts:
 4. **The ask** — the actual task, stated last, precise and single.
 
 Most bad prompts aren't badly *worded* — they're **missing a part**, usually the constraints or the example.`,
+    },
+    {
+      kind: "diagram",
+      body: "The four parts, in the order they belong:",
+      caption:
+        "The ask goes last on purpose: everything above it is the frame the golem reads the task through.",
+      view: {
+        kind: "stack",
+        bands: [
+          {
+            id: "role",
+            label: "role & instructions",
+            note: "What job is being done, and in what world. One or two lines is plenty.",
+            tone: "neutral",
+          },
+          {
+            id: "constraints",
+            label: "constraints",
+            note: "The musts and must-nots. This is the part that can actually be violated — which is what makes it steer.",
+            tone: "accent",
+          },
+          {
+            id: "examples",
+            label: "examples",
+            note: "One sample of good. Shows the standard instead of describing it.",
+            tone: "teal",
+          },
+          {
+            id: "ask",
+            label: "the ask",
+            note: "Last, precise, and single. Two asks in one prompt is two prompts.",
+            tone: "gold",
+          },
+        ],
+      },
     },
     {
       kind: "quiz",
@@ -62,106 +98,18 @@ Adjectives describe quality; **examples define it.** One worked example outweigh
 
 Want tests in your house style? Paste **one ideal test** and say "like this." Want error messages that carry a code and a remediation hint? Show *one*.
 
-Chapter I taught you that prose requirements leak ambiguity. The same holds on the bench: an example is a tiny spec that gets *copied* instead of interpreted — and copying loses far less than interpreting does.`,
-    },
-    {
-      kind: "theory",
-      body: `## Context engineering: curation, not accumulation
-
-Prompt engineering asks *how to phrase*. **Context engineering** asks the more important question: *what goes on the bench at all?*
-
-For a bug in the refund path, the golem needs:
-
-- the **refund module** — the code actually in play,
-- the **spec** for refunds — Chapter I's artifact,
-- the **failing test** — the Rite's artifact, naming exactly what "fixed" means.
-
-Not the whole repo. Not last month's migration notes. The skill is *selection*: the right two hundred lines beat the complete works of your codebase.`,
-    },
-    {
-      kind: "diagram",
-      body: "What you think you sent, and what actually arrived:",
-      caption: "Context is a budget, not a container. Everything you add competes with everything you already put there.",
-      view: {
-        kind: "compare",
-        columns: [
-          {
-            id: "you",
-            label: "what you meant",
-            tone: "neutral",
-          },
-          {
-            id: "model",
-            label: "what it received",
-            tone: "accent",
-          },
-        ],
-        rows: [
-          {
-            label: "the task",
-            cells: [
-              {
-                text: "\"fix the bug\"",
-                tone: "neutral",
-              },
-              {
-                text: "four words, no failing output, no file",
-                tone: "accent",
-              },
-            ],
-          },
-          {
-            label: "the codebase",
-            cells: [
-              {
-                text: "\"it's all in the repo\"",
-                tone: "neutral",
-              },
-              {
-                text: "whatever fit — usually the wrong half",
-                tone: "accent",
-              },
-            ],
-          },
-          {
-            label: "the standard",
-            cells: [
-              {
-                text: "\"you know our style\"",
-                tone: "neutral",
-              },
-              {
-                text: "nothing; it has never seen your review comments",
-                tone: "accent",
-              },
-            ],
-          },
-        ],
-      },
-    },
-    {
-      kind: "theory",
-      body: `## Context rot
-
-Here's the counterintuitive part: irrelevant context doesn't just waste space — it **actively harms**.
-
-- A distractor file invites the golem to "helpfully" touch it.
-- Mixed vocabularies pull in the wrong model of Account — Chapter III's nightmare, self-inflicted.
-- Stale docs and dead code teach old behavior as if it were current.
-- And the longer the bench, the thinner the attention: your one crucial constraint now competes with ten thousand tokens of noise.
-
-Curation cuts both ways. **Removing from the bench is as powerful as adding to it.**`,
+Chapter I taught you that prose requirements leak ambiguity. The same holds here: an example is a tiny spec that gets *copied* instead of interpreted — and copying loses far less than interpreting does.`,
     },
     {
       kind: "quiz",
-      question: `You're sending the golem to fix a bug in the refund path. What goes on the bench?`,
+      question: `Your team has a distinctive way of writing error messages. What gets the golem to match it?`,
       options: [
-        "The refund module, the spec's refund rules, and the failing test — and little else",
-        "The entire repository, so that no potentially relevant detail is missing",
-        "Only the error message — any code context would bias its fresh perspective",
+        "Paste one real error message from the codebase and say “like this”",
+        "Describe the convention carefully in three sentences",
+        "Tell it to follow the team's established style guide",
       ],
       answer: 0,
-      explain: `Starving and drowning are both failure modes: too little context forces guessing, while indiscriminate context buries the signal and invites edits you never asked for. Curation — the relevant module, the spec, the trial — is the craft itself.`,
+      explain: `It has never read your style guide and cannot see your codebase. A description has to be interpreted; an example only has to be continued — and continuation is the one thing this machine is built to do.`,
     },
     {
       kind: "fill",
@@ -179,11 +127,74 @@ Curation cuts both ways. **Removing from the bench is as powerful as adding to i
 
 The first output is wrong. Fine — that's data. The amateur move is re-rolling the dice; the engineer's move is **reading the failure and finding the missing instruction**.
 
-Golem ignored an edge case? Your constraints never mentioned it. Wrong style? You told instead of showed. Touched files it shouldn't have? The bench was cluttered, or the border unstated.
+Golem ignored an edge case? Your constraints never mentioned it. Wrong style? You told instead of showed. Touched files it shouldn't have? The border was unstated.
 
-Each failure names a hole in your words — patch the *prompt*, not just the output, exactly the way Chapter I taught you to tighten a spec.
+Each failure names a hole in your words — patch the *prompt*, not just the output, exactly the way Chapter I taught you to tighten a spec.`,
+    },
+    {
+      kind: "exercise",
+      mode: "spec-write",
+      brief: `## The examiner's trial: write the prompt
 
-Next discipline: setting the words in motion — the loop that acts, observes, and corrects.`,
+Here is the task you are about to hand over:
+
+> A payments contract has a \`refund\` function. It currently lets anyone call it. It must only be callable by the original payer, only before the deadline, and it must never leave the contract holding less than the sum of its open deposits.
+
+Write the **prompt** you would send — all four parts, in order. Do not write the implementation, and do not write the spec as prose: write the thing you would actually paste into the bench.`,
+      rubric: `1. All four parts are present and distinguishable: role/instructions, constraints, at least one example, and a single final ask.
+2. The constraints are stated so they can be VIOLATED — concrete and checkable, not "clean" or "high-quality".
+3. Includes at least one worked example (a test, a signature, an error message, a sample call) rather than only describing the desired style.
+4. The ask is single and precise — one task, not a list of loosely related wishes.
+5. It is a prompt, not an implementation and not a prose specification.`,
+      minChars: 160,
+    },
+    {
+      kind: "theory",
+      body: `## The half that is harder
+
+You can now write a prompt that says exactly what it wants. That is the easier discipline, and most people stop here.
+
+The harder one is deciding **what the golem gets to see at all** — which files, which spec, which test, and, far more importantly, what to leave out. Phrasing is a skill; selection is the craft.
+
+**Next:** the bench itself, and why adding to it is not free.`,
+    },
+  ],
+  testOut: [
+    {
+      question: `A working prompt has four parts. Which one is most often the missing one?`,
+      options: [
+        "The constraints — the musts and must-nots that can actually be violated",
+        "The role, which tells the model who it is supposed to be",
+        "The greeting, which sets a cooperative tone",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Why does "never panic" steer a model better than "write high-quality code"?`,
+      options: [
+        "It can be failed — an acceptance criterion creates the possibility of being wrong",
+        "It is shorter, so it survives further into the context",
+        "It uses an imperative verb, which models weight more heavily",
+      ],
+      answer: 0,
+    },
+    {
+      question: `You want output in your team's house style. What works?`,
+      options: [
+        "Paste one real example and say “like this”",
+        "Describe the style carefully and at length",
+        "Name the style guide the team follows",
+      ],
+      answer: 0,
+    },
+    {
+      question: `The first output comes back wrong. What is the engineer's move?`,
+      options: [
+        "Read the failure, find the instruction that was missing, and patch the prompt",
+        "Re-run it — the same prompt produces different output each time",
+        "Add “be careful and think step by step” and try again",
+      ],
+      answer: 0,
     },
   ],
 };

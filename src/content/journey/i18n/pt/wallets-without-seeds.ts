@@ -190,4 +190,14 @@ Tradução para desenvolvedores: carteiras multi‑dispositivo, recuperação po
 Quando o ledger confirmar que o código implantado é o Wasm canônico da conta inteligente, retorne ao caminho. Ele se curva para algo ainda mais estranho: um ledger onde os *valores próprios* usam um véu.`,
     },
   ],
+  testOut: [
+    { question: `Que problema uma smart account resolve que um par de chaves clássico não resolve?`,
+      options: ["A autorização vira programável — a conta decide o que conta como assinatura válida, em vez de uma chave ser a única resposta","Ela elimina as taxas de transação para o dono da conta","Ela deixa uma conta guardar ativos para os quais não tem trustline"], answer: 0 },
+    { question: `O que uma passkey substitui, e o que ela não substitui?`,
+      options: ["Substitui a frase-semente que um humano precisa guardar em segurança; não elimina a necessidade de a conta autorizar alguma coisa","Substitui a assinatura da conta por completo — contas com passkey não assinam nada","Substitui a taxa da rede, já que contas com passkey são patrocinadas por padrão"], answer: 0 },
+    { question: `O patrocínio de taxas permite a uma aplicação fazer o quê?`,
+      options: ["Pagar as taxas e reservas de um usuário, para quem não tem XLM nenhum conseguir transacionar","Reduzir a taxa base abaixo do mínimo do protocolo para seus usuários","Agrupar as transações dos usuários num envelope só para dividir uma taxa"], answer: 0 },
+    { question: `Por que \"ninguém precisa anotar doze palavras\" é decisão de produto e não só conveniência?`,
+      options: ["Frases-semente são a maior fonte isolada de perda irreversível de usuários — tirá-las elimina o modo de falha, não só o atrito","Porque listas de palavras não existem em todos os idiomas","Porque guardar frase-semente é proibido na maioria das jurisdições"], answer: 0 },
+  ],
 };

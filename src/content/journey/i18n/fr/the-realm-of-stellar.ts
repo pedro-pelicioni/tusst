@@ -48,6 +48,15 @@ Essaie de trouver le point où le réseau *s’arrête* — et remarque qu’i
       answer: 0,
       explain: `Tout est local : un nœud bouge quand son *conseil* bouge. L’accord global émerge des conseils qui se chevauchent — aucun nœud n’a jamais besoin d’un recensement de tout le réseau.`,
     },
+    { kind: "theory", body: `## Personne ne vous remet la liste
+
+Voici la partie qui ressemble à un bug la première fois qu'on l'entend : **il n'existe pas de liste officielle des validateurs.** Aucun registre ne décide qui compte. Chaque participant nomme ceux dont il accepte de dépendre, et c'est là tout le processus d'inscription.
+
+D'où l'objection évidente. Si chacun choisit son propre conseil, qu'est-ce qui empêche le réseau de se scinder en deux groupes qui s'accordent en interne et se contredisent entre eux ?
+
+La réponse est le **recouvrement**. Deux participants n'ont la garantie d'aboutir à la même conclusion que si leurs cercles de confiance se croisent suffisamment — et en pratique ils se croisent, parce que chacun finit indépendamment par nommer la même poignée d'institutions bien tenues et publiquement responsables. La sûreté du réseau entier est une propriété émergente d'un grand nombre de choix séparés et intéressés sur qui mérite qu'on dépende de lui.
+
+C'est réellement différent de « le protocole choisit », et la différence coupe des deux côtés. Personne ne peut s'ajouter à une liste pour gagner de l'influence. Et personne ne peut non plus vous remettre une bonne configuration — **choisir mal est une chose que vous avez le droit de faire.** D'où le conseil pratique, ennuyeux et juste, pour qui exploite un validateur : partez d'une configuration publiée et bien analysée, et comprenez tout écart avant de le faire.` },
     {
       kind: "theory",
       body: `## Sécurité avant vivacité
@@ -150,5 +159,15 @@ Chaque lab de la Forge tourne sur ce rythme — tu l’as déjà senti si tu a
       lessonSlug: "stellar-101-1",
       body: `La Campagne Acte VI — **La Porte de la Constellation** — parcourt ce même ciel en pratique : phrases secrètes du réseau, horizons, et tes premières cartes stellaires. Optionnel, et vaut le détour quand tu veux la carte derrière la théorie.`,
     },
+  ],
+  testOut: [
+    { question: `Comment un participant décide-t-il de qui dépend son accord ?`,
+      options: ["Il nomme sa propre tranche de quorum — il n'existe pas de liste officielle de validateurs, et l'inscription est ce nommage","Le protocole lui attribue un ensemble selon la mise","La SDF publie l'ensemble faisant autorité à chaque version du protocole"], answer: 0 },
+    { question: `Si chacun choisit son conseil, qu'est-ce qui empêche le réseau de se scinder ?`,
+      options: ["Le recouvrement — la sûreté tient quand les cercles de confiance se croisent assez, et en pratique ils se croisent car chacun nomme indépendamment les mêmes institutions bien tenues","Une règle de départage appliquée par le protocole en cas de désaccord","Un nombre minimal de validateurs que toute tranche doit contenir"], answer: 0 },
+    { question: `SCP privilégie la sûreté sur la vivacité. Qu'est-ce que cela signifie quand le réseau va mal ?`,
+      options: ["Il s'arrête plutôt que de risquer deux histoires contradictoires — s'arrêter se rattrape, diverger sur le passé non","Il continue de produire des registres et réconcilie ensuite toute bifurcation","Il élit un leader temporaire pour sortir de l'impasse"], answer: 0 },
+    { question: `Qu'apporte concrètement à un constructeur un consensus sans minage ?`,
+      options: ["Un registre toutes les quelques secondes, des frais en fractions de centime, et une clôture qui vaut finalité","Un débit supérieur au prix d'une finalité plus lente","Des transactions gratuites, puisqu'il n'y a pas de mineurs à payer"], answer: 0 },
   ],
 } satisfies JourneyConceptText;

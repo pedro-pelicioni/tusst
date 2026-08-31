@@ -113,6 +113,11 @@ Qu'est-ce qui a échoué ?`,
       explain: `Chaque incident coûteux de cette industrie est une variation de cette seule ligne. C'est pourquoi le tronçon suivant de la route ne commence pas par du code.`,
     },
     {
+      kind: "labLink",
+      labSlug: "treasure-chest",
+      body: `Vous pouvez voir l'une de ces machines tenir une promesse sur le vrai testnet, dès maintenant. Le laboratoire **Le Coffre au Trésor** de la Forge enferme des fonds dans une entrée du registre qui n'appartient à personne — jusqu'à ce que l'unique réclamant nommé la prenne. Pas d'agent séquestre, pas d'entreprise qui retient l'argent, personne qui *pourrait* changer d'avis. La règle libère, ou rien ne libère.`,
+    },
+    {
       kind: "theory",
       body: `## Pourquoi c'est le dernier chapitre facile
 
@@ -122,5 +127,15 @@ Regardez ce que cela donne. Si la machine fait précisément ce qui a été écr
 
 **Ensuite, sur la route de l'Artisanat :** comment écrire cela correctement, avant qu'une seule ligne de code n'existe. Et sur la route du Royaume : la machinerie de Stellar elle-même, de la façon dont des milliers de machines s'accordent jusqu'aux contrats que vous venez de rencontrer — cette fois de l'intérieur.`,
     },
+  ],
+  testOut: [
+    { question: `Qu'est-ce qui distingue un contrat d'une promesse tenue par une personne ?`,
+      options: ["Il exécute ses propres règles, sans que personne ne choisisse de les honorer","Il est écrit, alors qu'une promesse orale ne l'est pas","Il peut être réclamé en justice, contrairement à une promesse"], answer: 0 },
+    { question: `Qui exécute un contrat publié ?`,
+      options: ["Personne en particulier — des milliers de machines l'exécutent à l'identique et s'accordent sur le résultat","L'auteur, sur un serveur qu'il garde allumé pour cela","Les opérateurs du réseau, à tour de rôle"], answer: 0 },
+    { question: `Quand un contrat agit-il ?`,
+      options: ["Uniquement quand quelqu'un le sollicite avec une instruction signée","En continu, en vérifiant ses conditions en arrière-plan","Une fois par jour, quand le réseau balaie les règles stockées"], answer: 0 },
+    { question: `L'auteur peut-il éteindre un contrat déjà publié ?`,
+      options: ["Non, sauf si les règles publiées du contrat le prévoient elles-mêmes","Oui — l'auteur garde toujours une dérogation","Seulement en demandant aux opérateurs du réseau de le retirer"], answer: 0 },
   ],
 };

@@ -65,6 +65,18 @@ Try to find the point where the network *stalls* — and notice that it stalls r
     },
     {
       kind: "theory",
+      body: `## Nobody hands you the list
+
+Here is the part that sounds like a bug the first time you hear it: **there is no official list of validators.** No registry decides who counts. Each participant names the others it is willing to depend on, and that is the whole enrolment process.
+
+Which raises the obvious objection. If everyone picks their own council, what stops the network splitting into two groups that each agree internally and disagree with each other?
+
+The answer is **overlap**. Two participants can only be guaranteed to reach the same conclusion if their circles of trust intersect enough — and in practice they do, because everyone independently ends up naming the same handful of well-run, publicly accountable institutions. The safety of the whole network is an emergent property of a lot of separate, self-interested choices about who is worth depending on.
+
+That is genuinely different from "the protocol picks", and the difference cuts both ways. Nobody can add themselves to a list to gain influence. And nobody can hand you a good configuration either — **choosing badly is a thing you are allowed to do.** Which is why the practical advice for anyone running a validator is boring and correct: start from a published, well-analysed configuration, and understand any deviation before you make it.`,
+    },
+    {
+      kind: "theory",
       body: `## Safety over liveness
 
 You saw it in the simulator: strike down too much of a council and the network **waits**. It does not guess. It does not split into two histories.
@@ -165,5 +177,19 @@ Every lab in the Forge runs on top of this rhythm — you already felt it if you
       lessonSlug: "stellar-101-1",
       body: `The Campaign's Act VI — **The Constellation Gate** — walks this same sky hands-on: network passphrases, horizons, and your first star-charts. Optional, and worth the detour when you want the map behind the theory.`,
     },
+  ],
+  testOut: [
+    { question: `How does a participant decide whose agreement it depends on?`,
+      options: ["It names its own quorum slice — there is no official validator list, and enrolment is that naming","The protocol assigns it a set based on stake","The SDF publishes the authoritative validator set each protocol release"], answer: 0 },
+    { question: `If everyone picks their own council, what keeps the network from splitting?`,
+      options: ["Overlap — safety holds when circles of trust intersect enough, and in practice they do because participants independently name the same well-run institutions","A tie-breaker rule the protocol applies when groups disagree","A minimum number of validators that every slice must contain"], answer: 0 },
+    { question: `SCP prefers safety over liveness. What does that mean when the network is in trouble?`,
+      options: ["It halts rather than risk two conflicting histories — stopping is recoverable, disagreeing about the past is not",
+        "It keeps producing ledgers and reconciles any fork afterwards",
+        "It elects a temporary leader to break the deadlock"], answer: 0 },
+    { question: `What does consensus without mining buy a builder, concretely?`,
+      options: ["A ledger every few seconds with a fee measured in fractions of a cent, and one close as finality",
+        "Higher throughput at the cost of slower finality",
+        "Free transactions, since there are no miners to pay"], answer: 0 },
   ],
 };

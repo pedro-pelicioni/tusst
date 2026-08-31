@@ -149,4 +149,14 @@ A mesma rede torna a refatoração destemida — a sua *e* a do golem. “Reescr
       body: `Um segredo da Campanha: **cada escaramuça é avaliada por testes ocultos** — você forja, os testes julgam, vermelho ou verde. A Campanha *é* TDD jogado como um jogo, e você está dentro do rito desde sua primeira escaramuça. Próxima disciplina: desenhar as fronteiras onde uma palavra muda de sentido — o mapa de que toda especificação depende.`,
     },
   ],
+  testOut: [
+    { question: `Por que escrever o teste que falha antes do código?`,
+      options: ["Um teste que nunca falhou nunca provou que consegue falhar — escrevê-lo antes é como você sabe que ele está olhando para a coisa certa","É mais rápido, porque você evita reescrever o teste depois","Isso força a implementação a ficar mais simples do que ficaria"], answer: 0 },
+    { question: `O que um teste vermelho dá a uma dupla com IA que requisitos em prosa não dão?`,
+      options: ["Um critério de aceite que ela não consegue ler errado, e um sinal que pode ser má notícia","Um prompt mais curto, que cabe mais contexto","Permissão para mudar a API pública"], answer: 0 },
+    { question: `O golem faz o teste passar tratando como caso especial exatamente a entrada que o teste usa. O que isso revela?`,
+      options: ["O teste especificou de menos — ele nomeou um exemplo em vez da regra","O golem está agindo de má-fé e precisa de instruções mais rígidas","Nada; passar no teste é a definição de pronto"], answer: 0 },
+    { question: `Sua suíte está verde depois de uma mudança sobre a qual você tem dúvidas. O que isso de fato te disse?`,
+      options: ["Que nada do que a suíte observa quebrou — o que é só até onde a suíte por acaso observa","Que a mudança está correta","Que a mudança é segura para publicar"], answer: 0 },
+  ],
 };

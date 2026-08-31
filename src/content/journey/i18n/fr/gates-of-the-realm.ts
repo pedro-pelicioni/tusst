@@ -1,8 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
-export const conceptText = {
+export const conceptText: JourneyConceptText = {
   title: "Portes du Royaume",
-  tagline: "Ancrages & SEPs — où le grand livre rencontre le monde réel.",
+  tagline: "Les anchors — là où le registre touche le sol.",
   steps: [
     {
       kind: "theory",
@@ -14,63 +14,33 @@ Confie des dollars à une ancre et elle te verse l’équivalent en jetons depui
 
 Chaque actif fiduciaire sérieux sur Stellar passe par une porte de ce type. Les ancres sont le point de contact entre le registre et l'économie réelle.`,
     },
-    {
-      kind: "theory",
-      body: `## SEPs : la langue commune
+    { kind: "theory", body: `## Ce que « adossé » promet réellement
 
-Il existe de nombreux portefeuilles et de nombreuses ancres. Sans normes, chaque paire aurait besoin d’une intégration sur mesure — soit N×M intégrations à maintenir indéfiniment.
+Le jeton qu'émet un anchor n'est pas des dollars. C'est une **créance sur une entreprise** — et tout l'édifice repose sur le fait que cette entreprise l'honore.
 
-La réponse de Stellar tient dans les **SEP**, les *Stellar Ecosystem Proposals*. Ces normes publiques définissent précisément la manière dont portefeuilles, ancres et services communiquent. Implémente une SEP une fois et ton portefeuille fonctionnera avec **toute ancre** qui la respecte également — dépôt, authentification, identité et le reste.
+Ce qui veut dire que les questions intéressantes sur n'importe quel actif fiat ne sont pas techniques :
 
-Cette culture d’interopérabilité avant tout est l’une des superpuissances silencieuses de Stellar : les utilisateurs choisissent n’importe quelle porte, et toutes les portes partagent une même forme de clé.`,
-    },
-    {
-      kind: "theory",
-      body: `## SEP-1 et SEP-10 : identité et preuve
+- **Qui est l'émetteur, juridiquement ?** Une entité régulée dans une juridiction, ou un compte anonyme ?
+- **Où est l'argent ?** En conservation ségréguée, ou sur le compte qui paie les salaires ?
+- **Qui peut le prouver ?** Une attestation lisible, ou une promesse sur une page d'accueil ?
+- **Que se passe-t-il s'ils s'arrêtent ?** Une voie de remboursement qui survit à l'entreprise, ou un jeton qui devient discrètement un souvenir ?
 
-Deux petites normes portent toute la porte :
-
-- **SEP-1** — chaque domaine sérieux publie un \`stellar.toml\` : sa **carte d’identité on‑chain**. Quels actifs il émet, quels comptes sont officiels, où vivent ses services. Les portefeuilles le lisent pour distinguer le véritable émetteur d’un imposteur portant le même code d’actif.
-- **SEP-10** — **authentification web** : l’ancre envoie une *transaction de défi*, tu la signes avec la clé de ton compte et la lui renvoies. La possession du compte est prouvée, la session est accordée — et le défi **n’est jamais soumis** au registre.
-
-Connecte‑toi avec une signature : pas de mot de passe, pas d’e‑mail.`,
-    },
-    {
-      kind: "quiz",
-      question: `Que prouve exactement l’authentification web SEP-10 à une ancre ?`,
-      options: [
-        "Que tu contrôles la clé secrète du compte — en signant une transaction de défi qui ne touche jamais le grand livre",
-        "Ta véritable identité légale — SEP-10 effectue lui‑même la vérification KYC",
-        "Que ton compte possède assez de XLM pour payer les frais de l’ancre",
-      ],
+Le registre est honnête sur exactement une chose : il vous dira, précisément et pour toujours, *quel compte a émis cet actif*. Tout le reste est de la diligence — et c'est pourquoi un code d'actif seul ne signifie rien, et \`USDC\` du mauvais émetteur est un autre actif qui partage le nom par hasard.` },
+    { kind: "quiz",
+      question: `Un portefeuille affiche un solde de \`USDC\`. Que vous dit le code d'actif à lui seul ?`,
+      options: ["Presque rien — un actif est un code *plus son émetteur*, et n'importe qui peut émettre un code affichant USDC","Qu'il s'agit du stablecoin dollar bien connu, les codes d'actif étant uniques sur le registre","Qu'une entité régulée a attesté de son adossement"],
       answer: 0,
-      explain: `SEP-10 prouve uniquement la possession de la clé. L’identité légale relève d'une norme distincte, SEP-12, que les ancres appliquent *après* l'authentification — signature d’abord, justificatifs ensuite.`,
-    },
-    {
-      kind: "theory",
-      body: `## Les portes fonctionnelles : 24, 31, 41
-
-- **SEP-24** — dépôt et retrait *interactifs*. Ton portefeuille ouvre l'interface web hébergée par l’ancre ; celle-ci gère les formulaires KYC et les coordonnées bancaires ; les jetons arrivent une fois le virement validé. C'est la rampe d'accès quotidienne destinée aux utilisateurs.
-- **SEP-31** — paiements transfrontaliers entre *entreprises* : une ancre d'origine et une ancre de destination règlent la transaction sur Stellar tout en gérant chacune son infrastructure locale.
-- **SEP-41** — un vieux compagnon : l’interface **token** standard pour les contrats Soroban, celui que tout Stellar Asset Contract utilise.
-
-Rampes pour les gens, rails pour les institutions, un dialecte de jeton pour les contrats.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Où un portefeuille trouve-t‑il la carte d’identité d’un domaine ?`,
-      file: "discovery.txt",
-      before: `https://anchor.example/`,
-      after: `  →  actifs, comptes officiels et endpoints de service`,
-      choices: [
-        ".well-known/stellar.toml",
-        "api/v2/anchor-manifest.json",
-        "stellar/config.xml",
-        "identity.pdf",
-      ],
+      explain: `C'est la mélecture la plus coûteuse de l'écosystème, et le protocole n'y est pour rien : les codes d'actif n'ont jamais été uniques et n'ont jamais eu vocation à l'être. L'adresse de l'émetteur est l'identité ; le code est une étiquette. Un portefeuille qui vous montre l'un sans l'autre vous montre une rumeur.` },
+    { kind: "fill",
+      prompt: `Complétez ce qu'un actif est réellement :`,
+      file: "NOTES.md",
+      before: `Un actif sur Stellar est un code d'actif plus `,
+      after: ` — et deux actifs qui ne partagent que le code sont deux actifs différents.`,
+      choices: ["l'adresse de son émetteur", "la quantité en circulation", "le nom de domaine de l'anchor", "une inscription dans la liste d'actifs de la SDF"],
       answer: 0,
-      explain: `SEP-1, la norme la plus simple de toutes : un fichier TOML à un chemin bien connu. Prouve que tu possèdes le domaine, liste tes comptes émetteurs dans le fichier, et les portefeuilles peuvent afficher « émis par anchor.example » comme fait, pas comme intuition.`,
-    },
+      explain: `Le domaine s'en approche et sert vraiment — c'est ainsi qu'un émetteur publie qui il est — mais c'est une affirmation superposée. L'identité que le protocole lui-même garantit, c'est le compte émetteur, et c'est la seule partie que personne ne peut usurper.` },
+    { kind: "labLink", labSlug: "oz-token-wizard",
+      body: `Un anchor est une entreprise enroulée autour d'un unique acte technique : **émettre un jeton**. Cet acte, vous pouvez l'accomplir. L'**Assistant Jetons OZ** de la Forge forge un vrai jeton sur testnet, avec vous comme émetteur — et ce qu'il ne vous donne pas, c'est tout ce qui fait d'un anchor un anchor : la licence, la conservation, les audits et la promesse de rembourser.` },
     {
       kind: "theory",
       body: `## Un transfert de bout en bout
@@ -138,5 +108,22 @@ Tu n’as pas besoin d’une licence bancaire pour développer cette intégratio
 
 Portes, rivières, confiance — tout jusqu’à présent a été le *royaume classique*, la machinerie intégrée dans le protocole. Le prochain chapitre nous fait passer à la partie que tu programmes toi‑même : **Soroban**, où les contrats sont vivants et même le stockage a un battement de cœur.`,
     },
+    { kind: "theory", body: `## Les sigles devant lesquels vous venez de passer
+
+Vous les avez vus dans la remise d'Ana et vous les avez sans doute laissés filer : SEP-1, SEP-10, SEP-24. Trois standards pour trois tâches — *qui est cet anchor*, *prouvez que c'est vous*, et *exécutez le dépôt*.
+
+Ils n'étaient pas accessoires. Sans eux, le portefeuille d'Ana aurait besoin d'une intégration sur mesure avec son anchor, celui de sa mère d'une autre avec le sien, et chaque nouveau portefeuille repartirait de zéro. Deux portes n'ont coopéré que parce qu'elles s'étaient déjà entendues sur la façon de parler.
+
+**Ensuite :** l'entente elle-même — les standards qui permettent à n'importe quel portefeuille de se présenter à n'importe quelle porte.` },
   ],
-} satisfies JourneyConceptText;
+  testOut: [
+    { question: `Qu'est-ce qu'un anchor ?`,
+      options: ["Une entreprise régulée qui émet des actifs adossés à du fiat et exploite les rampes d'entrée et de sortie entre l'argent bancaire et le registre","Une fonctionnalité du protocole qui convertit automatiquement le fiat en actifs du registre","Un validateur spécialisé dans le trafic de paiements"], answer: 0 },
+    { question: `Un portefeuille affiche \`USDC\`. Qu'établit le code d'actif à lui seul ?`,
+      options: ["Presque rien — un actif est un code plus son émetteur, et n'importe quel compte peut émettre ce code","Qu'il s'agit du stablecoin dollar bien connu ; les codes sont uniques","Que quelqu'un a attesté de son adossement"], answer: 0 },
+    { question: `Dans une remise de porte à porte, quelle pièce effectue la conversion de devise ?`,
+      options: ["Le path payment, en passant par les carnets et pools du registre à un prix que chacun peut vérifier","Le bureau de change interne de l'anchor émetteur, hors registre","Un contrat-pont qui verrouille un actif et en frappe un autre"], answer: 0 },
+    { question: `Pourquoi peut-on construire une intégration anchor complète sans licence bancaire ?`,
+      options: ["La SDF exploite testanchor sur testnet — un anchor fonctionnel avec de l'argent fictif pour répéter toute la danse","Les anchors publient leurs identifiants de production pour le développement","On ne peut pas ; l'intégration anchor exige d'abord un accord signé"], answer: 0 },
+  ],
+};

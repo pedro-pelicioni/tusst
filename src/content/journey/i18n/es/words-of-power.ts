@@ -1,183 +1,135 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const wordsOfPower: Concept = {
-  meta: {
-    slug: "words-of-power",
-    title: "Palabras de Poder",
-    tagline: "Ingeniería de prompts y contexto — lo que realmente ve el gólem.",
-    numeral: "VI",
-    arc: "craft",
-    level: 2,
-    status: "live",
-    estMinutes: 12,
-    sigil: "/v2/journey/sigils/words-of-power.webp",
-    glyph: "🪶",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Palabras de Poder",
+  tagline: "Prompt engineering: las cuatro partes que tiene todo prompt que funciona.",
   steps: [
     {
       kind: "theory",
-      body: `## El banco es todo el mundo
+      body: `## Tus palabras son todo lo que tiene
 
-El gólem no conoce tu repositorio. No recuerda el día de ayer y no puede ver el archivo que *no* adjuntaste. Su universo completo es la **ventana de contexto** — el texto que tiene delante en este momento.
+El golem no conoce tu repositorio. No recuerda lo de ayer, y no ve el archivo que *no* adjuntaste. Su universo entero es el texto que tiene delante ahora mismo.
 
-Esa es la regla más profunda del prompting, y no es mística: **tú decides qué existe**. Lo que está en el banco es el mundo; lo que está fuera del banco nunca ocurrió.
+Esa es la regla más profunda del prompting, y no tiene nada de místico: **tú estás decidiendo qué existe.** Lo que pones delante de él es el mundo; lo que dejas fuera nunca ocurrió.
 
-Así que la pregunta detrás de cada prompt no es "¿cómo lo formulo?" sino *"¿qué necesita ver el gólem para hacerlo bien?"*`,
+Así que la pregunta detrás de cada prompt no es "¿cómo lo redacto?", sino *"¿qué necesita el golem para acertar?"* Este capítulo es la primera mitad de la respuesta — las palabras. El siguiente es la mitad difícil.`,
     },
     {
       kind: "theory",
       body: `## Anatomía de un prompt
 
-Un prompt funcional es un pequeño documento de ingeniería con cuatro partes:
+Un prompt que funciona es un pequeño documento de ingeniería con cuatro partes:
 
-1. **Rol e instrucciones** — qué trabajo se está realizando y cómo: "Eres responsable de implementar un caso de uso en un dominio de pagos."
-2. **Restricciones** — lo que se debe y no se debe hacer: "API pública sin cambios. Sin dependencias nuevas. Sin pánicos."
-3. **Ejemplos** — una muestra de *bueno*, para que la calidad se muestre en lugar de describirse.
-4. **La petición** — la tarea real, enunciada al final, precisa y única.
+1. **Rol e instrucciones** — qué trabajo se está haciendo, y cómo: "Estás implementando un caso de uso en un dominio de pagos."
+2. **Restricciones** — los debe y los no puede: "API pública sin cambios. Sin dependencias nuevas. Sin panics."
+3. **Ejemplos** — una muestra de lo *bueno*, para mostrar la calidad en vez de describirla.
+4. **La petición** — la tarea en sí, dicha al final, precisa y única.
 
-La mayoría de los prompts malos no están mal *redactados* — les **falta una parte**, normalmente las restricciones o el ejemplo.`,
-    },
-    {
-      kind: "quiz",
-      question: `¿Qué instrucción realmente mejora el código del gólem?`,
-      options: [
-        "Validar la cantidad: rechazar cero y negativos con un error tipado; nunca pánico; mantener la API pública sin cambios",
-        "Por favor escribe código realmente limpio, profesional, de alta calidad y listo para producción",
-        "Eres el mejor programador que ha existido — codifica en consecuencia",
-      ],
-      answer: 0,
-      explain: `El gólem no puede fallar en "alta calidad" — cualquier salida plausible califica. Sí puede fallar en "nunca pánico", y ese es el punto: los criterios de aceptación crean la posibilidad de equivocarse, lo que guía al modelo. La especificidad supera la cortesía — y el halago.`,
-    },
-    {
-      kind: "theory",
-      body: `## Mostrar, no contar
-
-Los adjetivos describen calidad; **los ejemplos la definen**. Un ejemplo trabajado supera a tres párrafos de adjetivos, porque el gólem es una máquina de continuación de patrones — así que entrégale un patrón que valga la pena continuar.
-
-¿Quieres pruebas al estilo de tu equipo? Pega **una prueba ideal** y di "así". ¿Quieres mensajes de error que lleven un código y una pista de remediación? Muestra *uno*.
-
-El Capítulo I te enseñó que los requisitos en prosa filtran ambigüedad. Lo mismo ocurre en el banco: un ejemplo es una pequeña especificación que se *copia* en lugar de interpretarse — y copiar pierde mucho menos que interpretar.`,
-    },
-    {
-      kind: "theory",
-      body: `## Ingeniería de contexto: curación, no acumulación
-
-El prompting pregunta *cómo formular*. **La ingeniería de contexto** plantea la cuestión más importante: *¿qué se coloca en el banco?*
-
-Para un error en la ruta de reembolso, el gólem necesita:
-
-- el **módulo de reembolso** — el código realmente en juego,
-- la **especificación** de reembolsos — artefacto del Capítulo I,
-- la **prueba que falla** — artefacto del Rite, que nombra exactamente qué significa "corregido".
-
-No todo el repositorio. No las notas de migración del mes pasado. La habilidad es *selección*: las doscientas líneas correctas superan a la obra completa de tu base de código.`,
+La mayoría de los prompts malos no están mal *redactados* — les **falta una parte**, casi siempre las restricciones o el ejemplo.`,
     },
     {
       kind: "diagram",
-      body: "Lo que crees que enviaste, y lo que de verdad llegó:",
-      caption: "El contexto es un presupuesto, no un recipiente. Todo lo que añades compite con lo que ya pusiste.",
+      body: "Las cuatro partes, en el orden que les corresponde:",
+      caption:
+        "La petición va al final a propósito: todo lo de arriba es el marco con el que el golem lee la tarea.",
       view: {
-        kind: "compare",
-        columns: [
-          {
-            id: "you",
-            label: "lo que querías decir",
-            tone: "neutral",
-          },
-          {
-            id: "model",
-            label: "lo que recibió",
-            tone: "accent",
-          },
-        ],
-        rows: [
-          {
-            label: "la tarea",
-            cells: [
-              {
-                text: "\"arregla el bug\"",
-                tone: "neutral",
-              },
-              {
-                text: "tres palabras, ninguna salida de error, ningún archivo",
-                tone: "accent",
-              },
-            ],
-          },
-          {
-            label: "el código",
-            cells: [
-              {
-                text: "\"está todo en el repo\"",
-                tone: "neutral",
-              },
-              {
-                text: "lo que cupo, normalmente la mitad equivocada",
-                tone: "accent",
-              },
-            ],
-          },
-          {
-            label: "el estándar",
-            cells: [
-              {
-                text: "\"ya conoces nuestro estilo\"",
-                tone: "neutral",
-              },
-              {
-                text: "nada; nunca ha visto tus comentarios de revisión",
-                tone: "accent",
-              },
-            ],
-          },
+        kind: "stack",
+        bands: [
+          { id: "role", label: "rol e instrucciones", note: "Qué trabajo se hace, y en qué mundo. Una o dos líneas bastan.", tone: "neutral" },
+          { id: "constraints", label: "restricciones", note: "Los debe y los no puede. Es la parte que sí puede incumplirse — y por eso dirige.", tone: "accent" },
+          { id: "examples", label: "ejemplos", note: "Una muestra de lo bueno. Enseña el estándar en vez de describirlo.", tone: "teal" },
+          { id: "ask", label: "la petición", note: "Al final, precisa y única. Dos peticiones en un prompt son dos prompts.", tone: "gold" },
         ],
       },
     },
     {
+      kind: "quiz",
+      question: `¿Qué instrucción mejora de verdad el código del golem?`,
+      options: [
+        "Valida el importe: rechaza cero y negativos con un error tipado; nunca hagas panic; mantén la API pública sin cambios",
+        "Por favor escribe un código muy limpio, profesional, de altísima calidad, listo para producción",
+        "Eres el mejor programador que ha existido — programa a esa altura",
+      ],
+      answer: 0,
+      explain: `El golem no puede fallar en "alta calidad" — toda salida se califica plausiblemente. Sí puede fallar en "nunca hagas panic", y ese es el punto: los criterios de aceptación crean la posibilidad de estar equivocado, y eso es lo que dirige a un modelo. La especificidad gana a la cortesía — y a la adulación.`,
+    },
+    {
       kind: "theory",
-      body: `## Decaimiento del contexto
+      body: `## Enseña, no describas
 
-Aquí viene la parte contraintuitiva: el contexto irrelevante no solo ocupa espacio — **daña activamente**.
+Los adjetivos describen la calidad; **los ejemplos la definen.** Un ejemplo trabajado pesa más que tres párrafos de adjetivos, porque el golem es una máquina de continuar patrones — así que dale un patrón que valga la pena continuar.
 
-- Un archivo distractor invita al gólem a "ayudar" tocándolo.
-- Vocabularios mezclados traen el modelo equivocado de Account — la pesadilla del Capítulo III, autoinfligida.
-- Documentación obsoleta y código muerto enseñan comportamientos antiguos como si fueran actuales.
-- Y cuanto más largo es el banco, más fina es la atención: tu restricción crucial compite ahora con diez mil tokens de ruido.
+¿Quieres pruebas en el estilo de la casa? Pega **una prueba ideal** y di "así". ¿Quieres mensajes de error con un código y una pista de solución? Enseña *uno*.
 
-La curación funciona en ambos sentidos. **Eliminar del banco es tan poderoso como añadir**.`,
+El Capítulo I te enseñó que los requisitos en prosa filtran ambigüedad. Aquí pasa igual: un ejemplo es una especificación diminuta que se *copia* en vez de interpretarse — y copiar pierde mucho menos que interpretar.`,
     },
     {
       kind: "quiz",
-      question: `Estás enviando al gólem a arreglar un error en la ruta de reembolso. ¿Qué va en el banco?`,
+      question: `Tu equipo tiene una forma muy propia de escribir mensajes de error. ¿Qué hace que el golem la reproduzca?`,
       options: [
-        "El módulo de reembolso, las reglas de reembolso de la especificación y la prueba que falla — y poco más",
-        "Todo el repositorio, para que no falte ningún detalle potencialmente relevante",
-        "Solo el mensaje de error — cualquier contexto de código sesgaría su perspectiva fresca",
+        "Pegar un mensaje de error real del código y decir “así”",
+        "Describir la convención con cuidado en tres frases",
+        "Decirle que siga la guía de estilo establecida del equipo",
       ],
       answer: 0,
-      explain: `Pasar hambre y ahogarse son ambos modos de falla: muy poco contexto obliga a adivinar, mientras que contexto indiscriminado entierra la señal e invita a ediciones que nunca pediste. La curación — el módulo relevante, la especificación, la prueba — es el oficio mismo.`,
+      explain: `Nunca ha leído tu guía de estilo y no ve tu código. Una descripción hay que interpretarla; un ejemplo solo hay que continuarlo — y continuar es lo único para lo que esta máquina está hecha.`,
     },
     {
       kind: "fill",
-      prompt: `El prompt más afilado que posees es uno que ya escribiste:`,
+      prompt: `El prompt más afilado que tienes es uno que ya escribiste:`,
       file: "prompt.md",
-      before: `Haz que este `,
-      after: ` pase, sin cambiar sus aserciones.`,
-      choices: ["test", "build", "demo", "deploy"],
+      before: `Haz que esta `,
+      after: ` que falla pase, sin cambiar sus aserciones.`,
+      choices: ["prueba", "compilación", "demo", "publicación"],
       answer: 0,
-      explain: `Una prueba que falla es un criterio de aceptación ejecutable — comportamiento, casos límite y finalización en una forma que no puede malinterpretarse. Los builds, demos y despliegues también pueden fallar, pero solo una prueba lleva aserciones: tu especificación con dientes, ahora trabajando como prompt.`,
+      explain: `Una prueba que falla es un criterio de aceptación ejecutable — comportamiento, bordes y "terminado" en una forma que no se puede malinterpretar. Compilaciones, demos y despliegues también fallan, pero solo una prueba lleva aserciones: tu especificación con dientes, ahora haciendo de prompt.`,
     },
     {
       kind: "theory",
-      body: `## La iteración es afinación de la especificación
+      body: `## Iterar es apretar la especificación
 
-La primera salida está equivocada. Bien, eso es datos. El movimiento amateur es volver a lanzar los dados; el movimiento del ingeniero es **leer el fallo y encontrar la instrucción que falta**.
+La primera salida sale mal. Bien — eso es información. La jugada de aficionado es volver a tirar los dados; la de ingeniero es **leer el fallo y encontrar la instrucción que faltaba**.
 
-¿El gólem ignoró un caso límite? Tus restricciones nunca lo mencionaron. ¿Estilo incorrecto? Dijiste en lugar de mostrar. ¿Tocó archivos que no debía? El banco estaba desordenado, o el borde no estaba definido.
+¿El golem ignoró un caso borde? Tus restricciones nunca lo mencionaron. ¿Estilo equivocado? Describiste en vez de enseñar. ¿Tocó archivos que no debía? La frontera no se dijo.
 
-Cada fallo nombra un agujero en tus palabras — corrige el *prompt*, no solo la salida, exactamente como el Capítulo I te enseñó a afinar una especificación.
-
-Próxima disciplina: poner las palabras en movimiento — el bucle que actúa, observa y corrige.`,
+Cada fallo nombra un agujero en tus palabras — parchea el *prompt*, no solo la salida, igual que el Capítulo I te enseñó a apretar una especificación.`,
     },
+    {
+      kind: "exercise",
+      mode: "spec-write",
+      brief: `## La prueba del examinador: escribe el prompt
+
+Esta es la tarea que estás a punto de delegar:
+
+> Un contrato de pagos tiene una función \`refund\`. Hoy permite que la llame cualquiera. Debe poder llamarla solo el pagador original, solo antes del plazo, y nunca debe dejar al contrato con menos que la suma de sus depósitos abiertos.
+
+Escribe el **prompt** que enviarías — las cuatro partes, en orden. No escribas la implementación, y no escribas la especificación en prosa: escribe lo que de verdad pegarías en el banco.`,
+      rubric: `1. Las cuatro partes están presentes y se distinguen: rol/instrucciones, restricciones, al menos un ejemplo, y una petición única al final.
+2. Las restricciones están redactadas de modo que puedan INCUMPLIRSE — concretas y comprobables, no "limpio" ni "de alta calidad".
+3. Incluye al menos un ejemplo trabajado (una prueba, una firma, un mensaje de error, una llamada de muestra) en vez de solo describir el estilo deseado.
+4. La petición es única y precisa — una tarea, no una lista de deseos vagamente relacionados.
+5. Es un prompt, no una implementación ni una especificación en prosa.`,
+      minChars: 160,
+    },
+    {
+      kind: "theory",
+      body: `## La mitad que es más difícil
+
+Ya sabes escribir un prompt que dice exactamente lo que quiere. Esa es la disciplina fácil, y la mayoría se queda ahí.
+
+La difícil es decidir **qué llega a ver el golem** — qué archivos, qué especificación, qué prueba, y, mucho más importante, qué dejar fuera. Redactar es una habilidad; seleccionar es el oficio.
+
+**A continuación:** el banco mismo, y por qué añadirle cosas no sale gratis.`,
+    },
+  ],
+  testOut: [
+    { question: `Un prompt que funciona tiene cuatro partes. ¿Cuál suele ser la que falta?`,
+      options: ["Las restricciones — los debe y los no puede que sí pueden incumplirse","El rol, que le dice al modelo quién debe ser","El saludo, que establece un tono cooperativo"], answer: 0 },
+    { question: `¿Por qué "nunca hagas panic" dirige mejor a un modelo que "escribe código de alta calidad"?`,
+      options: ["Porque se puede incumplir — un criterio de aceptación crea la posibilidad de estar equivocado","Porque es más corto, así que sobrevive más adentro del contexto","Porque usa un verbo en imperativo, que los modelos ponderan más"], answer: 0 },
+    { question: `Quieres la salida en el estilo de la casa de tu equipo. ¿Qué funciona?`,
+      options: ["Pegar un ejemplo real y decir “así”","Describir el estilo con cuidado y en detalle","Nombrar la guía de estilo que sigue el equipo"], answer: 0 },
+    { question: `La primera salida vuelve mal. ¿Cuál es la jugada de ingeniero?`,
+      options: ["Leer el fallo, encontrar la instrucción que faltaba y parchear el prompt","Volver a ejecutarlo — el mismo prompt produce salidas distintas cada vez","Añadir “ten cuidado y piensa paso a paso” y probar otra vez"], answer: 0 },
   ],
 };

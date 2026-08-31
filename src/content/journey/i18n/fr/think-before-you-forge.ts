@@ -200,4 +200,14 @@ Et chaque fois qu'un concept éveille ta curiosité pour le métal sous la surfa
 Ensuite : le royaume que tu vas construire — et comment des milliers de machines s'accordent sans un roi.`,
     },
   ],
+  testOut: [
+    { question: `Pourquoi une spécification est-elle la part d'ingénierie qui reste la vôtre à l'ère de l'IA ?`,
+      options: ["Quand le code est bon marché, « a l'air juste » et « est juste » deviennent indiscernables, sauf si vous avez écrit d'abord ce que juste veut dire","Parce que les modèles ne savent pas lire les spécifications, un humain doit donc les porter","Parce qu'une spécification s'écrit plus vite que du code et fait gagner du temps"], answer: 0 },
+    { question: `Que décrit une spécification ?`,
+      options: ["Le comportement — ce qui doit arriver, ce qui ne doit jamais arriver, et les cas limites","L'implémentation, assez précisément pour que n'importe quel dev produise le même code","La disposition du stockage et les signatures des fonctions publiques"], answer: 0 },
+    { question: `Deux implémentations très différentes satisfont votre spécification. Qu'est-ce que cela signifie ?`,
+      options: ["La spécification fait son travail — elle contraint le comportement et laisse l'implémentation libre","La spécification est trop vague et il lui manque du détail d'implémentation","L'une des deux implémentations est forcément fausse"], answer: 0 },
+    { question: `Laquelle de ces phrases appartient à une spécification ?`,
+      options: ["« Le solde du contrat ne descend jamais sous la somme des dépôts ouverts »","« Stocker les dépôts dans une map persistante indexée par adresse »","« Utiliser le SDK le plus récent et garder le code propre »"], answer: 0 },
+  ],
 } satisfies JourneyConceptText;

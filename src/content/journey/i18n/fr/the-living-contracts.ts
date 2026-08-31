@@ -1,8 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
-export const conceptText = {
-  title: "Les contrats vivants",
-  tagline: "Soroban : Wasm, stockage à durée limitée et frais prévisibles.",
+export const conceptText: JourneyConceptText = {
+  title: "Les Contrats Vivants",
+  tagline: "Soroban : du Wasm sur le registre, et trois étagères pour l'état.",
   steps: [
     {
       kind: "theory",
@@ -56,73 +56,6 @@ Choisir la mauvaise étagère est une erreur de débutant coûteuse : un stock
     },
     {
       kind: "theory",
-      body: `## L’état a un battement de cœur
-
-La plupart des chaînes laissent l’état s’accumuler à l’infini — chaque nœud traîne chaque entrée abandonnée depuis 2019. Stellar refuse : **chaque entrée Soroban a un TTL** (time‑to‑live), compté en registres, et le loyer l’étend.
-
-Quand le TTL expire :
-
-- **Temporaire** : les entrées sont supprimées. Disparues.
-- **Persistant** et **instance** : elles sont **archivées** — évincées du registre actif, mais rétablissables plus tard avec une preuve, revenant exactement comme avant.
-
-C’est l’**archivage d’état**, et aucune autre grande chaîne ne le fait. Le registre actif reste léger, les validateurs restent bon marché, l’historique reste récupérable.`,
-    },
-    {
-      kind: "quiz",
-      question: `Ton contrat suit le solde de chaque utilisateur. Quel niveau de stockage choisirais‑tu ?`,
-      options: [
-        "Persistant — les soldes doivent survivre à tout laps de TTL et être rétablis depuis l’archive",
-        "Temporaire — c’est le moins cher, et les utilisateurs peuvent redéposer si ça expire",
-        "Instance — les soldes appartiennent au contrat, donc ils voyagent avec lui",
-      ],
-      answer: 0,
-      explain: `La suppression du stockage temporaire est *définitive* : perdre un solde de cette manière revient à provoquer un rug pull par négligence. Le stockage d’instance est chargé à chaque appel ; y placer les données de chaque utilisateur fait donc payer tout le monde.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Place le solde sur la bonne étagère.`,
-      file: "token/src/lib.rs",
-      before: `env.storage().`,
-      after: `().set(&user, &balance);`,
-      choices: ["persistent", "temporary", "instance", "eternal"],
-      answer: 0,
-      explain: `Le soroban-sdk expose directement les trois niveaux : \`env.storage().persistent()\`, \`.temporary()\` et \`.instance()\`. Il n’existe pas de niveau \`eternal\` : c’est précisément le principe du système de loyer.`,
-    },
-    {
-      kind: "theory",
-      body: `## Des frais mesurés, pas enchéris
-
-Sur les chaînes où le gas se négocie aux enchères, tu dois surenchérir pour obtenir de l'espace dans un bloc et espérer que tout se passe bien ; une seule opération très demandée peut faire grimper les coûts pour tous.
-
-Soroban **mesure** à la place. Une transaction déclare ses **ressources** — instructions CPU, mémoire, lectures/écritures de registre, octets — et les frais sont *calculés* à partir de ces besoins mesurés, plus le loyer pour le stockage touché. Déclare honnêtement (la simulation le fait pour toi) et la partie remboursable de tout excès revient.
-
-Le résultat est un coût que tu peux citer à l’avance : « cette action coûte environ un cent » reste vrai même quand le réseau est occupé.`,
-    },
-    {
-      kind: "theory",
-      body: `## Simule d’abord, signe exactement ce que tu as simulé
-
-Chaque client Soroban suit un même rythme :
-
-1. **Simule** l’appel contre un nœud RPC — pas de signature, pas de coût.
-2. La simulation renvoie l'**empreinte** — les entrées du registre que l’appel va lire ou écrire — ainsi que l'estimation des ressources et les autorisations nécessaires.
-3. Tu **signes exactement ce que tu as simulé**, puis tu soumets la transaction.
-
-La transaction signée porte son empreinte, donc les validateurs connaissent son univers complet avant de l’exécuter ; rien en dehors de l’empreinte ne peut être touché. Saute la simulation et tu devines des nombres que le réseau rejettera simplement.`,
-    },
-    {
-      kind: "quiz",
-      question: `Pourquoi le flux Soroban simule avant de signer ?`,
-      options: [
-        "La simulation calcule l’empreinte et les besoins en ressources, donc tu signes une transaction avec des bornes exactes et imposables",
-        "C’est un dry‑run de courtoisie pour le débogage — les apps de production le sautent",
-        "La simulation pré‑exécute l’appel pour que les validateurs n’aient pas à le faire à nouveau",
-      ],
-      answer: 0,
-      explain: `Les validateurs ré‑exécutent toujours — mais uniquement dans l’empreinte déclarée. La simulation est le moyen pour une transaction d’apprendre ses propres bornes ; le registre les applique ensuite à la lettre.`,
-    },
-    {
-      kind: "theory",
       body: `## L’interface voyage avec le contrat
 
 Un contrat Soroban compilé n’est pas un objet binaire mystérieux. Le build intègre sa **spécification** directement dans le Wasm : chaque fonction, argument et type devient lisible par la machine.
@@ -131,6 +64,19 @@ Les outils l'exploitent directement : la CLI peut afficher l’interface d’u
 
 Tu peux ainsi appeler un contrat que tu n’as jamais vu avec des types vérifiés à la compilation. Voilà l’expérience de développement offerte par cette spécification embarquée.`,
     },
+    { kind: "quiz",
+      question: `Vous stockez le nonce de session d'un utilisateur, sans valeur quelques minutes après son émission. Quelle étagère ?`,
+      options: ["Temporaire — le loyer le plus bas, et l'oubli est exactement ce que vous voulez","Persistante, pour pouvoir la restaurer si un appel arrive en retard","D'instance, pour qu'elle disparaisse si le contrat est un jour archivé"],
+      answer: 0,
+      explain: `Faire correspondre l'étagère à la durée de vie réelle de la donnée est toute la décision de conception, et c'est celle qu'on rate dans la direction qui paraît prudente : mettre une donnée éphémère sur l'étagère persistante coûte plus cher pour toujours, pour une garantie dont la donnée n'a jamais eu besoin.` },
+    { kind: "fill",
+      prompt: `Complétez ce qu'un contrat déployé emporte avec lui :`,
+      file: "NOTES.md",
+      before: `Un appelant n'a pas besoin de votre documentation pour invoquer un contrat, car son `,
+      after: ` se lit depuis le code déployé lui-même.`,
+      choices: ["interface", "code source", "adresse de l'auteur", "rapport d'audit"],
+      answer: 0,
+      explain: `La source n'est pas sur le registre — le Wasm compilé l'est — et ni une adresse ni un audit ne disent à un outil quelles fonctions existent ni ce qu'elles prennent. C'est parce que l'interface voyage avec le code que l'outillage sait construire un appel vers un contrat que personne n'a documenté.` },
     {
       kind: "labLink",
       labSlug: "oz-token-wizard",
@@ -143,5 +89,24 @@ Tu peux ainsi appeler un contrat que tu n’as jamais vu avec des types vérifi�
 
 Au chapitre suivant, changement de perspective : certains contrats deviennent si puissants qu'ils cessent d'être de simples applications pour devenir **le compte lui-même**.`,
     },
+    { kind: "theory", body: `## Rien ici n'est gratuit
+
+Vous savez désormais dire ce qu'est un contrat Soroban, où vivent ses données, et comment n'importe qui l'appelle sans votre documentation.
+
+Ce que rien de tout cela ne vous a dit, c'est la part qui empêche les équipes de dormir : **l'état se loue, il ne se possède pas.** Chaque entrée sur chaque étagère a une horloge, et les étagères ne diffèrent que par une seule chose qui compte — ce qui arrive quand une horloge atteint zéro.
+
+Se tromper là-dessus ne ressemble pas à un bug. Cela ressemble à un contrat qui a fonctionné six mois puis, un mardi, s'est mis à répondre que la donnée n'existe pas.
+
+**Ensuite :** le battement, et la facture.` },
   ],
-} satisfies JourneyConceptText;
+  testOut: [
+    { question: `Qu'est-ce qu'un contrat Soroban, sur le registre ?`,
+      options: ["Du Wasm compilé stocké sur le registre, avec une adresse, invoqué par une opération de transaction comme n'importe quel autre verbe","Un script que les validateurs interprètent depuis la source au moment de l'appel","Un service hors chaîne que le protocole appelle au besoin"], answer: 0 },
+    { question: `Pourquoi Soroban propose-t-il trois sortes de stockage plutôt qu'une ?`,
+      options: ["Des données différentes ont une valeur différente dans le temps, et les étagères les tarifent et les font expirer différemment","Chaque sorte est optimisée pour une taille de donnée différente","Les anciens contrats utilisent l'une et les nouveaux l'autre"], answer: 0 },
+    { question: `Que signifie que l'interface voyage avec le contrat ?`,
+      options: ["La spécification du contrat se lit depuis le code déployé lui-même, si bien que l'outillage peut l'appeler sans documentation externe","L'interface est inscrite dans un annuaire public maintenu par la SDF","L'appelant doit recevoir une bibliothèque cliente de l'auteur du contrat"], answer: 0 },
+    { question: `Où voyage un appel de contrat ?`,
+      options: ["Dans la même enveloppe de transaction que vous connaissez déjà, comme une opération invoke_host_function","Sur un canal séparé réservé aux contrats, avec son propre consensus","Directement vers un validateur en RPC, en contournant le registre"], answer: 0 },
+  ],
+};

@@ -113,6 +113,11 @@ Quien empieza sobreestima los contratos de cuatro maneras concretas, y vale la p
       explain: `Cada incidente caro de esta industria es una variación de esa única línea. Y por eso el siguiente tramo del camino no empieza por el código.`,
     },
     {
+      kind: "labLink",
+      labSlug: "treasure-chest",
+      body: `Puedes ver a una de estas máquinas cumplir una promesa en la testnet real, ahora mismo. El laboratorio **El Cofre del Tesoro** de la Forja encierra fondos en una entrada del libro mayor que no pertenece a nadie — hasta que el único reclamante nombrado la toma. Sin agente de custodia, sin empresa reteniendo el dinero, sin nadie que *pudiera* cambiar de opinión. La regla lo libera, o no lo libera nada.`,
+    },
+    {
       kind: "theory",
       body: `## Por qué este es el último capítulo fácil
 
@@ -122,5 +127,15 @@ Fíjate en lo que eso suma. Si la máquina hace precisamente lo que se escribió
 
 **A continuación, en el camino del Oficio:** cómo escribir eso como es debido, antes de que exista una línea de código. Y en el camino del Reino: la maquinaria de Stellar misma, desde cómo coinciden miles de máquinas hasta los contratos que acabas de conocer — esta vez por dentro.`,
     },
+  ],
+  testOut: [
+    { question: `¿Qué distingue a un contrato de una promesa guardada por una persona?`,
+      options: ["Ejecuta sus propias reglas, sin que nadie elija si cumplirlas","Está escrito, y una promesa hablada no","Se puede reclamar en un juzgado, y una promesa no"], answer: 0 },
+    { question: `¿Quién ejecuta un contrato publicado?`,
+      options: ["Nadie en particular — miles de máquinas lo ejecutan de forma idéntica y coinciden en el resultado","El autor, en un servidor que mantiene encendido para eso","Los operadores de la red, por turnos"], answer: 0 },
+    { question: `¿Cuándo actúa un contrato?`,
+      options: ["Solo cuando alguien lo empuja con una instrucción firmada","De forma continua, revisando sus condiciones en segundo plano","Una vez al día, cuando la red barre las reglas almacenadas"], answer: 0 },
+    { question: `¿Puede el autor apagar un contrato ya publicado?`,
+      options: ["No, salvo que las propias reglas publicadas del contrato lo permitan","Sí — el autor siempre se guarda un override","Solo pidiendo a los operadores de la red que lo retiren"], answer: 0 },
   ],
 };

@@ -1,164 +1,142 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const theEndlessLoop: Concept = {
-  meta: {
-    slug: "the-endless-loop",
-    title: "O Loop Infinito",
-    tagline: "Loops agentes: agir, observar, corrigir — e saber quando parar.",
-    numeral: "VII",
-    arc: "craft",
-    level: 2,
-    status: "live",
-    estMinutes: 12,
-    sigil: "/v2/journey/sigils/the-endless-loop.webp",
-    glyph: "🔁",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "O Loop Infinito",
+  tagline: "Agir, observar, corrigir — e os sinais que fazem o laço subir.",
   steps: [
     {
       kind: "theory",
-      body: `## Do desejo ao loop
+      body: `## Do desejo ao laço
 
-Prompt único é um desejo: descreva, receba, espere. O **loop agente** substitui a esperança por um ciclo:
+Prompting de um tiro só é um desejo: descreva, receba, torça. O **laço agêntico** troca a torcida por um ciclo:
 
-> **agir → observar → corrigir → agir novamente**
+> **agir → observar → corrigir → agir de novo**
 
-O golem escreve código, *executa*‑o, lê a reclamação do compilador, corrige, executa de novo — a forma como você trabalha, no ritmo da máquina. A qualidade de um prompt único deixou de ser o número interessante no momento em que o golem pôde ver seus próprios resultados.
+O golem escreve código, *roda*, lê a reclamação do compilador, conserta, roda de novo — do jeito que você trabalha, em ritmo de máquina. A qualidade de um tiro só deixou de ser o número interessante no instante em que o golem passou a ver os próprios resultados.
 
-Mas um loop é maquinaria, não magia. Ele tem partes que podem ser bem ou mal projetadas — e cada uma das próximas telas é uma dessas partes.`,
-    },
-    {
-      kind: "theory",
-      body: `## Observação: os olhos do loop
-
-Um loop melhora apenas na medida em que suas **observações** são verdadeiras. A correção precisa de um sinal para corrigir *em direção a*:
-
-- **códigos de saída** — o comando falhou?
-- **saída de teste** — qual teste, qual asserção, qual linha?
-- **estado on‑chain** — o que o ledger realmente contém após a execução?
-
-Sinais, não vibrações. “A saída parece razoável” não corrige nada, porque nunca pode ser falsa. Cada verificador que você incorporou ao harness agora rende juros: conectado ao loop, ele se torna os olhos pelos quais o golem se orienta — **em cada iteração**.`,
+Mas um laço é maquinário, não mágica. Ele tem peças que podem ser bem ou mal projetadas, e este capítulo é sobre as duas que decidem se ele sobe.`,
     },
     {
       kind: "diagram",
       body: "O laço, e a única saída que importa:",
-      caption: "Um laço sem regra de parada não é autonomia — é orçamento queimando.",
+      caption:
+        "Três destes quatro são este capítulo. O quarto — decidir parar — é o próximo, e é o que as pessoas pulam.",
       view: {
         kind: "flow",
         layout: "cycle",
         play: true,
         nodes: [
-          {
-            id: "act",
-            label: "agir",
-            note: "Dê o menor passo que o plano permite, depois pare e olhe.",
-            tone: "accent",
-          },
-          {
-            id: "observe",
-            label: "observar",
-            note: "Leia o que o mundo respondeu. Não o que você esperava que respondesse.",
-            tone: "teal",
-          },
-          {
-            id: "correct",
-            label: "corrigir",
-            note: "Ajuste o plano, não só o último movimento.",
-            tone: "gold",
-          },
-          {
-            id: "stop",
-            label: "parar?",
-            note: "Pronto, travado, ou sem orçamento. Decida explicitamente, a cada volta.",
-            tone: "good",
-          },
+          { id: "act", label: "agir", note: "Dê o menor passo que o plano permite, então pare e olhe.", tone: "accent" },
+          { id: "observe", label: "observar", note: "Leia o que o mundo respondeu. Não o que você esperava.", tone: "teal" },
+          { id: "correct", label: "corrigir", note: "Ajuste o plano, não só a última jogada.", tone: "gold" },
+          { id: "stop", label: "parar?", note: "Pronto, travado ou sem orçamento. Decida explicitamente, todo turno.", tone: "good" },
         ],
       },
     },
     {
+      kind: "theory",
+      body: `## Observação: os olhos do laço
+
+Um laço melhora só até onde as **observações** dele são verdadeiras. Corrigir precisa de um sinal *para o qual* corrigir:
+
+- **códigos de saída** — o comando falhou?
+- **saída dos testes** — qual prova, qual asserção, qual linha?
+- **estado on-chain** — o que o ledger de fato guarda depois da execução?
+
+Sinais, não vibrações. "A saída parece razoável" não corrige nada, porque nunca pode ser falso. Todo verificador que você colocou no arreio agora rende juros: ligado ao laço, ele vira os olhos pelos quais o golem se guia — **em cada iteração**.`,
+    },
+    {
       kind: "quiz",
-      question: `Qual observação pode realmente orientar um loop?`,
+      question: `Qual observação consegue de fato guiar um laço?`,
       options: [
-        "O relatório do test runner: 3 passaram, 1 falhou — refund_after_deadline, asserção na linha 41",
-        "O resumo de fechamento do próprio golem: tudo parece correto agora",
-        "O fato de o código ter compilado na primeira tentativa — forte evidência de que a lógica está certa",
+        "O relatório do runner de testes: 3 passaram, 1 falhou — refund_after_deadline, asserção na linha 41",
+        "O resumo de fechamento do próprio golem: agora está tudo correto",
+        "O fato de o código ter compilado de primeira — forte evidência de que a lógica está certa",
       ],
       answer: 0,
-      explain: `Compilar significa que os tipos batem, não que o comportamento seja o desejado — e um resumo interno é a mente avaliando seu próprio dever de casa. Um sinal de orientação deve ser externo, específico e capaz de ser uma má notícia. “1 falhou, linha 41” é um cabeçalho; “parece correto” é clima.`,
+      explain: `Compilar significa que os tipos batem, não que o comportamento é o desejado — e um autorresumo é a mente corrigindo o próprio dever de casa. Um sinal de direção precisa ser externo, específico e capaz de ser má notícia. "1 falhou, linha 41" é uma manchete; "parece correto" é meteorologia.`,
     },
     {
       kind: "theory",
-      body: `## Todo loop precisa de freio
+      body: `## Um turno, rastreado
 
-Um loop sem monitoramento não converge — ele **gasta**. Um loop sem parada é uma conta, e às vezes um apagão. Instale os freios *antes* da primeira volta:
+É fácil concordar com um ciclo no abstrato. Aqui está um único turno, com o que de fato passa pelo fio.
 
-- **Critérios de sucesso** — as verificações que significam *concluído*, decididas antecipadamente.
-- **Orçamento** — tokens, minutos, dólares: o que acabar primeiro.
-- **Máximo de iterações** — um teto rígido, sempre.
-- **Detecção de falta de progresso** — o mesmo erro duas vezes significa *mudar a estratégia ou escalar*, nunca “de novo, mas mais difícil”.
+**Agir.** O golem edita \`refunds.rs\` — troca a comparação de prazo de \`>\` para \`>=\`. Uma mudança só, porque um turno que muda seis coisas não consegue te dizer qual delas funcionou.
 
-A regra do reino: nunca inicie um loop sem ter decidido como pará‑lo.`,
+**Observar.** O arreio roda as evals fixas e devolve exatamente isto:
+
+> \`test_refund_after_deadline ... FAILED\`
+> \`assertion failed: balance == 0, left: 40, right: 0\`
+> \`4 passed, 3 failed\`
+
+Não "continua quebrado". Uma linha, um número, e uma contagem que dá para comparar com a do turno anterior.
+
+**Corrigir.** Três verdes viraram quatro. Então a comparação era *um* dos bugs e não o único: o prazo está tratado, o saldo não. O plano se atualiza — o próximo turno vai atrás do saldo.
+
+Repare no que fez esse turno valer alguma coisa. Não foi o golem que decidiu ter melhorado. **Foi a contagem.**`,
     },
     {
-      kind: "quiz",
-      question: `Iteração 40, e o loop vem encontrando a mesma avaliação falha com a mesma mensagem de erro desde a iteração 12. O que o harness deve fazer?`,
-      options: [
-        "Parar e escalar para um humano — repetir sem progresso é condição de parada, não persistência",
-        "Continuar — iteração é o objetivo de um loop, e a tentativa 41 pode ser a certa",
-        "Aumentar a temperatura do modelo para que ele seja mais criativo na correção",
-      ],
-      answer: 0,
-      explain: `Vinte e oito falhas idênticas são uma mensagem: o loop carece de algo — contexto, permissão, especificação correta — que mais iterações não podem fornecer. Randomizar mais não passa de espalhar erros ao mesmo custo. Detecte falta de progresso, pare e entregue o rastro a um humano.`,
+      kind: "theory",
+      body: `## Evals: a bússola
+
+Como você sabe que a iteração 7 superou a 6? Não pelo sentimento. **Evals** são um conjunto *fixo* de verificações — testes, lint, build, uma asserção on-chain — rodadas **a cada iteração**, para que toda tentativa seja medida pela mesma régua.
+
+*Fixo* é a palavra que sustenta tudo. Se as verificações mudam entre tentativas, "progresso" fica impossível de medir — você está comparando notas de provas diferentes.
+
+Com uma bússola, o laço sabe *de fato* se andou: 4 verdes de 7 viraram 6 de 7. Sem ela, ele só sabe que se mexeu. Progresso é **medido, não sentido**.`,
     },
     {
       kind: "fill",
-      prompt: `Instale o freio antes que o loop gire:`,
-      file: "loop.rs",
-      before: `while !evals.pass() && iterations < `,
-      after: ` {`,
-      choices: ["budget.max_iterations", "usize::MAX", "evals.len()", "iterations + 1"],
-      answer: 0,
-      explain: `usize::MAX é “sem freio — vamos discutir isso na fatura”. Um limite que se move com o contador (iterations + 1) nunca realmente limita. E evals.len() confunde quantas verificações existem com quanto tempo tentar. O teto é um orçamento que você escolheu deliberadamente.`,
-    },
-    {
-      kind: "theory",
-      body: `## Avaliações: a bússola
-
-Como saber que a iteração 7 superou a iteração 6? Não por sensação. **Avaliações** são um conjunto *fixo* de verificações — testes, lint, build, uma asserção on‑chain — executadas **a cada iteração**, de modo que cada tentativa é medida contra a mesma régua.
-
-*Fixo* é a palavra que sustenta a carga. Se as verificações mudam entre tentativas, “progresso” se torna incalculável — você está comparando notas de exames diferentes.
-
-Com uma bússola, o loop sabe *com certeza* se avançou: 4 verdes de 7 viraram 6 de 7. Sem ela, ele só sabe que se moveu. Progresso é **medido, não sentido**.`,
-    },
-    {
-      kind: "theory",
-      body: `## Feedback instável envenena o loop
-
-Um teste que falha aleatoriamente — por timing, ordem, porta compartilhada — é um incômodo para humanos. Suspiramos e reexecutamos. Para um loop isso é **veneno**, porque o loop *age sobre cada sinal*.
-
-Um vermelho fantasma aparece → o golem “corrige” código que nunca estava quebrado → a mudança é aplicada → na próxima iteração, outro fantasma → outra correção. O loop passa a aprender superstições, cada uma se acumulando, tudo a partir de ruído.
-
-A regra: **torne o feedback determinístico antes de conectá‑lo a um loop**. Um teste instável é pior que nenhum teste — silêncio não engana ninguém; ruído engana incansavelmente.`,
-    },
-    {
-      kind: "quiz",
-      question: `Um teste falha aleatoriamente uma vez a cada cinco execuções, por questões de timing. Para um humano é um incômodo. O que isso representa para um loop?`,
-      options: [
-        "Veneno — o loop trata cada falha fantasma como verdade e “corrige” código saudável, acumulando erros a cada passagem",
-        "O mesmo incômodo — ao longo de muitas iterações a aleatoriedade se equilibra",
-        "Levemente útil — falhas extras aumentam a pressão para tornar o código mais robusto",
+      prompt: `Complete a propriedade que faz de uma bússola uma bússola:`,
+      file: "NOTES.md",
+      before: `As evals rodam a cada iteração, e o conjunto de verificações precisa continuar `,
+      after: ` — senão duas tentativas estão sendo corrigidas por duas provas diferentes.`,
+      choices: [
+        "fixo",
+        "aleatorizado",
+        "opcional",
+        "regenerado a cada tentativa",
       ],
       answer: 0,
-      explain: `Nada se equilibra, porque cada sinal falso dispara uma mudança real de código que a próxima iteração então incorpora. Humanos descartam ruído; loops obedecem a ele. Determinismo não é um luxo do harness — é pré‑requisito para qualquer loop.`,
+      explain: `Uma régua que se mexe não mede nada. É também por isso que "deixa o golem escrever os próprios testes enquanto trabalha" destrói o sinal em silêncio: a prova e o aluno deixam de ser coisas diferentes.`,
+    },
+    {
+      kind: "exercise",
+      mode: "spec-write",
+      brief: `## A prova do examinador: escreva um contrato de observação
+
+Um laço está prestes a ser apontado para uma tarefa real:
+
+> Um contrato Soroban tem um comportamento com defeito: reembolsos estão sendo pagos **depois** de o prazo ter passado. Você vai entregar isso a um laço agêntico e deixá-lo trabalhar sozinho por um tempo.
+
+Antes que ele gire uma vez, escreva o **contrato de observação** dele: por quais sinais este laço vai se guiar, e o que torna cada um confiável. Só comportamento — sem código de arreio, sem nomes de biblioteca.`,
+      rubric: `1. Nomeia pelo menos dois sinais concretos e externos (saída de teste, código de saída, estado on-chain, resultado de lint/build) — nem autoavaliação, nem "parece certo".
+2. Para pelo menos um sinal, diz o que o torna confiável — determinístico, reproduzível ou independente do código que está mudando.
+3. Diz o que conta como PRONTO em termos desses sinais, não em termos da opinião do golem.
+4. Nomeia pelo menos um sinal que NÃO deve ser confiado, e por quê (um autorresumo, um build que passou, um teste instável…).
+5. Só comportamento — sem implementação de arreio, sem exigir ferramentas ou bibliotecas específicas.`,
+      minChars: 140,
     },
     {
       kind: "theory",
-      body: `## A altitude correta
+      body: `## O que este capítulo não te deu
 
-Onde o humano fica enquanto o loop gira? Não dentro dele — revisar cada tecla significa *você* ser o loop, no ritmo do golem. E também não acima das nuvens, aprovando tudo que chega.
+Você já consegue montar um laço que enxerga com honestidade e mede o próprio progresso. Aponte para uma tarefa e ele sobe.
 
-A altitude correta é a **fronteira**: revise o *diff* contra a *especificação*. As avaliações passaram? A mudança respeita as regras do Capítulo I? Algo se moveu sem necessidade? Confie nos instrumentos do loop para os detalhes; mantenha o julgamento humano para o que os instrumentos não conseguem ver.
+Repare no que falta: nada aqui decide quando ele **para**. Não quando está pronto — essa parte você acabou de escrever — mas quando está *travado*, ou quando já gastou mais do que a tarefa valia. Um laço com bons olhos e sem freio não falha alto. Ele falha na fatura.
 
-Próxima disciplina: quando um loop não basta — muitos golems pequenos, um plano entrelaçado.`,
+**A seguir:** os freios, e a única rodada em que você descobre para que serviam.`,
     },
+  ],
+  testOut: [
+    { question: `O que um laço agêntico substitui, em comparação com prompting de um tiro só?`,
+      options: ["A torcida — o golem agora vê o resultado do próprio trabalho e corrige contra ele","A necessidade de uma spec, já que o laço descobre os requisitos no caminho","O compilador, já que o laço confere o código sozinho"], answer: 0 },
+    { question: `Por que "a saída parece razoável" nunca consegue guiar um laço?`,
+      options: ["Porque nunca pode ser falso — um sinal que não pode ser má notícia não carrega informação","Porque chega tarde demais na iteração para ser usado","Porque modelos não são treinados para avaliar julgamentos em linguagem natural"], answer: 0 },
+    { question: `Por que o conjunto de evals precisa continuar fixo entre iterações?`,
+      options: ["Senão duas tentativas são corrigidas por provas diferentes e o progresso fica impossível de medir","Senão o laço fica mais lento a cada verificação acrescentada","Senão o modelo memoriza as verificações e as burla"], answer: 0 },
+    { question: `Um laço compila limpo na primeira tentativa. O que isso prova?`,
+      options: ["Que os tipos batem — não que o comportamento é o que se queria","Que a lógica está muito provavelmente certa, já que a maioria dos bugs é de tipo","Nada; compilação não tem relação com qualidade de código"], answer: 0 },
   ],
 };

@@ -113,6 +113,11 @@ O que deu errado?`,
       explain: `Todo incidente caro desta indústria é uma variação dessa única linha. E é por isso que o próximo trecho da estrada não começa por código.`,
     },
     {
+      kind: "labLink",
+      labSlug: "treasure-chest",
+      body: `Dá para ver uma dessas máquinas cumprindo uma promessa na testnet real, agora. O laboratório **O Baú do Tesouro** da Forja tranca fundos numa entrada do livro-razão que não pertence a ninguém — até que o único reclamante nomeado a pegue. Sem agente de custódia, sem empresa segurando o dinheiro, sem ninguém que *pudesse* mudar de ideia. A regra libera, ou nada libera.`,
+    },
+    {
       kind: "theory",
       body: `## Por que este é o último capítulo fácil
 
@@ -121,6 +126,44 @@ Você já tem o térreo inteiro: um livro que ninguém edita em silêncio, uma c
 Repare no que isso soma. Se a máquina faz precisamente o que foi escrito — e não pode ser contestada, corrigida ou desfeita — então **escrever é o trabalho**. Não digitar: uma IA digita mais rápido que você e nunca cansa. Decidir, cravar, definir o "o que precisa ser verdade aqui, e o que nunca pode acontecer".
 
 **A seguir, na estrada do Ofício:** como escrever isso direito, antes de existir uma linha de código. E na estrada do Reino: o maquinário da própria Stellar, de como milhares de máquinas concordam até os contratos que você acabou de conhecer — dessa vez por dentro.`,
+    },
+  ],
+  testOut: [
+    {
+      question: `O que diferencia um contrato de uma promessa guardada por uma pessoa?`,
+      options: [
+        "Ele executa as próprias regras, sem ninguém escolhendo se vai cumprir",
+        "Ele está escrito, e uma promessa falada não está",
+        "Ele pode ser cobrado na justiça, e uma promessa não",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Quem roda um contrato publicado?`,
+      options: [
+        "Ninguém em particular — milhares de máquinas o executam de forma idêntica e concordam com o resultado",
+        "O autor, num servidor que ele mantém no ar para isso",
+        "Os operadores da rede, se revezando",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Quando um contrato age?`,
+      options: [
+        "Só quando alguém o cutuca com uma instrução assinada",
+        "Continuamente, checando as condições dele em segundo plano",
+        "Uma vez por dia, quando a rede varre as regras guardadas",
+      ],
+      answer: 0,
+    },
+    {
+      question: `O autor consegue desligar um contrato já publicado?`,
+      options: [
+        "Não, a menos que as próprias regras publicadas do contrato digam que sim",
+        "Sim — o autor sempre guarda um override",
+        "Só pedindo aos operadores da rede que o removam",
+      ],
+      answer: 0,
     },
   ],
 };

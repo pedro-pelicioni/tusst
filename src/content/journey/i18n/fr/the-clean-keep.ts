@@ -1,8 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
-export const conceptText = {
-  title: "Le bastion propre",
-  tagline: "Architecture propre et hexagonale — chaque pièce à sa place.",
+export const conceptText: JourneyConceptText = {
+  title: "Le Donjon Propre",
+  tagline: "Une loi : les dépendances de code source pointent vers l'intérieur, uniquement.",
   steps: [
     {
       kind: "theory",
@@ -58,6 +58,19 @@ Le bastion est le point. Les frameworks sont le mobilier.`,
         ],
       },
     },
+    { kind: "widget", component: "dependency-rule",
+      body: `La loi a une forme, et la prose ne sait pas la dessiner. **Activez quelques imports** et regardez où tombent les licites — puis percez un mur exprès et lisez ce que cela vous coûte.` },
+    { kind: "theory", body: `## Chaque brèche était raisonnable
+
+Personne n'enfreint la règle par malice. On l'enfreint un mardi, pour une bonne raison, avec une échéance sur le dos.
+
+Le cas d'usage du séquestre a besoin de la séquence courante du registre pour savoir si l'échéance est passée. Le nombre est à un appel de \`server.ledgers()\`. Écrire un port pour cela, c'est une interface, un adaptateur, un faux pour les tests — vingt minutes pour un nombre qui est *juste là*. Alors le SDK est importé dans le domaine, avec un commentaire promettant de nettoyer plus tard.
+
+Huit mois après, cet unique import a fait trois choses. Le domaine ne compile plus sans client réseau. Les tests du cas d'usage exigent un nœud qui tourne, donc ils sont devenus lents, donc on a cessé de les lancer. Et la version majeure du SDK est sortie, ce qui signifie désormais une migration **du domaine**.
+
+Les vingt minutes étaient réelles. Les intérêts aussi.
+
+La règle gagne sa place précisément les jours où elle ressemble à de la bureaucratie — car le jour où elle semblera nécessaire, le coût aura déjà été payé.` },
     {
       kind: "quiz",
       question: `Voici trois imports d'une dApp Stellar. Lequel **viole la règle de dépendance** ?`,
@@ -70,58 +83,6 @@ Le bastion est le point. Les frameworks sont le mobilier.`,
       explain: `Les deux autres sont le cercle extérieur qui nomme l'intérieur — la règle fonctionne exactement comme conçue. Le domaine qui importe le SDK est l'intérieur qui nomme l'extérieur : maintenant les pièces les plus profondes du bastion tremblent chaque fois qu'un fournisseur publie une version majeure.`,
     },
     {
-      kind: "theory",
-      body: `## Ports et adaptateurs
-
-Comment le cercle intérieur *utilise* la chaîne sans la nommer ? Il déclare un **port** — une interface que le domaine possède, écrite dans le langage propre au domaine :
-
-> PaymentsPort : envoyer un paiement, lire un solde, surveiller l'arrivée.
-
-Au bord, **les adaptateurs** implémentent le port : un *adaptateur Horizon* aujourd'hui, un *adaptateur RPC Soroban* pour les contrats, un *adaptateur factice* pour les tests. Changer de fournisseur RPC ? Un nouvel adaptateur. Passer de testnet à mainnet ? Une configuration. **Le cœur ne l'entend jamais.**
-
-Le domaine parle au port. Le monde se branche sur le port. C'est l'architecture hexagonale en une phrase.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Le bastion parle au port, jamais au fournisseur :`,
-      file: "domain/release-escrow.ts",
-      before: `constructor(private payments: `,
-      after: `) {}`,
-      choices: [
-        "PaymentsPort",
-        "HorizonClient",
-        "SorobanServer",
-        "FreighterApi",
-      ],
-      answer: 0,
-      explain: `Les trois autres sont réels et utiles — et ils appartiennent aux adaptateurs, derrière le port. Le cas d'utilisation ne nomme que l'interface qu'il possède, c'est pourquoi un adaptateur factice peut se substituer pendant les tests et qu'un nouveau fournisseur RPC ne touche jamais ce fichier.`,
-    },
-    {
-      kind: "theory",
-      body: `## Où tout vit
-
-Une requête traverse les murs comme ceci :
-
-**UI** (extérieur) → **cas d'utilisation** (intérieur) → **port** (bord intérieur) → **adaptateur** (extérieur) → réseau.
-
-- Composants React, routes, styles — **extérieur**.
-- Postgres, ORM, migrations — **extérieur**.
-- stellar-sdk, clients RPC, le pont portefeuille — **extérieur**.
-- "Libération des fonds uniquement quand les deux sont approuvés" — **intérieur**, dans un module qui n'importe *rien* de la liste ci-dessus.
-
-Le contrôle est mécanique : ouvre un fichier du domaine et lis ses imports. Si tu y trouves le nom d'un framework, un mur a été franchi.`,
-    },
-    {
-      kind: "theory",
-      body: `## L'île testable
-
-Un cœur sans import de framework est une **île pure** : instancie-le dans un test, fournis-lui un adaptateur factice et vérifie son comportement. Aucun réseau, aucun nœud conteneurisé, aucun RPC instable — les tests du Rite rouge-vert s'exécutent en **quelques millisecondes**.
-
-C'est un gain discret mais cumulatif : les équipes dont les bastions sont propres écrivent davantage de tests *parce qu'ils sont peu coûteux*, et des tests rapides permettent des boucles de rétroaction courtes — pour les humains comme pour les golems.
-
-Les adaptateurs gagnent toujours leurs propres tests contre le réseau réel — une couche mince et honnête, testée séparément à sa propre vitesse plus lente.`,
-    },
-    {
       kind: "quiz",
       question: `Où se trouve l'odeur ?`,
       options: [
@@ -132,26 +93,30 @@ Les adaptateurs gagnent toujours leurs propres tests contre le réseau réel �
       answer: 0,
       explain: `Une règle métier vivant dans l'UI est invisible à tes tests de cœur et se duplique dans l'écran suivant qui en a besoin. Son jumeau miroir est le SQL dans le domaine — le cercle intérieur qui atteint vers l'extérieur. Règles vers le cœur, traduction vers le bord.`,
     },
-    {
-      kind: "quiz",
-      question: `Ton fournisseur RPC annonce une fermeture. Dans un bastion construit sur ports et adaptateurs, qu'est-ce qui doit changer ?`,
-      options: [
-        "Un adaptateur, plus le câblage qui le sélectionne — le domaine et les cas d'utilisation ne changent pas du tout",
-        "Chaque cas d'utilisation qui envoie un paiement, puisque chacun d'eux appelle le fournisseur",
-        "Les entités du domaine, puisque l'URL du point de terminaison est stockée sur elles",
-      ],
+    { kind: "fill",
+      prompt: `Le test est mécanique — ouvrez un fichier du domaine et lisez ses imports :`,
+      file: "domain/release-escrow.ts",
+      before: `Un nom de framework ou d'éditeur dans cette liste d'imports signifie qu'`,
+      after: ` .`,
+      choices: ["un mur a été percé", "le fichier a besoin d'un commentaire explicatif", "l'import devrait être chargé paresseusement", "la version du framework est obsolète"],
       answer: 0,
-      explain: `Voilà le bénéfice de cette architecture en une phrase : un changement de fournisseur ne coûte qu'un adaptateur. Si, dans ta base de code, la réponse honnête est « chaque cas d'utilisation », les flèches de dépendance pointent dans la mauvaise direction.`,
-    },
-    {
-      kind: "theory",
-      body: `## Petits murs, petits prompts
+      explain: `Celui-ci ne demande aucun jugement, et c'est bien l'idée : c'est un grep. Un fichier du domaine qui nomme \`@stellar/stellar-sdk\`, un ORM ou un hook React a déjà perdu le débat, aussi raisonnable qu'ait été la raison sur le moment.` },
+    { kind: "theory", body: `## La loi, et le mécanisme manquant
 
-Voici ce que le bastion t'offre à l'ère de l'IA : **les modules bien délimités sont de bons prompts bien délimités.**
+Vous savez désormais dire dans quel sens chaque flèche doit pointer, et vérifier n'importe quel fichier en quelques secondes.
 
-« Réécris l'adaptateur Horizon pour cibler le nouveau RPC : voici le port qu'il doit respecter et les tests qu'il doit réussir » est une tâche que le golem peut accomplir *dans une boîte* : un seul fichier de contexte, un contrat à satisfaire, des tests à réussir et des murs qui limitent le rayon d'impact. Il reconstruit une pièce sans jamais errer dans le bastion.
+Ce que vous ne savez pas encore dire, c'est comment l'anneau intérieur **fait** quoi que ce soit. Il n'a pas le droit de nommer le SDK de la chaîne — mais un paiement doit tout de même partir. Il ne doit rien savoir d'une base de données — mais le séquestre doit bien être rangé quelque part. Une loi qui rend la chose utile impossible n'est pas une loi que l'on respecte.
 
-Prochaine discipline : le golem lui-même — et l'établi que tu dois construire autour de lui.`,
-    },
+**Ensuite :** les portes que le donjon perce dans ses propres murs, et qui a le droit de se tenir de l'autre côté.` },
   ],
-} satisfies JourneyConceptText;
+  testOut: [
+    { question: `Énoncez la règle de dépendance.`,
+      options: ["Les dépendances de code source pointent uniquement vers l'intérieur — l'anneau extérieur peut nommer l'intérieur, jamais l'inverse","Chaque couche peut dépendre de la couche immédiatement en dessous, et pas au-delà","Les dépendances pointent vers le module qui change le moins souvent"], answer: 0 },
+    { question: `Pourquoi vers l'intérieur plutôt que vers l'extérieur ?`,
+      options: ["Les frameworks s'agitent et les règles métier leur survivent — pointer vers l'extérieur rend votre code le plus lent otage de votre dépendance la plus rapide","Les modules internes sont plus petits, donc ils compilent plus vite sans imports","C'est une convention qui facilite le tracé automatique des graphes de dépendances"], answer: 0 },
+    { question: `Quel import enfreint la règle ?`,
+      options: ["domain/escrow.ts important le SDK de la chaîne pour construire une transaction","adapters/horizon.ts important une interface du domaine afin de l'implémenter","ui/ReleaseButton.tsx important un cas d'usage afin de l'appeler"], answer: 0 },
+    { question: `Un composant React décide si les fonds du séquestre peuvent être libérés, puis affiche le bouton. Où est le problème ?`,
+      options: ["Une règle métier dans l'UI est invisible aux tests du cœur, et le prochain écran qui en aura besoin la dupliquera","Nulle part — décider près du rendu garde le code ensemble","Uniquement la performance : la vérification se rejoue à chaque rendu"], answer: 0 },
+  ],
+};

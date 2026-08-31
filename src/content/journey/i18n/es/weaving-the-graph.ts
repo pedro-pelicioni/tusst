@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const weavingTheGraph: Concept = {
-  meta: {
-    slug: "weaving-the-graph",
-    title: "Tejiendo el Grafo",
-    tagline: "Ingeniería de grafos: muchos pequeños gólems, un plan tejido.",
-    numeral: "VIII",
-    arc: "craft",
-    level: 2,
-    status: "live",
-    estMinutes: 12,
-    sigil: "/v2/journey/sigils/weaving-the-graph.webp",
-    glyph: "🕸️",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Tejiendo el Grafo",
+  tagline: "Muchos golems pequeños, cada uno en su banco, un plan tejido.",
   steps: [
     {
       kind: "theory",
@@ -126,6 +116,8 @@ La disciplina consiste en detectar la *verdadera* independencia: el trabajo para
         ],
       },
     },
+    { kind: "widget", component: "fan-out",
+      body: `Cuatro tareas, dos etapas cada una, tres formas de planificarlas. **Cambia las duraciones** y mira qué dos planificaciones dejan de ser la misma cosa.` },
     {
       kind: "quiz",
       question: `¿Qué conjunto de subtareas es seguro ejecutar en paralelo?`,
@@ -137,6 +129,15 @@ La disciplina consiste en detectar la *verdadera* independencia: el trabajo para
       answer: 0,
       explain: `Ejecutar antes de escribir viola una dependencia, y la edición simultánea del mismo archivo genera conflictos de fusión y pasos extra. La prueba es sencilla y fiable: si el nodo A no lee la salida del nodo B ni toca su estado, pueden ejecutarse juntos.`,
     },
+    { kind: "quiz",
+      question: `Cinco nodos producen cada uno un hallazgo, y cada hallazgo necesita luego verificarse. ¿Cuándo está bien esperar a **los cinco** hallazgos antes de empezar **cualquier** verificación?`,
+      options: [
+        "Solo cuando el paso de verificación necesita de verdad el conjunto entero a la vez — para deduplicar entre hallazgos, digamos, o para saltárselo todo si el recuento es cero",
+        "Siempre — una frontera limpia entre etapas hace el pipeline más fácil de razonar",
+        "Nunca — esperar siempre es tiempo desperdiciado en un sistema paralelo",
+      ],
+      answer: 0,
+      explain: `Una barrera es una herramienta real con un coste real: gasta el tiempo del nodo más lento sin hacer nada con los otros cuatro. Se gana ese coste cuando la siguiente etapa trata de verdad sobre el *conjunto* — deduplicación, una salida temprana si hay cero, una comparación entre resultados. "Se lee mejor" no lo es, y "necesito aplanar la lista primero" tampoco.` },
     {
       kind: "theory",
       body: `## El forjador y el refutador
@@ -157,58 +158,22 @@ La descripción del trabajo importa. “Revisa esto” invita a un asentimiento.
       answer: 0,
       explain: `Un verificador que se le indique aprobar encontrará una forma de aprobar. “Summarize” produce prosa, no escrutinio; “rewrite” simplemente crea otro forjador con sus propios puntos ciegos. La refutación es el único objetivo que dirige al nodo a los agujeros.`,
     },
-    {
-      kind: "theory",
-      body: `## Orquestación vs. autonomía
+    { kind: "theory", body: `## Una forma todavía no es un sistema
 
-Separa claramente los dos trabajos del grafo:
+Ya sabes coger una misión demasiado grande para un solo banco y cortarla en nodos lo bastante pequeños como para hacerlos bien — y sabes entregar la comprobación a una segunda mente que nunca se encariñó con las decisiones de la primera.
 
-- **Las aristas son determinísticas.** Código simple decide qué se ejecuta cuándo, qué fluye dónde, cómo es un reintento — flujo de control que puedes leer, probar y reproducir.
-- **El juicio vive dentro de los nodos.** Dentro de su caja, el modelo aporta todo su arte a su única tarea.
+Lo que tienes es una forma. Lo que aún no tienes es una máquina en la que alguien pueda confiar. ¿Quién decide qué nodo va después? ¿Qué les pasa a los demás nodos cuando uno falla? Y — la pregunta que más dinero ahorra — ¿cuándo **no** deberías construir un grafo?
 
-Desdibujar la separación — dejar que el modelo improvise el siguiente paso — hace que los fallos dejen de ser reproducibles: cada ejecución es una nueva aventura por un grafo diferente. Mantén la estructura aburrida y las mentes contenidas: **fiabilidad del esqueleto, inteligencia de los órganos.**`,
-    },
-    {
-      kind: "quiz",
-      question: `En un grafo bien construido, ¿dónde reside el juicio del modelo?`,
-      options: [
-        "Dentro de los nodos — mientras las aristas entre ellos siguen siendo código determinístico que puedes probar y reproducir",
-        "En las aristas — dejar que el modelo improvise qué nodo se ejecuta después mantiene el sistema flexible",
-        "En ninguna parte — una pipeline seria es determinista de extremo a extremo, o no es ingeniería",
-      ],
-      answer: 0,
-      explain: `El flujo de control improvisado genera fallos no reproducibles — no puedes depurar una ruta que nunca ocurre de la misma forma. Y una pipeline sin juicio en ningún lado no necesitaría gólems. Esqueleto determinista, órganos que juzgan: cada tipo de fiabilidad donde corresponde.`,
-    },
-    {
-      kind: "theory",
-      body: `## Mamparos para el razonamiento
-
-El regalo más silencioso del grafo es la **contención**.
-
-En un único prompt gigante, una confusión en el paso dos envenena todo lo que sigue — mismo contexto, sin mamparos, el error se acumula educadamente hasta el final.
-
-En un grafo, un nodo fallido **falla solo**. Su contexto queda en cuarentena; sus propias evaluaciones capturan el fallo en *su* frontera — la brújula del capítulo anterior, ahora publicada por nodo; el orquestador lo reintenta o lo rodea. Esto es lo que las herramientas de pipelines y multi‑agentes existen para ofrecerte: pasos nombrados, handoffs tipados, reintentos — y es la lección del radio de explosión del bastión, una capa más arriba.`,
-    },
-    {
-      kind: "quiz",
-      question: `La tarea: renombrar una función y sus llamadas en un solo archivo. ¿Qué eliges?`,
-      options: [
-        "Un bucle simple — o simplemente tu editor; el coste de coordinación de un grafo superaría la tarea",
-        "Un grafo — más gólems significa más calidad, tanto en tareas pequeñas como grandes",
-        "Un grafo — las tareas pequeñas son exactamente el lugar para practicar para las grandes",
-      ],
-      answer: 0,
-      explain: `Cada nodo implica una configuración: contexto que curar, aristas que definir, fallos que encaminar. En una tarea pequeña, el andamiaje supera al trabajo — una consejo de guerra convocado para aplastar una mosca. Tarea simple, bucle simple; el grafo solo vale la pena cuando la descomposición lo justifica.`,
-    },
-    {
-      kind: "theory",
-      body: `## El oficio, ensamblado
-
-Mira lo que llevas ahora en el cinturón: **especificaciones** que dicen qué es correcto; **pruebas** que lo verifican siempre; **límites** que mantienen las palabras honestas; una **fortaleza** que contiene el cambio; un **arnés** que contiene al gólem; **palabras** que moldean lo que ve; **bucles** que le permiten autocorregirse; y un **grafo** que teje muchas mentes en un solo plan.
-
-Ninguno de estos lo hará la IA por ti. Todos ellos hacen que la IA valga diez veces su propio esfuerzo.
-
-Lo siguiente en el camino: volver al reino — llevar el oficio al Forge y gastarlo en la red real.`,
-    },
+**A continuación:** la parte que hace fiable a la forma.` },
+  ],
+  testOut: [
+    { question: `¿Por qué descomponer una misión grande en un grafo de nodos en vez de un prompt largo?`,
+      options: ["Cada nodo recibe su propio banco curado, así la calidad no se diluye entre pasos que no tienen nada que ver entre sí","Los modelos cobran menos por varias peticiones cortas que por una larga","Deja que el modelo elija su propio orden de trabajo, lo que mejora los resultados"], answer: 0 },
+    { question: `¿Cuál es la prueba para saber si dos nodos pueden correr en paralelo?`,
+      options: ["El nodo A ni lee la salida del nodo B ni toca su estado","Se espera que ambos nodos tarden aproximadamente lo mismo","Ninguno de los dos escribe en la red"], answer: 0 },
+    { question: `¿Por qué darle al segundo golem el objetivo \"refutar\" y no \"revisar\"?`,
+      options: ["Un nodo al que se le manda aprobar encontrará la forma de aprobar — la refutación es el único objetivo que apunta la mente a los agujeros","La refutación produce salida más corta, lo que cuesta menos","La revisión requiere el contexto original, y la refutación no"], answer: 0 },
+    { question: `Cuatro tareas en paralelo, cada una con dos etapas. ¿Qué cuesta realmente esperar a que todas terminen la etapa uno?`,
+      options: ["El tiempo de etapa uno de la tarea más lenta, gastado sin hacer nada con las demás — y otra vez en la etapa dos","Nada, mientras las tareas corran en paralelo dentro de cada etapa","Solo la sobrecarga de coordinación del planificador"], answer: 0 },
   ],
 };

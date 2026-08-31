@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const weavingTheGraph: Concept = {
-  meta: {
-    slug: "weaving-the-graph",
-    title: "Tecendo o Grafo",
-    tagline: "Engenharia de grafos: muitos pequenos golems, um plano entrelaçado.",
-    numeral: "VIII",
-    arc: "craft",
-    level: 2,
-    status: "live",
-    estMinutes: 12,
-    sigil: "/v2/journey/sigils/weaving-the-graph.webp",
-    glyph: "🕸️",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Tecendo o Grafo",
+  tagline: "Muitos golens pequenos, cada um na própria bancada, um plano tecido.",
   steps: [
     {
       kind: "theory",
@@ -127,6 +117,11 @@ A disciplina está em identificar a *verdadeira* independência: trabalho parale
       },
     },
     {
+      kind: "widget",
+      component: "fan-out",
+      body: `Quatro tarefas, dois estágios cada, três formas de agendá-las. **Inverta as durações** e veja quais duas agendas deixam de ser a mesma coisa.`,
+    },
+    {
       kind: "quiz",
       question: `Qual conjunto de subtarefas pode ser distribuído em paralelo com segurança?`,
       options: [
@@ -136,6 +131,17 @@ A disciplina está em identificar a *verdadeira* independência: trabalho parale
       ],
       answer: 0,
       explain: `Executar antes de escrever viola uma dependência, e editar o mesmo arquivo gera conflitos de merge e passos extras. O teste é simples e confiável: se o nó A não lê a saída do nó B nem toca no estado do nó B, eles podem rodar juntos.`,
+    },
+    {
+      kind: "quiz",
+      question: `Cinco nós produzem cada um um achado, e cada achado depois precisa ser verificado. Quando é certo esperar por **todos os cinco** achados antes de começar **qualquer** verificação?`,
+      options: [
+        "Só quando o passo de verificação realmente precisa do conjunto inteiro de uma vez — para deduplicar entre achados, digamos, ou para pular tudo se a contagem for zero",
+        "Sempre — uma fronteira limpa entre estágios torna o pipeline mais fácil de raciocinar",
+        "Nunca — esperar é sempre tempo desperdiçado num sistema paralelo",
+      ],
+      answer: 0,
+      explain: `Uma barreira é uma ferramenta real com um custo real: ela gasta o tempo do nó mais lento sem fazer nada com os outros quatro. Ela merece esse custo quando o próximo estágio é genuinamente sobre o *conjunto* — deduplicação, uma saída antecipada em zero, uma comparação entre resultados. "Fica mais legível" não é isso, e "preciso achatar a lista antes" também não.`,
     },
     {
       kind: "theory",
@@ -159,56 +165,23 @@ A descrição do trabalho importa. "Revise isto" convida a um aceno de aprovaç�
     },
     {
       kind: "theory",
-      body: `## Orquestração vs. autonomia
+      body: `## Uma forma ainda não é um sistema
 
-Separe claramente as duas funções do grafo:
+Você já consegue pegar uma missão grande demais para uma bancada só e cortá-la em nós pequenos o bastante para serem bem feitos — e sabe entregar a conferência a uma segunda mente que nunca se apegou às escolhas da primeira.
 
-- **Arestas são determinísticas.** Código simples decide o que roda quando, o que flui onde, como um retry se parece — fluxo de controle que você pode ler, testar e reproduzir.
-- **Julgamento vive dentro dos nós.** Dentro de sua caixa, o modelo aplica todo o ofício à sua única tarefa.
+O que você tem é uma forma. O que você ainda não tem é uma máquina em que alguém possa confiar. Quem decide qual nó roda em seguida? O que acontece com os outros nós quando um deles falha? E — a pergunta que mais economiza dinheiro — quando você **não** deveria construir um grafo?
 
-Misture as coisas — deixe o modelo improvisar qual passo vem a seguir — e as falhas deixam de ser reproduzíveis: cada execução vira uma nova aventura por um grafo diferente. Mantenha a estrutura entediante e as mentes contidas: **confiabilidade do esqueleto, inteligência dos órgãos.**`,
+**A seguir:** a parte que torna a forma confiável.`,
     },
-    {
-      kind: "quiz",
-      question: `Em um grafo bem construído, onde reside o julgamento do modelo?`,
-      options: [
-        "Dentro dos nós — enquanto as arestas entre eles permanecem código determinístico que você pode testar e reproduzir",
-        "Nas arestas — deixar o modelo improvisar qual nó roda a seguir mantém o sistema flexível",
-        "Em nenhum lugar — um pipeline sério é determinístico de ponta a ponta, ou não é engenharia",
-      ],
-      answer: 0,
-      explain: `Fluxo de controle improvisado gera falhas não reproduzíveis — você não consegue depurar um caminho que nunca acontece da mesma forma duas vezes. E um pipeline sem julgamento em nenhum ponto nem precisaria de golems. Esqueleto determinístico, órgãos julgadores: cada tipo de confiabilidade onde pertence.`,
-    },
-    {
-      kind: "theory",
-      body: `## Compartimentos para raciocínio
-
-O presente mais silencioso do grafo é **confinamento**.
-
-Em um prompt gigante, uma única confusão na segunda etapa envenena tudo que vem depois — mesmo contexto, sem compartimentos, o erro se acumula educadamente até o fim.
-
-Em um grafo, um nó que falha **falha sozinho**. Seu contexto é colocado em quarentena; suas próprias avaliações capturam a falha em *sua* fronteira — a bússola do último capítulo, agora publicada por nó; o orquestrador o repete ou o contorna. É isso que ferramentas de pipelines e multi‑agentes oferecem — etapas nomeadas, handoffs tipados, retries — e é a lição do raio de explosão da fortaleza novamente, um nível acima.`,
-    },
-    {
-      kind: "quiz",
-      question: `A tarefa: renomear uma função e seus pontos de chamada em um único arquivo. O que você usa?`,
-      options: [
-        "Um loop simples — ou apenas seu editor; o custo de coordenação de um grafo superaria a tarefa",
-        "Um grafo — mais golems significa mais qualidade, tanto em tarefas pequenas quanto grandes",
-        "Um grafo — tarefas pequenas são exatamente o lugar para praticar para as grandes",
-      ],
-      answer: 0,
-      explain: `Cada nó tem custo de preparação: contexto a curar, arestas a definir, falhas a rotear. Em uma tarefa pequena a estrutura pesa mais que o trabalho — um conselho de guerra convocado para matar uma mosca. Tarefa simples, loop simples; o grafo só vale a pena quando a decomposição justifica.`,
-    },
-    {
-      kind: "theory",
-      body: `## O ofício, montado
-
-Olhe o que está no seu cinto agora: **especificações** que dizem o que é certo; **testes** que verificam isso eternamente; **fronteiras** que mantêm as palavras honestas; um **keep** que contém mudanças; um **arnês** que contém o golem; **palavras** que moldam o que ele vê; **loops** que permitem correção; e um **grafo** que entrelaça muitas mentes em um plano.
-
-Nenhum desses carregará a IA por você. Todos eles tornam a IA valer dez vezes mais.
-
-Próximo passo na jornada: voltar ao reino — levar o ofício à Forja e colocá-lo em prática na rede real.`,
-    },
+  ],
+  testOut: [
+    { question: `Por que decompor uma missão grande num grafo de nós em vez de um prompt longo?`,
+      options: ["Cada nó ganha a própria bancada curada, então a qualidade não se dilui entre passos que não têm nada a ver um com o outro","Modelos cobram menos por vários pedidos curtos do que por um longo","Isso deixa o modelo escolher a própria ordem de trabalho, o que melhora os resultados"], answer: 0 },
+    { question: `Qual é o teste para saber se dois nós podem rodar em paralelo?`,
+      options: ["O nó A não lê a saída do nó B nem toca no estado dele","Espera-se que os dois nós levem aproximadamente o mesmo tempo","Nenhum dos dois escreve na rede"], answer: 0 },
+    { question: `Por que dar ao segundo golem o objetivo \"refutar\" e não \"revisar\"?`,
+      options: ["Um nó mandado aprovar vai achar um jeito de aprovar — refutação é o único objetivo que aponta a mente para os buracos","Refutação produz saída mais curta, o que custa menos","Revisão exige o contexto original, e refutação não"], answer: 0 },
+    { question: `Quatro tarefas em paralelo, cada uma com dois estágios. O que esperar todas terminarem o estágio um de fato custa?`,
+      options: ["O tempo de estágio um da tarefa mais lenta, gasto sem fazer nada com as outras — e de novo no estágio dois","Nada, desde que as tarefas rodem em paralelo dentro de cada estágio","Só o custo de coordenação do escalonador"], answer: 0 },
   ],
 };

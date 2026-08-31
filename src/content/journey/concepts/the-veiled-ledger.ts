@@ -1,20 +1,22 @@
 import type { Concept } from "../types";
 
-// Chapter VIII — privacy lands on the public ledger: the ZK host-function
-// groundwork, Confidential Tokens (amounts veiled, addresses public), and
-// Stellar Private Payments' shared pool — all with a compliance spine.
-// Frontier tech: the dates and specifics here matter.
+// Realm XI — why a public ledger needs a veil at all, the primitive that makes
+// one possible, and the first of the two systems built on it. The deeper veil
+// and the compliance spine that makes it legitimate are Realm XII, because
+// "amounts can be hidden" and "and it is still auditable" are separate claims
+// and only the second one is the surprising part.
 
 export const theVeiledLedger: Concept = {
   meta: {
     slug: "the-veiled-ledger",
     title: "The Veiled Ledger",
-    tagline: "Confidential tokens, private payments — privacy with a compliance spine.",
-    numeral: "VIII",
+    tagline: "Proof without disclosure — and the first veil built on it.",
+    numeral: "XIII",
     arc: "realm",
     level: 2,
+    requires: ["wallets-without-seeds"],
     status: "live",
-    estMinutes: 21,
+    estMinutes: 12,
     sigil: "/v2/journey/sigils/the-veiled-ledger.webp",
     glyph: "🕯️",
   },
@@ -155,77 +157,17 @@ Built for parties who know each other but must keep figures private: payroll, su
     },
     {
       kind: "theory",
-      body: `## Stellar Private Payments: veiling the counterparties
+      body: `## The veil you did not draw
 
-One veil deeper. **Stellar Private Payments (SPP)**, built by **Nethermind**, reached **developer preview on testnet in August 2026**.
+Here is where people relax too early. You wrapped payroll in a Confidential Token, the amounts went dark, and the problem feels solved.
 
-Instead of wrapping a token, users **deposit assets into a shared pool**. Transfers then happen *inside* the pool — and an outside observer can no longer link sender to receiver. Not just the amounts: the **counterparties themselves are hidden**.
+Watch what an observer still has. One address pays forty addresses. It does so on the first of every month, and again on the fifteenth. Two of those forty stopped receiving in March, and three new ones started in April. One of them receives from your address and from a second company's address.
 
-Where Confidential Tokens suit parties who know each other, SPP covers cases where *who paid whom* is itself the secret — donations, sensitive vendor relationships, personal finance on public rails.`,
-    },
-    {
-      kind: "diagram",
-      body: "Follow one payment through the pool, and watch what the explorer keeps:",
-      caption:
-        "The edges are public by construction. Everything the pool protects happens between them.",
-      view: {
-        kind: "flow",
-        layout: "row",
-        play: true,
-        nodes: [
-          {
-            id: "deposit",
-            label: "Deposit",
-            tone: "gold",
-            note: "Visible. The explorer records that this account moved funds into the pool, and how much. Nothing is hidden here — and nothing needs to be.",
-          },
-          {
-            id: "inside",
-            label: "Inside the pool",
-            tone: "accent",
-            note: "Hidden. Transfers between pool members need not surface on-chain at all: no sender, no receiver, no amount. This is the part the veil covers.",
-          },
-          {
-            id: "withdraw",
-            label: "Withdrawal",
-            tone: "gold",
-            note: "Visible again. Someone leaves the pool with a value — but tying THIS exit to THAT entry is exactly what the pool breaks.",
-          },
-          {
-            id: "observer",
-            label: "What the observer keeps",
-            tone: "neutral",
-            note: "Two public edges and a crowd in between. The bigger the pool, the weaker the link between any entry and any exit.",
-          },
-        ],
-      },
-    },
-    {
-      kind: "theory",
-      body: `## The compliance spine
+Nobody learned a single salary — and an observer now knows your headcount, your pay cycle, your attrition, your hiring, and which of your staff moonlight. **The amounts were never the only thing the ledger was saying.**
 
-"Private" without limits is a sanctions officer's nightmare, and these designs refuse to go there. SPP combines confidentiality with **compliance safeguards built in**:
+This is not a flaw in Confidential Tokens; it is the shape of what they promise. A veil covers the field you chose, and every uncovered field goes on speaking — timing, frequency, and above all the **graph** of who touches whom.
 
-- **KYC-gated participation** — joining the pool requires verified identity.
-- **Identity-level access controls** — permissions attach to *who you are*, not just which key you hold.
-- **Account-level freeze capability** — bad actors can be stopped even inside the veil.
-
-Those three safeguards are enforced by a piece worth knowing by name: the **Association Set Provider (ASP)**. An ASP publishes a *set* of deposits it vouches for — an allow list — or the ones it refuses to vouch for — a deny list. To withdraw, you prove your funds trace back to some deposit inside that set, **without revealing which one**. SPP builds this on a key-based association set, backed by a public key registry so participants can be referenced at all.
-
-Sit with the consequence, because it is the whole trick: **the same withdrawal is private and auditable at once**. Private, because the link to your particular deposit is never published. Auditable, because you could not have withdrawn without proving membership of a vouched-for set. Different ASPs can serve different jurisdictions — and you choose whose blessing you carry.
-
-The goal in one line: **privacy for users, not for crime**. Confidential *and* compliant transfers on public rails — that combination, not raw secrecy, is what institutions were waiting for.`,
-    },
-    {
-      kind: "quiz",
-      question: `An explorer watches a Confidential Token transfer and an SPP pool transfer. What does it see in each?`,
-      options: [
-        "CT: the two addresses but not the amount; SPP: not even the counterparties — value moved within the shared pool",
-        "Both hide amounts and addresses identically — SPP is just the cheaper one",
-        "CT hides the addresses but shows amounts; SPP shows everything to KYC'd viewers",
-      ],
-      answer: 0,
-      explain: `Two layers, two veils. Confidential Tokens hide *how much* between known parties; SPP's shared pool also hides *who*. Pick the layer that matches what your use case must keep quiet.`,
+Which is exactly why a second, deeper system had to exist.`,
     },
     {
       kind: "fill",
@@ -238,39 +180,59 @@ The goal in one line: **privacy for users, not for crime**. Confidential *and* c
       explain: `The token interface standard is the hook: anything speaking SEP-41 can be wrapped — including classic assets like USDC through their Stellar Asset Contract. The privacy layer composes with everything you already know.`,
     },
     {
-      kind: "theory",
-      body: `## Go and look inside one
-
-Everything above is checkable right now, on a pool that actually exists. Nethermind's developer preview is live on testnet, and its read functions answer **without a wallet and without a signature**. You are not a customer of this thing — you are a spectator, and spectating is free.
-
-Open the [Forge](/ide), switch to **Explore**, and pick **SPP privacy pool · XLM** from the known contracts. Then ask it, in this order:
-
-- \`get_policy_flags()\` — how this pool is configured. It answers **2**: blocklist enforced, no allowlist.
-- \`get_root()\` — the Merkle root committing to every note ever deposited here. One number standing in for the entire anonymity set.
-- \`is_known_root(<that number>)\` — **true**. Now change a single digit and ask again: **false**. You just walked the pool's own ring of remembered roots.
-- \`is_spent(<any number>)\` — **false**. This is the nullifier set: the pool's defence against double-spending, and very nearly the only thing a withdrawal publishes about itself.
-
-Read them in order and notice what is *missing*. Not one of those answers contains an address, an amount or a counterparty. The chain is telling you the exact truth and telling you nothing.
-
-**Two warnings, because a contract's spec cannot warn you about itself.** This pool exposes five leftover functions — \`balance\`, \`transfer\`, \`approve\` and friends — that answer politely and mean nothing at all; the Forge marks them *decoy* so they cannot fool you. And the preview's state **archives on 2026-09-02**, after which those reads stop answering until somebody pays to restore them. That is not the Forge failing: it is Soroban state rent, which every contract on this network lives under.`,
+      kind: "rustBranch",
+      lessonSlug: "stellar-protocol-27-1",
+      body: `None of this was a library someone published. BLS12-381, BN254, Poseidon — each arrived as a **CAP inside a named protocol release**, which is why a contract verifies a proof at native speed instead of paying a thousandfold penalty to do cryptography honestly. The Campaign's protocol act is where you watch a release actually land.`,
     },
     {
-      kind: "quiz",
-      question: `You call \`get_asp_non_membership_root()\` on the live pool and it answers **0**. What does that actually tell you?`,
+      kind: "theory",
+      body: `## The half that sounds impossible
+
+You now have a veil for the numbers. For payroll, invoices, settlement between parties who already know each other, that is the whole requirement — the figures were the secret.
+
+But sometimes the figures are not the secret. Sometimes *who paid whom* is the sensitive part: a donation, a supplier you would rather competitors not learn about, a personal transfer on public rails.
+
+Hiding that is the deeper veil, and it comes with an obvious objection — the one every compliance officer raises in the first minute, and the one worth taking seriously rather than waving away.
+
+**Next:** the second veil, and the answer to that objection.`,
+    },
+  ],
+  testOut: [
+    {
+      question: `What is the problem with a fully transparent ledger, for a business?`,
       options: [
-        "The blocklist is empty — and 0 is the value the contract checks every withdrawal against, so an empty list is an enforced policy, not a missing one",
-        "The call failed and fell back to a default: a Merkle root is never legitimately zero",
-        "The blocklist is confidential, so the contract returns 0 to anyone who is not an ASP",
+        "Balances and amounts are public forever, so anyone can derive salaries, margins and supplier terms from ordinary payments",
+        "Transactions can be traced back and reversed by observers",
+        "Public data makes the ledger slower to query at scale",
       ],
       answer: 0,
-      explain: `An empty tree still has a real root, and for this blocklist it is literally 0 — so "nobody is barred" is being actively enforced on every spend rather than left unset. Now try its neighbour: \`get_asp_membership_root()\` answers 2302223575749844940221218608817648865122641281382153518325924961250440546344, an impressive-looking number for a tree that is **also empty**. That one is the empty-tree zero-hash. Reading it as "the allowlist has members" is the easiest mistake in this whole subject, and you just avoided it.`,
     },
     {
-      kind: "labLink",
-      labSlug: "confidential-tokens",
-      body: `On the Forge's anvil: a **Confidential Tokens** lab, where you'll wrap a testnet token and watch amounts vanish from the explorer while the transfer still settles honestly. Its card reads *being forged* — this frontier is being hammered as you read.
-
-Notice how young these dates are. Riding tech this fresh means reading the protocol's own pulse — the final chapter shows you how.`,
+      question: `What does a zero-knowledge proof let a verifier conclude?`,
+      options: [
+        "That a statement about hidden values is true, while learning nothing else about those values",
+        "That the prover is a trusted party, verified by a third party",
+        "That the hidden values fall inside a range the verifier chose",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Why did these primitives have to arrive as protocol-level host functions?`,
+      options: [
+        "So contracts verify proofs at native speed — doing the same maths in contract code would carry a crushing cost penalty",
+        "Because contracts are not allowed to perform cryptography",
+        "So that only audited contracts can use them",
+      ],
+      answer: 0,
+    },
+    {
+      question: `A Confidential Token wraps an existing token. What changes, and what does not?`,
+      options: [
+        "Balances and transfer amounts become hidden; the addresses transacting stay public",
+        "Addresses become hidden; the amounts stay public",
+        "Both become hidden, which is what makes it confidential",
+      ],
+      answer: 0,
     },
   ],
 };

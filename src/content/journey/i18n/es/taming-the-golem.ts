@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const tamingTheGolem: Concept = {
-  meta: {
-    slug: "taming-the-golem",
-    title: "Domar al Golem",
-    tagline: "Ingeniería de arneses: dale a la IA una banca, no un deseo.",
-    numeral: "V",
-    arc: "craft",
-    level: 2,
-    status: "live",
-    estMinutes: 13,
-    sigil: "/v2/journey/sigils/taming-the-golem.webp",
-    glyph: "🗿",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Domando al Golem",
+  tagline: "El modelo se alquila. El arnés es ingeniería, y es tuyo.",
   steps: [
     {
       kind: "theory",
@@ -112,64 +102,32 @@ Las afirmaciones son datos. Los verificadores son la verdad.`,
       answer: 0,
       explain: `Una auto‑revisión por la misma mente comparte los mismos puntos ciegos — si creyó que el despliegue funcionó, volverá a creerlo. Los verificadores independientes no comparten esos puntos ciegos, y en Stellar una lectura RPC cuesta milisegundos. El libro mayor es el detector de mentiras más barato que tendrás.`,
     },
-    {
-      kind: "theory",
-      body: `## Menor privilegio: menos dientes, por favor
-
-Un golem con \`rm -rf\` disponible es un golem que *eventualmente* lo ejecutará — no por malicia, sino por un plan erróneo y confiado a las 2 a.m. La solución es antigua y probada: **menor privilegio**.
-
-- Concede herramientas para *esta tarea*, no herramientas en general.
-- Prefiere acceso **solo de lectura** siempre que escribir no sea necesario.
-- Limítalo a un directorio; sandboxea cualquier cosa que se ejecute.
-- Dale **solo claves de testnet** — nunca una clave cuya pérdida realmente cause daño.
-
-Conceder poder "por si acaso" es cómo empiezan los incidentes. Cada herramienta tiene un radio de explosión; concédele según corresponda.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Delimita el poder del golem antes de que empiece a trabajar:`,
-      file: "harness.toml",
-      before: `signing_keys = "`,
-      after: `"`,
-      choices: ["testnet", "mainnet", "all-networks", "treasury"],
+    { kind: "fill",
+      prompt: `Completa el primer movimiento del ingeniero de arneses:`,
+      file: "NOTES.md",
+      before: `El golem dice que el despliegue salió bien. Antes de que esa frase cambie nada, el arnés `,
+      after: ` .`,
+      choices: ["lee la cadena y comprueba", "le pide al golem que lo confirme", "anota la afirmación en el registro de la ejecución", "repite el despliegue por si acaso"],
       answer: 0,
-      explain: `Regla práctica: un golem solo posee claves cuya pérdida total puedas encarar con indiferencia. Los lumens de testnet son gratuitos gracias a friendbot; una clave de mainnet o del tesoro dentro de un bucle automatizado es un incidente con cuenta regresiva.`,
-    },
-    {
-      kind: "theory",
-      body: `## Diseña la ruta de falla
+      explain: `Pedirle a la misma mente que confirme su propio trabajo te compra el mismo punto ciego dos veces. Y una afirmación escrita en un log sigue siendo una afirmación — solo que ahora parece oficial. En Stellar la comprobación cuesta una lectura RPC, lo que convierte al libro mayor en el detector de mentiras más barato que tendrás.` },
+    { kind: "labLink", labSlug: "guild-vault",
+      body: `Puedes meterte dentro de un arnés de verificación ahora mismo. El laboratorio **La Cámara del Gremio** de la Forja te hace elevar el umbral de firma de una cuenta, para que una tesorería exija dos oficiales — y luego no se fía de tu palabra. El servidor lee el libro mayor y comprueba él mismo el conjunto de firmantes. Decir que lo hiciste no es la comprobación; la cadena sí.` },
+    { kind: "theory", body: `## La mitad que se salta
 
-Los aficionados diseñan lo que ocurre cuando el golem está *correcto*. Los ingenieros diseñan lo que ocurre cuando está **equivocado** — porque a veces lo estará.
+Ya sabes nombrar las piezas de un arnés y, más importante, negarte a creer nada de lo que el golem diga sobre su propio trabajo.
 
-- Un chequeo fallido **bloquea el merge**; no registra una advertencia en el vacío.
-- Los reintentos tienen un **presupuesto**, así un golem atascado se convierte en un golem detenido, no en una factura.
-- Un humano revisa **un diff con contexto**, nunca un hecho consumado ya en producción.
-- El rollback es una ruta probada, no una oración.
+Todo hasta aquí ha ido de darle **manos** — herramientas, un directorio, un ejecutor. Nada hasta aquí ha hecho la pregunta difícil: qué manos exactamente, y qué pasa el día en que las use sobre un plan seguro y equivocado.
 
-Para cada paso del arnés, haz una pregunta: *"cuando esto está mal, ¿qué lo captura?"* Si la respuesta es "ojalá que nada salga mal" — es un deseo, no un diseño.`,
-    },
-    {
-      kind: "quiz",
-      question: `¿Cuál de estos es una ruta de falla **diseñada**?`,
-      options: [
-        "Una suite de pruebas roja bloquea el auto‑merge, y un humano recibe el diff más la salida fallida",
-        "El prompt instruye firmemente al golem a ser extremadamente cuidadoso y a doble‑chequear todo",
-        "El bucle reintenta la misma tarea, sin límite, hasta que la salida finalmente pasa",
-      ],
-      answer: 0,
-      explain: `Las instrucciones son esperanzas — útiles, pero no *capturan* nada. Los reintentos ilimitados son una factura sin techo (un capítulo posterior nombra la solución). Una ruta diseñada tiene un disparador, una parada y un humano con suficiente contexto para actuar.`,
-    },
-    {
-      kind: "theory",
-      body: `## Has estado dentro de uno todo el tiempo
-
-Mira alrededor: **TUSST es un arnés.**
-
-El entorno de evaluación de la Forja es un mecanismo de verificación: tu solución se ejecuta de forma aislada, pruebas ocultas la juzgan y ningún texto convincente convierte un resultado rojo en verde. Los laboratorios on‑chain van más allá: no preguntan *si dices* que desplegaste — **leen la cadena** y lo comprueban.
-
-Esa es la disciplina en una imagen: construye la banca de modo que estar equivocado sea *detectable* y estar en lo correcto sea *comprobable* — para golems y para humanos.
-
-Próxima disciplina: las palabras mismas — lo que el golem realmente ve en la banca.`,
-    },
+**A continuación:** cuánto poder necesita de verdad el trabajo, y la única pregunta que hacerle a cada paso que construyas.` },
+  ],
+  testOut: [
+    { question: `¿Qué es el arnés, y por qué importa más que el prompt?`,
+      options: ["Todo lo que rodea al modelo — herramientas, permisos, directorio de trabajo, verificadores. El modelo se alquila; el arnés es tuyo y sobrevive a un cambio de modelo","El prompt de sistema y sus instrucciones, que es donde se fija el comportamiento","La infraestructura del proveedor, que determina latencia y rendimiento"], answer: 0 },
+    { question: `Mismo modelo, mismas tareas, y la salida de este mes es mucho peor. ¿Dónde mira primero un ingeniero de arneses?`,
+      options: ["A lo que rodea al modelo — el contexto dado, las herramientas disponibles, las comprobaciones que filtran la salida","A los pesos, que se degradan bajo carga sostenida","A ningún sitio — la aleatoriedad del muestreo explica cualquier oscilación"], answer: 0 },
+    { question: `¿Cuál es el rasgo más peligroso del golem?`,
+      options: ["Seguridad estando equivocado — informa de éxito con el mismo tono cálido haya pasado algo o no","Ignorancia — hay cosas que sencillamente no ha visto nunca","Lentitud en tareas largas, lo que tienta a saltarse la revisión"], answer: 0 },
+    { question: `"Contrato desplegado e inicializado con éxito." ¿Qué hace un buen arnés con esa frase?`,
+      options: ["La trata como una afirmación, lee la cadena, llama a una función de lectura y cree al libro mayor","La acepta — el modelo ha sido fiable hasta ahora","Le pide al golem que revise su propio trabajo en la misma sesión"], answer: 0 },
   ],
 };

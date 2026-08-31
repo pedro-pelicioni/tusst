@@ -1,21 +1,22 @@
 import type { Concept } from "../types";
 
-// Chapter VII (craft) — agentic loops: act, observe, correct. Observation as
-// the loop's ceiling, stopping conditions as the brake, evals as the compass,
-// flaky feedback as poison, and the human standing at the right altitude —
-// reviewing diffs against specs, not keystrokes.
+// Craft VIII — the loop as machinery: act, observe, correct, and the two
+// things that decide whether it climbs at all — honest observations and a
+// fixed compass. The brakes are Craft IX, because "how a loop works" and
+// "how a loop is stopped" are separate lessons and only one of them is the
+// one that costs money when skipped.
 
 export const theEndlessLoop: Concept = {
   meta: {
     slug: "the-endless-loop",
     title: "The Endless Loop",
-    tagline: "Agentic loops: act, observe, correct — and know when to stop.",
-    numeral: "VII",
+    tagline: "Act, observe, correct — and the signals that make it climb.",
+    numeral: "XI",
     arc: "craft",
     level: 2,
-    requires: ["think-before-you-forge"],
+    requires: ["what-the-golem-sees"],
     status: "live",
-    estMinutes: 13,
+    estMinutes: 12,
     sigil: "/v2/journey/sigils/the-endless-loop.webp",
     glyph: "🔁",
   },
@@ -30,24 +31,13 @@ One-shot prompting is a wish: describe, receive, hope. The **agentic loop** repl
 
 The golem writes code, *runs* it, reads the compiler's complaint, fixes, runs again — the way you work, at machine tempo. One-shot quality stopped being the interesting number the moment the golem could see its own results.
 
-But a loop is machinery, not magic. It has parts that can be engineered well or badly — and each of the next screens is one of those parts.`,
-    },
-    {
-      kind: "theory",
-      body: `## Observation: the loop's eyes
-
-A loop improves only as far as its **observations** are true. Correction needs a signal to correct *toward*:
-
-- **exit codes** — did the command fail?
-- **test output** — which trial, which assertion, which line?
-- **on-chain state** — what does the ledger actually hold after the run?
-
-Signals, not vibes. "The output looks reasonable" corrects nothing, because it can never be false. Every verifier you built into the harness now earns interest: wired into the loop, it becomes the eyes the golem steers by — **on every single iteration**.`,
+But a loop is machinery, not magic. It has parts that can be engineered well or badly, and this chapter is about the two that decide whether it climbs at all.`,
     },
     {
       kind: "diagram",
       body: "The loop, and the only exit that matters:",
-      caption: "A loop without a stopping rule is not autonomy — it is a burning budget.",
+      caption:
+        "Three of these four are this chapter. The fourth — deciding to stop — is the next one, and it is the one people skip.",
       view: {
         kind: "flow",
         layout: "cycle",
@@ -81,6 +71,18 @@ Signals, not vibes. "The output looks reasonable" corrects nothing, because it c
       },
     },
     {
+      kind: "theory",
+      body: `## Observation: the loop's eyes
+
+A loop improves only as far as its **observations** are true. Correction needs a signal to correct *toward*:
+
+- **exit codes** — did the command fail?
+- **test output** — which trial, which assertion, which line?
+- **on-chain state** — what does the ledger actually hold after the run?
+
+Signals, not vibes. "The output looks reasonable" corrects nothing, because it can never be false. Every verifier you built into the harness now earns interest: wired into the loop, it becomes the eyes the golem steers by — **on every single iteration**.`,
+    },
+    {
       kind: "quiz",
       question: `Which observation can actually steer a loop?`,
       options: [
@@ -93,37 +95,23 @@ Signals, not vibes. "The output looks reasonable" corrects nothing, because it c
     },
     {
       kind: "theory",
-      body: `## Every loop needs a brake
+      body: `## One turn, traced
 
-An unwatched loop doesn't converge — it **spends**. A loop without a stop is a bill, and occasionally an outage. Fit the brakes *before* the first turn:
+Cycles are easy to nod at. Here is a single turn, with what actually crosses the wire.
 
-- **Success criteria** — the checks that mean *done*, decided up front.
-- **Budget** — tokens, minutes, dollars: whichever runs out first.
-- **Max iterations** — a hard ceiling, always.
-- **No-progress detection** — the same error twice means *change strategy or escalate*, never "again, but harder."
+**Act.** The golem edits \`refunds.rs\` — moves the deadline comparison from \`>\` to \`>=\`. One change, because a turn that changes six things cannot tell you which one worked.
 
-The rule of the realm: never start a loop you haven't decided how to stop.`,
-    },
-    {
-      kind: "quiz",
-      question: `Iteration 40, and the loop has been hitting the same failing eval with the same error message since iteration 12. What should the harness do?`,
-      options: [
-        "Stop and escalate to a human — repeating without progress is a stop condition, not persistence",
-        "Keep going — iteration is the whole point of a loop, and attempt 41 might be the one",
-        "Raise the model's temperature so it gets more creative about the fix",
-      ],
-      answer: 0,
-      explain: `Twenty-eight identical failures are a message: the loop lacks something — context, a permission, a correct spec — that more iterations cannot supply. Randomizing harder buys scattered wrongness at the same price. Detect no-progress, stop, and hand a human the trail.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Fit the brake before the loop turns:`,
-      file: "loop.rs",
-      before: `while !evals.pass() && iterations < `,
-      after: ` {`,
-      choices: ["budget.max_iterations", "usize::MAX", "evals.len()", "iterations + 1"],
-      answer: 0,
-      explain: `usize::MAX is "no brake — we'll discuss it on the invoice." A bound that moves with the counter (iterations + 1) never binds at all. And evals.len() confuses how many checks exist with how long to keep trying. The ceiling is a budget you chose on purpose.`,
+**Observe.** The harness runs the fixed evals and hands back exactly this:
+
+> \`test_refund_after_deadline ... FAILED\`
+> \`assertion failed: balance == 0, left: 40, right: 0\`
+> \`4 passed, 3 failed\`
+
+Not "still broken". A line, a number, and a count that can be compared with last turn's count.
+
+**Correct.** Three green became four. So the comparison was *one* of the bugs and not the only one: the deadline is handled, the balance is not. The plan updates — next turn goes at the balance.
+
+Notice what made that turn worth anything. The golem did not decide it had improved. **The count did.**`,
     },
     {
       kind: "theory",
@@ -136,35 +124,84 @@ How do you know iteration 7 beat iteration 6? Not by feel. **Evals** are a *fixe
 With a compass, the loop knows *for a fact* whether it moved: 4 green out of 7 became 6 out of 7. Without one, it only knows that it moved. Progress is **measured, not felt**.`,
     },
     {
-      kind: "theory",
-      body: `## Flaky feedback poisons the loop
-
-A test that fails randomly — timing, ordering, a shared port — is an annoyance for humans. We sigh and re-run. For a loop it is **poison**, because the loop *acts on every signal*.
-
-A phantom red arrives → the golem "fixes" code that was never broken → the change lands → next iteration, a new phantom → another fix. The loop is now learning superstitions, each one compounding, all from noise.
-
-The rule: **make feedback deterministic before wiring it into a loop.** A flaky trial is worse than no trial — silence misleads no one; noise misleads tirelessly.`,
-    },
-    {
-      kind: "quiz",
-      question: `A test fails randomly one run in five, for timing reasons. For a human it's a nuisance. What is it for a loop?`,
-      options: [
-        "Poison — the loop treats every phantom failure as truth and 'fixes' healthy code, compounding wrongness each pass",
-        "The same nuisance — over many iterations the randomness averages itself out",
-        "Mildly useful — extra failures apply extra pressure to make the code more robust",
+      kind: "fill",
+      prompt: `Complete the property that makes a compass a compass:`,
+      file: "NOTES.md",
+      before: `Evals run every iteration, and the set of checks must stay `,
+      after: ` — otherwise two attempts are being graded by two different exams.`,
+      choices: [
+        "fixed",
+        "randomized",
+        "optional",
+        "regenerated for each attempt",
       ],
       answer: 0,
-      explain: `Nothing averages out, because each false signal triggers a real code change that the next iteration then builds on. Humans discount noise; loops obediently act on it. Determinism isn't a nicety of the harness — it's a precondition for looping at all.`,
+      explain: `A moving yardstick measures nothing. This is also why "let the golem write its own tests as it goes" quietly destroys the signal: the exam and the student stop being different things.`,
+    },
+    {
+      kind: "exercise",
+      mode: "spec-write",
+      brief: `## The examiner's trial: write an observation contract
+
+A loop is about to be pointed at a real task:
+
+> A Soroban contract has a failing behavior: refunds are being paid out **after** the deadline has passed. You are going to hand this to an agentic loop and let it work unattended for a while.
+
+Before it turns once, write its **observation contract**: what signals this loop will steer by, and what makes each one trustworthy. Behavior only — no harness code, no library names.`,
+      rubric: `1. Names at least two concrete, external signals (test output, exit code, on-chain state, lint/build result) — not self-assessment and not "looks right".
+2. For at least one signal, states what makes it trustworthy — deterministic, reproducible, or independent of the code under change.
+3. States what counts as DONE in terms of those signals, not in terms of the golem's opinion.
+4. Names at least one signal that must NOT be trusted, and why (a self-summary, a compile success, a flaky test…).
+5. Behavior only — no harness implementation, no specific tools or libraries required.`,
+      minChars: 140,
     },
     {
       kind: "theory",
-      body: `## The right altitude
+      body: `## What this chapter did not give you
 
-Where does the human stand while the loop turns? Not inside it — reviewing every keystroke means *you* are the loop, at golem tempo. And not above the clouds either, rubber-stamping whatever lands.
+You can now build a loop that sees honestly and measures its own progress. Point it at a task and it will climb.
 
-The right altitude is the **boundary**: review the *diff* against the *spec*. Did the evals pass? Does the change honor Chapter I's rules? Did anything move that had no business moving? Trust the loop's instruments for the small stuff; keep human judgment for what the instruments can't see.
+Notice what is missing: nothing here decides when it **stops**. Not when it is done — that part you just wrote down — but when it is *stuck*, or when it has spent more than the task was worth. A loop with good eyes and no brake does not fail loudly. It fails on the invoice.
 
-Next discipline: when one loop isn't enough — many small golems, one woven plan.`,
+**Next:** the brakes, and the one run where you find out why they were there.`,
+    },
+  ],
+  testOut: [
+    {
+      question: `What does an agentic loop replace, compared to one-shot prompting?`,
+      options: [
+        "Hope — the golem now sees the result of its own work and corrects against it",
+        "The need for a specification, since the loop discovers requirements as it goes",
+        "The compiler, since the loop checks the code itself",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Why can "the output looks reasonable" never steer a loop?`,
+      options: [
+        "Because it can never be false — a signal that cannot be bad news carries no information",
+        "Because it arrives too late in the iteration to be acted on",
+        "Because models are not trained to evaluate natural-language judgements",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Why must the set of evals stay fixed between iterations?`,
+      options: [
+        "Otherwise two attempts are graded by two different exams and progress is unmeasurable",
+        "Otherwise the loop runs slower with each additional check",
+        "Otherwise the model memorises the checks and games them",
+      ],
+      answer: 0,
+    },
+    {
+      question: `A loop compiles clean on its first attempt. What does that prove?`,
+      options: [
+        "That the types line up — not that the behavior is the one that was wanted",
+        "That the logic is very likely correct, since most bugs are type errors",
+        "Nothing at all; compilation is unrelated to code quality",
+      ],
+      answer: 0,
     },
   ],
 };

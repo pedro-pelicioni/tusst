@@ -1,8 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
-export const conceptText = {
-  title: "Dompter le golem",
-  tagline: "Ingénierie du harnais : donne à l’IA un établi, pas un simple vœu.",
+export const conceptText: JourneyConceptText = {
+  title: "Dompter le Golem",
+  tagline: "Le modèle est loué. Le harnais est de l'ingénierie, et il est à vous.",
   steps: [
     {
       kind: "theory",
@@ -102,64 +102,32 @@ Les affirmations sont des données. Les vérificateurs sont la vérité.`,
       answer: 0,
       explain: `La relecture par le même esprit partage les mêmes points aveugles — s’il croyait que le déploiement avait fonctionné, il le croira encore. Les vérificateurs indépendants ne partagent pas les points aveugles de personne, et sur Stellar une lecture RPC ne coûte que des millisecondes. Le registre est le détecteur de mensonge le moins cher que tu possèdes.`,
     },
-    {
-      kind: "theory",
-      body: `## Moindre privilège : moins de dents, s’il te plaît
-
-Un golem avec \`rm -rf\` disponible est un golem qui l’exécutera *à terme* — pas par malveillance, mais par un plan erroné confiant à 2 h du matin. Le remède est ancien et éprouvé : **moindre privilège**.
-
-- Accorde des outils pour *cette tâche*, pas des outils en général.
-- Privilégie l’accès **lecture‑seule** partout où l’écriture n’est pas la mission.
-- Limite-le à un répertoire ; exécute chaque commande dans un bac à sable.
-- Donne‑lui **les clés testnet uniquement** — jamais une clé dont la perte te ferait réellement mal.
-
-Les incidents commencent souvent par un pouvoir accordé « au cas où ». Chaque outil élargit le rayon d'impact ; accorde-le en conséquence.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Limite le pouvoir du golem avant qu’il ne commence le travail :`,
-      file: "harness.toml",
-      before: `signing_keys = "`,
-      after: `"`,
-      choices: ["testnet", "mainnet", "all-networks", "treasury"],
+    { kind: "fill",
+      prompt: `Complétez le premier réflexe de l'ingénieur du harnais :`,
+      file: "NOTES.md",
+      before: `Le golem annonce que le déploiement a réussi. Avant que cette phrase ne change quoi que ce soit, le harnais `,
+      after: ` .`,
+      choices: ["lit la chaîne et vérifie", "demande au golem de le confirmer", "consigne l'affirmation dans le journal", "relance le déploiement par précaution"],
       answer: 0,
-      explain: `La règle empirique : un golem ne possède que les clés dont la perte totale peut être ignorée. Les lumens testnet sont gratuits grâce à friendbot ; une clé mainnet ou trésorerie dans une boucle automatisée est un incident avec un compte à rebours.`,
-    },
-    {
-      kind: "theory",
-      body: `## Concevoir le chemin de l’échec
+      explain: `Demander au même esprit de confirmer son propre travail vous achète deux fois le même angle mort. Et une affirmation écrite dans un journal reste une affirmation — elle a juste l'air officielle. Sur Stellar la vérification coûte une lecture RPC, ce qui fait du registre le détecteur de mensonges le moins cher que vous posséderez.` },
+    { kind: "labLink", labSlug: "guild-vault",
+      body: `Vous pouvez vous tenir dans un harnais de vérification dès maintenant. Le laboratoire **Le Coffre de la Guilde** de la Forge vous fait relever le seuil de signature d'un compte, pour qu'un trésor exige deux officiers — puis il ne vous croit pas sur parole. Le serveur lit le registre et vérifie lui-même l'ensemble des signataires. Dire que vous l'avez fait n'est pas la vérification ; la chaîne, si.` },
+    { kind: "theory", body: `## La moitié que l'on saute
 
-Les amateurs conçoivent ce qui se passe lorsque le golem a raison. Les ingénieurs conçoivent ce qui se passe lorsqu’il a **tort** — parce que cela arrivera.
+Vous savez désormais nommer les pièces d'un harnais et, plus important, refuser de croire quoi que ce soit que le golem dit de son propre travail.
 
-- Une vérification qui échoue **bloque la fusion** ; elle ne se contente pas de consigner un avertissement ignoré.
-- Les tentatives ont un **budget**, donc un golem bloqué devient un golem arrêté, pas une facture.
-- Un humain examine **un diff avec contexte**, jamais un fait accompli déjà en production.
-- Le retour arrière suit une procédure testée, pas une prière.
+Tout jusqu'ici a consisté à lui donner des **mains** — des outils, un répertoire, un lanceur. Rien jusqu'ici n'a posé la question difficile : quelles mains exactement, et que se passe-t-il le jour où il s'en sert sur un plan sûr de lui et faux.
 
-À chaque étape du harnais, pose-toi cette question : *« si le résultat est faux, qu'est-ce qui le détecte ? »* Si la réponse est « espérons qu'aucun problème ne survienne », tu as formulé un vœu, pas conçu un système.`,
-    },
-    {
-      kind: "quiz",
-      question: `Lequel de ces éléments est un chemin d’échec **conçu** ?`,
-      options: [
-        "Un ensemble de tests rouge bloque l’auto‑fusion, et un humain reçoit le diff plus la sortie échouée",
-        "Le prompt instruit fermement le golem à être extrêmement prudent et à tout vérifier",
-        "La boucle réessaie la même tâche, sans limite, jusqu’à ce que la sortie passe enfin",
-      ],
-      answer: 0,
-      explain: `Les instructions expriment une intention — elles sont utiles, mais ne *détectent* aucun échec. Des tentatives illimitées produisent une facture sans plafond (un prochain chapitre présentera la solution). Un chemin d'échec bien conçu comporte un mécanisme de détection, un arrêt et un humain disposant d'assez de contexte pour agir.`,
-    },
-    {
-      kind: "theory",
-      body: `## Tu l'utilises depuis le début
-
-Regarde autour de toi : **TUSST est un harnais.**
-
-Le runner d'évaluation de la Forge est un harnais de vérification : ta solution s’exécute dans un bac à sable, des tests cachés la jugent et aucune déclaration pleine d'assurance ne transforme un échec en réussite. Les laboratoires on-chain vont plus loin : ils ne te demandent pas d'affirmer que tu as déployé — ils **lisent la chaîne** et le vérifient.
-
-C’est toute la discipline en une image : construis l'établi de façon à rendre l’erreur *détectable* et la réussite *démontrable* — pour les golems comme pour les humains.
-
-La prochaine discipline porte sur les mots eux-mêmes — ce que le golem voit réellement sur l'établi.`,
-    },
+**Ensuite :** de combien de pouvoir le travail a réellement besoin, et l'unique question à poser à chaque étape que vous construisez.` },
   ],
-} satisfies JourneyConceptText;
+  testOut: [
+    { question: `Qu'est-ce que le harnais, et pourquoi compte-t-il plus que le prompt ?`,
+      options: ["Tout ce qui entoure le modèle — outils, permissions, répertoire de travail, vérificateurs. Le modèle est loué ; le harnais est à vous et survit à un changement de modèle","Le prompt système et ses instructions, là où le comportement se décide","L'infrastructure du fournisseur, qui détermine latence et débit"], answer: 0 },
+    { question: `Même modèle, mêmes tâches, et la sortie de ce mois-ci est bien pire. Où l'ingénieur du harnais regarde-t-il d'abord ?`,
+      options: ["Ce qui entoure le modèle — le contexte fourni, les outils disponibles, les vérifications qui filtrent la sortie","Les poids, qui se dégradent sous charge soutenue","Nulle part — l'aléa d'échantillonnage explique toute variation"], answer: 0 },
+    { question: `Quel est le trait le plus dangereux du golem ?`,
+      options: ["L'assurance dans l'erreur — il annonce le succès du même ton chaleureux, que quelque chose se soit produit ou non","L'ignorance — il y a des choses qu'il n'a tout simplement jamais vues","La lenteur sur les tâches longues, qui pousse à sauter la relecture"], answer: 0 },
+    { question: `« Contrat déployé et initialisé avec succès. » Que fait un bon harnais de cette phrase ?`,
+      options: ["Il la traite comme une affirmation, lit la chaîne, appelle une fonction de lecture et croit le registre","Il l'accepte — le modèle a été fiable jusqu'ici","Il demande au golem de revérifier son propre travail dans la même session"], answer: 0 },
+  ],
+};

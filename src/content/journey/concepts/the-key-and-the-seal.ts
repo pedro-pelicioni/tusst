@@ -124,4 +124,43 @@ An account is a key pair. An address is the half you share. A signature is the s
 **Next:** the book can hold more than balances. It can hold *rules* — and those rules run themselves, with nobody in the middle deciding whether to honor them.`,
     },
   ],
+  // Dedicated test-out bank — see the note in the-book-no-one-can-erase.
+  testOut: [
+    {
+      question: `What does a signature actually prove?`,
+      options: [
+        "That whoever holds the private key approved this exact message",
+        "That the message was sent from a trusted device",
+        "That the network checked the sender's identity before accepting it",
+      ],
+      answer: 0,
+    },
+    {
+      question: `A stranger has your public address. What can they do with it?`,
+      options: [
+        "Send you value and check your signatures — nothing else",
+        "Spend from your account if they also know when you signed last",
+        "Read your private key, given enough time",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Why is a key not just a password with extra steps?`,
+      options: [
+        "A password is shown to a service that checks it; a key never leaves your side and produces a proof instead",
+        "A key is longer, so it takes more attempts to guess",
+        "A password can be reset by support, and a key is reset by the network",
+      ],
+      answer: 0,
+    },
+    {
+      question: `You change one character of a message after signing it. What happens?`,
+      options: [
+        "The signature stops matching — it covers the whole message, not a part of it",
+        "Nothing, as long as the change is smaller than the signature",
+        "The signature updates itself to cover the new text",
+      ],
+      answer: 0,
+    },
+  ],
 };

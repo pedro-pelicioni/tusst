@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const theLivingContracts: Concept = {
-  meta: {
-    slug: "the-living-contracts",
-    title: "Los Contratos Vivos",
-    tagline: "Soroban: Wasm, almacenamiento que expira, tarifas que tienen sentido.",
-    numeral: "VI",
-    arc: "realm",
-    level: 2,
-    status: "live",
-    estMinutes: 13,
-    sigil: "/v2/journey/sigils/the-living-contracts.webp",
-    glyph: "📦",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Los Contratos Vivos",
+  tagline: "Soroban: Wasm en el libro mayor, y tres estantes donde poner estado.",
   steps: [
     {
       kind: "theory",
@@ -66,73 +56,6 @@ Elegir la estantería equivocada es un error clásico de novato: el inflado de i
     },
     {
       kind: "theory",
-      body: `## El estado tiene latido
-
-La mayoría de las cadenas dejan que el estado se acumule para siempre — cada nodo arrastra cada entrada abandonada desde 2019. Stellar se niega: **cada entrada de Soroban tiene un TTL** (tiempo de vida), contado en ledgers, y el alquiler lo extiende.
-
-Cuando el TTL se agota:
-
-- Las entradas **temporales** se eliminan. Desaparecen.
-- Las entradas **persistentes** y **de instancia** se **archivan** — se expulsan del libro mayor activo, pero pueden restaurarse más tarde con una prueba, regresando exactamente como estaban.
-
-Esto es **archivado de estado**, y ninguna otra cadena importante lo hace. El libro mayor activo se mantiene ligero, los validadores siguen siendo económicos y la historia permanece recuperable.`,
-    },
-    {
-      kind: "quiz",
-      question: `Tu contrato lleva el registro del saldo de tokens de cada usuario. ¿Qué nivel de almacenamiento?`,
-      options: [
-        "Persistente — los saldos deben sobrevivir a cualquier lapsus de TTL y poder restaurarse desde el archivo",
-        "Temporal — es el más barato, y los usuarios pueden volver a depositar si expira",
-        "Instancia — los saldos pertenecen al contrato, así que viajan con él",
-      ],
-      answer: 0,
-      explain: `La eliminación temporal es *permanente* — un saldo desaparecido es una estafa por negligencia. Y el almacenamiento de instancia se carga en cada llamada, de modo que almacenar datos por usuario allí hace que todos paguen por todos.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Coloca el saldo en la estantería correcta.`,
-      file: "token/src/lib.rs",
-      before: `env.storage().`,
-      after: `().set(&user, &balance);`,
-      choices: ["persistent", "temporary", "instance", "eternal"],
-      answer: 0,
-      explain: `El SDK de soroban refleja los niveles uno a uno: \`env.storage().persistent()\`, \`.temporary()\`, \`.instance()\`. No existe \`eternal\` — ese es todo el punto del diseño de alquiler.`,
-    },
-    {
-      kind: "theory",
-      body: `## Tarifas que se miden, no que se subastan
-
-En cadenas con subasta de gas se *puja* por espacio de bloque y se reza; una moneda popular puede multiplicar los costos de todos.
-
-Soroban **mide** en su lugar. Una transacción declara sus **recursos** — instrucciones de CPU, memoria, lecturas y escrituras del ledger, bytes — y la tarifa se *calcula* a partir de esas necesidades medidas, más el alquiler por el almacenamiento que toca. Declara honestamente (la simulación lo hace por ti) y la parte reembolsable de cualquier sobreestimación vuelve a ti.
-
-El resultado es un costo que puedes cotizar de antemano: “esta acción cuesta alrededor de un centavo” sigue siendo cierto incluso cuando la red tiene un día muy ocupado.`,
-    },
-    {
-      kind: "theory",
-      body: `## Simula primero, firma exactamente eso
-
-Cada cliente de Soroban sigue un ritmo:
-
-1. **Simular** la llamada contra un nodo RPC — sin firma, sin costo.
-2. La simulación devuelve la **huella** — precisamente qué entradas del ledger leerá y escribirá la llamada — más estimaciones de recursos y la autorización que necesita.
-3. **Firma exactamente lo que simulaste** y envía.
-
-La transacción firmada lleva su huella, de modo que los validadores conocen todo su mundo antes de ejecutarla; nada fuera de la huella puede tocarse. Omitir la simulación es adivinar números que la red simplemente rechazará.`,
-    },
-    {
-      kind: "quiz",
-      question: `¿Por qué el flujo de Soroban simula antes de firmar?`,
-      options: [
-        "La simulación calcula la huella y las necesidades de recursos, así firmas una transacción con límites exactos y aplicables",
-        "Es una corrida de cortesía para depurar — las apps de producción la omiten",
-        "La simulación pre‑ejecuta la llamada para que los validadores no tengan que volver a ejecutarla",
-      ],
-      answer: 0,
-      explain: `Los validadores siempre re‑ejecutan — pero solo dentro de la huella declarada. La simulación es cómo una transacción aprende sus propios límites; el ledger luego los hace cumplir al pie de la letra.`,
-    },
-    {
-      kind: "theory",
       body: `## La interfaz viaja con el contrato
 
 Un contrato Soroban compilado no es un blob misterioso. La compilación inserta una **especificación de contrato** dentro del propio Wasm: cada función, argumento y tipo, legible por máquinas.
@@ -141,6 +64,19 @@ Las herramientas beben directamente de ella — la CLI puede imprimir la interfa
 
 Llama a un contrato que nunca has visto, con tipos verificados en tiempo de compilación. Esa es la experiencia de desarrollo que la spec compra.`,
     },
+    { kind: "quiz",
+      question: `Vas a guardar el nonce de sesión de un usuario, que no significa nada a los pocos minutos de emitirse. ¿Qué estante?`,
+      options: ["Temporal — el alquiler más barato, y olvidarlo es exactamente lo que quieres","Persistente, para poder restaurarlo si llega una llamada tardía","De instancia, para que desaparezca si el contrato se archiva algún día"],
+      answer: 0,
+      explain: `Casar el estante con la vida real del dato es toda la decisión de diseño, y es una que la gente falla en la dirección que parece segura: poner datos de vida corta en el estante persistente cuesta más para siempre, por una garantía que el dato nunca necesitó.` },
+    { kind: "fill",
+      prompt: `Completa lo que un contrato desplegado lleva consigo:`,
+      file: "NOTES.md",
+      before: `Quien llama no necesita tu documentación para invocar un contrato, porque su `,
+      after: ` puede leerse del propio código desplegado.`,
+      choices: ["interfaz", "código fuente", "dirección del autor", "informe de auditoría"],
+      answer: 0,
+      explain: `El fuente no está en el libro mayor — el Wasm compilado sí — y ni una dirección ni una auditoría le dicen a una herramienta qué funciones existen o qué reciben. Que la interfaz viaje con el código es la razón de que el instrumental pueda construir una llamada contra un contrato que nadie documentó.` },
     {
       kind: "labLink",
       labSlug: "oz-token-wizard",
@@ -153,5 +89,24 @@ Llama a un contrato que nunca has visto, con tipos verificados en tiempo de comp
 
 Próximo capítulo, una vuelta: contratos tan capaces que dejan de ser apps — y se convierten en la **cuenta misma**.`,
     },
+    { kind: "theory", body: `## Aquí nada es gratis
+
+Ya sabes decir qué es un contrato Soroban, dónde viven sus datos, y cómo cualquiera lo llama sin tu documentación.
+
+Lo que nada de eso te dijo es la parte que quita el sueño a los equipos: **el estado se alquila, no se posee.** Cada entrada en cada estante tiene un reloj, y los estantes se diferencian en exactamente una cosa que importa — qué pasa cuando un reloj llega a cero.
+
+Equivocarse en eso no parece un bug. Parece un contrato que funcionó seis meses y luego, un martes, empezó a responder que el dato no existe.
+
+**A continuación:** el latido, y la factura.` },
+  ],
+  testOut: [
+    { question: `¿Qué es un contrato Soroban, en el libro mayor?`,
+      options: ["Wasm compilado almacenado en el libro mayor, con dirección, invocado por una operación de transacción como cualquier otro verbo","Un script que los validadores interpretan desde el fuente en el momento de la llamada","Un servicio fuera de la cadena al que el protocolo llama cuando hace falta"], answer: 0 },
+    { question: `¿Por qué Soroban ofrece tres tipos de almacenamiento en vez de uno?`,
+      options: ["Datos distintos tienen valor distinto con el tiempo, y los estantes los tarifan y caducan de forma distinta","Cada tipo está optimizado para un tamaño de dato diferente","Los contratos antiguos usan uno y los nuevos otro"], answer: 0 },
+    { question: `¿Qué significa que la interfaz viaja con el contrato?`,
+      options: ["La especificación del contrato se lee desde el propio código desplegado, así que las herramientas pueden llamarlo sin documentación externa","La interfaz se registra en un directorio público que mantiene la SDF","Quien llama debe recibir una biblioteca cliente del autor del contrato"], answer: 0 },
+    { question: `¿Dónde viaja una llamada a contrato?`,
+      options: ["Dentro del mismo sobre de transacción que ya conoces, como una operación invoke_host_function","En un canal separado solo para contratos, con su propio consenso","Directamente a un validador por RPC, sin pasar por el libro mayor"], answer: 0 },
   ],
 };

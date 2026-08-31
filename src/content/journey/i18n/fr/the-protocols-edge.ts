@@ -139,4 +139,14 @@ Une demi-heure par mois suffit pour garder une longueur d'avance sur toutes les 
 Le royaume est désormais cartographié : du consensus aux contrats, des portes aux voiles, d'une frontière à l'autre. Il reste la meilleure partie : **y construire quelque chose**. La Forge est ouverte.`,
     },
   ],
+  testOut: [
+    { question: `Qu'est-ce qu'un CAP, et en quoi diffère-t-il d'un SEP ?`,
+      options: ["Un CAP modifie le protocole lui-même et sort dans une version numérotée ; un SEP normalise la façon dont les services se parlent et n'exige aucun changement de protocole","Un CAP est un brouillon et un SEP sa forme ratifiée","Un CAP régit les contrats et un SEP les opérations classiques"], answer: 0 },
+    { question: `Pourquoi importe-t-il que les mises à jour du protocole soient numérotées et nommées ?`,
+      options: ["Une fonctionnalité existe à partir d'une version précise : « Stellar prend-il cela en charge ? » signifie en réalité « sur quel protocole tourne ce réseau ? »","La numérotation fixe l'ordre dans lequel les validateurs appliquent les changements","Les versions nommées sont les seules que la SDF prend en charge en production"], answer: 0 },
+    { question: `Une fonctionnalité est active sur testnet mais pas encore sur mainnet. Que vous dit cela ?`,
+      options: ["La version du protocole a atteint testnet d'abord — développer dessus est acceptable, y amener de vrais utilisateurs non, tant que mainnet n'a pas suivi","La fonctionnalité a été rejetée et testnet est l'endroit où on la retire","Rien ; testnet et mainnet tournent toujours le même protocole"], answer: 0 },
+    { question: `Pourquoi lire le journal des changements du protocole plutôt que la seule documentation ?`,
+      options: ["La documentation décrit ce qui est vrai maintenant ; le journal est l'endroit où l'on voit ce qui va l'être, assez tôt pour s'y préparer","La documentation est souvent périmée et le journal la remplace","Le journal contient la seule référence d'API faisant autorité"], answer: 0 },
+  ],
 } satisfies JourneyConceptText;

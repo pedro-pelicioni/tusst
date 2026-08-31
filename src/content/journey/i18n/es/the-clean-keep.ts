@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const theCleanKeep: Concept = {
-  meta: {
-    slug: "the-clean-keep",
-    title: "La Fortaleza Limpia",
-    tagline: "Arquitectura limpia y hexagonal — cada pieza en su lugar.",
-    numeral: "IV",
-    arc: "craft",
-    level: 2,
-    status: "live",
-    estMinutes: 13,
-    sigil: "/v2/journey/sigils/the-clean-keep.webp",
-    glyph: "🏰",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "La Fortaleza Limpia",
+  tagline: "Una ley: las dependencias de código fuente apuntan hacia dentro, solo.",
   steps: [
     {
       kind: "theory",
@@ -68,6 +58,19 @@ La fortaleza es el punto. Los frameworks son el mobiliario.`,
         ],
       },
     },
+    { kind: "widget", component: "dependency-rule",
+      body: `La ley tiene una forma, y la prosa no puede dibujarla. **Activa algunos imports** y mira dónde caen los legales — luego rompe un muro a propósito y lee lo que te cuesta.` },
+    { kind: "theory", body: `## Toda brecha fue razonable
+
+Nadie rompe la regla por maldad. La rompe un martes, por un buen motivo, con una fecha límite encima.
+
+El caso de uso del escrow necesita la secuencia actual del libro mayor para decidir si el plazo ha vencido. El número está a una llamada de \`server.ledgers()\`. Escribir un puerto para eso significa una interfaz, un adaptador, un doble para las pruebas — veinte minutos por un número que está *ahí mismo*. Así que el SDK acaba importado dentro del dominio, con un comentario prometiendo limpiarlo.
+
+Ocho meses después, ese único import ha hecho tres cosas. El dominio ya no compila sin un cliente de red. Las pruebas del caso de uso necesitan un nodo en marcha, así que se volvieron lentas, así que se dejaron de ejecutar. Y ha salido la versión mayor del SDK, lo que ahora significa una migración **de dominio**.
+
+Los veinte minutos fueron reales. Los intereses también.
+
+La regla se gana el sueldo justo los días en que parece burocracia — porque el día en que parezca necesaria, el coste ya está pagado.` },
     {
       kind: "quiz",
       question: `Tres importaciones de una dApp Stellar. ¿Cuál **rompe la regla de dependencia**?`,
@@ -80,53 +83,6 @@ La fortaleza es el punto. Los frameworks son el mobiliario.`,
       explain: `Las otras dos son el anillo externo nombrando al interno — la regla funciona exactamente como se diseñó. El dominio importando el SDK es el interno nombrando al externo: ahora las habitaciones más profundas de la fortaleza tiemblan cada vez que un proveedor lanza una versión mayor.`,
     },
     {
-      kind: "theory",
-      body: `## Puertos y adaptadores
-
-¿Cómo usa el anillo interno la cadena sin nombrarla? Declara un **puerto** — una interfaz que pertenece al dominio, escrita en el propio lenguaje del dominio:
-
-> PaymentsPort: enviar un pago, leer un saldo, observar la llegada.
-
-En el borde, los **adaptadores** implementan el puerto: un *adaptador Horizon* hoy, un *adaptador Soroban RPC* para contratos, un *adaptador falso* para pruebas. ¿Cambiar de proveedor RPC? Un nuevo adaptador. ¿Pasar de testnet a mainnet? Configuración. **El núcleo nunca lo menciona**.
-
-El dominio habla con el puerto. El mundo se conecta al puerto. Eso es arquitectura hexagonal en una frase.`,
-    },
-    {
-      kind: "fill",
-      prompt: `La fortaleza habla con el puerto, nunca con el proveedor:`,
-      file: "domain/release-escrow.ts",
-      before: `constructor(private payments: `,
-      after: `) {}`,
-      choices: ["PaymentsPort", "HorizonClient", "SorobanServer", "FreighterApi"],
-      answer: 0,
-      explain: `Las otras tres son reales y útiles — y pertenecen a los adaptadores, detrás del puerto. El caso de uso solo nombra la interfaz que posee, por eso un adaptador falso puede sustituirlo en pruebas y un nuevo proveedor RPC nunca toca este archivo.`,
-    },
-    {
-      kind: "theory",
-      body: `## Dónde vive todo
-
-Una solicitud cruza los muros así:
-
-**UI** (externo) → **caso de uso** (interno) → **puerto** (borde interno) → **adaptador** (externo) → red.
-
-- Componentes React, rutas, estilos — **externo**.
-- Postgres, ORM, migraciones — **externo**.
-- stellar-sdk, clientes RPC, el puente de la billetera — **externo**.
-- “Liberar fondos solo cuando ambos aprueban” — **interno**, en un módulo que no importa *nada* de la lista anterior.
-
-La prueba de olor es mecánica: abre un archivo del dominio y revisa sus importaciones. Un nombre de framework en esa lista indica que se ha violado un muro.`,
-    },
-    {
-      kind: "theory",
-      body: `## La isla testeable
-
-Un núcleo sin importaciones de framework es una **isla pura**: constrúyela en una prueba, pásale un adaptador falso, verifica su comportamiento. Sin red, sin cadena dockerizada, sin RPC inestable — las pruebas del rito Rojo-Verde se ejecutan en **milisegundos**.
-
-Este es el beneficio silencioso y acumulativo: los equipos con fortalezas limpias escriben más pruebas *porque las pruebas son baratas*, y las pruebas baratas generan bucles rápidos — tanto para humanos como para golems.
-
-Los adaptadores siguen teniendo sus propias pruebas contra la red real — una capa delgada y honesta, probada por separado a su propio ritmo más lento.`,
-    },
-    {
       kind: "quiz",
       question: `¿Dónde está el olor?`,
       options: [
@@ -137,26 +93,30 @@ Los adaptadores siguen teniendo sus propias pruebas contra la red real — una c
       answer: 0,
       explain: `Una regla de negocio viviendo en la UI es invisible para las pruebas del núcleo y se duplica en la siguiente pantalla que la necesite. Su gemela espejo es SQL dentro del dominio — el anillo interno alcanzando hacia afuera. Las reglas van al núcleo, la traducción al borde.`,
     },
-    {
-      kind: "quiz",
-      question: `Tu proveedor RPC anuncia un cierre. En una fortaleza construida con puertos y adaptadores, ¿qué tiene que cambiar?`,
-      options: [
-        "Un adaptador, más el cableado que lo selecciona — el dominio y los casos de uso no cambian en absoluto",
-        "Cada caso de uso que envía un pago, ya que cada uno llama al proveedor",
-        "Las entidades del dominio, pues la URL del endpoint está almacenada en ellas",
-      ],
+    { kind: "fill",
+      prompt: `La prueba es mecánica — abre un archivo de dominio y lee sus imports:`,
+      file: "domain/release-escrow.ts",
+      before: `Un nombre de framework o de proveedor en esa lista de imports significa que `,
+      after: ` .`,
+      choices: ["se ha roto un muro", "el archivo necesita un comentario que lo explique", "el import debería cargarse de forma perezosa", "la versión del framework está desactualizada"],
       answer: 0,
-      explain: `Ese es el ROI de la arquitectura en una línea: el desgaste del proveedor tiene precio de un adaptador. Si la respuesta honesta en tu código es “todos los casos de uso”, las flechas de dependencia están apuntando en la dirección equivocada.`,
-    },
-    {
-      kind: "theory",
-      body: `## Muros pequeños, prompts pequeños
+      explain: `Para este no hace falta criterio, y ese es el punto: es grep. Un archivo de dominio que nombra \`@stellar/stellar-sdk\`, un ORM o un hook de React ya ha perdido la discusión, por razonable que fuera el motivo en su momento.` },
+    { kind: "theory", body: `## La ley, y el mecanismo que falta
 
-Esto es lo que la fortaleza te brinda en la era de IA: **los módulos bien delimitados son prompts bien delimitados**.
+Ya sabes decir hacia dónde debe apuntar cada flecha, y comprobar cualquier archivo en segundos.
 
-“Reescribe el adaptador Horizon para apuntar al nuevo RPC — aquí está el puerto que debe cumplir, aquí están sus pruebas” es una tarea que un golem completa *dentro de una caja*: el contexto de un solo archivo, un contrato que cumplir, pruebas que pasar, y muros que limitan el radio de explosión. El golem reconstruye una habitación sin nunca vagar por toda la fortaleza.
+Lo que aún no sabes decir es cómo el anillo interior **hace** algo. No puede nombrar el SDK de la cadena — pero un pago sigue teniendo que enviarse. No puede saber de bases de datos — pero el escrow sigue teniendo que guardarse en algún sitio. Una ley que vuelve imposible lo útil no es una ley que nadie cumpla.
 
-Próxima disciplina: el propio golem — y el banco que debes construir a su alrededor.`,
-    },
+**A continuación:** las puertas que la fortaleza abre en sus propios muros, y quién tiene permiso para estar al otro lado.` },
+  ],
+  testOut: [
+    { question: `Enuncia la regla de dependencia.`,
+      options: ["Las dependencias de código fuente apuntan solo hacia dentro — el anillo exterior puede nombrar al interior, nunca al revés","Cada capa puede depender de la inmediatamente inferior, y no más allá","Las dependencias apuntan al módulo que cambia con menos frecuencia"], answer: 0 },
+    { question: `¿Por qué hacia dentro y no hacia fuera?`,
+      options: ["Los frameworks se agitan y las reglas de negocio los sobreviven — apuntar hacia fuera deja tu código más lento como rehén de tu dependencia más rápida","Los módulos internos son más pequeños y compilan antes sin imports","Es una convención que facilita dibujar grafos de dependencias automáticos"], answer: 0 },
+    { question: `¿Qué import rompe la regla?`,
+      options: ["domain/escrow.ts importando el SDK de la cadena para construir una transacción","adapters/horizon.ts importando una interfaz del dominio para implementarla","ui/ReleaseButton.tsx importando un caso de uso para llamarlo"], answer: 0 },
+    { question: `Un componente React decide si pueden liberarse los fondos del escrow y luego renderiza el botón. ¿Qué falla?`,
+      options: ["Una regla de negocio en la UI es invisible para las pruebas del núcleo, y la siguiente pantalla que la necesite la duplicará","Nada — decidir cerca del render mantiene el código junto","Solo el rendimiento: la comprobación se repite en cada render"], answer: 0 },
   ],
 };

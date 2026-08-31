@@ -1,8 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
-export const conceptText = {
-  title: "Comptes, confiance et actifs",
-  tagline: "Réserves, lignes de confiance et comment tout actif naît.",
+export const conceptText: JourneyConceptText = {
+  title: "Comptes, Confiance et Actifs",
+  tagline: "Réserves, trustlines, et pourquoi un actif se choisit.",
   steps: [
     {
       kind: "theory",
@@ -89,97 +89,51 @@ Opt-in par conception : ton bilan ne contient que ce que tu as accepté de déte
         ],
       },
     },
+    { kind: "theory", body: `## La réserve, comptée
+
+Les règles abstraites sur les réserves deviennent évidentes dès qu'on en additionne une. Voici un compte ordinaire, en service :
+
+- **Le compte lui-même** — 2 réserves de base.
+- **Trois trustlines** — USDC, EURC et le jeton local d'un anchor : 3 de plus.
+- **Une offre ouverte** sur le DEX — 1 de plus.
+
+Six entrées à **0,5 XLM chacune : 3 XLM immobilisés.** Si le compte détient 3,4 XLM, son solde dépensable est de 0,4 — et un paiement d'1 XLM échouera, avec un solde qui semble manifestement suffire.
+
+Cette erreur a un nom dans toutes les files de support Stellar : *« j'ai des fonds mais le paiement dit provision insuffisante ».* Les fonds sont là. Ils ne sont simplement pas **disponibles**, car la disponibilité est le total moins la réserve, et la réserve a grandi chaque fois que le compte a accepté de détenir quelque chose de nouveau.
+
+La bonne nouvelle : rien n'a été dépensé. Fermez l'offre et 0,5 XLM revient. Fermez une trustline devenue inutile et une autre revient. La réserve est une caution sur de l'espace de registre, rendue dès que vous cessez de l'occuper.` },
+    { kind: "theory", body: `## Ce que le consentement empêche réellement
+
+La trustline ressemble à de la paperasse jusqu'à ce qu'on imagine le registre sans elle.
+
+Sur une chaîne où n'importe qui peut pousser un jeton vers n'importe quelle adresse, votre portefeuille est une boîte aux lettres publique où des inconnus écrivent. Des jetons arrivent sans qu'on les demande — certains en guise de marketing, d'autres nommés pour se faire passer pour un vrai actif, d'autres conçus pour que le simple fait d'interagir vous coûte quelque chose. Chaque portefeuille a alors besoin d'un filtre, chaque filtre d'une liste, et chaque liste est le jugement de quelqu'un sur ce que vous avez le droit de voir.
+
+Stellar descend cette décision d'un cran, dans le protocole : **un actif ne peut pas atterrir sur un compte qui n'a pas ouvert de trustline vers lui.** Personne ne met quoi que ce soit sur votre compte sans votre consentement préalable, explicite et inscrit au registre.
+
+La réserve est ce qui rend ce consentement honnête. Chaque trustline immobilise 0,5 XLM : en ouvrir une est donc un petit acte délibéré plutôt qu'une chose qu'un script fait dix mille fois — et la fermer rend la réserve.
+
+La friction était l'objectif.` },
     {
       kind: "labLink",
       labSlug: "wallet-onboarding",
       body: `Tu as déjà fait ça de tes propres mains : le laboratoire **Ton premier portefeuille** de Forge soumet \`change_trust\` avec ta signature sur le testnet en direct — le moment où un nouvel actif apparaît dans ton solde est la naissance d'une ligne de confiance. Si tu as sauté ce laboratoire, c'est le chapitre idéal pour en ouvrir une en vrai.`,
     },
-    {
-      kind: "theory",
-      body: `## Émettre un actif : il suffit de le payer
+    { kind: "theory", body: `## Détenir, et créer
 
-Il n'y a pas de rituel « déployer un token » dans Stellar classique. Un **actif est une paire** : un code court plus l'**adresse de l'émetteur** — \`USDC\` du compte Circle et \`USDC\` d'un inconnu sont des actifs différents.
+Vous savez désormais lire n'importe quel compte du registre : ce qu'il coûte d'exister, ce que chaque entrée ajoute à ce coût, et quels actifs il a accepté de détenir.
 
-Pour émettre, l'émetteur paie simplement l'actif depuis son propre compte à quelqu'un qui possède une ligne de confiance. Ce premier paiement *est* la frappe. L'offre est ce que l'émetteur a payé et n'a pas récupéré — le registre le suit automatiquement à travers les lignes de confiance.
+Tout jusqu'ici s'est joué du côté du détenteur. Retournez la pièce et un autre jeu de questions apparaît : comment un actif vient-il à exister, qui a le droit d'en créer un, et — la question à laquelle tout émetteur régulé doit répondre — l'émetteur peut-il contrôler qui le détient ensuite ?
 
-Tout compte peut émettre. La rareté de la confiance, pas la permission, est ce qui donne de la valeur à un actif.`,
-    },
-    {
-      kind: "quiz",
-      question: `Qu'est-ce qu'il faut pour créer un nouvel actif sur Stellar classique ?`,
-      options: [
-        "L'émetteur le paie à un compte qui a ouvert une ligne de confiance — le premier paiement est la frappe",
-        "Déployer et vérifier un contrat de token, puis enregistrer le ticker auprès de la SDF",
-        "Mettre en jeu XLM proportionnel à l'offre prévue",
-      ],
-      answer: 0,
-      explain: `Un actif est identifié par code + émetteur, donc il « existe » dès qu'il bouge pour la première fois. Les contrats n'entrent dans l'histoire que lorsque tu veux un comportement programmable — ou le pont SAC qui attend à la fin de ce chapitre.`,
-    },
-    {
-      kind: "theory",
-      body: `## Deux comptes, un actif : hygiène de l'émetteur
-
-Les émetteurs sérieux répartissent les rôles :
-
-- Le **compte d'émission** signe presque rien. Il frappe en payant le compte de distribution, puis retourne dormir — clés froides, surface d'attaque minimale.
-- Le **compte de distribution** détient l'offre active et gère le trafic quotidien : clients, échanges, chemins chauds.
-
-Si les clés de distribution fuitent, tu perds un solde — pas la presse à imprimer. Un émetteur peut aller encore plus loin : bloquer les signataires du compte d'émission afin que *personne* ne puisse jamais émettre à nouveau, fixant l'offre maximale pour toujours. Le registre lui-même devient l'audit.`,
-    },
-    {
-      kind: "theory",
-      body: `## Drapeaux d'autorisation : l'émetteur comme gardien
-
-Les actifs du monde réel portent la loi du monde réel, donc un émetteur peut définir des drapeaux sur lui-même :
-
-- **Auth required** — les lignes de confiance commencent non autorisées ; l'émetteur approuve chaque détenteur (portes KYC).
-- **Auth revocable** — l'émetteur peut geler une ligne de confiance autorisée, arrêtant ce solde à froid.
-- **Clawback** — l'émetteur peut récupérer l'actif entièrement (ordonnances judiciaires, fonds volés, paiements mal tapés).
-
-Ces drapeaux expliquent pourquoi les institutions réglementées peuvent émettre sur un registre public : la conformité est imposée *par le protocole*, pas par une promesse dans un PDF.`,
-    },
-    {
-      kind: "quiz",
-      question: `Un émetteur réglementé apprend qu'un compte d'un détenteur a été piraté. Quel drapeau lui permet d'arrêter ce solde de bouger — maintenant ?`,
-      options: [
-        "Auth revocable — révoquer l'autorisation de la ligne de confiance et le solde est gelé sur place",
-        "Auth required — il bloque rétroactivement les dépôts antérieurs du pirate",
-        "Auth immutable — il verrouille tout l'actif pour tout le monde",
-      ],
-      answer: 0,
-      explain: `Auth required ne bloque que les nouvelles lignes de confiance, et auth immutable ne promet simplement pas de changer les drapeaux. Geler arrête le mouvement ; **clawback** va un pas plus loin et récupère l'actif auprès de l'émetteur.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Complète l'identité d'un actif classique — qu'est-ce qui fait que USDC *est le vrai* USDC ?`,
-      file: "asset-identity.txt",
-      before: `asset  =  asset code  +  `,
-      after: `   (même code, émetteur différent → actif différent)`,
-      choices: [
-        "l'adresse du compte de l'émetteur",
-        "le hachage Wasm du contrat",
-        "un registre de ticker global",
-        "l’URL du site de l’ancre",
-      ],
-      answer: 0,
-      explain: `Il n'y a pas d'espace de noms à occuper. Les portefeuilles résolvent quel \`USDC\` est réel via l'adresse de l'émetteur — et, comme tu le verras aux Portes du Royaume, cet émetteur le prouve avec un fichier sur son propre domaine.`,
-    },
-    {
-      kind: "theory",
-      body: `## Le Stellar Asset Contract
-
-Les actifs classiques et les contrats intelligents partagent un même royaume, et le pont est le **Stellar Asset Contract (SAC)**. Tout actif classique — XLM inclus — peut être *invocée* comme un contrat : un déploiement, zéro code à écrire, et l'actif parle désormais **SEP-41**, l'interface de token Soroban standard.
-
-Même actif, même offre, même bilan — mais maintenant les contrats peuvent le détenir, le déplacer et y construire. USDC dans un pool de prêt et USDC dans la ligne de confiance de la grand-mère sont le *même USDC*.
-
-Tout protocole Soroban sérieux s'appuie sur ce pont quotidiennement.`,
-    },
-    {
-      kind: "rustBranch",
-      lessonSlug: "stellar-101-1",
-      body: `L'Acte VI de la Campagne — **La Porte de la Constellation** — parcourt ce même terrain depuis Rust : comptes, soldes et lignes de confiance interrogés et forgés dans le code plutôt que dans la prose. Prends l'itinéraire quand tu veux avoir tes doigts sur les entrées du registre elles-mêmes.
-
-Prochaine étape : actifs en *mouvement* — paiements qui traversent des devises en vol, et un échange intégré au protocole lui-même.`,
-    },
+**Ensuite :** l'autre côté de la trustline.` },
   ],
-} satisfies JourneyConceptText;
+  testOut: [
+    { question: `Qu'est-ce qu'un compte sur Stellar, structurellement ?`,
+      options: ["Une entrée du registre avec un solde, un numéro de séquence et des signataires — dont l'existence coûte une réserve minimale","Un enregistrement dans un contrat système que le protocole appelle","Une clé publique ; le registre ne stocke rien tant qu'elle n'a pas servi"], answer: 0 },
+    { question: `Pourquoi chaque entrée supplémentaire relève-t-elle le solde minimal d'un compte ?`,
+      options: ["Chaque entrée coûte du stockage à chaque validateur : la réserve tarifie ce coût continu — et elle est rendue quand l'entrée disparaît","C'est une commission qui finance l'exploitation des validateurs","Cela décourage les comptes de détenir plus d'un actif"], answer: 0 },
+    { question: `Quelqu'un vous envoie un actif dont vous n'avez jamais entendu parler. Que se passe-t-il ?`,
+      options: ["Le paiement échoue — un actif ne peut pas atterrir sur un compte sans trustline ouverte vers lui","Il arrive et apparaît dans vos soldes jusqu'à ce que vous le retiriez","Le protocole le retient jusqu'à ce que vous acceptiez ou refusiez"], answer: 0 },
+    { question: `À quoi vous engage réellement l'ouverture d'une trustline ?`,
+      options: ["À immobiliser une réserve et à consentir, au registre, à détenir cet actif précis de cet émetteur précis","À faire confiance à l'émetteur pour ne pas geler votre solde","À payer des frais récurrents tant que vous détenez l'actif"], answer: 0 },
+  ],
+};

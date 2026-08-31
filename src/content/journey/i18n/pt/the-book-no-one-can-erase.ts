@@ -138,4 +138,42 @@ Tudo que você vai encontrar mais adiante — contas, pagamentos, tokens, contra
 **A seguir:** se o livro é público e qualquer um pode escrever nele, o que impede um desconhecido de gastar o *seu* dinheiro? A resposta é uma chave — e ela não tem nada a ver com senha.`,
     },
   ],
+  testOut: [
+    {
+      question: `Doze amigos guardam, cada um, a própria cópia do livro da taverna. O que esse arranjo realmente garante?`,
+      options: [
+        "Ninguém precisa confiar no taverneiro — uma edição silenciosa deixa de bater com as outras onze cópias",
+        "O livro fica impossível de perder, mas o taverneiro ainda pode reescrevê-lo",
+        "Escrever fica mais rápido, porque doze pessoas dividem o trabalho",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Cada página ainda carrega um resumo curto da página anterior. O que isso acrescenta que as cópias sozinhas não dão?`,
+      options: [
+        "Editar uma página ANTIGA quebra todas as páginas que vieram depois, em vez de só aquela",
+        "Comprime o livro, então páginas antigas ocupam menos espaço",
+        "Permite ler o livro de trás para frente sem perder o lugar",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Por que um livro compartilhado precisa de uma regra sobre quem escreve a próxima página?`,
+      options: [
+        "Milhares de estranhos recebem movimentos ao mesmo tempo e precisam terminar com o mesmo livro, na mesma ordem",
+        "Porque papel é caro e alguém precisa se responsabilizar por ele",
+        "Porque só quem começou o livro pode acrescentar a ele",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Nos termos deste capítulo, o que é a Stellar?`,
+      options: [
+        "Um desses livros compartilhados, construído especificamente para valor circulando entre pessoas",
+        "Uma empresa que guarda o livro e cobra para escrever nele",
+        "Um computador de propósito geral que por acaso guarda um livro",
+      ],
+      answer: 0,
+    },
+  ],
 };

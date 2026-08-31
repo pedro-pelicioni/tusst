@@ -1,19 +1,22 @@
 import type { Concept } from "../types";
 
-// Chapter IV — value in motion: the on-ledger DEX, native AMM pools, and
-// path payments that convert currencies mid-flight in one atomic stroke.
-// The remittance story is the thread that ties the machinery together.
+// Realm V — the exchange that lives inside the protocol: order books as ledger
+// entries, and pools as the standing water beside them. Path payments — the
+// operation that spends this machinery without you ever touching it — are
+// Realm VI, because "there is a market in here" and "you never have to shop in
+// it" are different lessons.
 
 export const riversOfValue: Concept = {
   meta: {
     slug: "rivers-of-value",
     title: "Rivers of Value",
-    tagline: "Payments, path payments, the DEX and the AMMs.",
-    numeral: "IV",
+    tagline: "A currency exchange living inside the protocol itself.",
+    numeral: "VI",
     arc: "realm",
     level: 2,
+    requires: ["accounts-trust-and-assets"],
     status: "live",
-    estMinutes: 13,
+    estMinutes: 11,
     sigil: "/v2/journey/sigils/rivers-of-value.webp",
     glyph: "🌊",
   },
@@ -64,6 +67,25 @@ Order books need active traders quoting prices. **Liquidity pools** need only de
 Books and pools coexist on equal footing, and — as you are about to see — a single payment can drink from both.`,
     },
     {
+      kind: "theory",
+      body: `## The same trade, two venues
+
+Books and pools are not rivals with a winner. They fail in opposite directions, and the ledger carries both on purpose.
+
+Say you want 5,000 USDC of XLM.
+
+**The order book** fills you against whatever people actually posted. If a market maker is quoting tight, you get a price nobody could beat — real offers, real prices, no curve. If nobody is watching that pair this morning, the book is thin or empty, and you fill badly or not at all. A book's quality is somebody's attention.
+
+**The pool** always quotes. It has no opinion, no hours and no day off — the curve prices your order whether or not anyone is awake. What it charges for that reliability is slippage: you pay for the privilege of being able to trade at 3 a.m. against nobody.
+
+So the honest summary is boring: **the book is better when someone is minding it, and the pool is better when nobody is.** Which is precisely why aggregators exist, and why you should not be picking a venue by hand.`,
+    },
+    {
+      kind: "widget",
+      component: "amm-pool",
+      body: `The curve is easier felt than read. **Sell into the pool** — then move the same order into a shallower one and watch what the price does to you.`,
+    },
+    {
       kind: "quiz",
       question: `How do Stellar's native liquidity pools differ from Uniswap-style AMMs?`,
       options: [
@@ -75,97 +97,67 @@ Books and pools coexist on equal footing, and — as you are about to see — a 
       explain: `Same constant-product math, different home: the pool lives in the protocol itself, any asset pair welcome. Contract-based AMMs exist too, one layer up — you'll meet their names shortly.`,
     },
     {
-      kind: "theory",
-      body: `## Path payments: the killer feature
-
-\`path_payment_strict_send\` does something almost no other chain does natively: **send one asset, deliver another** — atomically, in one operation.
-
-You send USDC. The network routes it through order books and liquidity pools — maybe USDC → XLM → EURC — and your grandmother receives EURC. One transaction. If no route can deliver within your bounds, **nothing happens at all**: no funds stranded mid-swap.
-
-Two flavors:
-
-- **Strict send** — fix what you pay; the destination receives what the route yields (above your minimum).
-- **Strict receive** — fix what they get; you pay what it costs (below your maximum).`,
-    },
-    {
-      kind: "diagram",
-      body: "One payment, three currencies, one atomic transaction:",
-      caption: "If any hop cannot fill at the price you set, nothing happens at all — no half-converted money stranded in the middle.",
-      view: {
-        kind: "flow",
-        layout: "row",
-        play: true,
-        nodes: [
-          {
-            id: "send",
-            label: "you send BRL",
-            note: "You never touch the currencies in between, and never hold them.",
-            tone: "accent",
-          },
-          {
-            id: "hop1",
-            label: "BRL → XLM",
-            note: "The order book fills this hop at whatever the market offers right now.",
-            tone: "teal",
-          },
-          {
-            id: "hop2",
-            label: "XLM → EURC",
-            note: "And the next one, in the same instant, inside the same transaction.",
-            tone: "teal",
-          },
-          {
-            id: "recv",
-            label: "they receive EURC",
-            note: "Guaranteed amount, or the whole thing reverts. There is no partial arrival.",
-            tone: "good",
-          },
-        ],
-      },
-    },
-    {
-      kind: "quiz",
-      question: `An invoice is exactly 900 EURC and your treasury holds USDC. Which operation fits?`,
-      options: [
-        "path_payment_strict_receive — pin the 900 EURC delivered, cap the USDC you'll spend",
-        "path_payment_strict_send — send about 900 USDC worth and hope the rate lands near even",
-        "Two transactions: swap USDC for EURC on the DEX, then a plain payment",
-      ],
-      answer: 0,
-      explain: `Strict receive exists exactly for "the bill is fixed" cases. And one atomic operation beats swap-then-send: no price drift between steps, no leftover dust, no half-completed state to clean up.`,
-    },
-    {
       kind: "fill",
-      prompt: `Chart the river — what happens between sending and delivery in a path payment?`,
-      file: "remittance.txt",
-      before: `send 100 USDC  →  `,
-      after: `  →  deliver EURC — one atomic transaction`,
+      prompt: `Complete what a constant-product pool actually promises:`,
+      file: "NOTES.md",
+      before: `A pool will always quote you a price. What it does not promise is that the price stays put — the bigger your order is relative to the pool, the `,
+      after: ` .`,
       choices: [
-        "route through order books and liquidity pools",
-        "bridge through wrapped tokens on another chain",
-        "queue at an anchor's FX desk for conversion",
-        "auction the payment to market-maker bots",
+        "worse the price you end up paying",
+        "smaller the fee you are charged",
+        "longer the trade takes to settle",
+        "more likely the trade is rejected",
       ],
       answer: 0,
-      explain: `The routing is on-ledger and atomic: the protocol walks offers and pools to find delivery, and either the whole path executes at ledger close or none of it does.`,
+      explain: `The pool cannot run out and it cannot refuse you — that is the whole point of the curve. What it does instead is charge you more for every unit as you drain one side, so a large order in a small pool completes perfectly and expensively.`,
     },
     {
       kind: "theory",
-      body: `## Why remittance builders come here
+      body: `## You will never do this by hand
 
-The old rails: a cross-border transfer hops between correspondent banks for **2–5 days** and sheds a few percent in fees along the way.
+You now know there is a market inside the ledger: books that match at close, pools that quote from a curve, and a price that moves when you lean on it.
 
-The river: dollars become USDC at one edge, a **path payment** converts and delivers EURC in about **five seconds** for a fee measured in fractions of a cent, and euros come out the other edge.
+Here is the part that makes it useful: **you are almost never going to interact with any of it directly.** You will not place an offer, walk the book, or pick a pool. You will state what you are sending and what must arrive — and something else will do the shopping.
 
-The FX conversion — historically the expensive, opaque middle — becomes a transparent hop across public order books and pools. Cross-currency settlement in seconds is the use case Stellar was pointed at from day one.`,
+**Next:** the operation that spends this entire machine on your behalf, in one atomic step.`,
+    },
+  ],
+  testOut: [
+    {
+      question: `Who matches a buy offer with a sell offer on the Stellar DEX?`,
+      options: [
+        "The protocol itself, at ledger close — offers are ledger entries and matching is part of consensus",
+        "A matching-engine smart contract maintained by the SDF",
+        "Off-chain relayers who submit matched pairs for a cut",
+      ],
+      answer: 0,
     },
     {
-      kind: "theory",
-      body: `## The layer above the river
-
-On top of the native machinery, the ecosystem builds in Soroban: **Soroswap**, **Phoenix** and **Aquarius** run AMM protocols as smart contracts, and aggregators route each trade across native books, native pools and contract pools hunting the best price. You don't need their internals yet — just know the river has both a bedrock and a busy harbor built on top.
-
-One question remains open: where do the *real* dollars and euros enter and leave? That is the business of anchors — the gates of the realm, and the next chapter.`,
+      question: `What does it take to create a market for a new asset pair on the DEX?`,
+      options: [
+        "Two trustlines and an offer — every pair gets a book automatically, with no listing and no permission",
+        "An application to the SDF, which curates which pairs are tradeable",
+        "Deploying a market contract for that pair",
+      ],
+      answer: 0,
+    },
+    {
+      question: `An order book needs active traders quoting prices. What does a liquidity pool need instead?`,
+      options: [
+        "Only deposits — the constant-product curve quotes a price at every moment without anyone watching",
+        "A market maker bot, which the pool pays out of fees",
+        "An oracle feeding it the current external price",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Your order is large relative to the pool. What happens?`,
+      options: [
+        "It completes, at a progressively worse price — the curve charges more for each unit as you drain one side",
+        "It is rejected, because the pool cannot cover it",
+        "It is queued until enough liquidity is deposited",
+      ],
+      answer: 0,
     },
   ],
 };

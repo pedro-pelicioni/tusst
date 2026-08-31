@@ -1,20 +1,21 @@
 import type { Concept } from "../types";
 
-// Chapter V — anchors and SEPs: the regulated gates where bank money
-// becomes ledger money and back, and the standards that let any wallet
-// talk to any gate. Ends with a full remittance walked end to end.
+// Realm VII — the gate as a business: what an anchor actually promises, and
+// the shape of a remittance that crosses two of them. The standards those
+// gates speak are Realm VIII, so the acronyms appear here in context first
+// and get defined immediately after.
 
 export const gatesOfTheRealm: Concept = {
   meta: {
     slug: "gates-of-the-realm",
     title: "Gates of the Realm",
-    tagline: "Anchors & SEPs — where the ledger meets the real world.",
-    numeral: "V",
+    tagline: "Anchors — where the ledger touches the ground.",
+    numeral: "VIII",
     arc: "realm",
     level: 2,
-    requires: ["rivers-of-value"],
+    requires: ["the-crossing"],
     status: "live",
-    estMinutes: 13,
+    estMinutes: 11,
     sigil: "/v2/journey/sigils/gates-of-the-realm.webp",
     glyph: "⛩️",
   },
@@ -31,60 +32,49 @@ Every serious fiat asset on Stellar stands behind a gate like this. Anchors are 
     },
     {
       kind: "theory",
-      body: `## SEPs: the common tongue
+      body: `## What "backed" is actually promising
 
-There are many wallets and many anchors. Without standards, each pair would need a custom integration — N×M plumbing, forever.
+The token an anchor issues is not dollars. It is a **claim on a business** — and the whole edifice rests on that business honouring it.
 
-Stellar's answer is the **SEP**: *Stellar Ecosystem Proposal*. SEPs are public standards defining exactly how wallets, anchors and services speak to each other. Implement a SEP once and your wallet works with **every anchor** that implements it too — deposit flows, authentication, identity, all of it.
+Which means the interesting questions about any fiat asset are not technical:
 
-This interoperability-first culture is one of Stellar's quiet superpowers: users pick any door, and all the doors share one key shape.`,
-    },
-    {
-      kind: "theory",
-      body: `## SEP-1 and SEP-10: identity and proof
+- **Who is the issuer, legally?** A regulated entity in a jurisdiction, or an anonymous account?
+- **Where is the money?** Segregated custody, or the same account that pays their salaries?
+- **Who can prove it?** An attestation you can read, or a promise on a landing page?
+- **What happens if they stop?** A redemption path that survives the company, or a token that quietly becomes a souvenir?
 
-Two small standards carry the whole gate:
-
-- **SEP-1** — every serious domain publishes a \`stellar.toml\`: its **on-chain identity card**. Which assets it issues, which accounts are official, where its services live. Wallets read it to tell the real issuer from an impostor with the same asset code.
-- **SEP-10** — **web auth**: the anchor sends a *challenge transaction*, you sign it with your account's key and hand it back. Ownership proven, session granted — and the challenge is **never submitted** to the ledger.
-
-Log in with a signature: no password, no email.`,
+The ledger is honest about exactly one thing here: it will tell you, precisely and forever, *which account issued this asset*. Everything after that is diligence — which is why an asset code alone means nothing, and \`USDC\` from the wrong issuer is a different asset that happens to share a name.`,
     },
     {
       kind: "quiz",
-      question: `What exactly does SEP-10 web auth prove to an anchor?`,
+      question: `A wallet shows a balance of \`USDC\`. What does the asset code alone tell you?`,
       options: [
-        "That you control the account's secret key — by signing a challenge transaction that never touches the ledger",
-        "Your legal identity — SEP-10 performs the KYC check itself",
-        "That your account holds enough XLM to pay the anchor's fees",
+        "Almost nothing — an asset is a code *plus its issuer*, and anyone may issue a code that reads USDC",
+        "That it is the well-known dollar stablecoin, since asset codes are unique on the ledger",
+        "That some regulated entity has attested to backing it",
       ],
       answer: 0,
-      explain: `SEP-10 is pure key ownership. Legal identity is a separate standard (SEP-12) that anchors run *after* you're authenticated — signature first, paperwork second.`,
-    },
-    {
-      kind: "theory",
-      body: `## The working gates: 24, 31, 41
-
-- **SEP-24** — *interactive* deposit and withdraw. Your wallet opens the anchor's hosted webview; the anchor handles KYC forms and bank details; tokens arrive when the wire clears. The everyday ramp for humans.
-- **SEP-31** — cross-border payments between *businesses*: a sending anchor and a receiving anchor settle over Stellar while each handles its local rails.
-- **SEP-41** — an old friend: the standard **token interface** for Soroban contracts, the one every Stellar Asset Contract speaks.
-
-Ramps for people, rails for institutions, one token dialect for contracts.`,
+      explain: `This is the single most expensive misreading in the ecosystem, and the protocol is not the one at fault: asset codes were never unique and were never meant to be. The issuer's address is the identity; the code is a label. A wallet that shows you one without the other is showing you a rumour.`,
     },
     {
       kind: "fill",
-      prompt: `Where does a wallet find a domain's identity card?`,
-      file: "discovery.txt",
-      before: `https://anchor.example/`,
-      after: `  →  assets, official accounts, service endpoints`,
+      prompt: `Complete the thing an asset actually is:`,
+      file: "NOTES.md",
+      before: `An asset on Stellar is an asset code plus `,
+      after: ` — and two assets sharing only the code are two different assets.`,
       choices: [
-        ".well-known/stellar.toml",
-        "api/v2/anchor-manifest.json",
-        "stellar/config.xml",
-        "identity.pdf",
+        "the address of its issuer",
+        "the amount in circulation",
+        "the anchor's domain name",
+        "a registration in the SDF's asset list",
       ],
       answer: 0,
-      explain: `SEP-1, the simplest standard of all: one TOML file at a well-known path. Prove you own the domain, list your issuing accounts in the file, and wallets can show "issued by anchor.example" as fact, not vibes.`,
+      explain: `The domain comes close and is genuinely useful — it is how an issuer publishes who they are — but it is a claim layered on top. The identity that the protocol itself enforces is the issuing account, and it is the only part nobody can spoof.`,
+    },
+    {
+      kind: "labLink",
+      labSlug: "oz-token-wizard",
+      body: `An anchor is a business wrapped around a single technical act: **issuing a token**. You can perform that act yourself. The Forge's **OZ Token Wizard** forges a real token on testnet, with you as its issuer — and what it will not give you is everything that makes an anchor an anchor: the licence, the custody, the audits and the promise to redeem.`,
     },
     {
       kind: "theory",
@@ -152,6 +142,54 @@ Two regulated gates, one atomic river crossing in the middle. The chain never sa
 You don't need a banking license to build against all this. The SDF runs **testanchor** on testnet — a fully working anchor speaking SEP-1, SEP-10 and SEP-24 with play money. Point your wallet code at it and rehearse the entire deposit-and-withdraw dance before a single real dollar is involved.
 
 Gates, rivers, trust — everything so far has been the *classic* realm, machinery baked into the protocol. Next chapter we cross into the part you program yourself: **Soroban**, where contracts are alive and even storage has a heartbeat.`,
+    },
+    {
+      kind: "theory",
+      body: `## The acronyms you just walked past
+
+You saw them in Ana's remittance and probably let them slide: SEP-1, SEP-10, SEP-24. Three standards doing three jobs — *who is this anchor*, *prove you are you*, and *run the deposit*.
+
+They were not incidental. Without them, Ana's wallet would need a bespoke integration with her anchor, her mother's wallet would need another with hers, and every new wallet would start that work from zero. Two gates only cooperated because they had already agreed how to speak.
+
+**Next:** the agreement itself — the standards that let any wallet walk up to any gate.`,
+    },
+  ],
+  testOut: [
+    {
+      question: `What is an anchor?`,
+      options: [
+        "A regulated business that issues fiat-backed assets and runs the on- and off-ramps between bank money and the ledger",
+        "A protocol feature that converts fiat into ledger assets automatically",
+        "A validator that specialises in payment traffic",
+      ],
+      answer: 0,
+    },
+    {
+      question: `A wallet shows \`USDC\`. What does the asset code alone establish?`,
+      options: [
+        "Almost nothing — an asset is a code plus its issuer, and any account may issue that code",
+        "That it is the well-known dollar stablecoin; codes are unique",
+        "That someone has attested to its backing",
+      ],
+      answer: 0,
+    },
+    {
+      question: `In a gate-to-gate remittance, which piece performs the currency conversion?`,
+      options: [
+        "The path payment, routing across on-ledger order books and pools at a price anyone can verify",
+        "The sending anchor's internal FX desk, off the ledger",
+        "A bridge contract that locks one asset and mints the other",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Why can you build a full anchor integration without a banking licence?`,
+      options: [
+        "The SDF runs testanchor on testnet — a working anchor with play money to rehearse the whole dance against",
+        "Anchors publish their production credentials for development use",
+        "You cannot; anchor integration requires a signed agreement first",
+      ],
+      answer: 0,
     },
   ],
 };

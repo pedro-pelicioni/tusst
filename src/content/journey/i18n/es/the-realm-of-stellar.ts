@@ -58,6 +58,15 @@ Intenta encontrar el punto donde la red *se detiene* — y nota que se detiene e
       answer: 0,
       explain: `Todo es local: un nodo avanza cuando su *consejo* avanza. El acuerdo global surge de los consejos superpuestos — ningún nodo necesita un censo de toda la red.`,
     },
+    { kind: "theory", body: `## Nadie te entrega la lista
+
+Aquí está la parte que suena a error la primera vez que la oyes: **no existe una lista oficial de validadores.** Ningún registro decide quién cuenta. Cada participante nombra a los demás de los que está dispuesto a depender, y ese es todo el proceso de alta.
+
+Lo que plantea la objeción obvia. Si cada cual elige su propio consejo, ¿qué impide que la red se parta en dos grupos que coinciden internamente y discrepan entre sí?
+
+La respuesta es la **superposición**. Dos participantes solo tienen garantía de llegar a la misma conclusión si sus círculos de confianza se cruzan lo suficiente — y en la práctica se cruzan, porque todo el mundo acaba nombrando, de forma independiente, al mismo puñado de instituciones bien gestionadas y públicamente responsables. La seguridad de toda la red es una propiedad emergente de muchas elecciones separadas e interesadas sobre de quién vale la pena depender.
+
+Eso es genuinamente distinto de "el protocolo elige", y la diferencia corta por los dos lados. Nadie puede añadirse a una lista para ganar influencia. Y nadie puede entregarte una buena configuración tampoco — **elegir mal es algo que se te permite hacer.** Por eso el consejo práctico para quien opera un validador es aburrido y correcto: parte de una configuración publicada y bien analizada, y entiende cualquier desviación antes de hacerla.` },
     {
       kind: "theory",
       body: `## Seguridad sobre disponibilidad
@@ -160,5 +169,15 @@ Cada laboratorio de la Forja se ejecuta sobre este ritmo — ya lo sentiste si o
       lessonSlug: "stellar-101-1",
       body: `El Acto VI de la Campaña — **La Puerta de la Constelación** — recorre este mismo cielo de forma práctica: frases de red, horizontes y tus primeros mapas estelares. Opcional, y vale la desviación cuando quieres el mapa detrás de la teoría.`,
     },
+  ],
+  testOut: [
+    { question: `¿Cómo decide un participante de quién depende para acordar?`,
+      options: ["Nombra su propia porción de quórum — no hay lista oficial de validadores, y el alta es ese nombramiento","El protocolo le asigna un conjunto según el stake","La SDF publica el conjunto autorizado de validadores en cada versión del protocolo"], answer: 0 },
+    { question: `Si cada cual elige su consejo, ¿qué impide que la red se parta?`,
+      options: ["La superposición — la seguridad se sostiene cuando los círculos de confianza se cruzan lo suficiente, y en la práctica lo hacen porque los participantes nombran de forma independiente a las mismas instituciones bien gestionadas","Una regla de desempate que aplica el protocolo cuando los grupos discrepan","Un número mínimo de validadores que toda porción debe contener"], answer: 0 },
+    { question: `SCP prefiere seguridad antes que liveness. ¿Qué significa eso cuando la red tiene problemas?`,
+      options: ["Se detiene en vez de arriesgar dos historias en conflicto — parar es recuperable, discrepar sobre el pasado no","Sigue produciendo ledgers y reconcilia cualquier bifurcación después","Elige un líder temporal para romper el bloqueo"], answer: 0 },
+    { question: `¿Qué le da al constructor un consenso sin minería, en concreto?`,
+      options: ["Un ledger cada pocos segundos con una comisión medida en fracciones de céntimo, y un cierre como finalidad","Más rendimiento a costa de una finalidad más lenta","Transacciones gratis, ya que no hay mineros a los que pagar"], answer: 0 },
   ],
 };

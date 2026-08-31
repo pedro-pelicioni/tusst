@@ -1,23 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-// Chapter III (craft) — Domain-Driven Design with Stellar's own domain as the
-// running example: "Account" means three things in three contexts, the
-// transaction envelope is a textbook aggregate, and anchors are context
-// mapping with a business model. Ends on why AI needs your borders stated.
-
-export const bordersOfTheRealm: Concept = {
-  meta: {
-    slug: "borders-of-the-realm",
-    title: "Fronteiras do Reino",
-    tagline: "DDD e contextos delimitados, mapeados no próprio Stellar.",
-    numeral: "III",
-    arc: "craft",
-    level: 2,
-    status: "live",
-    estMinutes: 13,
-    sigil: "/v2/journey/sigils/borders-of-the-realm.webp",
-    glyph: "🗺",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Fronteiras do Reino",
+  tagline: "Uma palavra, três sentidos — e as fronteiras que tornam isso seguro.",
   steps: [
     {
       kind: "theory",
@@ -109,57 +94,14 @@ A fronteira não é uma falha de design. **A fronteira é o design.**`,
       explain: `Um modelo compartilhado cresce os campos e regras de todos os contextos até que nenhum contexto possa mudar sem quebrar outro. Dois modelos enxutos que compartilham um ID não são duplicação — são duas verdades sobre um mesmo endereço, cada uma onde é compreendida.`,
     },
     {
-      kind: "theory",
-      body: `## Entidades e objetos de valor
-
-Dois tipos de coisa vivem dentro de qualquer contexto:
-
-- Uma **entidade** tem identidade que sobrevive a mudanças. Uma **Account** Stellar é a mesma conta após mil pagamentos — seu endereço é sua identidade; seus saldos são apenas estado.
-- Um **objeto de valor** *é* seu valor. Um **Asset** Stellar é um código mais um emissor: dois \`USDC\` do mesmo emissor são intercambiáveis — indistinguíveis, na verdade. Trocar o emissor não edita o ativo; você passa a segurar um *ativo diferente*.
-
-Entidades são rastreadas. Valores são comparados. Confundir os dois gera bugs fantasma.`,
-    },
-    {
-      kind: "quiz",
-      question: `Qual destes é um **objeto de valor** no domínio Stellar?`,
-      options: [
-        "Um ativo — código + emissor; dois com campos iguais são a mesma coisa, sem identidade própria",
-        "Uma conta — mantém sua identidade enquanto seus saldos mudam por baixo",
-        "Um validador — permanece o mesmo nó entre reinicializações e mudanças de IP",
-      ],
-      answer: 0,
-      explain: `As outras duas respostas descrevem coisas reais — mas são *entidades*: identidade que sobrevive a mudanças. O ativo é puro valor: a igualdade é campo a campo, e "qual é o original?" nem faz sentido.`,
-    },
-    {
-      kind: "theory",
-      body: `## Agregados: a regra do envelope
-
-Alguns objetos só fazem sentido **juntos**, guardados por uma raiz que impõe as regras. Esse conjunto é um **agregado**.
-
-O Stellar lhe dá um espécime perfeito: o **transaction envelope**. Operações vivem *dentro* de uma transação — assinadas juntas, sequenciadas juntas, e **todas têm sucesso ou falham juntas**. Você não pode retirar a operação #3 e aplicá‑la isoladamente; o envelope é a única porta, contendo assinaturas e número de sequência.
-
-Esse é o padrão de agregado em produção: a consistência é imposta *na fronteira*, de modo que nada interno pode ficar meio‑aplicado.`,
-    },
-    {
-      kind: "quiz",
-      question: `Uma transação Stellar assinada contém cinco operações, e a terceira é a única que importa. Essa operação pode ser aplicada ao ledger sozinha?`,
-      options: [
-        "Não — operações só são aplicadas através do envelope, e a transação inteira tem sucesso ou falha como um todo",
-        "Sim — cada operação tem sua própria assinatura, então cada uma pode ficar independente",
-        "Sim — desde que você pague uma taxa separada por essa única operação",
-      ],
-      answer: 0,
-      explain: `O envelope é a raiz do agregado: assinaturas e número de sequência estão vinculados à transação, nunca por operação. Isso é exatamente o que torna swaps atômicos de múltiplas operações seguros — não existe um mundo onde só metade de uma operação seja aplicada.`,
-    },
-    {
       kind: "fill",
-      prompt: `Complete a lei do agregado:`,
+      prompt: `Complete a regra que faz de uma fronteira uma fronteira:`,
       file: "NOTES.md",
-      before: `Ops em um envelope `,
-      after: ` — a transação é a unidade de consistência.`,
-      choices: ["juntas", "independentemente", "por ordem de taxa", "por peso de assinatura"],
+      before: `Dentro de um contexto uma palavra tem exatamente um sentido. Na fronteira, esse sentido pode `,
+      after: ` .`,
+      choices: ["mudar", "continuar o mesmo", "virar opcional", "ser herdado pelo próximo contexto"],
       answer: 0,
-      explain: `Atomicidade é a promessa completa do agregado. Ordem de taxa e peso de assinatura são conceitos reais do Stellar — mas eles decidem *quando e se* um envelope se aplica, nunca *quais partes* dele se aplicam.`,
+      explain: `Se o sentido não pudesse mudar, você não precisaria de fronteira — precisaria de um modelo único compartilhado, que é justamente o que as fronteiras existem para evitar. Uma fronteira é exatamente o lugar onde "Conta" pode significar outra coisa, de propósito, com uma tradução na passagem.`,
     },
     {
       kind: "theory",
@@ -173,13 +115,52 @@ Nenhum dos mundos precisou adotar o modelo do outro. Essa é uma fronteira saud�
     },
     {
       kind: "theory",
+      body: `## A fronteira que se dissolve em silêncio
+
+Fronteiras raramente caem de uma vez. Elas se erodem, e sempre pelo mesmo movimento educado: *"esses dois contextos compartilham só um pouquinho."*
+
+Começa com um tipo. Pagamentos e Compliance precisam os dois de um endereço, então importam um \`Account\` compartilhado — só o identificador, mais nada. Aí Compliance precisa do status nele. Aí Pagamentos precisa de um campo de Compliance para um recibo. Seis meses depois o tipo compartilhado tem catorze campos, metade sem sentido em qualquer um dos contextos, e nenhum dos lados consegue mudá-lo sem uma reunião.
+
+O sinal não é o tamanho da coisa compartilhada. É **quem precisa ser consultado para mudá-la**. Uma fronteira que você não atravessa sem tradução é uma fronteira. Uma fronteira que você atravessa importando é enfeite.
+
+A ponte que continua saudável é aquela em que cada lado mantém o próprio modelo e algo no meio converte — que é exatamente o que um anchor faz, e exatamente o que um tipo compartilhado não faz.`,
+    },
+    {
+      kind: "exercise",
+      mode: "spec-write",
+      brief: `## A prova do examinador: desenhe as fronteiras
+
+Aqui está um sistema, descrito do jeito que um fundador descreveria:
+
+> Um app de remessas. Usuários se cadastram e passam por verificação de identidade. Carregam um saldo por transferência bancária, mandam dinheiro para destinatários em outro país, e o destinatário saca num parceiro local. O suporte pode congelar uma conta e ver a trilha de auditoria completa.
+
+Nomeie os **contextos delimitados** que você desenharia e, para cada um: as palavras cujo sentido muda naquela fronteira, e como os contextos conversam entre si. Só modelagem — sem schemas, sem serviços, sem nomes de framework.`,
+      rubric: `1. Nomeia ao menos três contextos delimitados plausíveis, com uma linha de responsabilidade cada.
+2. Identifica ao menos uma palavra que significa coisas genuinamente diferentes em dois desses contextos, e diz o que significa em cada um.
+3. Descreve como ao menos um par de contextos se comunica — uma tradução na borda, não um modelo compartilhado.
+4. Não resolve as diferenças propondo um modelo único para todo mundo.
+5. Só modelagem — sem schema de banco, sem nomes de serviço ou framework, sem código.`,
+      minChars: 180,
+    },
+    {
+      kind: "theory",
       body: `## Por que o golem precisa do seu mapa
 
-Um LLM leu milhões de bases de código onde "account", "transfer" e "balance" significam coisas diferentes. Deixe suas fronteiras sem declarar e ele **misturará vocabulários no meio do arquivo** — uma regra KYC invadindo seu modelo de pagamentos, a ideia de Account de exchange sombreando sua wallet — cada linha parece plausível localmente.
+Uma LLM leu um milhão de bases de código onde "conta", "transferência" e "saldo" significavam coisas diferentes. Deixe suas fronteiras não ditas e ela vai **misturar vocabulários no meio do arquivo** — uma regra de KYC vazando para o seu modelo de pagamentos, a ideia de Conta de uma exchange contaminando a da sua carteira — cada linha localmente plausível.
 
-Então escreva a fronteira no banco: *"Estamos no contexto Payments. Account significa detentor de saldo. Compliance é um modelo separado — referencie-o apenas pelo endereço."* Um contexto declarado é uma cerca que o golem respeita.
+Então escreva a fronteira na bancada: *"Estamos no contexto de Pagamentos. Conta significa detentor de saldo. Compliance é um modelo separado — referencie só pelo endereço."* Um contexto declarado é uma cerca que o golem respeita.
 
-Próxima disciplina: dentro de um contexto, onde cada peça *vive*? Entre na fortaleza.`,
+**A seguir:** você desenhou as linhas. O que de fato mora dentro de uma delas — e quais coisas só podem mudar juntas.`,
     },
+  ],
+  testOut: [
+    { question: `Três times definem "Conta" de formas diferentes. Como o DDD chama o lugar onde o sentido pode mudar?`,
+      options: ["Um contexto delimitado — a fronteira é o projeto, não uma falha dele","Uma colisão de nomes, a ser resolvida renomeando um deles","Dívida técnica, a ser paga unificando o modelo"], answer: 0 },
+    { question: `Compliance pede para acrescentar \`kyc_status\` à Conta do contexto de Pagamentos. Qual é a leitura DDD?`,
+      options: ["Manter modelos separados atrás de fronteiras separadas, ligados pelo endereço — cada contexto modela só o que precisa","Fundir os dois, já que duplicação é o mal maior","Acrescentar os campos como opcionais para Pagamentos ignorar"], answer: 0 },
+    { question: `O que é um anchor da Stellar, no vocabulário deste capítulo?`,
+      options: ["Um mapa de contextos virado negócio — ele traduz entre o contexto bancário e o contexto do ledger","Um modelo compartilhado que bancos e ledger concordam em adotar","Uma camada de compliance que fica acima dos dois contextos e os governa"], answer: 0 },
+    { question: `Por que uma fronteira não declarada machuca mais quando é uma IA escrevendo o código?`,
+      options: ["Ela leu um milhão de bases onde essas palavras significavam outras coisas, e vai misturar os vocabulários no meio do arquivo","Ela não consegue ler termos de domínio e precisa de nomes técnicos","Ela se recusa a seguir enquanto todo termo não for formalmente definido"], answer: 0 },
   ],
 };

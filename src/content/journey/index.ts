@@ -7,20 +7,32 @@ import { machinesThatKeepPromises } from "./concepts/machines-that-keep-promises
 import { thinkBeforeYouForge } from "./concepts/think-before-you-forge";
 import { theRedGreenRite } from "./concepts/the-red-green-rite";
 import { bordersOfTheRealm } from "./concepts/borders-of-the-realm";
+import { whatTheBorderHolds } from "./concepts/what-the-border-holds";
 import { theCleanKeep } from "./concepts/the-clean-keep";
+import { theKeepsOwnDoors } from "./concepts/the-keeps-own-doors";
 import { tamingTheGolem } from "./concepts/taming-the-golem";
+import { whatCatchesIt } from "./concepts/what-catches-it";
 import { wordsOfPower } from "./concepts/words-of-power";
+import { whatTheGolemSees } from "./concepts/what-the-golem-sees";
 import { theEndlessLoop } from "./concepts/the-endless-loop";
+import { theHandOnTheBrake } from "./concepts/the-hand-on-the-brake";
 import { weavingTheGraph } from "./concepts/weaving-the-graph";
+import { theSkeletonAndTheOrgans } from "./concepts/the-skeleton-and-the-organs";
 // ── Arc II · The Realm — the Stellar ecosystem, end to end ────────────
 import { theRealmOfStellar } from "./concepts/the-realm-of-stellar";
 import { anatomyOfATransaction } from "./concepts/anatomy-of-a-transaction";
+import { theFateOfAnEnvelope } from "./concepts/the-fate-of-an-envelope";
 import { accountsTrustAndAssets } from "./concepts/accounts-trust-and-assets";
+import { theIssuersSide } from "./concepts/the-issuers-side";
 import { riversOfValue } from "./concepts/rivers-of-value";
+import { theCrossing } from "./concepts/the-crossing";
 import { gatesOfTheRealm } from "./concepts/gates-of-the-realm";
+import { theCommonTongue } from "./concepts/the-common-tongue";
 import { theLivingContracts } from "./concepts/the-living-contracts";
+import { theHeartbeatAndTheBill } from "./concepts/the-heartbeat-and-the-bill";
 import { walletsWithoutSeeds } from "./concepts/wallets-without-seeds";
 import { theVeiledLedger } from "./concepts/the-veiled-ledger";
+import { theSpineBeneathTheVeil } from "./concepts/the-spine-beneath-the-veil";
 import { theProtocolsEdge } from "./concepts/the-protocols-edge";
 
 // The Builder's Journey — the essential road, in a ground floor and two arcs:
@@ -46,7 +58,7 @@ const theCapstoneForging: Concept = {
     slug: "the-capstone-forging",
     title: "The Capstone Forging",
     tagline: "Spec + tests + an AI at your side → a deployed contract.",
-    numeral: "IX",
+    numeral: "XV",
     arc: "craft",
     level: 2,
     requires: ["think-before-you-forge", "the-red-green-rite"],
@@ -67,21 +79,33 @@ export const journeyChapters: Concept[] = [
   thinkBeforeYouForge,
   theRedGreenRite,
   bordersOfTheRealm,
+  whatTheBorderHolds,
   theCleanKeep,
+  theKeepsOwnDoors,
   tamingTheGolem,
+  whatCatchesIt,
   wordsOfPower,
+  whatTheGolemSees,
   theEndlessLoop,
+  theHandOnTheBrake,
   weavingTheGraph,
+  theSkeletonAndTheOrgans,
   theCapstoneForging,
   // realm
   theRealmOfStellar,
   anatomyOfATransaction,
+  theFateOfAnEnvelope,
   accountsTrustAndAssets,
+  theIssuersSide,
   riversOfValue,
+  theCrossing,
   gatesOfTheRealm,
+  theCommonTongue,
   theLivingContracts,
+  theHeartbeatAndTheBill,
   walletsWithoutSeeds,
   theVeiledLedger,
+  theSpineBeneathTheVeil,
   theProtocolsEdge,
 ];
 

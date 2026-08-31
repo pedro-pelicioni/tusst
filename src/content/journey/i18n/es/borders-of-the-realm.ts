@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const bordersOfTheRealm: Concept = {
-  meta: {
-    slug: "borders-of-the-realm",
-    title: "Fronteras del Reino",
-    tagline: "DDD y contextos limitados, mapeados sobre Stellar mismo.",
-    numeral: "III",
-    arc: "craft",
-    level: 2,
-    status: "live",
-    estMinutes: 13,
-    sigil: "/v2/journey/sigils/borders-of-the-realm.webp",
-    glyph: "🗺",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "Fronteras del Reino",
+  tagline: "Una palabra, tres significados — y las fronteras que lo hacen seguro.",
   steps: [
     {
       kind: "theory",
@@ -103,64 +93,14 @@ La frontera no es un fallo de diseño. **La frontera es el diseño.**`,
       answer: 0,
       explain: `Un modelo compartido hace que cada contexto acumule campos y reglas hasta que ninguno pueda moverse sin romper a otro. Dos modelos ligeros que comparten un ID no son duplicación — son dos verdades sobre una misma dirección, cada una poseída donde se entiende.`,
     },
-    {
-      kind: "theory",
-      body: `## Entidades y objetos de valor
-
-Dos tipos de cosas viven dentro de cualquier contexto:
-
-- Una **entidad** tiene identidad que sobrevive al cambio. Una **Cuenta** de Stellar es la misma cuenta después de mil pagos — su dirección es su identidad; sus saldos son solo estado.
-- Un **objeto de valor** *es* su valor. Un **Activo** de Stellar es un código más un emisor: dos \`USDC\` del mismo emisor son intercambiables — indistinguibles, de hecho. Cambiar el emisor no edita el activo; estás sosteniendo un *activo diferente*.
-
-Las entidades se rastrean. Los valores se comparan. Confundir los dos es cómo nacen los bugs fantasma.`,
-    },
-    {
-      kind: "quiz",
-      question: `¿Cuál de estos es un **objeto de valor** en el dominio de Stellar?`,
-      options: [
-        "Un activo — código + emisor; dos con los mismos campos son la misma cosa, sin identidad propia",
-        "Una cuenta — mantiene su identidad mientras sus saldos cambian bajo ella",
-        "Un validador — permanece el mismo nodo a través de reinicios y cambios de IP",
-      ],
-      answer: 0,
-      explain: `Las otras dos respuestas describen cosas reales — pero son *entidades*: identidad que sobrevive al cambio. El activo es puro valor: la igualdad es campo por campo, y la pregunta “¿cuál es el original?” ni siquiera tiene sentido.`,
-    },
-    {
-      kind: "theory",
-      body: `## Agregados: la regla del sobre
-
-Algunos objetos solo tienen sentido **juntos**, protegidos por una raíz que impone las reglas. Ese conjunto es un **agregado**.
-
-Stellar te brinda un espécimen perfecto: el **sobre de transacción**. Las operaciones viven *dentro* de una transacción — firmadas juntas, secuenciadas juntas, y **todas tienen éxito o fallan juntas**. No puedes extraer la operación #3 y aplicarla sola; el sobre es la única puerta, y contiene las firmas y el número de secuencia.
-
-Ese es el patrón de agregado en producción: la consistencia se impone *en la frontera*, de modo que nada dentro pueda quedar a medio aplicar.`,
-    },
-    {
-      kind: "quiz",
-      question: `Una transacción firmada en Stellar contiene cinco operaciones, y la tercera es la única que te importa. ¿Puede esa operación aplicarse al libro mayor por sí sola?`,
-      options: [
-        "No — las operaciones se aplican solo a través de su sobre, y toda la transacción tiene éxito o falla como una unidad",
-        "Sí — cada operación lleva su propia firma, así que cada una puede actuar de forma independiente",
-        "Sí — siempre que pagues una tarifa separada por esa única operación",
-      ],
-      answer: 0,
-      explain: `El sobre es la raíz del agregado: firmas y número de secuencia están vinculados a la transacción, nunca a cada operación. Esto es exactamente lo que hace seguros los swaps atómicos de múltiples operaciones — no existe un mundo donde solo la mitad de una se aplique.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Completa la ley del agregado:`,
+    { kind: "fill",
+      prompt: `Completa la regla que hace de una frontera una frontera:`,
       file: "NOTES.md",
-      before: `Las ops en un sobre `,
-      after: ` — la transacción es la unidad de consistencia.`,
-      choices: [
-        "juntas",
-        "de forma independiente",
-        "por orden de comisión",
-        "por peso de firma",
-      ],
+      before: `Dentro de un contexto una palabra tiene exactamente un significado. En la frontera, ese significado puede `,
+      after: ` .`,
+      choices: ["cambiar", "seguir siendo el mismo", "volverse opcional", "heredarse al siguiente contexto"],
       answer: 0,
-      explain: `La atomicidad es la promesa completa del agregado. Orden de tarifas y peso de firma son conceptos reales de Stellar — pero deciden *cuándo y si* un sobre se aplica, nunca *qué partes* del mismo se aplican.`,
-    },
+      explain: `Si el significado no pudiera cambiar, no necesitarías una frontera — necesitarías un modelo único compartido, que es justo lo que las fronteras existen para evitar. Una frontera es precisamente el lugar donde "Cuenta" puede significar otra cosa, a propósito, con una traducción al pasar.` },
     {
       kind: "theory",
       body: `## Puentes entre contextos: el anchor
@@ -171,15 +111,45 @@ Los **anchors** de Stellar son este patrón con un modelo de negocio. En un lado
 
 Ningún mundo tuvo que adoptar el modelo del otro. Esa es una frontera saludable: cruzada por traducción, nunca por filtración.`,
     },
-    {
-      kind: "theory",
-      body: `## Por qué el golem necesita tu mapa
+    { kind: "theory", body: `## La frontera que se disuelve en silencio
 
-Un LLM ha leído millones de bases de código donde "account", "transfer" y "balance" significan cosas distintas. Si dejas tus fronteras sin declarar, él **mezclará vocabularios a mitad de archivo** — una regla KYC que se cuela en tu modelo de pagos, la idea de Cuenta de un exchange que se filtra en tu wallet — cada línea parece plausible localmente.
+Las fronteras rara vez caen de golpe. Se erosionan, y siempre con el mismo gesto educado: *"estos dos contextos comparten solo un poquito."*
 
-Así que escribe la frontera en la mesa: *"Estamos en el contexto Payments. Cuenta significa titular de saldo. Compliance es un modelo separado — refiérete a él solo por dirección."* Un contexto declarado es una valla que el golem respeta.
+Empieza con un tipo. Pagos y Compliance necesitan ambos una dirección, así que importan un \`Account\` compartido — solo el identificador, nada más. Luego Compliance necesita el estado en él. Luego Pagos necesita un campo de Compliance para un recibo. Seis meses después el tipo compartido tiene catorce campos, la mitad sin sentido en ninguno de los dos contextos, y ninguna de las partes puede cambiarlo sin una reunión.
 
-Siguiente disciplina: dentro de un contexto, ¿dónde vive cada pieza? Entra la fortaleza.`,
-    },
+La señal no es el tamaño de lo compartido. Es **a quién hay que consultar para cambiarlo**. Una frontera que no cruzas sin una traducción es una frontera. Una frontera que cruzas importando es un adorno.
+
+El puente que se mantiene sano es aquel en el que cada lado conserva su propio modelo y algo en el medio convierte — que es exactamente lo que hace un anchor, y exactamente lo que no hace un tipo compartido.` },
+    { kind: "exercise", mode: "spec-write",
+      brief: `## La prueba del examinador: dibuja las fronteras
+
+Aquí tienes un sistema, descrito como lo describiría un fundador:
+
+> Una app de remesas. Los usuarios se registran y pasan verificación de identidad. Cargan un saldo por transferencia bancaria, envían dinero a destinatarios de otro país, y el destinatario cobra en un socio local. El soporte puede congelar una cuenta y ver el rastro de auditoría completo.
+
+Nombra los **contextos delimitados** que dibujarías y, para cada uno: las palabras cuyo significado cambia en esa frontera, y cómo se hablan los contextos entre sí. Solo modelado — sin esquemas, sin servicios, sin nombres de framework.`,
+      rubric: `1. Nombra al menos tres contextos delimitados plausibles, con una línea de responsabilidad cada uno.
+2. Identifica al menos una palabra que significa cosas genuinamente distintas en dos de esos contextos, y dice qué significa en cada uno.
+3. Describe cómo se comunica al menos un par de contextos — una traducción en el borde, no un modelo compartido.
+4. No resuelve las diferencias proponiendo un modelo único para todos.
+5. Solo modelado — sin esquemas de base de datos, sin nombres de servicio o framework, sin código.`,
+      minChars: 180 },
+    { kind: "theory", body: `## Por qué el golem necesita tu mapa
+
+Un LLM ha leído un millón de bases de código donde "cuenta", "transferencia" y "saldo" significaban cosas distintas. Deja tus fronteras sin declarar y **mezclará vocabularios a mitad de archivo** — una regla de KYC filtrándose en tu modelo de pagos, la idea de Cuenta de un exchange tiñendo la de tu billetera — cada línea localmente plausible.
+
+Así que escribe la frontera en el banco: *"Estamos en el contexto de Pagos. Cuenta significa titular de saldo. Compliance es un modelo aparte — referéncialo solo por dirección."* Un contexto declarado es una valla que el golem respeta.
+
+**A continuación:** ya has trazado las líneas. Qué vive de verdad dentro de una — y qué cosas solo pueden cambiar juntas.` },
+  ],
+  testOut: [
+    { question: `Tres equipos definen "Cuenta" de forma distinta. ¿Cómo llama DDD al lugar donde el significado puede cambiar?`,
+      options: ["Un contexto delimitado — la frontera es el diseño, no un fallo de él","Una colisión de nombres, a resolver renombrando uno","Deuda técnica, a saldar unificando el modelo"], answer: 0 },
+    { question: `Compliance pide añadir \`kyc_status\` a la Cuenta del contexto de Pagos. ¿Cuál es la lectura DDD?`,
+      options: ["Mantener modelos separados tras fronteras separadas, unidos por la dirección — cada contexto modela solo lo que necesita","Fusionarlos, ya que la duplicación es el mal mayor","Añadir los campos como opcionales para que Pagos los ignore"], answer: 0 },
+    { question: `¿Qué es un anchor de Stellar, en el vocabulario de este capítulo?`,
+      options: ["Un mapa de contextos convertido en negocio — traduce entre el contexto bancario y el del libro mayor","Un modelo compartido que bancos y libro mayor acuerdan adoptar","Una capa de compliance que se sitúa por encima de ambos contextos"], answer: 0 },
+    { question: `¿Por qué una frontera sin declarar duele más cuando escribe el código una IA?`,
+      options: ["Ha leído un millón de bases donde esas palabras significaban otras cosas, y mezclará los vocabularios a mitad de archivo","No sabe leer términos de dominio y necesita nombres técnicos","Se niega a continuar hasta que todo término esté formalmente definido"], answer: 0 },
   ],
 };

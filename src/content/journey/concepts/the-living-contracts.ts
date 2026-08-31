@@ -1,20 +1,22 @@
 import type { Concept } from "../types";
 
-// Chapter VI — Soroban from the ledger's point of view: Wasm behind one
-// operation, storage with a heartbeat (TTL + state archival), measured
-// resource fees, and the simulate-then-sign flow every client follows.
+// Realm IX — the contract itself: Wasm on the ledger, the three shelves of
+// storage, and the interface that travels with the code. What it costs to keep
+// state alive and what a call costs to make are Realm X, because "where does
+// data live" and "who pays rent on it" are separate lessons and the second one
+// is the one that produces outages.
 
 export const theLivingContracts: Concept = {
   meta: {
     slug: "the-living-contracts",
     title: "The Living Contracts",
-    tagline: "Soroban: Wasm, storage that expires, fees that make sense.",
-    numeral: "VI",
+    tagline: "Soroban: Wasm on the ledger, and three shelves to put state on.",
+    numeral: "X",
     arc: "realm",
     level: 2,
-    requires: ["machines-that-keep-promises", "gates-of-the-realm"],
+    requires: ["the-common-tongue"],
     status: "live",
-    estMinutes: 14,
+    estMinutes: 11,
     sigil: "/v2/journey/sigils/the-living-contracts.webp",
     glyph: "📦",
   },
@@ -71,73 +73,6 @@ Choosing the wrong shelf is a classic rookie tax: instance bloat makes every sin
     },
     {
       kind: "theory",
-      body: `## State has a heartbeat
-
-Most chains let state pile up forever — every node drags around every abandoned entry from 2019. Stellar refuses: **every Soroban entry has a TTL** (time-to-live), counted in ledgers, and rent extends it.
-
-When the TTL runs out:
-
-- **Temporary** entries are deleted. Gone.
-- **Persistent** and **instance** entries are **archived** — evicted from the live ledger, but restorable later with a proof, returning exactly as they were.
-
-This is **state archival**, and no other major chain does it. The live ledger stays lean, validators stay cheap, history stays recoverable.`,
-    },
-    {
-      kind: "quiz",
-      question: `Your contract tracks each user's token balance. Which storage tier?`,
-      options: [
-        "Persistent — balances must outlive any TTL lapse and be restorable from the archive",
-        "Temporary — it's cheapest, and users can re-deposit if it expires",
-        "Instance — balances belong to the contract, so they ride with it",
-      ],
-      answer: 0,
-      explain: `Temporary deletion is *permanent* — a vanished balance is a rug-pull by negligence. And instance storage loads with every single call, so stuffing per-user data there makes everyone pay for everyone.`,
-    },
-    {
-      kind: "fill",
-      prompt: `Put the balance on the right shelf.`,
-      file: "token/src/lib.rs",
-      before: `env.storage().`,
-      after: `().set(&user, &balance);`,
-      choices: ["persistent", "temporary", "instance", "eternal"],
-      answer: 0,
-      explain: `The soroban-sdk mirrors the tiers one to one: \`env.storage().persistent()\`, \`.temporary()\`, \`.instance()\`. There is no \`eternal\` — that's the entire point of the rent design.`,
-    },
-    {
-      kind: "theory",
-      body: `## Fees that are measured, not auctioned
-
-On gas-auction chains you *bid* for blockspace and pray; one popular mint can multiply everyone's costs.
-
-Soroban **meters** instead. A transaction declares its **resources** — CPU instructions, memory, ledger reads and writes, bytes — and the fee is *computed* from those measured needs, plus rent for the storage it touches. Declare honestly (simulation does this for you) and the refundable portion of any over-estimate comes back.
-
-The result is a cost you can quote in advance: "this action costs about a cent" stays true even when the network is having a busy day.`,
-    },
-    {
-      kind: "theory",
-      body: `## Simulate first, sign exactly that
-
-Every Soroban client follows one rhythm:
-
-1. **Simulate** the call against an RPC node — no signature, no cost.
-2. The simulation returns the **footprint** — precisely which ledger entries the call will read and write — plus resource estimates and the auth it needs.
-3. You **sign exactly what you simulated** and submit.
-
-The signed transaction carries its footprint, so validators know its whole world before executing it; nothing outside the footprint may be touched. Skip simulation and you are guessing numbers the network will simply reject.`,
-    },
-    {
-      kind: "quiz",
-      question: `Why does the Soroban flow simulate before signing?`,
-      options: [
-        "Simulation computes the footprint and resource needs, so you sign a transaction with exact, enforceable bounds",
-        "It's a courtesy dry-run for debugging — production apps skip it",
-        "Simulation pre-executes the call so validators don't have to run it again",
-      ],
-      answer: 0,
-      explain: `Validators always re-execute — but only within the declared footprint. Simulation is how a transaction learns its own bounds; the ledger then enforces them to the byte.`,
-    },
-    {
-      kind: "theory",
       body: `## The interface travels with the contract
 
 A compiled Soroban contract is not a mystery blob. The build embeds a **contract spec** into the Wasm itself: every function, argument and type, machine-readable.
@@ -145,6 +80,27 @@ A compiled Soroban contract is not a mystery blob. The build embeds a **contract
 Tooling drinks straight from it — the CLI can print a deployed contract's interface, and clients **auto-generate fully typed bindings** from the on-chain Wasm. No hunting for ABI JSON files, no version drift between the contract and its docs: the ledger *is* the documentation.
 
 Call a contract you have never seen, with types checked at compile time. That is the developer experience the spec buys.`,
+    },
+    {
+      kind: "quiz",
+      question: `You are storing a user's session nonce, which is meaningless a few minutes after it is issued. Which shelf?`,
+      options: [
+        "Temporary — the cheapest rent, and forgetting it is exactly what you want",
+        "Persistent, so it can be restored if a call arrives late",
+        "Instance, so it disappears if the contract is ever archived",
+      ],
+      answer: 0,
+      explain: `Matching the shelf to the data's actual lifetime is the whole design decision, and it is one people get wrong in the safe-looking direction: putting short-lived data on the persistent shelf costs more forever, for a guarantee the data never needed.`,
+    },
+    {
+      kind: "fill",
+      prompt: `Complete what a deployed contract carries with it:`,
+      file: "NOTES.md",
+      before: `A caller does not need your documentation to invoke a contract, because its `,
+      after: ` can be read from the deployed code itself.`,
+      choices: ["interface", "source code", "author's address", "audit report"],
+      answer: 0,
+      explain: `The source is not on the ledger — compiled Wasm is — and neither an address nor an audit tells a tool what functions exist or what they take. The interface travelling with the code is why tooling can build a call against a contract nobody documented.`,
     },
     {
       kind: "labLink",
@@ -157,6 +113,56 @@ Call a contract you have never seen, with types checked at compile time. That is
       body: `Act VII of the Campaign puts the borrow checker to work on all of this — you write the Rust, compile the Wasm, and watch \`invoke_host_function\` carry *your* code onto the ledger. The full immersion is there whenever you want it.
 
 Next chapter, a twist: contracts so capable they stop being apps — and become the **account itself**.`,
+    },
+    {
+      kind: "theory",
+      body: `## Nothing here is free
+
+You can now say what a Soroban contract is, where its data lives, and how anyone calls it without your documentation.
+
+What none of that told you is the part that wakes teams up at night: **state is rented, not owned.** Every entry on every shelf has a clock, and the shelves differ in exactly one way that matters — what happens when a clock reaches zero.
+
+Get that wrong and the failure does not look like a bug. It looks like a contract that worked for six months and then, one Tuesday, started answering that the data does not exist.
+
+**Next:** the heartbeat, and the bill.`,
+    },
+  ],
+  testOut: [
+    {
+      question: `What is a Soroban contract, on the ledger?`,
+      options: [
+        "Compiled Wasm stored on the ledger, with an address, invoked through a transaction operation like any other verb",
+        "A script the validators interpret from source at call time",
+        "An off-chain service the protocol calls out to when needed",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Why does Soroban offer three separate kinds of storage rather than one?`,
+      options: [
+        "Different data has different value over time, and the shelves price and expire it differently",
+        "Each kind is optimised for a different data size",
+        "Older contracts use one kind and newer ones another",
+      ],
+      answer: 0,
+    },
+    {
+      question: `What does it mean that the interface travels with the contract?`,
+      options: [
+        "The contract's spec is readable from the deployed code itself, so tooling can call it without external documentation",
+        "The interface is registered in a public directory maintained by the SDF",
+        "Callers must be given a client library by the contract's author",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Where does a contract call ride?`,
+      options: [
+        "Inside the same transaction envelope you already know, as an invoke_host_function operation",
+        "On a separate contract-only channel with its own consensus",
+        "Directly to a validator over RPC, bypassing the ledger",
+      ],
+      answer: 0,
     },
   ],
 };

@@ -204,4 +204,14 @@ Y cuando un concepto despierte tu curiosidad por el metal que hay debajo, busca 
 A continuación: el reino en el que vas a construir y cómo miles de máquinas llegan a un acuerdo sin un rey.`,
     },
   ],
+  testOut: [
+    { question: `¿Por qué una especificación es la parte de la ingeniería que sigue siendo tuya en la era de la IA?`,
+      options: ["Cuando el código es barato, \"parece correcto\" y \"es correcto\" se vuelven indistinguibles salvo que escribieras antes qué significa correcto","Porque los modelos no saben leer especificaciones, así que un humano debe sostenerlas","Porque las especificaciones se escriben más rápido que el código y ahorran tiempo"], answer: 0 },
+    { question: `¿Qué describe una especificación?`,
+      options: ["Comportamiento — qué debe ocurrir, qué no debe ocurrir nunca, y los bordes","La implementación, con precisión suficiente para que cualquier dev produzca el mismo código","El diseño de almacenamiento y las firmas de las funciones públicas"], answer: 0 },
+    { question: `Dos implementaciones muy distintas satisfacen tu especificación. ¿Qué significa eso?`,
+      options: ["La especificación cumple su función — restringe el comportamiento y deja libre la implementación","La especificación es demasiado vaga y le falta detalle de implementación","Una de las dos implementaciones tiene que estar mal"], answer: 0 },
+    { question: `¿Cuál de estas pertenece a una especificación?`,
+      options: ["\"El saldo del contrato nunca baja de la suma de los depósitos abiertos\"","\"Guarda los depósitos en un mapa persistente indexado por dirección\"","\"Usa el SDK más reciente y mantén el código limpio\""], answer: 0 },
+  ],
 } satisfies JourneyConceptText;

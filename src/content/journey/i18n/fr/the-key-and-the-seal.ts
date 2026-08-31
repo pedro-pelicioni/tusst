@@ -108,4 +108,14 @@ Un compte est une paire de clés. Une adresse est la moitié qui se partage. Une
 **Ensuite :** le livre peut contenir plus que des soldes. Il peut contenir des *règles* — et ces règles s'exécutent d'elles-mêmes, sans personne au milieu pour décider de les honorer.`,
     },
   ],
+  testOut: [
+    { question: `Que prouve réellement une signature ?`,
+      options: ["Que le détenteur de la clé privée a approuvé exactement ce message","Que le message provient d'un appareil de confiance","Que le réseau a vérifié l'identité de l'expéditeur avant de l'accepter"], answer: 0 },
+    { question: `Un inconnu possède votre adresse publique. Que peut-il en faire ?`,
+      options: ["Vous envoyer de la valeur et vérifier vos signatures — rien d'autre","Dépenser depuis votre compte s'il sait aussi quand vous avez signé la dernière fois","Déduire votre clé privée, avec assez de temps"], answer: 0 },
+    { question: `Pourquoi une clé n'est-elle pas simplement un mot de passe avec des étapes en plus ?`,
+      options: ["Un mot de passe est montré à un service qui le vérifie ; une clé ne quitte jamais votre côté et produit une preuve à la place","Une clé est plus longue, il faut donc plus d'essais pour la deviner","Un mot de passe est réinitialisé par le support, et une clé par le réseau"], answer: 0 },
+    { question: `Vous changez un caractère du message après l'avoir signé. Que se passe-t-il ?`,
+      options: ["La signature cesse de correspondre — elle couvre le message entier, pas un morceau","Rien, tant que le changement est plus petit que la signature","La signature se met à jour pour couvrir le nouveau texte"], answer: 0 },
+  ],
 };

@@ -139,4 +139,14 @@ Le même filet permet de refactoriser sans crainte — qu'il s'agisse de ton tra
       body: `Un secret sur la Campagne : **chaque escarmouche est évaluée par des tests cachés** — tu forges, les tests jugent, rouge ou vert. La Campagne transforme le TDD en jeu, et tu participes au rite depuis ta première escarmouche. Prochaine discipline : tracer les frontières où les mots changent de sens — la carte dont dépend chaque spécification.`,
     },
   ],
+  testOut: [
+    { question: `Pourquoi écrire le test qui échoue avant le code ?`,
+      options: ["Un test qui n'a jamais échoué n'a jamais prouvé qu'il le pouvait — l'écrire d'abord, c'est ainsi qu'on sait qu'il surveille la bonne chose","C'est plus rapide, car on évite de réécrire le test ensuite","Cela force l'implémentation à être plus simple qu'elle ne l'aurait été"], answer: 0 },
+    { question: `Qu'est-ce qu'un test au rouge apporte à un binôme avec l'IA que des exigences en prose n'apportent pas ?`,
+      options: ["Un critère d'acceptation qu'elle ne peut pas mal lire, et un signal capable d'être une mauvaise nouvelle","Un prompt plus court, qui laisse de la place à plus de contexte","L'autorisation de modifier l'API publique"], answer: 0 },
+    { question: `Le golem fait passer le test en traitant comme cas particulier exactement l'entrée qu'utilise le test. Qu'est-ce que cela révèle ?`,
+      options: ["Le test sous-spécifiait le comportement — il a nommé un exemple plutôt que la règle","Le golem agit de mauvaise foi et exige des instructions plus strictes","Rien ; passer le test est la définition de terminé"], answer: 0 },
+    { question: `Votre suite est au vert après un changement dont vous doutez. Que vous a-t-elle réellement dit ?`,
+      options: ["Que rien de ce que la suite surveille n'a cassé — c'est-à-dire seulement jusqu'où la suite se trouve surveiller","Que le changement est correct","Que le changement peut être déployé sans risque"], answer: 0 },
+  ],
 } satisfies JourneyConceptText;

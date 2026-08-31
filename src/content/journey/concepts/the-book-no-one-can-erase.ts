@@ -153,4 +153,44 @@ Everything you will meet later — accounts, payments, tokens, contracts — is 
 **Next:** if the book is public and anyone can write to it, what stops a stranger from spending *your* money? The answer is a key — and it is nothing like a password.`,
     },
   ],
+  // Dedicated test-out bank — deliberately NOT the chapter's own checks, so a
+  // reader who fails still meets fresh questions when they walk the chapter.
+  testOut: [
+    {
+      question: `Twelve friends each keep their own copy of the tavern book. What does that arrangement actually buy them?`,
+      options: [
+        "Nobody has to trust the keeper — a quiet edit stops matching the other eleven copies",
+        "The book becomes impossible to lose, but a keeper can still rewrite it",
+        "Writing gets faster, because twelve people share the work",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Every page also carries a short summary of the page before it. What does that add that copies alone do not?`,
+      options: [
+        "Editing an OLD page breaks every page that came after it, instead of just that one",
+        "It compresses the book, so old pages take less room",
+        "It lets you read the book backwards without losing your place",
+      ],
+      answer: 0,
+    },
+    {
+      question: `Why does a shared book need a rule about who writes the next page?`,
+      options: [
+        "Thousands of strangers receive movements at once and must end up with the same book, in the same order",
+        "Because paper is expensive and someone has to be responsible for it",
+        "Because only the person who started the book is allowed to add to it",
+      ],
+      answer: 0,
+    },
+    {
+      question: `In the terms of this chapter, what is Stellar?`,
+      options: [
+        "One of these shared books, built specifically for value moving between people",
+        "A company that keeps the book and charges to write in it",
+        "A general-purpose computer that happens to store a book",
+      ],
+      answer: 0,
+    },
+  ],
 };

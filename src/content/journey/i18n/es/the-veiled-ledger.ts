@@ -1,18 +1,8 @@
-import type { Concept } from "../types";
+import type { JourneyConceptText } from "../types";
 
-export const theVeiledLedger: Concept = {
-  meta: {
-    slug: "the-veiled-ledger",
-    title: "El Libro Velado",
-    tagline: "Tokens confidenciales, pagos privados — privacidad con un respaldo de cumplimiento.",
-    numeral: "VIII",
-    arc: "realm",
-    level: 2,
-    status: "live",
-    estMinutes: 20,
-    sigil: "/v2/journey/sigils/the-veiled-ledger.webp",
-    glyph: "🕯️",
-  },
+export const conceptText: JourneyConceptText = {
+  title: "El Libro Velado",
+  tagline: "Prueba sin revelación — y el primer velo construido sobre ella.",
   steps: [
     {
       kind: "theory",
@@ -148,80 +138,17 @@ Esa segunda ola fue la que inclinó la balanza: hizo **prácticos los sistemas d
 
 Construido para partes que se conocen pero deben mantener cifras privadas: nóminas, facturas de proveedores, liquidaciones B2B.`,
     },
-    {
-      kind: "theory",
-      body: `## Pagos privados de Stellar: ocultando a las contrapartes
+    { kind: "theory", body: `## El velo que no corriste
 
-Un velo más profundo. **Pagos Privados de Stellar (SPP)**, creados por **Nethermind**, llegaron a **vista previa para desarrolladores en testnet en agosto de 2026**.
+Aquí es donde la gente se relaja demasiado pronto. Envolviste la nómina en un Token Confidencial, los importes se apagaron, y el problema parece resuelto.
 
-En lugar de envolver un token, los usuarios **depositan activos en un pool compartido**. Las transferencias ocurren *dentro* del pool — y un observador externo ya no puede enlazar remitente con receptor. No solo los montos: las **contrapartes mismas están ocultas**.
+Mira lo que un observador todavía tiene. Una dirección paga a cuarenta direcciones. Lo hace el día uno de cada mes, y otra vez el quince. Dos de esas cuarenta dejaron de recibir en marzo, y tres nuevas empezaron en abril. Una de ellas recibe de tu dirección y de la de una segunda empresa.
 
-Donde los Tokens Confidenciales sirven a partes que se conocen, SPP cubre casos donde *quién pagó a quién* es el propio secreto — donaciones, relaciones sensibles con proveedores, finanzas personales en vías públicas.`,
-    },
-    {
-      kind: "diagram",
-      body: "Sigue un pago a través del pool y mira qué se queda el explorador:",
-      caption:
-        "Los bordes son públicos por construcción. Todo lo que el pool protege ocurre entre ellos.",
-      view: {
-        kind: "flow",
-        layout: "row",
-        play: true,
-        nodes: [
-          {
-            id: "deposit",
-            label: "Depósito",
-            tone: "gold",
-            note: "Visible. El explorador registra que esta cuenta puso fondos en el pool, y cuánto. Aquí no se oculta nada — ni hace falta.",
-          },
-          {
-            id: "inside",
-            label: "Dentro del pool",
-            tone: "accent",
-            note: "Oculto. Las transferencias entre miembros del pool no necesitan aparecer on-chain: sin emisor, sin receptor, sin monto. Esta es la parte que cubre el velo.",
-          },
-          {
-            id: "withdraw",
-            label: "Retiro",
-            tone: "gold",
-            note: "Visible otra vez. Alguien sale del pool con un valor — pero unir ESTA salida con AQUELLA entrada es justo lo que el pool rompe.",
-          },
-          {
-            id: "observer",
-            label: "Lo que le queda al observador",
-            tone: "neutral",
-            note: "Dos bordes públicos y una multitud en medio. Cuanto mayor sea el pool, más débil es el vínculo entre cualquier entrada y cualquier salida.",
-          },
-        ],
-      },
-    },
-    {
-      kind: "theory",
-      body: `## La columna vertebral de cumplimiento
+Nadie averiguó un solo sueldo — y un observador ya conoce tu plantilla, tu ciclo de pago, tu rotación, tus contrataciones, y cuáles de tus empleados tienen un segundo trabajo. **Los importes nunca fueron lo único que el libro mayor estaba diciendo.**
 
-"Privado" sin límites es la pesadilla de un oficial de sanciones, y estos diseños se niegan a llegar allí. SPP combina confidencialidad con **salvaguardas de cumplimiento integradas**:
+Esto no es un defecto de los Tokens Confidenciales; es la forma de lo que prometen. Un velo cubre el campo que elegiste, y todo campo descubierto sigue hablando — horarios, frecuencia, y sobre todo el **grafo** de quién toca a quién.
 
-- **Participación gated por KYC** — unirse al pool requiere identidad verificada.
-- **Controles de acceso a nivel de identidad** — los permisos se asignan a *quién eres*, no solo a qué clave posees.
-- **Capacidad de congelar a nivel de cuenta** — los actores malintencionados pueden ser detenidos incluso dentro del velo.
-
-Esas tres salvaguardas las aplica una pieza que conviene conocer por su nombre: el **Association Set Provider (ASP)**. Un ASP publica un *conjunto* de depósitos por los que responde — una allow list — o aquellos por los que se niega a responder — una deny list. Para retirar, demuestras que tus fondos se remontan a algún depósito dentro de ese conjunto, **sin revelar cuál**. El SPP lo construye sobre un association set basado en claves, respaldado por un registro público de claves para que los participantes puedan siquiera ser referenciados.
-
-Detente en la consecuencia, porque es todo el truco: **el mismo retiro es privado y auditable a la vez**. Privado, porque el vínculo con tu depósito concreto nunca se publica. Auditable, porque no habrías podido retirar sin demostrar pertenencia a un conjunto avalado. Distintos ASP pueden atender distintas jurisdicciones — y tú eliges de quién llevas el aval.
-
-El objetivo en una frase: **privacidad para los usuarios, no para el crimen**. Transferencias confidenciales *y* compatibles en vías públicas — esa combinación, no el secreto absoluto, es lo que las instituciones estaban esperando.`,
-    },
-    {
-      kind: "quiz",
-      question: `Un explorador observa una transferencia de Token Confidencial y una transferencia de pool SPP. ¿Qué ve en cada caso?`,
-      options: [
-        "CT: las dos direcciones pero no el monto; SPP: ni siquiera las contrapartes — valor movido dentro del pool compartido",
-        "Ambos ocultan montos y direcciones idénticamente — SPP es solo la versión más barata",
-        "CT oculta las direcciones pero muestra los montos; SPP muestra todo a los espectadores con KYC",
-      ],
-      answer: 0,
-      explain: `Dos capas, dos velos. Los Tokens Confidenciales ocultan *cuánto* entre partes conocidas; el pool compartido de SPP también oculta *quién*. Elige la capa que coincida con lo que tu caso de uso necesita mantener en silencio.`,
-    },
+Que es precisamente por lo que tuvo que existir un segundo sistema, más profundo.` },
     {
       kind: "fill",
       prompt: `¿Qué puede envolver un Token Confidencial?`,
@@ -232,40 +159,26 @@ El objetivo en una frase: **privacidad para los usuarios, no para el crimen**. T
       answer: 0,
       explain: `El estándar de interfaz del token es el punto de enganche: cualquier cosa que hable SEP-41 puede ser envuelta — incluidos activos clásicos como USDC a través de su Contrato de Activo Stellar. La capa de privacidad se compone con todo lo que ya conoces.`,
     },
-    {
-      kind: "theory",
-      body: `## Ve a mirar dentro de uno
+    { kind: "rustBranch", lessonSlug: "stellar-protocol-27-1",
+      body: `Nada de esto fue una biblioteca que alguien publicó. BLS12-381, BN254, Poseidon — cada uno llegó como un **CAP dentro de una versión nombrada del protocolo**, y por eso un contrato verifica una prueba a velocidad nativa en vez de pagar una penalización de mil veces por hacer criptografía en serio. El acto de protocolo de la Campaña es donde ves aterrizar una versión de verdad.` },
+    { kind: "theory", body: `## La mitad que suena imposible
 
-Todo lo anterior es verificable ahora mismo, en un pool que existe de verdad. El developer preview de Nethermind está vivo en testnet, y sus funciones de lectura responden **sin cartera y sin firma**. No eres cliente de esta cosa — eres espectador, y mirar es gratis.
+Ya tienes un velo para los números. Para nóminas, facturas y liquidación entre partes que ya se conocen, ese es el requisito entero — las cifras eran el secreto.
 
-Abre la [Forge](/ide), ve a **Explore** y elige **pool de privacidad SPP · XLM** entre los contratos conocidos. Luego pregúntale, en este orden:
+Pero a veces las cifras no son el secreto. A veces *quién pagó a quién* es lo sensible: una donación, un proveedor que preferirías que la competencia no descubra, una transferencia personal sobre raíles públicos.
 
-- \`get_policy_flags()\` — cómo está configurado este pool. Responde **2**: blocklist aplicada, sin allowlist.
-- \`get_root()\` — la raíz de Merkle que compromete cada nota jamás depositada ahí. Un solo número representando todo el conjunto de anonimato.
-- \`is_known_root(<ese número>)\` — **true**. Ahora cambia un dígito y vuelve a preguntar: **false**. Acabas de recorrer el anillo de raíces que el pool recuerda.
-- \`is_spent(<cualquier número>)\` — **false**. Este es el conjunto de nullifiers: la defensa del pool contra el doble gasto, y casi lo único que un retiro publica sobre sí mismo.
+Ocultar eso es el velo más profundo, y viene con una objeción obvia — la que cualquier responsable de cumplimiento plantea en el primer minuto, y que conviene tomarse en serio en vez de despachar con la mano.
 
-Léelas en orden y fíjate en lo que *falta*. Ninguna de esas respuestas contiene una dirección, un monto ni una contraparte. La cadena te dice la verdad exacta y no te dice nada.
-
-**Dos advertencias, porque la spec de un contrato no puede advertirte sobre sí misma.** Este pool expone cinco funciones sobrantes — \`balance\`, \`transfer\`, \`approve\` y compañía — que responden con educación y no significan nada; la Forge las marca como *señuelo* para que no te engañen. Y el estado del preview **se archiva el 2026-09-02**, tras lo cual esas lecturas dejan de responder hasta que alguien pague por restaurarlas. Eso no es un fallo de la Forge: es el state rent de Soroban, bajo el que vive cada contrato de esta red.`,
-    },
-    {
-      kind: "quiz",
-      question: `Llamas a \`get_asp_non_membership_root()\` en el pool vivo y responde **0**. ¿Qué te dice eso realmente?`,
-      options: [
-        "La blocklist está vacía — y 0 es el valor contra el que el contrato compara cada retiro, así que una lista vacía es una política aplicada, no una política ausente",
-        "La llamada falló y cayó en un valor por defecto: una raíz de Merkle nunca es legítimamente cero",
-        "La blocklist es confidencial, así que el contrato devuelve 0 a quien no sea un ASP",
-      ],
-      answer: 0,
-      explain: `Un árbol vacío igual tiene una raíz real, y para esta blocklist es literalmente 0 — o sea, "nadie está vetado" se aplica activamente en cada gasto en vez de quedar sin definir. Ahora prueba la vecina: \`get_asp_membership_root()\` responde 2302223575749844940221218608817648865122641281382153518325924961250440546344, un número impresionante para un árbol que **también está vacío**. Ese es el zero-hash de árbol vacío. Leerlo como "la allowlist tiene miembros" es el error más fácil de todo este tema, y acabas de esquivarlo.`,
-    },
-    {
-      kind: "labLink",
-      labSlug: "confidential-tokens",
-      body: `En el yunque de la forja: un laboratorio de **Tokens Confidenciales**, donde envolverás un token de testnet y verás cómo los montos desaparecen del explorador mientras la transferencia se liquida honestamente. Su tarjeta indica *en proceso de forja* — esta frontera se está trabajando mientras lees.
-
-Observa cuán recientes son estas fechas. Montar tecnología tan fresca implica leer el pulso mismo del protocolo — el capítulo final te muestra cómo.`,
-    },
+**A continuación:** el segundo velo, y la respuesta a esa objeción.` },
+  ],
+  testOut: [
+    { question: `¿Cuál es el problema de un libro mayor totalmente transparente, para una empresa?`,
+      options: ["Los saldos y los importes son públicos para siempre, así que cualquiera deduce sueldos, márgenes y condiciones de proveedores a partir de pagos corrientes","Las transacciones pueden rastrearse y revertirse por observadores","Los datos públicos hacen el libro mayor más lento de consultar a escala"], answer: 0 },
+    { question: `¿Qué permite concluir a un verificador una prueba de conocimiento cero?`,
+      options: ["Que una afirmación sobre valores ocultos es cierta, sin aprender nada más sobre esos valores","Que el probador es una parte de confianza, verificada por un tercero","Que los valores ocultos caen en un rango que eligió el verificador"], answer: 0 },
+    { question: `¿Por qué estas primitivas tuvieron que llegar como funciones de host del protocolo?`,
+      options: ["Para que los contratos verifiquen pruebas a velocidad nativa — la misma matemática en código de contrato tendría una penalización aplastante","Porque los contratos no tienen permiso para hacer criptografía","Para que solo los contratos auditados puedan usarlas"], answer: 0 },
+    { question: `Un Token Confidencial envuelve un token existente. ¿Qué cambia y qué no?`,
+      options: ["Los saldos y los importes de transferencia quedan ocultos; las direcciones que transaccionan siguen públicas","Las direcciones quedan ocultas; los importes siguen públicos","Ambos quedan ocultos, que es lo que lo hace confidencial"], answer: 0 },
   ],
 };

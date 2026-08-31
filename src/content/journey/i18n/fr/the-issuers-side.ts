@@ -1,0 +1,107 @@
+import type { JourneyConceptText } from "../types";
+
+export const conceptText: JourneyConceptText = {
+  title: "Le Côté de l'Émetteur",
+  tagline: "N'importe qui peut émettre. Le métier, c'est tout ce qui suit.",
+  steps: [
+    {
+      kind: "theory",
+      body: `## Émettre un actif : il suffit de le payer
+
+Il n'y a pas de rituel « déployer un token » dans Stellar classique. Un **actif est une paire** : un code court plus l'**adresse de l'émetteur** — \`USDC\` du compte Circle et \`USDC\` d'un inconnu sont des actifs différents.
+
+Pour émettre, l'émetteur paie simplement l'actif depuis son propre compte à quelqu'un qui possède une ligne de confiance. Ce premier paiement *est* la frappe. L'offre est ce que l'émetteur a payé et n'a pas récupéré — le registre le suit automatiquement à travers les lignes de confiance.
+
+Tout compte peut émettre. La rareté de la confiance, pas la permission, est ce qui donne de la valeur à un actif.`,
+    },
+    {
+      kind: "quiz",
+      question: `Qu'est-ce qu'il faut pour créer un nouvel actif sur Stellar classique ?`,
+      options: [
+        "L'émetteur le paie à un compte qui a ouvert une ligne de confiance — le premier paiement est la frappe",
+        "Déployer et vérifier un contrat de token, puis enregistrer le ticker auprès de la SDF",
+        "Mettre en jeu XLM proportionnel à l'offre prévue",
+      ],
+      answer: 0,
+      explain: `Un actif est identifié par code + émetteur, donc il « existe » dès qu'il bouge pour la première fois. Les contrats n'entrent dans l'histoire que lorsque tu veux un comportement programmable — ou le pont SAC qui attend à la fin de ce chapitre.`,
+    },
+    {
+      kind: "theory",
+      body: `## Deux comptes, un actif : hygiène de l'émetteur
+
+Les émetteurs sérieux répartissent les rôles :
+
+- Le **compte d'émission** signe presque rien. Il frappe en payant le compte de distribution, puis retourne dormir — clés froides, surface d'attaque minimale.
+- Le **compte de distribution** détient l'offre active et gère le trafic quotidien : clients, échanges, chemins chauds.
+
+Si les clés de distribution fuitent, tu perds un solde — pas la presse à imprimer. Un émetteur peut aller encore plus loin : bloquer les signataires du compte d'émission afin que *personne* ne puisse jamais émettre à nouveau, fixant l'offre maximale pour toujours. Le registre lui-même devient l'audit.`,
+    },
+    {
+      kind: "theory",
+      body: `## Drapeaux d'autorisation : l'émetteur comme gardien
+
+Les actifs du monde réel portent la loi du monde réel, donc un émetteur peut définir des drapeaux sur lui-même :
+
+- **Auth required** — les lignes de confiance commencent non autorisées ; l'émetteur approuve chaque détenteur (portes KYC).
+- **Auth revocable** — l'émetteur peut geler une ligne de confiance autorisée, arrêtant ce solde à froid.
+- **Clawback** — l'émetteur peut récupérer l'actif entièrement (ordonnances judiciaires, fonds volés, paiements mal tapés).
+
+Ces drapeaux expliquent pourquoi les institutions réglementées peuvent émettre sur un registre public : la conformité est imposée *par le protocole*, pas par une promesse dans un PDF.`,
+    },
+    {
+      kind: "quiz",
+      question: `Un émetteur réglementé apprend qu'un compte d'un détenteur a été piraté. Quel drapeau lui permet d'arrêter ce solde de bouger — maintenant ?`,
+      options: [
+        "Auth revocable — révoquer l'autorisation de la ligne de confiance et le solde est gelé sur place",
+        "Auth required — il bloque rétroactivement les dépôts antérieurs du pirate",
+        "Auth immutable — il verrouille tout l'actif pour tout le monde",
+      ],
+      answer: 0,
+      explain: `Auth required ne bloque que les nouvelles lignes de confiance, et auth immutable ne promet simplement pas de changer les drapeaux. Geler arrête le mouvement ; **clawback** va un pas plus loin et récupère l'actif auprès de l'émetteur.`,
+    },
+    {
+      kind: "fill",
+      prompt: `Complète l'identité d'un actif classique — qu'est-ce qui fait que USDC *est le vrai* USDC ?`,
+      file: "asset-identity.txt",
+      before: `asset  =  asset code  +  `,
+      after: `   (même code, émetteur différent → actif différent)`,
+      choices: [
+        "l'adresse du compte de l'émetteur",
+        "le hachage Wasm du contrat",
+        "un registre de ticker global",
+        "l’URL du site de l’ancre",
+      ],
+      answer: 0,
+      explain: `Il n'y a pas d'espace de noms à occuper. Les portefeuilles résolvent quel \`USDC\` est réel via l'adresse de l'émetteur — et, comme tu le verras aux Portes du Royaume, cet émetteur le prouve avec un fichier sur son propre domaine.`,
+    },
+    {
+      kind: "theory",
+      body: `## Le Stellar Asset Contract
+
+Les actifs classiques et les contrats intelligents partagent un même royaume, et le pont est le **Stellar Asset Contract (SAC)**. Tout actif classique — XLM inclus — peut être *invocée* comme un contrat : un déploiement, zéro code à écrire, et l'actif parle désormais **SEP-41**, l'interface de token Soroban standard.
+
+Même actif, même offre, même bilan — mais maintenant les contrats peuvent le détenir, le déplacer et y construire. USDC dans un pool de prêt et USDC dans la ligne de confiance de la grand-mère sont le *même USDC*.
+
+Tout protocole Soroban sérieux s'appuie sur ce pont quotidiennement.`,
+    },
+    { kind: "labLink", labSlug: "oz-token-wizard",
+      body: `Tout sur cette page est une décision, pas une syntaxe. L'**Assistant Jetons OZ** de la Forge vous place du côté émetteur pour de vrai sur testnet — et l'intéressant n'est pas que cela marche, c'est que chaque choix que vous y faites est un choix qu'un anchor fait aussi, avec un service conformité à côté.` },
+    {
+      kind: "rustBranch",
+      lessonSlug: "stellar-101-1",
+      body: `L'Acte VI de la Campagne — **La Porte de la Constellation** — parcourt ce même terrain depuis Rust : comptes, soldes et lignes de confiance interrogés et forgés dans le code plutôt que dans la prose. Prends l'itinéraire quand tu veux avoir tes doigts sur les entrées du registre elles-mêmes.
+
+Prochaine étape : actifs en *mouvement* — paiements qui traversent des devises en vol, et un échange intégré au protocole lui-même.`,
+    },
+  ],
+  testOut: [
+    { question: `Comment un nouvel actif est-il créé sur Stellar ?`,
+      options: ["En le versant — un compte émetteur envoie simplement un actif qu'il n'a jamais détenu, et l'offre vient à exister","En déployant un contrat de jeton qui le frappe","En enregistrant le code de l'actif auprès de la SDF avant le premier usage"], answer: 0 },
+    { question: `Pourquoi les émetteurs gardent-ils un compte de distribution séparé plutôt que de payer depuis le compte émetteur ?`,
+      options: ["Le solde du compte émetteur ne veut rien dire — l'offre est ce qu'il a versé — un compte de distribution rend donc l'offre en circulation lisible et les clés de l'émetteur peu sollicitées","Le protocole interdit à un compte émetteur de détenir son propre actif","Cela divise par deux le coût de réserve des trustlines concernées"], answer: 0 },
+    { question: `Que permettent à l'émetteur ses drapeaux d'autorisation ?`,
+      options: ["Contrôler qui peut détenir l'actif, et geler la trustline d'un détenteur précis — le contrôle nécessaire pour opérer sous régulation","Annuler des paiements individuels une fois réglés","Fixer le prix auquel l'actif s'échange sur le DEX"], answer: 0 },
+    { question: `Qu'apporte le Stellar Asset Contract à un actif classique ?`,
+      options: ["Une interface de contrat, pour qu'un actif classique soit utilisable par les contrats Soroban comme un jeton de contrat","Une seconde offre, à base de contrat, qui reflète la classique","Une cotation automatique sur les AMM à base de contrats"], answer: 0 },
+  ],
+};
