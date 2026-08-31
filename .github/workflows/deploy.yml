@@ -66,6 +66,16 @@ jobs:
         with:
           node-version: "22"
           cache: "npm"
+
+      # Same pin as ci.yml, and for the same reason: Dependabot regenerates
+      # package-lock.json with npm 11, which prunes the `optional: true,
+      # peer: true` entries (typescript@4.9.5 under stellar-wallets-kit,
+      # utf-8-validate@5.0.10 under walletconnect). Node 22 ships npm 10,
+      # whose `npm ci` then rejects the lockfile as out of sync. ci.yml has
+      # carried this pin for a while; this job never did, so a lockfile that
+      # passed CI could still fail the deploy — which is exactly what happened.
+      - run: npm install -g npm@11
+
       - run: npm ci --no-audit --no-fund
 
       - name: Preflight — refuse to run if the schema has drifted
