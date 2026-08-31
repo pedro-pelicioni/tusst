@@ -46,6 +46,16 @@ fn canonical(ts: TokenStream) -> String {
     strip_trailing_commas(ts).to_string()
 }
 
+/// Canonicalize a token stream taken from the SUBMISSION's AST.
+///
+/// The spec side goes through `norm_tokens`, which canonicalizes. This must
+/// use the identical normalization or the two sides disagree: a macro call the
+/// student wrapped across lines keeps rustfmt's trailing comma, the one-line
+/// spec snippet does not, and a correct submission is marked wrong.
+pub fn norm_token_stream(ts: &TokenStream) -> String {
+    canonical(ts.clone())
+}
+
 pub fn norm<T: ToTokens>(t: &T) -> String {
     canonical(t.to_token_stream())
 }
@@ -98,6 +108,18 @@ mod tests {
         assert_eq!(
             norm_expr("Outer { inner: Inner { a: 1, b: 2 } }").unwrap(),
             norm_expr("Outer {\n inner: Inner {\n a: 1,\n b: 2,\n },\n}").unwrap()
+        );
+    }
+
+    /// The submission side and the spec side must normalize identically —
+    /// this is the pair that regressed when only `norm_tokens` was fixed.
+    #[test]
+    fn submission_and_spec_macro_args_agree() {
+        let wrapped: TokenStream =
+            TokenStream::from_str("\"latency\", 95,").unwrap();
+        assert_eq!(
+            norm_token_stream(&wrapped),
+            norm_tokens("\"latency\", 95").unwrap()
         );
     }
 

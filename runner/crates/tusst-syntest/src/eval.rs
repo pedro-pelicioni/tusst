@@ -5,7 +5,7 @@ use std::collections::HashSet;
 use syn::visit::{self, Visit};
 
 use crate::spec::{CheckKind, Construct, ParamSpec};
-use crate::tokens::{norm, norm_expr, norm_pat, norm_tokens, norm_type};
+use crate::tokens::{norm, norm_expr, norm_pat, norm_token_stream, norm_tokens, norm_type};
 
 #[derive(Debug)]
 pub struct FnInfo {
@@ -241,7 +241,7 @@ impl<'ast> Visit<'ast> for Index {
     fn visit_macro(&mut self, node: &'ast syn::Macro) {
         if let Some(seg) = node.path.segments.last() {
             self.macros
-                .push((seg.ident.to_string(), node.tokens.to_string()));
+                .push((seg.ident.to_string(), norm_token_stream(&node.tokens)));
         }
         self.absorb_macro_args(&node.tokens);
         visit::visit_macro(self, node);

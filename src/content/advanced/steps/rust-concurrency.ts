@@ -346,7 +346,7 @@ The API is otherwise identical to \`Mutex\`: guards, poisoning, release on drop.
 
 **It only wins when reads genuinely dominate and are slow enough to overlap.** A read that copies one integer finishes before a second thread arrives; you paid for concurrency you never used. A read that walks a large structure while eight threads do the same is where it pays.
 
-**Writer starvation is a real risk.** With a read-preferring implementation and a steady stream of readers, a writer can wait indefinitely. Rust's \`RwLock\` delegates to the OS primitive, so the fairness policy is the platform's, not the standard library's — do not rely on it.
+**Writer starvation is a real risk.** With a read-preferring implementation and a steady stream of readers, a writer can wait indefinitely. std's \`RwLock\` is write-preferring on the major platforms, so a waiting writer blocks new readers rather than queueing behind them forever — but the policy is an implementation detail, not a documented guarantee, so do not build on it.
 
 Default to \`Mutex\`. Move to \`RwLock\` when a profile shows read contention, not when the workload merely sounds read-heavy.`,
     },
@@ -545,7 +545,7 @@ The honest rule: **\`Relaxed\` for counters, \`Acquire\`/\`Release\` to publish 
       choices: ["Relaxed", "SeqCst", "Acquire"],
       answer: 0,
       explain:
-        "Nothing else depends on this counter's ordering, so `Relaxed` is both correct and cheapest. `Acquire` is not even valid on a store-side operation on its own.",
+        "Nothing else depends on this counter's ordering, so `Relaxed` is both correct and cheapest. `Acquire` is legal on a read-modify-write like `fetch_add`, but it orders nothing here and costs more — `SeqCst` costs more still.",
     },
     {
       kind: "quiz",

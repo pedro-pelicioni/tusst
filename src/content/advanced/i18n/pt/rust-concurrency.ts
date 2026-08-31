@@ -346,7 +346,7 @@ A API é no resto idêntica à do \`Mutex\`: guards, poisoning, liberação no d
 
 **Ele só ganha quando as leituras genuinamente dominam e são lentas o bastante para se sobrepor.** Uma leitura que copia um inteiro termina antes de a segunda thread chegar; você pagou por uma concorrência que nunca usou. Uma leitura que percorre uma estrutura grande enquanto oito threads fazem o mesmo é onde compensa.
 
-**Starvation de escritor é risco real.** Com uma implementação que prefere leitores e um fluxo contínuo deles, um escritor pode esperar indefinidamente. O \`RwLock\` de Rust delega à primitiva do SO, então a política de justiça é da plataforma, não da biblioteca padrão — não dependa dela.
+**Starvation de escritor é risco real.** Com uma implementação que prefere leitores e um fluxo contínuo deles, um escritor pode esperar indefinidamente. O \`RwLock\` da std prefere escritores nas plataformas principais, então um escritor esperando bloqueia leitores novos em vez de ficar na fila para sempre — mas a política é detalhe de implementação, não garantia documentada, então não construa em cima dela.
 
 Use \`Mutex\` por padrão. Migre para \`RwLock\` quando um profile mostrar contenção de leitura, não quando a carga apenas *soar* como muita leitura.`,
     },
@@ -545,7 +545,7 @@ A regra honesta: **\`Relaxed\` para contadores, \`Acquire\`/\`Release\` para pub
       choices: ["Relaxed", "SeqCst", "Acquire"],
       answer: 0,
       explain:
-        "Nada mais depende da ordem deste contador, então `Relaxed` é correto e o mais barato. `Acquire` nem sequer é válido sozinho numa operação do lado de store.",
+        "Nada mais depende da ordem deste contador, então `Relaxed` é correto e o mais barato. `Acquire` é legal num read-modify-write como `fetch_add`, mas aqui não ordena nada e custa mais — e `SeqCst` custa mais ainda.",
     },
     {
       kind: "quiz",

@@ -356,7 +356,7 @@ The state machine is destroyed wherever it happened to be suspended. Every local
       kind: "theory",
       body: `Two consequences that decide whether a service is correct under load.
 
-**A future can be dropped at any \`.await\`.** When a client disconnects or a timeout fires, the task stops between two statements. Anything that was half-done stays half-done — so a two-step operation must be idempotent, or wrapped so a retry can safely repeat it. This property is called **cancellation safety**, and library docs state it explicitly: \`tokio::sync::mpsc::Receiver::recv\` is cancel-safe, most \`read\` implementations are not.
+**A future can be dropped at any \`.await\`.** When a client disconnects or a timeout fires, the task stops between two statements. Anything that was half-done stays half-done — so a two-step operation must be idempotent, or wrapped so a retry can safely repeat it. This property is called **cancellation safety**, and library docs state it explicitly: \`tokio::sync::mpsc::Receiver::recv\` and \`AsyncReadExt::read\` are cancel-safe; \`read_exact\` is not, because it may already have moved bytes into your buffer when it is dropped.
 
 **Cleanup must be synchronous.** \`Drop\` cannot \`.await\`, so a future cannot await a graceful close on the way out. The standard workarounds are to do the cleanup in \`Drop\` synchronously, or to hand the work to a detached task that outlives the cancelled one.
 

@@ -143,7 +143,7 @@ The discipline worth keeping: **bound exactly what the body uses, and nothing mo
       choices: ["Display", "ToString + Clone", "Sized"],
       answer: 0,
       explain:
-        "`ToString` would work but is the wrong direction: the standard library implements `ToString` for every `T: Display`, so bounding on `Display` accepts strictly more types.",
+        "`ToString` would also compile — std blanket-implements it for every `T: Display` — but `Display` is the trait that expresses the capability, and it lets the body write into a buffer instead of allocating a `String` per element. The `+ Clone` is the real mistake: the body never clones.",
     },
     {
       kind: "quiz",
@@ -465,7 +465,7 @@ When you need both, the standard pattern is two traits: a generic one for the fa
         "`Clone` is not object safe. Which of its requirements is responsible?",
       options: [
         "`fn clone(&self) -> Self` returns `Self` by value, and the caller cannot know that type's size",
-        "`Clone` has a supertrait, and supertraits break object safety",
+        "`Clone` is implemented by too many types for one vtable to enumerate",
         "`clone` takes `&self`, and object-safe methods must take `self`",
       ],
       answer: 0,

@@ -349,7 +349,7 @@ A máquina de estados é destruída onde quer que estivesse suspensa. Toda vari�
       kind: "theory",
       body: `Duas consequências que decidem se um serviço está correto sob carga.
 
-**Um future pode ser dropado em qualquer \`.await\`.** Quando um cliente desconecta ou um timeout dispara, a task para entre dois statements. Qualquer coisa feita pela metade fica pela metade — então uma operação de dois passos precisa ser idempotente, ou embrulhada de modo que uma nova tentativa possa repeti-la com segurança. Essa propriedade se chama **cancellation safety**, e a documentação das bibliotecas a declara explicitamente: \`tokio::sync::mpsc::Receiver::recv\` é cancel-safe, a maioria das implementações de \`read\` não é.
+**Um future pode ser dropado em qualquer \`.await\`.** Quando um cliente desconecta ou um timeout dispara, a task para entre dois statements. Qualquer coisa feita pela metade fica pela metade — então uma operação de dois passos precisa ser idempotente, ou embrulhada de modo que uma nova tentativa possa repeti-la com segurança. Essa propriedade se chama **cancellation safety**, e a documentação das bibliotecas a declara explicitamente: \`tokio::sync::mpsc::Receiver::recv\` e \`AsyncReadExt::read\` são cancel-safe; \`read_exact\` não é, porque pode já ter movido bytes para o seu buffer quando é dropado.
 
 **A limpeza precisa ser síncrona.** \`Drop\` não pode fazer \`.await\`, então um future não consegue aguardar um fechamento gracioso na saída. Os contornos padrão são fazer a limpeza sincronamente no \`Drop\`, ou entregar o trabalho a uma task solta que sobreviva à cancelada.
 

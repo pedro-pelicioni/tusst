@@ -106,7 +106,7 @@ Olhe em volta: **o TUSST é um arreio.**
 
 O runner avaliado da Forja é um arreio de verificação — sua solução executa num sandbox, provas escondidas a julgam, e nenhuma quantidade de prosa confiante transforma um vermelho em verde. Os labs on-chain vão além: eles não perguntam *se você diz* que fez o deploy — eles **leem a chain** e conferem.
 
-É a disciplina numa imagem: construa a bancada de modo que errar seja *detectável* e acertar seja *demonstrável* — para golens e para humanos.
+É a disciplina numa imagem: construa a bancada de modo que errar seja *detectável* e acertar seja *demonstrável* — para modelos e para humanos.
 
 **A seguir:** as palavras em si — o que o modelo de fato vê na bancada.`,
     },

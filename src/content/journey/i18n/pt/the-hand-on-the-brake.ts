@@ -103,7 +103,7 @@ Onde fica o humano enquanto o laço gira? Não dentro dele — revisar cada tecl
 
 A altitude certa é a **fronteira**: revise o *diff* contra a *spec*. As evals passaram? A mudança respeita as regras do Capítulo I? Alguma coisa se mexeu sem ter o que fazer ali? Confie nos instrumentos do laço para o miúdo; guarde o julgamento humano para o que os instrumentos não veem.
 
-**A seguir:** quando um laço não basta — muitos golens pequenos, um plano tecido.`,
+**A seguir:** quando um laço não basta — muitos modelos pequenos, um plano tecido.`,
     },
   ],
   testOut: [

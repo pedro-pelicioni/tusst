@@ -142,7 +142,7 @@ A disciplina que vale manter: **restrinja exatamente o que o corpo usa, e nada a
       choices: ["Display", "ToString + Clone", "Sized"],
       answer: 0,
       explain:
-        "`ToString` funcionaria mas está na direção errada: a biblioteca padrão implementa `ToString` para todo `T: Display`, então restringir por `Display` aceita estritamente mais tipos.",
+        "`ToString` também compilaria — a std implementa em blanket para todo `T: Display` — mas `Display` é a trait que expressa a capacidade, e permite ao corpo escrever num buffer em vez de alocar uma `String` por elemento. O `+ Clone` é o erro de verdade: o corpo nunca clona.",
     },
     {
       kind: "quiz",
@@ -463,7 +463,7 @@ Quando precisa dos dois, o padrão padrão é duas traits: uma genérica para o 
         "`Clone` não é object safe. Qual das exigências dela é a responsável?",
       options: [
         "`fn clone(&self) -> Self` devolve `Self` por valor, e quem chama não tem como saber o tamanho desse tipo",
-        "`Clone` tem uma supertrait, e supertraits quebram object safety",
+        "`Clone` é implementada por tipos demais para uma vtable conseguir enumerar",
         "`clone` recebe `&self`, e métodos object safe precisam receber `self`",
       ],
       answer: 0,

@@ -108,7 +108,7 @@ Uma busca, não duas. A versão ingênua — \`if map.contains_key(k) { ... } el
     {
       kind: "quiz",
       question:
-        "Iterar o mesmo `HashMap` duas vezes no mesmo processo pode dar ordens diferentes. Por que isso é deliberado?",
+        "Dois `HashMap`s com entradas idênticas podem iterar em ordens diferentes, e o mesmo programa pode variar entre execuções. Por que isso é deliberado?",
       options: [
         "Hashing aleatorizado protege contra ataques de colisão, e a ordem instável impede que código dependa de um acidente",
         "É um bug da biblioteca padrão mantido por compatibilidade",

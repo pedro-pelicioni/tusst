@@ -108,7 +108,7 @@ One lookup, not two. The naive version — \`if map.contains_key(k) { ... } else
     {
       kind: "quiz",
       question:
-        "Iterating the same `HashMap` twice in one process can yield different orders. Why is that deliberate?",
+        "Two `HashMap`s holding identical entries can iterate in different orders, and the same program can differ between runs. Why is that deliberate?",
       options: [
         "Randomised hashing defends against collision attacks, and unstable order stops code depending on an accident",
         "It is a bug in the standard library retained for compatibility",
