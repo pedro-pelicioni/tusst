@@ -16,6 +16,7 @@ import { WidgetSlot } from "@/components/visuals/WidgetSlot";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
 import type { JourneyStep } from "@/content/journey/types";
+import { hashString, seededOrder } from "@/lib/seeded-order";
 
 const MASCOT_CELEBRATE = "/mascot/mascot-celebrate.png";
 const MASCOT_ENCOURAGE = "/mascot/mascot-encourage.png";
@@ -50,26 +51,6 @@ export interface BranchState {
 
 const doneKey = (slug: string) => `tusst:journey-steps:${slug}`;
 const draftKey = (slug: string) => `tusst:journey-ex:${slug}`;
-
-function hashString(s: string): number {
-  let h = 2166136261;
-  for (let i = 0; i < s.length; i++) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
-}
-
-function seededOrder(length: number, seed: number): number[] {
-  const order = Array.from({ length }, (_, i) => i);
-  let s = seed || 1;
-  for (let i = length - 1; i > 0; i--) {
-    s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
-    const j = s % (i + 1);
-    [order[i], order[j]] = [order[j], order[i]];
-  }
-  return order;
-}
 
 function ArrowButton({
   direction,
