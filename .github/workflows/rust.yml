@@ -22,7 +22,16 @@ name: Rust
 
 on:
   pull_request:
-    paths: ["runner/**", "runner-soroban/**"]
+    paths:
+      - "runner/**"
+      - "runner-soroban/**"
+      # check-advanced-content lives here rather than in ci.yml because it
+      # needs cargo to build tusst-checkfile; ci.yml's runner has no Rust
+      # toolchain, so the gate would degrade to a warning there and guard
+      # nothing. Trade-off: a content-only PR also runs the audit jobs.
+      - "src/content/advanced/**"
+      - "src/content/lesson-checks.ts"
+      - "scripts/check-advanced.ts"
   schedule:
     # Weekly, independent of any code change — the point is to catch newly
     # published advisories against dependencies that have been pinned and
@@ -51,6 +60,42 @@ jobs:
       # resolve to something else.
       - run: cargo test --workspace --locked
         working-directory: runner
+
+  check-advanced-content:
+    # The Advanced Path's 87 lessons each make three promises at once: the AST
+    # checks describe a solvable shape, the reference solution compiles under
+    # the sandbox's exact rustc flags, and its stdout matches expectedOutput
+    # byte for byte. Until now nothing enforced any of that in CI — the script
+    # existed and was invoked from nowhere but package.json, so the guarantee
+    # was only ever as good as the last person who remembered to run it.
+    #
+    # `--strict` is what makes this a gate rather than a formality: it turns
+    # every "toolchain missing, skipping" into an error and asserts that both
+    # sections covered every sandbox lesson. Without it a skipped section still
+    # prints "advanced content OK" and exits 0.
+    runs-on: ubuntu-latest
+    env:
+      # prisma generate runs in postinstall and only reads schema.prisma, but
+      # Prisma 7 refuses to load its config at all without this set.
+      DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy?schema=public"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      # Same pin, same reason, as ci.yml and deploy.yml: Dependabot writes the
+      # lockfile with npm 11, and npm 10's `npm ci` rejects it as out of sync.
+      - run: npm install -g npm@11
+      - run: npm ci --no-audit --no-fund
+
+      - uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
+      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        with:
+          workspaces: runner
+
+      - run: npm run check:advanced -- --strict
 
   build-runner-soroban:
     runs-on: ubuntu-latest
