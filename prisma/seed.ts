@@ -218,38 +218,60 @@ async function main() {
     }
   }
 
-  // ---- Demo user with some progress (for local verification) ----
-  const demo = await prisma.user.upsert({
-    where: { email: "demo@dev.local" },
-    create: {
-      email: "demo@dev.local",
-      name: "demo",
-      character: { create: {} },
-    },
-    update: { name: "demo" },
-  });
+  // ---- Demo user with some progress (LOCAL ONLY) ----
+  //
+  // This is a local-verification fixture, and the deploy runs this same
+  // seed against Neon — so without this guard every production deploy
+  // creates a demo@dev.local account and marks three lessons complete for
+  // it. Gate on the host rather than NODE_ENV: the seed is run by hand as
+  // often as by CI, and the connection string is the thing that actually
+  // says which database you are about to write to.
+  const dbHost = (() => {
+    try {
+      return new URL(process.env.DATABASE_URL ?? "").hostname;
+    } catch {
+      return "";
+    }
+  })();
+  const isLocalDb = dbHost === "localhost" || dbHost === "127.0.0.1";
 
-  const firstThree = await prisma.lesson.findMany({
-    where: { track: { slug: "rust-fundamentals" }, order: { lte: 3 } },
-    orderBy: { order: "asc" },
-  });
-  for (const lesson of firstThree) {
-    await prisma.progress.upsert({
-      where: { userId_lessonId: { userId: demo.id, lessonId: lesson.id } },
+  if (!isLocalDb) {
+    console.log(`[seed] ${dbHost}: not a local database — skipping the demo user.`);
+  } else {
+    const demo = await prisma.user.upsert({
+      where: { email: "demo@dev.local" },
       create: {
-        userId: demo.id,
-        lessonId: lesson.id,
-        completed: true,
-        completedAt: new Date(),
+        email: "demo@dev.local",
+        name: "demo",
+        character: { create: {} },
       },
-      update: { completed: true },
+      update: { name: "demo" },
     });
+
+    const firstThree = await prisma.lesson.findMany({
+      where: { track: { slug: "rust-fundamentals" }, order: { lte: 3 } },
+      orderBy: { order: "asc" },
+    });
+    for (const lesson of firstThree) {
+      await prisma.progress.upsert({
+        where: { userId_lessonId: { userId: demo.id, lessonId: lesson.id } },
+        create: {
+          userId: demo.id,
+          lessonId: lesson.id,
+          completed: true,
+          completedAt: new Date(),
+        },
+        update: { completed: true },
+      });
+    }
+
   }
 
   const trackCount = await prisma.track.count();
   const lessonCount = await prisma.lesson.count();
   console.log(
-    `Seeded ${trackCount} tracks, ${lessonCount} lessons, demo user with ${firstThree.length} completed lessons.`,
+    `Seeded ${trackCount} tracks, ${lessonCount} lessons` +
+      (isLocalDb ? ", plus the local demo user." : "."),
   );
 }
 
