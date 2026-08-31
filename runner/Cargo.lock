@@ -104,6 +104,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "tusst-checkfile"
+version = "0.1.0"
+dependencies = [
+ "serde_json",
+ "tusst-syntest",
+]
+
+[[package]]
 name = "tusst-runner"
 version = "0.1.0"
 dependencies = [

@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theKeyAndTheSeal: Concept = {
   meta: {
     slug: "the-key-and-the-seal",
-    title: "The Key and the Seal",
+    title: "Keys, Signatures & Accounts",
     tagline: "Keys and signatures: your account is a key, signing is a seal.",
     numeral: "II",
     arc: "foundations",

@@ -9,7 +9,7 @@ import type { Concept } from "../types";
 export const theFateOfAnEnvelope: Concept = {
   meta: {
     slug: "the-fate-of-an-envelope",
-    title: "The Fate of an Envelope",
+    title: "The Transaction Lifecycle",
     tagline: "Sequence, fees & the transaction lifecycle: submitted, included, failed, charged.",
     numeral: "III",
     arc: "realm",

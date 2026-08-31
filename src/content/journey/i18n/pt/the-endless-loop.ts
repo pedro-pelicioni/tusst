@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "O Loop Infinito",
+  title: "Loops agênticos",
   tagline: "Laços agênticos: agir, observar, corrigir — e os sinais que fazem o laço subir.",
   steps: [
     {
@@ -12,7 +12,7 @@ Prompting de um tiro só é um desejo: descreva, receba, torça. O **laço agên
 
 > **agir → observar → corrigir → agir de novo**
 
-O golem escreve código, *roda*, lê a reclamação do compilador, conserta, roda de novo — do jeito que você trabalha, em ritmo de máquina. A qualidade de um tiro só deixou de ser o número interessante no instante em que o golem passou a ver os próprios resultados.
+O modelo escreve código, *roda*, lê a reclamação do compilador, conserta, roda de novo — do jeito que você trabalha, em ritmo de máquina. A qualidade de um tiro só deixou de ser o número interessante no instante em que o modelo passou a ver os próprios resultados.
 
 Mas um laço é maquinário, não mágica. Ele tem peças que podem ser bem ou mal projetadas, e este capítulo é sobre as duas que decidem se ele sobe.`,
     },
@@ -43,14 +43,14 @@ Um laço melhora só até onde as **observações** dele são verdadeiras. Corri
 - **saída dos testes** — qual prova, qual asserção, qual linha?
 - **estado on-chain** — o que o ledger de fato guarda depois da execução?
 
-Sinais, não vibrações. "A saída parece razoável" não corrige nada, porque nunca pode ser falso. Todo verificador que você colocou no arreio agora rende juros: ligado ao laço, ele vira os olhos pelos quais o golem se guia — **em cada iteração**.`,
+Sinais, não vibrações. "A saída parece razoável" não corrige nada, porque nunca pode ser falso. Todo verificador que você colocou no arreio agora rende juros: ligado ao laço, ele vira os olhos pelos quais o modelo se guia — **em cada iteração**.`,
     },
     {
       kind: "quiz",
       question: `Qual observação consegue de fato guiar um laço?`,
       options: [
         "O relatório do runner de testes: 3 passaram, 1 falhou — refund_after_deadline, asserção na linha 41",
-        "O resumo de fechamento do próprio golem: agora está tudo correto",
+        "O resumo de fechamento do próprio modelo: agora está tudo correto",
         "O fato de o código ter compilado de primeira — forte evidência de que a lógica está certa",
       ],
       answer: 0,
@@ -62,7 +62,7 @@ Sinais, não vibrações. "A saída parece razoável" não corrige nada, porque 
 
 É fácil concordar com um ciclo no abstrato. Aqui está um único turno, com o que de fato passa pelo fio.
 
-**Agir.** O golem edita \`refunds.rs\` — troca a comparação de prazo de \`>\` para \`>=\`. Uma mudança só, porque um turno que muda seis coisas não consegue te dizer qual delas funcionou.
+**Agir.** O modelo edita \`refunds.rs\` — troca a comparação de prazo de \`>\` para \`>=\`. Uma mudança só, porque um turno que muda seis coisas não consegue te dizer qual delas funcionou.
 
 **Observar.** O arreio roda as evals fixas e devolve exatamente isto:
 
@@ -74,7 +74,7 @@ Não "continua quebrado". Uma linha, um número, e uma contagem que dá para com
 
 **Corrigir.** Três verdes viraram quatro. Então a comparação era *um* dos bugs e não o único: o prazo está tratado, o saldo não. O plano se atualiza — o próximo turno vai atrás do saldo.
 
-Repare no que fez esse turno valer alguma coisa. Não foi o golem que decidiu ter melhorado. **Foi a contagem.**`,
+Repare no que fez esse turno valer alguma coisa. Não foi o modelo que decidiu ter melhorado. **Foi a contagem.**`,
     },
     {
       kind: "theory",
@@ -99,7 +99,7 @@ Com uma bússola, o laço sabe *de fato* se andou: 4 verdes de 7 viraram 6 de 7.
         "regenerado a cada tentativa",
       ],
       answer: 0,
-      explain: `Uma régua que se mexe não mede nada. É também por isso que "deixa o golem escrever os próprios testes enquanto trabalha" destrói o sinal em silêncio: a prova e o aluno deixam de ser coisas diferentes.`,
+      explain: `Uma régua que se mexe não mede nada. É também por isso que "deixa o modelo escrever os próprios testes enquanto trabalha" destrói o sinal em silêncio: a prova e o aluno deixam de ser coisas diferentes.`,
     },
     {
       kind: "exercise",
@@ -113,7 +113,7 @@ Um laço está prestes a ser apontado para uma tarefa real:
 Antes que ele gire uma vez, escreva o **contrato de observação** dele: por quais sinais este laço vai se guiar, e o que torna cada um confiável. Só comportamento — sem código de arreio, sem nomes de biblioteca.`,
       rubric: `1. Nomeia pelo menos dois sinais concretos e externos (saída de teste, código de saída, estado on-chain, resultado de lint/build) — nem autoavaliação, nem "parece certo".
 2. Para pelo menos um sinal, diz o que o torna confiável — determinístico, reproduzível ou independente do código que está mudando.
-3. Diz o que conta como PRONTO em termos desses sinais, não em termos da opinião do golem.
+3. Diz o que conta como PRONTO em termos desses sinais, não em termos da opinião do modelo.
 4. Nomeia pelo menos um sinal que NÃO deve ser confiado, e por quê (um autorresumo, um build que passou, um teste instável…).
 5. Só comportamento — sem implementação de arreio, sem exigir ferramentas ou bibliotecas específicas.`,
       minChars: 140,
@@ -131,7 +131,7 @@ Repare no que falta: nada aqui decide quando ele **para**. Não quando está pro
   ],
   testOut: [
     { question: `O que um laço agêntico substitui, em comparação com prompting de um tiro só?`,
-      options: ["A torcida — o golem agora vê o resultado do próprio trabalho e corrige contra ele","A necessidade de uma spec, já que o laço descobre os requisitos no caminho","O compilador, já que o laço confere o código sozinho"], answer: 0 },
+      options: ["A torcida — o modelo agora vê o resultado do próprio trabalho e corrige contra ele","A necessidade de uma spec, já que o laço descobre os requisitos no caminho","O compilador, já que o laço confere o código sozinho"], answer: 0 },
     { question: `Por que "a saída parece razoável" nunca consegue guiar um laço?`,
       options: ["Porque nunca pode ser falso — um sinal que não pode ser má notícia não carrega informação","Porque chega tarde demais na iteração para ser usado","Porque modelos não são treinados para avaliar julgamentos em linguagem natural"], answer: 0 },
     { question: `Por que o conjunto de evals precisa continuar fixo entre iterações?`,

@@ -8,6 +8,7 @@ export const common = {
     hall: "salão",
     journey: "jornada",
     campaign: "campanha",
+    advanced: "avançado",
     cards: "cartas",
     forge: "forja",
     signOut: "sair",

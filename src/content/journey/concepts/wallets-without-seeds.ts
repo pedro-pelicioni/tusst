@@ -7,7 +7,7 @@ import type { Concept } from "../types";
 export const walletsWithoutSeeds: Concept = {
   meta: {
     slug: "wallets-without-seeds",
-    title: "Wallets Without Seeds",
+    title: "Smart Accounts & Passkeys",
     tagline: "Smart accounts & passkeys: and fees someone else sponsors.",
     numeral: "XII",
     arc: "realm",

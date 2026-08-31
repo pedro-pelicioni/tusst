@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "O Lado do Emissor",
+  title: "Emissão de assets",
   tagline: "Emissão de ativos: qualquer um consegue emitir — o ofício é tudo o que vem depois.",
   steps: [
     {

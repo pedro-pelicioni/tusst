@@ -4,12 +4,12 @@ import type { Concept } from "../types";
 // them. The tactical patterns that live INSIDE a border — entities, value
 // objects, aggregates — are Craft IV, because "where do the lines go" and
 // "what is on either side of them" are two different lessons and only the
-// first one is about the golem mixing your vocabularies.
+// first one is about the model mixing your vocabularies.
 
 export const bordersOfTheRealm: Concept = {
   meta: {
     slug: "borders-of-the-realm",
-    title: "Borders of the Realm",
+    title: "Bounded Contexts",
     tagline: "DDD & bounded contexts: one word, three meanings, and the borders that make that safe.",
     numeral: "III",
     arc: "craft",
@@ -166,11 +166,11 @@ Name the **bounded contexts** you would draw, and for each: the words whose mean
     },
     {
       kind: "theory",
-      body: `## Why the golem needs your map
+      body: `## Why the model needs your map
 
 An LLM has read a million codebases where "account", "transfer", and "balance" all meant different things. Leave your borders unstated and it will **mix vocabularies mid-file** — a KYC rule drifting into your payments model, an exchange's idea of Account shading into your wallet's — every line locally plausible.
 
-So spell the border onto the bench: *"We're in the Payments context. Account means balance holder. Compliance is a separate model — reference it by address only."* A stated context is a fence the golem respects.
+So spell the border onto the bench: *"We're in the Payments context. Account means balance holder. Compliance is a separate model — reference it by address only."* A stated context is a fence the model respects.
 
 **Next:** you have drawn the lines. What actually lives inside one — and which things are only allowed to change together.`,
     },

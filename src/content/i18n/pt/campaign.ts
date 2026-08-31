@@ -3,253 +3,258 @@ import type { ActText, CardText, SkirmishText } from "../types";
 // Localized campaign narrative. Card NAMES and act numerals stay as-is.
 export const actText: Record<string, ActText> = {
   "rust-fundamentals": {
-    title: "A Cidadela Enferrujada",
-    territory: "Capital em ruínas da arte rúnica",
+    title: "Fundamentos de Rust",
+    territory: "sintaxe, tipos, ownership",
+    overlord: null,
     synopsis:
-      "Você desperta nas ruínas oxidadas da Cidadela. Ferrisia, a Mãe-Caranguejo, ensina a você as palavras do despertar, o vínculo dos nomes e a lei da Lâmina Inflexível. Reacenda o farol, Forgeborn.",
+      "O térreo da linguagem: impressão, bindings e mutabilidade, tipos, funções, e as regras de ownership e borrowing das quais todo o resto depende.",
   },
   "control-flow": {
-    title: "O Salão dos Caminhos que se Bifurcam",
-    territory: "Labirinto de espelhos",
-    overlord: "O Senhor dos Espelhos",
+    title: "Controle de fluxo",
+    territory: "ramificações, match, laços",
+    overlord: null,
     synopsis:
-      "Um labirinto onde cada corredor corresponde a um destino diferente. O Senhor dos Espelhos aprisiona viajantes em loops infinitos. Ramifique com sabedoria, faça match de cada reflexo e quebre o loop eterno.",
+      "Ramificação e repetição em Rust, incluindo `match` exaustivo — o mecanismo que torna seguro tratar `Option` e `Result` mais adiante.",
   },
   "rust-standard-library": {
-    title: "Os Cofres Sem Fim",
-    territory: "Arquivo-masmorra sob o reino",
-    overlord: "O Acumulador",
+    title: "A biblioteca padrão",
+    territory: "coleções, iteradores, structs",
+    overlord: null,
     synopsis:
-      "Sob o reino dorme toda ferramenta que os antigos Stroopies já forjaram: bolsas que crescem, livros-razão encantados, correntes de espíritos preguiçosos que não trabalham até serem coletados. O Acumulador guarda tudo — e indexa tudo errado por um.",
+      "Os tipos que você vai usar todo dia: `Vec`, `HashMap`, strings e slices, iteradores, e dar comportamento aos seus próprios tipos com `impl`.",
   },
   "mastering-option": {
-    title: "O Pântano Evanescente",
-    territory: "Brejos assombrados do talvez",
+    title: "Option<T>",
+    territory: "a ausência, modelada como tipo",
+    overlord: null,
     synopsis:
-      "As coisas aqui podem ser ou não ser. Aldeões desaparecem em None; os tolos dão unwrap às cegas e nunca mais são vistos. No pântano você faz a única pergunta que importa: Some ou None?",
+      "Rust não tem null. `Option<T>` transforma 'pode não haver nada aqui' num caso que o compilador te obriga a tratar.",
   },
   "mastering-result": {
-    title: "O Julgamento dos Dois Destinos",
-    territory: "A Alta Corte do reino",
+    title: "Result<T, E>",
+    territory: "a falha, modelada como valor",
+    overlord: null,
     synopsis:
-      "Toda runa é julgada aqui: Ok ou Err. O lema da Corte está talhado sobre a porta — #[must_use]. Aprenda a propagar o julgamento com ?, a se recuperar de um Err com elegância e a jamais entrar em pânico no tribunal.",
+      "Erros são valores, não exceções. Faça match, converta e propague com `?` em vez de desenrolar uma pilha.",
   },
   "stellar-101": {
-    title: "O Portal da Constelação",
-    territory: "O céu partido",
+    title: "Stellar 101",
+    territory: "contas, lumens, trustlines, pagamentos",
+    overlord: null,
     synopsis:
-      "Com cinco campeões reunidos, você ascende. Fortalezas-estelares para contas, selo-e-segredo para pares de chaves, pontes de luz para trustlines — e lumens fluindo de novo pela primeira vez desde o Pânico.",
+      "Como a rede funciona de verdade: o que é uma conta, o que um lumen paga, por que segurar um asset é opt-in, e como um pagamento é montado e enviado.",
   },
   "soroban-smart-contracts": {
-    title: "O Covil do Beholder",
-    territory: "Fortaleza dos erros não tratados",
+    title: "Smart contracts Soroban",
+    territory: "contratos, storage, autorização",
+    overlord: null,
     synopsis:
-      "Além do Portal, ele espera, numa fortaleza erguida com cada erro jamais tratado. Forje runas Soroban, implante-as no céu vivo e volte os próprios contratos corrompidos do Beholder contra ele.",
+      "Escrever, guardar estado e proteger um contrato Soroban em Rust — as três coisas que todo contrato real precisa.",
   },
   "stellar-protocol-27": {
-    title: "O Céu Reescrito",
-    territory: "O próprio firmamento, em plena reforja",
-    overlord: "O Espectro do Eco",
+    title: "Protocol 27",
+    territory: "smart accounts e delegação de auth",
+    overlord: null,
     synopsis:
-      "O Beholder jaz quebrado — mas o céu vivo não guarda luto; ele se reforja, costura por costura. As estrelas chamam isso de Zipper: o Protocol 27. Porém, nos escombros do Covil, um olho jamais se fechou. Ele aprendeu a copiar o selo do signatário e pronunciá-lo duas vezes. Domine as leis reescritas do céu, Forgeborn, e silencie o Espectro do Eco.",
+      "O upgrade atual: smart accounts que definem a própria política de auth, delegação via CAP-0071, assinaturas vinculadas a endereço, e o caminho de migração.",
   },
 };
 
 export const skirmishText: Record<string, SkirmishText> = {
   "rust-fundamentals-1": {
-    title: "As Palavras do Despertar",
+    title: "Hello, World!",
     intro:
-      "O farol da Cidadela está apagado desde o Grande Pânico, e só responde a uma runa falada. Ferrisia lhe entrega um cinzel. \"Toda runa já forjada começa em `main`\", ela diz. \"Fale, Forgeborn — e cuidado com os pontos e vírgulas. O farol é pedante.\"",
+      "Todo programa Rust começa em `main`. Você vai imprimir uma linha exata e conhecer a macro `println!` — a ferramenta com que vai inspecionar tudo daqui pra frente.",
   },
   "rust-fundamentals-2": {
-    title: "A Lâmina Inflexível",
+    title: "Variáveis e mutabilidade",
     intro:
-      "No arsenal, toda lâmina é imutável por força da antiga lei — uma vez forjada, jamais alterada. Para reforjar uma, você precisa declarar sua intenção ao próprio aço. O Guardião do Empréstimo observa da porta, de braços cruzados, esperando você tentar mudá-la sem `mut`.",
+      "Bindings são imutáveis por padrão. Você vai ver o erro de compilação que isso gera e corrigir com `mut` — o primeiro de muitos lugares onde Rust te obriga a declarar a intenção.",
   },
   "rust-fundamentals-3": {
-    title: "As Formas da Matéria",
+    title: "Tipos de dados",
     intro:
-      "Ferrisia abre um armário de frascos rotulados: números inteiros, números quebrados, verdades e mentiras. \"A Cidadela recusa qualquer runa cuja forma não saiba nomear\", ela diz. \"Rotule seus frascos, Forgeborn — o farol só lê o que é tipado.\"",
+      "Inteiros, floats, booleanos e caracteres — e quando o compilador precisa que você anote um tipo que ele não consegue inferir sozinho.",
   },
   "rust-fundamentals-4": {
-    title: "A Receita do Ferreiro de Runas",
+    title: "Funções",
     intro:
-      "Na parede da forja há uma receita: pegue dois lingotes, funda-os, devolva a liga. \"Uma receita escrita uma vez serve a mil forjas\", diz Ferrisia. \"Os ferreiros as chamavam de funções. Escreva a sua, e a forja a chamará pelo nome.\"",
+      "Parâmetros, tipos de retorno e o retorno implícito de Rust: a última expressão sem ponto e vírgula é o valor. Essa única regra explica muita sintaxe adiante.",
   },
   "rust-fundamentals-5": {
-    title: "A Lei do Guardião Único",
+    title: "Fundamentos de ownership",
     intro:
-      "A porta do cofre carrega a lei mais antiga da Cidadela: todo tesouro tem exatamente um guardião. Entregue um tesouro a outro e ele deixa de ser seu — tente alcançá-lo de novo e as proteções o queimarão. Esta noite você aprende por que os ferreiros antigos às vezes forjavam uma cópia verdadeira.",
+      "Todo valor tem exatamente um dono. Atribuir uma `String` move o valor, e o binding antigo morre — a ideia única sobre a qual o resto de Rust é construído.",
   },
   "rust-fundamentals-6": {
-    title: "A Lâmina Emprestada",
+    title: "Borrowing e referências",
     intro:
-      "O Guardião do Empréstimo finalmente fala: \"Não é preciso entregar uma lâmina para que outro leia sua inscrição. Empreste-a — uma referência — e ela volta à sua mão quando terminarem.\" Ele toca o glifo `&` gravado em sua manopla. \"Esta marca. Aprenda-a.\"",
+      "Você não precisa entregar um valor para deixar uma função lê-lo. Empreste uma referência com `&` e ela volta — a alternativa cotidiana a clonar.",
   },
   "control-flow-1": {
-    title: "As Duas Portas",
+    title: "if / else",
     intro:
-      "A primeira câmara do labirinto guarda duas portas e uma única tocha. \"Todo caminho aqui é uma pergunta\", sussurra um reflexo que é quase você. \"Se a tocha arde, uma porta. Senão, a outra. O labirinto só respeita o viajante que sabe decidir.\"",
+      "Ramificação em Rust é expressão, não só comando — então um `if` pode produzir um valor que você liga direto a uma variável.",
   },
   "control-flow-2": {
-    title: "O Salão de Todos os Reflexos",
+    title: "Expressões match",
     intro:
-      "Um corredor de espelhos, cada um mostrando uma porta diferente que você poderia ter tomado. A regra do Senhor dos Espelhos é absoluta: nomeie o que vê em cada espelho — em todos — ou fique preso entre eles. A antiga arte rúnica chama isso de `match`, e ele não esquece nada.",
+      "`match` precisa ser exaustivo: o compilador rejeita qualquer caso esquecido. É esse mecanismo que torna seguro o tratamento de `Option` e `Result` mais adiante.",
   },
   "control-flow-3": {
-    title: "O Corredor Sem Fim",
+    title: "loop",
     intro:
-      "Este corredor se repete. O mesmo castiçal, a mesma rachadura na pedra, de novo e de novo. Viajantes que o percorrem para sempre tornam-se parte da parede. A única saída é contar seus ecos — e, quando a conta estiver certa, dar `break` no feitiço no meio do passo.",
+      "Um laço incondicional, e `break` com valor — a forma idiomática de repetir até algo dar certo.",
   },
   "control-flow-4": {
-    title: "A Galeria que Afunda",
+    title: "Laços while",
     intro:
-      "O piso desce um lance de cada vez, e a água está subindo. \"Enquanto houver andares acima da maré, continue descendo até o cofre\", diz o reflexo, sem ajudar em nada. Verifique a condição antes de cada passo — a galeria afoga os descuidados.",
+      "Repetir enquanto uma condição vale. Você também vai ver por que `while let` existe e onde ele ganha do `while` puro.",
   },
   "control-flow-5": {
-    title: "Os Passos Contados",
+    title: "Laços for",
     intro:
-      "Cinco pedras de passagem cruzam o lago-espelho, numeradas de um a cinco. Pise em cada uma exatamente uma vez, em ordem, anunciando em voz alta — o lago escuta. Os ferreiros antigos tinham uma runa para percorrer um caminho conhecido sem contar nos dedos: `for`.",
+      "Iterar sobre um range ou uma coleção — o laço que você realmente vai escrever, e o primeiro lugar onde iteradores aparecem.",
   },
   "control-flow-6": {
-    title: "O Labirinto do Senhor dos Espelhos",
+    title: "Controle de fluxo aninhado",
     intro:
-      "A galeria final: dez espelhos, e o Senhor dos Espelhos escondido atrás de cada terceiro. Percorra a fileira; anuncie o número de cada espelho — mas, onde ele se esconde, grite \"mirror\" em vez disso. Ramifique dentro do seu loop, Forgeborn. Quebre o coração do labirinto.",
+      "Combinando ramificações e laços, e mantendo o resultado legível quando a lógica deixa de ser trivial.",
   },
   "rust-standard-library-1": {
-    title: "A Bolsa Sem Fundo",
+    title: "Fundamentos de Vec",
     intro:
-      "O primeiro cofre guarda a ferramenta favorita dos Stroopies: uma bolsa que cresce para caber tudo o que você empurrar para dentro. \"Um `Vec`\", diz o Stroopkeeper, destrancando a vitrine. \"Todo aventureiro carrega um. Poucos o respeitam. Ele conta a partir do zero, como os deuses antigos queriam.\"",
+      "Um array que cresce: push, índice, e por que `Vec` é a coleção padrão em quase todo programa Rust.",
   },
   "rust-standard-library-2": {
-    title: "A Corrente dos Espíritos Preguiçosos",
+    title: "Iteradores",
     intro:
-      "Mais fundo, espíritos pendem em correntes — cada um segurando um valor, sem fazer absolutamente nada. \"Iteradores\", sussurra o Guardião. \"Os trabalhadores mais preguiçosos do reino. Não levantam um dedo até você coletar. Encadeie-os bem e eles somam uma fortuna em um só fôlego.\"",
+      "`map`, `filter` e `collect` — e o fato de que nada roda até um consumidor pedir os elementos.",
   },
   "rust-standard-library-3": {
-    title: "A Prateleira Que Pode Estar Vazia",
+    title: "Option e map",
     intro:
-      "A armadilha do Acumulador: uma prateleira com cinco espaços, e aventureiros que tentam alcançar o sexto. Antigamente, esse gesto derrubava o cofre inteiro. O `.get` da bolsa pergunta com educação — e a resposta, Forgeborn, pode muito bem ser nada.",
+      "Transformar um valor que pode não existir, sem dar unwrap antes.",
   },
   "rust-standard-library-4": {
-    title: "O Livro-Razão Encantado",
+    title: "HashMap",
     intro:
-      "Um livro que responde perguntas: pergunte \"ouro?\" e ele responde \"100\". Cada entrada é uma chave ligada a um valor, sem ordem alguma — o encantamento troca ordem por velocidade. Os ferreiros o chamavam de `HashMap`. O Acumulador o chama de sua memória.",
+      "Busca por chave/valor, e a API `entry` que lê ou insere com um único hash.",
   },
   "rust-standard-library-5": {
-    title: "A Inscrição Viva",
+    title: "Trabalhando com strings",
     intro:
-      "Algumas inscrições são talhadas uma vez e nunca mudam — e algumas crescem, letra por letra, junto com sua história. Esta noite você trabalha com o tipo vivo: `String`, o texto do reino que cresce, e `format!`, o feitiço que tece muitos em um.",
+      "`String` versus `&str`, por que você não indexa uma string por número, e o que UTF-8 tem a ver com isso.",
   },
   "rust-standard-library-6": {
-    title: "Uma Janela para o Tesouro",
+    title: "Slices",
     intro:
-      "O Acumulador não deixará você levar o tesouro embora — mas deixa você olhar. Um slice é uma janela para um trecho do tesouro: sem cópia, sem roubo, só uma vista daqui até ali. Cuidado com as bordas; a janela inclui o começo e exclui o fim.",
+      "Uma visão emprestada de parte de uma coleção — sem cópia, sem alocação.",
   },
   "rust-standard-library-7": {
-    title: "O Molde no Cofre Mais Profundo",
+    title: "Structs",
     intro:
-      "Depois dos livros-razão e da tinta viva, resta uma porta: a oficina do próprio Acumulador, onde todo tesouro começa como molde antes de se tornar algo. \"Uma `struct`\", diz ele, traçando a forma com uma garra, \"reúne muitas partes sob um só nome — uma forma que o cofre reconhecerá para sempre.\"",
+      "Agrupar dados relacionados sob um nome, com o tipo de cada campo declarado.",
   },
   "rust-standard-library-8": {
-    title: "O Rito que Desperta o Receptáculo",
+    title: "impl e métodos",
     intro:
-      "Um molde permanece inerte até receber um rito: alguém que o construa e uma voz que responda por ele. \"Um bloco `impl` ensina à forma o que ela pode fazer\", diz o Acumulador. \"Marque-a também com `derive`, para que revele seus próprios segredos quando você exigir vê-los.\"",
+      "Ligar comportamento a um tipo, e a diferença entre `self`, `&self` e `&mut self`.",
   },
   "mastering-option-1": {
-    title: "Some ou None?",
+    title: "Some ou None",
     intro:
-      "O Stroophantom se materializa — ou não. Difícil dizer. \"No pântano, toda resposta vem embrulhada\", diz ele de algum lugar. \"`Some(thing)`, ou `None`. Outros reinos fingem que a ausência não existe e trombam com ela à meia-noite. Aqui, nós a colocamos no tipo.\"",
+      "`Option<T>` transforma a ausência num caso que o compilador te obriga a tratar — é por isso que Rust não tem null.",
   },
   "mastering-option-2": {
-    title: "Os Tolos Que Deram Unwrap",
+    title: "Unwrap com segurança",
     intro:
-      "Lápides margeiam a trilha, cada uma talhada com a mesma última palavra: `.unwrap()`. \"Eles presumiram\", suspira o Fantasma. \"Em um `None`, o unwrap entra em pânico — o programa inteiro afunda. Carregue um valor padrão, e o pântano não poderá tocá-lo.\"",
+      "`unwrap_or`, `unwrap_or_else` e `expect`, e a regra de quando `unwrap()` é aceitável em produção.",
   },
   "mastering-option-3": {
-    title: "Pergunte ao Próprio Pântano",
+    title: "if let",
     intro:
-      "No coração do pântano, uma lanterna que pode ou não estar acesa. O Fantasma ensina a cortesia final: \"`if let Some(light)` — se houver algo, tome-o pelo nome e use-o. Se não, siga o caminho do else. Nunca presuma. Pergunte.\"",
+      "Casar um caso e ignorar o resto, quando um `match` completo seria só ruído.",
   },
   "mastering-result-1": {
-    title: "Os Dois Vereditos",
+    title: "Ok ou Err",
     intro:
-      "A Strooracle preside, e sua corte conhece exatamente duas sentenças: `Ok(value)` e `Err(reason)`. \"O pântano lhe ensinou a ausência\", ela diz. \"Eu lhe ensino a falha — e a falha, Forgeborn, sempre declara seu motivo para os registros.\"",
+      "`Result<T, E>` carrega o valor ou o motivo da falha — e `#[must_use]` garante que você não o ignore em silêncio.",
   },
   "mastering-result-2": {
-    title: "Lendo o Julgamento",
+    title: "Fazendo match em Result",
     intro:
-      "Um pergaminho chega lacrado, com um veredito dentro. Nesta corte não se adivinham vereditos — faz-se `match` neles: um braço para `Ok`, um braço para `Err`, ambos tratados, nada ignorado. O lema sobre a porta brilha quando você entra: `#[must_use]`.",
+      "Tratar os dois braços explicitamente, e decidir a cada chamada se a falha é recuperável.",
   },
   "mastering-result-3": {
-    title: "A Marca da Propagação",
+    title: "O operador ?",
     intro:
-      "Nem toda corte precisa sentenciar; algumas remetem o caso à instância superior. A Oráculo lhe mostra a menor runa do reino: `?`. \"Em Ok, desembrulhe e siga. Em Err, devolva-o a quem chamou você — no mesmo instante. Uma marca, e o julgamento sobe de instância.\"",
+      "Propagar a falha para quem chamou com um caractere, em vez de um `match` em cada nível.",
   },
   "stellar-101-1": {
-    title: "A Carta da Fortaleza-Estelar",
+    title: "Contas e keypairs",
     intro:
-      "Astrostroopie o recebe no Portal com uma carta e duas chaves. \"Toda alma no céu é uma fortaleza-estelar — uma conta. O selo `G` você pode gritar das torres; a semente `S` você guarda com a própria vida. Perder o primeiro é constrangedor. Perder a segunda é perder tudo.\"",
+      "Uma conta Stellar é uma chave pública. A chave secreta assina; a pública identifica. Todo o resto se apoia nisso.",
   },
   "stellar-101-2": {
-    title: "O Pedágio do Portal",
+    title: "Lumens e taxas",
     intro:
-      "\"A moeda do céu é o lumen\", diz o Viajante, girando uma moeda que se parte em dez milhões de centelhas. \"Cada centelha, um stroop. Toda travessia paga um pequeno pedágio — cem stroops, mais ou menos conforme o tráfego — para que ninguém inunde o céu de ruído.\"",
+      "XLM, stroops, a reserva base e por que toda conta precisa manter um saldo mínimo.",
   },
   "stellar-101-3": {
-    title: "A Ponte de Luz",
+    title: "Trustlines e assets",
     intro:
-      "Além dos lumens, o céu transporta todo ativo que uma fortaleza-estelar ousar emitir — mas só por pontes que você mesmo constrói. \"Uma trustline\", diz Astrostroopie, \"é você dizendo ao céu: eu aceito ESTE ativo, DESTE emissor. Sem ponte, sem carga. O céu leva consentimento a sério.\"",
+      "Segurar um asset não nativo é opt-in: você abre uma trustline antes, e isso é uma decisão deliberada do protocolo.",
   },
   "stellar-101-4": {
-    title: "Primeira Luz Através do Céu",
+    title: "Seu primeiro pagamento",
     intro:
-      "Tudo converge: uma fortaleza-estelar de destino, um ativo, uma quantia. O Viajante se afasta do console. \"Lumens não cruzam este Portal desde o Pânico. Envie o pagamento, Forgeborn. Que haja tráfego.\"",
+      "Montar, assinar e enviar um pagamento — o formato que toda operação Stellar compartilha.",
   },
   "soroban-smart-contracts-1": {
-    title: "A Primeira Runa Celeste",
+    title: "Seu primeiro contrato",
     intro:
-      "O portão da fortaleza lê runas, não aço. Aqui o seu Rust não é mais um programa — é um contrato, talhado no céu vivo, onde toda estrela pode chamá-lo. Sem biblioteca padrão, sem sistema operacional: apenas `#![no_std]`, o Env e a sua palavra. Talhe a primeira runa celeste.",
+      "`#[contract]`, `#[contractimpl]` e uma função exportada — o mínimo que um contrato Soroban precisa para existir.",
   },
   "soroban-smart-contracts-2": {
-    title: "O Livro-Razão Que Lembra",
+    title: "Storage de contrato",
     intro:
-      "Dentro da fortaleza, um livro-razão escreve a si mesmo. Tudo o que o Beholder já contou está armazenado aqui — mas o armazenamento no céu é alugado, não possuído. Leia, incremente, escreva de volta. O livro-razão lembra o que o seu contrato mandar lembrar, e nada mais.",
+      "Storage instance, persistent e temporary: três prateleiras com tempos de vida e custos diferentes.",
   },
   "soroban-smart-contracts-3": {
-    title: "O Selo do Signatário",
+    title: "Autorização",
     intro:
-      "A corrupção do Beholder começou com uma única função desprotegida — qualquer um podia sacar o que não era seu. Uma linha teria impedido. Exija o selo do signatário antes de mover um único lumen: `require_auth`. Volte o próprio cofre dele contra ele.",
+      "`require_auth` é a linha entre um contrato que qualquer um esvazia e um que só o dono movimenta.",
   },
   "stellar-protocol-27-1": {
-    title: "A Virada do Céu",
+    title: "Visão geral do Protocol 27",
     intro:
-      "Com o Beholder derrotado, as estrelas-validadoras se reúnem. Elas não remendam o céu — elas votam, e num ledger marcado o firmamento inteiro vira de uma vez. As estrelas chamam essa reforja de Zipper: o Protocol 27. Assista a um upgrade acontecer por dentro, Forgeborn.",
+      "O que o upgrade muda, e por que a delegação de autenticação importa para quem constrói carteiras.",
   },
   "stellar-protocol-27-2": {
-    title: "O Selo, Relembrado",
+    title: "Smart accounts e __check_auth",
     intro:
-      "Volte ao cofre que você selou no Covil. O `require_auth` resistiu — mas uma pergunta paira nos salões reconstruídos: e se quem segura o selo não for um par de chaves, e sim um *contrato*? Contas que são contratos escrevem a própria lei das assinaturas: `__check_auth`.",
+      "Uma conta-contrato decide sozinha o que conta como assinatura válida — essa função é a política inteira.",
   },
   "stellar-protocol-27-3": {
-    title: "A Coroa Delegada",
+    title: "Delegação de autenticação (CAP-0071)",
     intro:
-      "Nenhum guardião vigia todos os cofres sozinho. Sob o céu antigo, emprestar o selo exigia frágeis rodadas de adivinhação — simule, propague, reze. O céu reescrito faz da delegação uma lei: `delegate_account_auth`, pronunciado dentro de `__check_auth`, entrega a verificação a um guardião de confiança.",
+      "Permitir que uma conta delegue sua checagem de auth a outra, e o que isso destrava para recuperação e chaves de sessão.",
   },
   "stellar-protocol-27-4": {
-    title: "O Eco Que Assina Duas Vezes",
+    title: "Segurança de assinatura e credenciais V2",
     intro:
-      "Ele enfim se revela: o olho que nunca se fechou. O Espectro do Eco rouba um selo verdadeiro e o pronuncia de novo — diante de um cofre diferente, firmado pela mesma pena. O céu reescrito responde com um selo atado à própria porta: credenciais que nomeiam seu endereço.",
+      "Assinaturas vinculadas a endereço, e o ataque de replay que o formato de credencial V2 fecha.",
   },
   "stellar-protocol-27-5": {
-    title: "A Caravana da Migração",
+    title: "Migrando para o Protocol 27",
     intro:
-      "As caravanas se enfileiram no Portal, carroças pesadas com cada ferramenta forjada sob o céu antigo. Nada cruza para o firmamento reforjado sem mudar — cada SDK reforjado, cada import renomeado. Percorra a estrada da caravana, Forgeborn, e não deixe para trás nada que ainda fale a língua antiga.",
+      "O que quebra, o que não quebra, e em que ordem mudar as coisas nos SDKs.",
   },
   "stellar-protocol-27-6": {
-    title: "O Último Eco do Espectro",
+    title: "Juntando tudo: uma conta delegada",
     intro:
-      "O Espectro vem atrás do seu cofre com um selo roubado e um eco perfeito. Mas a sua conta já não é uma porta com uma só chave — é lei: um `__check_auth` que verifica seu signatário e delega a uma coroa-guardiã. Vincule o selo. Silencie o eco. Encerre a campanha.",
+      "Implemente `__check_auth` de ponta a ponta: verifique a assinatura, honre o delegado e rejeite o replay.",
   },
 };
 

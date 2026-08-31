@@ -2,14 +2,14 @@ import type { Concept } from "../types";
 
 // Craft VII — what a harness IS, and the one habit that makes it worth
 // having: never believe the claim, re-check it. Least privilege and failure
-// paths are Craft VIII, because "how to give the golem hands" and "what
+// paths are Craft VIII, because "how to give the model hands" and "what
 // catches it when those hands are wrong" are separate lessons, and only the
 // second one is the one that gets skipped.
 
 export const tamingTheGolem: Concept = {
   meta: {
     slug: "taming-the-golem",
-    title: "Taming the Golem",
+    title: "Harness Engineering",
     tagline: "Harness engineering: the model is rented, the harness is yours.",
     numeral: "VII",
     arc: "craft",
@@ -42,7 +42,7 @@ A working harness has named parts:
 - **Permissions** — what it may touch, and what it may not.
 - **Working directory** — the world it sees.
 - **Test runner** — the judge its output must face.
-- **Reviewer step** — where a human (or another golem) inspects the diff.
+- **Reviewer step** — where a human (or another model) inspects the diff.
 
 Two teams with the same model and different harnesses get *wildly* different results. When output quality shifts, engineers debug the harness — not the horoscope.`,
     },
@@ -97,24 +97,24 @@ Two teams with the same model and different harnesses get *wildly* different res
       kind: "theory",
       body: `## Verification beats trust
 
-The golem's most dangerous trait isn't ignorance — it's **confidence while wrong**. It announces success in the same warm tone whether the deploy worked or never happened. Confidence is *style*, not signal.
+The model's most dangerous trait isn't ignorance — it's **confidence while wrong**. It announces success in the same warm tone whether the deploy worked or never happened. Confidence is *style*, not signal.
 
 So a harness never trusts; it **re-checks**, using judges that can't be sweet-talked:
 
 - the **compiler** — does it even build?
 - the **test suite** — your trials from the Rite, red or green
 - the **linter** — did the standards hold?
-- the **chain itself** — does the ledger say what the golem says?
+- the **chain itself** — does the ledger say what the model says?
 
 Claims are data. Verifiers are truth.`,
     },
     {
       kind: "quiz",
-      question: `The golem reports: "Contract deployed and initialized successfully." What does a well-built harness do with that sentence?`,
+      question: `The model reports: "Contract deployed and initialized successfully." What does a well-built harness do with that sentence?`,
       options: [
         "Treats it as a claim — reads the chain, fetches the contract, calls a view function, and believes the ledger",
         "Accepts it — models are trained to be truthful, and this one has been reliable so far",
-        "Asks the golem to carefully double-check its own work in the same session",
+        "Asks the model to carefully double-check its own work in the same session",
       ],
       answer: 0,
       explain: `Self-review by the same mind shares the same blind spots — if it believed the deploy worked, it will believe it again. Independent verifiers don't share anyone's blind spots, and on Stellar an RPC read costs milliseconds. The ledger is the cheapest lie detector you will ever own.`,
@@ -123,11 +123,11 @@ Claims are data. Verifiers are truth.`,
       kind: "fill",
       prompt: `Complete the harness engineer's first move:`,
       file: "NOTES.md",
-      before: `The golem says the deploy succeeded. Before that sentence changes anything, the harness `,
+      before: `The model says the deploy succeeded. Before that sentence changes anything, the harness `,
       after: ` .`,
       choices: [
         "reads the chain and checks",
-        "asks the golem to confirm it",
+        "asks the model to confirm it",
         "records the claim in the run log",
         "retries the deploy to be safe",
       ],
@@ -143,7 +143,7 @@ Claims are data. Verifiers are truth.`,
       kind: "theory",
       body: `## The half that gets skipped
 
-You can now name the parts of a harness and, more importantly, refuse to believe anything the golem says about its own work.
+You can now name the parts of a harness and, more importantly, refuse to believe anything the model says about its own work.
 
 Everything so far has been about giving it **hands** — tools, a directory, a runner. Nothing so far has asked the harder question: which hands, exactly, and what happens on the day it uses them on a confidently wrong plan.
 
@@ -170,7 +170,7 @@ Everything so far has been about giving it **hands** — tools, a directory, a r
       answer: 0,
     },
     {
-      question: `What is the golem's most dangerous trait?`,
+      question: `What is the model's most dangerous trait?`,
       options: [
         "Confidence while wrong — it reports success in the same warm tone whether or not anything happened",
         "Ignorance — there are things it has simply never seen",
@@ -183,7 +183,7 @@ Everything so far has been about giving it **hands** — tools, a directory, a r
       options: [
         "Treats it as a claim, reads the chain, calls a view function, and believes the ledger",
         "Accepts it — the model has been reliable so far",
-        "Asks the golem to double-check its own work in the same session",
+        "Asks the model to double-check its own work in the same session",
       ],
       answer: 0,
     },

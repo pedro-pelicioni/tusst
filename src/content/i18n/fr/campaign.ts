@@ -11,14 +11,14 @@ export const actText: Record<string, ActText> = {
   "control-flow": {
     title: "La Salle des Chemins qui Bifurquent",
     territory: "Labyrinthe de miroirs",
-    overlord: "Le Seigneur des Miroirs",
+    overlord: null,
     synopsis:
       "Un labyrinthe où chaque couloir mène à un destin différent. Le Seigneur des Miroirs piège les voyageurs dans des boucles infinies. Bifurque avec sagesse, matche chaque reflet et brise la boucle éternelle.",
   },
   "rust-standard-library": {
     title: "Les Coffres Sans Fin",
     territory: "Archive-donjon sous le royaume",
-    overlord: "L'Amasseur",
+    overlord: null,
     synopsis:
       "Sous le royaume dorment tous les outils que les anciens Stroopies ont jamais forgés : sacs extensibles, registres enchantés, chaînes d'esprits paresseux qui ne travaillent que lorsqu'on les collecte. L'Amasseur veille sur tout — et indexe tout avec un décalage de un.",
   },
@@ -43,14 +43,14 @@ export const actText: Record<string, ActText> = {
   "soroban-smart-contracts": {
     title: "L'Antre du Beholder",
     territory: "Forteresse des erreurs non gérées",
-    overlord: "Le Stroopbeholder",
+    overlord: null,
     synopsis:
       "Au-delà de la Porte, il attend, dans une forteresse bâtie de chaque erreur jamais gérée. Forge des runes Soroban, déploie-les dans le ciel vivant, et retourne contre le Beholder ses propres contrats corrompus.",
   },
   "stellar-protocol-27": {
     title: "Le Ciel Réécrit",
     territory: "Le firmament lui-même, en pleine reforge",
-    overlord: "Le Spectre de l'Écho",
+    overlord: null,
     synopsis:
       "Le Beholder gît, brisé — mais le ciel vivant ne porte pas le deuil ; il se reforge, couture après couture. Les étoiles appellent cela le Zipper : le Protocol 27. Pourtant, dans les décombres de l'Antre, un œil ne s'est jamais fermé. Il a appris à copier le sceau du signataire et à le prononcer deux fois. Maîtrise les lois réécrites du ciel, Forgeborn, et fais taire le Spectre de l'Écho.",
   },

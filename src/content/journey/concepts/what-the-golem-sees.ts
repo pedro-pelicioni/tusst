@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const whatTheGolemSees: Concept = {
   meta: {
     slug: "what-the-golem-sees",
-    title: "What the Golem Sees",
+    title: "Context Engineering",
     tagline: "Context engineering: curation, not accumulation.",
     numeral: "X",
     arc: "craft",
@@ -24,7 +24,7 @@ export const whatTheGolemSees: Concept = {
       kind: "theory",
       body: `## Curation, not accumulation
 
-Prompt engineering asks *how to phrase*. **Context engineering** asks the more important question: *what goes in front of the golem at all?*
+Prompt engineering asks *how to phrase*. **Context engineering** asks the more important question: *what goes in front of the model at all?*
 
 For a bug in the refund path, it needs three things:
 
@@ -41,12 +41,12 @@ Not the whole repo. Not last month's migration notes. The skill is *selection*: 
 The refund bug, for real. Here is what goes on, with a size and a reason:
 
 - \`refunds.rs\` (180 lines) — the code that is wrong. Not the module that calls it; the one that decides.
-- The three refund clauses from the spec (14 lines) — so "correct" has a definition that isn't the golem's opinion.
+- The three refund clauses from the spec (14 lines) — so "correct" has a definition that isn't the model's opinion.
 - \`test_refund_after_deadline\` and its failing output (20 lines) — the one trial that is red, and what it actually printed.
 
 And what stays off, which is the harder half:
 
-- \`payments.rs\`, even though refunds live under payments — it is not where the bug is, and **every file on the bench is a file the golem may decide to improve**.
+- \`payments.rs\`, even though refunds live under payments — it is not where the bug is, and **every file on the bench is a file the model may decide to improve**.
 - The migration notes from the release that introduced the deadline. They describe a schema that has changed twice since, and stale material teaches confidently.
 - The rest of the test suite. Six hundred lines of green say nothing about the one that is red.
 
@@ -95,7 +95,7 @@ Roughly 210 lines, against a repository of forty thousand. That ratio *is* the j
     },
     {
       kind: "quiz",
-      question: `You're sending the golem to fix a bug in the refund path. What goes on the bench?`,
+      question: `You're sending the model to fix a bug in the refund path. What goes on the bench?`,
       options: [
         "The refund module, the spec's refund rules, and the failing test — and little else",
         "The entire repository, so that no potentially relevant detail is missing",
@@ -110,7 +110,7 @@ Roughly 210 lines, against a repository of forty thousand. That ratio *is* the j
 
 Here's the counterintuitive part: irrelevant context doesn't just waste space — it **actively harms**.
 
-- A distractor file invites the golem to "helpfully" touch it.
+- A distractor file invites the model to "helpfully" touch it.
 - Mixed vocabularies pull in the wrong model of Account — Chapter III's nightmare, self-inflicted.
 - Stale docs and dead code teach old behavior as if it were current.
 - And the longer the bench, the thinner the attention: your one crucial constraint now competes with ten thousand tokens of noise.
@@ -126,7 +126,7 @@ Curation cuts both ways. **Removing from the bench is as powerful as adding to i
         "Extra blank lines between the sections of the prompt",
       ],
       answer: 0,
-      explain: `Unrelated material costs you room and attention. *Contradictory* material costs you correctness: the golem has no way to know which of two accounts of the truth is the current one, and confident-and-wrong is the expensive failure mode.`,
+      explain: `Unrelated material costs you room and attention. *Contradictory* material costs you correctness: the model has no way to know which of two accounts of the truth is the current one, and confident-and-wrong is the expensive failure mode.`,
     },
     {
       kind: "fill",
@@ -141,13 +141,13 @@ Curation cuts both ways. **Removing from the bench is as powerful as adding to i
         "handled automatically by the model",
       ],
       answer: 0,
-      explain: `This is the whole chapter in one line. Phrasing is a skill you can practise in an afternoon; deciding what the golem never sees is the part that stays hard, and the part that separates a working bench from a full one.`,
+      explain: `This is the whole chapter in one line. Phrasing is a skill you can practise in an afternoon; deciding what the model never sees is the part that stays hard, and the part that separates a working bench from a full one.`,
     },
     {
       kind: "theory",
       body: `## Why this is the last quiet chapter
 
-So far the golem has done one thing at a time: you set the bench, you write the ask, you read the answer. You are still the loop.
+So far the model has done one thing at a time: you set the bench, you write the ask, you read the answer. You are still the loop.
 
 The moment it starts acting on its own output — running the test it just wrote, reading the failure, trying again — everything here compounds. A bench that was merely cluttered becomes a bench that grows, on its own, with every step it takes.
 

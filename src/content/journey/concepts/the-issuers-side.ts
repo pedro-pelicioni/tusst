@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theIssuersSide: Concept = {
   meta: {
     slug: "the-issuers-side",
-    title: "The Issuer's Side",
+    title: "Asset Issuance",
     tagline: "Asset issuance: anyone can mint — the craft is everything after that.",
     numeral: "V",
     arc: "realm",

@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "O Esqueleto e os Órgãos",
+  title: "Orquestração",
   tagline: "Orquestração: arestas determinísticas, julgamento dentro dos nós.",
   steps: [
     {
@@ -24,7 +24,7 @@ Misture as coisas — deixe o modelo improvisar qual passo vem a seguir — e as
         "Em nenhum lugar — um pipeline sério é determinístico de ponta a ponta, ou não é engenharia",
       ],
       answer: 0,
-      explain: `Fluxo de controle improvisado gera falhas não reproduzíveis — você não consegue depurar um caminho que nunca acontece da mesma forma duas vezes. E um pipeline sem julgamento em nenhum ponto nem precisaria de golems. Esqueleto determinístico, órgãos julgadores: cada tipo de confiabilidade onde pertence.`,
+      explain: `Fluxo de controle improvisado gera falhas não reproduzíveis — você não consegue depurar um caminho que nunca acontece da mesma forma duas vezes. E um pipeline sem julgamento em nenhum ponto nem precisaria de modelos. Esqueleto determinístico, órgãos julgadores: cada tipo de confiabilidade onde pertence.`,
     },
     {
       kind: "fill",
@@ -75,7 +75,7 @@ Em um grafo, um nó que falha **falha sozinho**. Seu contexto é colocado em qua
       question: `A tarefa: renomear uma função e seus pontos de chamada em um único arquivo. O que você usa?`,
       options: [
         "Um loop simples — ou apenas seu editor; o custo de coordenação de um grafo superaria a tarefa",
-        "Um grafo — mais golems significa mais qualidade, tanto em tarefas pequenas quanto grandes",
+        "Um grafo — mais modelos significa mais qualidade, tanto em tarefas pequenas quanto grandes",
         "Um grafo — tarefas pequenas são exatamente o lugar para praticar para as grandes",
       ],
       answer: 0,
@@ -104,7 +104,7 @@ Só projeto — sem código de orquestração, sem nomes de ferramenta ou framew
       kind: "theory",
       body: `## O ofício, montado
 
-Olhe o que está no seu cinto agora: **especificações** que dizem o que é certo; **testes** que verificam isso eternamente; **fronteiras** que mantêm as palavras honestas; um **keep** que contém mudanças; um **arnês** que contém o golem; **palavras** que moldam o que ele vê; **loops** que permitem correção; e um **grafo** que entrelaça muitas mentes em um plano.
+Olhe o que está no seu cinto agora: **especificações** que dizem o que é certo; **testes** que verificam isso eternamente; **fronteiras** que mantêm as palavras honestas; um **keep** que contém mudanças; um **arnês** que contém o modelo; **palavras** que moldam o que ele vê; **loops** que permitem correção; e um **grafo** que entrelaça muitas mentes em um plano.
 
 Nenhum desses carregará a IA por você. Todos eles tornam a IA valer dez vezes mais.
 

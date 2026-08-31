@@ -12,6 +12,7 @@ import {
   type Skirmish,
 } from "@/content/campaign";
 import { getLessonSteps, type LessonStep } from "@/content/steps";
+import { getAdvancedStepsLocalized } from "@/content/advanced/i18n";
 import { es } from "./es";
 import { fr } from "./fr";
 import { pt } from "./pt";
@@ -23,7 +24,15 @@ export function getLessonStepsLocalized(
   slug: string,
   locale: Locale,
 ): LessonStep[] | undefined {
-  return CONTENT[locale]?.steps[slug] ?? getLessonSteps(slug);
+  // Campaign overlay, then the Advanced Path overlay, then English. The
+  // advanced overlay is kept in its own module because its locale coverage is
+  // deliberately behind the campaign's (EN + PT first, es/fr later) and
+  // `LocaleContent` demands a complete map.
+  return (
+    CONTENT[locale]?.steps[slug] ??
+    getAdvancedStepsLocalized(slug, locale) ??
+    getLessonSteps(slug)
+  );
 }
 
 function localizeAct(act: Act, content: LocaleContent | undefined): Act {

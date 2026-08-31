@@ -9,7 +9,7 @@ import type { Concept } from "../types";
 export const theLivingContracts: Concept = {
   meta: {
     slug: "the-living-contracts",
-    title: "The Living Contracts",
+    title: "Soroban: Contracts on Stellar",
     tagline: "Soroban: Wasm on the ledger, and three shelves to put state on.",
     numeral: "X",
     arc: "realm",

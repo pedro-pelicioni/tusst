@@ -42,6 +42,11 @@ jobs:
           filters: |
             prisma:
               - 'prisma/**'
+              # The seed is the ONLY thing that creates Track/Lesson rows, and
+              # the catalogues it reads live outside prisma/. Without these,
+              # adding a lesson ships a live syllabus whose links 404.
+              - 'src/content/advanced/curriculum.ts'
+              - 'src/content/tracks.ts'
 
   migrate-neon:
     needs: detect-changes

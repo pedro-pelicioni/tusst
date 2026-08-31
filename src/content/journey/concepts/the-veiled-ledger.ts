@@ -9,7 +9,7 @@ import type { Concept } from "../types";
 export const theVeiledLedger: Concept = {
   meta: {
     slug: "the-veiled-ledger",
-    title: "The Veiled Ledger",
+    title: "Zero-Knowledge & Confidential Tokens",
     tagline: "Zero-knowledge & confidential tokens: proof without disclosure.",
     numeral: "XIII",
     arc: "realm",

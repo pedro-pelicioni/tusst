@@ -11,14 +11,14 @@ export const actText: Record<string, ActText> = {
   "control-flow": {
     title: "El Salón de los Caminos Bifurcados",
     territory: "Laberinto de espejos",
-    overlord: "El Señor de los Espejos",
+    overlord: null,
     synopsis:
       "Un laberinto donde cada corredor corresponde a un destino distinto. El Señor de los Espejos atrapa a los viajeros en bucles infinitos. Bifurca con sabiduría, haz match con cada reflejo y rompe el bucle eterno.",
   },
   "rust-standard-library": {
     title: "Las Bóvedas Infinitas",
     territory: "Archivo-mazmorra bajo el reino",
-    overlord: "El Acaparador",
+    overlord: null,
     synopsis:
       "Bajo el reino duerme cada herramienta que los viejos Stroopies forjaron: mochilas que crecen, libros de cuentas encantados, cadenas de espíritus perezosos que no trabajan hasta que los recolectas. El Acaparador lo custodia todo — y todo lo indexa con un desfase de uno.",
   },
@@ -43,14 +43,14 @@ export const actText: Record<string, ActText> = {
   "soroban-smart-contracts": {
     title: "La Guarida del Beholder",
     territory: "Fortaleza de errores sin manejar",
-    overlord: "El Stroopbeholder",
+    overlord: null,
     synopsis:
       "Más allá de la Puerta te espera, en una fortaleza construida con cada error que nadie manejó jamás. Forja runas Soroban, despliégalas en el cielo viviente y vuelve los contratos corruptos del Beholder en su contra.",
   },
   "stellar-protocol-27": {
     title: "El Cielo Reescrito",
     territory: "El propio firmamento, en plena reforja",
-    overlord: "El Espectro del Eco",
+    overlord: null,
     synopsis:
       "El Beholder yace roto — pero el cielo viviente no guarda luto; se reforja a sí mismo, costura a costura. Las estrellas lo llaman el Zipper: Protocol 27. Sin embargo, entre los escombros de la Guarida, un ojo nunca se cerró. Aprendió a copiar el sello del firmante y a pronunciarlo dos veces. Domina las leyes reescritas del cielo, Forgeborn, y silencia al Espectro del Eco.",
   },

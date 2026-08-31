@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theCrossing: Concept = {
   meta: {
     slug: "the-crossing",
-    title: "The Crossing",
+    title: "Path Payments",
     tagline: "Path payments: send one currency, deliver another, atomically.",
     numeral: "VII",
     arc: "realm",

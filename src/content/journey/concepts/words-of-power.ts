@@ -9,7 +9,7 @@ import type { Concept } from "../types";
 export const wordsOfPower: Concept = {
   meta: {
     slug: "words-of-power",
-    title: "Words of Power",
+    title: "Prompt Engineering",
     tagline: "Prompt engineering: the four parts every working prompt has.",
     numeral: "IX",
     arc: "craft",
@@ -25,11 +25,11 @@ export const wordsOfPower: Concept = {
       kind: "theory",
       body: `## Your words are all it has
 
-The golem does not know your repo. It does not remember yesterday, and it cannot see the file you *didn't* attach. Its entire universe is the text sitting in front of it right now.
+The model does not know your repo. It does not remember yesterday, and it cannot see the file you *didn't* attach. Its entire universe is the text sitting in front of it right now.
 
 That is the deepest rule of prompting, and it isn't mystical: **you are deciding what exists.** Whatever you put in front of it is the world; whatever you leave out never happened.
 
-So the question behind every prompt is not "how do I phrase this?" but *"what does the golem need in order to get this right?"* This chapter is the first half of that answer — the words themselves. The next one is the harder half.`,
+So the question behind every prompt is not "how do I phrase this?" but *"what does the model need in order to get this right?"* This chapter is the first half of that answer — the words themselves. The next one is the harder half.`,
     },
     {
       kind: "theory",
@@ -48,7 +48,7 @@ Most bad prompts aren't badly *worded* — they're **missing a part**, usually t
       kind: "diagram",
       body: "The four parts, in the order they belong:",
       caption:
-        "The ask goes last on purpose: everything above it is the frame the golem reads the task through.",
+        "The ask goes last on purpose: everything above it is the frame the model reads the task through.",
       view: {
         kind: "stack",
         bands: [
@@ -81,20 +81,20 @@ Most bad prompts aren't badly *worded* — they're **missing a part**, usually t
     },
     {
       kind: "quiz",
-      question: `Which instruction actually improves the golem's code?`,
+      question: `Which instruction actually improves the model's code?`,
       options: [
         "Validate the amount: reject zero and negatives with a typed error; never panic; keep the public API unchanged",
         "Please write really clean, professional, high-quality, production-grade code",
         "You are the greatest programmer who has ever lived — code accordingly",
       ],
       answer: 0,
-      explain: `The golem can't fail "high-quality" — every output plausibly qualifies. It *can* fail "never panic", and that's the point: acceptance criteria create the possibility of being wrong, which is what steers a model. Specificity beats politeness — and flattery.`,
+      explain: `The model can't fail "high-quality" — every output plausibly qualifies. It *can* fail "never panic", and that's the point: acceptance criteria create the possibility of being wrong, which is what steers a model. Specificity beats politeness — and flattery.`,
     },
     {
       kind: "theory",
       body: `## Show, don't tell
 
-Adjectives describe quality; **examples define it.** One worked example outweighs three paragraphs of adjectives, because the golem is a pattern-continuation machine — so hand it a pattern worth continuing.
+Adjectives describe quality; **examples define it.** One worked example outweighs three paragraphs of adjectives, because the model is a pattern-continuation machine — so hand it a pattern worth continuing.
 
 Want tests in your house style? Paste **one ideal test** and say "like this." Want error messages that carry a code and a remediation hint? Show *one*.
 
@@ -102,7 +102,7 @@ Chapter I taught you that prose requirements leak ambiguity. The same holds here
     },
     {
       kind: "quiz",
-      question: `Your team has a distinctive way of writing error messages. What gets the golem to match it?`,
+      question: `Your team has a distinctive way of writing error messages. What gets the model to match it?`,
       options: [
         "Paste one real error message from the codebase and say “like this”",
         "Describe the convention carefully in three sentences",
@@ -127,7 +127,7 @@ Chapter I taught you that prose requirements leak ambiguity. The same holds here
 
 The first output is wrong. Fine — that's data. The amateur move is re-rolling the dice; the engineer's move is **reading the failure and finding the missing instruction**.
 
-Golem ignored an edge case? Your constraints never mentioned it. Wrong style? You told instead of showed. Touched files it shouldn't have? The border was unstated.
+Model ignored an edge case? Your constraints never mentioned it. Wrong style? You told instead of showed. Touched files it shouldn't have? The border was unstated.
 
 Each failure names a hole in your words — patch the *prompt*, not just the output, exactly the way Chapter I taught you to tighten a spec.`,
     },
@@ -154,7 +154,7 @@ Write the **prompt** you would send — all four parts, in order. Do not write t
 
 You can now write a prompt that says exactly what it wants. That is the easier discipline, and most people stop here.
 
-The harder one is deciding **what the golem gets to see at all** — which files, which spec, which test, and, far more importantly, what to leave out. Phrasing is a skill; selection is the craft.
+The harder one is deciding **what the model gets to see at all** — which files, which spec, which test, and, far more importantly, what to leave out. Phrasing is a skill; selection is the craft.
 
 **Next:** the bench itself, and why adding to it is not free.`,
     },

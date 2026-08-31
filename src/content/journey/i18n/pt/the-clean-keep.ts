@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "A Fortaleza Limpa",
+  title: "Clean architecture",
   tagline: "Clean architecture: dependências de código-fonte apontam para dentro, só.",
   steps: [
     {

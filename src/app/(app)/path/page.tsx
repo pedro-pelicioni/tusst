@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getCampaignProgress } from "@/lib/campaign-progress";
+import { getAdvancedProgress } from "@/lib/advanced-progress";
 import { acts } from "@/content/campaign";
 import { JOURNEY_LIVE } from "@/content/journey";
 import { getMessages } from "@/i18n/server";
@@ -60,8 +61,9 @@ export default async function HallPage() {
   const userId = session?.user?.id;
   const m = await getMessages();
 
-  const [{ rows, cardsClaimed }, character, labsDone] = await Promise.all([
+  const [{ rows, cardsClaimed }, advanced, character, labsDone] = await Promise.all([
     getCampaignProgress(userId),
+    getAdvancedProgress(userId),
     userId
       ? prisma.character.findUnique({
           where: { userId },
@@ -223,6 +225,45 @@ export default async function HallPage() {
                   {fmt(m.home.doors.campaign.progress, {
                     done: cardsClaimed,
                     total: acts.length,
+                  })}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* ─── the Advanced Path (a third road, for people past the first two) ─── */}
+          <div
+            data-reveal="5"
+            className="sc-door mt-6 overflow-hidden rounded-2xl border border-accent2/25 bg-bg/70 backdrop-blur"
+          >
+            <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center">
+              <div className="grid h-20 w-20 shrink-0 place-items-center rounded-2xl border border-accent2/30 bg-[radial-gradient(70%_70%_at_50%_40%,rgba(69,214,196,0.16),transparent_75%)]">
+                <span className="font-mono text-2xl text-accent2" aria-hidden>
+                  {"</>"}
+                </span>
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent2/90">
+                  {m.home.doors.advanced.label}
+                </p>
+                <h2 className="mt-1 font-display text-2xl font-bold tracking-wide text-fg">
+                  {m.home.doors.advanced.title}
+                </h2>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-muted2">
+                  {m.home.doors.advanced.blurb}
+                </p>
+              </div>
+              <div className="flex shrink-0 flex-col items-start gap-2 sm:items-end">
+                <Link
+                  href="/advanced"
+                  className="rounded-full border border-accent2/50 bg-accent2/10 px-6 py-2.5 font-display text-[12px] font-bold uppercase tracking-[0.14em] text-accent2 transition hover:bg-accent2/20"
+                >
+                  {m.home.doors.advanced.cta}
+                </Link>
+                <span className="font-mono text-[11px] text-muted">
+                  {fmt(m.home.doors.advanced.progress, {
+                    done: advanced.totalDone,
+                    total: advanced.totalLessons,
                   })}
                 </span>
               </div>

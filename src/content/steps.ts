@@ -5,6 +5,8 @@
 // FINAL editor challenge's hidden checks stay in `content/lessons.ts`
 // (server-only) and are graded through /api/submissions — nothing leaks.
 
+import { getAdvancedSteps } from "@/content/advanced/steps";
+
 export interface TheoryStep {
   kind: "theory";
   body: string; // markdown
@@ -2657,5 +2659,9 @@ __check_auth: signature verified, steward honored — the echo is silent ✓
 };
 
 export function getLessonSteps(slug: string): LessonStep[] | undefined {
-  return steps[slug];
+  // Campaign lessons first, then the Advanced Path. Keeping the fallback here
+  // (rather than merging the two records) means the lesson player, the locale
+  // overlay and check-i18n all keep seeing one accessor, and the campaign's
+  // authoring file stays free of advanced content.
+  return steps[slug] ?? getAdvancedSteps(slug);
 }

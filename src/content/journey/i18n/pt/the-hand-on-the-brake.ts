@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "A Mão no Freio",
+  title: "Guardrails e regras de parada",
   tagline: "Laços agênticos e freios: sem regra de parada não é autonomia, é uma fatura.",
   steps: [
     {
@@ -61,7 +61,7 @@ O caminho mais barato agora é jogar a noite inteira fora e recomeçar com a ins
 
 Um teste que falha aleatoriamente — tempo, ordem, uma porta compartilhada — é um aborrecimento para humanos. A gente suspira e roda de novo. Para um laço é **veneno**, porque o laço *age sobre todo sinal*.
 
-Chega um vermelho fantasma → o golem "conserta" código que nunca esteve quebrado → a mudança entra → na iteração seguinte, um novo fantasma → outro conserto. O laço agora está aprendendo superstições, cada uma se compondo sobre a anterior, todas vindas de ruído.
+Chega um vermelho fantasma → o modelo "conserta" código que nunca esteve quebrado → a mudança entra → na iteração seguinte, um novo fantasma → outro conserto. O laço agora está aprendendo superstições, cada uma se compondo sobre a anterior, todas vindas de ruído.
 
 A regra: **torne o feedback determinístico antes de ligá-lo a um laço.** Uma prova instável é pior que prova nenhuma — o silêncio não engana ninguém; o ruído engana sem cansar.`,
     },
@@ -99,7 +99,7 @@ A regra: **torne o feedback determinístico antes de ligá-lo a um laço.** Uma 
       kind: "theory",
       body: `## A altitude certa
 
-Onde fica o humano enquanto o laço gira? Não dentro dele — revisar cada tecla significa que *você* é o laço, em ritmo de golem. E nem acima das nuvens, carimbando o que quer que caia.
+Onde fica o humano enquanto o laço gira? Não dentro dele — revisar cada tecla significa que *você* é o laço, em ritmo de modelo. E nem acima das nuvens, carimbando o que quer que caia.
 
 A altitude certa é a **fronteira**: revise o *diff* contra a *spec*. As evals passaram? A mudança respeita as regras do Capítulo I? Alguma coisa se mexeu sem ter o que fazer ali? Confie nos instrumentos do laço para o miúdo; guarde o julgamento humano para o que os instrumentos não veem.
 

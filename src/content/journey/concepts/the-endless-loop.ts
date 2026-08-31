@@ -9,7 +9,7 @@ import type { Concept } from "../types";
 export const theEndlessLoop: Concept = {
   meta: {
     slug: "the-endless-loop",
-    title: "The Endless Loop",
+    title: "Agentic Loops",
     tagline: "Agentic loops: act, observe, correct — and the signals that make it climb.",
     numeral: "XI",
     arc: "craft",
@@ -29,7 +29,7 @@ One-shot prompting is a wish: describe, receive, hope. The **agentic loop** repl
 
 > **act → observe → correct → act again**
 
-The golem writes code, *runs* it, reads the compiler's complaint, fixes, runs again — the way you work, at machine tempo. One-shot quality stopped being the interesting number the moment the golem could see its own results.
+The model writes code, *runs* it, reads the compiler's complaint, fixes, runs again — the way you work, at machine tempo. One-shot quality stopped being the interesting number the moment the model could see its own results.
 
 But a loop is machinery, not magic. It has parts that can be engineered well or badly, and this chapter is about the two that decide whether it climbs at all.`,
     },
@@ -80,14 +80,14 @@ A loop improves only as far as its **observations** are true. Correction needs a
 - **test output** — which trial, which assertion, which line?
 - **on-chain state** — what does the ledger actually hold after the run?
 
-Signals, not vibes. "The output looks reasonable" corrects nothing, because it can never be false. Every verifier you built into the harness now earns interest: wired into the loop, it becomes the eyes the golem steers by — **on every single iteration**.`,
+Signals, not vibes. "The output looks reasonable" corrects nothing, because it can never be false. Every verifier you built into the harness now earns interest: wired into the loop, it becomes the eyes the model steers by — **on every single iteration**.`,
     },
     {
       kind: "quiz",
       question: `Which observation can actually steer a loop?`,
       options: [
         "The test runner's report: 3 passed, 1 failed — refund_after_deadline, assertion at line 41",
-        "The golem's own closing summary: everything looks correct now",
+        "The model's own closing summary: everything looks correct now",
         "The fact that the code compiled on the first try — strong evidence the logic is right",
       ],
       answer: 0,
@@ -99,7 +99,7 @@ Signals, not vibes. "The output looks reasonable" corrects nothing, because it c
 
 Cycles are easy to nod at. Here is a single turn, with what actually crosses the wire.
 
-**Act.** The golem edits \`refunds.rs\` — moves the deadline comparison from \`>\` to \`>=\`. One change, because a turn that changes six things cannot tell you which one worked.
+**Act.** The model edits \`refunds.rs\` — moves the deadline comparison from \`>\` to \`>=\`. One change, because a turn that changes six things cannot tell you which one worked.
 
 **Observe.** The harness runs the fixed evals and hands back exactly this:
 
@@ -111,7 +111,7 @@ Not "still broken". A line, a number, and a count that can be compared with last
 
 **Correct.** Three green became four. So the comparison was *one* of the bugs and not the only one: the deadline is handled, the balance is not. The plan updates — next turn goes at the balance.
 
-Notice what made that turn worth anything. The golem did not decide it had improved. **The count did.**`,
+Notice what made that turn worth anything. The model did not decide it had improved. **The count did.**`,
     },
     {
       kind: "theory",
@@ -136,7 +136,7 @@ With a compass, the loop knows *for a fact* whether it moved: 4 green out of 7 b
         "regenerated for each attempt",
       ],
       answer: 0,
-      explain: `A moving yardstick measures nothing. This is also why "let the golem write its own tests as it goes" quietly destroys the signal: the exam and the student stop being different things.`,
+      explain: `A moving yardstick measures nothing. This is also why "let the model write its own tests as it goes" quietly destroys the signal: the exam and the student stop being different things.`,
     },
     {
       kind: "exercise",
@@ -150,7 +150,7 @@ A loop is about to be pointed at a real task:
 Before it turns once, write its **observation contract**: what signals this loop will steer by, and what makes each one trustworthy. Behavior only — no harness code, no library names.`,
       rubric: `1. Names at least two concrete, external signals (test output, exit code, on-chain state, lint/build result) — not self-assessment and not "looks right".
 2. For at least one signal, states what makes it trustworthy — deterministic, reproducible, or independent of the code under change.
-3. States what counts as DONE in terms of those signals, not in terms of the golem's opinion.
+3. States what counts as DONE in terms of those signals, not in terms of the model's opinion.
 4. Names at least one signal that must NOT be trusted, and why (a self-summary, a compile success, a flaky test…).
 5. Behavior only — no harness implementation, no specific tools or libraries required.`,
       minChars: 140,
@@ -170,7 +170,7 @@ Notice what is missing: nothing here decides when it **stops**. Not when it is d
     {
       question: `What does an agentic loop replace, compared to one-shot prompting?`,
       options: [
-        "Hope — the golem now sees the result of its own work and corrects against it",
+        "Hope — the model now sees the result of its own work and corrects against it",
         "The need for a specification, since the loop discovers requirements as it goes",
         "The compiler, since the loop checks the code itself",
       ],

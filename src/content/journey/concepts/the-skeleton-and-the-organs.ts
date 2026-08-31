@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theSkeletonAndTheOrgans: Concept = {
   meta: {
     slug: "the-skeleton-and-the-organs",
-    title: "The Skeleton and the Organs",
+    title: "Orchestration",
     tagline: "Orchestration: deterministic edges, judgement inside the nodes.",
     numeral: "XIV",
     arc: "craft",
@@ -40,7 +40,7 @@ Blur the split — let the model improvise which step comes next — and failure
         "Nowhere — a serious pipeline is deterministic end to end, or it isn't engineering",
       ],
       answer: 0,
-      explain: `Improvised control flow means unreproducible failures — you can't debug a path that never happens the same way twice. And a pipeline with no judgment anywhere didn't need golems at all. Deterministic skeleton, judging organs: each kind of reliability where it belongs.`,
+      explain: `Improvised control flow means unreproducible failures — you can't debug a path that never happens the same way twice. And a pipeline with no judgment anywhere didn't need models at all. Deterministic skeleton, judging organs: each kind of reliability where it belongs.`,
     },
     {
       kind: "fill",
@@ -115,7 +115,7 @@ In a graph, a failed node **fails alone**. Its context is quarantined; its own e
       question: `The task: rename one function and its call sites in a single file. What do you reach for?`,
       options: [
         "A simple loop — or just your editor; a graph's coordination costs would exceed the task itself",
-        "A graph — more golems means more quality, on small tasks and large ones alike",
+        "A graph — more models means more quality, on small tasks and large ones alike",
         "A graph — small tasks are exactly the place to practice for the big ones",
       ],
       answer: 0,
@@ -144,7 +144,7 @@ Design only — no orchestration code, no tool or framework names.`,
       kind: "theory",
       body: `## The craft, assembled
 
-Look at what's on your belt now: **specs** that say what right means; **trials** that check it forever; **borders** that keep words honest; a **keep** that contains change; a **harness** that contains the golem; **words** that shape what it sees; **loops** that let it correct itself; and a **graph** that weaves many minds into one plan.
+Look at what's on your belt now: **specs** that say what right means; **trials** that check it forever; **borders** that keep words honest; a **keep** that contains change; a **harness** that contains the model; **words** that shape what it sees; **loops** that let it correct itself; and a **graph** that weaves many minds into one plan.
 
 None of these will the AI carry for you. All of them make the AI worth ten of itself.
 

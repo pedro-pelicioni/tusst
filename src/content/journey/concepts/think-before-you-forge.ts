@@ -10,7 +10,7 @@ import type { Concept } from "../types";
 export const thinkBeforeYouForge: Concept = {
   meta: {
     slug: "think-before-you-forge",
-    title: "Think Before You Forge",
+    title: "Spec-Driven Development",
     tagline: "Spec-driven development: the skill AI cannot exercise for you.",
     numeral: "I",
     arc: "craft",
@@ -198,7 +198,7 @@ Time to forge a spec of your own. The commission:
 
 > The guild wants an on-chain **tip jar**. Anyone may drop tips into it. Only the guild's **keeper** may collect what's inside. The guild is paranoid about two things: the keeper somehow taking *more* than the jar holds, and tips getting stuck forever if the keeper vanishes.
 
-Write the spec — **behavior only**, the way this chapter taught: what must happen, what must never happen, and the edges. An AI examiner will judge it against the rubric below (and it grades exactly like the golem forges: to the letter).`,
+Write the spec — **behavior only**, the way this chapter taught: what must happen, what must never happen, and the edges. An AI examiner will judge it against the rubric below (and it grades exactly like the model forges: to the letter).`,
       rubric: `1. Behavior only — no storage layouts, libraries, or function signatures.
 2. The deposit rule and the collect rule are each stated unambiguously (who may act, on what).
 3. At least one **invariant** that must hold at all times.

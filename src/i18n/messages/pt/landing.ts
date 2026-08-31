@@ -10,7 +10,7 @@ export const landing = {
     champions: "Campeões",
     boss: "O Beholder",
     forge: "A Forja",
-    enterRealm: "Entrar no Reino",
+    enterRealm: "Começar a aprender",
     openMenu: "Abrir menu de navegação",
     closeMenu: "Fechar menu de navegação",
   },
@@ -28,7 +28,7 @@ export const landing = {
     eyebrow: "Forjado na Stellar",
     titleTop: "Uma Campanha",
     titleBottom: "de Rust Gamificada",
-    body: "O TUSST forja você das primeiras palavras de despertar até contratos vivos na testnet da Stellar. Cada escaramuça é código de verdade julgado por provas ocultas — o compilador é seu aliado mais severo, e Ferrisia, a Mãe-Caranguejo, não distribui clemência.",
+    body: "A TUSST te leva da sua primeira linha de Rust até contratos vivos na testnet da Stellar. Toda lição termina em código de verdade corrigido por testes ocultos — o compilador é seu aliado mais severo, e ele não distribui clemência.",
     badgeRust: "Rust primeiro",
     badgeSoroban: "Contratos Soroban",
     badgeBrowser: "roda no navegador",
@@ -36,8 +36,8 @@ export const landing = {
   },
   carousel: {
     kicker: "A Coleção",
-    heading: "Campeões do Reino",
-    body: "Oito cartas pintadas para oito atos. Vença o combate final de um ato e o campeão dele entra para a sua coleção — percursos impecáveis rendem versões raras.",
+    heading: "As cartas de campeão",
+    body: "Oito cartas pintadas para oito atos. Termine a última lição de um ato e a carta dele entra para a sua coleção — percursos impecáveis rendem versões raras.",
     previous: "Anterior",
     next: "Próximo",
     cards: {
@@ -56,7 +56,7 @@ export const landing = {
       eyebrow: "A Campanha",
       titleTop: "Oito Atos.",
       titleBottom: "Um Céu a Reacender.",
-      body: "Da Cidadela Enferrujada ao Céu Reescrito: os atos abrem em ordem e as escaramuças aceitam tentativas ilimitadas. Avance dos fundamentos de Rust, pela história da Stellar, até contratos implantados na testnet ativa.",
+      body: "Os atos abrem em ordem e toda lição aceita tentativas ilimitadas. Avance dos fundamentos de Rust, passando por como a Stellar funciona de verdade, até contratos implantados na testnet ativa.",
       cta: "Começar no Ato I ›",
     },
     boss: {
@@ -77,7 +77,7 @@ export const landing = {
   },
   cta: {
     titleTop: "O Céu Espera,",
-    titleBottom: "Forgeborn.",
+    titleBottom: "Comece a construir.",
     body: "Os anciãos são diretos sobre as suas chances: seu compilador vai insultá-lo mil vezes para que o Beholder não o fira uma única vez.",
     button: "Começar a Campanha",
     altPrefix: "Ou vá direto para a bigorna —",

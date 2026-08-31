@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "O Livro-feito-véu",
+  title: "Zero-knowledge e tokens confidenciais",
   tagline: "Zero-knowledge e tokens confidenciais: prova sem revelação.",
   steps: [
     {

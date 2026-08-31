@@ -56,7 +56,7 @@ export const JOURNEY_LIVE = true;
 const theCapstoneForging: Concept = {
   meta: {
     slug: "the-capstone-forging",
-    title: "The Capstone Forging",
+    title: "Capstone: Spec to Deployed Contract",
     tagline: "Spec + tests + an AI at your side → a deployed contract.",
     numeral: "XV",
     arc: "craft",

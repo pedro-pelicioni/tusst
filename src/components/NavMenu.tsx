@@ -24,6 +24,7 @@ export function NavMenu({
     ...(journeyLive ? [{ href: "/journey", label: m.common.nav.journey }] : []),
     { href: "/labs", label: m.common.nav.forge },
     { href: "/campaign", label: m.common.nav.campaign },
+    { href: "/advanced", label: m.common.nav.advanced },
     { href: "/cards", label: m.common.nav.cards },
   ];
 

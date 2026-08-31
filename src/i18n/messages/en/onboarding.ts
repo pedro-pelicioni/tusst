@@ -49,13 +49,13 @@ export const onboarding = {
   ],
 
   // Social proof.
-  proofHeading: "The elders have forged many apprentices",
+  proofHeading: "Builders who finished the track",
   proofBody:
-    "Our mission is to turn Forgeborn into masters of the runecraft — real code, judged by hidden trials, straight in your browser. No setup. No excuses.",
+    "Real code, graded by hidden tests, straight in your browser. No local setup, no toolchain to install.",
 
   // Campaign plan.
   planKicker: "Your campaign plan",
-  planHeading: "Forgeborn — Rust to Soroban",
+  planHeading: "Rust to Soroban",
   unlocksPaths: "Your experience unlocks the first {count} paths.",
   firstPath: "Every legend starts at the first path.",
   planJourneyNote:

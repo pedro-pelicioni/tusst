@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theHandOnTheBrake: Concept = {
   meta: {
     slug: "the-hand-on-the-brake",
-    title: "The Hand on the Brake",
+    title: "Guardrails & Stopping Rules",
     tagline: "Agentic loops & guardrails: without a stopping rule it is not autonomy, it is a bill.",
     numeral: "XII",
     arc: "craft",
@@ -77,7 +77,7 @@ That is the shape of it: **the brake does not save you money on the good runs. I
 
 A test that fails randomly — timing, ordering, a shared port — is an annoyance for humans. We sigh and re-run. For a loop it is **poison**, because the loop *acts on every signal*.
 
-A phantom red arrives → the golem "fixes" code that was never broken → the change lands → next iteration, a new phantom → another fix. The loop is now learning superstitions, each one compounding, all from noise.
+A phantom red arrives → the model "fixes" code that was never broken → the change lands → next iteration, a new phantom → another fix. The loop is now learning superstitions, each one compounding, all from noise.
 
 The rule: **make feedback deterministic before wiring it into a loop.** A flaky trial is worse than no trial — silence misleads no one; noise misleads tirelessly.`,
     },
@@ -139,11 +139,11 @@ The rule: **make feedback deterministic before wiring it into a loop.** A flaky 
       kind: "theory",
       body: `## The right altitude
 
-Where does the human stand while the loop turns? Not inside it — reviewing every keystroke means *you* are the loop, at golem tempo. And not above the clouds either, rubber-stamping whatever lands.
+Where does the human stand while the loop turns? Not inside it — reviewing every keystroke means *you* are the loop, at model tempo. And not above the clouds either, rubber-stamping whatever lands.
 
 The right altitude is the **boundary**: review the *diff* against the *spec*. Did the evals pass? Does the change honor Chapter I's rules? Did anything move that had no business moving? Trust the loop's instruments for the small stuff; keep human judgment for what the instruments can't see.
 
-**Next:** when one loop isn't enough — many small golems, one woven plan.`,
+**Next:** when one loop isn't enough — many small models, one woven plan.`,
     },
   ],
   testOut: [

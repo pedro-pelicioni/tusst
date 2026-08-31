@@ -1,14 +1,14 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "O Que Te Pega",
+  title: "Menor privilégio e caminhos de falha",
   tagline: "Menor privilégio e caminhos de falha: toda ferramenta é um raio de destruição.",
   steps: [
     {
       kind: "theory",
       body: `## Menor privilégio: menos dentes, por favor
 
-Um golem com \`rm -rf\` disponível é um golem que *eventualmente* o executará — não por malícia, mas por um plano confiante e errado às 2 da manhã. A solução é antiga e comprovada: **menor privilégio**.
+Um modelo com \`rm -rf\` disponível é um modelo que *eventualmente* o executará — não por malícia, mas por um plano confiante e errado às 2 da manhã. A solução é antiga e comprovada: **menor privilégio**.
 
 - Conceda ferramentas para *esta tarefa*, não ferramentas em geral.
 - Prefira acesso **somente leitura** sempre que escrita não for necessária.
@@ -20,17 +20,17 @@ Permissão concedida "por precaução" é como incidentes começam. Cada ferrame
     {
       kind: "widget",
       component: "blast-radius",
-      body: `Dois medidores, e eles não andam juntos. **Conceda ao golem o que uma tarefa de consertar-e-provar precisa**, depois continue acrescentando — e veja qual barra responde.`,
+      body: `Dois medidores, e eles não andam juntos. **Conceda ao modelo o que uma tarefa de consertar-e-provar precisa**, depois continue acrescentando — e veja qual barra responde.`,
     },
     {
       kind: "fill",
-      prompt: `Delimite o poder do golem antes que ele comece a trabalhar:`,
+      prompt: `Delimite o poder do modelo antes que ele comece a trabalhar:`,
       file: "harness.toml",
       before: `signing_keys = "`,
       after: `"`,
       choices: ["testnet", "mainnet", "all-networks", "treasury"],
       answer: 0,
-      explain: `Regra prática: um golem só deve possuir chaves cuja perda total você possa ignorar. Lumens de testnet são gratuitos via friendbot; uma chave de mainnet ou do tesouro dentro de um loop automatizado é um incidente com contagem regressiva.`,
+      explain: `Regra prática: um modelo só deve possuir chaves cuja perda total você possa ignorar. Lumens de testnet são gratuitos via friendbot; uma chave de mainnet ou do tesouro dentro de um loop automatizado é um incidente com contagem regressiva.`,
     },
     {
       kind: "theory",
@@ -38,15 +38,15 @@ Permissão concedida "por precaução" é como incidentes começam. Cada ferrame
 
 Conceder demais raramente é uma decisão. É uma terça-feira à tarde.
 
-O golem precisa conferir um saldo, então ganha acesso à rede — de forma estreita, para aquilo. Uma semana depois ele precisa instalar uma dependência, então a rede fica aberta. Alguém está depurando um problema de mainnet e larga uma chave real no ambiente "só para esta execução", e ninguém remove, porque remover é uma tarefa e nada está quebrado no momento.
+O modelo precisa conferir um saldo, então ganha acesso à rede — de forma estreita, para aquilo. Uma semana depois ele precisa instalar uma dependência, então a rede fica aberta. Alguém está depurando um problema de mainnet e larga uma chave real no ambiente "só para esta execução", e ninguém remove, porque remover é uma tarefa e nada está quebrado no momento.
 
 Agora volte e faça a pergunta que o arreio existe para responder: *quando isto der errado, o que pega?* Rede aberta mais chave real mais um plano confiantemente errado não é um perfil de risco hipotético. São três terças-feiras comuns, empilhadas.
 
-A auditoria é barata e ninguém faz: **liste o que o golem tem hoje e, para cada item, nomeie a tarefa que precisou daquilo.** Qualquer coisa sem nome nessa coluna é uma concessão que ninguém lembra de ter feito.`,
+A auditoria é barata e ninguém faz: **liste o que o modelo tem hoje e, para cada item, nomeie a tarefa que precisou daquilo.** Qualquer coisa sem nome nessa coluna é uma concessão que ninguém lembra de ter feito.`,
     },
     {
       kind: "quiz",
-      question: `Você acrescenta rede aberta e escrita em qualquer lugar a um golem que já lê o repositório, roda testes, escreve num diretório e tem chaves de testnet. O que essas duas concessões compraram?`,
+      question: `Você acrescenta rede aberta e escrita em qualquer lugar a um modelo que já lê o repositório, roda testes, escreve num diretório e tem chaves de testnet. O que essas duas concessões compraram?`,
       options: [
         "Quase nenhuma capacidade nova, e um salto grande no raio de destruição",
         "Um salto grande nos dois — foi essa a troca que você aceitou",
@@ -59,10 +59,10 @@ A auditoria é barata e ninguém faz: **liste o que o golem tem hoje e, para cad
       kind: "theory",
       body: `## Projete o caminho de falha
 
-Amadores projetam o que acontece quando o golem está *certo*. Engenheiros projetam o que acontece quando ele está **errado** — porque às vezes ele estará.
+Amadores projetam o que acontece quando o modelo está *certo*. Engenheiros projetam o que acontece quando ele está **errado** — porque às vezes ele estará.
 
 - Uma verificação falha **bloqueia o merge**; não registra um aviso no vazio.
-- Retries têm um **orçamento**, então um golem travado se torna um golem parado, não uma conta crescente.
+- Retries têm um **orçamento**, então um modelo travado se torna um modelo parado, não uma conta crescente.
 - Um humano revisa **um diff com contexto**, nunca um fato consumado já em produção.
 - Rollback é um caminho testado, não uma oração.
 
@@ -81,7 +81,7 @@ Para cada passo do harness, faça a pergunta: *"quando isso está errado, o que 
         ],
         rows: [
           { label: "o que é", cells: [{ text: "\"tenha cuidado e confira duas vezes\"", tone: "bad" }, { text: "uma suíte vermelha que barra o merge", tone: "good" }] },
-          { label: "quando o golem erra", cells: [{ text: "ele segue em frente, confiante", tone: "bad" }, { text: "ele para no fio de disparo", tone: "good" }] },
+          { label: "quando o modelo erra", cells: [{ text: "ele segue em frente, confiante", tone: "bad" }, { text: "ele para no fio de disparo", tone: "good" }] },
           { label: "quem descobre", cells: [{ text: "quem esbarrar no bug", tone: "bad" }, { text: "um humano, com o diff e a falha", tone: "good" }] },
           { label: "quando", cells: [{ text: "em produção, depois", tone: "bad" }, { text: "antes de qualquer merge", tone: "good" }] },
         ],
@@ -92,7 +92,7 @@ Para cada passo do harness, faça a pergunta: *"quando isso está errado, o que 
       question: `Qual destes é um caminho de falha **projetado**?`,
       options: [
         "Uma suite de testes vermelha bloqueia o auto‑merge, e um humano recebe o diff junto com a saída falha",
-        "O prompt instrui firmemente o golem a ser extremamente cuidadoso e a revisar tudo duas vezes",
+        "O prompt instrui firmemente o modelo a ser extremamente cuidadoso e a revisar tudo duas vezes",
         "O loop tenta a mesma tarefa, sem limite, até que a saída finalmente passe",
       ],
       answer: 0,
@@ -108,17 +108,17 @@ O runner avaliado da Forja é um arreio de verificação — sua solução execu
 
 É a disciplina numa imagem: construa a bancada de modo que errar seja *detectável* e acertar seja *demonstrável* — para golens e para humanos.
 
-**A seguir:** as palavras em si — o que o golem de fato vê na bancada.`,
+**A seguir:** as palavras em si — o que o modelo de fato vê na bancada.`,
     },
   ],
   testOut: [
     { question: `Por que dar chaves de testnet e não de mainnet a um laço automatizado?`,
-      options: ["Um golem só deve segurar chaves cuja perda total você consiga dar de ombros — lumens do friendbot são de graça, uma chave de tesouraria é um incidente com contagem regressiva","Chaves de mainnet são recusadas pela maioria dos SDKs em contexto automatizado","Transações de testnet são mais rápidas, então o laço itera antes"], answer: 0 },
+      options: ["Um modelo só deve segurar chaves cuja perda total você consiga dar de ombros — lumens do friendbot são de graça, uma chave de tesouraria é um incidente com contagem regressiva","Chaves de mainnet são recusadas pela maioria dos SDKs em contexto automatizado","Transações de testnet são mais rápidas, então o laço itera antes"], answer: 0 },
     { question: `Qual destes é um caminho de falha projetado?`,
-      options: ["Uma suíte vermelha barra o auto-merge, e um humano recebe o diff mais a saída da falha","O prompt instrui firmemente o golem a ter cuidado e conferir tudo duas vezes","O laço repete a mesma tarefa sem limite até algo passar"], answer: 0 },
+      options: ["Uma suíte vermelha barra o auto-merge, e um humano recebe o diff mais a saída da falha","O prompt instrui firmemente o modelo a ter cuidado e conferir tudo duas vezes","O laço repete a mesma tarefa sem limite até algo passar"], answer: 0 },
     { question: `Qual é a única pergunta a fazer de cada passo de um arreio?`,
       options: ["Quando isto der errado, o que pega?","Com que frequência esse passo falha na prática?","Esse passo pode ficar mais rápido ou mais barato?"], answer: 0 },
-    { question: `Você dá ao golem rede aberta e permissão de escrever em qualquer lugar. O que isso comprou de fato?`,
+    { question: `Você dá ao modelo rede aberta e permissão de escrever em qualquer lugar. O que isso comprou de fato?`,
       options: ["Quase nenhuma capacidade extra, e uma porção grande de raio de destruição — o formato clássico da concessão \"só por garantia\"","Ganhos mais ou menos proporcionais em capacidade e em risco","Mais capacidade que risco, já que a maioria das tarefas acaba precisando dos dois"], answer: 0 },
   ],
 };

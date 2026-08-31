@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Os Contratos Vivos",
+  title: "Soroban: contratos na Stellar",
   tagline: "Soroban: Wasm no ledger, e três prateleiras para pôr estado.",
   steps: [
     {

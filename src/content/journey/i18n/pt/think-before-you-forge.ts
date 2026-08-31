@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Pense antes de forjar",
+  title: "Desenvolvimento guiado por spec",
   tagline: "Spec-driven development: a habilidade que a IA não pode exercer por você.",
   steps: [
     {
@@ -185,7 +185,7 @@ Chegou a hora de forjar sua própria spec. A encomenda é esta:
 
 > A guilda quer um **cofre de gorjetas** on-chain. Qualquer pessoa pode depositar gorjetas nele. Somente o **guardião** da guilda pode recolher o que estiver dentro. A guilda teme duas coisas: o guardião conseguir retirar *mais* do que o cofre possui e as gorjetas ficarem presas para sempre caso o guardião desapareça.
 
-Escreva a spec — **somente comportamento**, como este capítulo ensinou: o que deve acontecer, o que nunca pode acontecer e os casos de borda. Um examinador de IA vai avaliá-la usando a rubrica abaixo (e ele corrige exatamente como os golems da forja: ao pé da letra).`,
+Escreva a spec — **somente comportamento**, como este capítulo ensinou: o que deve acontecer, o que nunca pode acontecer e os casos de borda. Um examinador de IA vai avaliá-la usando a rubrica abaixo (e ele corrige exatamente como os modelos da forja: ao pé da letra).`,
       rubric: `1. Somente comportamento — nada de formatos de armazenamento, bibliotecas ou assinaturas de funções.
 2. A regra de depósito e a regra de coleta estão declaradas sem ambiguidade (quem pode agir e sobre o quê).
 3. Pelo menos uma **invariante** que precisa ser verdadeira em todos os momentos.

@@ -3,7 +3,7 @@ export const lesson = {
   // lesson page (server)
   lessonNumber: "lesson {number}",
   completedBadge: "completed",
-  skirmishTag: "skirmish · {act}",
+  skirmishTag: "lesson · {act}",
   signIn: "sign in",
   signInSuffix: "to run code and save progress",
   comingSoon: "coming soon",
@@ -12,15 +12,15 @@ export const lesson = {
   comingSoonEnd: ".",
 
   // LessonSteps (step player)
-  praise: ["Well forged!", "That's it!", "The runes approve.", "Flawless."],
+  praise: ["Nicely done.", "That's it.", "Correct.", "Clean."],
   incorrect: "Not quite — study the rune again.",
-  skirmishComplete: "skirmish complete",
+  skirmishComplete: "lesson complete",
   doneSignedIn:
     "The beacon flickers a little brighter. Your progress is carved into the Ledgerstone.",
   doneAnonymous:
-    "The beacon flickers a little brighter — but unwritten runes fade. Create a free account to save your progress and claim your champion cards.",
+    "Nothing here is saved yet. Create a free account to keep your progress and collect the section cards.",
   saveProgress: "Save my progress",
-  nextSkirmish: "Next skirmish ›",
+  nextSkirmish: "Next lesson ›",
   backToAct: "Back to the act",
   exitLesson: "Exit lesson",
   previousStep: "Previous step",

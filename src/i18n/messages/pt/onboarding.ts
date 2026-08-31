@@ -51,15 +51,15 @@ export const onboarding = {
   // Prova social.
   proofHeading: "Os anciões já forjaram muitos aprendizes",
   proofBody:
-    "Nossa missão é transformar Forgeborn em mestres da arte rúnica — código de verdade, julgado por provas ocultas, direto no seu navegador. Sem configuração. Sem desculpas.",
+    "Código de verdade, corrigido por testes ocultos, direto no seu navegador. Sem setup local, sem toolchain para instalar.",
 
   // Plano de campanha.
   planKicker: "Seu plano de campanha",
-  planHeading: "Forgeborn — de Rust a Soroban",
+  planHeading: "De Rust a Soroban",
   unlocksPaths: "Sua experiência desbloqueia as primeiras {count} trilhas.",
   firstPath: "Toda lenda começa na primeira trilha.",
   planJourneyNote:
-    "Estes atos são sua estrada de maestria opcional. Sua estrada essencial — a Jornada do Construtor — começa agora.",
+    "Estas seções são sua estrada opcional de aprofundamento. Sua estrada essencial — a Jornada do Construtor — começa agora.",
 
   // Botões e links.
   begin: "Começar",
