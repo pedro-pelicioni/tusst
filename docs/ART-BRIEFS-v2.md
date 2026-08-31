@@ -178,3 +178,91 @@ npm run assets:v2
 
 The script reports each slot (missing masters are fine), enforces per-file
 KB budgets, and writes to `public/v2/`. Commit only `public/v2/` outputs.
+
+## The test-out seals — the skip buttons (`/journey`)
+
+Added 30/08/2026 for the Duolingo-style "I already know this" shortcut. Unlike
+the sigils, these two masters ship **with** their flat gray backdrop and are
+cut by `kind: "key"` in the pipeline rather than `alpha`.
+
+| # | file in `art-src/v2/` | master size | kind |
+|---|---|---|---|
+| 31 | `skip-chapter.png` | 1024×1024 | keyed layer |
+| 32 | `skip-arc.png` | 1024×1024 | keyed layer |
+
+Both have a glyph stand-in (`🗝` / `🜲`) in `SkipLink`, so a missing master
+never costs the reader the shortcut.
+
+**31 · skip-chapter** — the small key, for a single chapter's paper.
+
+> Painterly dark-fantasy D&D illustration of a single object, centered,
+> isolated on a perfectly even flat light-gray backdrop (#d4d4d4), subject well
+> clear of all four edges. An ornate small brass key floating upright at a
+> slight angle; its bow is a circular rune-ring etched with abstract geometric
+> glyphs, the ward at the tip cut into a sharp forward-pointing chevron like a
+> fast-forward arrow. Warm gold (#d9b96a) rim light along every edge, deep
+> violet (#120b22) shadow pooling in the recesses, a single ember-red spark
+> glinting at the tip. Dramatic rim light, soft film grain, matte-painting
+> detail. No text, no letters, no numbers, no watermark, no UI, no background
+> scenery, no hands.
+
+**32 · skip-arc** — the heavier seal, for a whole arc's paper. Note the key
+params: the master's warm bloom sits close to the gray backdrop in value, and
+the default key leaves it as a milky halo on the dark map, so this slot cuts at
+`keyStart: 62, keyFull: 120` and rides a lower `alphaQuality` to stay in budget.
+
+> Painterly dark-fantasy D&D illustration of a single object, centered,
+> isolated on a perfectly even flat light-gray backdrop (#d4d4d4), subject well
+> clear of all four edges. A heavy circular gilded seal-medallion, like a wax
+> seal pressed in gold: a thick ornate ring of braided metal enclosing a raised
+> rune of three converging chevrons pointing forward. Aged brass and warm gold
+> (#d9b96a) with ember-red enamel inlay in the grooves, deep violet (#120b22)
+> shadow in the relief, faint volumetric glow behind the ring. Dramatic rim
+> light, soft film grain, matte-painting detail, richer and heavier than a
+> small key — this is a master seal. No text, no letters, no numbers, no
+> watermark, no UI, no background scenery, no hands.
+
+## The split-pass sigils (`/journey`)
+
+Added 31/08/2026, when the two-arc curriculum grew from 20 to 32 live chapters.
+Like the test-out seals — and unlike the original sigils — these masters ship
+**with** their flat gray backdrop and are cut by `kind: "key"` rather than
+`alpha`. Named by slug, same as every other sigil.
+
+| file in `art-src/v2/` | chapter | subject |
+|---|---|---|
+| `sigil-what-the-border-holds.png` | Craft IV | open brass coffer holding a medallion, a plain gem, a bound cluster |
+| `sigil-the-keeps-own-doors.png` | Craft VI | a lone carved stone doorway, warm light spilling through |
+| `sigil-what-catches-it.png` | Craft VIII | a taut brass net with one fallen ember caught in it |
+| `sigil-what-the-golem-sees.png` | Craft X | a lone stone window frame, one shaft of light, dust motes |
+| `sigil-the-hand-on-the-brake.png` | Craft XII | a gauntlet clamping a brake lever onto a great cog, sparks |
+| `sigil-the-skeleton-and-the-organs.png` | Craft XIV | a rigid brass armature cradling three glowing orbs |
+| `sigil-the-fate-of-an-envelope.png` | Realm III | a sealed envelope, half gilded, half fraying into embers |
+| `sigil-the-issuers-side.png` | Realm V | hammer poised over a blank gold disc on a small anvil |
+| `sigil-the-crossing.png` | Realm VII | a ferry on luminous water, one coin half gold half silver |
+| `sigil-the-common-tongue.png` | Realm IX | a keyring of a dozen keys, every one the same shape |
+| `sigil-the-heartbeat-and-the-bill.png` | Realm XI | an hourglass whose falling sand is tiny gold coins |
+| `sigil-the-spine-beneath-the-veil.png` | Realm XIV | a gilded spinal column half-wrapped in drifting gauze |
+
+**Shared prompt shape** — the style preamble above, then:
+
+> …of a single object, centered, isolated on a perfectly even flat light-gray
+> backdrop (#d4d4d4), subject well clear of all four edges. **Keep every glow
+> and haze tight against the object — the backdrop stays perfectly flat and
+> uniform.** No text, no letters, no numbers, no watermark, no UI, no
+> background scenery, no hands. SUBJECT: …
+
+That bolded clause is load-bearing. Without it the model bleeds bloom into the
+backdrop, the key pass turns it into a milky halo on the dark map, and the WebP
+balloons past budget — which is exactly what happened to `skip-arc` and had to
+be fixed with a far harder key.
+
+**Per-slot tuning that was needed.** Four of the twelve blew the 100 KB budget
+on residual soft alpha:
+
+- `the-fate-of-an-envelope` — ember haze around the edge; cut hard at
+  `keyStart: 56, keyFull: 118`, `alphaQuality: 70`. 194 KB → 66 KB.
+- `what-catches-it` — a fine mesh net, so keying harder would have eaten the
+  weave; fixed with compression instead (`width: 560`, `alphaQuality: 52`).
+  140 KB → under budget.
+- `the-common-tongue`, `the-heartbeat-and-the-bill` — `alphaQuality: 72` alone.

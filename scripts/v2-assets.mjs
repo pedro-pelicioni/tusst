@@ -161,6 +161,31 @@ const JOBS = [
   { src: "sigil-19.png", out: "journey/sigils/wallets-without-seeds.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
   { src: "sigil-20.png", out: "journey/sigils/weaving-the-graph.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 58, trim: true },
   { src: "sigil-21.png", out: "journey/sigils/words-of-power.webp", kind: "alpha", budgetKB: 100, resize: { width: 640 }, alphaQuality: 90, trim: true },
+
+  // The chapters added during the split pass. Like the skip seals these
+  // masters ship WITH their gray backdrop, so they go through the key pass
+  // rather than "alpha", and are named by slug like every other sigil.
+  { src: "sigil-the-common-tongue.png", out: "journey/sigils/the-common-tongue.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 72, trim: true, key: { keyStart: 34, keyFull: 96 } },
+  { src: "sigil-the-crossing.png", out: "journey/sigils/the-crossing.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 88, trim: true, key: { keyStart: 34, keyFull: 96 } },
+  { src: "sigil-the-fate-of-an-envelope.png", out: "journey/sigils/the-fate-of-an-envelope.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 70, trim: true, key: { keyStart: 56, keyFull: 118 } },
+  { src: "sigil-the-hand-on-the-brake.png", out: "journey/sigils/the-hand-on-the-brake.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 88, trim: true, key: { keyStart: 34, keyFull: 96 } },
+  { src: "sigil-the-heartbeat-and-the-bill.png", out: "journey/sigils/the-heartbeat-and-the-bill.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 72, trim: true, key: { keyStart: 34, keyFull: 96 } },
+  { src: "sigil-the-issuers-side.png", out: "journey/sigils/the-issuers-side.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 88, trim: true, key: { keyStart: 34, keyFull: 96 } },
+  { src: "sigil-the-keeps-own-doors.png", out: "journey/sigils/the-keeps-own-doors.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 88, trim: true, key: { keyStart: 34, keyFull: 96 } },
+  { src: "sigil-the-skeleton-and-the-organs.png", out: "journey/sigils/the-skeleton-and-the-organs.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 88, trim: true, key: { keyStart: 34, keyFull: 96 } },
+  { src: "sigil-the-spine-beneath-the-veil.png", out: "journey/sigils/the-spine-beneath-the-veil.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 88, trim: true, key: { keyStart: 34, keyFull: 96 } },
+  { src: "sigil-what-catches-it.png", out: "journey/sigils/what-catches-it.webp", kind: "key", budgetKB: 100, resize: { width: 560 }, alphaQuality: 52, trim: true, key: { keyStart: 44, keyFull: 104 } },
+  { src: "sigil-what-the-border-holds.png", out: "journey/sigils/what-the-border-holds.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 88, trim: true, key: { keyStart: 34, keyFull: 96 } },
+  { src: "sigil-what-the-golem-sees.png", out: "journey/sigils/what-the-golem-sees.webp", kind: "key", budgetKB: 100, resize: { width: 640 }, alphaQuality: 88, trim: true, key: { keyStart: 34, keyFull: 96 } },
+  // ── Test-out seals — the "I already know this" buttons on the map ──
+  // Unlike the sigils these masters ship WITH their gray backdrop, so they
+  // go through the key pass rather than "alpha". Rendered ~40-56px, so 320
+  // wide is already 2x on the densest screens.
+  { src: "skip-chapter.png", out: "journey/skip-chapter.webp", kind: "key", budgetKB: 40, resize: { width: 320 }, alphaQuality: 90, trim: true, key: { keyStart: 30, keyFull: 92 } },
+  // The seal master carries a warm bloom whose value sits close to the gray
+  // backdrop; the default key leaves it as a milky halo on the dark map. Cut
+  // far harder so the bloom goes with the background and the metal stays.
+  { src: "skip-arc.png", out: "journey/skip-arc.webp", kind: "key", budgetKB: 40, resize: { width: 320 }, alphaQuality: 68, trim: true, key: { keyStart: 62, keyFull: 120 } },
 ];
 
 async function run() {
