@@ -3,7 +3,7 @@ export const lesson = {
   // página da lição (server)
   lessonNumber: "lição {number}",
   completedBadge: "concluída",
-  skirmishTag: "combate · {act}",
+  skirmishTag: "lição · {act}",
   signIn: "entre",
   signInSuffix: "para rodar código e salvar o progresso",
   comingSoon: "em breve",
@@ -12,15 +12,15 @@ export const lesson = {
   comingSoonEnd: ".",
 
   // LessonSteps (player de passos)
-  praise: ["Bem forjado!", "É isso!", "As runas aprovam.", "Impecável."],
-  incorrect: "Ainda não — estude a runa de novo.",
-  skirmishComplete: "combate concluído",
+  praise: ["Boa.", "É isso.", "Correto.", "Limpo."],
+  incorrect: "Ainda não — revise o trecho.",
+  skirmishComplete: "lição concluída",
   doneSignedIn:
-    "O farol tremula um pouco mais forte. Seu progresso está gravado na Pedra do Ledger.",
+    "Progresso salvo na sua conta.",
   doneAnonymous:
-    "O farol tremula um pouco mais forte — mas runas não escritas se apagam. Crie uma conta gratuita para salvar seu progresso e reivindicar suas cartas de campeão.",
+    "Nada aqui foi salvo ainda. Crie uma conta gratuita para guardar seu progresso e colecionar as cartas das seções.",
   saveProgress: "Salvar meu progresso",
-  nextSkirmish: "Próximo combate ›",
+  nextSkirmish: "Próxima lição ›",
   backToAct: "Voltar ao ato",
   exitLesson: "Sair da lição",
   previousStep: "Passo anterior",
@@ -57,7 +57,7 @@ export const lesson = {
   mentorLimit:
     "o mentor descansa — você usou as dicas de hoje para esta lição. Restam as dicas do pergaminho:",
   mentorUnavailable:
-    "o mentor está longe da forja — as dicas do pergaminho podem ajudar:",
+    "o mentor está indisponível — estas dicas podem ajudar:",
   goldCoinAlt: "Moeda de ouro",
   goldEarned: "+{gold} de ouro",
   goldFirstReveal:

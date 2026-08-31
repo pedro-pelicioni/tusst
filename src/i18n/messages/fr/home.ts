@@ -2,11 +2,11 @@
 export const home = {
   metaTitle: "Le Hall — TUSST",
   metaDescription:
-    "Choisis ta route : le Voyage du Bâtisseur, les labs guidés de la Forge ou la campagne Rust optionnelle.",
+    "Choisis ta route : le Voyage du Bâtisseur, le Parcours Avancé, les labs guidés de la Forge ou la campagne Rust optionnelle.",
   kicker: "le hall",
-  title: "Choisis ta route, forgeborn",
+  title: "Choisis ta route",
   intro:
-    "Deux routes partent de ce hall — et la Forge brûle pour les deux. Apprends le métier, presse de vrais boutons sur un vrai réseau et plonge dans Rust autant que tu veux.",
+    "Trois routes et un atelier. Apprends le métier d'ingénieur, presse de vrais boutons sur un vrai réseau et plonge dans Rust autant que tu veux.",
   continueCta: "Reprendre où tu t'étais arrêté",
   level: "niveau {level}",
   xpToNext: "{into} / {span} xp jusqu'au niveau {next}",
@@ -26,6 +26,14 @@ export const home = {
         "Huit actes de maîtrise Rust → Soroban. Optionnelle, profonde, et valant chaque escarmouche.",
       cta: "Marcher en Campagne",
       progress: "{done}/{total} actes remportés",
+    },
+    advanced: {
+      label: "si vous livrez déjà",
+      title: "Parcours Avancé",
+      blurb:
+        "Ingénierie système en Rust à la profondeur qu'exige un poste d'infrastructure backend. Pas de fondamentaux, pas de récit — ownership, lifetimes, concurrence, internals de l'async, unsafe et FFI.",
+      cta: "Ouvrir le Parcours Avancé",
+      progress: "{done}/{total} leçons faites",
     },
     forge: {
       label: "là où l'on pratique",

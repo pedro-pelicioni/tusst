@@ -38,8 +38,8 @@ export const visuals = {
       "the README",
       "a dead-code file nobody deleted",
     ],
-    starving: "Nothing on the bench. The golem has to guess what you meant — and it will.",
-    partial: "Relevant, but incomplete. Whatever you left off, the golem will invent.",
+    starving: "Nothing on the bench. The model has to guess what you meant — and it will.",
+    partial: "Relevant, but incomplete. Whatever you left off, the model will invent.",
     clean: "The task, and nothing else. This is what curation looks like.",
     noisy: "{percent}% of the bench is noise. Your one crucial constraint is now competing with it — and a distractor file is an invitation to edit it.",
     overflow: "Over budget. The bench was truncated, and you do not get to choose which half survived.",
@@ -73,7 +73,7 @@ export const visuals = {
     hint: "There is no clever exception up there. Everything above the diagonal is a migration waiting for a vendor to ship a major version.",
   },
   blastRadius: {
-    grantsLabel: "what the golem may do",
+    grantsLabel: "what the model may do",
     grants: [
       "read the repository",
       "run the test suite",

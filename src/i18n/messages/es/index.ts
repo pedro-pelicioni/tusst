@@ -1,4 +1,5 @@
 import type { Messages } from "../en";
+import { advanced } from "./advanced";
 import { auth } from "./auth";
 import { common } from "./common";
 import { home } from "./home";
@@ -12,4 +13,4 @@ import { pages } from "./pages";
 import { visuals } from "./visuals";
 
 // Spanish translation: mirrors the file structure of ../en.
-export const es: Messages = { auth, common, home, ide, journey, labs, landing, lesson, onboarding, pages, visuals };
+export const es: Messages = { advanced, auth, common, home, ide, journey, labs, landing, lesson, onboarding, pages, visuals };

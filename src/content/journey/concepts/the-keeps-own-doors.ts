@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theKeepsOwnDoors: Concept = {
   meta: {
     slug: "the-keeps-own-doors",
-    title: "The Keep's Own Doors",
+    title: "Ports & Adapters",
     tagline: "Ports & adapters: the domain declares the door, the world fits it.",
     numeral: "VI",
     arc: "craft",
@@ -124,7 +124,7 @@ The adapter's whole job is the translation between those two vocabularies. If no
 
 A core with no framework imports is a **pure island**: construct it in a test, hand it a fake adapter, assert on behavior. No network, no dockerized chain, no flaky RPC — the trials from the Red-Green Rite, running in **milliseconds**.
 
-This is the quiet, compounding payoff: teams with clean keeps write more tests *because tests are cheap*, and cheap trials mean tight loops — for humans and golems alike.
+This is the quiet, compounding payoff: teams with clean keeps write more tests *because tests are cheap*, and cheap trials mean tight loops — for humans and models alike.
 
 The adapters still earn their own tests against the real network — a thin, honest layer, tested separately at its own slower speed.`,
     },
@@ -176,9 +176,9 @@ Declare the **ports** this use-case needs — the doors the domain owns. For eac
 
 Here is what the keep buys you in the AI era: **well-bounded modules are well-bounded prompts.**
 
-"Rewrite the Horizon adapter to target the new RPC — here's the port it must satisfy, here are its tests" is a task a golem completes *inside a box*: one small file's worth of context, a contract to satisfy, trials to pass, and walls that cap the blast radius. The golem rebuilds one room without ever wandering the keep.
+"Rewrite the Horizon adapter to target the new RPC — here's the port it must satisfy, here are its tests" is a task a model completes *inside a box*: one small file's worth of context, a contract to satisfy, trials to pass, and walls that cap the blast radius. The model rebuilds one room without ever wandering the keep.
 
-Next discipline: the golem itself — and the bench you must build around it.`,
+Next discipline: the model itself — and the bench you must build around it.`,
     },
   ],
   testOut: [

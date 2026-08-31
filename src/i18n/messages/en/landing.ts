@@ -10,7 +10,7 @@ export const landing = {
     champions: "Champions",
     boss: "The Beholder",
     forge: "The Forge",
-    enterRealm: "Enter the Realm",
+    enterRealm: "Start learning",
     openMenu: "Open navigation menu",
     closeMenu: "Close navigation menu",
   },
@@ -28,7 +28,7 @@ export const landing = {
     eyebrow: "Forged on Stellar",
     titleTop: "A Gamified",
     titleBottom: "Rust Campaign",
-    body: "TUSST forges you from the first waking words to contracts live on Stellar's testnet. Every skirmish is real code judged by hidden trials — the compiler is your harshest ally, and Ferrisia the Crab-Mother does not hand out mercy.",
+    body: "TUSST takes you from your first line of Rust to contracts live on Stellar's testnet. Every lesson ends in real code judged by hidden tests — the compiler is your harshest ally, and it does not hand out mercy.",
     badgeRust: "Rust first",
     badgeSoroban: "Soroban contracts",
     badgeBrowser: "runs in the browser",
@@ -36,7 +36,7 @@ export const landing = {
   },
   carousel: {
     kicker: "The Collection",
-    heading: "Champions of the Realm",
+    heading: "The Champion Cards",
     body: "Eight painted cards for eight acts. Clear an act's finale and its champion joins your collection — flawless runs earn rare prints.",
     previous: "Previous",
     next: "Next",
@@ -56,7 +56,7 @@ export const landing = {
       eyebrow: "The Campaign",
       titleTop: "Eight Acts.",
       titleBottom: "One Sky to Relight.",
-      body: "From the Rusted Citadel to the Rewritten Sky: acts unlock in order and skirmishes retry forever. March from Rust fundamentals, through Stellar lore, to contracts deployed on the living testnet.",
+      body: "Acts unlock in order and every lesson retries forever. Work from Rust fundamentals, through how Stellar actually works, to contracts deployed on the real testnet.",
       cta: "Begin at Act I ›",
     },
     boss: {
@@ -77,7 +77,7 @@ export const landing = {
   },
   cta: {
     titleTop: "The Sky Awaits,",
-    titleBottom: "Forgeborn.",
+    titleBottom: "Start Building.",
     body: "The elders are blunt about your odds: your compiler will insult you a thousand times so the Beholder cannot hurt you once.",
     button: "Begin the Campaign",
     altPrefix: "Or skip straight to the anvil —",
@@ -89,7 +89,7 @@ export const landing = {
     motto: "nothing left unhandled",
   },
   a11y: {
-    carouselLabel: "Champions of the realm",
+    carouselLabel: "Champion cards",
     prevCard: "Previous champion",
     nextCard: "Next champion",
     goToCard: "Go to {name}",

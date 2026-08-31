@@ -7,8 +7,8 @@ import type { Concept } from "../types";
 export const weavingTheGraph: Concept = {
   meta: {
     slug: "weaving-the-graph",
-    title: "Weaving the Graph",
-    tagline: "Graph engineering: many small golems, each on its own bench, one woven plan.",
+    title: "Graph Engineering",
+    tagline: "Graph engineering: many small models, each on its own bench, one woven plan.",
     numeral: "XIII",
     arc: "craft",
     level: 2,
@@ -142,7 +142,7 @@ The discipline is spotting *true* independence: parallel work must share **no st
       options: [
         "Evaluating three candidate libraries against the same checklist — independent work, no shared state",
         "Writing a migration script and running that same script — overlapping them saves time",
-        "Three golems editing the same module at once, to finish it three times faster",
+        "Three models editing the same module at once, to finish it three times faster",
       ],
       answer: 0,
       explain: `Run-before-written violates a dependency, and shared-file editing is a merge-conflict factory with extra steps. The test is boring and reliable: if node A neither reads node B's output nor touches node B's state, they may run together.`,
@@ -164,13 +164,13 @@ The discipline is spotting *true* independence: parallel work must share **no st
 
 The harness chapter warned you: self-review shares the blind spots of the self. A graph fixes that *structurally*.
 
-Add a **verifier node**: one golem forges; a *different* node — fresh context, no attachment to the choices already made — is told to **refute**: find where the diff violates the spec, hunt the edge cases, try to break it.
+Add a **verifier node**: one model forges; a *different* node — fresh context, no attachment to the choices already made — is told to **refute**: find where the diff violates the spec, hunt the edge cases, try to break it.
 
 The job description matters. "Review this" invites a shrug of approval. *"Find what's wrong with this"* aims the mind at holes. Adversarial pairs catch what self-review structurally cannot — the reason real forges pair a maker with an inspector.`,
     },
     {
       kind: "fill",
-      prompt: `Give the second golem its true job:`,
+      prompt: `Give the second model its true job:`,
       file: "graph.toml",
       before: `verifier.goal = "`,
       after: ` the forge node's diff"`,
@@ -209,7 +209,7 @@ What you have is a shape. What you do not yet have is a machine anyone can rely 
       answer: 0,
     },
     {
-      question: `Why give the second golem the goal \"refute\" rather than \"review\"?`,
+      question: `Why give the second model the goal \"refute\" rather than \"review\"?`,
       options: [
         "A node told to approve will find a way to approve — refutation is the only goal that aims the mind at the holes",
         "Refutation produces shorter output, which costs less",

@@ -7,7 +7,7 @@ import type { Concept } from "../types";
 export const theCommonTongue: Concept = {
   meta: {
     slug: "the-common-tongue",
-    title: "The Common Tongue",
+    title: "SEPs: The Interop Standards",
     tagline: "SEPs: implement once, and every gate opens.",
     numeral: "IX",
     arc: "realm",

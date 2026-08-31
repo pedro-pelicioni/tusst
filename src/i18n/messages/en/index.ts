@@ -1,3 +1,4 @@
+import { advanced } from "./advanced";
 import { auth } from "./auth";
 import { common } from "./common";
 import { home } from "./home";
@@ -12,6 +13,6 @@ import { visuals } from "./visuals";
 
 // English is the source of truth: every other locale must satisfy `Messages`,
 // so a missing key is a compile error, not a silent runtime fallback.
-export const en = { auth, common, home, ide, journey, labs, landing, lesson, onboarding, pages, visuals };
+export const en = { advanced, auth, common, home, ide, journey, labs, landing, lesson, onboarding, pages, visuals };
 
 export type Messages = typeof en;

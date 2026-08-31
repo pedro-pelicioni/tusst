@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theSpineBeneathTheVeil: Concept = {
   meta: {
     slug: "the-spine-beneath-the-veil",
-    title: "The Spine Beneath the Veil",
+    title: "Private Payments & Compliance",
     tagline: "Private payments & compliance: hiding the counterparties, staying auditable.",
     numeral: "XIV",
     arc: "realm",

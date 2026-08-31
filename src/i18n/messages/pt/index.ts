@@ -1,5 +1,6 @@
 import type { Messages } from "../en";
 
+import { advanced } from "./advanced";
 import { auth } from "./auth";
 import { common } from "./common";
 import { home } from "./home";
@@ -14,4 +15,4 @@ import { visuals } from "./visuals";
 
 // Tradução pt-BR: espelha a estrutura de arquivos de ../en; o tipo `Messages`
 // garante que nenhuma chave falte ou sobre.
-export const pt: Messages = { auth, common, home, ide, journey, labs, landing, lesson, onboarding, pages, visuals };
+export const pt: Messages = { advanced, auth, common, home, ide, journey, labs, landing, lesson, onboarding, pages, visuals };

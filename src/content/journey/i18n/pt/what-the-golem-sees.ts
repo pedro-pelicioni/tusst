@@ -1,14 +1,14 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "O Que o Golem Enxerga",
+  title: "Context engineering",
   tagline: "Context engineering: curadoria, não acúmulo.",
   steps: [
     {
       kind: "theory",
       body: `## Curadoria, não acúmulo
 
-Prompt engineering pergunta *como formular*. **Context engineering** faz a pergunta mais importante: *o que vai para a frente do golem, afinal?*
+Prompt engineering pergunta *como formular*. **Context engineering** faz a pergunta mais importante: *o que vai para a frente do modelo, afinal?*
 
 Para um bug no fluxo de reembolso, ele precisa de três coisas:
 
@@ -25,12 +25,12 @@ Não o repositório inteiro. Não as notas de migração do mês passado. A habi
 O bug de reembolso, de verdade. Isto é o que entra, com tamanho e motivo:
 
 - \`refunds.rs\` (180 linhas) — o código que está errado. Não o módulo que o chama; o que decide.
-- As três cláusulas de reembolso da spec (14 linhas) — para "correto" ter uma definição que não é a opinião do golem.
+- As três cláusulas de reembolso da spec (14 linhas) — para "correto" ter uma definição que não é a opinião do modelo.
 - \`test_refund_after_deadline\` e a saída de falha dele (20 linhas) — a única prova que está vermelha, e o que ela de fato imprimiu.
 
 E o que fica de fora, que é a metade mais difícil:
 
-- \`payments.rs\`, mesmo com reembolso morando dentro de pagamentos — não é onde está o bug, e **todo arquivo na bancada é um arquivo que o golem pode decidir melhorar**.
+- \`payments.rs\`, mesmo com reembolso morando dentro de pagamentos — não é onde está o bug, e **todo arquivo na bancada é um arquivo que o modelo pode decidir melhorar**.
 - As notas de migração da release que introduziu o prazo. Elas descrevem um schema que já mudou duas vezes desde então, e material velho ensina com confiança.
 - O resto da suíte de testes. Seiscentas linhas de verde não dizem nada sobre a única que está vermelha.
 
@@ -79,7 +79,7 @@ Cerca de 210 linhas, contra um repositório de quarenta mil. Essa proporção *�
     },
     {
       kind: "quiz",
-      question: `Você vai mandar o golem consertar um bug no fluxo de reembolso. O que vai para a bancada?`,
+      question: `Você vai mandar o modelo consertar um bug no fluxo de reembolso. O que vai para a bancada?`,
       options: [
         "O módulo de reembolso, as regras de reembolso da spec e o teste que falha — e pouco mais",
         "O repositório inteiro, para que nenhum detalhe potencialmente relevante fique de fora",
@@ -94,7 +94,7 @@ Cerca de 210 linhas, contra um repositório de quarenta mil. Essa proporção *�
 
 Aqui vem a parte contraintuitiva: contexto irrelevante não só desperdiça espaço — ele **causa dano ativo**.
 
-- Um arquivo distrator convida o golem a "prestativamente" mexer nele.
+- Um arquivo distrator convida o modelo a "prestativamente" mexer nele.
 - Vocabulários misturados puxam o modelo errado de Conta — o pesadelo do Capítulo III, autoinfligido.
 - Docs velhos e código morto ensinam comportamento antigo como se fosse o atual.
 - E quanto mais longa a bancada, mais fina a atenção: sua única restrição crucial agora disputa com dez mil tokens de ruído.
@@ -110,7 +110,7 @@ A curadoria corta dos dois lados. **Tirar da bancada é tão poderoso quanto pô
         "Linhas em branco a mais entre as seções do prompt",
       ],
       answer: 0,
-      explain: `Material sem relação te custa espaço e atenção. Material *contraditório* te custa correção: o golem não tem como saber qual das duas versões da verdade é a atual, e confiante-e-errado é o modo de falha caro.`,
+      explain: `Material sem relação te custa espaço e atenção. Material *contraditório* te custa correção: o modelo não tem como saber qual das duas versões da verdade é a atual, e confiante-e-errado é o modo de falha caro.`,
     },
     {
       kind: "fill",
@@ -125,13 +125,13 @@ A curadoria corta dos dois lados. **Tirar da bancada é tão poderoso quanto pô
         "resolvido automaticamente pelo modelo",
       ],
       answer: 0,
-      explain: `É o capítulo inteiro numa linha. Formular é uma habilidade que se treina numa tarde; decidir o que o golem nunca vê é a parte que continua difícil, e a que separa uma bancada que funciona de uma bancada cheia.`,
+      explain: `É o capítulo inteiro numa linha. Formular é uma habilidade que se treina numa tarde; decidir o que o modelo nunca vê é a parte que continua difícil, e a que separa uma bancada que funciona de uma bancada cheia.`,
     },
     {
       kind: "theory",
       body: `## Por que este é o último capítulo calmo
 
-Até aqui o golem fez uma coisa de cada vez: você monta a bancada, escreve o pedido, lê a resposta. O laço ainda é você.
+Até aqui o modelo fez uma coisa de cada vez: você monta a bancada, escreve o pedido, lê a resposta. O laço ainda é você.
 
 No instante em que ele começa a agir sobre a própria saída — rodar o teste que acabou de escrever, ler a falha, tentar de novo — tudo daqui se compõe. Uma bancada que estava apenas bagunçada vira uma bancada que **cresce**, sozinha, a cada passo que ele dá.
 

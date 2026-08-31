@@ -9,7 +9,7 @@ import type { Concept } from "../types";
 export const riversOfValue: Concept = {
   meta: {
     slug: "rivers-of-value",
-    title: "Rivers of Value",
+    title: "The DEX & Liquidity Pools",
     tagline: "The DEX & liquidity pools: a currency exchange inside the protocol itself.",
     numeral: "VI",
     arc: "realm",

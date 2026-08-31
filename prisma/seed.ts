@@ -2,6 +2,7 @@ import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { tracks as catalog } from "../src/content/tracks";
+import { advancedTracks } from "../src/content/advanced/curriculum";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -150,6 +151,69 @@ async function main() {
         where: { slug },
         create: { slug, ...data },
         update: data,
+      });
+    }
+  }
+
+  // ---- The Advanced Path (outside the campaign) ----
+  //
+  // Seeded from src/content/advanced/curriculum.ts, which is also what the
+  // /advanced pages read — one source of truth, so the seed can never drift
+  // from what the index page advertises.
+  //
+  // `order` starts at 20 to leave the campaign's 01–08 alone; `challengeCount`
+  // is the REAL authored lesson count, never an aspirational headline. The
+  // same explicit-slug rule as above applies with full force: these slugs key
+  // Progress rows and the XP anti-replay guard, so they are append-only.
+  for (const [i, t] of advancedTracks.entries()) {
+    const data = {
+      title: t.title,
+      description: t.description,
+      level: "advanced" as const,
+      domain: "rust" as const,
+      order: 20 + i,
+      // `soon` tracks are seeded so their slug is reserved, but stay closed:
+      // /advanced/[slug] 404s on them and the index shows only a syllabus.
+      status: t.status === "active" ? ("active" as const) : ("coming_soon" as const),
+      tags: t.tags,
+      estMinutes: Math.round(t.estHours * 60),
+      challengeCount: t.lessons.length,
+      popular: false,
+      isNew: true,
+    };
+    await prisma.track.upsert({
+      where: { slug: t.slug },
+      create: { slug: t.slug, ...data },
+      update: data,
+    });
+
+    const track = await prisma.track.findUnique({ where: { slug: t.slug } });
+    if (!track) continue;
+
+    for (let j = 0; j < t.lessons.length; j++) {
+      const lesson = t.lessons[j];
+      const lessonData = {
+        trackId: track.id,
+        title: lesson.title,
+        summary: lesson.summary,
+        order: j + 1,
+        difficulty: "hard",
+        goldReward: 10,
+        status: "active" as const,
+      };
+      const existing = await prisma.lesson.findUnique({
+        where: { slug: lesson.slug },
+        select: { title: true },
+      });
+      if (existing && existing.title !== lesson.title) {
+        console.warn(
+          `[seed] ${lesson.slug}: title changing "${existing.title}" -> "${lesson.title}" — confirm this is an intentional rename, not a reorder.`,
+        );
+      }
+      await prisma.lesson.upsert({
+        where: { slug: lesson.slug },
+        create: { slug: lesson.slug, ...lessonData },
+        update: lessonData,
       });
     }
   }

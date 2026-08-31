@@ -3,8 +3,8 @@ import type { Concept } from "../types";
 export const theRedGreenRite: Concept = {
   meta: {
     slug: "the-red-green-rite",
-    title: "O Rito Vermelho-Verde",
-    tagline: "TDD: testes primeiro, forja depois.",
+    title: "Desenvolvimento guiado por testes",
+    tagline: "TDD: testes primeiro, código depois.",
     numeral: "II",
     arc: "craft",
     level: 1,
@@ -20,7 +20,7 @@ export const theRedGreenRite: Concept = {
 
 No Capítulo I você aprendeu a escrever o que *certo* significa. Um **teste** é essa frase tornada executável — uma especificação que a máquina reavalia em milissegundos, toda vez, para sempre.
 
-Isso importa *mais* com IA, não menos. Um golem pode discutir seu texto, reinterpretar sua intenção, “melhorar” seus requisitos. Ele não pode discutir \`assert_eq!\`. **Testes são a especificação que a máquina não pode contestar** — o único lugar onde uma resposta plausível e uma resposta correta deixam de ser confundíveis.
+Isso importa *mais* com IA, não menos. Um modelo pode discutir seu texto, reinterpretar sua intenção, “melhorar” seus requisitos. Ele não pode discutir \`assert_eq!\`. **Testes são a especificação que a máquina não pode contestar** — o único lugar onde uma resposta plausível e uma resposta correta deixam de ser confundíveis.
 
 Escreva‑os **primeiro**, e toda forja que vier depois será avaliada desde o nascimento.`,
     },
@@ -75,7 +75,7 @@ Vermelho prova que o teste pode capturar o bug que ele protege. Verde prova que 
         "Executar a suíte mais algumas vezes para garantir que o verde está estável",
       ],
       answer: 0,
-      explain: `Quando o mesmo golem forja tanto o código quanto seus testes, um teste que afirma pouco demais permanece verde para sempre. Vermelho é a única prova de que um teste tem dentes — uma quebra deliberada mostra que ele realmente morde.`,
+      explain: `Quando o mesmo modelo forja tanto o código quanto seus testes, um teste que afirma pouco demais permanece verde para sempre. Vermelho é a única prova de que um teste tem dentes — uma quebra deliberada mostra que ele realmente morde.`,
     },
     {
       kind: "theory",
@@ -124,17 +124,17 @@ Afirme‑as após *cada* operação que seus testes realizam — depósito, libe
     },
     {
       kind: "theory",
-      body: `## Aceitando o trabalho do golem sem medo
+      body: `## Aceitando o trabalho do modelo sem medo
 
 Aqui está a recompensa. Uma IA entrega 300 linhas. Sem testes, suas opções são *ler cada linha com muito cuidado* ou *confiar*. Ambas falham em escala.
 
 Com uma suíte escrita antes, a aceitação se torna mecânica: **vermelho — rejeitar**, com a falha como feedback. **verde — aceitar**, e ler por estilo quando quiser.
 
-A mesma rede torna a refatoração destemida — a sua *e* a do golem. “Reescreva este módulo, mantenha os testes verdes” é uma instrução segura *apenas porque* os testes existem e o golem não os escreveu para se adequar ao próprio código.`,
+A mesma rede torna a refatoração destemida — a sua *e* a do modelo. “Reescreva este módulo, mantenha os testes verdes” é uma instrução segura *apenas porque* os testes existem e o modelo não os escreveu para se adequar ao próprio código.`,
     },
     {
       kind: "quiz",
-      question: `O golem se gaba de **100 % de cobertura de linhas**. O que você realmente aprendeu?`,
+      question: `O modelo se gaba de **100 % de cobertura de linhas**. O que você realmente aprendeu?`,
       options: [
         "Todas as linhas foram executadas nos testes — o que não diz nada sobre quanto comportamento as asserções realmente verificam",
         "O código está correto — cada linha foi exercida e passou",
@@ -154,8 +154,8 @@ A mesma rede torna a refatoração destemida — a sua *e* a do golem. “Reescr
       options: ["Um teste que nunca falhou nunca provou que consegue falhar — escrevê-lo antes é como você sabe que ele está olhando para a coisa certa","É mais rápido, porque você evita reescrever o teste depois","Isso força a implementação a ficar mais simples do que ficaria"], answer: 0 },
     { question: `O que um teste vermelho dá a uma dupla com IA que requisitos em prosa não dão?`,
       options: ["Um critério de aceite que ela não consegue ler errado, e um sinal que pode ser má notícia","Um prompt mais curto, que cabe mais contexto","Permissão para mudar a API pública"], answer: 0 },
-    { question: `O golem faz o teste passar tratando como caso especial exatamente a entrada que o teste usa. O que isso revela?`,
-      options: ["O teste especificou de menos — ele nomeou um exemplo em vez da regra","O golem está agindo de má-fé e precisa de instruções mais rígidas","Nada; passar no teste é a definição de pronto"], answer: 0 },
+    { question: `O modelo faz o teste passar tratando como caso especial exatamente a entrada que o teste usa. O que isso revela?`,
+      options: ["O teste especificou de menos — ele nomeou um exemplo em vez da regra","O modelo está agindo de má-fé e precisa de instruções mais rígidas","Nada; passar no teste é a definição de pronto"], answer: 0 },
     { question: `Sua suíte está verde depois de uma mudança sobre a qual você tem dúvidas. O que isso de fato te disse?`,
       options: ["Que nada do que a suíte observa quebrou — o que é só até onde a suíte por acaso observa","Que a mudança está correta","Que a mudança é segura para publicar"], answer: 0 },
   ],

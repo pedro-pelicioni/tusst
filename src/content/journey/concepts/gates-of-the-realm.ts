@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const gatesOfTheRealm: Concept = {
   meta: {
     slug: "gates-of-the-realm",
-    title: "Gates of the Realm",
+    title: "Anchors & On/Off Ramps",
     tagline: "Anchors: where the ledger touches the ground.",
     numeral: "VIII",
     arc: "realm",

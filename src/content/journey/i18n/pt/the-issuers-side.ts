@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "O Lado do Emissor",
+  title: "Emissão de assets",
   tagline: "Emissão de ativos: qualquer um consegue emitir — o ofício é tudo o que vem depois.",
   steps: [
     {
@@ -72,7 +72,7 @@ Essas flags explicam por que instituições reguladas podem emitir em um livro�
         "a URL da página inicial do anchor",
       ],
       answer: 0,
-      explain: `Não há namespace para ocupar. Carteiras resolvem qual \`USDC\` é real via o endereço do emissor — e, como você verá nos Portões do Reino, esse emissor prova sua identidade com um arquivo em seu próprio domínio.`,
+      explain: `Não há namespace para ocupar. Carteiras resolvem qual \`USDC\` é real via o endereço do emissor — e, como você verá quando chegarmos às âncoras, esse emissor prova sua identidade com um arquivo em seu próprio domínio.`,
     },
     {
       kind: "theory",

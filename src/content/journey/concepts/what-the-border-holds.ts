@@ -9,7 +9,7 @@ import type { Concept } from "../types";
 export const whatTheBorderHolds: Concept = {
   meta: {
     slug: "what-the-border-holds",
-    title: "What the Border Holds",
+    title: "Entities, Value Objects & Aggregates",
     tagline: "Tactical DDD: identity, value, and the cluster that must move as one.",
     numeral: "IV",
     arc: "craft",

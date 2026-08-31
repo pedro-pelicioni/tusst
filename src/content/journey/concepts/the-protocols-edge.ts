@@ -7,7 +7,7 @@ import type { Concept } from "../types";
 export const theProtocolsEdge: Concept = {
   meta: {
     slug: "the-protocols-edge",
-    title: "The Protocol's Edge",
+    title: "CAPs, SEPs & Protocol Upgrades",
     tagline: "CAPs, SEPs & named upgrades: riding a living protocol.",
     numeral: "XV",
     arc: "realm",

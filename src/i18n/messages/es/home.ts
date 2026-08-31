@@ -2,11 +2,11 @@
 export const home = {
   metaTitle: "El Salón — TUSST",
   metaDescription:
-    "Elige tu camino: el Viaje del Constructor, los labs guiados de la Forja o la campaña opcional de Rust.",
+    "Elige tu camino: el Viaje del Constructor, el Camino Avanzado, los labs guiados de la Forja o la campaña opcional de Rust.",
   kicker: "el salón",
-  title: "Elige tu camino, forgeborn",
+  title: "Elige tu camino",
   intro:
-    "Dos caminos parten de este salón — y la Forja arde para ambos. Aprende el oficio, pulsa botones de verdad en una red de verdad y profundiza en Rust cuanto quieras.",
+    "Tres caminos y un taller. Aprende el oficio de ingeniería, pulsa botones de verdad en una red de verdad y profundiza en Rust cuanto quieras.",
   continueCta: "Continuar donde lo dejaste",
   level: "nivel {level}",
   xpToNext: "{into} / {span} xp para el nivel {next}",
@@ -26,6 +26,14 @@ export const home = {
         "Ocho actos de maestría Rust → Soroban. Opcional, profunda y digna de cada combate.",
       cta: "Marchar en la Campaña",
       progress: "{done}/{total} actos superados",
+    },
+    advanced: {
+      label: "si ya entregas",
+      title: "Camino Avanzado",
+      blurb:
+        "Ingeniería de sistemas en Rust a la profundidad que exige un puesto de infraestructura backend. Sin fundamentos, sin historia — ownership, lifetimes, concurrencia, internals de async, unsafe y FFI.",
+      cta: "Abrir el Camino Avanzado",
+      progress: "{done}/{total} lecciones hechas",
     },
     forge: {
       label: "donde se practica",

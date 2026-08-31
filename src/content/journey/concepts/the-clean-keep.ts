@@ -9,7 +9,7 @@ import type { Concept } from "../types";
 export const theCleanKeep: Concept = {
   meta: {
     slug: "the-clean-keep",
-    title: "The Clean Keep",
+    title: "Clean Architecture",
     tagline: "Clean architecture: source-code dependencies point inward, only.",
     numeral: "V",
     arc: "craft",

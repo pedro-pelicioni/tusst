@@ -16,7 +16,7 @@ export const labs = {
   intro:
     "Guided labs where every big button does something real on the testnet — wallets funded, trustlines opened, payments settled — and the copy tells you exactly what just happened on the ledger.",
   liveHeading: "// labs",
-  soonHeading: "// being forged",
+  soonHeading: "// in preparation",
   freeMode: {
     title: "Free mode — the IDE",
     blurb:
@@ -27,7 +27,7 @@ export const labs = {
   card: {
     minutes: "{minutes} min",
     xp: "{xp} xp",
-    soon: "being forged",
+    soon: "in preparation",
     completed: "completed",
     start: "Enter the lab",
     resume: "Resume",
@@ -84,7 +84,7 @@ export const labs = {
       passkeyUnavailable:
         "Passkeys need a secure browser context and WebAuthn support. Open this lab over HTTPS on a passkey-capable device.",
       passkeyMismatch:
-        "That passkey belongs to a different smart wallet. Try again and choose the credential you just forged.",
+        "That passkey belongs to a different smart wallet. Try again and choose the credential you just created.",
       passkeyFailed:
         "The passkey ceremony did not finish. Approve the device prompt and try again.",
       smartWalletDeployFailed:

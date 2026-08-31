@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theIssuersSide: Concept = {
   meta: {
     slug: "the-issuers-side",
-    title: "The Issuer's Side",
+    title: "Asset Issuance",
     tagline: "Asset issuance: anyone can mint — the craft is everything after that.",
     numeral: "V",
     arc: "realm",
@@ -88,7 +88,7 @@ These flags are why regulated institutions can issue on a public ledger at all: 
         "the anchor's homepage URL",
       ],
       answer: 0,
-      explain: `There is no namespace to squat. Wallets resolve which \`USDC\` is real via the issuer's address — and, as you'll see at the Gates of the Realm, that issuer proves itself with a file on its own domain.`,
+      explain: `There is no namespace to squat. Wallets resolve which \`USDC\` is real via the issuer's address — and, as you'll see when we reach anchors, that issuer proves itself with a file on its own domain.`,
     },
     {
       kind: "theory",

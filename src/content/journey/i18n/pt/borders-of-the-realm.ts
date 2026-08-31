@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Fronteiras do Reino",
+  title: "Bounded contexts",
   tagline: "DDD e contextos delimitados: uma palavra, três sentidos, e as fronteiras que tornam isso seguro.",
   steps: [
     {
@@ -144,11 +144,11 @@ Nomeie os **contextos delimitados** que você desenharia e, para cada um: as pal
     },
     {
       kind: "theory",
-      body: `## Por que o golem precisa do seu mapa
+      body: `## Por que o modelo precisa do seu mapa
 
 Uma LLM leu um milhão de bases de código onde "conta", "transferência" e "saldo" significavam coisas diferentes. Deixe suas fronteiras não ditas e ela vai **misturar vocabulários no meio do arquivo** — uma regra de KYC vazando para o seu modelo de pagamentos, a ideia de Conta de uma exchange contaminando a da sua carteira — cada linha localmente plausível.
 
-Então escreva a fronteira na bancada: *"Estamos no contexto de Pagamentos. Conta significa detentor de saldo. Compliance é um modelo separado — referencie só pelo endereço."* Um contexto declarado é uma cerca que o golem respeita.
+Então escreva a fronteira na bancada: *"Estamos no contexto de Pagamentos. Conta significa detentor de saldo. Compliance é um modelo separado — referencie só pelo endereço."* Um contexto declarado é uma cerca que o modelo respeita.
 
 **A seguir:** você desenhou as linhas. O que de fato mora dentro de uma delas — e quais coisas só podem mudar juntas.`,
     },

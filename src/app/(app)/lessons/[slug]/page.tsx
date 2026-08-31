@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { acts } from "@/content/campaign";
+import { advancedTrackOfLesson } from "@/content/advanced/curriculum";
 import { getUnlockedActCount } from "@/lib/unlock";
 import { TRIAL_LESSON_SLUG } from "@/content/steps";
 import {
@@ -100,6 +101,14 @@ export default async function LessonPage({
 
   // Bite-sized step flow (Mimo-style) — used whenever the lesson has authored
   // steps. Falls back to the classic two-pane layout otherwise.
+  // The Advanced Path lives outside the campaign, so its lessons must point
+  // back at /advanced rather than the act-flavoured /tracks page. Everything
+  // else — the player, the sandbox grader, XP — is identical.
+  const advancedTrack = advancedTrackOfLesson(slug);
+  const trackHref = advancedTrack
+    ? `/advanced/${advancedTrack.slug}`
+    : `/tracks/${lesson.track.slug}`;
+
   const steps = getLessonStepsLocalized(slug, locale);
   if (content && steps) {
     return (
@@ -108,7 +117,7 @@ export default async function LessonPage({
         steps={steps}
         starterCode={content.starterCode}
         nextHref={nextHref}
-        trackHref={`/tracks/${lesson.track.slug}`}
+        trackHref={trackHref}
         signedIn={!!userId}
         allowAnonymous={slug === TRIAL_LESSON_SLUG}
         title={skirmish?.title ?? lessonTitle}

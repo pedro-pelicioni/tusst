@@ -3,7 +3,7 @@ import type { Concept } from "../types";
 export const walletsWithoutSeeds: Concept = {
   meta: {
     slug: "wallets-without-seeds",
-    title: "Carteiras Sem Sementes",
+    title: "Smart accounts e passkeys",
     tagline: "Smart accounts e passkeys: e taxas que outra pessoa patrocina.",
     numeral: "VII",
     arc: "realm",

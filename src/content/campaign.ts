@@ -139,369 +139,369 @@ export const acts: Act[] = [
   {
     numeral: "I",
     trackSlug: "rust-fundamentals",
-    title: "The Rusted Citadel",
-    territory: "Ruined capital of runecraft",
+    title: "Rust Fundamentals",
+    territory: "syntax, types, ownership",
     overlord: null,
     synopsis:
-      "You awaken in the oxidized ruins of the Citadel. Ferrisia the Crab-Mother teaches you the waking words, the binding of names, and the law of the Unbending Blade. Relight the beacon, Forgeborn.",
+      "The ground floor of the language: printing, bindings and mutability, types, functions, and the ownership and borrowing rules everything else depends on.",
     cardId: "stroowarrior",
     skirmishes: [
       {
         lessonSlug: "rust-fundamentals-1",
         numeral: "I.1",
-        title: "The Waking Words",
+        title: "Hello, World!",
         intro:
-          "The Citadel's beacon has been dark since the Great Panic, and it answers only to a spoken rune. Ferrisia hands you a chisel. \"Every rune ever forged begins at `main`,\" she says. \"Speak, Forgeborn — and mind your semicolons. The beacon is pedantic.\"",
+          "Every Rust program starts at `main`. You will print one exact line and meet the `println!` macro — the tool you will use to inspect everything that follows.",
       },
       {
         lessonSlug: "rust-fundamentals-2",
         numeral: "I.2",
-        title: "The Unbending Blade",
+        title: "Variables & Mutability",
         intro:
-          "In the armory, every blade is bound immutable by the old law — once forged, never changed. To reforge one you must declare your intent to the steel itself. The Borrow Warden watches from the doorway, arms crossed, waiting for you to try changing it without `mut`.",
+          "Bindings are immutable by default. You will see the compile error that causes, and fix it with `mut` — the first of many places Rust makes you state your intent.",
       },
       {
         lessonSlug: "rust-fundamentals-3",
         numeral: "I.3",
-        title: "The Shapes of Matter",
+        title: "Data Types",
         intro:
-          "Ferrisia opens a cabinet of labeled vials: whole numbers, broken numbers, truths and lies. \"The Citadel refuses any rune whose shape it cannot name,\" she says. \"Label your vials, Forgeborn — the beacon reads only what is typed.\"",
+          "Integers, floats, booleans and characters, and when the compiler needs you to annotate a type it cannot infer on its own.",
       },
       {
         lessonSlug: "rust-fundamentals-4",
         numeral: "I.4",
-        title: "The Rune-Smith's Recipe",
+        title: "Functions",
         intro:
-          "On the forge wall hangs a recipe: take two ingots, fuse them, hand back the alloy. \"A recipe written once serves a thousand forgings,\" Ferrisia says. \"The smiths called them functions. Write yours, and the forge will call it by name.\"",
+          "Parameters, return types, and Rust's implicit return: the last expression without a semicolon is the value. That one rule explains a lot of later syntax.",
       },
       {
         lessonSlug: "rust-fundamentals-5",
         numeral: "I.5",
-        title: "The Law of One Keeper",
+        title: "Ownership Basics",
         intro:
-          "The vault door bears the Citadel's oldest law: every treasure has exactly one keeper. Hand a treasure to another and it is no longer yours — reach for it again and the wards will burn you. Tonight you learn why the old smiths sometimes forged a true copy instead.",
+          "Every value has exactly one owner. Assigning a `String` moves it, and the old binding is dead — the single idea the rest of Rust is built on.",
       },
       {
         lessonSlug: "rust-fundamentals-6",
         numeral: "I.6",
-        title: "The Borrowed Blade",
+        title: "Borrowing & References",
         intro:
-          "The Borrow Warden finally speaks: \"You need not surrender a blade to let another read its inscription. Lend it — a reference — and it returns to your hand when they are done.\" He taps the `&` sigil etched into his gauntlet. \"This mark. Learn it.\"",
+          "You do not have to give a value away to let a function read it. Lend a reference with `&` and it comes back — the everyday alternative to cloning.",
       },
     ],
   },
   {
     numeral: "II",
     trackSlug: "control-flow",
-    title: "The Hall of Forking Roads",
-    territory: "Labyrinth of mirrors",
-    overlord: "The Mirror Overlord",
+    title: "Control Flow",
+    territory: "branches, matching, loops",
+    overlord: null,
     synopsis:
-      "A labyrinth where every corridor matches a different fate. The Mirror Overlord traps travelers in infinite loops. Branch wisely, match every reflection, and break the eternal loop.",
+      "Branching and repetition in Rust, including exhaustive `match` — the mechanism that makes `Option` and `Result` safe to handle later.",
     cardId: "stropillusion",
     skirmishes: [
       {
         lessonSlug: "control-flow-1",
         numeral: "II.1",
-        title: "The Two Doors",
+        title: "if / else",
         intro:
-          "The labyrinth's first chamber holds two doors and a single torch. \"Every path here is a question,\" whispers a reflection that is almost you. \"If the torch burns, one door. Else, the other. The maze only respects a traveler who can decide.\"",
+          "Branching in Rust is an expression, not just a statement — so an `if` can produce a value you bind directly.",
       },
       {
         lessonSlug: "control-flow-2",
         numeral: "II.2",
-        title: "The Hall of Every Reflection",
+        title: "match Expressions",
         intro:
-          "A corridor of mirrors, each showing a different door you might have taken. The Mirror Overlord's rule is absolute: name what you see in every mirror — every one — or be trapped between them. The old runecraft calls this a `match`, and it forgets nothing.",
+          "`match` must be exhaustive: the compiler rejects any case you forgot. That is the mechanism behind safe `Option` and `Result` handling later.",
       },
       {
         lessonSlug: "control-flow-3",
         numeral: "II.3",
-        title: "The Endless Corridor",
+        title: "loop",
         intro:
-          "This corridor repeats. The same sconce, the same crack in the stone, again and again. Travelers who walk it forever become part of the wall. The only way out is to count your echoes — and when the count is right, to `break` the spell mid-stride.",
+          "An unconditional loop, and `break` with a value — the idiomatic way to retry until something succeeds.",
       },
       {
         lessonSlug: "control-flow-4",
         numeral: "II.4",
-        title: "The Sinking Gallery",
+        title: "while Loops",
         intro:
-          "The floor descends one flight at a time, and the water is rising. \"While there are floors above the tide, keep climbing down to the vault,\" the reflection says, unhelpfully. Check the condition before every step — the gallery drowns the careless.",
+          "Loop while a condition holds. You will also see why `while let` exists and where it beats a plain `while`.",
       },
       {
         lessonSlug: "control-flow-5",
         numeral: "II.5",
-        title: "The Counted Steps",
+        title: "for Loops",
         intro:
-          "Five stepping stones cross the mirror-lake, numbered one to five. Step on each exactly once, in order, announcing it aloud — the lake listens. The old smiths had a rune for walking a known path without counting on your fingers: `for`.",
+          "Iterating a range or a collection — the loop you will actually write, and the first place iterators appear.",
       },
       {
         lessonSlug: "control-flow-6",
         numeral: "II.6",
-        title: "The Overlord's Maze",
+        title: "Nested Control Flow",
         intro:
-          "The final gallery: ten mirrors, and the Mirror Overlord hiding behind every third one. Walk the row; call out the number of each mirror — but where the Overlord hides, shout \"mirror\" instead. Branch inside your loop, Forgeborn. Break the labyrinth's heart.",
+          "Combining branches and loops, and keeping the result readable when the logic stops being trivial.",
       },
     ],
   },
   {
     numeral: "III",
     trackSlug: "rust-standard-library",
-    title: "The Endless Vaults",
-    territory: "Dungeon-archive beneath the realm",
-    overlord: "The Hoarder",
+    title: "The Standard Library",
+    territory: "collections, iterators, structs",
+    overlord: null,
     synopsis:
-      "Beneath the realm sleeps every tool the old Stroopies ever forged: growable satchels, enchanted ledgers, chains of lazy spirits that do no work until collected. The Hoarder guards it all — and indexes everything off-by-one.",
+      "The types you will reach for every day: `Vec`, `HashMap`, strings and slices, iterators, and giving your own types behaviour with `impl`.",
     cardId: "stroopkeeper",
     skirmishes: [
       {
         lessonSlug: "rust-standard-library-1",
         numeral: "III.1",
-        title: "The Bottomless Satchel",
+        title: "Vec Basics",
         intro:
-          "The first vault holds the Stroopies' favorite tool: a satchel that grows to fit whatever you push into it. \"A `Vec`,\" the Stroopkeeper says, unlocking the case. \"Every adventurer carries one. Few respect it. It counts from zero, as the old gods intended.\"",
+          "A growable array: push, index, and the reason `Vec` is the default collection in almost every Rust program.",
       },
       {
         lessonSlug: "rust-standard-library-2",
         numeral: "III.2",
-        title: "The Chain of Lazy Spirits",
+        title: "Iterators",
         intro:
-          "Deeper in, spirits hang in chains — each one holding a value, doing absolutely nothing. \"Iterators,\" whispers the Keeper. \"The laziest workers in the realm. They lift no finger until you collect. Chain them well and they'll sum a fortune in one breath.\"",
+          "`map`, `filter` and `collect` — and the fact that nothing runs until a consumer asks for elements.",
       },
       {
         lessonSlug: "rust-standard-library-3",
         numeral: "III.3",
-        title: "The Shelf That May Be Empty",
+        title: "Option & map",
         intro:
-          "The Hoarder's trap: a shelf with five slots, and adventurers who reach for the sixth. In the old days that reach crashed the whole vault. The satchel's `.get` asks politely instead — and the answer, Forgeborn, may be nothing at all.",
+          "Transforming a value that may not be there, without unwrapping it first.",
       },
       {
         lessonSlug: "rust-standard-library-4",
         numeral: "III.4",
-        title: "The Enchanted Ledger",
+        title: "HashMap",
         intro:
-          "A book that answers questions: ask it \"gold?\" and it answers \"100\". Every entry is a key bound to a value, in no particular order — the enchantment trades order for speed. The smiths called it a `HashMap`. The Hoarder calls it his memory.",
+          "Key/value lookup, and the `entry` API that reads or inserts in a single hash.",
       },
       {
         lessonSlug: "rust-standard-library-5",
         numeral: "III.5",
-        title: "The Living Inscription",
+        title: "String Handling",
         intro:
-          "Some inscriptions are carved once and never change — and some grow, letter by letter, as their story does. Tonight you work with the living kind: `String`, the growable text of the realm, and `format!`, the spell that weaves many into one.",
+          "`String` versus `&str`, why you cannot index a string by number, and what UTF-8 has to do with it.",
       },
       {
         lessonSlug: "rust-standard-library-6",
         numeral: "III.6",
-        title: "A Window Into the Hoard",
+        title: "Slices",
         intro:
-          "The Hoarder will not let you carry the hoard out — but he'll let you look. A slice is a window into a stretch of treasure: no copy, no theft, just a view from here to there. Mind the edges; the window includes its start and excludes its end.",
+          "A borrowed view into part of a collection — no copy, no allocation.",
       },
       {
         lessonSlug: "rust-standard-library-7",
         numeral: "III.7",
-        title: "The Blueprint in the Deepest Vault",
+        title: "Structs",
         intro:
-          "Past the ledgers and the living ink, one door remains: the Hoarder's own workshop, where every treasure begins as a blueprint before it becomes a thing. \"A `struct`,\" he says, tracing the mold with one claw, \"binds many parts under one name — a shape the vault will recognize forever after.\"",
+          "Grouping related data under one name, with each field's type stated.",
       },
       {
         lessonSlug: "rust-standard-library-8",
         numeral: "III.8",
-        title: "The Rite That Wakes the Vessel",
+        title: "impl & Methods",
         intro:
-          "A blueprint is inert until it is given a rite — a maker to shape it, and a voice to answer for it. \"An `impl` block teaches the shape what it can do,\" the Hoarder says. \"Mark it with `derive`, too, so it may speak its own secrets aloud when you demand to see them.\"",
+          "Attaching behaviour to a type, and the difference between `self`, `&self` and `&mut self`.",
       },
     ],
   },
   {
     numeral: "IV",
     trackSlug: "mastering-option",
-    title: "The Vanishing Marsh",
-    territory: "Haunted wetlands of maybe",
+    title: "Option<T>",
+    territory: "absence, modelled as a type",
     overlord: null,
     synopsis:
-      "Things here may or may not be. Villagers vanish into None; the foolish unwrap blindly and are never seen again. In the marsh you ask the only question that matters: Some, or None?",
+      "Rust has no null. `Option<T>` makes 'there may be nothing here' a case the compiler forces you to handle.",
     cardId: "stroophantom",
     skirmishes: [
       {
         lessonSlug: "mastering-option-1",
         numeral: "IV.1",
-        title: "Some, or None?",
+        title: "Some or None",
         intro:
-          "The Stroophantom materializes — or doesn't. Hard to say. \"In the marsh, every answer is wrapped,\" it says from somewhere. \"`Some(thing)`, or `None`. Other realms pretend absence doesn't exist and crash into it at midnight. Here, we put it in the type.\"",
+          "`Option<T>` makes absence a case the compiler forces you to handle — this is why Rust has no null.",
       },
       {
         lessonSlug: "mastering-option-2",
         numeral: "IV.2",
-        title: "The Fools Who Unwrapped",
+        title: "Unwrap Safely",
         intro:
-          "Gravestones line the path, each carved with the same last word: `.unwrap()`. \"They assumed,\" the Phantom sighs. \"On `None`, unwrap panics — the whole program drowns. Carry a default instead, and the marsh cannot touch you.\"",
+          "`unwrap_or`, `unwrap_or_else` and `expect`, and the rule for when `unwrap()` is acceptable in production.",
       },
       {
         lessonSlug: "mastering-option-3",
         numeral: "IV.3",
-        title: "Ask the Marsh Itself",
+        title: "if let",
         intro:
-          "At the marsh's heart, a lantern that may or may not be lit. The Phantom teaches the final courtesy: \"`if let Some(light)` — if there is something, take it by name and use it. If not, walk the else path. Never assume. Ask.\"",
+          "Matching one case and ignoring the rest, when a full `match` would be noise.",
       },
     ],
   },
   {
     numeral: "V",
     trackSlug: "mastering-result",
-    title: "The Trial of Two Fates",
-    territory: "The realm's High Court",
+    title: "Result<T, E>",
+    territory: "failure, modelled as a value",
     overlord: null,
     synopsis:
-      "Every rune is judged here: Ok or Err. The Court's motto is carved over the door — #[must_use]. Learn to propagate judgment with ?, recover from Err with grace, and never panic in court.",
+      "Errors are values, not exceptions. Match them, convert them, and propagate them with `?` instead of unwinding a stack.",
     cardId: "strooracle",
     skirmishes: [
       {
         lessonSlug: "mastering-result-1",
         numeral: "V.1",
-        title: "The Two Verdicts",
+        title: "Ok or Err",
         intro:
-          "The Strooracle presides, and her court knows exactly two rulings: `Ok(value)` and `Err(reason)`. \"The marsh taught you absence,\" she says. \"I teach you failure — and failure, Forgeborn, always states its reason for the record.\"",
+          "`Result<T, E>` carries either the value or the reason it failed — and `#[must_use]` means you cannot quietly ignore it.",
       },
       {
         lessonSlug: "mastering-result-2",
         numeral: "V.2",
-        title: "Reading the Judgment",
+        title: "Matching on Result",
         intro:
-          "A scroll arrives sealed with a verdict inside. You do not guess at verdicts in this court — you `match` them: one arm for `Ok`, one arm for `Err`, both handled, nothing ignored. The motto over the door glows as you enter: `#[must_use]`.",
+          "Handling both arms explicitly, and deciding per call site whether a failure is recoverable.",
       },
       {
         lessonSlug: "mastering-result-3",
         numeral: "V.3",
-        title: "The Mark of Propagation",
+        title: "The ? Operator",
         intro:
-          "Not every court must rule; some pass the case upward. The Oracle shows you the smallest rune in the realm: `?`. \"On Ok, unwrap and continue. On Err, return it to whoever called you — instantly. One mark, and the judgment flows uphill.\"",
+          "Propagating a failure to the caller in one character, instead of a `match` at every level.",
       },
     ],
   },
   {
     numeral: "VI",
     trackSlug: "stellar-101",
-    title: "The Constellation Gate",
-    territory: "The broken sky",
+    title: "Stellar 101",
+    territory: "accounts, lumens, trustlines, payments",
     overlord: null,
     synopsis:
-      "With five champions gathered, you ascend. Star-keeps for accounts, sigil-and-secret for keypairs, light-bridges for trustlines — and lumens flowing again for the first time since the Panic.",
+      "How the network actually works: what an account is, what a lumen pays for, why holding an asset is opt-in, and how a payment is built and submitted.",
     cardId: "astrostroopie",
     skirmishes: [
       {
         lessonSlug: "stellar-101-1",
         numeral: "VI.1",
-        title: "The Star-Keep Charter",
+        title: "Accounts & Keypairs",
         intro:
-          "Astrostroopie meets you at the Gate with a charter and two keys. \"Every soul in the sky is a star-keep — an account. The `G` sigil you may shout from the towers; the `S` seed you guard with your life. Lose the first, awkward. Lose the second, everything.\"",
+          "A Stellar account is a public key. The secret key signs; the public key identifies. Everything else builds on that.",
       },
       {
         lessonSlug: "stellar-101-2",
         numeral: "VI.2",
-        title: "The Toll of the Gate",
+        title: "Lumens & Fees",
         intro:
-          "\"The sky's currency is the lumen,\" the Voyager says, flipping a coin that splits into ten million sparks. \"Each spark, a stroop. Every crossing pays a tiny toll — a hundred stroops, give or take the traffic — so no one floods the sky with noise.\"",
+          "XLM, stroops, the base reserve and why every account must hold a minimum balance.",
       },
       {
         lessonSlug: "stellar-101-3",
         numeral: "VI.3",
-        title: "The Light-Bridge",
+        title: "Trustlines & Assets",
         intro:
-          "Beyond lumens, the sky carries every asset a star-keep dares to issue — but only across bridges you build yourself. \"A trustline,\" Astrostroopie says, \"is you telling the sky: I accept THIS asset, from THIS issuer. No bridge, no cargo. The sky takes consent seriously.\"",
+          "Holding a non-native asset is opt-in: you open a trustline first, and that is a deliberate protocol design.",
       },
       {
         lessonSlug: "stellar-101-4",
         numeral: "VI.4",
-        title: "First Light Across the Sky",
+        title: "Your First Payment",
         intro:
-          "Everything converges: a destination star-keep, an asset, an amount. The Voyager steps back from the console. \"Lumens haven't crossed this Gate since the Panic. Chart the payment, Forgeborn. Let there be traffic.\"",
+          "Building, signing and submitting a payment — the shape every Stellar operation shares.",
       },
     ],
   },
   {
     numeral: "VII",
     trackSlug: "soroban-smart-contracts",
-    title: "The Beholder's Lair",
-    territory: "Fortress of unhandled errors",
-    overlord: "The Stroopbeholder",
+    title: "Soroban Smart Contracts",
+    territory: "contracts, storage, authorization",
+    overlord: null,
     synopsis:
-      "Beyond the Gate it waits, in a fortress built of every error never handled. Forge Soroban runes, deploy them to the living sky, and turn the Beholder's own corrupted contracts against it.",
+      "Writing, storing state in, and securing a Soroban contract in Rust — the three things every real contract needs.",
     cardId: "stroopbeholder",
     skirmishes: [
       {
         lessonSlug: "soroban-smart-contracts-1",
         numeral: "VII.1",
-        title: "The First Sky-Rune",
+        title: "Your First Contract",
         intro:
-          "The fortress gate reads runes, not steel. Here your Rust is no longer a program — it is a contract, carved into the living sky where every star can call it. No standard library, no operating system: just `#![no_std]`, the Env, and your word. Carve the first sky-rune.",
+          "`#[contract]`, `#[contractimpl]` and an exported function — the minimum a Soroban contract needs to exist.",
       },
       {
         lessonSlug: "soroban-smart-contracts-2",
         numeral: "VII.2",
-        title: "The Ledger That Remembers",
+        title: "Contract Storage",
         intro:
-          "Inside the fortress, a ledger writes itself. Everything the Beholder ever counted is stored here — but storage in the sky is rented, not owned. Read, increment, write back. The ledger remembers what your contract tells it to remember, and nothing else.",
+          "Instance, persistent and temporary storage: three shelves with different lifetimes and different costs.",
       },
       {
         lessonSlug: "soroban-smart-contracts-3",
         numeral: "VII.3",
-        title: "The Seal of the Signer",
+        title: "Authorization",
         intro:
-          "The Beholder's corruption began with a single unguarded function — anyone could withdraw what wasn't theirs. One line would have stopped it. Demand the signer's seal before you move a single lumen: `require_auth`. Turn its own vault against it.",
+          "`require_auth` is the line between a contract anyone can drain and one only its owner can move.",
       },
     ],
   },
   {
     numeral: "VIII",
     trackSlug: "stellar-protocol-27",
-    title: "The Rewritten Sky",
-    territory: "The firmament itself, mid-reforge",
-    overlord: "The Echo Wraith",
+    title: "Protocol 27",
+    territory: "smart accounts & auth delegation",
+    overlord: null,
     synopsis:
-      "The Beholder lies broken — but the living sky does not mourn; it reforges itself, seam by seam. The stars call it the Zipper: Protocol 27. Yet in the rubble of the Lair, one eye never closed. It learned to copy the signer's seal and speak it twice. Master the rewritten laws of the sky, Forgeborn, and silence the Echo Wraith.",
+      "The current upgrade: smart accounts that define their own auth policy, delegation via CAP-0071, address-bound signatures, and the migration path.",
     cardId: "stroopzipper",
     skirmishes: [
       {
         lessonSlug: "stellar-protocol-27-1",
         numeral: "VIII.1",
-        title: "The Turning of the Sky",
+        title: "Protocol 27 Overview",
         intro:
-          "With the Beholder gone, the validator-stars convene. They do not patch the sky — they vote, and at an appointed ledger the whole firmament turns at once. The stars call this reforging the Zipper: Protocol 27. Watch an upgrade happen from the inside, Forgeborn.",
+          "What the upgrade changes, and why authentication delegation matters for anyone building wallets.",
       },
       {
         lessonSlug: "stellar-protocol-27-2",
         numeral: "VIII.2",
-        title: "The Seal, Remembered",
+        title: "Smart Accounts & __check_auth",
         intro:
-          "Return to the vault you sealed in the Lair. `require_auth` held — but a question lingers in the rebuilt halls: what if the one holding the seal is not a keypair, but a *contract*? Accounts that are contracts write their own law of signatures: `__check_auth`.",
+          "A contract account decides for itself what counts as a valid signature — that function is the whole policy.",
       },
       {
         lessonSlug: "stellar-protocol-27-3",
         numeral: "VIII.3",
-        title: "The Delegated Crown",
+        title: "Authentication Delegation (CAP-0071)",
         intro:
-          "No keeper guards every vault alone. Under the old sky, lending your seal meant fragile rounds of divination — simulate, propagate, pray. The rewritten sky makes delegation law: `delegate_account_auth`, spoken inside `__check_auth`, hands the check to a steward you trust.",
+          "Letting one account delegate its auth check to another, and what that unlocks for recovery and session keys.",
       },
       {
         lessonSlug: "stellar-protocol-27-4",
         numeral: "VIII.4",
-        title: "The Echo That Signs Twice",
+        title: "Signature Security & V2 Credentials",
         intro:
-          "It shows itself at last: the eye that never closed. The Echo Wraith steals a true seal and speaks it again — before a different vault signed by the same pen. The rewritten sky answers with a seal bound to its own door: credentials that name their address.",
+          "Address-bound signatures, and the replay attack the V2 credential format closes.",
       },
       {
         lessonSlug: "stellar-protocol-27-5",
         numeral: "VIII.5",
-        title: "The Migration Caravan",
+        title: "Migrating to Protocol 27",
         intro:
-          "The caravans line up at the Gate, wagons heavy with every tool forged under the old sky. Nothing crosses into the reforged firmament unchanged — every SDK reforged, every import renamed. Walk the caravan road, Forgeborn, and leave nothing behind that still speaks the old tongue.",
+          "What breaks, what does not, and the order to change things in across the SDKs.",
       },
       {
         lessonSlug: "stellar-protocol-27-6",
         numeral: "VIII.6",
-        title: "The Wraith's Last Echo",
+        title: "Putting It Together: A Delegated Account",
         intro:
-          "The Wraith comes for your vault with a stolen seal and a perfect echo. But your account is no longer a door with one key — it is law: a `__check_auth` that verifies its signer and delegates to a steward crown. Bind the seal. Silence the echo. End the campaign.",
+          "Implement `__check_auth` end to end: verify the signature, honour the delegate, and reject the replay.",
       },
     ],
   },

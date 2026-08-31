@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { AstCheck } from "@/content/lesson-checks";
+import { getAdvancedLessonContent } from "@/content/advanced/graders";
 
 // Authored lesson content + hidden grading data.
 //
@@ -2139,5 +2140,8 @@ impl ZipperAccount {
 };
 
 export function getLessonContent(slug: string): LessonContent | undefined {
-  return lessons[slug];
+  // Campaign lessons first, then the Advanced Path. `AdvancedLessonContent`
+  // is a `LessonContent` plus a reference solution, so the grader in
+  // lib/validate.ts needs no knowledge of which path a lesson came from.
+  return lessons[slug] ?? getAdvancedLessonContent(slug);
 }

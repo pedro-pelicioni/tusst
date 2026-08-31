@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { getLessonContent } from "@/content/lessons";
 import { acts } from "@/content/campaign";
+import { advancedTrackBySlug } from "@/content/advanced/curriculum";
 import {
   getActLocalized,
   getCardLocalized,
@@ -22,6 +23,13 @@ export default async function TrackPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+
+  // The Advanced Path seeds its tracks `active`, which would otherwise let this
+  // campaign-flavoured page render one — act numeral, champion-card slot and a
+  // "back to Campaign" link included. It has its own surface.
+  if (advancedTrackBySlug(slug)) {
+    redirect(`/advanced/${slug}`);
+  }
 
   const track = await prisma.track.findUnique({
     where: { slug },
@@ -202,9 +210,6 @@ export default async function TrackPage({
                       lessonTitle
                     )}
                   </div>
-                  <div className="font-mono text-[11px] text-muted">
-                    {skirmish ? lessonTitle : lesson.summary}
-                  </div>
                 </div>
                 <span className="shrink-0 rounded bg-white/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-muted2">
                   {playable
@@ -240,7 +245,7 @@ export default async function TrackPage({
         </ul>
         )}
 
-        {track.lessons.length > 0 && (
+        {track.lessons.length > 0 && track.lessons.length < track.challengeCount && (
           <p className="mt-4 font-mono text-[11px] text-muted">
             {fmt(t.challengesAvailable, {
               count: track.lessons.length,

@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "O livro que ninguém apaga",
+  title: "O que é uma blockchain",
   tagline: "O que é uma blockchain, sem uma sigla sequer.",
   steps: [
     {

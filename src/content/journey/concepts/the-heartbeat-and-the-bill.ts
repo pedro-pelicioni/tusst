@@ -7,7 +7,7 @@ import type { Concept } from "../types";
 export const theHeartbeatAndTheBill: Concept = {
   meta: {
     slug: "the-heartbeat-and-the-bill",
-    title: "The Heartbeat and the Bill",
+    title: "State Archival & Fees",
     tagline: "State archival & fees: state is rented, and a call is measured, not auctioned.",
     numeral: "XI",
     arc: "realm",

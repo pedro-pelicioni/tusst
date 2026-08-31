@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theBookNoOneCanErase: Concept = {
   meta: {
     slug: "the-book-no-one-can-erase",
-    title: "The Book No One Can Erase",
+    title: "What a Blockchain Is",
     tagline: "What a blockchain is, told without a single acronym.",
     numeral: "I",
     arc: "foundations",

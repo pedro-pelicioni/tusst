@@ -1,8 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Tecendo o Grafo",
-  tagline: "Graph engineering: muitos golens pequenos, cada um na própria bancada, um plano tecido.",
+  title: "Graph engineering",
+  tagline: "Graph engineering: muitos modelos pequenos, cada um na própria bancada, um plano tecido.",
   steps: [
     {
       kind: "theory",
@@ -127,7 +127,7 @@ A disciplina está em identificar a *verdadeira* independência: trabalho parale
       options: [
         "Avaliar três bibliotecas candidatas contra a mesma checklist — trabalho independente, sem estado compartilhado",
         "Escrever um script de migração e executar esse mesmo script — sobrepor salva tempo",
-        "Três golems editando o mesmo módulo ao mesmo tempo, para terminá‑lo três vezes mais rápido",
+        "Três modelos editando o mesmo módulo ao mesmo tempo, para terminá‑lo três vezes mais rápido",
       ],
       answer: 0,
       explain: `Executar antes de escrever viola uma dependência, e editar o mesmo arquivo gera conflitos de merge e passos extras. O teste é simples e confiável: se o nó A não lê a saída do nó B nem toca no estado do nó B, eles podem rodar juntos.`,
@@ -149,13 +149,13 @@ A disciplina está em identificar a *verdadeira* independência: trabalho parale
 
 O capítulo do arnês avisou: auto‑revisão compartilha os pontos cegos do eu. Um grafo corrige isso *estruturalmente*.
 
-Adicione um **nó verificador**: um golem forja; um nó *diferente* — contexto novo, sem vínculo às escolhas já feitas — recebe a tarefa de **refutar**: encontrar onde o diff viola a especificação, caçar casos de borda, tentar quebrá‑lo.
+Adicione um **nó verificador**: um modelo forja; um nó *diferente* — contexto novo, sem vínculo às escolhas já feitas — recebe a tarefa de **refutar**: encontrar onde o diff viola a especificação, caçar casos de borda, tentar quebrá‑lo.
 
 A descrição do trabalho importa. "Revise isto" convida a um aceno de aprovação. *"Encontre o que está errado aqui"* direciona a mente para os buracos. Pares adversariais capturam o que a auto‑revisão não pode estruturalmente — por isso forjas reais emparelham um criador com um inspetor.`,
     },
     {
       kind: "fill",
-      prompt: `Dê ao segundo golem sua verdadeira tarefa:`,
+      prompt: `Dê ao segundo modelo sua verdadeira tarefa:`,
       file: "graph.toml",
       before: `verifier.goal = "`,
       after: ` o diff do nó forjador"`,
@@ -179,7 +179,7 @@ O que você tem é uma forma. O que você ainda não tem é uma máquina em que 
       options: ["Cada nó ganha a própria bancada curada, então a qualidade não se dilui entre passos que não têm nada a ver um com o outro","Modelos cobram menos por vários pedidos curtos do que por um longo","Isso deixa o modelo escolher a própria ordem de trabalho, o que melhora os resultados"], answer: 0 },
     { question: `Qual é o teste para saber se dois nós podem rodar em paralelo?`,
       options: ["O nó A não lê a saída do nó B nem toca no estado dele","Espera-se que os dois nós levem aproximadamente o mesmo tempo","Nenhum dos dois escreve na rede"], answer: 0 },
-    { question: `Por que dar ao segundo golem o objetivo \"refutar\" e não \"revisar\"?`,
+    { question: `Por que dar ao segundo modelo o objetivo \"refutar\" e não \"revisar\"?`,
       options: ["Um nó mandado aprovar vai achar um jeito de aprovar — refutação é o único objetivo que aponta a mente para os buracos","Refutação produz saída mais curta, o que custa menos","Revisão exige o contexto original, e refutação não"], answer: 0 },
     { question: `Quatro tarefas em paralelo, cada uma com dois estágios. O que esperar todas terminarem o estágio um de fato custa?`,
       options: ["O tempo de estágio um da tarefa mais lenta, gasto sem fazer nada com as outras — e de novo no estágio dois","Nada, desde que as tarefas rodem em paralelo dentro de cada estágio","Só o custo de coordenação do escalonador"], answer: 0 },

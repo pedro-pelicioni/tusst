@@ -2,31 +2,31 @@
 export const pages = {
   campaign: {
     kicker: "a estrada opcional",
-    title: "Campanha de Rust — Forgeborn",
+    title: "Campanha de Rust",
     optionalNote:
       "A trilha de maestria. Cada ato é opcional — e cada ato te deixa mais afiado. A Jornada aponta para cá sempre que você quiser o Rust por trás de um conceito.",
   },
   path: {
     kicker: "trilha da campanha",
-    title: "Forgeborn — de Rust a Soroban",
-    championCards: "Cartas de campeão",
+    title: "De Rust a Soroban",
+    championCards: "Cartas da coleção",
     claimed: "{percent}% reivindicadas",
-    actReward: "recompensa do ato",
+    actReward: "recompensa da seção",
     rewardStats: "{type} · poder {power}",
-    skirmishesForgingSoon: "combates sendo forjados — em breve",
+    skirmishesForgingSoon: "lições em preparo — em breve",
     startLearning: "Começar a aprender",
-    viewChampions: "Ver seus campeões",
+    viewChampions: "Ver suas cartas",
   },
   cards: {
-    metaTitle: "Campeões do Reino — TUSST",
+    metaTitle: "Coleção de cartas — TUSST",
     metaDescription:
-      "As cartas de campeão da Constelação Despedaçada. Vença o combate final de um ato para reivindicar seu campeão.",
-    kicker: "// a constelação despedaçada",
-    title: "Campeões do Reino",
+      "Cartas colecionáveis, uma por seção da campanha. Termine a última lição de uma seção para ganhar a carta dela.",
+    kicker: "// coleção",
+    title: "Coleção de cartas",
     intro:
-      "Oito cartas para oito atos, espalhadas pelo Grande Pânico. Cada ato da campanha termina com um combate final — vença-o, e seu campeão entra para a sua coleção. A última carta não é dada. Ela é tomada.",
+      "Oito cartas, uma por seção da campanha. Termine a última lição de uma seção e a carta dela entra na sua coleção. Puramente cosmético — não dão vantagem nenhuma e não travam conteúdo algum.",
     bossCard: "carta do chefe",
-    actLink: "Ato {numeral} — {title}",
+    actLink: "Seção {numeral} — {title}",
     unassigned: "não atribuída",
     footnote:
       "as cartas são progressão cosmética — não trazem vantagem de gameplay. edições raras são concedidas por completar um ato de forma impecável. a reivindicação on-chain chega com o projeto final de Soroban.",
@@ -39,15 +39,15 @@ export const pages = {
       intermediate: "intermediário",
       advanced: "avançado",
     },
-    act: "Ato {numeral}",
+    act: "Seção {numeral}",
     overlord: "chefe: {overlord}",
-    actReward: "recompensa do ato",
+    actReward: "recompensa da seção",
     rewardStats: "{type} · poder {power}",
     progress: "progresso",
     lessonsHeading: "// lições",
-    forgingTitle: "combates sendo forjados",
+    forgingTitle: "lições em preparo",
     forgingBefore:
-      "Seu onboarding desbloqueou este ato, mas os combates dele ainda estão sendo escritos. Volte para a",
+      "Seu onboarding desbloqueou esta seção, mas as lições dela ainda estão sendo escritas. Volte para a",
     forgingLink: "trilha da campanha",
     forgingAfter: "para continuar lutando.",
     difficulty: {
@@ -60,15 +60,15 @@ export const pages = {
       "{count} de {total} desafios disponíveis · mais estão a caminho.",
   },
   profile: {
-    forgeborn: "forgeborn",
+    forgeborn: "builder",
     lvlXp: "nv {level} · {xp} xp",
     since: "desde {date}",
     goldCoinAlt: "Moeda de ouro — o dracma Stroop",
     goldCaption: "ouro · ganho uma lição de cada vez",
     stats: {
-      skirmishesWon: "combates vencidos",
-      actsCleared: "atos concluídos",
-      championCards: "cartas de campeão",
+      skirmishesWon: "lições concluídas",
+      actsCleared: "seções concluídas",
+      championCards: "cartas da coleção",
     },
     campaignHeading: "// campanha",
     status: {
@@ -76,6 +76,6 @@ export const pages = {
       locked: "bloqueado",
     },
     continueCampaign: "Continuar a campanha",
-    viewChampions: "Ver seus campeões",
+    viewChampions: "Ver suas cartas",
   },
 };

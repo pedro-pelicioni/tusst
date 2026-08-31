@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theRedGreenRite: Concept = {
   meta: {
     slug: "the-red-green-rite",
-    title: "The Red-Green Rite",
+    title: "Test-Driven Development",
     tagline: "TDD: tests first, forge second.",
     numeral: "II",
     arc: "craft",
@@ -26,7 +26,7 @@ export const theRedGreenRite: Concept = {
 
 In Chapter I you learned to write down what *right* means. A **test** is that sentence made executable — a spec the machine re-checks in milliseconds, every time, forever.
 
-This matters *more* with AI, not less. A golem can argue with your prose, reinterpret your intent, "improve" your requirements. It cannot argue with \`assert_eq!\`. **Tests are the spec the machine can't argue with** — the one place where a plausible answer and a right answer stop being confusable.
+This matters *more* with AI, not less. A model can argue with your prose, reinterpret your intent, "improve" your requirements. It cannot argue with \`assert_eq!\`. **Tests are the spec the machine can't argue with** — the one place where a plausible answer and a right answer stop being confusable.
 
 Write them **first**, and every forge that follows is graded from birth.`,
     },
@@ -81,7 +81,7 @@ Red proves the test can catch the bug it guards against. Green proves the behavi
         "Rerun the suite a few more times to make sure the green is stable",
       ],
       answer: 0,
-      explain: `When the same golem forges both the code and its tests, a test that asserts too little stays green forever. Red is the only proof a test has teeth — one deliberate break tells you it bites.`,
+      explain: `When the same model forges both the code and its tests, a test that asserts too little stays green forever. Red is the only proof a test has teeth — one deliberate break tells you it bites.`,
     },
     {
       kind: "theory",
@@ -130,17 +130,17 @@ Assert it after *every* operation your tests perform — deposit, release, refun
     },
     {
       kind: "theory",
-      body: `## Accepting the golem's work fearlessly
+      body: `## Accepting the model's work fearlessly
 
 Here is the payoff. An AI hands you 300 lines. Without tests, your options are *read every line very carefully* or *trust*. Both fail at scale.
 
 With a suite written first, acceptance is mechanical: **red — reject**, with the failure as feedback. **Green — accept**, and read for style at your leisure.
 
-The same net makes refactoring fearless — yours *and* the golem's. "Rewrite this module, keep the tests green" is a safe instruction *only because* the trials exist and the golem didn't get to write them to fit its own code.`,
+The same net makes refactoring fearless — yours *and* the model's. "Rewrite this module, keep the tests green" is a safe instruction *only because* the trials exist and the model didn't get to write them to fit its own code.`,
     },
     {
       kind: "quiz",
-      question: `The golem proudly reports **100% line coverage**. What did you actually learn?`,
+      question: `The model proudly reports **100% line coverage**. What did you actually learn?`,
       options: [
         "Every line ran during the tests — which says nothing about how much behavior the assertions actually check",
         "The code is correct — every line was exercised and passed",
@@ -160,8 +160,8 @@ The same net makes refactoring fearless — yours *and* the golem's. "Rewrite th
       options: ["A test that has never failed has never proved it can — writing it first is how you know it is watching the right thing","It is faster, because you avoid rewriting the test afterwards","It forces the implementation to be simpler than it otherwise would be"], answer: 0 },
     { question: `What does a red test give an AI pair that prose requirements do not?`,
       options: ["An acceptance criterion it cannot misread, and a signal that can be bad news","A shorter prompt, which fits more context","Permission to change the public API"], answer: 0 },
-    { question: `The golem makes the failing test pass by special-casing the exact input the test uses. What does that reveal?`,
-      options: ["The test under-specified the behavior — it named one example rather than the rule","The golem is behaving maliciously and needs stricter instructions","Nothing; passing the test is the definition of done"], answer: 0 },
+    { question: `The model makes the failing test pass by special-casing the exact input the test uses. What does that reveal?`,
+      options: ["The test under-specified the behavior — it named one example rather than the rule","The model is behaving maliciously and needs stricter instructions","Nothing; passing the test is the definition of done"], answer: 0 },
     { question: `Your suite is green after a change you are unsure about. What has that actually told you?`,
       options: ["That nothing the suite watches has broken — which is only as much as the suite happens to watch","That the change is correct","That the change is safe to deploy"], answer: 0 },
   ],

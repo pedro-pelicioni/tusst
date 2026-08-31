@@ -7,7 +7,7 @@ import type { Concept } from "../types";
 export const theRealmOfStellar: Concept = {
   meta: {
     slug: "the-realm-of-stellar",
-    title: "The Realm of Stellar",
+    title: "Consensus & the Stellar Network",
     tagline: "Consensus (SCP): how thousands of machines agree without a king.",
     numeral: "I",
     arc: "realm",

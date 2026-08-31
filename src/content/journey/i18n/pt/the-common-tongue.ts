@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "A Língua Comum",
+  title: "SEPs: os padrões de interoperabilidade",
   tagline: "SEPs: implemente uma vez, e todo portão abre.",
   steps: [
     { kind: "theory", body: `## A aritmética que obriga a existir um padrão

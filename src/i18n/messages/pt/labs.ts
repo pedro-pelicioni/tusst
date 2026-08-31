@@ -9,7 +9,7 @@ export const labs = {
   intro:
     "Labs guiados onde cada botão faz algo real na testnet — carteiras financiadas, trustlines abertas, pagamentos liquidados — e o texto explica exatamente o que aconteceu no ledger.",
   liveHeading: "// labs",
-  soonHeading: "// sendo forjados",
+  soonHeading: "// em preparo",
   freeMode: {
     title: "Modo livre — o IDE",
     blurb:
@@ -20,7 +20,7 @@ export const labs = {
   card: {
     minutes: "{minutes} min",
     xp: "{xp} xp",
-    soon: "sendo forjado",
+    soon: "em preparo",
     completed: "concluído",
     start: "Entrar no lab",
     resume: "Continuar",

@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const accountsTrustAndAssets: Concept = {
   meta: {
     slug: "accounts-trust-and-assets",
-    title: "Accounts, Trust & Assets",
+    title: "Accounts, Trustlines & Assets",
     tagline: "Accounts, reserves & trustlines: why holding an asset is opt-in.",
     numeral: "IV",
     arc: "realm",
