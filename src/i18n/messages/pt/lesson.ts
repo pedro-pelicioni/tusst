@@ -21,7 +21,7 @@ export const lesson = {
     "Nada aqui foi salvo ainda. Crie uma conta gratuita para guardar seu progresso e colecionar as cartas das seções.",
   saveProgress: "Salvar meu progresso",
   nextSkirmish: "Próxima lição ›",
-  backToAct: "Voltar ao ato",
+  backToAct: "Voltar à seção",
   exitLesson: "Sair da lição",
   previousStep: "Passo anterior",
   nextStep: "Próximo passo",

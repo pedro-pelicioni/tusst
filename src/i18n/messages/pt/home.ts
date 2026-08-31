@@ -25,7 +25,7 @@ export const home = {
       blurb:
         "Oito seções, de Rust básico a contratos Soroban, corrigidas num sandbox de verdade. Opcional, e o jeito mais rápido de sujar as mãos.",
       cta: "Marchar na Campanha",
-      progress: "{done}/{total} atos vencidos",
+      progress: "{done}/{total} seções concluídas",
     },
     advanced: {
       label: "se você já entrega",
