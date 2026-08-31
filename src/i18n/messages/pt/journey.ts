@@ -88,4 +88,33 @@ export const journey = {
       backToMap: "Voltar à Jornada",
     },
   },
+  testOut: {
+    chapterCta: "Eu já sei isto",
+    arcCta: "Testar e pular este trecho",
+    chapterKicker: "a chave do atalho",
+    arcKicker: "o selo mestre",
+    chapterTitle: "Pular {title}",
+    arcTitle: "Pular {title}",
+    chapterBlurb:
+      "Acerte {count} perguntas sem nenhum erro e o capítulo é selado, com XP e tudo — sem precisar ler.",
+    arcBlurb:
+      "Acerte {count} perguntas ({allowed} escorregão permitido) e todo capítulo deste trecho é selado de uma vez.",
+    arcBlurbStrict:
+      "Acerte {count} perguntas sem nenhum erro e todo capítulo deste trecho é selado de uma vez.",
+    question: "Pergunta {current} de {total}",
+    submit: "Corrigir minha prova",
+    checking: "corrigindo…",
+    passKicker: "a porta se abre",
+    passBody: "{correct}/{total}. Selados: {chapters}.",
+    failKicker: "hoje não",
+    failBody:
+      "{correct}/{total}. Nada foi selado — daqui, o capítulo é o caminho mais rápido.",
+    readInstead: "Ler o capítulo",
+    readArcInstead: "Começar do início",
+    tryAgain: "Sortear outra prova",
+    backToMap: "Voltar para a Jornada",
+    signedOut: "Entre primeiro — um capítulo selado precisa cair numa conta.",
+    signIn: "Entrar",
+    unavailable: "Não foi possível sortear essa prova agora — tente daqui a pouco.",
+  },
 };

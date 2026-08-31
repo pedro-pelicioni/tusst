@@ -132,6 +132,32 @@ for (const [locale, translated] of Object.entries(translatedJourneys)) {
     );
     if (!target.steps || target.steps.length !== source.steps.length) continue;
 
+    // The test-out bank rides the same parity rules as the steps: same
+    // length, same `answer` per index, same option count. A translated bank
+    // whose answer drifted would silently mark honest readers wrong.
+    const sourceBank = source.testOut ?? [];
+    const targetBank = target.testOut ?? [];
+    check(
+      targetBank.length === sourceBank.length,
+      `journey/${locale}/${slug}: expected ${sourceBank.length} test-out questions, got ${targetBank.length}`,
+    );
+    if (targetBank.length === sourceBank.length) {
+      sourceBank.forEach((sourceQ, index) => {
+        const targetQ = targetBank[index];
+        const label = `journey/${locale}/${slug}/testOut/${index}`;
+        check(
+          targetQ.answer === sourceQ.answer,
+          `${label}: stable field answer changed`,
+        );
+        check(
+          targetQ.options.length === sourceQ.options.length,
+          `${label}: expected ${sourceQ.options.length} options, got ${targetQ.options.length}`,
+        );
+        check(targetQ.question.trim() !== "", `${label}: empty question`);
+        checkPlaceholders(sourceQ, targetQ, label);
+      });
+    }
+
     source.steps.forEach((sourceStep, index) => {
       const targetStep = target.steps![index];
       const label = `journey/${locale}/${slug}/${index}`;
@@ -384,5 +410,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `i18n coverage OK: ${journeyChapters.length} Journey chapters, ${labs.length} Labs, ${lessonSlugs.length} Campaign lessons × 3 translated locales.`,
+  `i18n coverage OK: ${journeyChapters.length} Journey chapters (${journeyChapters.filter((c) => (c.testOut?.length ?? 0) > 0).length} with a test-out bank), ${labs.length} Labs, ${lessonSlugs.length} Campaign lessons × 3 translated locales.`,
 );

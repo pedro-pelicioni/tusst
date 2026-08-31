@@ -84,7 +84,27 @@ export interface ConceptMeta {
   glyph: string;
 }
 
+/**
+ * One test-out question. Deliberately NOT a `JourneyStep`: these never render
+ * inside the player, and their `answer` must never reach the browser — the
+ * API ships `question` + pre-shuffled `options` only, and grades on the
+ * server. Correct answer first, same authoring convention as `quiz`.
+ */
+export interface TestOutQuestion {
+  question: string;
+  options: string[];
+  answer: number;
+}
+
 export interface Concept {
   meta: ConceptMeta;
   steps: JourneyStep[];
+  /**
+   * The "I already know this" bank. Dedicated questions, not a replay of the
+   * chapter's own checks — a reader who fails must still meet fresh material
+   * when they walk the chapter. OPTIONAL: a chapter without a bank simply
+   * offers no skip, and an arc is only skippable once every live chapter in
+   * it has one.
+   */
+  testOut?: TestOutQuestion[];
 }

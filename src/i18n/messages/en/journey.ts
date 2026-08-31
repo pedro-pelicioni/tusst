@@ -88,4 +88,33 @@ export const journey = {
       backToMap: "Back to the Journey",
     },
   },
+  testOut: {
+    chapterCta: "I already know this",
+    arcCta: "Test out of this stretch",
+    chapterKicker: "the shortcut key",
+    arcKicker: "the master seal",
+    chapterTitle: "Skip {title}",
+    arcTitle: "Skip {title}",
+    chapterBlurb:
+      "Answer {count} questions with nothing wrong and the chapter is sealed, XP and all — no reading required.",
+    arcBlurb:
+      "Answer {count} questions ({allowed} slip allowed) and every chapter in this stretch is sealed at once.",
+    arcBlurbStrict:
+      "Answer {count} questions with nothing wrong and every chapter in this stretch is sealed at once.",
+    question: "Question {current} of {total}",
+    submit: "Mark my paper",
+    checking: "marking…",
+    passKicker: "the door opens",
+    passBody: "{correct}/{total}. Sealed: {chapters}.",
+    failKicker: "not this time",
+    failBody:
+      "{correct}/{total}. Nothing was sealed — the chapter is the faster road from here.",
+    readInstead: "Read the chapter instead",
+    readArcInstead: "Start at the beginning",
+    tryAgain: "Draw a new paper",
+    backToMap: "Back to the Journey",
+    signedOut: "Sign in first — a sealed chapter has to land on an account.",
+    signIn: "Sign in",
+    unavailable: "That paper could not be drawn right now — try again in a moment.",
+  },
 };

@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getJourneyChaptersLocalized } from "@/content/journey/i18n";
-import type { Concept, ConceptLevel } from "@/content/journey/types";
+import { arcIsTestable, chapterIsTestable } from "@/content/journey/test-out";
+import type { Concept, ConceptArc, ConceptLevel } from "@/content/journey/types";
 import type { Messages } from "@/i18n/messages/en";
 import { getLocale, getMessages } from "@/i18n/server";
 import { fmt } from "@/i18n/format";
@@ -22,6 +23,50 @@ import { SceneParticles } from "@/components/scene/SceneParticles";
 
 const LEVEL_KEY = ["foundations", "essential", "advanced"] as const;
 
+// The two test-out seals. Both have a text-only fallback, same rule as the
+// chapter sigils — a missing master must never cost the reader the shortcut.
+const CHAPTER_SEAL = "/v2/journey/skip-chapter.webp";
+const ARC_SEAL = "/v2/journey/skip-arc.webp";
+
+/** "I already know this" — the Duolingo shortcut, drawn as a rune key. */
+function SkipLink({
+  href,
+  label,
+  art,
+  tone,
+}: {
+  href: string;
+  label: string;
+  art: string | null;
+  tone: "chapter" | "arc";
+}) {
+  return (
+    <Link
+      href={href}
+      className={`mt-2 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.18em] transition ${
+        tone === "arc"
+          ? "border-gold/40 bg-gold/[0.07] text-gold/90 hover:border-gold/70"
+          : "border-line bg-white/[0.03] text-muted2 hover:border-accent/50 hover:text-accent-soft"
+      }`}
+    >
+      {art ? (
+        <Image
+          src={art}
+          alt=""
+          width={tone === "arc" ? 22 : 18}
+          height={tone === "arc" ? 22 : 18}
+          // The seals are not square, so the height is the constraint and the
+          // width follows — without `w-auto` Next warns about the broken ratio.
+          className={`w-auto object-contain ${tone === "arc" ? "h-[22px]" : "h-[18px]"}`}
+        />
+      ) : (
+        <span aria-hidden>{tone === "arc" ? "🜲" : "🗝"}</span>
+      )}
+      {label}
+    </Link>
+  );
+}
+
 function levelLabel(level: ConceptLevel, m: Messages["journey"]) {
   return m.levels[LEVEL_KEY[level]];
 }
@@ -36,6 +81,7 @@ function ArcRail({
   completed,
   titles,
   startHere = false,
+  skipArt,
   m,
 }: {
   chapters: Concept[];
@@ -44,6 +90,8 @@ function ArcRail({
   titles: Map<string, string>;
   /** level 0 labels its next chapter "start here" until the tier is entered */
   startHere?: boolean;
+  /** resolved chapter-seal path, or null when the master has not landed */
+  skipArt: string | null;
   m: Messages["journey"];
 }) {
   const recommended = chapters.find(
@@ -171,6 +219,16 @@ function ArcRail({
               ) : (
                 body
               )}
+              {/* Sibling of the card's Link, never inside it — an anchor
+                  nested in an anchor is invalid and swallows the click. */}
+              {live && !done && chapterIsTestable(chapter) && (
+                <SkipLink
+                  href={`/journey/test-out/chapter/${meta.slug}`}
+                  label={m.testOut.chapterCta}
+                  art={skipArt}
+                  tone="chapter"
+                />
+              )}
             </div>
           </div>
         );
@@ -199,6 +257,16 @@ export default async function JourneyPage() {
   const craft = chapters.filter((chapter) => chapter.meta.arc === "craft");
   const realm = chapters.filter((chapter) => chapter.meta.arc === "realm");
   const titles = new Map(chapters.map((c) => [c.meta.slug, c.meta.title]));
+  // fs checks, so they stay on the server — same guard the sigils use.
+  const skipArt = hasV2Asset(CHAPTER_SEAL) ? CHAPTER_SEAL : null;
+  const arcArt = hasV2Asset(ARC_SEAL) ? ARC_SEAL : null;
+  // An arc is only skippable once every live chapter in it carries a bank —
+  // otherwise one paper would seal chapters it never asked about.
+  const arcSkippable = (arc: ConceptArc) =>
+    arcIsTestable(arc, chapters) &&
+    chapters.some(
+      (c) => c.meta.arc === arc && c.meta.status === "live" && !completed.has(c.meta.slug),
+    );
   // "start here" survives only until the ground floor is entered.
   const untouched = !foundations.some((c) => completed.has(c.meta.slug));
 
@@ -256,10 +324,19 @@ export default async function JourneyPage() {
             <p className="mt-1 max-w-2xl text-[12.5px] leading-relaxed text-muted">
               {m.journey.arcs.foundations.blurb}
             </p>
+            {arcSkippable("foundations") && (
+              <SkipLink
+                href="/journey/test-out/arc/foundations"
+                label={m.journey.testOut.arcCta}
+                art={arcArt}
+                tone="arc"
+              />
+            )}
             <ArcRail
               chapters={foundations}
               completed={completed}
               titles={titles}
+              skipArt={skipArt}
               startHere={untouched}
               m={m.journey}
             />
@@ -273,10 +350,19 @@ export default async function JourneyPage() {
             <p className="mt-1 max-w-2xl text-[12.5px] leading-relaxed text-muted">
               {m.journey.arcs.craft.blurb}
             </p>
+            {arcSkippable("craft") && (
+              <SkipLink
+                href="/journey/test-out/arc/craft"
+                label={m.journey.testOut.arcCta}
+                art={arcArt}
+                tone="arc"
+              />
+            )}
             <ArcRail
               chapters={craft}
               completed={completed}
               titles={titles}
+              skipArt={skipArt}
               m={m.journey}
             />
           </div>
@@ -289,10 +375,19 @@ export default async function JourneyPage() {
             <p className="mt-1 max-w-2xl text-[12.5px] leading-relaxed text-muted">
               {m.journey.arcs.realm.blurb}
             </p>
+            {arcSkippable("realm") && (
+              <SkipLink
+                href="/journey/test-out/arc/realm"
+                label={m.journey.testOut.arcCta}
+                art={arcArt}
+                tone="arc"
+              />
+            )}
             <ArcRail
               chapters={realm}
               completed={completed}
               titles={titles}
+              skipArt={skipArt}
               m={m.journey}
             />
           </div>

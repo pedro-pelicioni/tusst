@@ -88,4 +88,33 @@ export const journey = {
       backToMap: "Retour au Voyage",
     },
   },
+  testOut: {
+    chapterCta: "Je sais déjà tout ça",
+    arcCta: "Passer l'examen de ce tronçon",
+    chapterKicker: "la clé du raccourci",
+    arcKicker: "le sceau de maîtrise",
+    chapterTitle: "Sauter {title}",
+    arcTitle: "Sauter {title}",
+    chapterBlurb:
+      "Répondez juste à {count} questions, sans aucune erreur, et le chapitre est scellé, XP compris — sans rien lire.",
+    arcBlurb:
+      "Répondez juste à {count} questions ({allowed} erreur tolérée) et chaque chapitre de ce tronçon est scellé d'un coup.",
+    arcBlurbStrict:
+      "Répondez juste à {count} questions, sans aucune erreur, et chaque chapitre de ce tronçon est scellé d'un coup.",
+    question: "Question {current} sur {total}",
+    submit: "Corriger ma copie",
+    checking: "correction…",
+    passKicker: "la porte s'ouvre",
+    passBody: "{correct}/{total}. Scellés : {chapters}.",
+    failKicker: "pas cette fois",
+    failBody:
+      "{correct}/{total}. Rien n'a été scellé — d'ici, le chapitre est la route la plus rapide.",
+    readInstead: "Lire le chapitre",
+    readArcInstead: "Commencer par le début",
+    tryAgain: "Tirer une nouvelle copie",
+    backToMap: "Retour au Voyage",
+    signedOut: "Connectez-vous d'abord — un chapitre scellé doit atterrir sur un compte.",
+    signIn: "Se connecter",
+    unavailable: "Impossible de tirer cette copie pour l'instant — réessayez dans un instant.",
+  },
 };

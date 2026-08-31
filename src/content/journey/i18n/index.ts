@@ -25,6 +25,7 @@ function localizeConcept(
       tagline: text.tagline,
     },
     steps: text.steps ?? concept.steps,
+    testOut: text.testOut ?? concept.testOut,
   };
 }
 

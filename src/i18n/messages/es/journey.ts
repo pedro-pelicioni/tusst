@@ -88,4 +88,33 @@ export const journey = {
       backToMap: "Volver al Viaje",
     },
   },
+  testOut: {
+    chapterCta: "Ya me sé esto",
+    arcCta: "Examinarme y saltar este tramo",
+    chapterKicker: "la llave del atajo",
+    arcKicker: "el sello maestro",
+    chapterTitle: "Saltar {title}",
+    arcTitle: "Saltar {title}",
+    chapterBlurb:
+      "Acierta {count} preguntas sin ningún fallo y el capítulo queda sellado, con XP incluido — sin leer nada.",
+    arcBlurb:
+      "Acierta {count} preguntas ({allowed} desliz permitido) y todos los capítulos de este tramo se sellan de una vez.",
+    arcBlurbStrict:
+      "Acierta {count} preguntas sin ningún fallo y todos los capítulos de este tramo se sellan de una vez.",
+    question: "Pregunta {current} de {total}",
+    submit: "Corregir mi examen",
+    checking: "corrigiendo…",
+    passKicker: "la puerta se abre",
+    passBody: "{correct}/{total}. Sellados: {chapters}.",
+    failKicker: "hoy no",
+    failBody:
+      "{correct}/{total}. No se selló nada — desde aquí, el capítulo es el camino más rápido.",
+    readInstead: "Leer el capítulo",
+    readArcInstead: "Empezar por el principio",
+    tryAgain: "Sacar otro examen",
+    backToMap: "Volver al Viaje",
+    signedOut: "Inicia sesión primero — un capítulo sellado tiene que caer en una cuenta.",
+    signIn: "Iniciar sesión",
+    unavailable: "No se pudo sacar ese examen ahora mismo — inténtalo en un momento.",
+  },
 };
