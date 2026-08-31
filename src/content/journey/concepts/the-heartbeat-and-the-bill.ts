@@ -8,7 +8,7 @@ export const theHeartbeatAndTheBill: Concept = {
   meta: {
     slug: "the-heartbeat-and-the-bill",
     title: "The Heartbeat and the Bill",
-    tagline: "State is rented, and a call is measured — not auctioned.",
+    tagline: "State archival & fees: state is rented, and a call is measured, not auctioned.",
     numeral: "XI",
     arc: "realm",
     level: 2,

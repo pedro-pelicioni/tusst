@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Les Portes du Donjon",
-  tagline: "Ports et adaptateurs — le domaine déclare la porte, le monde s'y ajuste.",
+  tagline: "Ports et adaptateurs : le domaine déclare la porte, le monde s'y ajuste.",
   steps: [
     {
       kind: "theory",

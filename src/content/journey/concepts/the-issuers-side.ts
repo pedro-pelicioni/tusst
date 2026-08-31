@@ -9,7 +9,7 @@ export const theIssuersSide: Concept = {
   meta: {
     slug: "the-issuers-side",
     title: "The Issuer's Side",
-    tagline: "Anyone can mint. The craft is everything after that.",
+    tagline: "Asset issuance: anyone can mint — the craft is everything after that.",
     numeral: "V",
     arc: "realm",
     level: 1,

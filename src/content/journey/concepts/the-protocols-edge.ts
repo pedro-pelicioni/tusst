@@ -8,7 +8,7 @@ export const theProtocolsEdge: Concept = {
   meta: {
     slug: "the-protocols-edge",
     title: "The Protocol's Edge",
-    tagline: "CAPs, SEPs, named upgrades — riding a living protocol.",
+    tagline: "CAPs, SEPs & named upgrades: riding a living protocol.",
     numeral: "XV",
     arc: "realm",
     level: 2,

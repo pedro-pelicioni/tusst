@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "La Langue Commune",
-  tagline: "Les SEP — implémentez une fois, et chaque porte s'ouvre.",
+  tagline: "SEP : implémentez une fois, et chaque porte s'ouvre.",
   steps: [
     { kind: "theory", body: `## L'arithmétique qui impose un standard
 

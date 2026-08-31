@@ -9,7 +9,7 @@ export const theKeyAndTheSeal: Concept = {
   meta: {
     slug: "the-key-and-the-seal",
     title: "The Key and the Seal",
-    tagline: "Your account is a key. Signing is a seal. That's the whole idea.",
+    tagline: "Keys and signatures: your account is a key, signing is a seal.",
     numeral: "II",
     arc: "foundations",
     level: 0,

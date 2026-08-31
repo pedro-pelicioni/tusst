@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "La Boucle Sans Fin",
-  tagline: "Agir, observer, corriger — et les signaux qui la font monter.",
+  tagline: "Boucles agentiques : agir, observer, corriger — et les signaux qui la font monter.",
   steps: [
     { kind: "theory", body: `## Du souhait à la boucle
 

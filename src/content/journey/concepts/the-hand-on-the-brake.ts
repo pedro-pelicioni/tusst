@@ -9,7 +9,7 @@ export const theHandOnTheBrake: Concept = {
   meta: {
     slug: "the-hand-on-the-brake",
     title: "The Hand on the Brake",
-    tagline: "A loop without a stopping rule is not autonomy — it is a bill.",
+    tagline: "Agentic loops & guardrails: without a stopping rule it is not autonomy, it is a bill.",
     numeral: "XII",
     arc: "craft",
     level: 2,

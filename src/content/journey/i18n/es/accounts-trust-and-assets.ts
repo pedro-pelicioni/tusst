@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Cuentas, Confianza y Activos",
-  tagline: "Reservas, trustlines, y por qué un activo es opt-in.",
+  tagline: "Cuentas, reservas y trustlines: por qué tener un activo es opt-in.",
   steps: [
     {
       kind: "theory",

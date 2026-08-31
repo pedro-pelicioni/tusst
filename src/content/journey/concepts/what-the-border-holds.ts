@@ -10,7 +10,7 @@ export const whatTheBorderHolds: Concept = {
   meta: {
     slug: "what-the-border-holds",
     title: "What the Border Holds",
-    tagline: "Identity, value, and the cluster that must move as one.",
+    tagline: "Tactical DDD: identity, value, and the cluster that must move as one.",
     numeral: "IV",
     arc: "craft",
     level: 2,

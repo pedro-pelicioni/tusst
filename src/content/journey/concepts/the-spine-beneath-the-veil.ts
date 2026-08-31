@@ -9,7 +9,7 @@ export const theSpineBeneathTheVeil: Concept = {
   meta: {
     slug: "the-spine-beneath-the-veil",
     title: "The Spine Beneath the Veil",
-    tagline: "Hiding the counterparties — and staying auditable anyway.",
+    tagline: "Private payments & compliance: hiding the counterparties, staying auditable.",
     numeral: "XIV",
     arc: "realm",
     level: 2,

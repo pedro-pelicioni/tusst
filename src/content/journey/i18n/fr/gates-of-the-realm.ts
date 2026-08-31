@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Portes du Royaume",
-  tagline: "Les anchors — là où le registre touche le sol.",
+  tagline: "Anchors : là où le registre touche le sol.",
   steps: [
     {
       kind: "theory",

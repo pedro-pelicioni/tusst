@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "A Espinha Sob o Véu",
-  tagline: "Esconder as contrapartes — e continuar auditável.",
+  tagline: "Private payments e compliance: esconder as contrapartes, continuar auditável.",
   steps: [
     {
       kind: "theory",

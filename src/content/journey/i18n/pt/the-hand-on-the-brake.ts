@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "A Mão no Freio",
-  tagline: "Um laço sem regra de parada não é autonomia — é uma fatura.",
+  tagline: "Laços agênticos e freios: sem regra de parada não é autonomia, é uma fatura.",
   steps: [
     {
       kind: "theory",

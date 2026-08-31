@@ -2,8 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
   title: "Portefeuilles sans phrases secrètes",
-  tagline:
-    "Comptes intelligents, passkeys et frais sponsorisés par quelqu’un d’autre.",
+  tagline: "Smart accounts et passkeys : et des frais parrainés par quelqu'un d'autre.",
   steps: [
     {
       kind: "theory",

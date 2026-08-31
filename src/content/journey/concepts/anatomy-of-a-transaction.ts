@@ -10,7 +10,7 @@ export const anatomyOfATransaction: Concept = {
   meta: {
     slug: "anatomy-of-a-transaction",
     title: "Anatomy of a Transaction",
-    tagline: "One shape carries everything that ever changes the ledger.",
+    tagline: "The transaction envelope: one shape carries everything that changes the ledger.",
     numeral: "II",
     arc: "realm",
     level: 1,

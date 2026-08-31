@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "El Esqueleto y los Órganos",
-  tagline: "La fiabilidad viene de la estructura, la inteligencia de los nodos.",
+  tagline: "Orquestación: aristas deterministas, juicio dentro de los nodos.",
   steps: [
     {
       kind: "theory",

@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Ce Qui le Rattrape",
-  tagline: "Chaque outil est un rayon de souffle. Concevez pour le jour où il a tort.",
+  tagline: "Moindre privilège et chemins d'échec : chaque outil est un rayon de souffle.",
   steps: [
     {
       kind: "theory",

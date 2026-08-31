@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "L'Échine Sous le Voile",
-  tagline: "Masquer les contreparties — et rester auditable.",
+  tagline: "Private payments et conformité : masquer les contreparties, rester auditable.",
   steps: [
     {
       kind: "theory",

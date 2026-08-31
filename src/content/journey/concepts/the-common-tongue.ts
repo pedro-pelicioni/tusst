@@ -8,7 +8,7 @@ export const theCommonTongue: Concept = {
   meta: {
     slug: "the-common-tongue",
     title: "The Common Tongue",
-    tagline: "SEPs — implement once, and every gate opens.",
+    tagline: "SEPs: implement once, and every gate opens.",
     numeral: "IX",
     arc: "realm",
     level: 2,

@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Le Squelette et les Organes",
-  tagline: "La fiabilité vient de la structure, l'intelligence des nœuds.",
+  tagline: "Orchestration : des arêtes déterministes, le jugement dans les nœuds.",
   steps: [
     {
       kind: "theory",

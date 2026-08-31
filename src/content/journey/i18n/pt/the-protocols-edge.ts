@@ -4,7 +4,7 @@ export const theProtocolsEdge: Concept = {
   meta: {
     slug: "the-protocols-edge",
     title: "A Vantagem do Protocolo",
-    tagline: "CAPs, SEPs, upgrades nomeados — surfando um protocolo vivo.",
+    tagline: "CAPs, SEPs e versões nomeadas: cavalgando um protocolo vivo.",
     numeral: "IX",
     arc: "realm",
     level: 2,

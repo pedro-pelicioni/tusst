@@ -10,7 +10,7 @@ export const bordersOfTheRealm: Concept = {
   meta: {
     slug: "borders-of-the-realm",
     title: "Borders of the Realm",
-    tagline: "One word, three meanings — and the borders that make that safe.",
+    tagline: "DDD & bounded contexts: one word, three meanings, and the borders that make that safe.",
     numeral: "III",
     arc: "craft",
     level: 2,

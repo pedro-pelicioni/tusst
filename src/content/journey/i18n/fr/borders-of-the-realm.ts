@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Frontières du Royaume",
-  tagline: "Un mot, trois sens — et les frontières qui rendent cela sûr.",
+  tagline: "DDD et contextes délimités : un mot, trois sens, et les frontières qui rendent cela sûr.",
   steps: [
     {
       kind: "theory",

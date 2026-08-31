@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "O Livro-feito-véu",
-  tagline: "Prova sem revelação — e o primeiro véu construído sobre ela.",
+  tagline: "Zero-knowledge e tokens confidenciais: prova sem revelação.",
   steps: [
     {
       kind: "theory",

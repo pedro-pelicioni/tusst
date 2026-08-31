@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "O Loop Infinito",
-  tagline: "Agir, observar, corrigir — e os sinais que fazem o laço subir.",
+  tagline: "Laços agênticos: agir, observar, corrigir — e os sinais que fazem o laço subir.",
   steps: [
     {
       kind: "theory",

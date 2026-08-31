@@ -10,7 +10,7 @@ export const theCleanKeep: Concept = {
   meta: {
     slug: "the-clean-keep",
     title: "The Clean Keep",
-    tagline: "One law: source-code dependencies point inward, only.",
+    tagline: "Clean architecture: source-code dependencies point inward, only.",
     numeral: "V",
     arc: "craft",
     level: 2,

@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Las Puertas de la Fortaleza",
-  tagline: "Puertos y adaptadores — el dominio declara la puerta, el mundo encaja en ella.",
+  tagline: "Puertos y adaptadores: el dominio declara la puerta, el mundo encaja en ella.",
   steps: [
     {
       kind: "theory",

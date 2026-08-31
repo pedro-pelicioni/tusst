@@ -9,7 +9,7 @@ export const accountsTrustAndAssets: Concept = {
   meta: {
     slug: "accounts-trust-and-assets",
     title: "Accounts, Trust & Assets",
-    tagline: "Reserves, trustlines, and why an asset is opt-in.",
+    tagline: "Accounts, reserves & trustlines: why holding an asset is opt-in.",
     numeral: "IV",
     arc: "realm",
     level: 1,

@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "La Traversée",
-  tagline: "Envoyez une monnaie, livrez-en une autre — atomiquement, en une opération.",
+  tagline: "Path payments : envoyez une monnaie, livrez-en une autre, atomiquement.",
   steps: [
     {
       kind: "theory",

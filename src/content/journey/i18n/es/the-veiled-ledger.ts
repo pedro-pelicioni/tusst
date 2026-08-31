@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "El Libro Velado",
-  tagline: "Prueba sin revelación — y el primer velo construido sobre ella.",
+  tagline: "Zero-knowledge y tokens confidenciales: prueba sin revelación.",
   steps: [
     {
       kind: "theory",

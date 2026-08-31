@@ -9,7 +9,7 @@ export const theSkeletonAndTheOrgans: Concept = {
   meta: {
     slug: "the-skeleton-and-the-organs",
     title: "The Skeleton and the Organs",
-    tagline: "Reliability from the structure, intelligence from the nodes.",
+    tagline: "Orchestration: deterministic edges, judgement inside the nodes.",
     numeral: "XIV",
     arc: "craft",
     level: 2,

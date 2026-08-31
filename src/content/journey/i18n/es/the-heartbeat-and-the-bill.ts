@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "El Latido y la Factura",
-  tagline: "El estado se alquila, y una llamada se mide — no se subasta.",
+  tagline: "Archivado de estado y comisiones: el estado se alquila, y una llamada se mide, no se subasta.",
   steps: [
     {
       kind: "theory",

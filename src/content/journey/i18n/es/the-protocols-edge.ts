@@ -4,7 +4,7 @@ export const theProtocolsEdge: Concept = {
   meta: {
     slug: "the-protocols-edge",
     title: "La frontera del protocolo",
-    tagline: "CAPs, SEPs y actualizaciones con nombre: navegar un protocolo vivo.",
+    tagline: "CAPs, SEPs y versiones nombradas: cabalgando un protocolo vivo.",
     numeral: "IX",
     arc: "realm",
     level: 2,

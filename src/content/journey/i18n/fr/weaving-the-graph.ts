@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Tisser le Graphe",
-  tagline: "Beaucoup de petits golems, chacun sur son établi, un plan tissé.",
+  tagline: "Graph engineering : beaucoup de petits golems, chacun sur son établi, un plan tissé.",
   steps: [
     {
       kind: "theory",

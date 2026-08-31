@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Máquinas que cumplen promesas",
-  tagline: "Un contrato es una regla que se ejecuta sola — nada más místico.",
+  tagline: "Qué es un contrato inteligente: una regla que se ejecuta sola, nada más.",
   steps: [
     {
       kind: "theory",

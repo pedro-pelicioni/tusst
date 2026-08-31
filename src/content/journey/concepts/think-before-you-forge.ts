@@ -11,7 +11,7 @@ export const thinkBeforeYouForge: Concept = {
   meta: {
     slug: "think-before-you-forge",
     title: "Think Before You Forge",
-    tagline: "Specs are the skill AI can't do for you.",
+    tagline: "Spec-driven development: the skill AI cannot exercise for you.",
     numeral: "I",
     arc: "craft",
     level: 1,

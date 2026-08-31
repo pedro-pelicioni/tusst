@@ -9,7 +9,7 @@ export const machinesThatKeepPromises: Concept = {
   meta: {
     slug: "machines-that-keep-promises",
     title: "Machines That Keep Promises",
-    tagline: "A contract is a rule that runs itself — nothing more mystical.",
+    tagline: "What a smart contract is: a rule that runs itself, nothing more mystical.",
     numeral: "III",
     arc: "foundations",
     level: 0,

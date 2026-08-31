@@ -8,7 +8,7 @@ export const walletsWithoutSeeds: Concept = {
   meta: {
     slug: "wallets-without-seeds",
     title: "Carteras sin semillas",
-    tagline: "Cuentas inteligentes, claves de paso y tarifas que paga otro.",
+    tagline: "Smart accounts y passkeys: y comisiones que patrocina otro.",
     numeral: "VII",
     arc: "realm",
     level: 2,

@@ -10,7 +10,7 @@ export const theVeiledLedger: Concept = {
   meta: {
     slug: "the-veiled-ledger",
     title: "The Veiled Ledger",
-    tagline: "Proof without disclosure — and the first veil built on it.",
+    tagline: "Zero-knowledge & confidential tokens: proof without disclosure.",
     numeral: "XIII",
     arc: "realm",
     level: 2,

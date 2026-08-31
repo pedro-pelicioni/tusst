@@ -9,7 +9,7 @@ export const gatesOfTheRealm: Concept = {
   meta: {
     slug: "gates-of-the-realm",
     title: "Gates of the Realm",
-    tagline: "Anchors — where the ledger touches the ground.",
+    tagline: "Anchors: where the ledger touches the ground.",
     numeral: "VIII",
     arc: "realm",
     level: 2,

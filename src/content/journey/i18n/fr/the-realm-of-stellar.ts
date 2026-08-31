@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
   title: "Le Royaume de Stellar",
-  tagline: "Comment des milliers de machines s’accordent sans un roi.",
+  tagline: "Consensus (SCP) : comment des milliers de machines s'accordent sans roi.",
   steps: [
     {
       kind: "theory",

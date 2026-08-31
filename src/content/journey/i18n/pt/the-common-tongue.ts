@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "A Língua Comum",
-  tagline: "SEPs — implemente uma vez, e todo portão abre.",
+  tagline: "SEPs: implemente uma vez, e todo portão abre.",
   steps: [
     { kind: "theory", body: `## A aritmética que obriga a existir um padrão
 

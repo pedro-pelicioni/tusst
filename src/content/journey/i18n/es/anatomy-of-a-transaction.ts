@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Anatomía de una Transacción",
-  tagline: "Una sola forma carga todo lo que cambia el libro mayor.",
+  tagline: "El sobre de transacción: una sola forma carga todo lo que cambia el libro mayor.",
   steps: [
     {
       kind: "theory",

@@ -9,7 +9,7 @@ export const theCrossing: Concept = {
   meta: {
     slug: "the-crossing",
     title: "The Crossing",
-    tagline: "Send one currency, deliver another — atomically, in one operation.",
+    tagline: "Path payments: send one currency, deliver another, atomically.",
     numeral: "VII",
     arc: "realm",
     level: 2,

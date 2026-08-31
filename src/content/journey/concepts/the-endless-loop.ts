@@ -10,7 +10,7 @@ export const theEndlessLoop: Concept = {
   meta: {
     slug: "the-endless-loop",
     title: "The Endless Loop",
-    tagline: "Act, observe, correct — and the signals that make it climb.",
+    tagline: "Agentic loops: act, observe, correct — and the signals that make it climb.",
     numeral: "XI",
     arc: "craft",
     level: 2,

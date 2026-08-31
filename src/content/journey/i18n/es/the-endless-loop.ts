@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "El Bucle Infinito",
-  tagline: "Actuar, observar, corregir — y las señales que lo hacen subir.",
+  tagline: "Bucles agénticos: actuar, observar, corregir — y las señales que lo hacen subir.",
   steps: [
     { kind: "theory", body: `## Del deseo al bucle
 

@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Anatomie d'une Transaction",
-  tagline: "Une seule forme porte tout ce qui modifie le registre.",
+  tagline: "L'enveloppe de transaction : une seule forme porte tout ce qui modifie le registre.",
   steps: [
     {
       kind: "theory",

@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Lo Que Lo Detiene",
-  tagline: "Toda herramienta es un radio de daño. Diseña para el día en que se equivoque.",
+  tagline: "Mínimo privilegio y caminos de fallo: toda herramienta es un radio de daño.",
   steps: [
     {
       kind: "theory",

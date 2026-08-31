@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Le Côté de l'Émetteur",
-  tagline: "N'importe qui peut émettre. Le métier, c'est tout ce qui suit.",
+  tagline: "Émission d'actifs : n'importe qui peut émettre — le métier, c'est tout ce qui suit.",
   steps: [
     {
       kind: "theory",

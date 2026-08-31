@@ -8,7 +8,7 @@ export const walletsWithoutSeeds: Concept = {
   meta: {
     slug: "wallets-without-seeds",
     title: "Wallets Without Seeds",
-    tagline: "Smart accounts, passkeys, and fees someone else sponsors.",
+    tagline: "Smart accounts & passkeys: and fees someone else sponsors.",
     numeral: "XII",
     arc: "realm",
     level: 2,

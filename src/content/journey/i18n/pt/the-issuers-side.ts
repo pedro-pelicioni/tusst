@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "O Lado do Emissor",
-  tagline: "Qualquer um consegue emitir. O ofício é tudo o que vem depois.",
+  tagline: "Emissão de ativos: qualquer um consegue emitir — o ofício é tudo o que vem depois.",
   steps: [
     {
       kind: "theory",

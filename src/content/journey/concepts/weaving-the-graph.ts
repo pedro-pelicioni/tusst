@@ -8,7 +8,7 @@ export const weavingTheGraph: Concept = {
   meta: {
     slug: "weaving-the-graph",
     title: "Weaving the Graph",
-    tagline: "Many small golems, each on its own bench, one woven plan.",
+    tagline: "Graph engineering: many small golems, each on its own bench, one woven plan.",
     numeral: "XIII",
     arc: "craft",
     level: 2,

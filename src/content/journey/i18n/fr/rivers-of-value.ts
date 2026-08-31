@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Rivières de Valeur",
-  tagline: "Un bureau de change qui vit dans le protocole lui-même.",
+  tagline: "Le DEX et les pools de liquidité : un bureau de change dans le protocole lui-même.",
   steps: [
     {
       kind: "theory",

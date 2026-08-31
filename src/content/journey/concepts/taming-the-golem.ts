@@ -10,7 +10,7 @@ export const tamingTheGolem: Concept = {
   meta: {
     slug: "taming-the-golem",
     title: "Taming the Golem",
-    tagline: "The model is rented. The harness is engineering, and it is yours.",
+    tagline: "Harness engineering: the model is rented, the harness is yours.",
     numeral: "VII",
     arc: "craft",
     level: 2,

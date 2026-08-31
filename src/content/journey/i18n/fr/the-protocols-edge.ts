@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
   title: "Aux frontières du protocole",
-  tagline: "CAPs, SEPs et mises à niveau nommées : suivre un protocole vivant.",
+  tagline: "CAP, SEP et versions nommées : chevaucher un protocole vivant.",
   steps: [
     {
       kind: "theory",

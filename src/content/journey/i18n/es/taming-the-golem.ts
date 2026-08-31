@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Domando al Golem",
-  tagline: "El modelo se alquila. El arnés es ingeniería, y es tuyo.",
+  tagline: "Harness engineering: el modelo se alquila, el arnés es tuyo.",
   steps: [
     {
       kind: "theory",

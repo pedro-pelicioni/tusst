@@ -10,7 +10,7 @@ export const riversOfValue: Concept = {
   meta: {
     slug: "rivers-of-value",
     title: "Rivers of Value",
-    tagline: "A currency exchange living inside the protocol itself.",
+    tagline: "The DEX & liquidity pools: a currency exchange inside the protocol itself.",
     numeral: "VI",
     arc: "realm",
     level: 2,

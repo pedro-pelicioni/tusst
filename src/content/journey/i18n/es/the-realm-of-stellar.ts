@@ -4,7 +4,7 @@ export const theRealmOfStellar: Concept = {
   meta: {
     slug: "the-realm-of-stellar",
     title: "El Reino de Stellar",
-    tagline: "Cómo miles de máquinas llegan a un acuerdo sin un rey.",
+    tagline: "Consenso (SCP): cómo miles de máquinas se ponen de acuerdo sin un rey.",
     numeral: "I",
     arc: "realm",
     level: 1,

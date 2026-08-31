@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Le Destin d'une Enveloppe",
-  tagline: "Soumise, incluse, échouée, facturée — quatre choses différentes.",
+  tagline: "Séquence, frais et cycle de vie d'une transaction : soumise, incluse, échouée, facturée.",
   steps: [
     {
       kind: "theory",

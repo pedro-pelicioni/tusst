@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "O Que Te Pega",
-  tagline: "Toda ferramenta é um raio de destruição. Projete para o dia em que ele errar.",
+  tagline: "Menor privilégio e caminhos de falha: toda ferramenta é um raio de destruição.",
   steps: [
     {
       kind: "theory",

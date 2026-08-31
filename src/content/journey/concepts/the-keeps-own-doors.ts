@@ -9,7 +9,7 @@ export const theKeepsOwnDoors: Concept = {
   meta: {
     slug: "the-keeps-own-doors",
     title: "The Keep's Own Doors",
-    tagline: "Ports and adapters — the domain declares the door, the world fits it.",
+    tagline: "Ports & adapters: the domain declares the door, the world fits it.",
     numeral: "VI",
     arc: "craft",
     level: 2,

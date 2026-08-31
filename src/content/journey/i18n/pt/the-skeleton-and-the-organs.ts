@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "O Esqueleto e os Órgãos",
-  tagline: "Confiabilidade vem da estrutura, inteligência vem dos nós.",
+  tagline: "Orquestração: arestas determinísticas, julgamento dentro dos nós.",
   steps: [
     {
       kind: "theory",

@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Le Donjon Propre",
-  tagline: "Une loi : les dépendances de code source pointent vers l'intérieur, uniquement.",
+  tagline: "Clean architecture : les dépendances de code source pointent vers l'intérieur, uniquement.",
   steps: [
     {
       kind: "theory",

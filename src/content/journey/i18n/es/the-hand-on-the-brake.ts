@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "La Mano en el Freno",
-  tagline: "Un bucle sin regla de parada no es autonomía — es una factura.",
+  tagline: "Bucles agénticos y frenos: sin regla de parada no es autonomía, es una factura.",
   steps: [
     { kind: "theory", body: `## Todo bucle necesita un freno
 

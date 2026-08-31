@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "La Main sur le Frein",
-  tagline: "Une boucle sans règle d'arrêt n'est pas de l'autonomie — c'est une facture.",
+  tagline: "Boucles agentiques et garde-fous : sans règle d'arrêt ce n'est pas de l'autonomie, c'est une facture.",
   steps: [
     { kind: "theory", body: `## Toute boucle a besoin d'un frein
 

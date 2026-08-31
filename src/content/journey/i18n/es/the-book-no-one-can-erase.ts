@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "El libro que nadie puede borrar",
-  tagline: "Qué es una blockchain, contado sin una sola sigla.",
+  tagline: "Qué es una blockchain, sin una sola sigla.",
   steps: [
     {
       kind: "theory",

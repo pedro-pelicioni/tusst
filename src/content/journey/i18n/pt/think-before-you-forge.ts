@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Pense antes de forjar",
-  tagline: "Specs são a habilidade que a IA não pode exercer por você.",
+  tagline: "Spec-driven development: a habilidade que a IA não pode exercer por você.",
   steps: [
     {
       kind: "theory",

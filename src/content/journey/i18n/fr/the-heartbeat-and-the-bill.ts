@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Le Battement et la Facture",
-  tagline: "L'état se loue, et un appel se mesure — il ne s'enchérit pas.",
+  tagline: "Archivage d'état et frais : l'état se loue, et un appel se mesure, il ne s'enchérit pas.",
   steps: [
     {
       kind: "theory",

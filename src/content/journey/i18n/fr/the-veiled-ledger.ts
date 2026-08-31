@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "Le Registre Voilé",
-  tagline: "Preuve sans divulgation — et le premier voile bâti dessus.",
+  tagline: "Zero-knowledge et jetons confidentiels : preuve sans divulgation.",
   steps: [
     {
       kind: "theory",

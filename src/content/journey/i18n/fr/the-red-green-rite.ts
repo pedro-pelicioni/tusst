@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
   title: "Le rite rouge-vert",
-  tagline: "TDD : tests d'abord, forge ensuite.",
+  tagline: "TDD : les tests d'abord, la forge ensuite.",
   steps: [
     {
       kind: "theory",

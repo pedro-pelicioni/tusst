@@ -10,7 +10,7 @@ export const theFateOfAnEnvelope: Concept = {
   meta: {
     slug: "the-fate-of-an-envelope",
     title: "The Fate of an Envelope",
-    tagline: "Submitted, included, failed, charged — four different things.",
+    tagline: "Sequence, fees & the transaction lifecycle: submitted, included, failed, charged.",
     numeral: "III",
     arc: "realm",
     level: 1,

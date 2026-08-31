@@ -2,7 +2,7 @@ import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
   title: "A Pulsação e a Conta",
-  tagline: "Estado é alugado, e uma chamada é medida — não leiloada.",
+  tagline: "Arquivamento de estado e taxas: estado é alugado, e uma chamada é medida, não leiloada.",
   steps: [
     {
       kind: "theory",

@@ -9,7 +9,7 @@ export const whatCatchesIt: Concept = {
   meta: {
     slug: "what-catches-it",
     title: "What Catches It",
-    tagline: "Every tool is a blast radius. Design for the day it is wrong.",
+    tagline: "Least privilege & failure paths: every tool is a blast radius.",
     numeral: "VIII",
     arc: "craft",
     level: 2,
