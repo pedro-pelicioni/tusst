@@ -21,6 +21,33 @@ const WIDGETS: Record<WidgetComponent, ComponentType> = {
     import("./LedgerTamperSim").then((m) => m.LedgerTamperSim),
   ),
   "seal-sign": dynamic(() => import("./SealSim").then((m) => m.SealSim)),
+  "context-window": dynamic(() =>
+    import("./ContextWindowSim").then((m) => m.ContextWindowSim),
+  ),
+  "loop-brake": dynamic(() =>
+    import("./LoopBrakeSim").then((m) => m.LoopBrakeSim),
+  ),
+  "dependency-rule": dynamic(() =>
+    import("./DependencyRuleSim").then((m) => m.DependencyRuleSim),
+  ),
+  "blast-radius": dynamic(() =>
+    import("./BlastRadiusSim").then((m) => m.BlastRadiusSim),
+  ),
+  "fan-out": dynamic(() =>
+    import("./FanOutSim").then((m) => m.FanOutSim),
+  ),
+  "amm-pool": dynamic(() =>
+    import("./AmmPoolSim").then((m) => m.AmmPoolSim),
+  ),
+  "path-payment": dynamic(() =>
+    import("./PathPaymentSim").then((m) => m.PathPaymentSim),
+  ),
+  "explorer-view": dynamic(() =>
+    import("./ExplorerViewSim").then((m) => m.ExplorerViewSim),
+  ),
+  "state-archival": dynamic(() =>
+    import("./StateArchivalSim").then((m) => m.StateArchivalSim),
+  ),
 };
 
 export function WidgetSlot({ component }: { component: WidgetComponent }) {

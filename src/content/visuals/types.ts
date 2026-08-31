@@ -72,4 +72,16 @@ export type DiagramView =
 
 /** Bespoke simulators. Adding a member here is a compile error until the
  *  registry in components/visuals/WidgetSlot.tsx maps it. */
-export type WidgetComponent = "scp-sim" | "ledger-tamper" | "seal-sign";
+export type WidgetComponent =
+  | "scp-sim"
+  | "ledger-tamper"
+  | "seal-sign"
+  | "context-window"
+  | "loop-brake"
+  | "dependency-rule"
+  | "blast-radius"
+  | "fan-out"
+  | "amm-pool"
+  | "path-payment"
+  | "explorer-view"
+  | "state-archival";
