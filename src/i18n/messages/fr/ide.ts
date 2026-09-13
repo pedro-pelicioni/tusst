@@ -336,6 +336,24 @@ export const ide = {
     importFromGithub: "⤓ importer depuis GitHub",
     closeDrawer: "fermer le tiroir des projets",
   },
+  templates: {
+    "hello-world": {
+      name: "hello world",
+      description: "Salutation + compteur persistant. Le plus petit contrat utile.",
+    },
+    "oz-fungible": {
+      name: "token fongible OZ",
+      description: "Token SEP-41 avec pause + mint par l'owner (OpenZeppelin stellar-tokens).",
+    },
+    "oz-nft": {
+      name: "NFT OZ",
+      description: "Collection NFT à mint séquentiel (OpenZeppelin stellar-tokens).",
+    },
+    blank: {
+      name: "vierge",
+      description: "Squelette nu avec le jeu de dépendances retenu.",
+    },
+  },
   wallet: {
     connect: "connecter un portefeuille",
     localWallet: "portefeuille local (testnet uniquement)",

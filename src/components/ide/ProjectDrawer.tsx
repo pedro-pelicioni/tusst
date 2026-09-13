@@ -185,8 +185,8 @@ export function ProjectDrawer({
                       className="mt-0.5 accent-[#8f7bff]"
                     />
                     <span>
-                      <span className="block font-mono text-[12px] text-fg">{t.name}</span>
-                      <span className="block text-[11px] text-muted">{t.description}</span>
+                      <span className="block font-mono text-[12px] text-fg">{m.ide.templates[t.id].name}</span>
+                      <span className="block text-[11px] text-muted">{m.ide.templates[t.id].description}</span>
                     </span>
                   </label>
                 ))}

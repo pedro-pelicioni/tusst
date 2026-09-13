@@ -8,10 +8,12 @@ import type { SorobanFileMap } from "@/lib/soroban/types";
 // follow the integration patterns from OpenZeppelin's own stellar-contracts
 // examples (MIT), which is the intended way to consume that library.
 
+export type ForgeTemplateId = "hello-world" | "oz-fungible" | "oz-nft" | "blank";
+
+// Names and descriptions live in the UI dictionaries (`ide.templates`) so
+// every locale ships them — this file only carries the id and the files.
 export interface ForgeTemplate {
-  id: string;
-  name: string;
-  description: string;
+  id: ForgeTemplateId;
   files: SorobanFileMap;
 }
 
@@ -419,8 +421,6 @@ fn hello_answers() {
 export const forgeTemplates: ForgeTemplate[] = [
   {
     id: "hello-world",
-    name: "hello world",
-    description: "Greeting + persistent counter. The smallest useful contract.",
     files: {
       "Cargo.toml": CURATED_CARGO_TOML,
       "src/lib.rs": HELLO_LIB,
@@ -429,8 +429,6 @@ export const forgeTemplates: ForgeTemplate[] = [
   },
   {
     id: "oz-fungible",
-    name: "OZ fungible token",
-    description: "SEP-41 token with pause + owner mint (OpenZeppelin stellar-tokens).",
     files: {
       "Cargo.toml": CURATED_CARGO_TOML,
       "src/lib.rs": FUNGIBLE_LIB,
@@ -439,8 +437,6 @@ export const forgeTemplates: ForgeTemplate[] = [
   },
   {
     id: "oz-nft",
-    name: "OZ NFT",
-    description: "Sequential-minting NFT collection (OpenZeppelin stellar-tokens).",
     files: {
       "Cargo.toml": CURATED_CARGO_TOML,
       "src/lib.rs": NFT_LIB,
@@ -449,8 +445,6 @@ export const forgeTemplates: ForgeTemplate[] = [
   },
   {
     id: "blank",
-    name: "blank",
-    description: "Bare skeleton with the curated dependency set.",
     files: {
       "Cargo.toml": CURATED_CARGO_TOML,
       "src/lib.rs": BLANK_LIB,
