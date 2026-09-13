@@ -24,9 +24,16 @@
 //
 // Run: npm run check:advanced   (needs a local rustc for section 5 and cargo
 // for section 6; each skips with a clear warning if its toolchain is missing,
-// so the structural checks still guard CI)
+// so the structural checks still guard a machine without a Rust toolchain)
 //
-// Env switches, both for the translation loop and both off by default:
+// Run: npm run check:advanced -- --strict   (CI)
+// In strict mode every skip becomes an error, and the script asserts that it
+// compiled AND verified every sandbox lesson. Without that assertion a skipped
+// section still prints "advanced content OK" and exits 0 — which is exactly
+// how a gate ends up guarding nothing while looking green.
+//
+// Env switches for the translation loop, both off by default and both
+// pointless under --strict (a skipped section is fatal there):
 //   ADVANCED_I18N_PARTIAL=1    a lesson missing from an overlay is a warning
 //                              instead of an error (while a locale is being
 //                              filled in)
@@ -35,7 +42,14 @@
 //                              a reference solution)
 
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdtempSync,
+  readdirSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -66,8 +80,29 @@ import {
 const PARTIAL_OVERLAYS = process.env.ADVANCED_I18N_PARTIAL === "1";
 const STRUCTURAL_ONLY = process.env.ADVANCED_STRUCTURAL_ONLY === "1";
 
+const STRICT =
+  process.argv.includes("--strict") || process.env.CHECK_ADVANCED_STRICT === "1";
+
 const errors: string[] = [];
 const warnings: string[] = [];
+
+// Every sandbox lesson must be both compiled (section 5) and evaluated
+// (section 6). Tracked at module scope so the assertion at the bottom can see
+// them no matter which branch ran.
+const sandboxLessons = Object.values(advancedGraders).filter(
+  (c) => c.grader === "sandbox",
+).length;
+let compiledCount = 0;
+let verifiedCount = 0;
+
+/**
+ * A degradation, not a defect — unless we are in CI, where a toolchain that
+ * silently is not there is the whole failure mode this flag exists to catch.
+ */
+function skip(message: string) {
+  if (STRICT) errors.push(`${message} (fatal under --strict)`);
+  else warnings.push(message);
+}
 
 function check(condition: unknown, message: string) {
   if (!condition) errors.push(message);
@@ -499,11 +534,9 @@ for (const overlay of OVERLAYS) {
 // ---------------------------------------------------------------------------
 
 if (STRUCTURAL_ONLY) {
-  warnings.push("ADVANCED_STRUCTURAL_ONLY=1 — skipped compiling reference solutions");
+  skip("ADVANCED_STRUCTURAL_ONLY=1 — skipped compiling reference solutions");
 } else if (!hasRustc()) {
-  warnings.push(
-    "rustc not found — skipped compiling reference solutions (structure was still checked)",
-  );
+  skip("rustc not found — skipped compiling reference solutions");
 } else {
   const dir = mkdtempSync(join(tmpdir(), "tusst-advanced-"));
   let compiled = 0;
@@ -542,6 +575,7 @@ if (STRUCTURAL_ONLY) {
       }
       compiled++;
     }
+    compiledCount = compiled;
     console.log(`compiled and ran ${compiled} reference solution(s)`);
   } finally {
     rmSync(dir, { recursive: true, force: true });
@@ -579,9 +613,7 @@ function hasCargo(): boolean {
 // CI without cargo still gets every structural guarantee.
 function resolveCheckfile(): string | null {
   if (!existsSync(join(RUNNER_DIR, "Cargo.toml"))) {
-    warnings.push(
-      `runner workspace not found at ${RUNNER_DIR} — skipped AST-check verification`,
-    );
+    skip(`runner workspace not found at ${RUNNER_DIR} — skipped AST-check verification`);
     return null;
   }
 
@@ -589,12 +621,25 @@ function resolveCheckfile(): string | null {
   const releaseBin = join(RUNNER_DIR, "target", "release", "tusst-checkfile");
 
   if (!hasCargo()) {
-    // No cargo, but a previous build may have left the binary behind.
+    // No cargo, but a previous build may have left the binary behind. Only
+    // trust it if it is newer than every tusst-syntest source: a stale binary
+    // would bless all 87 lessons under the OLD normalization, which is the
+    // precise failure this section exists to catch.
     const prebuilt = [releaseBin, debugBin].find((p) => existsSync(p));
-    if (prebuilt) return prebuilt;
-    warnings.push(
-      "cargo not found — skipped AST-check verification (structure and reference solutions were still checked)",
-    );
+    if (prebuilt) {
+      const srcDir = join(RUNNER_DIR, "crates", "tusst-syntest", "src");
+      const newestSource = existsSync(srcDir)
+        ? Math.max(
+            ...readdirSync(srcDir).map((f) => statSync(join(srcDir, f)).mtimeMs),
+          )
+        : 0;
+      if (statSync(prebuilt).mtimeMs >= newestSource) return prebuilt;
+      skip(
+        `${prebuilt} is older than tusst-syntest's sources and cargo is unavailable to rebuild it — skipped AST-check verification rather than trust a stale evaluator`,
+      );
+      return null;
+    }
+    skip("cargo not found — skipped AST-check verification");
     return null;
   }
 
@@ -606,15 +651,27 @@ function resolveCheckfile(): string | null {
     { cwd: RUNNER_DIR, encoding: "utf8", timeout: 600_000 },
   );
   if (build.status !== 0) {
-    warnings.push(
+    skip(
       `could not build tusst-checkfile — skipped AST-check verification\n${(build.stderr || "").trim().split("\n").slice(0, 8).join("\n")}`,
     );
     return null;
   }
-  return existsSync(debugBin) ? debugBin : null;
+  if (existsSync(debugBin)) return debugBin;
+  // cargo said it built, but the binary is not where we look — CARGO_TARGET_DIR
+  // is the usual reason, and it is standard CI cache practice. This was the one
+  // bail-out that returned null in silence.
+  skip(
+    `cargo built tusst-checkfile but no binary at ${debugBin} — CARGO_TARGET_DIR is probably set; skipped AST-check verification`,
+  );
+  return null;
 }
 
-const checkfile = STRUCTURAL_ONLY ? null : resolveCheckfile();
+let checkfile: string | null = null;
+if (STRUCTURAL_ONLY) {
+  skip("ADVANCED_STRUCTURAL_ONLY=1 — skipped AST-check verification");
+} else {
+  checkfile = resolveCheckfile();
+}
 
 if (checkfile) {
   const dir = mkdtempSync(join(tmpdir(), "tusst-astchecks-"));
@@ -680,6 +737,7 @@ if (checkfile) {
       }
       verified++;
     }
+    verifiedCount = verified;
     console.log(`evaluated AST checks for ${verified} lesson(s)`);
   } finally {
     rmSync(dir, { recursive: true, force: true });
@@ -687,6 +745,20 @@ if (checkfile) {
 }
 
 // ---------------------------------------------------------------------------
+
+// The assertion that makes every skip above impossible to ignore: if a section
+// ran but covered fewer lessons than exist, the counts disagree and the build
+// fails. A gate that can quietly verify nothing while printing OK is not a gate.
+if (STRICT) {
+  check(
+    compiledCount === sandboxLessons,
+    `compiled ${compiledCount} reference solution(s) but ${sandboxLessons} sandbox lesson(s) exist — section 5 did not cover everything`,
+  );
+  check(
+    verifiedCount === sandboxLessons,
+    `evaluated AST checks for ${verifiedCount} lesson(s) but ${sandboxLessons} sandbox lesson(s) exist — section 6 did not cover everything`,
+  );
+}
 
 for (const warning of warnings) console.warn(`! ${warning}`);
 
@@ -699,5 +771,9 @@ if (errors.length > 0) {
 for (const line of coverage) console.log(`overlay ${line}`);
 const active = advancedTracks.filter((t) => t.status === "active");
 console.log(
-  `advanced content OK: ${active.length} active track(s), ${advancedLessonSlugs.length} lessons, ${advancedTracks.length - active.length} track(s) declared.`,
+  `advanced content OK: ${active.length} active track(s), ${advancedLessonSlugs.length} lessons, ` +
+    `${advancedTracks.length - active.length} track(s) declared, ` +
+    `${compiledCount}/${sandboxLessons} compiled, ${verifiedCount}/${sandboxLessons} AST-verified` +
+    (STRICT ? " [strict]" : "") +
+    ".",
 );
