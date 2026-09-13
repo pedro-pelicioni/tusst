@@ -97,7 +97,7 @@ front: Some(1)
       kind: "theory",
       body: `Escolha \`BTreeMap\` quando precisar de iteração ordenada, varreduras por faixa ou saída determinística (um dump de config, um snapshot de teste, um payload assinado). Escolha \`HashMap\` no resto — é mais rápido e é o padrão certo.
 
-A API \`entry\` é o idioma que vale memorizar para os dois:
+A API \`entry\` é o padrão idiomático que vale memorizar para os dois:
 
 \`\`\`rust
 *hits.entry(method).or_insert(0) += 1;

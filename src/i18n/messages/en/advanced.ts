@@ -34,7 +34,7 @@ export const advanced = {
   empty: "No lessons are authored for this track yet.",
   notes: {
     english:
-      "Advanced lessons are written in English first. Portuguese lands next; Spanish and French follow.",
+      "Advanced lessons are available in English, Portuguese, Spanish and French. Code, compiler output and expected stdout stay in English on purpose — that is what a real terminal shows.",
     sandbox:
       "Every exercise compiles and runs in the Forge sandbox — standard library only, no external crates.",
   },

@@ -28,7 +28,7 @@ export const advanced = {
   empty: "Aucune leçon rédigée dans ce parcours pour l'instant.",
   notes: {
     english:
-      "Les leçons avancées sont d'abord écrites en anglais. Le portugais suit ; l'espagnol et le français ensuite.",
+      "Les leçons avancées sont disponibles en anglais, portugais, espagnol et français. Le code, la sortie du compilateur et le stdout attendu restent en anglais à dessein — c'est ce qu'affiche un vrai terminal.",
     sandbox:
       "Chaque exercice compile et s'exécute dans le bac à sable de la Forge — bibliothèque standard uniquement, sans crates externes.",
   },
