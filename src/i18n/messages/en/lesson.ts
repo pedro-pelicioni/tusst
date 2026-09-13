@@ -13,15 +13,15 @@ export const lesson = {
 
   // LessonSteps (step player)
   praise: ["Nicely done.", "That's it.", "Correct.", "Clean."],
-  incorrect: "Not quite — study the rune again.",
+  incorrect: "Not quite — read that part again.",
   skirmishComplete: "lesson complete",
   doneSignedIn:
-    "The beacon flickers a little brighter. Your progress is carved into the Ledgerstone.",
+    "Progress saved to your account.",
   doneAnonymous:
     "Nothing here is saved yet. Create a free account to keep your progress and collect the section cards.",
   saveProgress: "Save my progress",
   nextSkirmish: "Next lesson ›",
-  backToAct: "Back to the act",
+  backToAct: "Back to the section",
   exitLesson: "Exit lesson",
   previousStep: "Previous step",
   nextStep: "Next step",
@@ -57,7 +57,7 @@ export const lesson = {
   mentorLimit:
     "the mentor rests — you've used today's hints for this lesson. The scroll's own hints remain:",
   mentorUnavailable:
-    "the mentor is away from the forge — the scroll's hints may help:",
+    "the mentor is unavailable — these hints may help:",
   goldCoinAlt: "Gold coin",
   goldEarned: "+{gold} gold",
   goldFirstReveal:
