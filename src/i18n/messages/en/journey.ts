@@ -46,7 +46,7 @@ export const journey = {
       kicker: "see it in rust",
       optional: "optional deep-dive",
       cta: "Open the Rust lesson",
-      locked: "Unlocks with Campaign Act {numeral}",
+      locked: "Unlocks with Campaign section {numeral}",
     },
     lab: {
       kicker: "hands-on lab",

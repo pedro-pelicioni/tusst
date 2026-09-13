@@ -46,7 +46,7 @@ export const journey = {
       kicker: "ver em rust",
       optional: "aprofundamento opcional",
       cta: "Abrir a lição de Rust",
-      locked: "Destrava com o Ato {numeral} da Campanha",
+      locked: "Destrava com a seção {numeral} da Campanha",
     },
     lab: {
       kicker: "lab prático",
