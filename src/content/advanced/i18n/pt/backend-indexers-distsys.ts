@@ -294,14 +294,14 @@ Saída esperada:
 
 \`\`\`text
 pass  naive  idempotent
-   1    265         225
-   2    530         225
-exactly-once total: 225
+   1    305         265
+   2    610         265
+exactly-once total: 265
 account balance
 alice       125
-bob          40
+bob          80
 carol        60
-distinct event ids retained: 4
+distinct event ids retained: 5
 \`\`\`
 
 A linha de passada é \`"{:>4}{:>7}{:>12}"\`; a linha de saldo é \`"{:<8}{:>7}"\`.`,

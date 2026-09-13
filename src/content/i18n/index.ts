@@ -25,9 +25,9 @@ export function getLessonStepsLocalized(
   locale: Locale,
 ): LessonStep[] | undefined {
   // Campaign overlay, then the Advanced Path overlay, then English. The
-  // advanced overlay is kept in its own module because its locale coverage is
-  // deliberately behind the campaign's (EN + PT first, es/fr later) and
-  // `LocaleContent` demands a complete map.
+  // advanced overlay is kept in its own module because `LocaleContent`
+  // demands a complete campaign map, while the advanced one is keyed per
+  // lesson and allowed to be partial while a new lesson is being translated.
   return (
     CONTENT[locale]?.steps[slug] ??
     getAdvancedStepsLocalized(slug, locale) ??

@@ -1,0 +1,10 @@
+// ES · editor instructions — Macros, Unsafe, FFI & Money.
+//
+// Only the learner-facing `instructions` markdown is localized. Starter code,
+// expected output and the hidden AST checks are locale-neutral and always
+// come from the English source of truth (../../graders/rust-systems-edges.ts) — the same
+// split the campaign uses in `src/content/i18n/server.ts`.
+//
+// CLIENT-SAFE: instructions are shown to the reader. Nothing secret here.
+
+export const rustSystemsEdgesInstructionsEs: Record<string, { instructions: string }> = {};

@@ -260,7 +260,7 @@ mut after release: true
 
 O formato padrão onde isso aparece é uma árvore com links para o pai:
 
-\`\`\`text
+\`\`\`rust
 root.children  ->  Rc<Node>   (forte)
 leaf.parent    ->  Rc<Node>   (forte)  // ciclo: nada nunca é liberado
 \`\`\``,

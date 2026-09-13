@@ -17,9 +17,22 @@
 // all: steps exist, the flow ends in an `editor` step, curriculum and content
 // agree on which lessons exist, and no slug collides with the campaign.
 //
+// It also holds the pt/es/fr overlays to the English source: every lesson
+// translated, and every translation structurally identical to its original —
+// same step kinds, same answer indexes, byte-identical ```text``` output
+// blocks and executable `choices`.
+//
 // Run: npm run check:advanced   (needs a local rustc for section 5 and cargo
 // for section 6; each skips with a clear warning if its toolchain is missing,
 // so the structural checks still guard CI)
+//
+// Env switches, both for the translation loop and both off by default:
+//   ADVANCED_I18N_PARTIAL=1    a lesson missing from an overlay is a warning
+//                              instead of an error (while a locale is being
+//                              filled in)
+//   ADVANCED_STRUCTURAL_ONLY=1 skip sections 5–6 even when the Rust toolchain
+//                              is present (nothing in a translation can change
+//                              a reference solution)
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -30,14 +43,41 @@ import { serializeChecks } from "../src/content/lesson-checks";
 import { advancedTracks, advancedLessonSlugs } from "../src/content/advanced/curriculum";
 import { advancedSteps } from "../src/content/advanced/steps";
 import { advancedGraders } from "../src/content/advanced/graders";
+import type { LessonStep } from "../src/content/steps";
 import { ptAdvancedSteps } from "../src/content/advanced/i18n/pt";
+import { esAdvancedSteps } from "../src/content/advanced/i18n/es";
+import { frAdvancedSteps } from "../src/content/advanced/i18n/fr";
 import { ptAdvancedInstructions } from "../src/content/advanced/i18n/pt/instructions";
+import { esAdvancedInstructions } from "../src/content/advanced/i18n/es/instructions";
+import { frAdvancedInstructions } from "../src/content/advanced/i18n/fr/instructions";
+import {
+  ptAdvancedLessonText,
+  ptAdvancedTrackText,
+} from "../src/content/advanced/i18n/pt/curriculum";
+import {
+  esAdvancedLessonText,
+  esAdvancedTrackText,
+} from "../src/content/advanced/i18n/es/curriculum";
+import {
+  frAdvancedLessonText,
+  frAdvancedTrackText,
+} from "../src/content/advanced/i18n/fr/curriculum";
+
+const PARTIAL_OVERLAYS = process.env.ADVANCED_I18N_PARTIAL === "1";
+const STRUCTURAL_ONLY = process.env.ADVANCED_STRUCTURAL_ONLY === "1";
 
 const errors: string[] = [];
 const warnings: string[] = [];
 
 function check(condition: unknown, message: string) {
   if (!condition) errors.push(message);
+}
+
+// A missing translation: an error once a locale ships, a warning while it is
+// being filled in.
+function missing(message: string) {
+  if (PARTIAL_OVERLAYS) warnings.push(message);
+  else errors.push(message);
 }
 
 // Mirrors compile.rs exactly. If that file changes, change this.
@@ -189,51 +229,268 @@ for (const [slug, content] of Object.entries(advancedGraders)) {
 }
 
 // ---------------------------------------------------------------------------
-// 4. PT overlay parity (EN is the source of truth; pt must match structurally)
+// 4. Locale overlay parity (EN is the source of truth; pt/es/fr must match)
 // ---------------------------------------------------------------------------
+//
+// A translation may change every word of prose and nothing else. The bits a
+// translator can break without noticing are exactly the bits the grader and
+// the step player depend on: the answer index, the executable `choices`, the
+// ```text``` block the reader is told to reproduce byte for byte, and the
+// `{placeholder}` names inside format strings.
 
-for (const [slug, steps] of Object.entries(advancedSteps)) {
-  const pt = ptAdvancedSteps[slug];
-  if (!pt) {
-    warnings.push(`${slug}: no pt translation yet`);
-    continue;
+// Copied from scripts/check-i18n.ts — that script is not importable, it runs
+// the whole campaign check on import.
+function placeholders(value: unknown): string[] {
+  if (typeof value === "string") {
+    return [...value.matchAll(/\{[A-Za-z_][A-Za-z0-9_]*\}/g)].map(
+      (match) => match[0],
+    );
   }
+  if (Array.isArray(value)) return value.flatMap(placeholders);
+  if (value && typeof value === "object") {
+    return Object.values(value).flatMap(placeholders);
+  }
+  return [];
+}
+
+function checkPlaceholders(source: unknown, translated: unknown, label: string) {
+  const expected = placeholders(source).sort();
+  const actual = placeholders(translated).sort();
   check(
-    pt.length === steps.length,
-    `pt/${slug}: expected ${steps.length} steps, got ${pt.length}`,
+    JSON.stringify(actual) === JSON.stringify(expected),
+    `${label}: placeholders differ (${actual.join(", ")} vs ${expected.join(", ")})`,
   );
-  if (pt.length !== steps.length) continue;
-
-  steps.forEach((source, i) => {
-    const target = pt[i];
-    const label = `pt/${slug}/${i}`;
-    check(target.kind === source.kind, `${label}: kind changed`);
-    if (source.kind === "quiz" && target.kind === "quiz") {
-      check(target.answer === source.answer, `${label}: quiz answer changed`);
-      check(
-        target.options.length === source.options.length,
-        `${label}: option count changed`,
-      );
-    }
-    if (source.kind === "fill" && target.kind === "fill") {
-      check(target.answer === source.answer, `${label}: fill answer changed`);
-      // Choices are code, not prose — translating them breaks the exercise.
-      check(
-        JSON.stringify(target.choices) === JSON.stringify(source.choices),
-        `${label}: executable choices were translated`,
-      );
-      check(target.file === source.file, `${label}: file changed`);
-    }
-  });
 }
 
-for (const slug of Object.keys(ptAdvancedSteps)) {
-  check(slug in advancedSteps, `pt/${slug}: translation for an unknown lesson`);
+// Every ```text``` fence in a markdown string, in order.
+function textBlocks(markdown: string): string[] {
+  return [...markdown.matchAll(/```text\n([\s\S]*?)```/g)].map((m) => m[1]);
 }
-for (const slug of Object.keys(ptAdvancedInstructions)) {
+
+// In an editor intro and in the grader instructions a ```text``` block IS the
+// expected output — the runner compares stdout byte for byte, so a translated
+// (or even re-wrapped) block promises the reader the wrong bytes. In a theory
+// step the same fence usually holds a diagram, which a translator may and
+// should localize; there only the block count has to survive.
+function checkTextBlocks(source: string, translated: string, label: string) {
   check(
-    slug in advancedGraders,
-    `pt/${slug}: instructions for an unknown lesson`,
+    JSON.stringify(textBlocks(translated)) === JSON.stringify(textBlocks(source)),
+    `${label}: a \`\`\`text\`\`\` output block changed`,
+  );
+}
+
+function checkTextBlockCount(source: string, translated: string, label: string) {
+  check(
+    textBlocks(translated).length === textBlocks(source).length,
+    `${label}: \`\`\`text\`\`\` block count changed`,
+  );
+}
+
+// Fill-step code may translate its `//` comments and nothing else. The blank
+// can sit inside a comment (before = "// ", after = "the rest of the line"),
+// so the two halves are compared as one joined line.
+function stripLineComments(code: string): string {
+  return code.replace(/\/\/.*$/gm, "").replace(/[ \t]+$/gm, "");
+}
+
+function fillCode(step: { before: string; after: string }): string {
+  return stripLineComments(`${step.before}___${step.after}`);
+}
+
+// The prose of a step, keyed by field, for the "still English" heuristic.
+function proseFields(step: LessonStep): Record<string, string> {
+  switch (step.kind) {
+    case "theory":
+      return { body: step.body };
+    case "quiz":
+      return {
+        question: step.question,
+        ...Object.fromEntries(step.options.map((o, i) => [`options[${i}]`, o])),
+        ...(step.explain ? { explain: step.explain } : {}),
+      };
+    case "fill":
+      return {
+        prompt: step.prompt,
+        ...(step.explain ? { explain: step.explain } : {}),
+      };
+    case "editor":
+      return { intro: step.intro };
+  }
+}
+
+function allProse(step: LessonStep): string {
+  return Object.values(proseFields(step)).join("\n");
+}
+
+// Short fields (a code-only quiz option like `Rc<RefCell<T>>`) legitimately
+// stay identical across locales; a sentence does not.
+function looksUntranslated(source: string, translated: string): boolean {
+  return source === translated && source.length > 40 && /[A-Za-z]{4,}\s+[A-Za-z]{3,}/.test(source);
+}
+
+const OVERLAYS = [
+  {
+    locale: "pt",
+    steps: ptAdvancedSteps,
+    instructions: ptAdvancedInstructions,
+    tracks: ptAdvancedTrackText,
+    lessons: ptAdvancedLessonText,
+  },
+  {
+    locale: "es",
+    steps: esAdvancedSteps,
+    instructions: esAdvancedInstructions,
+    tracks: esAdvancedTrackText,
+    lessons: esAdvancedLessonText,
+  },
+  {
+    locale: "fr",
+    steps: frAdvancedSteps,
+    instructions: frAdvancedInstructions,
+    tracks: frAdvancedTrackText,
+    lessons: frAdvancedLessonText,
+  },
+] as const;
+
+const coverage: string[] = [];
+
+for (const overlay of OVERLAYS) {
+  const { locale } = overlay;
+  let stepsDone = 0;
+  let instructionsDone = 0;
+
+  // 4a. Steps
+  for (const [slug, steps] of Object.entries(advancedSteps)) {
+    const target = overlay.steps[slug];
+    if (!target) {
+      missing(`${locale}/${slug}: no ${locale} steps yet`);
+      continue;
+    }
+    stepsDone++;
+    check(
+      target.length === steps.length,
+      `${locale}/${slug}: expected ${steps.length} steps, got ${target.length}`,
+    );
+    if (target.length !== steps.length) continue;
+
+    steps.forEach((source, i) => {
+      const translated = target[i];
+      const label = `${locale}/${slug}/${i}`;
+      check(translated.kind === source.kind, `${label}: kind changed`);
+      if (translated.kind !== source.kind) return;
+
+      checkPlaceholders(source, translated, label);
+      if (source.kind === "editor") {
+        checkTextBlocks(allProse(source), allProse(translated), label);
+      } else {
+        checkTextBlockCount(allProse(source), allProse(translated), label);
+      }
+
+      if (source.kind === "quiz" && translated.kind === "quiz") {
+        check(translated.answer === source.answer, `${label}: quiz answer changed`);
+        check(
+          translated.options.length === source.options.length,
+          `${label}: option count changed`,
+        );
+      }
+      if (source.kind === "fill" && translated.kind === "fill") {
+        check(translated.answer === source.answer, `${label}: fill answer changed`);
+        // Choices are code, not prose — translating them breaks the exercise.
+        check(
+          JSON.stringify(translated.choices) === JSON.stringify(source.choices),
+          `${label}: executable choices were translated`,
+        );
+        check(translated.file === source.file, `${label}: file changed`);
+        check(
+          fillCode(translated) === fillCode(source),
+          `${label}: fill code changed (only // comments may be translated)`,
+        );
+      }
+      if (source.kind === "theory" && translated.kind === "theory") {
+        check(translated.image === source.image, `${label}: image changed`);
+      }
+
+      const sourceProse = proseFields(source);
+      const translatedProse = proseFields(translated);
+      for (const [field, text] of Object.entries(sourceProse)) {
+        if (looksUntranslated(text, translatedProse[field] ?? "")) {
+          warnings.push(`${label}: ${field} is identical to English`);
+        }
+      }
+    });
+  }
+  for (const slug of Object.keys(overlay.steps)) {
+    check(slug in advancedSteps, `${locale}/${slug}: translation for an unknown lesson`);
+  }
+
+  // 4b. Instructions
+  for (const [slug, content] of Object.entries(advancedGraders)) {
+    const translated = overlay.instructions[slug]?.instructions;
+    if (translated === undefined) {
+      missing(`${locale}/${slug}: no ${locale} instructions yet`);
+      continue;
+    }
+    instructionsDone++;
+    const label = `${locale}/${slug}/instructions`;
+    check(translated.trim() !== "", `${label}: empty`);
+    check(translated !== content.instructions, `${label}: identical to English`);
+    checkTextBlocks(content.instructions, translated, label);
+    checkPlaceholders(content.instructions, translated, label);
+  }
+  for (const slug of Object.keys(overlay.instructions)) {
+    check(slug in advancedGraders, `${locale}/${slug}: instructions for an unknown lesson`);
+  }
+
+  // 4c. Curriculum
+  let tracksDone = 0;
+  for (const track of advancedTracks) {
+    const text = overlay.tracks[track.slug];
+    if (!text) {
+      missing(`${locale}/${track.slug}: no ${locale} track text yet`);
+      continue;
+    }
+    tracksDone++;
+    const label = `${locale}/${track.slug}/track`;
+    check(text.title.trim() !== "", `${label}: empty title`);
+    check(text.description.trim() !== "", `${label}: empty description`);
+    check(text.serves.trim() !== "", `${label}: empty serves`);
+    check(
+      (text.syllabus?.length ?? 0) === (track.syllabus?.length ?? 0),
+      `${label}: syllabus length differs from English`,
+    );
+    if (looksUntranslated(track.description, text.description)) {
+      warnings.push(`${label}: description is identical to English`);
+    }
+  }
+  for (const slug of Object.keys(overlay.tracks)) {
+    check(
+      advancedTracks.some((t) => t.slug === slug),
+      `${locale}/${slug}: track text for an unknown track`,
+    );
+  }
+  let lessonsDone = 0;
+  for (const track of advancedTracks) {
+    for (const lesson of track.lessons) {
+      const text = overlay.lessons[lesson.slug];
+      if (!text) {
+        missing(`${locale}/${lesson.slug}: no ${locale} lesson title yet`);
+        continue;
+      }
+      lessonsDone++;
+      const label = `${locale}/${lesson.slug}/lesson`;
+      check(text.title.trim() !== "", `${label}: empty title`);
+      check(text.summary.trim() !== "", `${label}: empty summary`);
+      if (looksUntranslated(lesson.summary, text.summary)) {
+        warnings.push(`${label}: summary is identical to English`);
+      }
+    }
+  }
+  for (const slug of Object.keys(overlay.lessons)) {
+    check(curriculumSlugs.has(slug), `${locale}/${slug}: lesson text for an unknown lesson`);
+  }
+
+  coverage.push(
+    `${locale}: ${stepsDone}/${advancedLessonSlugs.length} steps, ${instructionsDone}/${Object.keys(advancedGraders).length} instructions, ${tracksDone}/${advancedTracks.length} tracks, ${lessonsDone}/${advancedLessonSlugs.length} lesson titles`,
   );
 }
 
@@ -241,7 +498,9 @@ for (const slug of Object.keys(ptAdvancedInstructions)) {
 // 5. The real check: compile and run every reference solution
 // ---------------------------------------------------------------------------
 
-if (!hasRustc()) {
+if (STRUCTURAL_ONLY) {
+  warnings.push("ADVANCED_STRUCTURAL_ONLY=1 — skipped compiling reference solutions");
+} else if (!hasRustc()) {
   warnings.push(
     "rustc not found — skipped compiling reference solutions (structure was still checked)",
   );
@@ -355,7 +614,7 @@ function resolveCheckfile(): string | null {
   return existsSync(debugBin) ? debugBin : null;
 }
 
-const checkfile = resolveCheckfile();
+const checkfile = STRUCTURAL_ONLY ? null : resolveCheckfile();
 
 if (checkfile) {
   const dir = mkdtempSync(join(tmpdir(), "tusst-astchecks-"));
@@ -437,6 +696,7 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
+for (const line of coverage) console.log(`overlay ${line}`);
 const active = advancedTracks.filter((t) => t.status === "active");
 console.log(
   `advanced content OK: ${active.length} active track(s), ${advancedLessonSlugs.length} lessons, ${advancedTracks.length - active.length} track(s) declared.`,
