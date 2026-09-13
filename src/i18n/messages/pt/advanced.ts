@@ -28,7 +28,7 @@ export const advanced = {
   empty: "Nenhuma lição escrita nesta trilha ainda.",
   notes: {
     english:
-      "As lições avançadas são escritas primeiro em inglês. O português vem em seguida; espanhol e francês depois.",
+      "As lições avançadas estão disponíveis em inglês, português, espanhol e francês. Código, saída do compilador e stdout esperado ficam em inglês de propósito — é o que um terminal de verdade mostra.",
     sandbox:
       "Todo exercício compila e roda no sandbox da Forge — apenas biblioteca padrão, sem crates externos.",
   },

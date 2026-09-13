@@ -16,10 +16,11 @@ import { backendRpcServicesStepsPt } from "./backend-rpc-services";
 // PT step overlays for the Advanced Path.
 //
 // PARTIAL BY DESIGN: a lesson with no entry here falls back to English at
-// resolution time (see `src/content/advanced/i18n/index.ts`). That is what
-// lets EN and PT ship first and es/fr land later without blocking either.
-// `check:advanced` warns about the gap and hard-fails on a translation whose
-// structure drifted — a changed answer index or a translated `choices` array.
+// resolution time (see `src/content/advanced/i18n/index.ts`), so a lesson can
+// be authored in EN and translated in a later commit without leaving a gap on
+// any page. `check:advanced` reports a missing translation and hard-fails on
+// one whose structure drifted — a changed answer index, a translated
+// `choices` array, an edited ```text``` output block.
 
 export const ptAdvancedSteps: Record<string, LessonStep[]> = {
   ...rustOwnershipDeepStepsPt,

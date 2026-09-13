@@ -1,4 +1,6 @@
 // The Forge IDE (/ide) UI strings.
+import type { ForgeTemplateId } from "@/content/soroban-templates";
+
 export const ide = {
   meta: {
     title: "Forge — IDE Online | TUSST",
@@ -336,6 +338,24 @@ export const ide = {
     importFromGithub: "⤓ import from GitHub",
     closeDrawer: "close project drawer",
   },
+  templates: {
+    "hello-world": {
+      name: "hello world",
+      description: "Greeting + persistent counter. The smallest useful contract.",
+    },
+    "oz-fungible": {
+      name: "OZ fungible token",
+      description: "SEP-41 token with pause + owner mint (OpenZeppelin stellar-tokens).",
+    },
+    "oz-nft": {
+      name: "OZ NFT",
+      description: "Sequential-minting NFT collection (OpenZeppelin stellar-tokens).",
+    },
+    blank: {
+      name: "blank",
+      description: "Bare skeleton with the curated dependency set.",
+    },
+  } satisfies Record<ForgeTemplateId, { name: string; description: string }>,
   wallet: {
     connect: "connect wallet",
     localWallet: "local wallet (testnet only)",

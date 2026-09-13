@@ -10,12 +10,9 @@
 // lifetime, closure. Traduzi-los afasta o leitor da mensagem de erro real do
 // compilador, que é onde ele vai encontrar a palavra de novo.
 
-export interface AdvancedTrackText {
-  title: string;
-  description: string;
-  serves: string;
-  syllabus?: string[];
-}
+import type { AdvancedTrackText } from "../types";
+
+export type { AdvancedTrackText };
 
 export const ptAdvancedTrackText: Record<string, AdvancedTrackText> = {
   "rust-ownership-deep": {

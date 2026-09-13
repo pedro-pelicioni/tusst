@@ -177,7 +177,7 @@ for chunk in 0..4 {
 }
 \`\`\`
 
-O \`let table = Arc::clone(&table);\` que sombreia dentro do laço é o idioma: ele clona o handle para esta iteração, e a closure \`move\` leva esse clone em vez do binding externo.`,
+O \`let table = Arc::clone(&table);\` que sombreia dentro do laço é o padrão idiomático: ele clona o handle para esta iteração, e a closure \`move\` leva esse clone em vez do binding externo.`,
     },
     {
       kind: "theory",
