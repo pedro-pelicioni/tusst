@@ -4,7 +4,7 @@ export const pages = {
     kicker: "a estrada opcional",
     title: "Campanha de Rust",
     optionalNote:
-      "A trilha de maestria. Cada ato é opcional — e cada ato te deixa mais afiado. A Jornada aponta para cá sempre que você quiser o Rust por trás de um conceito.",
+      "A trilha de aprofundamento. Cada seção é opcional — e cada uma te deixa mais afiado. A Jornada aponta para cá sempre que você quiser o Rust por trás de um conceito.",
   },
   path: {
     kicker: "trilha da campanha",
@@ -29,7 +29,7 @@ export const pages = {
     actLink: "Seção {numeral} — {title}",
     unassigned: "não atribuída",
     footnote:
-      "as cartas são progressão cosmética — não trazem vantagem de gameplay. edições raras são concedidas por completar um ato de forma impecável. a reivindicação on-chain chega com o projeto final de Soroban.",
+      "as cartas são puramente cosméticas — não dão vantagem nenhuma e não travam conteúdo. edições raras são concedidas por terminar uma seção sem errar nenhuma resposta.",
   },
   track: {
     backToPath: "trilha da campanha",
