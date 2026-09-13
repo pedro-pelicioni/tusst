@@ -9,7 +9,7 @@ export const onboarding = {
   welcomeBodyRust: "Rust",
   welcomeBody2: " programs and ",
   welcomeBodySoroban: "Soroban contracts",
-  welcomeBody3: " on Stellar — one small rune at a time.",
+  welcomeBody3: " on Stellar — one small step at a time.",
 
   // Question headings.
   goalQuestion: "Why are you learning to code?",
@@ -36,7 +36,7 @@ export const onboarding = {
   xpLevels: [
     {
       label: "NONE",
-      blurb: "You've never written a rune. Perfect — the Citadel was built for you.",
+      blurb: "You have never written a line of code. Perfect — this track starts there.",
     },
     {
       label: "LOW",

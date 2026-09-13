@@ -9,7 +9,7 @@ export const onboarding = {
   welcomeBodyRust: "Rust",
   welcomeBody2: " e ",
   welcomeBodySoroban: "contratos Soroban",
-  welcomeBody3: " na Stellar — uma pequena runa de cada vez.",
+  welcomeBody3: " na Stellar — um pequeno passo de cada vez.",
 
   // Títulos das perguntas.
   goalQuestion: "Por que você está aprendendo a programar?",
@@ -36,7 +36,7 @@ export const onboarding = {
   xpLevels: [
     {
       label: "NENHUMA",
-      blurb: "Você nunca escreveu uma runa. Perfeito — a Cidadela foi construída para você.",
+      blurb: "Você nunca escreveu uma linha de código. Perfeito — esta trilha começa aí.",
     },
     {
       label: "POUCA",
@@ -49,7 +49,7 @@ export const onboarding = {
   ],
 
   // Prova social.
-  proofHeading: "Os anciões já forjaram muitos aprendizes",
+  proofHeading: "Builders que terminaram a trilha",
   proofBody:
     "Código de verdade, corrigido por testes ocultos, direto no seu navegador. Sem setup local, sem toolchain para instalar.",
 
