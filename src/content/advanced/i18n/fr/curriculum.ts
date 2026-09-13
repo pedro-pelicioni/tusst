@@ -154,8 +154,8 @@ export const frAdvancedLessonText: Record<
   },
   // traits & generics
   "rust-traits-generics-1": {
-    title: "Définir et implémenter une trait",
-    summary: "Écris une trait avec une méthode par défaut et surcharge-la.",
+    title: "Définir et implémenter un trait",
+    summary: "Écris un trait avec une méthode par défaut et surcharge-la.",
   },
   "rust-traits-generics-2": {
     title: "Trait bounds et clauses where",
@@ -180,12 +180,12 @@ export const frAdvancedLessonText: Record<
   "rust-traits-generics-6": {
     title: "Object safety",
     summary:
-      "Prédis quelles traits peuvent devenir des trait objects avant que le compilateur te le dise.",
+      "Prédis quels traits peuvent devenir des trait objects avant que le compilateur te le dise.",
   },
   "rust-traits-generics-7": {
     title: "Blanket impls et l'orphan rule",
     summary:
-      "Implémente une trait pour tout type qui satisfait un bound — et sache quand tu n'as pas le droit.",
+      "Implémente un trait pour tout type qui satisfait un bound — et sache quand tu n'as pas le droit.",
   },
   // errors
   "rust-error-handling-1": {
