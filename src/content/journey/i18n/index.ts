@@ -4,12 +4,14 @@ import type { Concept } from "../types";
 import { ptJourneyText } from "./pt";
 import { esJourneyText } from "./es";
 import { frJourneyText } from "./fr";
+import { trJourneyText } from "./tr";
 import type { JourneyConceptText } from "./types";
 
 const TEXT: Partial<Record<Locale, Record<string, JourneyConceptText>>> = {
   pt: ptJourneyText,
   es: esJourneyText,
   fr: frJourneyText,
+  tr: trJourneyText,
 };
 
 function localizeConcept(

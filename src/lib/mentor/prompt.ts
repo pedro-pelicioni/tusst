@@ -16,6 +16,7 @@ const LANGUAGE_NAMES: Record<Locale, string> = {
   pt: "Brazilian Portuguese",
   es: "Spanish",
   fr: "French",
+  tr: "Turkish",
 };
 
 // The Socratic contract, shared by both mentors. It lives in one place

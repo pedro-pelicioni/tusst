@@ -29,6 +29,7 @@ const OG_LOCALES = {
   pt: "pt_BR",
   es: "es_ES",
   fr: "fr_FR",
+  tr: "tr_TR",
 } as const;
 
 export async function generateMetadata(): Promise<Metadata> {

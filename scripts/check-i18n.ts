@@ -2,10 +2,12 @@ import { readFileSync } from "node:fs";
 import { acts, cards } from "../src/content/campaign";
 import { es as campaignEs } from "../src/content/i18n/es";
 import { fr as campaignFr } from "../src/content/i18n/fr";
+import { tr as campaignTr } from "../src/content/i18n/tr";
 import { pt as campaignPt } from "../src/content/i18n/pt";
 import { journeyChapters } from "../src/content/journey";
 import { esJourneyText } from "../src/content/journey/i18n/es";
 import { frJourneyText } from "../src/content/journey/i18n/fr";
+import { trJourneyText } from "../src/content/journey/i18n/tr";
 import { ptJourneyText } from "../src/content/journey/i18n/pt";
 import type { JourneyConceptText } from "../src/content/journey/i18n/types";
 import { labs } from "../src/content/labs";
@@ -104,6 +106,7 @@ const translatedJourneys = {
   pt: ptJourneyText,
   es: esJourneyText,
   fr: frJourneyText,
+  tr: trJourneyText,
 } satisfies Record<string, Record<string, JourneyConceptText>>;
 
 for (const [locale, translated] of Object.entries(translatedJourneys)) {
@@ -230,7 +233,7 @@ function sourceText(step: LabStep): LabStepText {
   return result;
 }
 
-for (const locale of ["pt", "es", "fr"] as const) {
+for (const locale of ["pt", "es", "fr", "tr"] as const) {
   const translated = LAB_TEXT[locale] as Record<
     string,
     LabTextOverlay | undefined
@@ -305,6 +308,7 @@ const translatedCampaigns = {
   pt: campaignPt,
   es: campaignEs,
   fr: campaignFr,
+  tr: campaignTr,
 };
 const lessonSlugs = acts.flatMap((act) =>
   act.skirmishes.map((skirmish) => skirmish.lessonSlug),
@@ -410,5 +414,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `i18n coverage OK: ${journeyChapters.length} Journey chapters (${journeyChapters.filter((c) => (c.testOut?.length ?? 0) > 0).length} with a test-out bank), ${labs.length} Labs, ${lessonSlugs.length} Campaign lessons × 3 translated locales.`,
+  `i18n coverage OK: ${journeyChapters.length} Journey chapters (${journeyChapters.filter((c) => (c.testOut?.length ?? 0) > 0).length} with a test-out bank), ${labs.length} Labs, ${lessonSlugs.length} Campaign lessons × 4 translated locales.`,
 );

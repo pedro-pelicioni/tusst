@@ -15,10 +15,11 @@ import { getLessonSteps, type LessonStep } from "@/content/steps";
 import { getAdvancedStepsLocalized } from "@/content/advanced/i18n";
 import { es } from "./es";
 import { fr } from "./fr";
+import { tr } from "./tr";
 import { pt } from "./pt";
 import type { LocaleContent, TrackText } from "./types";
 
-const CONTENT: Partial<Record<Locale, LocaleContent>> = { pt, es, fr };
+const CONTENT: Partial<Record<Locale, LocaleContent>> = { pt, es, fr, tr };
 
 export function getLessonStepsLocalized(
   slug: string,

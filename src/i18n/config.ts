@@ -2,7 +2,7 @@
 // Locale is stored in the `tusst_locale` cookie (readable from server
 // components) and mirrored to `User.locale` for signed-in players.
 
-export const LOCALES = ["en", "pt", "es", "fr"] as const;
+export const LOCALES = ["en", "pt", "es", "fr", "tr"] as const;
 export type Locale = (typeof LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = "en";
@@ -16,6 +16,7 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   pt: "Português",
   es: "Español",
   fr: "Français",
+  tr: "Türkçe",
 };
 
 export const LOCALE_FLAGS: Record<Locale, string> = {
@@ -23,6 +24,7 @@ export const LOCALE_FLAGS: Record<Locale, string> = {
   pt: "🇧🇷",
   es: "🇪🇸",
   fr: "🇫🇷",
+  tr: "🇹🇷",
 };
 
 export function isLocale(value: unknown): value is Locale {

@@ -10,11 +10,12 @@ import { getLessonContent, type LessonContent } from "@/content/lessons";
 import { getAdvancedInstructionsLocalized } from "@/content/advanced/i18n";
 import { lessonText as es } from "./es/lessons";
 import { lessonText as fr } from "./fr/lessons";
+import { lessonText as tr } from "./tr/lessons";
 import { lessonText as pt } from "./pt/lessons";
 
 const LESSON_TEXT: Partial<
   Record<Locale, Record<string, { instructions: string }>>
-> = { pt, es, fr };
+> = { pt, es, fr, tr };
 
 export function getLessonContentLocalized(
   slug: string,
