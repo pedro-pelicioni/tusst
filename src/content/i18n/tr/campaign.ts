@@ -4,7 +4,7 @@ import type { ActText, CardText, SkirmishText } from "../types";
 export const actText: Record<string, ActText> = {
   "rust-fundamentals": {
     title: "Rust Temelleri",
-    territory: "sözdizimi, tipler, ownership",
+    territory: "sözdizimi, tipler, OWNERSHIP",
     synopsis:
       "Dilin zemin katı: yazdırma, binding'ler ve mutability, tipler, fonksiyonlar ve geri kalan her şeyin dayandığı ownership ile borrow kuralları.",
   },
@@ -17,7 +17,7 @@ export const actText: Record<string, ActText> = {
   },
   "rust-standard-library": {
     title: "Standart Kütüphane",
-    territory: "koleksiyonlar, iterator'lar, struct'lar",
+    territory: "koleksiyonlar, ITERATOR'lar, struct'lar",
     overlord: null,
     synopsis:
       "Her gün elinin gideceği tipler: `Vec`, `HashMap`, string'ler ve slice'lar, iterator'lar ve `impl` ile kendi tiplerine davranış kazandırmak.",
@@ -36,7 +36,7 @@ export const actText: Record<string, ActText> = {
   },
   "stellar-101": {
     title: "Stellar 101",
-    territory: "hesaplar, lumen'ler, trustline'lar, ödemeler",
+    territory: "hesaplar, lumen'ler, TRUSTLINE'lar, ödemeler",
     synopsis:
       "Ağ gerçekte nasıl çalışır: hesap nedir, bir lumen neyin bedelini öder, bir varlığı tutmak neden isteğe bağlıdır ve bir ödeme nasıl kurulup gönderilir.",
   },

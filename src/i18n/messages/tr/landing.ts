@@ -15,7 +15,7 @@ export const landing = {
     closeMenu: "Gezinme menüsünü kapat",
   },
   hero: {
-    subtitle: "The Ultimate Stellar Supreme Tutorial",
+    subtitle: "THE ULTIMATE STELLAR SUPREME TUTORIAL",
     tagline:
       "Rust'ta ustalaş, sonra Stellar'da Soroban kontratları döv — sekiz perde, sekiz şampiyon, tek bir çok gözlü dehşet.",
     ctaPrimary: "Kampanya'ya başla",
@@ -85,8 +85,8 @@ export const landing = {
     altSuffix: ", giriş gerekmez.",
   },
   footer: {
-    tagline: "the ultimate stellar supreme tutorial",
-    motto: "nothing left unhandled",
+    tagline: "THE ULTIMATE STELLAR SUPREME TUTORIAL",
+    motto: "NOTHING LEFT UNHANDLED",
   },
   a11y: {
     carouselLabel: "Şampiyon kartları",
