@@ -17,7 +17,7 @@
 // all: steps exist, the flow ends in an `editor` step, curriculum and content
 // agree on which lessons exist, and no slug collides with the campaign.
 //
-// It also holds the pt/es/fr overlays to the English source: every lesson
+// It also holds the pt/es/fr/tr overlays to the English source: every lesson
 // translated, and every translation structurally identical to its original —
 // same step kinds, same answer indexes, byte-identical ```text``` output
 // blocks and executable `choices`.
@@ -61,9 +61,11 @@ import type { LessonStep } from "../src/content/steps";
 import { ptAdvancedSteps } from "../src/content/advanced/i18n/pt";
 import { esAdvancedSteps } from "../src/content/advanced/i18n/es";
 import { frAdvancedSteps } from "../src/content/advanced/i18n/fr";
+import { trAdvancedSteps } from "../src/content/advanced/i18n/tr";
 import { ptAdvancedInstructions } from "../src/content/advanced/i18n/pt/instructions";
 import { esAdvancedInstructions } from "../src/content/advanced/i18n/es/instructions";
 import { frAdvancedInstructions } from "../src/content/advanced/i18n/fr/instructions";
+import { trAdvancedInstructions } from "../src/content/advanced/i18n/tr/instructions";
 import {
   ptAdvancedLessonText,
   ptAdvancedTrackText,
@@ -76,6 +78,10 @@ import {
   frAdvancedLessonText,
   frAdvancedTrackText,
 } from "../src/content/advanced/i18n/fr/curriculum";
+import {
+  trAdvancedLessonText,
+  trAdvancedTrackText,
+} from "../src/content/advanced/i18n/tr/curriculum";
 
 const PARTIAL_OVERLAYS = process.env.ADVANCED_I18N_PARTIAL === "1";
 const STRUCTURAL_ONLY = process.env.ADVANCED_STRUCTURAL_ONLY === "1";
@@ -264,7 +270,7 @@ for (const [slug, content] of Object.entries(advancedGraders)) {
 }
 
 // ---------------------------------------------------------------------------
-// 4. Locale overlay parity (EN is the source of truth; pt/es/fr must match)
+// 4. Locale overlay parity (EN is the source of truth; pt/es/fr/tr must match)
 // ---------------------------------------------------------------------------
 //
 // A translation may change every word of prose and nothing else. The bits a
@@ -384,6 +390,13 @@ const OVERLAYS = [
     instructions: frAdvancedInstructions,
     tracks: frAdvancedTrackText,
     lessons: frAdvancedLessonText,
+  },
+  {
+    locale: "tr",
+    steps: trAdvancedSteps,
+    instructions: trAdvancedInstructions,
+    tracks: trAdvancedTrackText,
+    lessons: trAdvancedLessonText,
   },
 ] as const;
 

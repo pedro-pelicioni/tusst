@@ -1,0 +1,98 @@
+// TR · Açılış sayfası (illüstrasyonlu sahneler).
+// Marka metinleri (TUSST, tagline, motto ve şampiyon adları) tüm yerellerde
+// bilerek İngilizce kalır.
+export const landing = {
+  metaDescription:
+    "Uygulamalı, oyunlaştırılmış kodlama görevleri. Önce Rust'ta ustalaş, sonra Stellar'da gerçek Soroban akıllı kontratları yayına al. Kurulum yok — sadece kod.",
+  metaImageAlt: "TUSST — Rust'tan Stellar'a giden yolunu döv",
+  nav: {
+    campaign: "Kampanya",
+    champions: "Şampiyonlar",
+    boss: "Beholder",
+    forge: "Forge",
+    enterRealm: "Öğrenmeye başla",
+    openMenu: "Gezinme menüsünü aç",
+    closeMenu: "Gezinme menüsünü kapat",
+  },
+  hero: {
+    subtitle: "THE ULTIMATE STELLAR SUPREME TUTORIAL",
+    tagline:
+      "Rust'ta ustalaş, sonra Stellar'da Soroban kontratları döv — sekiz perde, sekiz şampiyon, tek bir çok gözlü dehşet.",
+    ctaPrimary: "Kampanya'ya başla",
+    ctaSecondary: "Forge'u aç",
+    ctaSecondaryBadge: "giriş yok",
+    freeLine: "ücretsiz · kurulum yok · tarayıcıda",
+    scrollHint: "aşağı in",
+  },
+  intro: {
+    eyebrow: "Stellar'da dövüldü",
+    titleTop: "Oyunlaştırılmış Bir",
+    titleBottom: "Rust Kampanyası",
+    body: "TUSST seni ilk Rust satırından Stellar testnet'inde canlı kontratlara taşır. Her ders, gizli testlerle yargılanan gerçek kodla biter — derleyici en sert müttefikin ve merhamet dağıtmaz.",
+    badgeRust: "Önce Rust",
+    badgeSoroban: "Soroban kontratları",
+    badgeBrowser: "tarayıcıda çalışır",
+    badgeFree: "ücretsiz · kurulum yok",
+  },
+  carousel: {
+    kicker: "Koleksiyon",
+    heading: "Şampiyon Kartları",
+    body: "Sekiz perde için sekiz boyalı kart. Bir perdenin finalini temizle, şampiyonu koleksiyonuna katılsın — kusursuz koşular nadir baskılar kazandırır.",
+    previous: "Önceki",
+    next: "Sonraki",
+    cards: {
+      metaStroowarrior: "perde I · savaşçı",
+      metaStropillusion: "perde II · illüzyonist",
+      metaStroopkeeper: "perde III · arşivci",
+      metaStroophantom: "perde IV · nadir · hayalet",
+      metaStrooracle: "perde V · nadir · kâhin",
+      metaAstrostroopie: "perde VI · nadir · gezgin",
+      metaStroopbeholder: "perde VII · boss · ucube",
+      metaStroopzipper: "perde VIII · boss · haberci",
+    },
+  },
+  features: {
+    campaign: {
+      eyebrow: "Kampanya",
+      titleTop: "Sekiz Perde.",
+      titleBottom: "Yeniden Yakılacak Tek Gökyüzü.",
+      body: "Perdeler sırayla açılır ve her ders sonsuz kez tekrar denenebilir. Rust temellerinden Stellar'ın gerçekte nasıl çalıştığına, oradan gerçek testnet'e deploy edilmiş kontratlara ilerle.",
+      cta: "Perde I'den başla ›",
+    },
+    boss: {
+      eyebrow: "Perde VII · boss",
+      titleTop: "Beholder'ın",
+      titleBottom: "İni",
+      body: "Kapı'nın ötesinde bekliyor; hiç ele alınmamış her hatadan örülmüş bir kalede. Soroban rünleri döv, onları yaşayan gökyüzüne deploy et ve kendi bozuk kontratlarını ona karşı çevir.",
+      note: "kartı bir ödül değil. bir ganimet.",
+    },
+    forge: {
+      eyebrow: "giriş yok · kurulum yok",
+      titleTop: "Forge",
+      titleBottom: "Açık",
+      body: "Tarayıcında tam teşekküllü bir Soroban demirhanesi: yaz, derle, test et ve gerçek kontratları testnet'e deploy et — yeniden yazılmış gökyüzünün keşif kuşu Kuzgun, her koşu başarısız olduğunda ipucu gaklayarak yanında.",
+      cta: "Forge'u aç",
+      ctaBadge: "giriş yok",
+    },
+  },
+  cta: {
+    titleTop: "Gökyüzü Bekliyor,",
+    titleBottom: "İnşaya Başla.",
+    body: "Yaşlılar şansın konusunda açık sözlü: derleyicin sana bin kez hakaret edecek ki Beholder sana bir kez bile zarar veremesin.",
+    button: "Kampanya'ya başla",
+    altPrefix: "Ya da doğruca örse atla —",
+    altLink: "Forge'u aç",
+    altSuffix: ", giriş gerekmez.",
+  },
+  footer: {
+    tagline: "THE ULTIMATE STELLAR SUPREME TUTORIAL",
+    motto: "NOTHING LEFT UNHANDLED",
+  },
+  a11y: {
+    carouselLabel: "Şampiyon kartları",
+    prevCard: "Önceki şampiyon",
+    nextCard: "Sonraki şampiyon",
+    goToCard: "Şuraya git: {name}",
+    cardStatus: "{name} — kart {index} / {total}",
+  },
+};

@@ -3,12 +3,15 @@ import type { LessonStep } from "@/content/steps";
 import { ptAdvancedSteps } from "./pt";
 import { esAdvancedSteps } from "./es";
 import { frAdvancedSteps } from "./fr";
+import { trAdvancedSteps } from "./tr";
 import { ptAdvancedInstructions } from "./pt/instructions";
 import { esAdvancedInstructions } from "./es/instructions";
 import { frAdvancedInstructions } from "./fr/instructions";
+import { trAdvancedInstructions } from "./tr/instructions";
 import { ptAdvancedLessonText, ptAdvancedTrackText } from "./pt/curriculum";
 import { esAdvancedLessonText, esAdvancedTrackText } from "./es/curriculum";
 import { frAdvancedLessonText, frAdvancedTrackText } from "./fr/curriculum";
+import { trAdvancedLessonText, trAdvancedTrackText } from "./tr/curriculum";
 import type { AdvancedTrackText } from "./types";
 
 // Locale resolution for the Advanced Path.
@@ -18,13 +21,14 @@ import type { AdvancedTrackText } from "./types";
 //
 // Every map is PARTIAL and every lookup falls back to English, so a lesson
 // can be authored in EN and translated in a later commit without breaking a
-// single page. Coverage (all 87 lessons × pt/es/fr) is enforced by
+// single page. Coverage (all 87 lessons × pt/es/fr/tr) is enforced by
 // `check:advanced`, not by the types.
 
 const ADVANCED_STEPS: Partial<Record<Locale, Record<string, LessonStep[]>>> = {
   pt: ptAdvancedSteps,
   es: esAdvancedSteps,
   fr: frAdvancedSteps,
+  tr: trAdvancedSteps,
 };
 
 const ADVANCED_INSTRUCTIONS: Partial<
@@ -33,6 +37,7 @@ const ADVANCED_INSTRUCTIONS: Partial<
   pt: ptAdvancedInstructions,
   es: esAdvancedInstructions,
   fr: frAdvancedInstructions,
+  tr: trAdvancedInstructions,
 };
 
 export function getAdvancedStepsLocalized(
@@ -55,6 +60,7 @@ const ADVANCED_TRACK_TEXT: Partial<
   pt: ptAdvancedTrackText,
   es: esAdvancedTrackText,
   fr: frAdvancedTrackText,
+  tr: trAdvancedTrackText,
 };
 
 const ADVANCED_LESSON_TEXT: Partial<
@@ -63,6 +69,7 @@ const ADVANCED_LESSON_TEXT: Partial<
   pt: ptAdvancedLessonText,
   es: esAdvancedLessonText,
   fr: frAdvancedLessonText,
+  tr: trAdvancedLessonText,
 };
 
 /** Track name/description/serves/syllabus, English when untranslated. */

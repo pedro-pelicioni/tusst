@@ -32,6 +32,7 @@ const LOCALE_NAMES: Record<string, string> = {
   pt: "Brazilian Portuguese",
   es: "Spanish",
   fr: "French",
+  tr: "Turkish",
 };
 
 function parseVerdict(text: string): { meets: boolean; feedback: string } | null {
