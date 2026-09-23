@@ -87,7 +87,10 @@ export async function Nav() {
               )}
               {pouch?.goldRevealed && (
                 <Link
-                  href="/profile"
+                  // The pouch is the shortest road to the Armory: click the
+                  // gold, see what it buys. It only renders once the currency
+                  // is revealed, so this leaks nothing.
+                  href="/armory"
                   aria-label={fmt(m.common.nav.pouchAria, { gold: pouch.gold })}
                   title={fmt(m.common.nav.pouchTitle, { gold: pouch.gold })}
                   className="flex items-center gap-1.5 rounded-full border border-[#b8873e]/35 bg-[#b8873e]/10 px-2.5 py-1 transition hover:border-[#b8873e]/70 hover:bg-[#b8873e]/20"
