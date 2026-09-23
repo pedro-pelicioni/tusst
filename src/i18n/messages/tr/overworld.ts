@@ -52,6 +52,7 @@ export const overworld = {
     maxForm: "Son forma ulaşıldı",
     signInToSave: "İlerlemeni kaydetmek için giriş yap",
     myHero: "Kahramanım",
+    recenter: "Ortala",
     centerCamera: "Haritayı kahramanına ortala",
     formsTitle: "Kahramanının 8 formu",
     formsIntro: "Yolun: {hero}, {role}. Portre ve karakter birlikte evrilir.",
@@ -189,6 +190,30 @@ export const overworld = {
       role: "Ledger'ın Arşivcisi",
       detail: "Kâtip → muhafız → ledger'ın muhafızı",
       forms: ["Kâtip", "Okuyucu", "Arşivci", "Bekçi", "Muhafız", "Bilge", "Ulu Muhafız", "Ledger'ın Muhafızı"],
+    },
+    stroophantom: {
+      name: "Stroophantom",
+      role: "Var Olmayabilen Şövalye",
+      detail: "Işıltı → hortlak → hayaletler efendisi",
+      forms: ["Işıltı", "Musallat", "Heyula", "Hayalet Şövalye", "Tayf Şövalye", "Hortlak", "Karabasan", "Hayaletler Efendisi"],
+    },
+    strooracle: {
+      name: "Strooracle",
+      role: "İki Kaderin Hakemi",
+      detail: "Çömez → baş yargıç → iki kaderin hakemi",
+      forms: ["Çömez", "Yargıç", "Kâhin", "Hakem", "Yüce Kâhin", "Baş Yargıç", "Ulu Hakem", "İki Kaderin Hakemi"],
+    },
+    astrostroopie: {
+      name: "Astrostroopie",
+      role: "Takımyıldız Kapısının Seyyahı",
+      detail: "Yıldız gözcüsü → yıldız yolcusu → kapı bekçisi",
+      forms: ["Yıldız Gözcüsü", "Haritacı", "Seyyah", "Dümenci", "Yol Bulucu", "Yıldız Yolcusu", "Takımyıldız Habercisi", "Kapı Bekçisi"],
+    },
+    stroopzipper: {
+      name: "Stroopzipper",
+      role: "Yeniden Yazılan Göğün Habercisi",
+      detail: "Dikişçik → haberci → yeniden yazılan göğün habercisi",
+      forms: ["Dikişçik", "Dikişçi", "Fermuar", "Dikiş Ustası", "Haberci", "Gök Ustası", "Ulu Haberci", "Yeniden Yazılan Göğün Habercisi"],
     },
   },
   battle: {

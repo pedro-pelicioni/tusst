@@ -52,6 +52,7 @@ export const overworld = {
     maxForm: "Forma final alcançada",
     signInToSave: "Entre para salvar seu progresso",
     myHero: "Meu herói",
+    recenter: "Centralizar",
     centerCamera: "Centralizar o mapa no seu herói",
     formsTitle: "As 8 formas do seu herói",
     formsIntro: "Seu caminho: {hero}, {role}. Retrato e personagem evoluem juntos.",
@@ -189,6 +190,30 @@ export const overworld = {
       role: "Arquivista do Ledger",
       detail: "Escriba → guardião → guardião do ledger",
       forms: ["Escriba", "Leitor", "Arquivista", "Vigia", "Guardião", "Sábio", "Grão-Guardião", "Guardião do Ledger"],
+    },
+    stroophantom: {
+      name: "Stroophantom",
+      role: "O Cavaleiro Que Talvez Não Exista",
+      detail: "Fogo-fátuo → revenante → senhor espectral",
+      forms: ["Fogo-Fátuo", "Assombração", "Espectro", "Cavaleiro Etéreo", "Cavaleiro Espectral", "Revenante", "Fantasma do Pavor", "Senhor Espectral"],
+    },
+    strooracle: {
+      name: "Strooracle",
+      role: "Árbitra dos Dois Destinos",
+      detail: "Acólita → juíza → árbitra dos dois destinos",
+      forms: ["Acólita", "Julgadora", "Oráculo", "Árbitra", "Alto Oráculo", "Juíza", "Grã-Árbitra", "Árbitra dos Dois Destinos"],
+    },
+    astrostroopie: {
+      name: "Astrostroopie",
+      role: "Viajante do Portal das Constelações",
+      detail: "Observador estelar → andarilho das estrelas → guardião do portal",
+      forms: ["Observador Estelar", "Cartógrafo", "Viajante", "Navegador", "Desbravador", "Andarilho das Estrelas", "Heraldo das Constelações", "Guardião do Portal"],
+    },
+    stroopzipper: {
+      name: "Stroopzipper",
+      role: "Heraldo do Céu Reescrito",
+      detail: "Alinhavo → cerzidor → heraldo do céu reescrito",
+      forms: ["Alinhavo", "Cerzidor", "Zíper", "Mestre da Costura", "Heraldo", "Artífice do Céu", "Grão-Heraldo", "Heraldo do Céu Reescrito"],
     },
   },
   battle: {

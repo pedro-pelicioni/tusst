@@ -1,13 +1,14 @@
 // Full-viewport pixel-art hero: the Journey island is the backdrop (one
-// parallax layer, nearest-neighbour scaled), a hero sprite walks its beach
-// road, and the centered title block sits over a light vignette so the
+// parallax layer, nearest-neighbour scaled), the whole playable cast stands
+// on it — each character at their own spot, doing the thing that defines
+// them — and the centered title block sits over a light vignette so the
 // island's coast and citadel stay visible around the copy.
 
 import Image from "next/image";
 import Link from "next/link";
 import type { Messages } from "@/i18n/messages";
-import { DEFAULT_HERO_ID, heroById } from "@/content/heroes";
-import { HeroWalker } from "./HeroWalker";
+import { HEROES } from "@/content/heroes";
+import { HeroCast, type CastMember } from "./HeroCast";
 import { Particles } from "./Particles";
 import { SceneLayers, hasLandingAsset } from "./SceneLayers";
 
@@ -20,10 +21,27 @@ export function HeroScene({
   beginHref: string;
   signedIn: boolean;
 }) {
-  // Same fs check SceneLayers uses for its own art: the sheet is a public
-  // path too, and a missing file simply keeps the diamond stand-in.
-  const hero = heroById(DEFAULT_HERO_ID);
-  const sheet = hasLandingAsset(hero.sheet) ? hero.sheet : null;
+  // Where each character stands on the island master, and what they do there.
+  // Stations hug the left and right thirds so nobody stands behind the
+  // centered copy block; the right-hand half faces back toward it.
+  const STATIONS: Record<string, Omit<CastMember, "id" | "sheet" | "color">> = {
+    stroowarrior:  { at: [23, 55], form: 5, act: "swing", delay: 0 },
+    stroopkeeper:  { at: [15, 74], form: 5, act: "read",  delay: 1.1 },
+    stroophantom:  { at: [11, 44], form: 5, act: "fade",  delay: 2.2 },
+    strooracle:    { at: [72, 30], form: 5, act: "weigh", delay: 0.6, flip: true },
+    stropillusion: { at: [84, 47], form: 5, act: "cast",  delay: 1.7, flip: true },
+    astrostroopie: { at: [88, 20], form: 5, act: "chart", delay: 2.8, flip: true },
+    stroopzipper:  { at: [76, 70], form: 5, act: "zip",   delay: 3.4, flip: true },
+  };
+
+  // Same fs check SceneLayers uses for its own art: a sheet that has not
+  // landed yet simply falls back to the character's coloured stand-in.
+  const cast: CastMember[] = HEROES.filter((h) => STATIONS[h.id]).map((h) => ({
+    id: h.id,
+    sheet: hasLandingAsset(h.sheet) ? h.sheet : null,
+    color: h.color,
+    ...STATIONS[h.id],
+  }));
 
   return (
     <header data-scene className="ld-scene ld-scene--hero flex min-h-[max(100svh,640px)] items-center">
@@ -40,7 +58,7 @@ export function HeroScene({
         ]}
       />
 
-      <HeroWalker sheet={sheet} />
+      <HeroCast cast={cast} />
       <Particles tone="hero" />
       <div aria-hidden className="ld-scrim ld-scrim--island" />
 

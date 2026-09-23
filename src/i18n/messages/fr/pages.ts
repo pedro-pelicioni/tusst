@@ -18,18 +18,21 @@ export const pages = {
     viewChampions: "Voir tes champions",
   },
   cards: {
-    metaTitle: "Champions du Royaume — TUSST",
+    metaTitle: "Les Personnages — TUSST",
     metaDescription:
-      "Les cartes de champion de la Constellation Brisée. Remporte le combat final d'un acte pour réclamer son champion.",
-    kicker: "// la constellation brisée",
-    title: "Champions du Royaume",
+      "Les huit personnages du royaume — sept à incarner, un à affronter. Chacun se rencontre en terminant une section de la campagne.",
+    kicker: "// la troupe",
+    title: "Les Personnages",
     intro:
-      "Huit cartes pour huit actes, dispersées par la Grande Panique. Chaque acte de la campagne s'achève sur un combat final — remporte-le, et son champion rejoint ta collection. La dernière carte ne se donne pas. Elle se prend.",
-    bossCard: "carte de boss",
-    actLink: "Acte {numeral} — {title}",
-    unassigned: "non attribuée",
+      "Huit personnages parcourent ce royaume, un qui attend à la fin de chaque section de la campagne. Sept d'entre eux, tu peux les incarner : choisis-en un et il grandira avec toi à travers huit formes, de l'apprenti au champion radieux. Le huitième n'est pas un compagnon.",
+    bossCard: "boss",
+    formsLabel: "huit formes",
+    playCta: "Incarner ce héros",
+    bossNote: "Affronté, pas incarné.",
+    actLink: "Section {numeral} — {title}",
+    unassigned: "non attribué",
     footnote:
-      "les cartes sont une progression cosmétique — elles n'apportent aucun avantage en jeu. les tirages rares récompensent un acte terminé sans faute. la réclamation on-chain arrive avec le projet final Soroban.",
+      "les personnages sont purement cosmétiques — ton choix n'apporte aucun avantage et ne verrouille rien. tu rencontres chacun d'eux en terminant sa section de la campagne, et tu peux changer de personnage depuis ton profil à tout moment.",
   },
   track: {
     backToPath: "voie de campagne",

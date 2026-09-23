@@ -254,7 +254,7 @@ export function OverworldStage({
         onClick={ow.centerCamera}
         title={m.overworld.hud.centerCamera}
       >
-        ◎ {m.overworld.hud.myHero}
+        ◎ {m.overworld.hud.recenter}
       </button>
       {!imageSrc && (
         <p className="ow-hud ow-eyebrow bottom-16 left-3 text-[#ffe7a6] drop-shadow max-md:hidden">{m.overworld.map.standIn}</p>

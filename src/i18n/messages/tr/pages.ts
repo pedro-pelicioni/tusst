@@ -18,18 +18,21 @@ export const pages = {
     viewChampions: "Kartlarını gör",
   },
   cards: {
-    metaTitle: "Kart Koleksiyonu — TUSST",
+    metaTitle: "Karakterler — TUSST",
     metaDescription:
-      "Her kampanya bölümü için bir tane koleksiyon kartı. Bir bölümün son dersini bitir, kartını al.",
-    kicker: "// koleksiyon",
-    title: "Kart Koleksiyonu",
+      "Diyarın sekiz karakteri — yedisini oynayabilirsin, biriyle dövüşürsün. Her biriyle bir kampanya bölümünü bitirince tanışırsın.",
+    kicker: "// kadro",
+    title: "Karakterler",
     intro:
-      "Sekiz kart, her kampanya bölümü için bir tane. Bir bölümün son dersini bitir, kartı koleksiyonuna katılsın. Tamamen kozmetik — hiçbir avantaj sağlamazlar ve bu sayfadaki hiçbir şey içerik kilitlemez.",
-    bossCard: "boss kartı",
+      "Bu diyarda sekiz karakter yürür; her kampanya bölümünün sonunda biri seni bekler. Yedisi sen olabilirsin: birini seç, çıraklıktan ışıyan şampiyonluğa uzanan sekiz form boyunca seninle birlikte büyüsün. Sekizincisi bir yol arkadaşı değil.",
+    bossCard: "boss",
+    formsLabel: "sekiz form",
+    playCta: "Bu karakterle oyna",
+    bossNote: "Dövüşülür, oynanmaz.",
     actLink: "Bölüm {numeral} — {title}",
     unassigned: "atanmamış",
     footnote:
-      "kartlar yalnızca kozmetiktir — avantaj sağlamaz, hiçbir şeyi kilitlemez. nadir baskılar, bir bölümü tek yanlış cevap vermeden bitirenlere verilir.",
+      "karakterler yalnızca kozmetiktir — seçimin hiçbir avantaj sağlamaz, hiçbir şeyi kilitlemez. her biriyle kampanya bölümünü bitirdiğinde tanışırsın ve kimi oynadığını profilinden dilediğin zaman değiştirebilirsin.",
   },
   track: {
     backToPath: "kampanya",

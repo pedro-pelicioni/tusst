@@ -52,6 +52,7 @@ export const overworld = {
     maxForm: "Forma final alcanzada",
     signInToSave: "Inicia sesión para guardar tu progreso",
     myHero: "Mi héroe",
+    recenter: "Centrar",
     centerCamera: "Centrar el mapa en tu héroe",
     formsTitle: "Las 8 formas de tu héroe",
     formsIntro: "Tu camino: {hero}, {role}. Retrato y personaje evolucionan juntos.",
@@ -189,6 +190,30 @@ export const overworld = {
       role: "Archivista del Libro Mayor",
       detail: "Escriba → guardián → guardián del libro mayor",
       forms: ["Escriba", "Lector", "Archivista", "Custodio", "Guardián", "Sabio", "Gran Guardián", "Guardián del Libro Mayor"],
+    },
+    stroophantom: {
+      name: "Stroophantom",
+      role: "El Caballero Que Quizá No Esté",
+      detail: "Fuego fatuo → aparecido → señor espectral",
+      forms: ["Fuego Fatuo", "Presencia", "Espectro", "Caballero Sombra", "Caballero Espectral", "Aparecido", "Fantasma del Pavor", "Señor Espectral"],
+    },
+    strooracle: {
+      name: "Strooracle",
+      role: "Árbitra de los Dos Destinos",
+      detail: "Acólita → jueza → árbitra de dos destinos",
+      forms: ["Acólita", "Dictaminadora", "Oráculo", "Árbitra", "Alto Oráculo", "Jueza", "Gran Árbitra", "Árbitra de Dos Destinos"],
+    },
+    astrostroopie: {
+      name: "Astrostroopie",
+      role: "Viajero del Portal de las Constelaciones",
+      detail: "Vigía estelar → surcaestrellas → guardián del portal",
+      forms: ["Vigía Estelar", "Cartógrafo", "Viajero", "Navegante", "Explorador", "Surcaestrellas", "Heraldo de Constelaciones", "Guardián del Portal"],
+    },
+    stroopzipper: {
+      name: "Stroopzipper",
+      role: "Heraldo del Cielo Reescrito",
+      detail: "Hilván → zurcidor → heraldo del cielo reescrito",
+      forms: ["Hilván", "Zurcidor", "Cremallera", "Sastre", "Heraldo", "Artífice del Cielo", "Gran Heraldo", "Heraldo del Cielo Reescrito"],
     },
   },
   battle: {

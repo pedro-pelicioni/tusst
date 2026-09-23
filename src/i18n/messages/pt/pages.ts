@@ -18,18 +18,21 @@ export const pages = {
     viewChampions: "Ver suas cartas",
   },
   cards: {
-    metaTitle: "Coleção de cartas — TUSST",
+    metaTitle: "Os personagens — TUSST",
     metaDescription:
-      "Cartas colecionáveis, uma por seção da campanha. Termine a última lição de uma seção para ganhar a carta dela.",
-    kicker: "// coleção",
-    title: "Coleção de cartas",
+      "Os oito personagens do reino — sete você pode jogar, um você enfrenta. Cada um é conhecido ao terminar uma seção da campanha.",
+    kicker: "// o elenco",
+    title: "Os personagens",
     intro:
-      "Oito cartas, uma por seção da campanha. Termine a última lição de uma seção e a carta dela entra na sua coleção. Puramente cosmético — não dão vantagem nenhuma e não travam conteúdo algum.",
-    bossCard: "carta do chefe",
+      "Oito personagens caminham por este reino, um esperando no fim de cada seção da campanha. Sete deles você pode ser: escolha um e ele cresce com você por oito formas, de aprendiz a campeão solar. O oitavo não é um companheiro.",
+    bossCard: "chefe",
+    formsLabel: "oito formas",
+    playCta: "Jogar com este herói",
+    bossNote: "Para enfrentar, não para jogar.",
     actLink: "Seção {numeral} — {title}",
-    unassigned: "não atribuída",
+    unassigned: "não atribuído",
     footnote:
-      "as cartas são puramente cosméticas — não dão vantagem nenhuma e não travam conteúdo. edições raras são concedidas por terminar uma seção sem errar nenhuma resposta.",
+      "os personagens são puramente cosméticos — sua escolha não dá vantagem nenhuma e não trava conteúdo algum. você conhece cada um terminando a seção da campanha dele, e pode trocar quem você joga no seu perfil quando quiser.",
   },
   track: {
     backToPath: "trilha da campanha",

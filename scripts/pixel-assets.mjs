@@ -145,7 +145,17 @@ const PIXEL_NEAR_LOSSLESS = { nearLossless: true, quality: 90, effort: 5 };
 const PIXEL_LOSSY = { quality: 88, effort: 6 };
 const SCENE = { quality: 82, alphaQuality: 80, effort: 5 };
 
-const HERO_IDS = ["stroowarrior", "stropillusion", "stroopkeeper"];
+// Keep in step with HEROES in src/content/heroes.ts — the playable roster.
+// `stroopbeholder` is deliberately absent: it is the Act VII boss, not a hero.
+const HERO_IDS = [
+  "stroowarrior",
+  "stropillusion",
+  "stroopkeeper",
+  "stroophantom",
+  "strooracle",
+  "astrostroopie",
+  "stroopzipper",
+];
 // 3 journey region bosses + 8 act overlords. Slot ids match the `boss` field
 // in src/content/overworld/*-world.ts (regions ids / act trackSlugs).
 const BOSS_SLOTS = [

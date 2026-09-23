@@ -18,18 +18,21 @@ export const pages = {
     viewChampions: "View your cards",
   },
   cards: {
-    metaTitle: "Card Collection — TUSST",
+    metaTitle: "The Characters — TUSST",
     metaDescription:
-      "Collectible cards, one per campaign section. Finish a section's last lesson to claim its card.",
-    kicker: "// collection",
-    title: "Card Collection",
+      "The eight characters of the realm — seven you can play, one you fight. Each is met by finishing a campaign section.",
+    kicker: "// the cast",
+    title: "The Characters",
     intro:
-      "Eight cards, one per campaign section. Finish a section's last lesson and its card joins your collection. Purely cosmetic — they carry no advantage, and nothing on this page gates any content.",
-    bossCard: "boss card",
+      "Eight characters walk this realm, one waiting at the end of each campaign section. Seven of them you can be: pick one and they grow with you through eight forms, from apprentice to radiant champion. The eighth is not a companion.",
+    bossCard: "boss",
+    formsLabel: "eight forms",
+    playCta: "Play as this character",
+    bossNote: "Fought, not played.",
     actLink: "Section {numeral} — {title}",
     unassigned: "unassigned",
     footnote:
-      "cards are cosmetic only — they carry no advantage and gate nothing. rare prints are awarded for finishing a section without a wrong answer.",
+      "characters are cosmetic only — your choice carries no advantage and gates nothing. you meet each one by finishing its campaign section, and you can change who you play from your profile at any time.",
   },
   track: {
     backToPath: "campaign",

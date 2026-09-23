@@ -52,6 +52,7 @@ export const overworld = {
     maxForm: "Final form reached",
     signInToSave: "Sign in to save your progress",
     myHero: "My hero",
+    recenter: "Recenter",
     centerCamera: "Center the map on your hero",
     formsTitle: "The 8 forms of your hero",
     formsIntro: "Your path: {hero}, {role}. Portrait and character evolve together.",
@@ -189,6 +190,30 @@ export const overworld = {
       role: "Archivist of the Ledger",
       detail: "Scribe → keeper → keeper of the ledger",
       forms: ["Scribe", "Reader", "Archivist", "Warden", "Keeper", "Sage", "Grand Keeper", "Keeper of the Ledger"],
+    },
+    stroophantom: {
+      name: "Stroophantom",
+      role: "The Knight Who May Not Be",
+      detail: "Wisp → revenant → spectral lord",
+      forms: ["Wisp", "Haunt", "Specter", "Wraith Knight", "Spectral Knight", "Revenant", "Dread Phantom", "Spectral Lord"],
+    },
+    strooracle: {
+      name: "Strooracle",
+      role: "Arbiter of the Two Fates",
+      detail: "Acolyte → judge → arbiter of two fates",
+      forms: ["Acolyte", "Adjudicator", "Oracle", "Arbiter", "High Oracle", "Judge", "Grand Arbiter", "Arbiter of Two Fates"],
+    },
+    astrostroopie: {
+      name: "Astrostroopie",
+      role: "Voyager of the Constellation Gate",
+      detail: "Stargazer → starfarer → gatekeeper",
+      forms: ["Stargazer", "Cartographer", "Voyager", "Navigator", "Pathfinder", "Starfarer", "Constellation Herald", "Gatekeeper"],
+    },
+    stroopzipper: {
+      name: "Stroopzipper",
+      role: "Herald of the Rewritten Sky",
+      detail: "Seamling → stitcher → herald of the rewritten sky",
+      forms: ["Seamling", "Stitcher", "Zipper", "Seamwright", "Herald", "Skywright", "Grand Herald", "Herald of the Rewritten Sky"],
     },
   },
   battle: {

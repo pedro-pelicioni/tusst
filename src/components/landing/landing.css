@@ -322,105 +322,181 @@
    as an inline px `path()`; the walker's centre is the path point and
    the figure hangs above it, so its feet stay on the sand. Without
    offset-path support the figure simply stands at the road's start. */
-@keyframes ld-hero-walk {
-  from { offset-distance: 0%; }
-  to { offset-distance: 100%; }
-}
 
-/* steps(1) over two intervals = flip exactly at the turn-around */
-@keyframes ld-hero-face {
-  0%, 100% { transform: scaleX(1); }
-  50% { transform: scaleX(-1); }
-}
+/* ── the island cast ───────────────────────────────────────────────
+   Every playable character standing at their own spot on the landing
+   island, each with the idle action that says who they are. Positions come
+   from <HeroCast> (projected through the island's cover fit); everything
+   below is presentation only, so the reduced-motion rule at the end of this
+   block stops the whole cast at once. Each figure exposes --cast-accent, so
+   a slash, a flame and a seam are all drawn in that character's colour. */
 
-/* steps(2) over one interval = two frames: 0 and -3px */
-@keyframes ld-hero-bob {
-  from { transform: translateY(0); }
-  to { transform: translateY(-6px); }
-}
-
-.ld-hero-walker {
+.ld-cast {
   position: absolute;
-  left: 18%;
-  top: 60%;
-  width: 64px;
-  height: 64px;
-  visibility: hidden;
+  width: 62px;
+  height: 62px;
+  /* the station point is where the feet stand */
+  transform: translate(-50%, -100%);
 }
-
-.ld-hero-walker.is-ready {
-  visibility: visible;
+.ld-cast-body {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 92%;
 }
-
-/* the feet's ground shadow sits on the path point */
-.ld-hero-walker::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 34px;
-  height: 9px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: rgba(8, 16, 26, 0.45);
-}
-
-@supports (offset-path: path("M0 0")) {
-  .ld-hero-walker {
-    left: 0;
-    top: 0;
-    offset-rotate: 0deg;
-    offset-distance: 0%;
-    animation: ld-hero-walk 14s linear infinite alternate;
-  }
-}
-
-.ld-hero-face {
-  position: absolute;
-  inset: 0;
-  animation: ld-hero-face 28s steps(1, end) infinite;
-}
-
-.ld-hero-body {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 50%;
-  height: 64px;
-  display: grid;
-  place-items: center;
-}
-
-.ld-hero-bob {
-  animation: ld-hero-bob 0.36s steps(2) infinite;
-}
-
-/* cell 0 of the 4×2 forms sheet */
-.ld-hero-cell {
+.ld-cast-cell {
+  display: block;
+  width: 100%;
+  height: 100%;
   background-repeat: no-repeat;
   background-size: 400% 200%;
-  background-position: 0% 0%;
   image-rendering: pixelated;
-  filter: drop-shadow(0 6px 3px rgba(0, 0, 0, 0.45));
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.5));
 }
-
-/* stand-in while the sheet hasn't landed: a gold pixel diamond with a T */
-.ld-hero-standin::before {
-  content: "";
+.ld-cast-body.is-flipped .ld-cast-cell { transform: scaleX(-1); }
+.ld-cast-standin {
+  display: block;
+  width: 60%;
+  height: 60%;
+  margin: 20% auto;
+  border-radius: 6px;
+  transform: rotate(45deg);
+  opacity: 0.85;
+}
+.ld-cast-fx {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 30px;
-  height: 30px;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background: linear-gradient(135deg, #ffe7a6 0%, #d9b96a 55%, #a5742c 100%);
-  box-shadow:
-    0 0 0 2px #1a1024,
-    0 0 18px rgba(217, 185, 106, 0.6);
+  inset: 0;
+  pointer-events: none;
 }
 
-.ld-hero-standin > b {
-  position: relative;
-  font: 700 13px var(--font-silkscreen), monospace;
-  color: #1a1024;
+/* warrior — winds up and swings, a crescent of light trailing the blade */
+@keyframes ld-act-swing-body {
+  0%, 62% { transform: rotate(0deg); }
+  70% { transform: rotate(-14deg); }
+  78% { transform: rotate(20deg); }
+  88% { transform: rotate(-3deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes ld-act-swing-fx {
+  0%, 70% { opacity: 0; transform: rotate(-40deg) scale(0.5); }
+  80% { opacity: 0.95; transform: rotate(35deg) scale(1.15); }
+  100% { opacity: 0; transform: rotate(60deg) scale(1.3); }
+}
+.ld-act-swing .ld-cast-body { animation: ld-act-swing-body 3.4s ease-in-out infinite; }
+.ld-act-swing .ld-cast-fx {
+  animation: ld-act-swing-fx 3.4s ease-out infinite;
+  border-right: 3px solid var(--cast-accent);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 6px var(--cast-accent));
+}
+
+/* illusionist — throws a spark that swells and burns out */
+@keyframes ld-act-cast-body {
+  0%, 55% { transform: translateY(0) rotate(0deg); }
+  68% { transform: translateY(-3px) rotate(-6deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+@keyframes ld-act-cast-fx {
+  0%, 60% { opacity: 0; transform: translate(60%, -10%) scale(0.2); }
+  75% { opacity: 1; transform: translate(95%, -45%) scale(1); }
+  100% { opacity: 0; transform: translate(120%, -80%) scale(1.5); }
+}
+.ld-act-cast .ld-cast-body { animation: ld-act-cast-body 3.8s ease-in-out infinite; }
+.ld-act-cast .ld-cast-fx {
+  animation: ld-act-cast-fx 3.8s ease-out infinite;
+  background: radial-gradient(circle, var(--cast-accent) 0%, transparent 65%);
+  border-radius: 50%;
+}
+
+/* archivist — reads, and the page catches the light as it turns */
+@keyframes ld-act-read-body {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+@keyframes ld-act-read-fx {
+  0%, 55% { opacity: 0; }
+  62% { opacity: 0.85; }
+  72% { opacity: 0.15; }
+  80% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+.ld-act-read .ld-cast-body { animation: ld-act-read-body 3.2s ease-in-out infinite; }
+.ld-act-read .ld-cast-fx {
+  animation: ld-act-read-fx 4.6s ease-in-out infinite;
+  background: radial-gradient(ellipse at 70% 65%, var(--cast-accent) 0%, transparent 55%);
+}
+
+/* oracle — the two pans tip, one fate then the other */
+@keyframes ld-act-weigh-body {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+@keyframes ld-act-weigh-fx {
+  0%, 100% { opacity: 0.15; transform: translateX(-12%); }
+  50% { opacity: 0.8; transform: translateX(12%); }
+}
+.ld-act-weigh .ld-cast-body { animation: ld-act-weigh-body 4.4s ease-in-out infinite; }
+.ld-act-weigh .ld-cast-fx {
+  animation: ld-act-weigh-fx 4.4s ease-in-out infinite;
+  background: radial-gradient(circle at 50% 70%, var(--cast-accent) 0%, transparent 60%);
+}
+
+/* phantom — may or may not be there */
+@keyframes ld-act-fade-body {
+  0%, 100% { opacity: 0.95; transform: translateY(0); }
+  45% { opacity: 0.18; transform: translateY(-5px); }
+}
+@keyframes ld-act-fade-fx {
+  0%, 100% { opacity: 0.35; transform: scale(0.9); }
+  45% { opacity: 0.05; transform: scale(1.25); }
+}
+.ld-act-fade .ld-cast-body { animation: ld-act-fade-body 5.2s ease-in-out infinite; }
+.ld-act-fade .ld-cast-fx {
+  animation: ld-act-fade-fx 5.2s ease-in-out infinite;
+  background: radial-gradient(circle at 50% 75%, var(--cast-accent) 0%, transparent 60%);
+}
+
+/* voyager — reads the sky, and a star answers */
+@keyframes ld-act-chart-body {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  40% { transform: translateY(-2px) rotate(4deg); }
+}
+@keyframes ld-act-chart-fx {
+  0%, 100% { opacity: 0; transform: translate(35%, -55%) scale(0.4); }
+  35% { opacity: 1; transform: translate(45%, -70%) scale(1); }
+  70% { opacity: 0.2; transform: translate(55%, -85%) scale(0.6); }
+}
+.ld-act-chart .ld-cast-body { animation: ld-act-chart-body 4.8s ease-in-out infinite; }
+.ld-act-chart .ld-cast-fx {
+  animation: ld-act-chart-fx 4.8s ease-in-out infinite;
+  background: radial-gradient(circle, #fff 0%, var(--cast-accent) 35%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* herald — pulls the seam and the sky closes behind it */
+@keyframes ld-act-zip-body {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  45% { transform: translateY(-4px) rotate(-5deg); }
+}
+@keyframes ld-act-zip-fx {
+  0% { opacity: 0; transform: translate(-40%, -60%) scaleX(0.1); }
+  40% { opacity: 1; transform: translate(10%, -75%) scaleX(1); }
+  100% { opacity: 0; transform: translate(60%, -90%) scaleX(1.4); }
+}
+.ld-act-zip .ld-cast-body { animation: ld-act-zip-body 4.2s ease-in-out infinite; }
+.ld-act-zip .ld-cast-fx {
+  animation: ld-act-zip-fx 4.2s ease-in-out infinite;
+  height: 3px;
+  top: 30%;
+  background: linear-gradient(90deg, transparent, var(--cast-accent), transparent);
+  filter: drop-shadow(0 0 5px var(--cast-accent));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ld-cast-body,
+  .ld-cast-fx {
+    animation: none !important;
+  }
+  .ld-cast-fx { opacity: 0.35; }
 }

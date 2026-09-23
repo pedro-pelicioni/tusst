@@ -53,6 +53,7 @@ export const overworld = {
     maxForm: "Forme finale atteinte",
     signInToSave: "Connecte-toi pour sauvegarder ta progression",
     myHero: "Mon héros",
+    recenter: "Recentrer",
     centerCamera: "Centrer la carte sur ton héros",
     formsTitle: "Les 8 formes de ton héros",
     formsIntro: "Ta voie : {hero}, {role}. Le portrait et le personnage évoluent ensemble.",
@@ -190,6 +191,30 @@ export const overworld = {
       role: "Archiviste du Registre",
       detail: "Scribe → gardien → gardien du registre",
       forms: ["Scribe", "Lecteur", "Archiviste", "Veilleur", "Gardien", "Sage", "Grand Gardien", "Gardien du Registre"],
+    },
+    stroophantom: {
+      name: "Stroophantom",
+      role: "Le Chevalier Qui N'Est Peut-Être Pas",
+      detail: "Feu follet → revenant → seigneur spectral",
+      forms: ["Feu follet", "Apparition", "Spectre", "Chevalier d'ombre", "Chevalier spectral", "Revenant", "Fantôme d'effroi", "Seigneur Spectral"],
+    },
+    strooracle: {
+      name: "Strooracle",
+      role: "Arbitre des Deux Destins",
+      detail: "Acolyte → juge → arbitre des deux destins",
+      forms: ["Acolyte", "Assesseure", "Oracle", "Arbitre", "Haute Oracle", "Juge", "Grande Arbitre", "Arbitre des Deux Destins"],
+    },
+    astrostroopie: {
+      name: "Astrostroopie",
+      role: "Voyageur de la Porte de la Constellation",
+      detail: "Guetteur d'étoiles → arpenteur d'étoiles → gardien de la Porte",
+      forms: ["Guetteur d'étoiles", "Cartographe", "Voyageur", "Navigateur", "Éclaireur", "Arpenteur d'étoiles", "Héraut de la Constellation", "Gardien de la Porte"],
+    },
+    stroopzipper: {
+      name: "Stroopzipper",
+      role: "Héraut du Ciel Réécrit",
+      detail: "Ourlet → raccommodeur → héraut du ciel réécrit",
+      forms: ["Ourlet", "Raccommodeur", "Éclair", "Maître des coutures", "Héraut", "Artisan du ciel", "Grand Héraut", "Héraut du Ciel Réécrit"],
     },
   },
   battle: {

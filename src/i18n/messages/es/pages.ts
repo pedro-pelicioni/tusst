@@ -18,18 +18,21 @@ export const pages = {
     viewChampions: "Ver tus campeones",
   },
   cards: {
-    metaTitle: "Campeones del Reino — TUSST",
+    metaTitle: "Los Personajes — TUSST",
     metaDescription:
-      "Las cartas de campeón de la Constelación Rota. Gana el combate final de un acto para reclamar a su campeón.",
-    kicker: "// la constelación rota",
-    title: "Campeones del Reino",
+      "Los ocho personajes del reino — siete que puedes jugar, uno al que te enfrentas. Conoces a cada uno al terminar un acto de la campaña.",
+    kicker: "// el reparto",
+    title: "Los Personajes",
     intro:
-      "Ocho cartas para ocho actos, esparcidas por el Gran Pánico. Cada acto de la campaña termina con un combate final — supéralo y su campeón se une a tu colección. La última carta no se regala. Se toma.",
-    bossCard: "carta de jefe",
+      "Ocho personajes recorren este reino, uno esperando al final de cada acto de la campaña. Siete de ellos puedes ser tú: elige uno y crecerá contigo a través de ocho formas, de aprendiz a campeón radiante. El octavo no es un compañero.",
+    bossCard: "jefe",
+    formsLabel: "ocho formas",
+    playCta: "Jugar con este personaje",
+    bossNote: "Se enfrenta, no se juega.",
     actLink: "Acto {numeral} — {title}",
     unassigned: "sin asignar",
     footnote:
-      "las cartas son progresión cosmética — no otorgan ventaja de juego. las ediciones raras se conceden por completar un acto de forma impecable. el reclamo on-chain llega con el proyecto final de Soroban.",
+      "los personajes son solo cosméticos — tu elección no otorga ninguna ventaja ni desbloquea nada. conoces a cada uno al terminar su acto de la campaña, y puedes cambiar de personaje desde tu perfil cuando quieras.",
   },
   track: {
     backToPath: "senda de campaña",
