@@ -10,6 +10,10 @@ import { getLocale, getMessages } from "@/i18n/server";
 import { fmt } from "@/i18n/format";
 import { hueFromName } from "@/components/CharacterAvatar";
 import { ProgressBar } from "@/components/ProgressBar";
+import { isHeroId } from "@/content/heroes";
+import { LoadoutFigure } from "@/components/overworld/LoadoutFigure";
+import { buildArmoryView } from "@/lib/armory-view";
+import { buildHeroView } from "@/lib/hero-view";
 
 // The Forgeborn's profile: identity, character progression and campaign
 // standing. The pouch (gold) only appears after the Phase 5 reveal —
@@ -20,7 +24,7 @@ export default async function ProfilePage() {
   if (!session?.user?.id) redirect("/login");
   const userId = session.user.id;
 
-  const [user, campaign, onboardingUnlock] = await Promise.all([
+  const [user, campaign, onboardingUnlock, armoryPieces] = await Promise.all([
     prisma.user.findUnique({
       where: { id: userId },
       include: {
@@ -30,6 +34,10 @@ export default async function ProfilePage() {
     }),
     getCampaignProgress(userId),
     getUnlockedActs(),
+    prisma.armoryPiece.findMany({
+      where: { userId },
+      select: { itemId: true, equipped: true },
+    }),
   ]);
   if (!user) redirect("/login");
 
@@ -42,6 +50,9 @@ export default async function ProfilePage() {
   const initial = (name.trim()[0] ?? "?").toUpperCase();
   const level = user.character?.level ?? 1;
   const xp = user.character?.xp ?? 0;
+  const heroId = user.character?.heroId;
+  const heroName = isHeroId(heroId) ? m.overworld.heroes[heroId].name : "—";
+  const armory = buildArmoryView({ gold: user.gold, pieces: armoryPieces });
 
   const providers =
     user.accounts.length > 0
@@ -145,6 +156,75 @@ export default async function ProfilePage() {
           </div>
         </div>
       )}
+
+      {/* ── loadout (same gate as the pouch: no gold, no Armory) ── */}
+      {user.goldRevealed && (
+        <div className="mt-6 flex flex-wrap items-center gap-5 rounded-2xl border border-line bg-bg-elev px-5 py-4">
+          <LoadoutFigure
+            hero={buildHeroView({
+              heroId: user.character?.heroId,
+              name: user.name,
+              xp,
+              signedIn: true,
+              m: m.overworld,
+            })}
+            slots={armory.slots}
+            size={96}
+          />
+          <div className="min-w-0 flex-1">
+            <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
+              {m.armory.loadout.title}
+            </p>
+            <p className="mt-1 font-display text-lg font-bold tracking-wide text-fg">
+              {armory.ownedCount > 0
+                ? fmt(m.armory.collection, {
+                    owned: armory.ownedCount,
+                    total: armory.totalCount,
+                  })
+                : m.armory.loadout.empty}
+            </p>
+            <ul className="mt-2 flex flex-wrap gap-2">
+              {armory.slots.map((s) => (
+                <li
+                  key={s.slot}
+                  className="rounded-full border border-line px-2.5 py-1 font-mono text-[10px] text-muted2"
+                >
+                  {m.armory.slots[s.slot]}:{" "}
+                  <span className="text-fg">
+                    {s.equipped
+                      ? m.armory.items[s.equipped.id].name
+                      : m.armory.loadout.slotEmpty}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Link
+            href="/armory"
+            className="shrink-0 rounded-full border border-[#b8873e]/45 bg-[#b8873e]/10 px-4 py-1.5 font-mono text-[11px] uppercase tracking-wider text-[#e0b25f] transition hover:bg-[#b8873e]/20"
+          >
+            {m.armory.loadout.open}
+          </Link>
+        </div>
+      )}
+
+      {/* ── hero ── */}
+      <div className="mt-10 flex items-center justify-between gap-4 rounded-2xl border border-line bg-bg-elev px-5 py-4">
+        <div className="min-w-0">
+          <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
+            {m.overworld.hud.myHero}
+          </p>
+          <p className="mt-1 truncate font-display text-lg font-bold tracking-wide text-fg">
+            {heroName}
+          </p>
+        </div>
+        <Link
+          href="/hero?callbackUrl=%2Fprofile"
+          className="shrink-0 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 font-mono text-[11px] uppercase tracking-wider text-accent transition hover:bg-accent/20"
+        >
+          {m.overworld.hud.changeHero}
+        </Link>
+      </div>
 
       {/* ── stats ── */}
       <div className="mt-10 grid grid-cols-3 gap-3">

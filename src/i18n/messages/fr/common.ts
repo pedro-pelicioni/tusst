@@ -5,11 +5,12 @@ export const common = {
   logoAlt: "TUSST — le Sceau Stroop",
   nav: {
     path: "voie",
-    hall: "hall",
+    hall: "carte du monde",
     journey: "voyage",
     campaign: "campagne",
     advanced: "avancé",
     cards: "cartes",
+    armory: "arsenal",
     forge: "forge",
     signOut: "déconnexion",
     signIn: "connexion",

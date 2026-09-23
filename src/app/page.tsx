@@ -19,16 +19,16 @@ export default async function Home() {
   const [session, messages] = await Promise.all([auth(), getMessages()]);
   const m = messages.landing;
 
-  // New visitors get the Mimo-style personalized onboarding before their
-  // first skirmish; returning players go straight to the campaign path.
-  const beginHref = session?.user ? "/path" : "/onboarding";
+  // New visitors sign in first (GitHub / Discord), then pick a hero, then
+  // reach the world map; returning players go straight to the world map.
+  const beginHref = session?.user ? "/path" : "/login";
   const enterHref = session?.user ? "/path" : "/login";
 
   return (
     <div id="landing" suppressHydrationWarning className="overflow-x-clip bg-[#050409] text-fg">
       <JsGate />
       <LandingNav enterHref={enterHref} />
-      <HeroScene m={m} beginHref={beginHref} />
+      <HeroScene m={m} beginHref={beginHref} signedIn={!!session?.user} />
       <main>
         <IntroScene m={m} />
         <ChampionCarousel />

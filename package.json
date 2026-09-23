@@ -9,6 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "check:i18n": "tsx scripts/check-i18n.ts",
+    "check:overworld": "tsx scripts/check-overworld.ts",
+    "test:overworld": "tsx --test src/lib/overworld/graph.test.ts",
     "check:forge-pins": "node scripts/check-forge-pins.mjs",
     "check:spp": "tsx scripts/check-spp-liveness.ts",
     "check:advanced": "tsx --conditions=react-server scripts/check-advanced.ts",
@@ -22,6 +24,7 @@
     "runner:soroban:build": "docker build -t tusst-soroban-runner:latest runner-soroban",
     "assets:landing": "node scripts/landing-assets.mjs",
     "assets:v2": "node scripts/v2-assets.mjs",
+    "assets:pixel": "node scripts/pixel-assets.mjs",
     "xp:backfill": "node scripts/backfill-xp.mjs"
   },
   "dependencies": {

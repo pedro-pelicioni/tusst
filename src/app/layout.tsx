@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, JetBrains_Mono, Cinzel } from "next/font/google";
+import { Geist, JetBrains_Mono, Cinzel, Silkscreen } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { LocaleProvider } from "@/i18n/client";
 import { MESSAGES } from "@/i18n/messages";
@@ -22,6 +22,14 @@ const display = Cinzel({
   variable: "--font-cinzel",
   subsets: ["latin"],
   weight: ["500", "600", "700", "800", "900"],
+});
+
+// Pixel face for the overworld HUD and the landing hero title — the one
+// place TUSST speaks 16-bit.
+const pixel = Silkscreen({
+  variable: "--font-silkscreen",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 const OG_LOCALES = {
@@ -92,7 +100,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${sans.variable} ${mono.variable} ${display.variable} h-full antialiased`}
+      className={`${sans.variable} ${mono.variable} ${display.variable} ${pixel.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-bg text-fg">
         <LocaleProvider locale={locale} messages={MESSAGES[locale]}>

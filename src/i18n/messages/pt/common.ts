@@ -5,11 +5,12 @@ export const common = {
   logoAlt: "TUSST — o Sigilo Stroop",
   nav: {
     path: "trilha",
-    hall: "salão",
+    hall: "mapa-múndi",
     journey: "jornada",
     campaign: "campanha",
     advanced: "avançado",
     cards: "cartas",
+    armory: "arsenal",
     forge: "forja",
     signOut: "sair",
     signIn: "entrar",

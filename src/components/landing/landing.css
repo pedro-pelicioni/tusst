@@ -255,3 +255,172 @@
     display: none;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   PIXEL HERO — the Journey island as the landing backdrop, a crimson
+   pixel button and a hero sprite walking the beach road. Everything
+   animated stays `ld-` prefixed so the reduced-motion block above
+   (later in the cascade only by !important) still stops it.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* nearest-neighbour scaling for the pixel-art island layer */
+.ld-pixel {
+  image-rendering: pixelated;
+}
+
+/* lighter scrim: a vignette behind the copy plus soft top/bottom fades,
+   so the coast, the forge and the citadel stay visible around the title */
+.ld-scrim--island {
+  background:
+    radial-gradient(38% 46% at 50% 48%, rgba(5, 4, 9, 0.74) 0%, rgba(5, 4, 9, 0.5) 48%, transparent 100%),
+    linear-gradient(180deg, rgba(5, 4, 9, 0.64) 0%, rgba(5, 4, 9, 0.1) 24%, rgba(5, 4, 9, 0.1) 68%, rgba(5, 4, 9, 0.72) 100%);
+}
+
+/* crimson pixel button: the overworld's .ow-btn-primary gradient, frame
+   and hard shadow (overworld.css), sized for the landing */
+.ld-btn-pixel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  font: 12px/1.4 var(--font-silkscreen), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fff2cb;
+  text-shadow: 1px 2px #5d1720;
+  background: linear-gradient(#bd4551 0%, #a32c3c 48%, #812130 50%, #942635 100%);
+  border: 2px solid var(--ow-frame-light);
+  box-shadow:
+    inset 0 0 0 1px #e7816d,
+    4px 5px #2a1220,
+    0 0 36px rgba(163, 44, 60, 0.4);
+  transition:
+    filter 0.12s,
+    transform 0.08s,
+    box-shadow 0.08s;
+}
+
+.ld-btn-pixel:hover {
+  filter: brightness(1.08);
+}
+
+.ld-btn-pixel:active {
+  transform: translate(1px, 1px);
+  box-shadow:
+    inset 0 0 0 1px #e7816d,
+    2px 3px #2a1220,
+    0 0 36px rgba(163, 44, 60, 0.4);
+}
+
+.ld-btn-pixel:focus-visible {
+  outline: 2px solid var(--ow-frame-light);
+  outline-offset: 4px;
+}
+
+/* ── Hero walker ─────────────────────────────────────────────────────
+   HeroWalker.tsx measures the stage (the section box) and sets the road
+   as an inline px `path()`; the walker's centre is the path point and
+   the figure hangs above it, so its feet stay on the sand. Without
+   offset-path support the figure simply stands at the road's start. */
+@keyframes ld-hero-walk {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+
+/* steps(1) over two intervals = flip exactly at the turn-around */
+@keyframes ld-hero-face {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(-1); }
+}
+
+/* steps(2) over one interval = two frames: 0 and -3px */
+@keyframes ld-hero-bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+
+.ld-hero-walker {
+  position: absolute;
+  left: 18%;
+  top: 60%;
+  width: 64px;
+  height: 64px;
+  visibility: hidden;
+}
+
+.ld-hero-walker.is-ready {
+  visibility: visible;
+}
+
+/* the feet's ground shadow sits on the path point */
+.ld-hero-walker::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34px;
+  height: 9px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(8, 16, 26, 0.45);
+}
+
+@supports (offset-path: path("M0 0")) {
+  .ld-hero-walker {
+    left: 0;
+    top: 0;
+    offset-rotate: 0deg;
+    offset-distance: 0%;
+    animation: ld-hero-walk 14s linear infinite alternate;
+  }
+}
+
+.ld-hero-face {
+  position: absolute;
+  inset: 0;
+  animation: ld-hero-face 28s steps(1, end) infinite;
+}
+
+.ld-hero-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  height: 64px;
+  display: grid;
+  place-items: center;
+}
+
+.ld-hero-bob {
+  animation: ld-hero-bob 0.36s steps(2) infinite;
+}
+
+/* cell 0 of the 4×2 forms sheet */
+.ld-hero-cell {
+  background-repeat: no-repeat;
+  background-size: 400% 200%;
+  background-position: 0% 0%;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 6px 3px rgba(0, 0, 0, 0.45));
+}
+
+/* stand-in while the sheet hasn't landed: a gold pixel diamond with a T */
+.ld-hero-standin::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: linear-gradient(135deg, #ffe7a6 0%, #d9b96a 55%, #a5742c 100%);
+  box-shadow:
+    0 0 0 2px #1a1024,
+    0 0 18px rgba(217, 185, 106, 0.6);
+}
+
+.ld-hero-standin > b {
+  position: relative;
+  font: 700 13px var(--font-silkscreen), monospace;
+  color: #1a1024;
+}

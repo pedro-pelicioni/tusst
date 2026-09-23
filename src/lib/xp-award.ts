@@ -1,7 +1,7 @@
 import "server-only";
 
 import type { Prisma } from "@prisma/client";
-import { levelFromXp, type XpSource } from "./xp";
+import { levelFromXp, type XpAwardOutcome, type XpSource } from "./xp";
 
 // Award XP inside a caller-owned transaction. The XpEvent unique constraint
 // (userId, source, sourceKey) is the anti-replay guard. Sequential replays
@@ -13,14 +13,9 @@ import { levelFromXp, type XpSource } from "./xp";
 // aborted"). Character.xp/level are updated in the same transaction so the
 // aggregate can never drift from the ledger.
 
-export interface XpAwardOutcome {
-  awarded: boolean;
-  earned: number;
-  /** ledger total after (or without) this award */
-  total: number;
-  level: number;
-  leveledUp: boolean;
-}
+// The outcome shape lives in ./xp (client-safe) so the players can type the
+// payload they receive; re-exported here for the server-side callers.
+export type { XpAwardOutcome };
 
 export async function awardXp(
   tx: Prisma.TransactionClient,

@@ -21,6 +21,24 @@
   --gold: #d9b96a;
   --ember: #c96a6a;
   --accent-soft: #cfc3ff;
+
+  /* overworld — the pixel HUD (parchment panels, carved frames, crimson buttons) */
+  --ow-parchment: #f1e3bf;
+  --ow-parchment-2: #dcc48f;
+  --ow-parchment-ink: #3a2416;
+  --ow-parchment-muted: #7a5a3a;
+  --ow-wood: #1a1024;
+  --ow-wood-2: #2a1a36;
+  --ow-frame: #b98a49;
+  --ow-frame-light: #f4ce7b;
+  --ow-crimson: #a32c3c;
+  --ow-crimson-2: #812130;
+  --ow-sea: #1b6e86;
+  --ow-gilding:
+    inset 0 0 0 1px #fff0a1,
+    inset 0 0 0 4px #5a3a6a,
+    0 0 0 1px #0d0714,
+    3px 4px 0 #0d0714;
 }
 
 @theme inline {
@@ -39,10 +57,22 @@
   --color-gold: var(--gold);
   --color-ember: var(--ember);
   --color-accent-soft: var(--accent-soft);
+  --color-ow-parchment: var(--ow-parchment);
+  --color-ow-parchment2: var(--ow-parchment-2);
+  --color-ow-ink: var(--ow-parchment-ink);
+  --color-ow-ink-muted: var(--ow-parchment-muted);
+  --color-ow-wood: var(--ow-wood);
+  --color-ow-wood2: var(--ow-wood-2);
+  --color-ow-frame: var(--ow-frame);
+  --color-ow-frame-light: var(--ow-frame-light);
+  --color-ow-crimson: var(--ow-crimson);
+  --color-ow-crimson2: var(--ow-crimson-2);
+  --color-ow-sea: var(--ow-sea);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-jetbrains-mono);
   --font-display: var(--font-cinzel);
+  --font-pixel: var(--font-silkscreen);
 }
 
 html,

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { NavMenu } from "./NavMenu";
+import { SignInLink } from "./SignInLink";
 import { auth, signOut } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getMessages } from "@/i18n/server";
@@ -37,6 +38,9 @@ export async function Nav() {
     { href: "/labs", label: m.common.nav.forge },
     { href: "/campaign", label: m.common.nav.campaign },
     { href: "/advanced", label: m.common.nav.advanced },
+    // The Armory appears with the pouch, never before: the hidden-currency
+    // reveal is the whole point (see prisma/schema.prisma).
+    ...(pouch?.goldRevealed ? [{ href: "/armory", label: m.common.nav.armory }] : []),
   ];
 
   return (
@@ -103,6 +107,7 @@ export async function Nav() {
               <NavMenu
                 name={user.name ?? "guardian"}
                 journeyLive={JOURNEY_LIVE}
+                armoryOpen={!!pouch?.goldRevealed}
                 signOutAction={handleSignOut}
               />
             </>
@@ -118,12 +123,9 @@ export async function Nav() {
                 </Link>
               ))}
               <LanguageSwitcher />
-              <Link
-                href="/login"
-                className="whitespace-nowrap rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
-              >
+              <SignInLink className="whitespace-nowrap rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20">
                 {m.common.nav.signIn}
-              </Link>
+              </SignInLink>
             </>
           )}
         </nav>

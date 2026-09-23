@@ -16,6 +16,21 @@ export const XP_LAB: Record<"novice" | "adept" | "master", number> = {
   master: 150,
 };
 
+/**
+ * What an award attempt resolved to — the shape every XP-granting route
+ * returns to the browser. It lives here, not in `xp-award.ts`, because that
+ * module is `server-only` and the players need the type to render the
+ * victory screen from the real result instead of guessing.
+ */
+export interface XpAwardOutcome {
+  awarded: boolean;
+  earned: number;
+  /** ledger total after (or without) this award */
+  total: number;
+  level: number;
+  leveledUp: boolean;
+}
+
 /** Cumulative XP required to REACH level `level` (level 1 = 0 xp). */
 export function xpForLevel(level: number): number {
   return 50 * level * (level - 1); // L2=100, L3=300, L4=600, L5=1000…

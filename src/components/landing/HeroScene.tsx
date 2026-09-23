@@ -1,74 +1,51 @@
-// Full-viewport illustrated hero: four parallax layers (sky plate, far
-// spires, citadel hill, foreground rocks), CSS light rays and drifting
-// motes, and the centered title block — a giant rune glyph behind it
-// works as an oversized sigil watermark.
+// Full-viewport pixel-art hero: the Journey island is the backdrop (one
+// parallax layer, nearest-neighbour scaled), a hero sprite walks its beach
+// road, and the centered title block sits over a light vignette so the
+// island's coast and citadel stay visible around the copy.
 
 import Image from "next/image";
 import Link from "next/link";
 import type { Messages } from "@/i18n/messages";
+import { DEFAULT_HERO_ID, heroById } from "@/content/heroes";
+import { HeroWalker } from "./HeroWalker";
 import { Particles } from "./Particles";
 import { SceneLayers, hasLandingAsset } from "./SceneLayers";
 
 export function HeroScene({
   m,
   beginHref,
+  signedIn,
 }: {
   m: Messages["landing"];
   beginHref: string;
+  signedIn: boolean;
 }) {
+  // Same fs check SceneLayers uses for its own art: the sheet is a public
+  // path too, and a missing file simply keeps the diamond stand-in.
+  const hero = heroById(DEFAULT_HERO_ID);
+  const sheet = hasLandingAsset(hero.sheet) ? hero.sheet : null;
+
   return (
     <header data-scene className="ld-scene ld-scene--hero flex min-h-[max(100svh,640px)] items-center">
       <SceneLayers
         layers={[
-          { src: "/landing/hero/sky.webp", plx: 0.05, mouse: 0.25, priority: true, quality: 75 },
-          { src: "/landing/hero/far.webp", plx: 0.12, mouse: 0.45, eager: true },
-          { src: "/landing/hero/mid.webp", plx: 0.2, mouse: 0.7, priority: true, quality: 75 },
+          {
+            src: "/landing/hero/island.webp",
+            plx: 0.08,
+            mouse: 0.3,
+            priority: true,
+            quality: 75,
+            className: "ld-pixel",
+          },
         ]}
       />
 
-      {/* the party marches toward the citadel between the crag and the
-          foreground rocks — same parallax factor as the rocks so their
-          feet stay planted on them */}
-      {hasLandingAsset("/landing/hero/party.webp") && (
-        <div
-          aria-hidden
-          data-plx={0.3}
-          className="ld-plx pointer-events-none absolute bottom-[20%] left-[3%] hidden w-[clamp(240px,24vw,410px)] md:block"
-        >
-          <div data-plx-mouse={1.1}>
-            <Image
-              src="/landing/hero/party.webp"
-              alt=""
-              width={1400}
-              height={895}
-              quality={75}
-              sizes="400px"
-              className="h-auto w-full drop-shadow-[0_16px_26px_rgba(0,0,0,0.6)]"
-            />
-          </div>
-        </div>
-      )}
-
-      <SceneLayers
-        layers={[
-          { src: "/landing/hero/fg.webp", plx: 0.3, mouse: 1.1, eager: true, quality: 75, className: "object-bottom" },
-        ]}
-      />
-
-      <div aria-hidden className="ld-ray left-[16%]" style={{ "--delay": "0s" } as React.CSSProperties} />
-      <div aria-hidden className="ld-ray left-[38%]" style={{ "--delay": "2.4s" } as React.CSSProperties} />
+      <HeroWalker sheet={sheet} />
       <Particles tone="hero" />
-      <div aria-hidden className="ld-scrim" />
+      <div aria-hidden className="ld-scrim ld-scrim--island" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl justify-center px-6 pb-24 pt-28 md:pb-16">
-        <div className="relative flex w-full max-w-xl flex-col items-center text-center" data-reveal>
-          <span
-            aria-hidden
-            className="pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 select-none font-display text-[200px] font-black leading-none text-gold/[0.08] md:-top-24 md:text-[290px]"
-          >
-            Ø
-          </span>
-
+        <div className="flex w-full max-w-xl flex-col items-center text-center" data-reveal>
           <Image
             src="/logo-sigil.png"
             alt=""
@@ -79,8 +56,12 @@ export function HeroScene({
             className="ld-glow h-20 w-20 rounded-full md:h-24 md:w-24"
           />
 
-          <h1 className="mt-6 flex flex-col items-center gap-3">
-            <span className="font-display text-[clamp(64px,12vw,124px)] font-black leading-none tracking-[0.08em] text-fg [text-shadow:0_0_46px_rgba(143,123,255,0.45),0_10px_50px_rgba(0,0,0,0.9)]">
+          <p className="mt-6 font-pixel text-[10px] uppercase tracking-[0.3em] text-gold">
+            {m.hero.kicker}
+          </p>
+
+          <h1 className="mt-4 flex flex-col items-center gap-4">
+            <span className="font-pixel text-[clamp(56px,10vw,112px)] font-bold leading-none tracking-[0.06em] text-fg [text-shadow:4px_4px_0_#1a1024,0_0_40px_rgba(143,123,255,.45)]">
               TUSST
             </span>
             <span className="font-mono text-[clamp(10px,1.6vw,13px)] uppercase tracking-[0.5em] text-accent-soft">
@@ -88,29 +69,35 @@ export function HeroScene({
             </span>
           </h1>
 
-          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-muted2">
+          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-fg/80">
             {m.hero.tagline}
           </p>
 
-          <div className="mt-9 flex flex-col items-center gap-3.5 sm:flex-row">
-            <Link
-              href={beginHref}
-              className="rounded-full bg-accent px-8 py-3.5 font-display text-[13px] font-bold uppercase tracking-[0.18em] text-[#0b0716] shadow-[0_0_34px_rgba(143,123,255,0.4)] transition hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-accent-soft focus-visible:outline-offset-4"
-            >
-              {m.hero.ctaPrimary}
+          <div className="mt-9 flex w-full flex-col items-center gap-3.5 sm:w-auto sm:flex-row">
+            <Link href={beginHref} className="ld-btn-pixel">
+              {signedIn ? m.hero.ctaContinue : m.hero.ctaPrimary}
             </Link>
             <Link
               href="/ide"
-              className="flex items-center gap-2.5 rounded-full border border-gold/45 bg-[rgba(217,185,106,0.07)] px-7 py-3.5 font-display text-[13px] font-bold uppercase tracking-[0.18em] text-gold transition hover:bg-[rgba(217,185,106,0.16)] focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-4"
+              className="inline-flex items-center justify-center gap-2.5 border-2 border-gold/40 bg-[rgba(5,4,9,0.35)] px-6 py-3 font-pixel text-[11px] uppercase tracking-[0.08em] text-gold shadow-[3px_4px_0_rgba(26,16,36,0.8)] transition-colors hover:border-gold/70 hover:bg-[rgba(217,185,106,0.12)] focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-4"
             >
               {m.hero.ctaSecondary}
-              <span className="rounded-full border border-gold/40 px-2 py-0.5 font-mono text-[9px] tracking-[0.16em]">
+              <span className="border border-gold/40 px-1.5 py-0.5 font-mono text-[9px] tracking-[0.16em] text-gold/80">
                 {m.hero.ctaSecondaryBadge}
               </span>
             </Link>
           </div>
 
-          <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
+          {!signedIn && (
+            <Link
+              href="/login"
+              className="mt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-accent-soft/85 underline decoration-accent/40 underline-offset-4 transition-colors hover:text-white hover:decoration-accent-soft focus-visible:outline-2 focus-visible:outline-accent-soft focus-visible:outline-offset-4"
+            >
+              {m.hero.ctaEnter}
+            </Link>
+          )}
+
+          <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.3em] text-muted2">
             {m.hero.freeLine}
           </p>
         </div>
@@ -118,7 +105,7 @@ export function HeroScene({
 
       <div
         aria-hidden
-        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-center font-mono text-[9px] uppercase tracking-[0.4em] text-muted"
+        className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-center font-mono text-[9px] uppercase tracking-[0.4em] text-muted2"
       >
         <span className="ld-hint mb-1 block text-[13px] text-accent-soft">▼</span>
         {m.hero.scrollHint}

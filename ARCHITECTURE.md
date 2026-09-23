@@ -74,7 +74,8 @@ Two principles shape the design:
 | Area | Route group | Notes |
 | --- | --- | --- |
 | Landing | `/` | own cinematic chrome |
-| Product pages | `(app)/` — `/path`, `/cards`, `/lessons/[slug]`, `/tracks/[slug]`, `/profile`, `/login` | shared Nav + Footer |
+| Overworld | `(world)/` — `/path` (world map), `/journey` (Isle of the Builder), `/campaign` (Rusted Isle) | shared Nav, no Footer, full-viewport stage (`src/components/overworld`) |
+| Product pages | `(app)/` — `/hero`, `/cards`, `/lessons/[slug]`, `/tracks/[slug]`, `/journey/[slug]`, `/profile`, `/login` | shared Nav + Footer |
 | Forge IDE | `(ide)/` — `/ide` | full-viewport layout (Nav, no Footer); open access, no login required |
 | API | `/api/auth/[...nextauth]`, `/api/submissions`, `/api/soroban/{compile,test,audit}` | route handlers |
 

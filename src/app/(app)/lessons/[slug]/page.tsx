@@ -7,6 +7,7 @@ import { advancedTrackOfLesson } from "@/content/advanced/curriculum";
 import { getUnlockedActCount } from "@/lib/unlock";
 import { TRIAL_LESSON_SLUG } from "@/content/steps";
 import {
+  getActLocalized,
   getLessonStepsLocalized,
   getSkirmishLocalized,
   localizeLessonTitle,
@@ -18,6 +19,11 @@ import { fmt } from "@/i18n/format";
 import { LessonPlayer } from "@/components/LessonPlayer";
 import { LessonSteps } from "@/components/LessonSteps";
 import { Markdown } from "@/components/Markdown";
+import type { BattleSkin } from "@/components/overworld/BattleFrame";
+import { hasV2Asset } from "@/components/scene/SceneArt";
+import { CAMPAIGN_IMAGE, FORTRESS_POSITIONS } from "@/content/overworld/campaign-world";
+import { buildHeroView } from "@/lib/hero-view";
+import { XP_LESSON } from "@/lib/xp";
 
 export default async function LessonPage({
   params,
@@ -111,6 +117,53 @@ export default async function LessonPage({
 
   const steps = getLessonStepsLocalized(slug, locale);
   if (content && steps) {
+    // The battle skin: the act's overlord (or the sentinel stand-in) over
+    // the Rusted Isle cropped at the act's fortress. Advanced Path lessons
+    // are narrative-free by design and keep the plain player. Presentation
+    // only — the sandbox grader and its XP are untouched, so the page tells
+    // the victory screen the lesson's XP value and whether it was already
+    // cleared before this run.
+    const actIndex = acts.findIndex((a) => a.trackSlug === lesson.track.slug);
+    let battle: (BattleSkin & { xp: number; alreadyDone: boolean }) | undefined;
+    if (actIndex >= 0 && !advancedTrack) {
+      const act = getActLocalized(acts[actIndex].trackSlug, locale) ?? acts[actIndex];
+      const trackSlug = act.trackSlug;
+      const character = userId
+        ? await prisma.character.findUnique({
+            where: { userId },
+            select: { heroId: true, xp: true },
+          })
+        : null;
+      const bossArt = `/v2/overworld/bosses/${trackSlug}.webp`;
+      const actBosses = m.overworld.bosses.acts as Record<string, string | undefined>;
+      battle = {
+        hero: buildHeroView({
+          heroId: character?.heroId,
+          name: session?.user?.name,
+          xp: character?.xp ?? 0,
+          signedIn: !!userId,
+          m: m.overworld,
+        }),
+        boss: {
+          name:
+            act.overlord ??
+            actBosses[trackSlug] ??
+            fmt(m.overworld.bosses.sentinel, { numeral: act.numeral }),
+          level: 4 + actIndex * 6,
+          art: hasV2Asset(bossArt) ? bossArt : null,
+        },
+        arena: {
+          src: hasV2Asset(CAMPAIGN_IMAGE.src) ? CAMPAIGN_IMAGE.src : null,
+          pos: FORTRESS_POSITIONS[trackSlug] ?? [50, 50],
+        },
+        missionNumber: skirmish?.numeral ?? String(lesson.order).padStart(2, "0"),
+        backHref: `/campaign?at=${slug}`,
+        nextHref: next ? `/campaign?at=${slug}&go=${next.slug}` : `/campaign?at=${slug}`,
+        nextTitle: next ? localizeLessonTitle(next.slug, next.title, locale) : null,
+        xp: XP_LESSON,
+        alreadyDone: completed,
+      };
+    }
     return (
       <LessonSteps
         lessonSlug={slug}
@@ -125,6 +178,7 @@ export default async function LessonPage({
         fileName={fileName}
         language={language}
         mentorEnabled={!!userId && !!process.env.MENTOR_API_KEY}
+        battle={battle}
       />
     );
   }

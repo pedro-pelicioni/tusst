@@ -5,11 +5,12 @@ export const common = {
   logoAlt: "TUSST — Stroop Mührü",
   nav: {
     path: "yol",
-    hall: "salon",
+    hall: "dünya haritası",
     journey: "yolculuk",
     campaign: "kampanya",
     advanced: "ileri seviye",
     cards: "kartlar",
+    armory: "cephanelik",
     forge: "forge",
     signOut: "çıkış",
     signIn: "giriş",

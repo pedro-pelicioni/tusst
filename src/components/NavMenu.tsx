@@ -9,10 +9,13 @@ import { useMessages } from "@/i18n/client";
 export function NavMenu({
   name,
   journeyLive = false,
+  armoryOpen = false,
   signOutAction,
 }: {
   name: string;
   journeyLive?: boolean;
+  /** `User.goldRevealed` — the Armory door only exists once gold does */
+  armoryOpen?: boolean;
   signOutAction: () => Promise<void>;
 }) {
   const m = useMessages();
@@ -26,6 +29,7 @@ export function NavMenu({
     { href: "/campaign", label: m.common.nav.campaign },
     { href: "/advanced", label: m.common.nav.advanced },
     { href: "/cards", label: m.common.nav.cards },
+    ...(armoryOpen ? [{ href: "/armory", label: m.common.nav.armory }] : []),
   ];
 
   useEffect(() => {

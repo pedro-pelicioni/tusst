@@ -1,0 +1,86 @@
+/* The Armory — item sprites, rarity plates and the loadout figure.
+   Imported by <ArmoryShop> and <LoadoutFigure> (CSS imports dedupe). Note
+   that <LoadoutFigure> also imports overworld.css: the portrait it layers the
+   pieces onto is a .ow-portrait cell defined there. */
+
+/* ── item sprites: one cell of a 4×2 sheet, same contract as .ow-portrait ── */
+.ow-item-sprite {
+  display: block;
+  background-repeat: no-repeat;
+  background-size: 400% 200%;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* The stand-in while a sheet master has not landed: a gilded rune plate
+   tinted by rarity. Deliberately NOT a broken <img> — every slot ships
+   readable with zero art (docs/ART-BRIEFS-v2.md § Armory). */
+.ow-item-standin {
+  display: grid;
+  place-items: center;
+  border: 2px solid #deb969;
+  box-shadow: 2px 3px #1d0d09;
+  background-color: #341c22;
+}
+.ow-item-standin svg {
+  width: 56%;
+  height: 56%;
+  opacity: 0.9;
+}
+
+/* ── shop card ─────────────────────────────────────────────────── */
+.ow-shop-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+.ow-shop-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 10px 12px;
+  border: 2px solid var(--ow-frame);
+  background: linear-gradient(180deg, var(--ow-wood-2), var(--ow-wood));
+  box-shadow: 3px 4px 0 #0d0714;
+  transition: transform 0.18s ease;
+}
+.ow-shop-card:hover { transform: translateY(-2px); }
+.ow-shop-card.is-equipped { border-color: var(--ow-frame-light); }
+/* Cannot afford it yet: the piece is shown, never hidden — the price is the
+   goal. Dimmed, not disabled-looking. */
+.ow-shop-card.is-locked .ow-item-sprite,
+.ow-shop-card.is-locked .ow-item-standin { filter: brightness(0.45) saturate(0.45); }
+
+.ow-shop-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: 11px var(--font-silkscreen), monospace;
+  color: #e0b25f;
+}
+.ow-shop-price img { width: 14px; height: 14px; }
+
+/* ── loadout figure: portrait + the three worn pieces, DOM-layered ──
+   No per-hero sprite surgery: the hero's own portrait cell stays untouched
+   and the pieces are absolutely positioned around it. */
+.ow-loadout {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.ow-loadout-aura {
+  position: absolute;
+  inset: -10%;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.ow-loadout-slot { position: absolute; pointer-events: none; }
+.ow-loadout-weapon { right: -14%; bottom: 4%; transform: rotate(-18deg); }
+.ow-loadout-mascot { left: -18%; bottom: -6%; }
+.ow-loadout-equipment { right: -12%; top: -10%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ow-shop-card { transition: none; }
+  .ow-shop-card:hover { transform: none; }
+}

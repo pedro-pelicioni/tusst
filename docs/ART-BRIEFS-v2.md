@@ -266,3 +266,280 @@ on residual soft alpha:
   weave; fixed with compression instead (`width: 560`, `alphaQuality: 52`).
   140 KB → under budget.
 - `the-common-tongue`, `the-heartbeat-and-the-bill` — `alphaQuality: 72` alone.
+
+## Overworld — the RPG surfaces (`/path`, `/journey`, `/campaign`, battle skin)
+
+Masters go into `art-src/v2/overworld/` (gitignored) and `npm run assets:pixel`
+(`scripts/pixel-assets.mjs`) cuts them into `public/v2/overworld/`. These are
+**16-bit pixel art**, not the painterly preamble above — every prompt in this
+section is self-contained. Every slot has a stand-in (CSS sea + region blobs
+for the maps, the `CharacterAvatar` diamond for a hero sprite, an initial for
+a portrait, a sigil glyph for a boss), so ship in any order.
+
+> **Status 2026-09-23:** all 6 hero sheets and 4 of the 11 bosses are in.
+>
+> The account WAS in a Higgsfield "grace period" that capped generation at
+> **5 per UTC day** — every 6th submission that day was refused with *"You've
+> reached the daily generation limit for your grace period"* and cost nothing,
+> and the quota reset at **00:00 UTC** (confirmed twice: refused at 23:56 UTC,
+> all five accepted at 00:01). **Lifted on 2026-09-23** when the plan was
+> upgraded: a batch submitted at 00:16 UTC — minutes after that day's five were
+> already spent — went through 3/3. The refusal text is kept here only so it
+> stays recognisable if a plan ever lapses.
+>
+> | Run | Slots | Credits |
+> | --- | --- | --- |
+> | 2026-09-22 | 5 hero sheets (`gpt_image_2_5`, 3 each) | 432.77 → 417.77 |
+> | 2026-09-23 | `hero-stropillusion-forms` + bosses `foundations`, `craft`, `realm`, `rust-fundamentals` | 417.77 → 407.02 |
+> | 2026-09-23 | the 3 Armory sheets (`gpt_image_2_5`) — see the Armory section | 407.02 → … |
+>
+> **Still missing (7 act bosses):** `control-flow`, `rust-standard-library`,
+> `mastering-option`, `mastering-result`, `stellar-101`,
+> `soroban-smart-contracts`, `stellar-protocol-27`. Prompts are in the boss
+> table below; ~2 credits each. Each one falls back to a glyph in the fortress
+> node and the battle arena until its master lands.
+
+### Maps (Phase 2 — already generated)
+
+| master | output | size | budget |
+|---|---|---|---|
+| `journey-island.png` | `v2/overworld/journey-island.webp` | 2560 wide, 3:2 | 1400 KB |
+| `campaign-island.png` | `v2/overworld/campaign-island.webp` | 2560 wide, 3:2 | 1400 KB |
+| `world-map.png` | `v2/overworld/world-map.webp` | 2560 wide, 16:9 | 1200 KB |
+| (`journey-island.png`) | `landing/hero/island.webp` | 2560 wide, lossy scene | 420 KB |
+
+`kind: "pixel"`: nearest-neighbour downscale, near-lossless WebP first, lossy
+fallback when over budget (all three maps currently take the fallback).
+
+### Hero sheets ×3 — 8 forms + 8 bust portraits (`/journey`, `/campaign`, HUD, `/hero`)
+
+The app addresses each sheet as a **4×2 grid of 256 px cells**
+(`sheetPosition` in `src/lib/hero.ts`), cell `n` = form `n` = level `n+1`.
+
+**Model / settings:** `gpt_image_2_5`, `quality: "high"`, `resolution: "2k"`,
+`background: "transparent"`, aspect **`16:9`** (the model offers no 2:1; the
+output is 2688×1520 and the `regrid` step re-cells it). Reference: the
+champion card `public/cards/<id>.png` uploaded via `media_upload` and passed
+as `image_references`.
+
+> **THE FACE IS A BRAND CONSTANT — pin it in every hero prompt.** The Stroop
+> species has a dark dome head, a curled hook antenna, two glowing amber eyes
+> and a **glowing amber upturned crescent smile** (`public/mascot/*.png` is the
+> canonical face). The champion cards paint it mid-battle-cry with a dark open
+> mouth, which is right for a painting of someone shouting and *wrong* for a
+> bust: stripped of the raised sword and the action pose, the same mouth reads
+> as dismayed. `stroowarrior` was generated from the card alone on 2026-09-22
+> and came out sad-looking in all 8 cells on both sheets; `stroopkeeper` got
+> the smile and looks right. Re-drawn 2026-09-23 with the keeper's portrait
+> sheet passed as a SECOND reference for the face and the card kept only for
+> armour and palette, plus an explicit "never an open dark oval mouth" clause.
+> Do the same for any future hero, and check the mouth before accepting a
+> result.
+
+| master (`art-src/v2/overworld/`) | hero | role phrase in the prompt |
+|---|---|---|
+| `hero-stroowarrior-forms.png` / `-portraits.png` | STROOWARRIOR | the armored warrior from the reference painting (sword and shield) |
+| `hero-stropillusion-forms.png` / `-portraits.png` | STROPILLUSION | the illusionist mage from the reference painting (staff, robes, arcane glow) |
+| `hero-stroopkeeper-forms.png` / `-portraits.png` | STROOPKEEPER | the archivist scholar from the reference painting (tome, robes, lantern) |
+
+**Forms prompt** (swap ROLE):
+
+> 16-bit pixel art character sheet: the SAME chibi hero character shown 8
+> times in a strict 4 by 2 grid, each figure centered in its own equal cell,
+> full body, facing right, idle pose, same proportions and silhouette in every
+> cell. The hero is ROLE. Left to right, top to bottom the outfit escalates
+> from a humble apprentice (row 1: apprentice, squire, warrior, vanguard) to a
+> legendary champion (row 2: knight, champion, warlord, radiant solar champion
+> with a glowing halo and wings). Faithful to the reference painting's face,
+> colors and species. Crisp pixel clusters, dark outlines, no text, no labels,
+> no grid lines, no background scenery, transparent background.
+
+**Portraits prompt** (swap ROLE):
+
+> 16-bit pixel art bust portraits of the same hero (ROLE), 8 portraits in a
+> strict 4 by 2 grid, equal square cells, each bust centered facing slightly
+> left, the outfit escalating exactly like the character sheet (apprentice →
+> squire → warrior → vanguard → knight → champion → warlord → radiant champion
+> with halo), consistent face and colors, transparent background, no text, no
+> grid lines.
+
+If a result's grid is uneven or figures bleed into each other, retry once
+adding: *"each of the 8 figures must be fully inside its own cell with
+generous empty margin around it"*. None of the five 2026-09-22 results
+needed it.
+
+**Pipeline:** `kind: "alpha"` (the PNG already carries alpha — no key pass),
+`regrid: { cols: 4, rows: 2, cell: 256, pad: 8 }`, `anchor: "bottom"` for
+forms (feet on a shared floor so the walk bob and map anchor stay put) and
+`"center"` for portraits. The regrid finds the emptiest cut line within ±20 %
+of each nominal boundary, crops every figure to its alpha bbox and composites
+the 8 into a fresh 1024×512 canvas at **one uniform scale** (the largest
+figure — the winged final form — fits 240 px), so the hero keeps its size
+from form to form. Near-lossless is tried first; all five took the lossy
+fallback at 117–154 KB against a 160 KB budget. If a sheet lands over budget,
+lower `alphaQuality` before `quality` — the forms jobs run at **78**, dropped
+from 82 on 2026-09-23 when the re-drawn `stroowarrior` (its flame sword carries
+a wide soft glow, and glow is what the alpha plane spends its bits on) landed
+at 164 KB. At 78 all six sheets pass.
+
+### Bosses ×11 — 512 wide keyed (`MissionNode`, `BattleFrame`)
+
+3 journey region bosses + 8 act overlords. Slot ids are the region ids of
+`src/content/overworld/journey-world.ts` and the act `trackSlug`s of
+`src/content/campaign.ts` (the `boss` field on a fortress node).
+
+**Model / settings:** `nano_banana_pro`, `resolution: "2k"`, aspect `1:1`,
+no reference image. Submit as one `generate_image_batch` (11 requests) and
+`jobs_wait`.
+
+**Prompt shape:** `SUBJECT, 16-bit pixel art monster sprite, front view, full
+body centered, crisp pixel clusters, dark outlines, dramatic rim light, flat
+light gray #d4d4d4 background, no text, no watermark`
+
+| master (`art-src/v2/overworld/`) | slot | SUBJECT |
+|---|---|---|
+| `boss-foundations.png` | Journey · Foundations | a hulking stone golem covered in glowing teal runes |
+| `boss-craft.png` | Journey · Craft | a three-headed green hydra coiled around broken gears |
+| `boss-realm.png` | Journey · Realm | a spectral wraith holding a floating open ledger, violet flames |
+| `boss-rust-fundamentals.png` | Act I | a rusted iron golem with chains |
+| `boss-control-flow.png` | Act II | a serpent coiled into an infinite loop of segments |
+| `boss-rust-standard-library.png` | Act III | a beast made of stacked ancient books and scrolls |
+| `boss-mastering-option.png` | Act IV | a hooded phantom fading into void, one glowing eye |
+| `boss-mastering-result.png` | Act V | a two-faced oracle statue, one side gold one side cracked |
+| `boss-stellar-101.png` | Act VI | a sky leviathan made of stars and clouds |
+| `boss-soroban-smart-contracts.png` | Act VII | a floating beholder-like eye monster with many smaller eyes, deep purple |
+| `boss-stellar-protocol-27.png` | Act VIII | an armored herald knight with a banner of glowing glyphs |
+
+**Pipeline:** `kind: "key"` with `keyStart: 30, keyFull: 92` (the same gray
+key as the sigils), `trim: true`, `resize: { width: 512 }`, `alphaQuality:
+88`, budget **90 KB** → `public/v2/overworld/bosses/<slot>.webp`. If the
+model bleeds glow into the backdrop, cut harder (`keyStart: 56, keyFull:
+118`) exactly like `the-fate-of-an-envelope` above.
+
+## Armory — the three cosmetic sheets (`/armory`, profile loadout)
+
+Masters go into `art-src/v2/overworld/` (gitignored) as `armory-weapons.png`,
+`armory-equipment.png`, `armory-mascots.png`; `npm run assets:pixel` re-cells
+them into `public/v2/armory/<slot>.webp`. **16-bit pixel art**, same register as
+the hero sheets and bosses above.
+
+Each sheet is a **4×2 grid of 256 px cells** — cell `n` is the item whose
+`cell` is `n` in `src/content/armory.ts`, so **cell order is frozen**: the list
+below IS the catalog order, and swapping two entries turns every owner's sword
+into someone else's. Every slot falls back to a gilded rune plate
+(`.ow-item-standin`), so `/armory` is fully playable with none of this art in
+place — which is how it shipped.
+
+> **Status 2026-09-23: all three sheets are in.** One `generate_image_batch` of
+> three, accepted 3/3 straight after the plan upgrade lifted the daily cap, and
+> every grid came back clean on the first try — `regrid` found its 8 figures in
+> each sheet and re-celled all three to 1024×512, so the "uneven grid" retry
+> note at the end of this section has still never been exercised here.
+
+**Model / settings:** `gpt_image_2_5`, `quality: "high"`, `resolution: "2k"`,
+`background: "transparent"`, aspect **`16:9`** — identical to the hero sheets
+(the model has no 2:1; `regrid` re-cells the 2688×1520 output). No reference
+image: these are props, not characters, and the palette is pinned in the prompt
+instead.
+
+**Pipeline:** `kind: "alpha"` (the master carries its own alpha — no key pass),
+`regrid: { cols: 4, rows: 2, cell: 256, pad: 8, anchor: "center" }`,
+`alphaQuality: 74`, budget **160 KB** → `public/v2/armory/<slot>.webp`.
+`anchor: "center"` and not `"bottom"`: items are props that should sit in the
+middle of their cell, and the single uniform scale across the sheet is what
+keeps the dagger visibly smaller than the greatsword. **alphaQuality 74, not
+the heroes' 82:** these sheets carry wide soft rim-light glows, which is
+exactly what the alpha plane spends its bits on — at 82, `mascots` landed at
+163 KB against the 160 KB budget while the other two passed. Lowering
+alphaQuality before quality (the rule above) brought the three in at 86 / 128 /
+140 KB.
+
+### Prompt — `armory-weapons.png`
+
+> 16-bit pixel art item sheet: 8 different fantasy WEAPONS shown in a strict 4
+> by 2 grid, each weapon centered in its own equal cell, angled diagonally, the
+> whole item fully inside its own cell with generous empty margin around it, no
+> item touching another. Crisp pixel clusters, dark outlines, dramatic rim
+> light. Left to right, top to bottom the weapons escalate in power from a
+> humble apprentice tool to a legendary radiant relic: (1) a short rune-etched
+> bronze dagger, (2) a plain iron shortsword, (3) a slender spear with a teal
+> glowing tip, (4) a pair of crossed twin daggers with amber gems, (5) a heavy
+> forge hammer with molten orange cracks, (6) an arcane violet wizard staff
+> topped with a floating glyph, (7) a dark scythe whose blade is a curved
+> ledger page, (8) a colossal golden greatsword wreathed in radiant solar
+> light. Consistent palette of amber gold, teal and violet on dark steel. No
+> text, no labels, no numbers, no grid lines, no background scenery,
+> transparent background.
+
+| cell | item id | price |
+|---|---|---|
+| 0 | `rune-dagger` | 20 |
+| 1 | `iron-shortsword` | 45 |
+| 2 | `trustline-spear` | 70 |
+| 3 | `twin-lumens` | 100 |
+| 4 | `forge-hammer` | 140 |
+| 5 | `soroban-staff` | 185 |
+| 6 | `ledger-scythe` | 240 |
+| 7 | `consensus-greatsword` | 320 |
+
+### Prompt — `armory-equipment.png`
+
+> 16-bit pixel art item sheet: 8 different fantasy ARMOR and EQUIPMENT pieces
+> shown in a strict 4 by 2 grid, each piece centered in its own equal cell,
+> front facing, the whole item fully inside its own cell with generous empty
+> margin around it, no item touching another. Crisp pixel clusters, dark
+> outlines, dramatic rim light. Left to right, top to bottom the gear escalates
+> from humble apprentice kit to legendary regalia: (1) a patched brown
+> apprentice cloak, (2) a brass keeper lantern with warm light, (3) a pair of
+> rune-etched leather bracers, (4) steel pauldrons with teal sigils, (5) an
+> engraved silver cuirass with a glowing amber gem, (6) a flowing violet cloak
+> embroidered with stars, (7) a round golden aegis shield with a carved rune
+> boss, (8) a radiant golden crown ringed by a halo of floating glyphs.
+> Consistent palette of amber gold, teal and violet on dark steel and leather.
+> No text, no labels, no numbers, no grid lines, no background scenery,
+> transparent background.
+
+| cell | item id | price |
+|---|---|---|
+| 0 | `patchcloak` | 20 |
+| 1 | `keeper-lantern` | 40 |
+| 2 | `runed-bracers` | 65 |
+| 3 | `sigil-pauldrons` | 95 |
+| 4 | `gem-cuirass` | 135 |
+| 5 | `starweave-cloak` | 180 |
+| 6 | `golden-aegis` | 235 |
+| 7 | `protocol-crown` | 320 |
+
+### Prompt — `armory-mascots.png`
+
+> 16-bit pixel art creature sheet: 8 different chibi fantasy COMPANION
+> CREATURES, mostly dragons, shown in a strict 4 by 2 grid, each creature full
+> body facing right in an idle pose, centered in its own equal cell, fully
+> inside its cell with generous empty margin around it, no creature touching
+> another. Crisp pixel clusters, dark outlines, dramatic rim light. Left to
+> right, top to bottom they escalate from a humble hatchling to a legendary
+> beast: (1) a tiny orange ember wyrmling baby dragon, (2) a small glowing teal
+> rune sprite, (3) a pale luminous moth with star-patterned wings, (4) a chubby
+> stone golem pup covered in glowing teal runes, (5) a teal frost drake with
+> icy crystal wings, (6) a small floating violet eye beholder creature with
+> tiny extra eyes, (7) a baby sky leviathan made of clouds and stars, (8) a
+> majestic radiant golden solar dragon with spread wings and a glowing halo.
+> Consistent palette of amber gold, teal and violet. No text, no labels, no
+> numbers, no grid lines, no background scenery, transparent background.
+
+| cell | item id | price |
+|---|---|---|
+| 0 | `ember-wyrmling` | 30 |
+| 1 | `rune-sprite` | 55 |
+| 2 | `lumen-moth` | 80 |
+| 3 | `golem-pup` | 110 |
+| 4 | `frost-drake` | 150 |
+| 5 | `void-beholder` | 200 |
+| 6 | `sky-leviathan` | 260 |
+| 7 | `solar-dragon` | 350 |
+
+If a result's grid is uneven or two items bleed together, retry once adding
+*"each of the 8 items must be fully inside its own cell with generous empty
+margin around it, no item touching another"* — the `regrid` step throws rather
+than guessing when it cannot find 8 separate figures, so a bad grid fails loudly
+at `npm run assets:pixel` instead of shipping scrambled cells.
