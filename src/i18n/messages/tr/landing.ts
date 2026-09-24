@@ -4,7 +4,7 @@
 export const landing = {
   metaDescription:
     "Uygulamalı, oyunlaştırılmış kodlama görevleri. Önce Rust'ta ustalaş, sonra Stellar'da gerçek Soroban akıllı kontratları yayına al. Kurulum yok — sadece kod.",
-  metaImageAlt: "TUSST — Rust'tan Stellar'a giden yolunu döv",
+  metaImageAlt: "TUSST — Rust ve Stellar'da ustalaşmak için bir piksel macerası",
   nav: {
     campaign: "Kampanya",
     champions: "Şampiyonlar",

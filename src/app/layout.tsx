@@ -70,7 +70,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: OG_LOCALES[locale],
       images: [
         {
-          url: "/landing/og.jpg",
+          url: "/landing/og-overworld.jpg",
           width: 1200,
           height: 630,
           alt: messages.landing.metaImageAlt,
@@ -81,7 +81,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: ["/landing/og.jpg"],
+      images: ["/landing/og-overworld.jpg"],
     },
     robots: {
       index: true,

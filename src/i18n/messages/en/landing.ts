@@ -4,7 +4,7 @@
 export const landing = {
   metaDescription:
     "Hands-on, gamified coding challenges. Master Rust first, then ship real Soroban smart contracts on Stellar. No setup — just code.",
-  metaImageAlt: "TUSST — forge your path from Rust to Stellar",
+  metaImageAlt: "TUSST — a pixel adventure to master Rust and Stellar",
   nav: {
     campaign: "Campaign",
     champions: "Champions",
