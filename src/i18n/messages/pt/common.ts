@@ -21,6 +21,15 @@ export const common = {
     pouchTitle: "{gold} de ouro",
     lvl: "nv {level}",
   },
+  music: {
+    label: "Música",
+    mute: "Silenciar música",
+    unmute: "Ativar música",
+    start: "Tocar música",
+    idleHint: "A música começa no seu primeiro clique",
+    volume: "Volume da música",
+    volumeAria: "Volume da música: {value}",
+  },
   footer: {
     tagline: "TUSST · The Ultimate Stellar Supreme Tutorial",
     motto: "aprenda rust → domine stellar · open-source",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, JetBrains_Mono, Cinzel, Silkscreen } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { LocaleProvider } from "@/i18n/client";
+import { MusicProvider } from "@/components/music/MusicProvider";
 import { MESSAGES } from "@/i18n/messages";
 import { getLocale } from "@/i18n/server";
 import "./globals.css";
@@ -104,7 +105,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full bg-bg text-fg">
         <LocaleProvider locale={locale} messages={MESSAGES[locale]}>
-          {children}
+          <MusicProvider>{children}</MusicProvider>
         </LocaleProvider>
         <Analytics />
       </body>

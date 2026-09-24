@@ -112,3 +112,51 @@ body::after {
 ::selection {
   background: rgba(143, 123, 255, 0.32);
 }
+
+/* Pixel range slider (music volume): hard-edged track filled up to --fill,
+   square two-tone thumb, no rounding anywhere — 16-bit, like the speaker. */
+.pixel-range {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 18px;
+  background: transparent;
+  cursor: pointer;
+}
+.pixel-range::-webkit-slider-runnable-track {
+  height: 6px;
+  background: linear-gradient(to right, var(--accent) var(--fill), var(--bg-elev-2) var(--fill));
+  box-shadow: 0 0 0 2px #0d0714, inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.pixel-range::-moz-range-track {
+  height: 6px;
+  background: linear-gradient(to right, var(--accent) var(--fill), var(--bg-elev-2) var(--fill));
+  box-shadow: 0 0 0 2px #0d0714, inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.pixel-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 16px;
+  margin-top: -5px;
+  border: 0;
+  border-radius: 0;
+  background: var(--fg);
+  box-shadow: inset -2px -2px 0 var(--muted-2), 0 0 0 2px #0d0714;
+}
+.pixel-range::-moz-range-thumb {
+  width: 10px;
+  height: 16px;
+  border: 0;
+  border-radius: 0;
+  background: var(--fg);
+  box-shadow: inset -2px -2px 0 var(--muted-2), 0 0 0 2px #0d0714;
+}
+.pixel-range.is-muted::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, var(--muted) var(--fill), var(--bg-elev-2) var(--fill));
+}
+.pixel-range.is-muted::-moz-range-track {
+  background: linear-gradient(to right, var(--muted) var(--fill), var(--bg-elev-2) var(--fill));
+}
+.pixel-range:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}

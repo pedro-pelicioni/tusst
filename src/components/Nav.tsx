@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { MusicControl } from "./music/MusicControl";
 import { NavMenu } from "./NavMenu";
 import { SignInLink } from "./SignInLink";
 import { auth, signOut } from "@/lib/auth";
@@ -106,6 +107,7 @@ export async function Nav() {
                   </span>
                 </Link>
               )}
+              <MusicControl phone="hidden" />
               <LanguageSwitcher />
               <NavMenu
                 name={user.name ?? "guardian"}
@@ -125,6 +127,7 @@ export async function Nav() {
                   {l.label}
                 </Link>
               ))}
+              <MusicControl phone="mute" />
               <LanguageSwitcher />
               <SignInLink className="whitespace-nowrap rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20">
                 {m.common.nav.signIn}

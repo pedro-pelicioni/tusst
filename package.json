@@ -25,6 +25,7 @@
     "assets:landing": "node scripts/landing-assets.mjs",
     "assets:v2": "node scripts/v2-assets.mjs",
     "assets:pixel": "node scripts/pixel-assets.mjs",
+    "assets:music": "node scripts/music-assets.mjs",
     "xp:backfill": "node scripts/backfill-xp.mjs"
   },
   "dependencies": {

@@ -21,6 +21,15 @@ export const common = {
     pouchTitle: "{gold} altın",
     lvl: "sev {level}",
   },
+  music: {
+    label: "Müzik",
+    mute: "Müziği kapat",
+    unmute: "Müziği aç",
+    start: "Müziği çal",
+    idleHint: "Müzik ilk tıklamanızda başlar",
+    volume: "Müzik sesi",
+    volumeAria: "Müzik sesi: {value}",
+  },
   footer: {
     tagline: "TUSST · The Ultimate Stellar Supreme Tutorial",
     motto: "rust öğren → stellar'da ustalaş · açık kaynak",

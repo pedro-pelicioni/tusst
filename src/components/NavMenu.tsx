@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CharacterAvatar } from "./CharacterAvatar";
+import { MusicPanel } from "./music/MusicControl";
 import { useMessages } from "@/i18n/client";
 
 /** Profile avatar that opens a dropdown with the nav links and sign out. */
@@ -85,6 +86,14 @@ export function NavMenu({
               {l.label}
             </Link>
           ))}
+          {/* Phones: the bar has no room for the music pill, so it lives here. */}
+          <div className="my-1 h-px bg-line sm:hidden" />
+          <div className="px-4 pb-2 pt-2.5 sm:hidden">
+            <div className="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2">
+              {m.common.music.label}
+            </div>
+            <MusicPanel />
+          </div>
           <div className="my-1 h-px bg-line" />
           <form action={signOutAction}>
             <button
