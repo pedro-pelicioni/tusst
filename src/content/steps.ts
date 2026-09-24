@@ -1889,7 +1889,7 @@ A **trustline** is that acceptance — a bridge you open from your account to on
 trustline = "I accept USDC, issued by G...CENTRE"
 \`\`\`
 
-No trustline, no balance — payments in that asset simply can't reach you. (Each open trustline also raises your reserve slightly.)`,
+No trustline, no balance — a payment in that asset to you fails with \`op_no_trust\`. (Each open trustline also raises your reserve slightly.)`,
     },
     {
       kind: "quiz",
@@ -2119,18 +2119,18 @@ let count: u32 = env.storage().instance()
 env.storage().instance().set(&COUNTER, &count);
 \`\`\`
 
-\`get\` returns an \`Option<T>\` — the key may never have been written, or its rent (TTL) may have expired. \`unwrap_or(0)\` is the counter idiom.`,
+\`get\` returns an \`Option<T>\` because the key may never have been written. \`unwrap_or(0)\` is the counter idiom. An expired TTL is not a \`None\` here: instance storage is archived with the contract, and the transaction restores it before your code runs, or fails without running it.`,
     },
     {
       kind: "quiz",
       question: "Why does `storage().get(&KEY)` return an `Option<T>` instead of `T`?",
       options: [
-        "The key may never have been written — or its TTL expired",
+        "The key may not exist: never written, removed, or (temporary storage only) expired",
         "All SDK functions return Option for consistency",
         "To force error handling on type mismatches",
       ],
       answer: 0,
-      explain: "Ledger storage is rented, not owned. Absence is a normal state — handle it.",
+      explain: "Absence is a normal state — handle it. Expiry only causes it on temporary storage: expired instance and persistent entries are archived, and the transaction restores them first or fails. They never reach your code as `None`.",
     },
     {
       kind: "fill",

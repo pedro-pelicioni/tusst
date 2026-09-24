@@ -167,8 +167,8 @@ export const visuals = {
     verdictSoon: "Un paso más y el reloj se acaba. Lo que pasa después es lo único que separa a los tres estantes.",
     verdictArchived: [
       "",
-      "Archivada, no borrada. El dato salió del libro mayor activo y tu llamada fallará hasta que alguien lo restaure — pero sigue ahí, y la restauración es una comisión, no una reescritura.",
-      "La propia instancia del contrato está archivada. Nadie puede llamarlo, y toda entrada persistente que posee se fue con él. Restaurar lo devuelve todo.",
+      "Archivada, no borrada. El dato salió del libro mayor activo, pero sigue ahí: una transacción que lo necesite puede restaurarlo primero. La restauración es una comisión, no una reescritura.",
+      "La propia instancia del contrato está archivada, y todo su almacenamiento de instancia se fue con ella — ambos son una sola entrada del libro mayor. Una llamada puede restaurar primero la instancia, pagando una comisión, y todo vuelve.",
     ],
     verdictLost: [
       "Perdida. No archivada — borrada. No hay restauración para el almacenamiento temporal, y no hay comisión que la traiga de vuelta. Lo que vivía aquí hay que reconstruirlo desde otro sitio, o sencillamente se perdió.",

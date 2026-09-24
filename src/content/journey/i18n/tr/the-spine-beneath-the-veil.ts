@@ -109,7 +109,7 @@ Yukarıdakilerin hepsi şu anda, gerçekten var olan bir pool'da kontrol edilebi
 
 Bunları sırayla oku ve *eksik* olana dikkat et. O cevapların hiçbiri bir adres, bir tutar ya da bir karşı taraf içermiyor.
 
-**İki uyarı, çünkü bir kontratın spec'i seni kendisi hakkında uyaramaz.** Bu pool, kibarca cevap verip hiçbir anlam taşımayan beş artık fonksiyon açığa çıkarıyor — \`balance\`, \`transfer\`, \`approve\` ve arkadaşları; Forge onları seni kandıramasınlar diye *yem* olarak işaretliyor. Ve ön izlemenin state'i **2026-09-02'de arşivleniyor**; ondan sonra biri onları geri yüklemek için ödeme yapana kadar o okumalar cevap vermeyi bırakıyor. Bu Forge'un hatası değil: bu ağdaki her kontratın altında yaşadığı Soroban state kirası.`,
+**İki uyarı, çünkü bir kontratın spec'i seni kendisi hakkında uyaramaz.** Bu pool, kibarca cevap verip hiçbir anlam taşımayan beş artık fonksiyon açığa çıkarıyor — \`balance\`, \`transfer\`, \`approve\` ve arkadaşları; Forge onları seni kandıramasınlar diye *yem* olarak işaretliyor. Ve ön izlemenin state'i **TTL**'lere bağlı. Bir TTL dolduğunda girdiler kaybolmaz, arşivlenir: okumalar yine cevap verir, bir sonraki yazma ise önce onları bir ücret karşılığında geri yükler. Bu, Soroban state kirası; bu ağdaki her kontrat onun altında yaşar — Forge kontratın saatini zincirden okur ve süre dolmaya yaklaşınca seni uyarır.`,
     },
     {
       kind: "labLink",

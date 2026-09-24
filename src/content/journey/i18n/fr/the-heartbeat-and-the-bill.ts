@@ -13,7 +13,7 @@ La plupart des chaînes laissent l’état s’accumuler à l’infini — chaqu
 Quand le TTL expire :
 
 - **Temporaire** : les entrées sont supprimées. Disparues.
-- **Persistant** et **instance** : elles sont **archivées** — évincées du registre actif, mais rétablissables plus tard avec une preuve, revenant exactement comme avant.
+- **Persistant** et **instance** : elles sont **archivées** — évincées du registre actif, pas effacées. Une transaction ultérieure qui a besoin de l’une d’elles peut la restaurer au passage, moyennant des frais, et elle revient exactement comme avant.
 
 C’est l’**archivage d’état**, et aucune autre grande chaîne ne le fait. Le registre actif reste léger, les validateurs restent bon marché, l’historique reste récupérable.`,
     },
@@ -23,7 +23,7 @@ C’est l’**archivage d’état**, et aucune autre grande chaîne ne le fait. 
 
 Les étagères abstraites deviennent une décision de conception dès qu'on a des données réelles. Prenez un simple contrat de séquestre :
 
-- **L'adresse de l'administrateur et le taux de frais** vont sur le stockage **d'instance**. Ils appartiennent au contrat lui-même, sont lus à presque chaque appel, et si le contrat est archivé ils doivent partir avec lui — il n'y a rien à sauver d'un taux dont le contrat n'existe plus.
+- **L'adresse de l'administrateur et le taux de frais** vont sur le stockage **d'instance**. Ils appartiennent au contrat lui-même, sont lus à presque chaque appel, et ils suivent l'horloge du contrat : tant que le contrat est actif, eux aussi, et restaurer un contrat archivé les ramène avec lui.
 - **Chaque séquestre ouvert** va sur le stockage **persistant**. Il y a l'argent de quelqu'un dedans. Si son TTL expire, l'entrée doit rester récupérable, car « on a oublié » n'est pas une réponse acceptable à « où est mon argent ».
 - **Une cotation éphémère** que l'appelant consulte avant de s'engager va sur le stockage **temporaire**. Elle ne vaut plus rien dans dix minutes et personne ne devrait payer de loyer pour la garder.
 
@@ -68,7 +68,7 @@ Le résultat est un coût que tu peux citer à l’avance : « cette action co
 Chaque client Soroban suit un même rythme :
 
 1. **Simule** l’appel contre un nœud RPC — pas de signature, pas de coût.
-2. La simulation renvoie l'**empreinte** — les entrées du registre que l’appel va lire ou écrire — ainsi que l'estimation des ressources et les autorisations nécessaires.
+2. La simulation renvoie l'**empreinte** — les entrées du registre que l’appel va lire ou écrire — ainsi que l'estimation des ressources, les autorisations nécessaires et les éventuelles entrées archivées à restaurer d’abord.
 3. Tu **signes exactement ce que tu as simulé**, puis tu soumets la transaction.
 
 La transaction signée porte son empreinte, donc les validateurs connaissent son univers complet avant de l’exécuter ; rien en dehors de l’empreinte ne peut être touché. Saute la simulation et tu devines des nombres que le réseau rejettera simplement.`,
@@ -89,7 +89,7 @@ La transaction signée porte son empreinte, donc les validateurs connaissent son
     { question: `Le TTL d'une entrée temporaire atteint zéro. Qu'advient-il de la donnée ?`,
       options: ["Elle est supprimée — il n'existe aucune restauration pour le stockage temporaire, à aucun prix","Elle est archivée et peut être restaurée moyennant des frais, comme toute autre entrée","Elle est conservée mais passe en lecture seule jusqu'à prolongation"], answer: 0 },
     { question: `Le TTL d'une entrée persistante atteint zéro. Que se passe-t-il ?`,
-      options: ["Elle est archivée, pas supprimée — les appels qui en ont besoin échouent jusqu'à restauration, et restaurer coûte des frais","Elle est supprimée, comme une entrée temporaire","Le contrat est mis en pause jusqu'à réécriture de l'entrée"], answer: 0 },
+      options: ["Elle est archivée, pas supprimée — une transaction ultérieure qui en a besoin peut la restaurer d'abord, et la restauration coûte des frais","Elle est supprimée, comme une entrée temporaire","Le contrat est mis en pause jusqu'à réécriture de l'entrée"], answer: 0 },
     { question: `Pourquoi le protocole facture-t-il un loyer sur l'état ?`,
       options: ["Parce que l'état coûte du stockage à chaque validateur pour toujours : des frais d'écriture uniques laisseraient n'importe qui imposer un coût continu illimité","Pour décourager les contrats de stocker quoi que ce soit on-chain","Pour financer l'exploitation des validateurs, payée par les frais d'archivage"], answer: 0 },
     { question: `À quoi sert de simuler un appel de contrat avant de le signer ?`,

@@ -121,18 +121,18 @@ let count: u32 = env.storage().instance()
 env.storage().instance().set(&COUNTER, &count);
 \`\`\`
 
-\`get\` bir \`Option<T>\` döndürür — anahtar hiç yazılmamış olabilir ya da kirası (TTL) dolmuş olabilir. \`unwrap_or(0)\`, sayaç kalıbıdır.`,
+\`get\` bir \`Option<T>\` döndürür, çünkü anahtar hiç yazılmamış olabilir. \`unwrap_or(0)\`, sayaç kalıbıdır. Burada dolmuş bir TTL \`None\` demek değildir: instance storage kontratla birlikte arşivlenir ve işlem, kodun çalışmadan önce onu geri yükler ya da kodu hiç çalıştırmadan başarısız olur.`,
     },
     {
       kind: "quiz",
       question: "`storage().get(&KEY)` neden `T` yerine `Option<T>` döndürür?",
       options: [
-        "Anahtar hiç yazılmamış olabilir — ya da TTL'i dolmuş olabilir",
+        "Anahtar var olmayabilir: hiç yazılmamış, silinmiş ya da (yalnızca temporary storage'da) süresi dolmuş olabilir",
         "Tutarlılık için tüm SDK fonksiyonları Option döndürür",
         "Tip uyuşmazlıklarında hata yönetimini zorlamak için",
       ],
       answer: 0,
-      explain: "Ledger storage'ı kiralanır, sahiplenilmez. Yokluk normal bir durumdur — ele al.",
+      explain: "Yokluk normal bir durumdur — ele al. Süre dolması buna yalnızca temporary storage'da yol açar: süresi dolmuş instance ve persistent girdiler arşivlenir ve işlem önce onları geri yükler ya da başarısız olur. Koduna asla `None` olarak ulaşmazlar.",
     },
     {
       kind: "fill",

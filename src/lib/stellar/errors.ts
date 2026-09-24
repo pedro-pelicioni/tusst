@@ -7,9 +7,11 @@
 // one instead, which is how "load a contract id that does not exist" ended up
 // reporting "could not load the contract" and nothing else.
 //
-// The `code` matters as much as the text: a 404 means the ledger entry is not
-// there, which for a contract id we curated ourselves means its state was
-// archived rather than that the id is wrong.
+// The `code` matters as much as the text: a 404 means the ledger entry does
+// not exist at all. It does NOT mean archived — since Protocol 23 the RPC
+// still returns archived entries (liveUntilLedgerSeq 0) and their specs load
+// fine — so for a contract id it means the id is wrong or the contract lives
+// on another network.
 
 export interface StellarErrorInfo {
   message: string;

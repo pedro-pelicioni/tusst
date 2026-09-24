@@ -536,7 +536,7 @@ Aynı kod, farklı ihraççı → tamamen farklı bir varlık. Kimlik, ihraçç�
 trustline = "G...CENTRE tarafından ihraç edilen USDC'yi kabul ediyorum"
 \`\`\`
 
-Trustline yok, bakiye yok — o varlıktaki ödemeler sana ulaşamaz bile. (Açık her trustline rezervini de biraz yükseltir.)`,
+Trustline yok, bakiye yok — o varlıkta sana yapılan bir ödeme \`op_no_trust\` ile başarısız olur. (Açık her trustline rezervini de biraz yükseltir.)`,
     },
     {
       kind: "quiz",

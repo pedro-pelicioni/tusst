@@ -830,7 +830,7 @@ let count: u32 = env.storage().instance().get(&KEY).unwrap_or(0);
 env.storage().instance().set(&KEY, &count);
 \`\`\`
 
-\`get\` renvoie \`Option<T>\` — la clé peut n'avoir jamais été écrite (ou son loyer a expiré), donc \`unwrap_or(0)\` est l'idiome pour les compteurs. Les clés et les valeurs passent par référence.
+\`get\` renvoie \`Option<T>\` car la clé peut n'avoir jamais été écrite : \`unwrap_or(0)\` est donc l'idiome pour les compteurs. Une entrée d'instance expirée ne revient pas sous forme de \`None\` : elle est archivée, et la transaction la restaure avant que ton code s'exécute (ou échoue sans l'exécuter). Les clés et les valeurs passent par référence.
 
 ### Ta mission
 

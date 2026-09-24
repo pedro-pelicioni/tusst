@@ -106,7 +106,7 @@ Ouvre la [Forge](/ide), va dans **Explore** et choisis **pool de confidentialit�
 
 Lis-les dans l'ordre et remarque ce qui *manque*. Aucune de ces réponses ne contient d'adresse, de montant ni de contrepartie.
 
-**Deux avertissements, car la spec d'un contrat ne peut pas t'avertir sur elle-même.** Ce pool expose cinq fonctions résiduelles — \`balance\`, \`transfer\`, \`approve\` et compagnie — qui répondent poliment et ne veulent rien dire ; la Forge les marque *leurre* pour qu'elles ne te trompent pas. Et l'état de l'aperçu **est archivé le 2026-09-02**, après quoi ces lectures cessent de répondre jusqu'à ce que quelqu'un paie pour les restaurer. Ce n'est pas la Forge qui échoue : c'est le state rent de Soroban, sous lequel vit chaque contrat de ce réseau.`,
+**Deux avertissements, car la spec d'un contrat ne peut pas t'avertir sur elle-même.** Ce pool expose cinq fonctions résiduelles — \`balance\`, \`transfer\`, \`approve\` et compagnie — qui répondent poliment et ne veulent rien dire ; la Forge les marque *leurre* pour qu'elles ne te trompent pas. Et l'état de l'aperçu repose sur des **TTL**. Quand l'un d'eux expire, les entrées sont archivées, pas perdues : les lectures continuent de répondre, et la prochaine écriture les restaure d'abord, moyennant des frais. C'est le state rent de Soroban, sous lequel vit chaque contrat de ce réseau — la Forge lit l'horloge du contrat sur la chaîne et te prévient quand l'échéance approche.`,
     },
     {
       kind: "labLink",

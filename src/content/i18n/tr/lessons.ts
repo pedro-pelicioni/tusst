@@ -906,7 +906,7 @@ let count: u32 = env.storage().instance().get(&KEY).unwrap_or(0);
 env.storage().instance().set(&KEY, &count);
 \`\`\`
 
-\`get\` bir \`Option<T>\` döndürür — anahtar hiç yazılmamış (ya da kirası dolmuş) olabilir; bu yüzden sayaçlar için kalıp \`unwrap_or(0)\`'dır. Anahtarlar ve değerler referansla geçirilir.
+\`get\` bir \`Option<T>\` döndürür, çünkü anahtar hiç yazılmamış olabilir; bu yüzden sayaçlar için kalıp \`unwrap_or(0)\`'dır. Süresi dolmuş bir instance girdisi \`None\` olarak dönmez: arşivlenir ve işlem, kodun çalışmadan önce onu geri yükler (ya da kodu hiç çalıştırmadan başarısız olur). Anahtarlar ve değerler referansla geçirilir.
 
 ### Görevin
 

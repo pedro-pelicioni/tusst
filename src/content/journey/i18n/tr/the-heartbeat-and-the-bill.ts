@@ -13,7 +13,7 @@ export const conceptText: JourneyConceptText = {
 TTL dolduğunda:
 
 - **Temporary** kayıtlar silinir. Gitti.
-- **Persistent** ve **instance** kayıtlar **arşivlenir** — canlı ledger'dan çıkarılır ama daha sonra bir kanıtla geri getirilebilir; tam olarak bırakıldıkları gibi dönerler.
+- **Persistent** ve **instance** kayıtlar **arşivlenir** — canlı ledger'dan çıkarılır ama silinmez. Bunlardan birine ihtiyaç duyan sonraki bir işlem, onu ilk iş olarak bir ücret karşılığında geri getirebilir ve kayıt tam olarak bırakıldığı gibi döner.
 
 Buna **state archival** (durum arşivleme) deniyor ve başka hiçbir büyük zincir bunu yapmıyor. Canlı ledger yalın kalır, validator'lar ucuz kalır, geçmiş kurtarılabilir kalır.`,
     },
@@ -28,7 +28,7 @@ Buna **state archival** (durum arşivleme) deniyor ve başka hiçbir büyük zin
 
 Soyut raflar, elinde gerçek veri olduğu anda bir tasarım kararına dönüşür. Basit bir escrow (emanet) kontratını ele al:
 
-- **Admin adresi ve ücret oranı** **instance** storage'a gider. Kontratın kendisine aittirler, neredeyse her çağrıda okunurlar ve kontrat arşivlenirse onunla birlikte gitmeleri gerekir — kontratı artık var olmayan bir ücret oranından kurtarılacak bir şey yoktur.
+- **Admin adresi ve ücret oranı** **instance** storage'a gider. Kontratın kendisine aittirler, neredeyse her çağrıda okunurlar ve kontratın saatini paylaşırlar: kontrat canlı olduğu sürece onlar da canlıdır, arşivlenmiş bir kontratı geri getirmek de onları onunla birlikte geri getirir.
 - **Açık olan her escrow** **persistent** storage'a gider. İçinde birinin parası var. TTL'i dolsa bile kayıt kurtarılabilir kalmalı, çünkü "param nerede" sorusuna "unutmuşuz" kabul edilebilir bir cevap değildir.
 - Çağıranın işlemi onaylamadan önce çektiği **kısa ömürlü bir fiyat teklifi** **temporary** storage'a gider. On dakika sonra beş para etmez ve kimse onu tutmak için kira ödememeli.
 
@@ -74,7 +74,7 @@ Sonuç, önceden söyleyebildiğin bir maliyet: "bu aksiyon yaklaşık bir sente
 Her Soroban istemcisi tek bir ritmi izler:
 
 1. Çağrıyı bir RPC düğümüne karşı **simüle et** — imza yok, maliyet yok.
-2. Simülasyon **footprint**'i (ayak izini) döndürür — çağrının tam olarak hangi ledger kayıtlarını okuyup yazacağını — artı kaynak tahminlerini ve ihtiyaç duyduğu auth'u.
+2. Simülasyon **footprint**'i (ayak izini) döndürür — çağrının tam olarak hangi ledger kayıtlarını okuyup yazacağını — artı kaynak tahminlerini, ihtiyaç duyduğu auth'u ve varsa önce geri getirmesi gereken arşivlenmiş kayıtları.
 3. **Tam olarak simüle ettiğini imzalar** ve gönderirsin.
 
 İmzalı işlem footprint'ini taşır; böylece validator'lar onu çalıştırmadan önce bütün dünyasını bilir ve footprint dışındaki hiçbir şeye dokunulamaz. Simülasyonu atlarsan, ağın düpedüz reddedeceği sayıları tahmin ediyorsun demektir.`,
@@ -95,7 +95,7 @@ Her Soroban istemcisi tek bir ritmi izler:
     { question: `Temporary bir kaydın TTL'i sıfıra ulaşıyor. Veriye ne olur?`,
       options: ["Silinir — temporary storage için hiçbir fiyata geri getirme yoktur","Arşivlenir ve diğer her kayıt gibi bir ücret karşılığında geri getirilebilir","Tutulur ama süresi uzatılana kadar salt okunur olur"], answer: 0 },
     { question: `Persistent bir kaydın TTL'i sıfıra ulaşıyor. Ne olur?`,
-      options: ["Silinmez, arşivlenir — ona ihtiyaç duyan çağrılar biri geri getirene kadar başarısız olur ve geri getirmenin bir ücreti vardır","Temporary bir kayıt gibi silinir","Kayıt yeniden yazılana kadar kontrat duraklatılır"], answer: 0 },
+      options: ["Silinmez, arşivlenir — ona ihtiyaç duyan sonraki bir işlem önce onu geri getirebilir ve geri getirmenin bir ücreti vardır","Temporary bir kayıt gibi silinir","Kayıt yeniden yazılana kadar kontrat duraklatılır"], answer: 0 },
     { question: `Protokol state için neden kira alıyor ki?`,
       options: ["Çünkü state her validator'a sonsuza dek storage'a mal olur; tek seferlik bir yazma ücreti, herkesin sınırsız ve sürekli bir maliyet dayatmasına izin verirdi","Kontratları on-chain'de hiçbir şey saklamamaya caydırmak için","Arşiv ücretlerinden ödenen validator operasyonlarını finanse etmek için"], answer: 0 },
     { question: `Bir kontrat çağrısını imzalamadan önce simüle etmenin anlamı ne?`,

@@ -83,7 +83,7 @@ Henüz ledger'da yok — tıpkı Friendbot'tan önceki senin gibi. Ama bu kez on
     "quiz-recap": {
       question: `Biri ikinci hesabına **USDC** göndermek istiyor. Ulaşır mı?`,
       options: [
-        "Hayır — ikinci hesap hiç USDC trustline'ı açmadı, o yüzden ledger reddeder",
+        "Hayır — ikinci hesap hiç USDC trustline'ı açmadı, o yüzden ödeme op_no_trust ile başarısız olur",
         "Evet — her hesap her varlığı alabilir",
         "Sadece daha yüksek ücret öderlerse",
       ],

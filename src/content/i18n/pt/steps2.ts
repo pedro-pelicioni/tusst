@@ -536,7 +536,7 @@ Uma **trustline** é essa aceitação — uma ponte que você abre da sua conta 
 trustline = "aceito USDC, emitido por G...CENTRE"
 \`\`\`
 
-Sem trustline, sem saldo — pagamentos naquele ativo simplesmente não conseguem te alcançar. (Cada trustline aberta também aumenta um pouco sua reserva.)`,
+Sem trustline, sem saldo — um pagamento naquele ativo para você falha com \`op_no_trust\`. (Cada trustline aberta também aumenta um pouco sua reserva.)`,
     },
     {
       kind: "quiz",
@@ -766,18 +766,18 @@ let count: u32 = env.storage().instance()
 env.storage().instance().set(&COUNTER, &count);
 \`\`\`
 
-\`get\` retorna um \`Option<T>\` — a chave pode nunca ter sido escrita, ou o aluguel dela (TTL) pode ter expirado. \`unwrap_or(0)\` é o padrão do contador.`,
+\`get\` retorna um \`Option<T>\` porque a chave pode nunca ter sido escrita. \`unwrap_or(0)\` é o padrão do contador. Um TTL expirado não vira \`None\` aqui: o instance storage é arquivado junto com o contrato, e a transação o restaura antes do seu código rodar, ou falha sem rodá-lo.`,
     },
     {
       kind: "quiz",
       question: "Por que `storage().get(&KEY)` retorna um `Option<T>` em vez de `T`?",
       options: [
-        "A chave pode nunca ter sido escrita — ou o TTL dela expirou",
+        "A chave pode não existir: nunca escrita, removida ou (só no temporary storage) expirada",
         "Todas as funções do SDK retornam Option por consistência",
         "Para forçar tratamento de erro em incompatibilidades de tipo",
       ],
       answer: 0,
-      explain: "O storage do ledger é alugado, não possuído. Ausência é um estado normal — trate-a.",
+      explain: "Ausência é um estado normal — trate-a. A expiração só causa isso no temporary storage: entradas expiradas no instance e no persistent storage são arquivadas, e a transação as restaura primeiro ou falha. Elas nunca chegam ao seu código como `None`.",
     },
     {
       kind: "fill",

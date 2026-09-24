@@ -148,7 +148,7 @@ Fee, sequence bump, two balances updated, one ledger close. Five seconds. That's
       id: "quiz-recap",
       question: `Someone wants to send **USDC** to your second account. Will it arrive?`,
       options: [
-        "No — the second account never opened a USDC trustline, so the ledger refuses it",
+        "No — the second account never opened a USDC trustline, so the payment fails with op_no_trust",
         "Yes — any account can receive any asset",
         "Only if they pay a higher fee",
       ],

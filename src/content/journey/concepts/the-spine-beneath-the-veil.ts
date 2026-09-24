@@ -125,7 +125,7 @@ Open the [Forge](/ide), switch to **Explore**, and pick **SPP privacy pool · XL
 
 Read them in order and notice what is *missing*. Not one of those answers contains an address, an amount or a counterparty.
 
-**Two warnings, because a contract's spec cannot warn you about itself.** This pool exposes five leftover functions — \`balance\`, \`transfer\`, \`approve\` and friends — that answer politely and mean nothing at all; the Forge marks them *decoy* so they cannot fool you. And the preview's state **archives on 2026-09-02**, after which those reads stop answering until somebody pays to restore them. That is not the Forge failing: it is Soroban state rent, which every contract on this network lives under.`,
+**Two warnings, because a contract's spec cannot warn you about itself.** This pool exposes five leftover functions — \`balance\`, \`transfer\`, \`approve\` and friends — that answer politely and mean nothing at all; the Forge marks them *decoy* so they cannot fool you. And the preview's state runs on **TTLs**. When one lapses, the entries are archived, not lost: reads still answer, and the next write restores them first, for a fee. That is Soroban state rent, which every contract on this network lives under — the Forge reads the contract's clock from the chain and warns you when it gets close.`,
     },
     {
       kind: "labLink",

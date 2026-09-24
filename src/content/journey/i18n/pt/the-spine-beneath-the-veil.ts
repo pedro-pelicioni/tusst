@@ -106,7 +106,7 @@ Abra a [Forge](/ide), vá em **Explore** e escolha **pool de privacidade SPP · 
 
 Leia na ordem e repare no que está *faltando*. Nenhuma dessas respostas contém endereço, valor ou contraparte.
 
-**Dois avisos, porque a spec de um contrato não consegue avisar sobre ela mesma.** Este pool expõe cinco funções sobradas — \`balance\`, \`transfer\`, \`approve\` e companhia — que respondem educadamente e não significam nada; a Forge marca elas como *isca* para que não enganem você. E o estado do preview **arquiva em 2026-09-02**, depois disso as leituras param de responder até alguém pagar para restaurar. Isso não é a Forge falhando: é o state rent do Soroban, sob o qual todo contrato desta rede vive.`,
+**Dois avisos, porque a spec de um contrato não consegue avisar sobre ela mesma.** Este pool expõe cinco funções sobradas — \`balance\`, \`transfer\`, \`approve\` e companhia — que respondem educadamente e não significam nada; a Forge marca elas como *isca* para que não enganem você. E o estado do preview funciona com **TTLs**. Quando um deles vence, as entradas são arquivadas, não perdidas: leituras continuam respondendo, e a próxima escrita restaura elas primeiro, pagando uma taxa. Isso é o state rent do Soroban, sob o qual todo contrato desta rede vive — a Forge lê o relógio do contrato direto da chain e avisa você quando o prazo estiver perto.`,
     },
     {
       kind: "labLink",

@@ -32,12 +32,6 @@ export interface KnownContract {
   slug: KnownContractSlug;
   /** functions that exist on-chain but do not mean what their names imply */
   decoys?: string[];
-  /**
-   * UTC day this deployment's ledger entries archive, when it is a developer
-   * preview with a known expiry. Soroban state has a TTL; nothing here has
-   * been extended since it was deployed, and a write does not bump it.
-   */
-  archivesOn?: string;
 }
 
 /**
@@ -45,54 +39,38 @@ export interface KnownContract {
  * Addresses from the project's own deployments/testnet/deployments.json,
  * each confirmed live on testnet RPC on 2026-08-29.
  *
- * These archive on 2026-09-02. That is not a guess: every instance carries
- * liveUntilLedgerSeq 4464663–4464671 against a latestLedger of 4406146, and
- * the pool's own state was last written at ledger 4402026 without the TTL
- * moving. When they archive, reads fail until somebody pays to restore them.
+ * No archive date lives here. One did (2026-09-02, read off the TTLs at the
+ * time), the TTLs were extended, and every SPP contract kept showing an
+ * "expired" banner while live until ~ledger 7.7M. The workbench now asks the
+ * chain when a contract is loaded — see liveness.ts.
  */
-const SPP_ARCHIVES_ON = "2026-09-02";
-
 export const KNOWN_CONTRACTS: readonly KnownContract[] = [
   {
     id: "CD2W5LURL6GXAJTZVADMRVZPXIZTTPJH5TBMMQ5G4A6XPCMUJ2OHXZ4L",
     slug: "sppPoolXlm",
     // The MockToken leak. All five answer, none of them mean anything.
     decoys: ["balance", "allowance", "approve", "transfer", "transfer_from"],
-    archivesOn: SPP_ARCHIVES_ON,
   },
   {
     id: "CBMRWHTPWJ73LAAPMZQ3Z3CIPD2N5NIBVTPQBG7I7ZEMMHWUHQLFNUVS",
     slug: "sppPoolEurc",
     decoys: ["balance", "allowance", "approve", "transfer", "transfer_from"],
-    archivesOn: SPP_ARCHIVES_ON,
   },
   {
     id: "CBLPKFROCJVAD33GEYNIJJSTHTBGEXQSWIUMUJZ3BRB4AO5A7RY5Z7EA",
     slug: "sppRegistry",
-    archivesOn: SPP_ARCHIVES_ON,
   },
   {
     id: "CBND3Z65TUMIUEZJ733RF3BFQFLRRESLOWTE2JCXE7FICECCXOD6DJSR",
     slug: "sppAspMembership",
-    archivesOn: SPP_ARCHIVES_ON,
   },
   {
     id: "CDSTXVEJMU3CYE667W5Q7HWKASFOR7ADXWPC5UG4ZP3KFMNUHJRREIO2",
     slug: "sppAspNonMembership",
-    archivesOn: SPP_ARCHIVES_ON,
   },
 ];
 
 export function lookupKnownContract(id: string): KnownContract | undefined {
   const trimmed = id.trim();
   return KNOWN_CONTRACTS.find((c) => c.id === trimmed);
-}
-
-/** True once the deployment's stated archive day has passed. */
-export function isPastArchiveDate(
-  contract: KnownContract | undefined,
-  now: Date = new Date(),
-): boolean {
-  if (!contract?.archivesOn) return false;
-  return now >= new Date(`${contract.archivesOn}T00:00:00Z`);
 }

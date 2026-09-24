@@ -36,7 +36,7 @@ The reserve is not a fee. It is **rent-by-deposit**: the ledger stays lean becau
 
 On many chains, anyone can airdrop junk tokens into your address. On Stellar they cannot: to hold any asset besides XLM, your account must first open a **trustline** to it.
 
-A trustline says: *"I accept asset X from issuer Y, up to this **limit**."* It is created with the \`change_trust\` operation, it is its own ledger entry — so it locks **one base reserve** — and until it exists, payments of that asset to you simply fail.
+A trustline says: *"I accept asset X from issuer Y, up to this **limit**."* It is created with the \`change_trust\` operation, it is its own ledger entry — so it locks **one base reserve** — and until it exists, a payment of that asset to you fails with \`op_no_trust\`.
 
 Opt-in by design: your balance sheet contains only what you agreed to hold.`,
     },

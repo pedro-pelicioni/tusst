@@ -20,7 +20,7 @@ La reserva no es una tarifa. Es **alquiler‑por‑depósito**: el libro mayor s
 
 En muchas cadenas cualquiera puede lanzar tokens basura a tu dirección. En Stellar no pueden: para mantener cualquier activo que no sea XLM, tu cuenta debe abrir primero una **línea de confianza** hacia él.
 
-Una línea de confianza dice: *"Acepto el activo X del emisor Y, hasta este **límite**."* Se crea con la operación \`change_trust\`, es su propia entrada en el libro mayor — por lo que bloquea **una reserva base** — y mientras no exista, los pagos de ese activo a ti simplemente fallan.
+Una línea de confianza dice: *"Acepto el activo X del emisor Y, hasta este **límite**."* Se crea con la operación \`change_trust\`, es su propia entrada en el libro mayor — por lo que bloquea **una reserva base** — y mientras no exista, un pago de ese activo a ti falla con \`op_no_trust\`.
 
 Opt‑in por diseño: tu balance solo contiene lo que aceptaste mantener.`,
     },

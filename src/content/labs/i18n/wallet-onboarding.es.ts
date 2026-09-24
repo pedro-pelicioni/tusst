@@ -83,7 +83,7 @@ Tarifa, aumento de secuencia, dos saldos actualizados, un cierre de libro mayor.
     "quiz-recap": {
       question: `Alguien quiere enviar **USDC** a tu segunda cuenta. ¿Llegará?`,
       options: [
-        "No — la segunda cuenta nunca abrió una línea de confianza USDC, por lo que el libro mayor lo rechaza",
+        "No — la segunda cuenta nunca abrió una línea de confianza USDC, por lo que el pago falla con op_no_trust",
         "Sí — cualquier cuenta puede recibir cualquier activo",
         "Solo si pagan una tarifa más alta",
       ],

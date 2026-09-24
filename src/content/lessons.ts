@@ -1708,7 +1708,7 @@ let count: u32 = env.storage().instance().get(&KEY).unwrap_or(0);
 env.storage().instance().set(&KEY, &count);
 \`\`\`
 
-\`get\` returns \`Option<T>\` — the key may have never been written (or its rent expired), so \`unwrap_or(0)\` is the idiom for counters. Keys and values pass by reference.
+\`get\` returns \`Option<T>\` because the key may never have been written, so \`unwrap_or(0)\` is the idiom for counters. An expired instance entry does not come back as \`None\`: it is archived, and the transaction restores it before your code runs (or fails without running it). Keys and values pass by reference.
 
 ### Your task
 

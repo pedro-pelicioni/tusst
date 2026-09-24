@@ -536,7 +536,7 @@ Une **trustline** est cette acceptation — un pont que tu ouvres de ton compte 
 trustline = "J'accepte l'USDC, émis par G...CENTRE"
 \`\`\`
 
-Pas de trustline, pas de solde — les paiements dans cet actif ne peuvent tout simplement pas t'atteindre. (Chaque trustline ouverte augmente aussi légèrement ta réserve.)`,
+Pas de trustline, pas de solde — un paiement qu'on t'envoie dans cet actif échoue avec \`op_no_trust\`. (Chaque trustline ouverte augmente aussi légèrement ta réserve.)`,
     },
     {
       kind: "quiz",
@@ -766,18 +766,18 @@ let count: u32 = env.storage().instance()
 env.storage().instance().set(&COUNTER, &count);
 \`\`\`
 
-\`get\` renvoie une \`Option<T>\` — la clé peut n'avoir jamais été écrite, ou son loyer (TTL) peut avoir expiré. \`unwrap_or(0)\` est l'idiome du compteur.`,
+\`get\` renvoie une \`Option<T>\` parce que la clé peut n'avoir jamais été écrite. \`unwrap_or(0)\` est l'idiome du compteur. Un TTL expiré ne donne pas \`None\` ici : le stockage d'instance est archivé avec le contrat, et la transaction le restaure avant que ton code s'exécute, ou échoue sans l'exécuter.`,
     },
     {
       kind: "quiz",
       question: "Pourquoi `storage().get(&KEY)` renvoie-t-il une `Option<T>` plutôt que `T` ?",
       options: [
-        "La clé peut n'avoir jamais été écrite — ou son TTL a expiré",
+        "La clé peut ne pas exister : jamais écrite, supprimée, ou (stockage temporaire uniquement) expirée",
         "Toutes les fonctions du SDK renvoient Option par cohérence",
         "Pour forcer la gestion d'erreurs sur les incompatibilités de types",
       ],
       answer: 0,
-      explain: "Le stockage du ledger est loué, pas possédé. L'absence est un état normal — gère-la.",
+      explain: "L'absence est un état normal — gère-la. L'expiration n'en est la cause que pour le stockage temporaire : les entrées d'instance et persistantes expirées sont archivées, et la transaction les restaure d'abord ou échoue. Elles ne parviennent jamais à ton code sous forme de `None`.",
     },
     {
       kind: "fill",

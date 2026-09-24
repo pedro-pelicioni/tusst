@@ -83,7 +83,7 @@ Taxa, aumento de sequência, dois saldos atualizados, um fechamento de ledger. C
     "quiz-recap": {
       question: `Alguém quer enviar **USDC** para a sua segunda conta. Ele chegará?`,
       options: [
-        "Não — a segunda conta nunca abriu uma linha de confiança USDC, então o ledger o rejeita",
+        "Não — a segunda conta nunca abriu uma linha de confiança USDC, então o pagamento falha com op_no_trust",
         "Sim — qualquer conta pode receber qualquer ativo",
         "Somente se pagarem uma taxa maior",
       ],

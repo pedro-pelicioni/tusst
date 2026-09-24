@@ -13,7 +13,7 @@ A maioria das cadeias deixa o estado se acumular para sempre — cada nó carreg
 Quando o TTL se esgota:
 
 - Entradas **Temporary** são deletadas. Desaparecem.
-- Entradas **Persistent** e **instance** são **arquivadas** — removidas do ledger ativo, mas restauráveis depois com uma prova, retornando exatamente como estavam.
+- Entradas **Persistent** e **instance** são **arquivadas** — removidas do ledger ativo, não apagadas. Uma transação posterior que precisar de uma delas pode restaurá-la antes de executar, por uma taxa, e ela volta exatamente como estava.
 
 Isso é **arquivo de estado**, e nenhuma outra grande cadeia faz isso. O ledger ativo permanece enxuto, os validadores ficam baratos, a história permanece recuperável.`,
     },
@@ -25,7 +25,7 @@ Isso é **arquivo de estado**, e nenhuma outra grande cadeia faz isso. O ledger 
 
 Prateleiras abstratas viram decisão de projeto no instante em que você tem dado real. Pegue um contrato de escrow simples:
 
-- **O endereço do admin e a taxa** vão para armazenamento de **instância**. Eles pertencem ao próprio contrato, são lidos em quase toda chamada, e se o contrato for arquivado devem ir junto — não há o que salvar numa taxa cujo contrato não existe mais.
+- **O endereço do admin e a taxa** vão para armazenamento de **instância**. Eles pertencem ao próprio contrato, são lidos em quase toda chamada, e seguem o relógio do contrato: enquanto o contrato estiver ativo, eles também estão, e restaurar um contrato arquivado os traz de volta junto.
 - **Cada escrow aberto** vai para armazenamento **persistente**. Tem dinheiro de alguém ali. Se o TTL vencer, a entrada precisa continuar recuperável, porque "a gente esqueceu" não é resposta aceitável para "cadê meu dinheiro".
 - **Uma cotação de vida curta** que quem chama busca antes de se comprometer vai para armazenamento **temporário**. Ela não vale nada em dez minutos e ninguém deveria pagar aluguel para mantê-la.
 
@@ -71,7 +71,7 @@ O resultado é um custo que você pode cotar antecipadamente: “esta ação cus
 Todo cliente Soroban segue um ritmo:
 
 1. **Simule** a chamada contra um nó RPC — sem assinatura, sem custo.
-2. A simulação devolve o **footprint** — exatamente quais entradas do ledger a chamada lerá e escreverá — além das estimativas de recursos e da autorização necessária.
+2. A simulação devolve o **footprint** — exatamente quais entradas do ledger a chamada lerá e escreverá — além das estimativas de recursos, da autorização necessária e de eventuais entradas arquivadas que precisem ser restauradas primeiro.
 3. Você **assina exatamente o que simulou** e submete.
 
 A transação assinada carrega seu footprint, então os validadores conhecem todo o seu mundo antes de executá‑la; nada fora do footprint pode ser tocado. Pular a simulação é adivinhar números que a rede simplesmente rejeitará.`,
@@ -92,7 +92,7 @@ A transação assinada carrega seu footprint, então os validadores conhecem tod
     { question: `O TTL de uma entrada temporária chega a zero. O que acontece com o dado?`,
       options: ["Ele é apagado — não existe restauração para armazenamento temporário, a preço nenhum","Ele é arquivado e pode ser restaurado por uma taxa, como qualquer outra entrada","Ele é mantido mas fica somente leitura até ser renovado"], answer: 0 },
     { question: `O TTL de uma entrada persistente chega a zero. O que acontece?`,
-      options: ["Ela é arquivada, não apagada — chamadas que precisam dela falham até alguém restaurar, e restaurar é uma taxa","Ela é apagada, igual a uma entrada temporária","O contrato é pausado até a entrada ser reescrita"], answer: 0 },
+      options: ["Ela é arquivada, não apagada — uma transação posterior que precisar dela pode restaurá-la primeiro, e a restauração custa uma taxa","Ela é apagada, igual a uma entrada temporária","O contrato é pausado até a entrada ser reescrita"], answer: 0 },
     { question: `Por que o protocolo cobra aluguel de estado?`,
       options: ["Porque estado custa armazenamento de todo validador para sempre, então uma taxa única de escrita deixaria qualquer um impor um custo contínuo sem limite","Para desencorajar contratos de guardar qualquer coisa on-chain","Para financiar a operação dos validadores, paga com taxas de arquivamento"], answer: 0 },
     { question: `Qual é o ponto de simular uma chamada de contrato antes de assiná-la?`,

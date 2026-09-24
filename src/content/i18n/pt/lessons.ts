@@ -844,7 +844,7 @@ let count: u32 = env.storage().instance().get(&KEY).unwrap_or(0);
 env.storage().instance().set(&KEY, &count);
 \`\`\`
 
-\`get\` retorna \`Option<T>\` — a chave pode nunca ter sido escrita (ou o aluguel dela expirou), então \`unwrap_or(0)\` é o padrão clássico para contadores. Chaves e valores passam por referência.
+\`get\` retorna \`Option<T>\` porque a chave pode nunca ter sido escrita, então \`unwrap_or(0)\` é o padrão clássico para contadores. Uma entrada de instância expirada não volta como \`None\`: ela é arquivada, e a transação a restaura antes do seu código rodar (ou falha sem rodá-lo). Chaves e valores passam por referência.
 
 ### Sua missão
 

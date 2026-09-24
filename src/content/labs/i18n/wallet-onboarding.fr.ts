@@ -83,7 +83,7 @@ Commission, augmentation de séquence, deux soldes mis à jour, une clôture du 
     "quiz-recap": {
       question: `Quelqu’un veut envoyer **USDC** à ton deuxième compte. Arrivera‑t‑il ?`,
       options: [
-        "Non — le deuxième compte n’a jamais ouvert de ligne de confiance USDC, donc le grand livre le refuse",
+        "Non — le deuxième compte n’a jamais ouvert de ligne de confiance USDC, donc le paiement échoue avec op_no_trust",
         "Oui — tout compte peut recevoir n’importe quel actif",
         "Seulement s’ils paient une commission plus élevée",
       ],

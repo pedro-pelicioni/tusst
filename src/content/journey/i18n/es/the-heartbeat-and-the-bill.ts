@@ -13,7 +13,7 @@ La mayoría de las cadenas dejan que el estado se acumule para siempre — cada 
 Cuando el TTL se agota:
 
 - Las entradas **temporales** se eliminan. Desaparecen.
-- Las entradas **persistentes** y **de instancia** se **archivan** — se expulsan del libro mayor activo, pero pueden restaurarse más tarde con una prueba, regresando exactamente como estaban.
+- Las entradas **persistentes** y **de instancia** se **archivan** — se expulsan del libro mayor activo, pero no se borran. Una transacción posterior que necesite una de ellas puede restaurarla primero, pagando una comisión, y la entrada vuelve exactamente como estaba.
 
 Esto es **archivado de estado**, y ninguna otra cadena importante lo hace. El libro mayor activo se mantiene ligero, los validadores siguen siendo económicos y la historia permanece recuperable.`,
     },
@@ -23,7 +23,7 @@ Esto es **archivado de estado**, y ninguna otra cadena importante lo hace. El li
 
 Los estantes abstractos se vuelven una decisión de diseño en cuanto tienes datos reales. Toma un contrato de escrow sencillo:
 
-- **La dirección del admin y la comisión** van a almacenamiento de **instancia**. Pertenecen al contrato mismo, se leen en casi cada llamada, y si el contrato se archiva deben irse con él — no hay nada que salvar de una comisión cuyo contrato ya no existe.
+- **La dirección del admin y la comisión** van a almacenamiento de **instancia**. Pertenecen al contrato mismo, se leen en casi cada llamada, y comparten el reloj del contrato: mientras el contrato esté activo, ellos también, y restaurar un contrato archivado los devuelve con él.
 - **Cada escrow abierto** va a almacenamiento **persistente**. Ahí hay dinero de alguien. Si vence su TTL, la entrada debe seguir siendo recuperable, porque "se nos olvidó" no es una respuesta aceptable a "¿dónde está mi dinero?".
 - **Una cotización de vida corta** que el llamante consulta antes de comprometerse va a almacenamiento **temporal**. No vale nada en diez minutos y nadie debería pagar alquiler por conservarla.
 
@@ -68,7 +68,7 @@ El resultado es un costo que puedes cotizar de antemano: “esta acción cuesta 
 Cada cliente de Soroban sigue un ritmo:
 
 1. **Simular** la llamada contra un nodo RPC — sin firma, sin costo.
-2. La simulación devuelve la **huella** — precisamente qué entradas del ledger leerá y escribirá la llamada — más estimaciones de recursos y la autorización que necesita.
+2. La simulación devuelve la **huella** — precisamente qué entradas del ledger leerá y escribirá la llamada — más estimaciones de recursos, la autorización que necesita y cualquier entrada archivada que deba restaurar primero.
 3. **Firma exactamente lo que simulaste** y envía.
 
 La transacción firmada lleva su huella, de modo que los validadores conocen todo su mundo antes de ejecutarla; nada fuera de la huella puede tocarse. Omitir la simulación es adivinar números que la red simplemente rechazará.`,
@@ -89,7 +89,7 @@ La transacción firmada lleva su huella, de modo que los validadores conocen tod
     { question: `El TTL de una entrada temporal llega a cero. ¿Qué le pasa al dato?`,
       options: ["Se borra — no hay restauración para el almacenamiento temporal, a ningún precio","Se archiva y puede restaurarse pagando, como cualquier otra entrada","Se conserva pero queda en solo lectura hasta renovarlo"], answer: 0 },
     { question: `El TTL de una entrada persistente llega a cero. ¿Qué pasa?`,
-      options: ["Se archiva, no se borra — las llamadas que la necesitan fallan hasta que alguien la restaure, y restaurar cuesta una comisión","Se borra, igual que una entrada temporal","El contrato se pausa hasta reescribir la entrada"], answer: 0 },
+      options: ["Se archiva, no se borra — una transacción posterior que la necesite puede restaurarla primero, y la restauración cuesta una comisión","Se borra, igual que una entrada temporal","El contrato se pausa hasta reescribir la entrada"], answer: 0 },
     { question: `¿Por qué cobra el protocolo alquiler por el estado?`,
       options: ["Porque el estado le cuesta almacenamiento a cada validador para siempre, así que una comisión única de escritura dejaría a cualquiera imponer un coste continuo sin límite","Para desalentar que los contratos guarden nada on-chain","Para financiar la operación de los validadores, pagada con comisiones de archivado"], answer: 0 },
     { question: `¿Cuál es el sentido de simular una llamada a contrato antes de firmarla?`,

@@ -830,7 +830,7 @@ let count: u32 = env.storage().instance().get(&KEY).unwrap_or(0);
 env.storage().instance().set(&KEY, &count);
 \`\`\`
 
-\`get\` devuelve \`Option<T>\` — puede que la clave nunca se haya escrito (o que su renta haya expirado), así que \`unwrap_or(0)\` es el idioma para contadores. Las claves y los valores se pasan por referencia.
+\`get\` devuelve \`Option<T>\` porque puede que la clave nunca se haya escrito, así que \`unwrap_or(0)\` es el idioma para contadores. Una entrada del almacenamiento instance que expiró no vuelve como \`None\`: se archiva, y la transacción la restaura antes de que tu código se ejecute (o falla sin ejecutarlo). Las claves y los valores se pasan por referencia.
 
 ### Tu misión
 
