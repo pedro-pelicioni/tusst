@@ -40,12 +40,15 @@ export function QuestPanel({
   const locked = node.status === "locked";
   const soon = node.status === "soon";
   const enterable = !!node.href && !locked && !soon;
+  const dock = node.kind === "dock";
   const label =
     node.kind === "fortress" && node.numeral
       ? fmt(q.act, { numeral: node.numeral })
       : node.kind === "waypoint" && node.numeral
         ? fmt(q.skirmish, { numeral: node.numeral })
-        : fmt(q.mission, { number: node.number });
+        : dock
+          ? fmt(q.track, { number: node.number })
+          : fmt(q.mission, { number: node.number });
 
   return (
     <aside
@@ -86,14 +89,15 @@ export function QuestPanel({
             {enterable ? (
               <>
                 <div className="flex items-center justify-between pb-2 text-[11px] text-[#77583b]">
-                  <span className="ow-eyebrow">{done ? q.earned : q.reward}</span>
+                  {/* a dock grants nothing itself — its row is the track's progress */}
+                  <span className="ow-eyebrow">{dock ? q.progress : done ? q.earned : q.reward}</span>
                   <strong className="text-[#87372a]">
                     {node.rewardLabel ?? fmt(q.xpReward, { xp: node.xp })}
                   </strong>
                 </div>
                 {near ? (
                   <button type="button" className="ow-btn-primary" onClick={onEnter}>
-                    {done ? q.revisit : node.kind === "fortress" ? q.openAct : q.enter}
+                    {dock ? q.openTrack : done ? q.revisit : node.kind === "fortress" ? q.openAct : q.enter}
                   </button>
                 ) : (
                   <button

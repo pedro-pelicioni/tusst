@@ -89,7 +89,7 @@ export default async function WorldMapPage() {
     },
     {
       id: "landmark:advanced",
-      href: "/advanced",
+      href: "/harbor",
       eyebrow: w.landmarks.advanced.subtitle,
       title: w.landmarks.advanced.title,
       blurb: w.landmarks.advanced.blurb,

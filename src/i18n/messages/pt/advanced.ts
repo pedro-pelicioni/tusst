@@ -22,6 +22,7 @@ export const advanced = {
   resume: "Continuar trilha",
   review: "Revisar trilha",
   backToIndex: "caminho avançado",
+  mapLink: "Ver no mapa do Porto →",
   lessonsHeading: "// lições",
   soon: "em preparo",
   done: "feito",

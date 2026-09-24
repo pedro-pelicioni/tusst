@@ -35,6 +35,7 @@ export async function chooseHero(formData: FormData): Promise<void> {
   revalidatePath("/path");
   revalidatePath("/journey");
   revalidatePath("/campaign");
+  revalidatePath("/harbor");
 
   redirect(callbackUrl);
 }

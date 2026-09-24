@@ -108,12 +108,14 @@ export default async function LessonPage({
   // Bite-sized step flow (Mimo-style) — used whenever the lesson has authored
   // steps. Falls back to the classic two-pane layout otherwise.
   // The Advanced Path lives outside the campaign, so its lessons must point
-  // back at /advanced rather than the act-flavoured /tracks page. Everything
-  // else — the player, the sandbox grader, XP — is identical.
+  // back at the Harbor rather than the act-flavoured /tracks page: the hero
+  // stands on the lesson just played, and "next" walks them to the following
+  // one — the islands' return protocol. Everything else — the plain player,
+  // the sandbox grader, XP — is identical.
   const advancedTrack = advancedTrackOfLesson(slug);
-  const trackHref = advancedTrack
-    ? `/advanced/${advancedTrack.slug}`
-    : `/tracks/${lesson.track.slug}`;
+  const trackHref = advancedTrack ? `/harbor?at=${slug}` : `/tracks/${lesson.track.slug}`;
+  const stepsNextHref =
+    advancedTrack && next ? `/harbor?at=${slug}&go=${next.slug}` : nextHref;
 
   const steps = getLessonStepsLocalized(slug, locale);
   if (content && steps) {
@@ -169,7 +171,7 @@ export default async function LessonPage({
         lessonSlug={slug}
         steps={steps}
         starterCode={content.starterCode}
-        nextHref={nextHref}
+        nextHref={stepsNextHref}
         trackHref={trackHref}
         signedIn={!!userId}
         allowAnonymous={slug === TRIAL_LESSON_SLUG}

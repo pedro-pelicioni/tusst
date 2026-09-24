@@ -37,7 +37,7 @@ export async function Nav() {
     ...(JOURNEY_LIVE ? [{ href: "/journey", label: m.common.nav.journey }] : []),
     { href: "/labs", label: m.common.nav.forge },
     { href: "/campaign", label: m.common.nav.campaign },
-    { href: "/advanced", label: m.common.nav.advanced },
+    { href: "/harbor", label: m.common.nav.advanced },
     // The Armory appears with the pouch, never before: the hidden-currency
     // reveal is the whole point (see prisma/schema.prisma).
     ...(pouch?.goldRevealed ? [{ href: "/armory", label: m.common.nav.armory }] : []),

@@ -12,7 +12,8 @@ import { ProgressBar } from "@/components/ProgressBar";
 //
 // Visually the quietest page in the app, on purpose. No SceneArt, no
 // particles, no sigils, no champion cards — this is a syllabus, and its
-// reader wants to scan it and pick a gap, not be immersed in anything.
+// reader wants to scan it and pick a gap, not be immersed in anything. The
+// game layer lives on the Harbor map (/harbor); this is its list view.
 
 export async function generateMetadata(): Promise<Metadata> {
   const m = await getMessages();
@@ -46,6 +47,12 @@ export default async function AdvancedIndexPage() {
       <p className="mt-3 max-w-2xl text-[13px] leading-relaxed text-muted">
         {t.calibration}
       </p>
+      <Link
+        href="/harbor"
+        className="mt-4 inline-block font-mono text-[11px] uppercase tracking-[0.18em] text-accent2 transition hover:text-fg"
+      >
+        {t.mapLink}
+      </Link>
 
       {/* overall progress — only meaningful once something is finished */}
       {totalDone > 0 && (

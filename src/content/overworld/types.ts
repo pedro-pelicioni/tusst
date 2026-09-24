@@ -13,7 +13,7 @@ import type { HeroId } from "@/content/heroes";
 /** `[x%, y%]` of the world image. */
 export type Point = [number, number];
 
-export type WorldId = "journey" | "campaign" | "world";
+export type WorldId = "journey" | "campaign" | "harbor" | "world";
 
 export interface WorldImage {
   /** public path; the stage falls back to a CSS stand-in when it's missing */
@@ -33,7 +33,7 @@ export interface WorldRegion {
   radius?: number;
 }
 
-export type NodeKind = "mission" | "fortress" | "waypoint" | "landmark" | "island";
+export type NodeKind = "mission" | "fortress" | "dock" | "waypoint" | "landmark" | "island";
 
 /**
  * A clickable area of the map art, as an ellipse in % of the image. The
@@ -49,7 +49,7 @@ export interface WorldHotspot {
 }
 
 export interface WorldNode {
-  /** journey: chapter slug · campaign: `act:<trackSlug>` or lesson slug · world: `island:<id>` / `landmark:<id>` */
+  /** journey: chapter slug · campaign: `act:<trackSlug>` or lesson slug · harbor: `track:<trackSlug>` or lesson slug · world: `island:<id>` / `landmark:<id>` */
   id: string;
   kind: NodeKind;
   pos: Point;

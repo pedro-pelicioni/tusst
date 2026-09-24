@@ -270,6 +270,9 @@
 .ow-node.ow-fortress .ow-marker { width: 40px; height: 34px; font-size: 12px; }
 .ow-node.ow-fortress .ow-node-art { width: 84px; height: 84px; bottom: 28px; }
 .ow-node.ow-fortress .ow-node-level { top: -90px; }
+.ow-node.ow-waypoint.is-wide .ow-marker { width: auto; min-width: 18px; padding: 0 3px; border-radius: 9px; }
+/* harbor docks: the fortress marker, no floating art (the landmark is painted) */
+.ow-node.ow-dock .ow-marker { width: 40px; height: 34px; font-size: 12px; }
 
 /* ── hero ──────────────────────────────────────────────────────── */
 .ow-hero {

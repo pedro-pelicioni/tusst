@@ -173,6 +173,14 @@ const BOSS_SLOTS = [
   "stellar-protocol-27",
 ];
 
+/**
+ * Per-boss alphaQuality where 88 lands over the 90 KB budget. The Act VI
+ * leviathan is a coil of soft cloud with a star-dusted rim, so its alpha plane
+ * is mostly edge: 88 lands it at 103 KB, 74 at 84 KB. Lower alphaQuality
+ * before quality, per the rule in docs/ART-BRIEFS-v2.md.
+ */
+const BOSS_ALPHA_QUALITY = { "stellar-101": 74 };
+
 /** Sheet geometry the app relies on — see HERO_SHEET_COLS/ROWS in src/lib/hero.ts. */
 const HERO_SHEET = { cols: 4, rows: 2, cell: 256, pad: 8 };
 
@@ -237,7 +245,7 @@ const JOBS = [
     kind: "key",
     budgetKB: 90,
     resize: { width: 512 },
-    alphaQuality: 88,
+    alphaQuality: BOSS_ALPHA_QUALITY[slot] ?? 88,
     trim: true,
     key: { keyStart: 30, keyFull: 92 },
   })),
