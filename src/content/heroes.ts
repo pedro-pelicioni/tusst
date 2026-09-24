@@ -23,6 +23,9 @@ export interface Hero {
   sheet: string;
   /** 4×2 sheet of the 8 bust portraits, 256px cells */
   portraits: string;
+  /** 4×2 animation sheet: row 0 a 4-frame walk cycle, row 1 a 4-frame
+   *  signature action (the landing island animates both) */
+  anim: string;
   /** accent for the HUD + stand-ins */
   color: string;
 }
@@ -35,6 +38,7 @@ export const HEROES: readonly Hero[] = [
     cardId: "stroowarrior",
     sheet: "/v2/overworld/heroes/stroowarrior/forms.webp",
     portraits: "/v2/overworld/heroes/stroowarrior/portraits.webp",
+    anim: "/v2/overworld/heroes/stroowarrior/anim.webp",
     color: "#d9b96a",
   },
   {
@@ -42,6 +46,7 @@ export const HEROES: readonly Hero[] = [
     cardId: "stropillusion",
     sheet: "/v2/overworld/heroes/stropillusion/forms.webp",
     portraits: "/v2/overworld/heroes/stropillusion/portraits.webp",
+    anim: "/v2/overworld/heroes/stropillusion/anim.webp",
     color: "#8f7bff",
   },
   {
@@ -49,6 +54,7 @@ export const HEROES: readonly Hero[] = [
     cardId: "stroopkeeper",
     sheet: "/v2/overworld/heroes/stroopkeeper/forms.webp",
     portraits: "/v2/overworld/heroes/stroopkeeper/portraits.webp",
+    anim: "/v2/overworld/heroes/stroopkeeper/anim.webp",
     color: "#45d6c4",
   },
   {
@@ -56,6 +62,7 @@ export const HEROES: readonly Hero[] = [
     cardId: "stroophantom",
     sheet: "/v2/overworld/heroes/stroophantom/forms.webp",
     portraits: "/v2/overworld/heroes/stroophantom/portraits.webp",
+    anim: "/v2/overworld/heroes/stroophantom/anim.webp",
     color: "#8fe3ff",
   },
   {
@@ -63,6 +70,7 @@ export const HEROES: readonly Hero[] = [
     cardId: "strooracle",
     sheet: "/v2/overworld/heroes/strooracle/forms.webp",
     portraits: "/v2/overworld/heroes/strooracle/portraits.webp",
+    anim: "/v2/overworld/heroes/strooracle/anim.webp",
     color: "#c06ae0",
   },
   {
@@ -70,6 +78,7 @@ export const HEROES: readonly Hero[] = [
     cardId: "astrostroopie",
     sheet: "/v2/overworld/heroes/astrostroopie/forms.webp",
     portraits: "/v2/overworld/heroes/astrostroopie/portraits.webp",
+    anim: "/v2/overworld/heroes/astrostroopie/anim.webp",
     color: "#6f8fe0",
   },
   {
@@ -77,6 +86,7 @@ export const HEROES: readonly Hero[] = [
     cardId: "stroopzipper",
     sheet: "/v2/overworld/heroes/stroopzipper/forms.webp",
     portraits: "/v2/overworld/heroes/stroopzipper/portraits.webp",
+    anim: "/v2/overworld/heroes/stroopzipper/anim.webp",
     color: "#f0a742",
   },
 ];

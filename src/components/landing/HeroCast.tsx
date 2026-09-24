@@ -1,20 +1,20 @@
 "use client";
 
-// The landing island's cast: every playable character standing at their own
-// spot on the map, each performing the idle action that says who they are —
-// the warrior swings, the illusionist casts, the archivist reads, the oracle
-// weighs two fates, the phantom fades, the voyager charts, the herald zips the
-// sky. Replaces the single wandering walker.
+// The landing island's cast: every playable character walking their own road
+// on the map, and stopping at the end of it to do the thing that defines them
+// — the warrior swings, the illusionist hurls fire, the archivist reads, the
+// oracle weighs two fates, the phantom phases out, the voyager reads the
+// stars, the herald zips the sky shut. Then they turn and walk back.
 //
-// All motion is CSS (`landing.css`, the `ld-act-*` keyframes) so the
-// reduced-motion switch there stops everything at once; the only JS is
-// projecting each station's image-space point into stage pixels through the
-// island layer's object-cover + 6% bleed geometry, so a figure's feet stay on
-// the sand at any viewport aspect. Hidden below md, where the copy takes the
-// whole frame.
+// The animation is frame-by-frame, not transforms: each character's
+// anim.webp is a 4×2 sheet (row 0 a walk cycle, row 1 the action) and
+// landing.css steps through it. All motion is CSS, so the reduced-motion
+// switch there stops the whole island at once. The only JS is projecting each
+// road's image-space points into stage pixels through the island layer's
+// object-cover + 6% bleed geometry, so feet stay on the path at any viewport
+// aspect. Hidden below md, where the copy takes the whole frame.
 
 import { useEffect, useRef, useState } from "react";
-import { sheetPosition } from "@/lib/hero";
 
 const ISLAND = { width: 2528, height: 1696 };
 /** SceneLayers gives parallax layers `inset: -6%` of bleed */
@@ -22,29 +22,22 @@ const BLEED = 0.06;
 
 export interface CastMember {
   id: string;
-  /** form sheet (4×2), or null while the art hasn't landed */
-  sheet: string | null;
-  /** accent, for the character's signature effect */
+  /** 4×2 animation sheet, or null while the art hasn't landed */
+  anim: string | null;
+  /** accent, for the stand-in */
   color: string;
-  /** station, in % of the island master (public/landing/hero/island.webp) */
-  at: readonly [number, number];
-  /** which of the 8 forms to stand here in */
-  form: number;
-  /** the signature idle action */
-  act: "swing" | "cast" | "read" | "weigh" | "fade" | "chart" | "zip";
-  /** face left instead of right */
-  flip?: boolean;
-  /** stagger, so the island does not pulse in unison */
+  /** the road, in % of the island master (public/landing/hero/island.webp) */
+  road: readonly (readonly [number, number])[];
+  /** negative seconds into the loop, so the island never moves in unison */
   delay: number;
 }
 
-/** Image-space % → stage px, matching the cover fit the browser applies. */
-function project(
-  x: number,
-  y: number,
+/** `path()` data, in stage px, for a road projected through the cover fit. */
+function roadPath(
+  road: CastMember["road"],
   stageWidth: number,
   stageHeight: number,
-): { left: number; top: number } {
+): string {
   const boxWidth = stageWidth * (1 + 2 * BLEED);
   const boxHeight = stageHeight * (1 + 2 * BLEED);
   const scale = Math.max(boxWidth / ISLAND.width, boxHeight / ISLAND.height);
@@ -52,10 +45,13 @@ function project(
   const imageHeight = ISLAND.height * scale;
   const originX = (boxWidth - imageWidth) / 2 - BLEED * stageWidth;
   const originY = (boxHeight - imageHeight) / 2 - BLEED * stageHeight;
-  return {
-    left: originX + (x / 100) * imageWidth,
-    top: originY + (y / 100) * imageHeight,
-  };
+  return road
+    .map(([x, y], i) => {
+      const px = (originX + (x / 100) * imageWidth).toFixed(1);
+      const py = (originY + (y / 100) * imageHeight).toFixed(1);
+      return `${i === 0 ? "M" : "L"}${px} ${py}`;
+    })
+    .join(" ");
 }
 
 export function HeroCast({ cast }: { cast: readonly CastMember[] }) {
@@ -84,48 +80,42 @@ export function HeroCast({ cast }: { cast: readonly CastMember[] }) {
       className="ld-plx pointer-events-none absolute inset-0 hidden md:block"
     >
       <div className="absolute inset-0" data-plx-mouse={0.3}>
-        {size &&
-          cast.map((member) => {
-            const { left, top } = project(member.at[0], member.at[1], size.w, size.h);
-            return (
-              <div
-                key={member.id}
-                className={`ld-cast ld-act-${member.act}`}
-                style={{
-                  left,
-                  top,
-                  // Every effect reads the character's own accent, so the
-                  // slash, the flame and the seam are all in their colour.
-                  ["--cast-accent" as string]: member.color,
-                  animationDelay: `${member.delay}s`,
-                }}
-              >
-                <span
-                  className="ld-cast-fx"
-                  style={{ animationDelay: `${member.delay}s` }}
-                />
-                <span
-                  className={`ld-cast-body${member.flip ? " is-flipped" : ""}`}
-                  style={{ animationDelay: `${member.delay}s` }}
-                >
-                  {member.sheet ? (
+        {cast.map((member) => {
+          const path = size ? roadPath(member.road, size.w, size.h) : null;
+          // One delay drives every layer, so walking, facing, stepping and the
+          // walk/act swap stay locked to the same moment of the loop.
+          const delay = { animationDelay: `${member.delay}s` };
+          return (
+            <div
+              key={member.id}
+              className={`ld-cast${path ? " is-ready" : ""}`}
+              style={{
+                ...(path ? { offsetPath: `path("${path}")` } : {}),
+                ...delay,
+              }}
+            >
+              <span className="ld-cast-figure" style={delay}>
+                {member.anim ? (
+                  <>
                     <span
-                      className="ld-cast-cell"
-                      style={{
-                        backgroundImage: `url(${member.sheet})`,
-                        backgroundPosition: sheetPosition(member.form),
-                      }}
+                      className="ld-cast-frames ld-cast-walk"
+                      style={{ backgroundImage: `url(${member.anim})`, ...delay }}
                     />
-                  ) : (
                     <span
-                      className="ld-cast-standin"
-                      style={{ background: member.color }}
+                      className="ld-cast-frames ld-cast-act"
+                      style={{ backgroundImage: `url(${member.anim})`, ...delay }}
                     />
-                  )}
-                </span>
-              </div>
-            );
-          })}
+                  </>
+                ) : (
+                  <span
+                    className="ld-cast-standin"
+                    style={{ background: member.color }}
+                  />
+                )}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

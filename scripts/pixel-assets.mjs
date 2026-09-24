@@ -40,6 +40,7 @@ import sharp from "sharp";
 const ROOT = process.cwd();
 const SRC = path.join(ROOT, "art-src", "v2", "overworld");
 const OUT = path.join(ROOT, "public");
+const ONLY = process.argv.slice(2);
 
 const KEY_START = 12;
 const KEY_FULL = 64;
@@ -190,6 +191,10 @@ const JOBS = [
   { src: "journey-island.png", out: "v2/overworld/journey-island.webp", kind: "pixel", budgetKB: 1400, resize: { width: 2560 } },
   { src: "campaign-island.png", out: "v2/overworld/campaign-island.webp", kind: "pixel", budgetKB: 1400, resize: { width: 2560 } },
   { src: "world-map.png", out: "v2/overworld/world-map.webp", kind: "pixel", budgetKB: 1200, resize: { width: 2560 } },
+  // The Harbor (Advanced Path). Its master came out of gpt_image_2_5 at
+  // 2048×1360; `withoutEnlargement` keeps it there rather than smearing a
+  // 1.25× nearest-neighbour upscale into it.
+  { src: "harbor-island.png", out: "v2/overworld/harbor-island.webp", kind: "pixel", budgetKB: 1400, resize: { width: 2560 } },
   // The landing hero reuses the Journey master as its background layer. It
   // sits under a scrim and a parallax transform, so lossy is fine there and
   // the budget is a third of the map's.
@@ -201,6 +206,23 @@ const JOBS = [
   // step turns each into the exact 1024×512 / 256px-cell sheet the app
   // addresses. Forms sit on a shared baseline (feet on the cell floor, so the
   // walk bob and the map anchor stay put form to form); portraits center.
+  // ── Hero animation sheets (Phase 8) — 4×2 of 8 REAL frames ───────────
+  // Masters: hero-<id>-anim.png. Row 0 is a 4-frame side-view walk cycle,
+  // row 1 a 4-frame signature action, so one sheet drives both loops: the
+  // CSS steps background-position-x across a row (0 → 133.333% in steps(4),
+  // which lands exactly on the four columns of a 400% background) and picks
+  // the row with background-position-y. `anchor: "bottom"` matters more here
+  // than anywhere else — the feet must sit on one baseline or the character
+  // bounces as the frames advance.
+  ...HERO_IDS.map((id) => ({
+    src: `hero-${id}-anim.png`,
+    out: `v2/overworld/heroes/${id}/anim.webp`,
+    kind: "alpha",
+    budgetKB: 160,
+    alphaQuality: 78,
+    regrid: { ...HERO_SHEET, anchor: "bottom" },
+  })),
+
   ...HERO_IDS.flatMap((id) => [
     { src: `hero-${id}-forms.png`, out: `v2/overworld/heroes/${id}/forms.webp`, kind: "alpha", budgetKB: 160, alphaQuality: 78, regrid: { ...HERO_SHEET, anchor: "bottom" } },
     { src: `hero-${id}-portraits.png`, out: `v2/overworld/heroes/${id}/portraits.webp`, kind: "alpha", budgetKB: 160, alphaQuality: 82, regrid: { ...HERO_SHEET, anchor: "center" } },
@@ -365,6 +387,9 @@ async function run() {
   let missing = 0;
 
   for (const job of JOBS) {
+    // `npm run assets:pixel -- harbor` re-cuts only the jobs whose master or
+    // output path contains one of the arguments; no argument runs them all.
+    if (ONLY.length && !ONLY.some((f) => job.src.includes(f) || job.out.includes(f))) continue;
     const srcPath = path.join(SRC, job.src);
     // Masters land incrementally — a missing source is fine, every slot has
     // a CSS/glyph stand-in (sea gradient + region blobs for maps, the

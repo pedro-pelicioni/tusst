@@ -47,3 +47,9 @@ INFRA-RUNNER.md
 
 # landing art masters (regenerable via Higgsfield; see scripts/landing-assets.mjs)
 art-src/
+
+# internal working notes — art briefs, v2 context. They live on disk only:
+# they are scratch, they churn constantly, and losing an uncommitted edit to
+# one of them should never be a git problem. docs/screenshots/ stays tracked,
+# the README embeds it.
+docs/*.md

@@ -21,26 +21,29 @@ export function HeroScene({
   beginHref: string;
   signedIn: boolean;
 }) {
-  // Where each character stands on the island master, and what they do there.
-  // Stations hug the left and right thirds so nobody stands behind the
-  // centered copy block; the right-hand half faces back toward it.
-  const STATIONS: Record<string, Omit<CastMember, "id" | "sheet" | "color">> = {
-    stroowarrior:  { at: [23, 55], form: 5, act: "swing", delay: 0 },
-    stroopkeeper:  { at: [15, 74], form: 5, act: "read",  delay: 1.1 },
-    stroophantom:  { at: [11, 44], form: 5, act: "fade",  delay: 2.2 },
-    strooracle:    { at: [72, 30], form: 5, act: "weigh", delay: 0.6, flip: true },
-    stropillusion: { at: [84, 47], form: 5, act: "cast",  delay: 1.7, flip: true },
-    astrostroopie: { at: [88, 20], form: 5, act: "chart", delay: 2.8, flip: true },
-    stroopzipper:  { at: [76, 70], form: 5, act: "zip",   delay: 3.4, flip: true },
+  // Each character's road on the island master (% of the image), walked end
+  // to end and back. The roads hug the left and right thirds so nobody walks
+  // behind the centered copy block. Delays are negative so the island is
+  // already mid-motion on first paint, and every character is at a different
+  // moment of the loop.
+  const ROADS: Record<string, Pick<CastMember, "road" | "delay">> = {
+    // the west shore road, beach to watchtower — the original walker's route
+    stroowarrior:  { road: [[24, 63], [23.5, 57], [26, 47], [26.5, 38]], delay: 0 },
+    stroopkeeper:  { road: [[12, 78], [18, 74], [24, 76]], delay: -4.3 },
+    stroophantom:  { road: [[8, 52], [10, 44], [13, 36]], delay: -8.6 },
+    strooracle:    { road: [[70, 34], [75, 30], [80, 33]], delay: -12.9 },
+    stropillusion: { road: [[74, 52], [79, 46], [84, 50]], delay: -17.1 },
+    astrostroopie: { road: [[74, 20], [79, 16], [84, 20]], delay: -21.4 },
+    stroopzipper:  { road: [[70, 74], [76, 70], [82, 72]], delay: -25.7 },
   };
 
   // Same fs check SceneLayers uses for its own art: a sheet that has not
-  // landed yet simply falls back to the character's coloured stand-in.
-  const cast: CastMember[] = HEROES.filter((h) => STATIONS[h.id]).map((h) => ({
+  // landed yet falls back to the character's coloured stand-in.
+  const cast: CastMember[] = HEROES.filter((h) => ROADS[h.id]).map((h) => ({
     id: h.id,
-    sheet: hasLandingAsset(h.sheet) ? h.sheet : null,
+    anim: hasLandingAsset(h.anim) ? h.anim : null,
     color: h.color,
-    ...STATIONS[h.id],
+    ...ROADS[h.id],
   }));
 
   return (
