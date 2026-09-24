@@ -7,19 +7,19 @@ export const labText = {
   },
   steps: {
     "intro": {
-      body: `## No forjes solo
+      body: `## No empieces desde cero
 
-Los buenos herreros no funden su propio hierro para cada espada. En Stellar, los contratos de token se forjan a partir de **los bloques auditados de OpenZeppelin** — las mismas bibliotecas probadas en batalla que aseguran miles de millones en cadenas, portadas a Soroban como \`stellar-tokens\`.
+En Stellar, los contratos de token se construyen a partir de **los bloques auditados de OpenZeppelin** — las mismas bibliotecas probadas en batalla que aseguran miles de millones en cadenas, portadas a Soroban como \`stellar-tokens\`.
 
 En los próximos minutos **elegirás tus extensiones**, verás cómo la Forja construye **Rust de verdad** a partir de ellas, **compilarás** el código en un runner aislado, **desplegar el Wasm** en testnet con tu propia firma y **acuñar** tu primera oferta.
 
 No hay maquetas. El mismo flujo que usa el IDE en modo libre.`,
     },
     "sigil": {
-      title: "Invoca tu sigilo",
+      title: "Carga tu par de claves",
       body: `Desplegar cuesta una firma, y una firma necesita tu par de claves. Si forjaste uno en el laboratorio de cartera, la Forja lo reutiliza; si no, se crea uno nuevo ahora.`,
       cta: "Preparar el par de claves",
-      successBody: `Tu sigilo responde:
+      successBody: `Tu dirección:
 
 \`{address}\`
 
@@ -99,7 +99,7 @@ Un token **burnable** permite a los titulares destruir sus propias unidades, red
       title: "Genera el Rust y compila",
       body: `La Forja ahora construye **{name} ({symbol})** a partir de tus elecciones — Rust de verdad con \`stellar-tokens\`, fijado a las mismas versiones auditadas que usa el IDE — y lo compila a **WebAssembly** en un runner aislado. Una compilación real tarda un minuto o dos; obsérvalo.`,
       cta: "Compila a Wasm",
-      successBody: `El runner devolvió tu contrato como un **blob Wasm**: el Rust fue transformado para la máquina virtual del ledger.
+      successBody: `El runner devolvió tu contrato como un **blob Wasm**: Rust compilado para la máquina virtual del ledger.
 
 Observa lo que NO sucedió: tu nombre, símbolo y oferta no están incrustados en el código. Viajan como **argumentos del constructor** en el siguiente paso, así que el mismo Wasm verificado podría dar vida a mil tokens diferentes.`,
     },
@@ -107,7 +107,7 @@ Observa lo que NO sucedió: tu nombre, símbolo y oferta no están incrustados e
       title: "Despliega en la testnet",
       body: `Dos transacciones, ambas firmadas por ti: primero el Wasm se **sube** al libro mayor, luego se crea una **instancia de contrato** a partir de él — y su \`__constructor\` se ejecuta una vez con tu nombre, símbolo y oferta, acuñando todo a tu dirección.`,
       cta: "Despliega y ejecuta el constructor",
-      successBody: `**{symbol} vive.** Dirección del contrato:
+      successBody: `**{symbol} está activo.** Dirección del contrato:
 
 \`{contract}\`
 
@@ -115,7 +115,7 @@ Esa dirección ahora responde a llamadas SEP-41 — \`balance\`, \`transfer\`, \
     },
     "mint": {
       title: "Acuña una ronda de bonificación",
-      body: `El constructor ya acuñó la oferta inicial para ti. Ahora invoca directamente el contrato vivo: la Forja consulta su **especificación on-chain**, construye una llamada \`mint\`, **la simula** y te pide firmar la transacción real: el mismo flujo de simular y después firmar que usan todas las dApps de Soroban.`,
+      body: `El constructor ya acuñó la oferta inicial para ti. Ahora invoca directamente el contrato desplegado: la Forja consulta su **especificación on-chain**, construye una llamada \`mint\`, **la simula** y te pide firmar la transacción real: el mismo flujo de simular y después firmar que usan todas las dApps de Soroban.`,
       cta: "Acuña 25 más {symbol}",
       successBody: `Acuñación completada: 25 {symbol} más en tu saldo. La operación fue autorizada porque el contrato verificó \`owner.require_auth()\` y **tú eres el propietario**.
 
@@ -131,7 +131,7 @@ Cualquiera que llame a \`mint\` será rechazado por la misma línea. Eso es cont
       explain: `Un estándar es un lenguaje compartido, no un trato de marketing ni una garantía de seguridad. SEP-41 significa que tu token responde a las llamadas que el ecosistema ya sabe hacer — por eso el asistente se basó en el estándar en lugar de inventar puntos de entrada.`,
     },
     "claim": {
-      body: `El ledger conserva tu Wasm, tu contrato y un saldo acuñado a tu sigilo. La Forja consultará la propia cadena — **simulando \`balance(you)\` en tu contrato** — antes de liberar la recompensa. Prueba, no promesas.`,
+      body: `El ledger conserva tu Wasm, tu contrato y un saldo acuñado a tu dirección. La Forja consultará la propia cadena — **simulando \`balance(you)\` en tu contrato** — antes de liberar la recompensa. Prueba, no promesas.`,
     },
   },
 } satisfies LabTextOverlay;

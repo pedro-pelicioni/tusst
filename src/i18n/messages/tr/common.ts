@@ -9,7 +9,6 @@ export const common = {
     journey: "yolculuk",
     campaign: "kampanya",
     advanced: "ileri seviye",
-    cards: "kartlar",
     armory: "cephanelik",
     forge: "forge",
     signOut: "çıkış",

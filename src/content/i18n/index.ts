@@ -95,12 +95,6 @@ function localizeCard(
   };
 }
 
-export function getCardsLocalized(locale: Locale): ChampionCard[] {
-  const content = CONTENT[locale];
-  if (!content) return cards;
-  return cards.map((c) => localizeCard(c, content));
-}
-
 export function getCardLocalized(
   id: string,
   locale: Locale,

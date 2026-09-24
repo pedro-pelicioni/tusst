@@ -8,12 +8,12 @@ export const armory = {
   kicker: "cephanelik",
   title: "Derslerin sana ödediğini harca",
   intro:
-    "Bitirdiğin her ders kesene 10 altın ödüyor. İşte satın alabileceklerin — bir kılıç, bir teçhizat parçası, yanı başında bir yaratık. Hiçbiri seni daha güçlü yapmıyor. Hepsi seni sen yapıyor.",
+    "Bitirdiğin her ders kesene 10 altın ödüyor. İşte satın alabileceklerin — bir kılıç, bir teçhizat parçası, yanı başında bir yaratık. Hiçbiri seni daha güçlü yapmıyor.",
 
   // Para birimi katmanı hâlâ gizliyken dükkânın yerine gösterilir.
   locked: {
     title: "Kapılar kapalı",
-    body: "Cephanelik, bitirdiğin ilk dersten sonra açılır. Git bir ders bitir, kapılar bunu bilecek.",
+    body: "Cephanelik, bitirdiğin ilk dersten sonra açılır.",
     cta: "Bir ders seç",
   },
 

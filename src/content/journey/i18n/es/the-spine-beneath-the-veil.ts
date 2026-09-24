@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "La Espina Bajo el Velo",
+  title: "Pagos privados y compliance",
   tagline: "Private payments y compliance: ocultar las contrapartes, seguir siendo auditable.",
   steps: [
     {
@@ -65,7 +65,7 @@ Donde los Tokens Confidenciales sirven a partes que se conocen, SPP cubre casos 
 
 Esas tres salvaguardas las aplica una pieza que conviene conocer por su nombre: el **Association Set Provider (ASP)**. Un ASP publica un *conjunto* de depósitos por los que responde — una allow list — o aquellos por los que se niega a responder — una deny list. Para retirar, demuestras que tus fondos se remontan a algún depósito dentro de ese conjunto, **sin revelar cuál**. El SPP lo construye sobre un association set basado en claves, respaldado por un registro público de claves para que los participantes puedan siquiera ser referenciados.
 
-Detente en la consecuencia, porque es todo el truco: **el mismo retiro es privado y auditable a la vez**. Privado, porque el vínculo con tu depósito concreto nunca se publica. Auditable, porque no habrías podido retirar sin demostrar pertenencia a un conjunto avalado. Distintos ASP pueden atender distintas jurisdicciones — y tú eliges de quién llevas el aval.
+Detente en la consecuencia, porque es todo el truco: **el mismo retiro es privado y auditable a la vez**. Privado, porque el vínculo con tu depósito concreto nunca se publica. Auditable, porque no habrías podido retirar sin demostrar pertenencia a un conjunto avalado. Distintos ASP pueden atender distintas jurisdicciones — y tú eliges cuál responde por ti.
 
 El objetivo en una frase: **privacidad para los usuarios, no para el crimen**. Transferencias confidenciales *y* compatibles en vías públicas — esa combinación, no el secreto absoluto, es lo que las instituciones estaban esperando.`,
     },
@@ -104,16 +104,16 @@ Abre la [Forge](/ide), ve a **Explore** y elige **pool de privacidad SPP · XLM*
 - \`is_known_root(<ese número>)\` — **true**. Ahora cambia un dígito y vuelve a preguntar: **false**. Acabas de recorrer el anillo de raíces que el pool recuerda.
 - \`is_spent(<cualquier número>)\` — **false**. Este es el conjunto de nullifiers: la defensa del pool contra el doble gasto, y casi lo único que un retiro publica sobre sí mismo.
 
-Léelas en orden y fíjate en lo que *falta*. Ninguna de esas respuestas contiene una dirección, un monto ni una contraparte. La cadena te dice la verdad exacta y no te dice nada.
+Léelas en orden y fíjate en lo que *falta*. Ninguna de esas respuestas contiene una dirección, un monto ni una contraparte.
 
 **Dos advertencias, porque la spec de un contrato no puede advertirte sobre sí misma.** Este pool expone cinco funciones sobrantes — \`balance\`, \`transfer\`, \`approve\` y compañía — que responden con educación y no significan nada; la Forge las marca como *señuelo* para que no te engañen. Y el estado del preview **se archiva el 2026-09-02**, tras lo cual esas lecturas dejan de responder hasta que alguien pague por restaurarlas. Eso no es un fallo de la Forge: es el state rent de Soroban, bajo el que vive cada contrato de esta red.`,
     },
     {
       kind: "labLink",
       labSlug: "confidential-tokens",
-      body: `En el yunque de la forja: un laboratorio de **Tokens Confidenciales**, donde envolverás un token de testnet y verás cómo los montos desaparecen del explorador mientras la transferencia se liquida honestamente. Su tarjeta indica *en proceso de forja* — esta frontera se está trabajando mientras lees.
+      body: `En la Forja: un laboratorio de **Tokens Confidenciales**, donde envolverás un token de testnet y verás cómo los montos desaparecen del explorador mientras la transferencia se liquida honestamente. Por ahora, su tarjeta indica *en la fragua*.
 
-Observa cuán recientes son estas fechas. Montar tecnología tan fresca implica leer el pulso mismo del protocolo — el capítulo final te muestra cómo.`,
+Observa cuán recientes son estas fechas. Con tecnología tan nueva hay que seguir de cerca las actualizaciones del protocolo — el capítulo final te muestra cómo.`,
     },
   ],
   testOut: [

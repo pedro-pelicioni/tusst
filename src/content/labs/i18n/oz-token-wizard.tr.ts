@@ -7,19 +7,19 @@ export const labText = {
   },
   steps: {
     "intro": {
-      body: `## Tek başına dövme
+      body: `## Sıfırdan başlama
 
-Gerçek demirciler her kılıç için kendi demirini eritmez. Stellar'da token kontratları **OpenZeppelin'in denetlenmiş yapı taşlarından** dövülür — zincirler arasında milyarları koruyan, savaş görmüş aynı kütüphaneler, Soroban'a \`stellar-tokens\` olarak taşındı.
+Stellar'da token kontratları **OpenZeppelin'in denetlenmiş yapı taşlarından** kurulur — zincirler arasında milyarları koruyan, savaş görmüş aynı kütüphaneler, Soroban'a \`stellar-tokens\` olarak taşındı.
 
 Önümüzdeki birkaç dakikada **extension'larını seçeceksin**, Forge'un onlardan **gerçek Rust** kurduğunu izleyeceksin, onu sandbox'lanmış bir runner'da **derleyeceksin**, kendi imzanla **Wasm'ı testnet'e deploy edeceksin** ve ilk arzını **mint edeceksin**.
 
 Mockup yok. Serbest mod IDE'nin kullandığı pipeline'ın aynısı.`,
     },
     "sigil": {
-      title: "Mührünü çağır",
-      body: `Deploy etmek bir imzaya mal olur, imza için de anahtar çiftin gerekir. Cüzdan lab'ında bir tane dövdüysen Forge onu çağırır; dövmediysen şimdi yeni bir tane basılır.`,
-      cta: "Anahtar çiftini çağır",
-      successBody: `Mührün yanıt veriyor:
+      title: "Anahtar çiftini yükle",
+      body: `Deploy etmek bir imzaya mal olur, imza için de anahtar çiftin gerekir. Cüzdan lab'ında bir tane oluşturduysan Forge onu yeniden kullanır; oluşturmadıysan şimdi yenisini oluşturur.`,
+      cta: "Anahtar çiftini yükle",
+      successBody: `Adresin:
 
 \`{address}\`
 
@@ -27,9 +27,9 @@ Bundan sonraki her işlem — deploy, mint — bu imzayı taşıyacak.`,
     },
     "fund": {
       title: "Hesabı körükle",
-      body: `Deploy'lar ve çağrılar küçük kaynak ücretleri öder, bu yüzden hesabın canlı ve fonlu olması gerekir. Friendbot doldurur — zaten fonluysa sadece başını sallar.`,
+      body: `Deploy'lar ve çağrılar küçük kaynak ücretleri öder, bu yüzden hesabın canlı ve fonlu olması gerekir. Friendbot doldurur — zaten fonluysa hiçbir şey değişmez.`,
       cta: "Körükle (Friendbot)",
-      successBody: `Hesap nefes alıyor — {balance} XLM hazırda. Bin deploy'a yetecek yakıt.`,
+      successBody: `Fonlandı: {balance} XLM. Bin deploy'a yeter.`,
     },
     "name": {
       prompt: `## Yarattığına bir ad ver
@@ -99,7 +99,7 @@ Construction sırasında tam token cinsinden **sana** mint edilir. Token'ın **7
       title: "Rust'ı döv ve derle",
       body: `Forge şimdi seçimlerinden **{name} ({symbol})** token'ını kuruyor — IDE'nin kullandığı aynı denetlenmiş sürümlere sabitlenmiş gerçek \`stellar-tokens\` Rust'ı — ve onu sandbox'lanmış bir runner'da **WebAssembly**'ye derliyor. Gerçek bir derleme bir iki dakika sürer; çalışmasını izle.`,
       cta: "Wasm'a derle",
-      successBody: `Runner kontratını bir **Wasm blob** olarak döndürür — eritilip ledger'ın sanal makinesi için yeniden dökülmüş Rust.
+      successBody: `Runner kontratını bir **Wasm blob** olarak döndürür — ledger'ın sanal makinesi için derlenmiş Rust.
 
 Olmayan şeye dikkat: adın, sembolün ve arzın koda gömülmedi. Sonraki adımda **constructor argümanı** olarak yolculuk edecekler; böylece aynı doğrulanmış Wasm bin farklı token doğurabilir.`,
     },
@@ -107,7 +107,7 @@ Olmayan şeye dikkat: adın, sembolün ve arzın koda gömülmedi. Sonraki adım
       title: "Testnet'e deploy et",
       body: `İkisi de senin imzaladığın iki işlem: önce Wasm ledger'a **yüklenir**, sonra ondan bir **kontrat instance'ı** yaratılır — ve \`__constructor\` adın, sembolün ve arzınla bir kez çalışıp her şeyi adresine mint eder.`,
       cta: "Deploy et ve constructor'ı çalıştır",
-      successBody: `**{symbol} yaşıyor.** Kontrat adresi:
+      successBody: `**{symbol} yayında.** Kontrat adresi:
 
 \`{contract}\`
 
@@ -115,7 +115,7 @@ Bu adres artık soran her cüzdan, explorer ya da kontrat için SEP-41 çağrıl
     },
     "mint": {
       title: "Bonus tur mint et",
-      body: `Constructor'ın başlangıç arzını sana zaten mint etti. Şimdi yaşayan kontratı doğrudan çağır: Forge **spec'ini zincirden** çeker, bir \`mint\` çağrısı kurar, onu **simüle eder** ve gerçeğini sana imzalatır — her Soroban dApp'inin kullandığı simüle-et-sonra-imzala akışının aynısı.`,
+      body: `Constructor'ın başlangıç arzını sana zaten mint etti. Şimdi deploy edilmiş kontratı doğrudan çağır: Forge **spec'ini zincirden** çeker, bir \`mint\` çağrısı kurar, onu **simüle eder** ve gerçeğini sana imzalatır — her Soroban dApp'inin kullandığı simüle-et-sonra-imzala akışının aynısı.`,
       cta: "25 {symbol} daha mint et",
       successBody: `Mint edildi — bakiyende 25 {symbol} daha; yetkilendirildi, çünkü kontrat \`owner.require_auth()\` kontrolünü yaptı ve **sahibi sensin**.
 
@@ -131,7 +131,7 @@ Bu adres artık soran her cüzdan, explorer ya da kontrat için SEP-41 çağrıl
       explain: `Standart ortak bir dildir; pazarlama anlaşması ya da güvenlik garantisi değil. SEP-41, token'ının ekosistemin zaten yapmayı bildiği çağrılara yanıt vermesi demek — wizard'ın entrypoint icat etmek yerine standardın üstüne inşa etmesinin sebebi de bu.`,
     },
     "claim": {
-      body: `Ledger Wasm'ını, kontratını ve mührüne mint edilmiş bir bakiyeyi tutuyor. Forge ödeme yapmadan önce zincirin kendisine soracak — **kontratında \`balance(you)\` simüle ederek**. Vaat değil, kanıt.`,
+      body: `Ledger Wasm'ını, kontratını ve adresine mint edilmiş bir bakiyeyi tutuyor. Forge ödeme yapmadan önce zincirin kendisine soracak — **kontratında \`balance(you)\` simüle ederek**. Vaat değil, kanıt.`,
     },
   },
 } satisfies LabTextOverlay;

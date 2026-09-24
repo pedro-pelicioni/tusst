@@ -1,18 +1,18 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Palabras de Poder",
+  title: "Prompt engineering",
   tagline: "Prompt engineering: las cuatro partes que tiene todo prompt que funciona.",
   steps: [
     {
       kind: "theory",
       body: `## Tus palabras son todo lo que tiene
 
-El golem no conoce tu repositorio. No recuerda lo de ayer, y no ve el archivo que *no* adjuntaste. Su universo entero es el texto que tiene delante ahora mismo.
+El modelo no conoce tu repositorio. No recuerda lo de ayer, y no ve el archivo que *no* adjuntaste. Su universo entero es el texto que tiene delante ahora mismo.
 
-Esa es la regla más profunda del prompting, y no tiene nada de místico: **tú estás decidiendo qué existe.** Lo que pones delante de él es el mundo; lo que dejas fuera nunca ocurrió.
+Esa es la regla central del prompting: **tú decides qué existe.** Si lo dejaste fuera, el modelo no lo tiene.
 
-Así que la pregunta detrás de cada prompt no es "¿cómo lo redacto?", sino *"¿qué necesita el golem para acertar?"* Este capítulo es la primera mitad de la respuesta — las palabras. El siguiente es la mitad difícil.`,
+Así que la pregunta detrás de cada prompt no es "¿cómo lo redacto?", sino *"¿qué necesita el modelo para acertar?"* Este capítulo es la primera mitad de la respuesta — las palabras. El siguiente es la mitad difícil.`,
     },
     {
       kind: "theory",
@@ -31,7 +31,7 @@ La mayoría de los prompts malos no están mal *redactados* — les **falta una 
       kind: "diagram",
       body: "Las cuatro partes, en el orden que les corresponde:",
       caption:
-        "La petición va al final a propósito: todo lo de arriba es el marco con el que el golem lee la tarea.",
+        "La petición va al final a propósito: todo lo de arriba es el marco con el que el modelo lee la tarea.",
       view: {
         kind: "stack",
         bands: [
@@ -44,20 +44,20 @@ La mayoría de los prompts malos no están mal *redactados* — les **falta una 
     },
     {
       kind: "quiz",
-      question: `¿Qué instrucción mejora de verdad el código del golem?`,
+      question: `¿Qué instrucción mejora de verdad el código del modelo?`,
       options: [
         "Valida el importe: rechaza cero y negativos con un error tipado; nunca hagas panic; mantén la API pública sin cambios",
         "Por favor escribe un código muy limpio, profesional, de altísima calidad, listo para producción",
         "Eres el mejor programador que ha existido — programa a esa altura",
       ],
       answer: 0,
-      explain: `El golem no puede fallar en "alta calidad" — toda salida se califica plausiblemente. Sí puede fallar en "nunca hagas panic", y ese es el punto: los criterios de aceptación crean la posibilidad de estar equivocado, y eso es lo que dirige a un modelo. La especificidad gana a la cortesía — y a la adulación.`,
+      explain: `El modelo no puede fallar en "alta calidad" — toda salida se califica plausiblemente. Sí puede fallar en "nunca hagas panic", y ese es el punto: los criterios de aceptación crean la posibilidad de estar equivocado, y eso es lo que dirige a un modelo. La especificidad gana a la cortesía — y a la adulación.`,
     },
     {
       kind: "theory",
       body: `## Enseña, no describas
 
-Los adjetivos describen la calidad; **los ejemplos la definen.** Un ejemplo trabajado pesa más que tres párrafos de adjetivos, porque el golem es una máquina de continuar patrones — así que dale un patrón que valga la pena continuar.
+Los adjetivos describen la calidad; **los ejemplos la definen.** Un ejemplo trabajado pesa más que tres párrafos de adjetivos, porque el modelo es una máquina de continuar patrones — así que dale un patrón que valga la pena continuar.
 
 ¿Quieres pruebas en el estilo de la casa? Pega **una prueba ideal** y di "así". ¿Quieres mensajes de error con un código y una pista de solución? Enseña *uno*.
 
@@ -65,7 +65,7 @@ El Capítulo I te enseñó que los requisitos en prosa filtran ambigüedad. Aqu�
     },
     {
       kind: "quiz",
-      question: `Tu equipo tiene una forma muy propia de escribir mensajes de error. ¿Qué hace que el golem la reproduzca?`,
+      question: `Tu equipo tiene una forma muy propia de escribir mensajes de error. ¿Qué hace que el modelo la reproduzca?`,
       options: [
         "Pegar un mensaje de error real del código y decir “así”",
         "Describir la convención con cuidado en tres frases",
@@ -90,7 +90,7 @@ El Capítulo I te enseñó que los requisitos en prosa filtran ambigüedad. Aqu�
 
 La primera salida sale mal. Bien — eso es información. La jugada de aficionado es volver a tirar los dados; la de ingeniero es **leer el fallo y encontrar la instrucción que faltaba**.
 
-¿El golem ignoró un caso borde? Tus restricciones nunca lo mencionaron. ¿Estilo equivocado? Describiste en vez de enseñar. ¿Tocó archivos que no debía? La frontera no se dijo.
+¿El modelo ignoró un caso borde? Tus restricciones nunca lo mencionaron. ¿Estilo equivocado? Describiste en vez de enseñar. ¿Tocó archivos que no debía? La frontera no se dijo.
 
 Cada fallo nombra un agujero en tus palabras — parchea el *prompt*, no solo la salida, igual que el Capítulo I te enseñó a apretar una especificación.`,
     },
@@ -117,7 +117,7 @@ Escribe el **prompt** que enviarías — las cuatro partes, en orden. No escriba
 
 Ya sabes escribir un prompt que dice exactamente lo que quiere. Esa es la disciplina fácil, y la mayoría se queda ahí.
 
-La difícil es decidir **qué llega a ver el golem** — qué archivos, qué especificación, qué prueba, y, mucho más importante, qué dejar fuera. Redactar es una habilidad; seleccionar es el oficio.
+La difícil es decidir **qué llega a ver el modelo** — qué archivos, qué especificación, qué prueba, y, mucho más importante, qué dejar fuera. Redactar es una habilidad; seleccionar es el oficio.
 
 **A continuación:** el banco mismo, y por qué añadirle cosas no sale gratis.`,
     },

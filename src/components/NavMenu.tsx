@@ -29,7 +29,6 @@ export function NavMenu({
     { href: "/labs", label: m.common.nav.forge },
     { href: "/campaign", label: m.common.nav.campaign },
     { href: "/harbor", label: m.common.nav.advanced },
-    { href: "/cards", label: m.common.nav.cards },
     ...(armoryOpen ? [{ href: "/armory", label: m.common.nav.armory }] : []),
   ];
 

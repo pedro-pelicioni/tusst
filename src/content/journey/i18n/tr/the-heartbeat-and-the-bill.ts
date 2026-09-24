@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Kalp Atışı ve Fatura",
+  title: "Durum arşivleme ve ücretler",
   tagline: "State archival ve ücretler: state kiralıktır, çağrının bedeli ise açık artırmayla değil ölçümle belirlenir.",
   steps: [
     {

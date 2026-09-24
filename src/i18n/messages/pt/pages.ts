@@ -1,4 +1,4 @@
-// Páginas do app: path (o Salão usa `home`), campaign, cards, tracks/[slug], profile.
+// Páginas do app: path (o Salão usa `home`), campaign, tracks/[slug], profile.
 export const pages = {
   campaign: {
     kicker: "a estrada opcional",
@@ -16,23 +16,6 @@ export const pages = {
     skirmishesForgingSoon: "lições em preparo — em breve",
     startLearning: "Começar a aprender",
     viewChampions: "Ver suas cartas",
-  },
-  cards: {
-    metaTitle: "Os personagens — TUSST",
-    metaDescription:
-      "Os oito personagens do reino — sete você pode jogar, um você enfrenta. Cada um é conhecido ao terminar uma seção da campanha.",
-    kicker: "// o elenco",
-    title: "Os personagens",
-    intro:
-      "Oito personagens caminham por este reino, um esperando no fim de cada seção da campanha. Sete deles você pode ser: escolha um e ele cresce com você por oito formas, de aprendiz a campeão solar. O oitavo não é um companheiro.",
-    bossCard: "chefe",
-    formsLabel: "oito formas",
-    playCta: "Jogar com este herói",
-    bossNote: "Para enfrentar, não para jogar.",
-    actLink: "Seção {numeral} — {title}",
-    unassigned: "não atribuído",
-    footnote:
-      "os personagens são puramente cosméticos — sua escolha não dá vantagem nenhuma e não trava conteúdo algum. você conhece cada um terminando a seção da campanha dele, e pode trocar quem você joga no seu perfil quando quiser.",
   },
   track: {
     backToPath: "trilha da campanha",
@@ -66,7 +49,7 @@ export const pages = {
     forgeborn: "builder",
     lvlXp: "nv {level} · {xp} xp",
     since: "desde {date}",
-    goldCoinAlt: "Moeda de ouro — o dracma Stroop",
+    goldCoinAlt: "Moeda de ouro",
     goldCaption: "ouro · ganho uma lição de cada vez",
     stats: {
       skirmishesWon: "lições concluídas",
@@ -79,6 +62,6 @@ export const pages = {
       locked: "bloqueado",
     },
     continueCampaign: "Continuar a campanha",
-    viewChampions: "Ver suas cartas",
+    openCampaignMap: "Abrir o mapa da campanha",
   },
 };

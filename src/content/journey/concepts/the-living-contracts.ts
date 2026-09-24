@@ -29,7 +29,7 @@ export const theLivingContracts: Concept = {
 
 And here is the elegant part: calling one needs no new transaction format. The envelope you dissected carries a single operation — \`invoke_host_function\` — and inside rides the call: which contract, which function, which arguments.
 
-Same envelope, same signatures, same ~5-second close. The classic realm and the contract realm share one bloodstream.`,
+Same envelope, same signatures, same ~5-second close.`,
     },
     {
       kind: "theory",

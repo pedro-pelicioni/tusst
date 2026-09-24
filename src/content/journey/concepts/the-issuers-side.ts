@@ -94,7 +94,7 @@ These flags are why regulated institutions can issue on a public ledger at all: 
       kind: "theory",
       body: `## The Stellar Asset Contract
 
-Classic assets and smart contracts share one realm, and the bridge is the **Stellar Asset Contract (SAC)**. Any classic asset — XLM included — can be *summoned* as a contract: one deploy, zero code to write, and the asset now speaks **SEP-41**, the standard Soroban token interface.
+Classic assets and smart contracts share one ledger, and the bridge is the **Stellar Asset Contract (SAC)**. Any classic asset — XLM included — can be *exposed* as a contract: one deploy, zero code to write, and the asset now speaks **SEP-41**, the standard Soroban token interface.
 
 Same asset, same supply, one balance sheet — but now contracts can hold it, move it, and build on it. USDC in a lending pool and USDC in grandma's trustline are the *same USDC*.
 

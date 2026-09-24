@@ -15,7 +15,7 @@ Um laço sem vigilância não converge — ele **gasta**. Um laço sem parada é
 - **Máximo de iterações** — um teto rígido, sempre.
 - **Detecção de não-progresso** — o mesmo erro duas vezes significa *mude a estratégia ou escale*, nunca "de novo, mas com mais força".
 
-A regra do reino: nunca comece um laço sem ter decidido como pará-lo.`,
+A regra: nunca comece um laço sem ter decidido como pará-lo.`,
     },
     {
       kind: "widget",

@@ -78,7 +78,7 @@ Essas flags explicam por que instituições reguladas podem emitir em um livro�
       kind: "theory",
       body: `## O Stellar Asset Contract
 
-Ativos clássicos e contratos inteligentes compartilham um mesmo reino, e a ponte é o **Stellar Asset Contract (SAC)**. Qualquer ativo clássico — XLM incluído — pode ser *invocado* como um contrato: um deploy, zero código para escrever, e o ativo agora fala **SEP‑41**, a interface padrão de token Soroban.
+Ativos clássicos e contratos inteligentes compartilham o mesmo livro‑razão, e a ponte é o **Stellar Asset Contract (SAC)**. Qualquer ativo clássico — XLM incluído — pode ser *exposto* como um contrato: um deploy, zero código para escrever, e o ativo agora fala **SEP‑41**, a interface padrão de token Soroban.
 
 Mesmo ativo, mesmo suprimento, um único balanço — mas agora contratos podem mantê‑lo, movê‑lo e construir sobre ele. USDC em um pool de empréstimos e USDC na linha de confiança da avó são o *mesmo USDC*.
 

@@ -146,7 +146,7 @@ Design only — no orchestration code, no tool or framework names.`,
 
 Look at what's on your belt now: **specs** that say what right means; **trials** that check it forever; **borders** that keep words honest; a **keep** that contains change; a **harness** that contains the model; **words** that shape what it sees; **loops** that let it correct itself; and a **graph** that weaves many minds into one plan.
 
-None of these will the AI carry for you. All of them make the AI worth ten of itself.
+The AI won't bring any of these on its own. Each one makes it far more useful.
 
 Next on the road: back to the realm — carry the craft into the Forge and spend it on the real network.`,
     },

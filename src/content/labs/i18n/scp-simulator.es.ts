@@ -52,7 +52,7 @@ Observa lo que *no* hacen: nunca se dividen en dos historias competidoras.`,
         "Deben volver a descargar la cadena desde el génesis",
         "Nada; una red detenida permanece detenida para siempre",
       ],
-      explain: `Pruébalo en el simulador: levanta los caídos, propone, y el ritmo vuelve. Las detenciones son pausas, no muertes.`,
+      explain: `Pruébalo en el simulador: levanta los caídos, propone, y el ritmo vuelve.`,
     },
     "claim": {
       body: `Has cerrado libros mayores, detenido una red y la has recuperado — el ciclo completo de acuerdo federado, en una sola sesión. Completa el lab y recibe tus XP.`,

@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "El Latido y la Factura",
+  title: "Archivado de estado y tarifas",
   tagline: "Archivado de estado y comisiones: el estado se alquila, y una llamada se mide, no se subasta.",
   steps: [
     {

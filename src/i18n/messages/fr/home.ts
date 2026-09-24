@@ -23,8 +23,8 @@ export const home = {
       label: "la route optionnelle",
       title: "Campagne Rust",
       blurb:
-        "Huit actes de maîtrise Rust → Soroban. Optionnelle, profonde, et valant chaque escarmouche.",
-      cta: "Marcher en Campagne",
+        "Huit actes, des bases de Rust aux contrats Soroban. Optionnelle et approfondie.",
+      cta: "Ouvrir la Campagne",
       progress: "{done}/{total} actes remportés",
     },
     advanced: {

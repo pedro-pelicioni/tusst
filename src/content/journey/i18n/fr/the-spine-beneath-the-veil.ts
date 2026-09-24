@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "L'Échine Sous le Voile",
+  title: "Paiements privés et conformité",
   tagline: "Private payments et conformité : masquer les contreparties, rester auditable.",
   steps: [
     {
@@ -65,7 +65,7 @@ Une confidentialité sans limites serait le cauchemar d’un responsable des san
 
 Ces trois garde-fous sont appliqués par une pièce qu’il vaut la peine de connaître par son nom : l’**Association Set Provider (ASP)**. Un ASP publie un *ensemble* de dépôts dont il se porte garant — une allow list — ou ceux dont il refuse de se porter garant — une deny list. Pour retirer, tu prouves que tes fonds remontent à un dépôt situé dans cet ensemble, **sans révéler lequel**. SPP construit cela sur un association set fondé sur des clés, adossé à un registre public de clés pour que les participants puissent seulement être désignés.
 
-Arrête-toi sur la conséquence, car c’est toute l’astuce : **le même retrait est à la fois privé et auditable**. Privé, parce que le lien avec ton dépôt précis n’est jamais publié. Auditable, parce que tu n’aurais pas pu retirer sans prouver ton appartenance à un ensemble cautionné. Des ASP différents peuvent servir des juridictions différentes — et c’est toi qui choisis la caution que tu portes.
+Arrête-toi sur la conséquence, car c’est toute l’astuce : **le même retrait est à la fois privé et auditable**. Privé, parce que le lien avec ton dépôt précis n’est jamais publié. Auditable, parce que tu n’aurais pas pu retirer sans prouver ton appartenance à un ensemble cautionné. Des ASP différents peuvent servir des juridictions différentes — et c’est toi qui choisis lequel se porte garant pour toi.
 
 L’objectif tient en une phrase : **la confidentialité pour les utilisateurs, pas pour le crime**. Des transferts à la fois confidentiels et conformes sur une infrastructure publique — c’est cette combinaison, et non le secret absolu, que les institutions attendaient.`,
     },
@@ -104,16 +104,16 @@ Ouvre la [Forge](/ide), va dans **Explore** et choisis **pool de confidentialit�
 - \`is_known_root(<ce nombre>)\` — **true**. Change maintenant un seul chiffre et redemande : **false**. Tu viens de parcourir l'anneau de racines dont le pool se souvient.
 - \`is_spent(<n'importe quel nombre>)\` — **false**. C'est l'ensemble des nullifiers : la défense du pool contre la double dépense, et à peu près la seule chose qu'un retrait publie sur lui-même.
 
-Lis-les dans l'ordre et remarque ce qui *manque*. Aucune de ces réponses ne contient d'adresse, de montant ni de contrepartie. La chaîne te dit l'exacte vérité et ne te dit rien.
+Lis-les dans l'ordre et remarque ce qui *manque*. Aucune de ces réponses ne contient d'adresse, de montant ni de contrepartie.
 
 **Deux avertissements, car la spec d'un contrat ne peut pas t'avertir sur elle-même.** Ce pool expose cinq fonctions résiduelles — \`balance\`, \`transfer\`, \`approve\` et compagnie — qui répondent poliment et ne veulent rien dire ; la Forge les marque *leurre* pour qu'elles ne te trompent pas. Et l'état de l'aperçu **est archivé le 2026-09-02**, après quoi ces lectures cessent de répondre jusqu'à ce que quelqu'un paie pour les restaurer. Ce n'est pas la Forge qui échoue : c'est le state rent de Soroban, sous lequel vit chaque contrat de ce réseau.`,
     },
     {
       kind: "labLink",
       labSlug: "confidential-tokens",
-      body: `Sur l’enclume de la Forge : un laboratoire **Jetons confidentiels**, où tu envelopperas un jeton testnet et verras les montants disparaître de l’explorateur tandis que les transferts continuent de se régler correctement. Sa carte indique *en cours de forge* — cette frontière est en train d’être martelée pendant que tu lis.
+      body: `Dans la Forge : un laboratoire **Jetons confidentiels**, où tu envelopperas un jeton testnet et verras les montants disparaître de l’explorateur tandis que les transferts continuent de se régler correctement. Pour l’instant, sa carte indique *en cours de forge*.
 
-Remarque à quel point ces dates sont jeunes. Naviguer dans une technologie aussi fraîche signifie lire le pouls du protocole lui‑même — le dernier chapitre te montre comment.`,
+Remarque à quel point ces dates sont jeunes. Avec une technologie aussi neuve, il faut suivre de près les mises à niveau du protocole — le dernier chapitre te montre comment.`,
     },
   ],
   testOut: [

@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Les Contrats Vivants",
+  title: "Soroban : des contrats sur Stellar",
   tagline: "Soroban : du Wasm sur le registre, et trois étagères pour l'état.",
   steps: [
     {
@@ -12,7 +12,7 @@ export const conceptText: JourneyConceptText = {
 
 Et voici la partie élégante : appeler un contrat ne nécessite aucun nouveau format de transaction. L’enveloppe que tu as décortiquée contient une seule opération — \`invoke_host_function\` — et à l’intérieur se trouve l’appel : quel contrat, quelle fonction, quels arguments.
 
-Même enveloppe, mêmes signatures, même clôture en cinq secondes environ. Le monde classique et celui des contrats partagent le même système circulatoire.`,
+Même enveloppe, mêmes signatures, même clôture en cinq secondes environ.`,
     },
     {
       kind: "theory",

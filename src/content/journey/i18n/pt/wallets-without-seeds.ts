@@ -187,7 +187,7 @@ Tradução para desenvolvedores: carteiras multi‑dispositivo, recuperação po
       labSlug: "passkey-smart-wallet",
       body: `A Forge está pronta: entre em **Passkey Smart Wallet**, registre uma chave de acesso real, implante seu contrato de conta inteligente na testnet e responda a um novo desafio WebAuthn com seu próprio dispositivo.
 
-Quando o ledger confirmar que o código implantado é o Wasm canônico da conta inteligente, retorne ao caminho. Ele se curva para algo ainda mais estranho: um ledger onde os *valores próprios* usam um véu.`,
+Quando o ledger confirmar que o código implantado é o Wasm canônico da conta inteligente, pronto. A seguir: um ledger onde os *próprios valores* ficam ocultos.`,
     },
   ],
   testOut: [

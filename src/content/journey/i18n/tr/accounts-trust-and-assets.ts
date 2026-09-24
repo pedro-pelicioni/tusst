@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Hesaplar, Güven ve Varlıklar",
+  title: "Hesaplar, trustline'lar ve varlıklar",
   tagline: "Hesaplar, rezervler ve trustline'lar: bir varlığı tutmak neden opt-in'dir.",
   steps: [
     {

@@ -12,7 +12,7 @@ export const conceptText: JourneyConceptText = {
 
 E aqui está a parte elegante: chamar um contrato não requer um novo formato de transação. O envelope que você analisou carrega uma única operação — \`invoke_host_function\` — e dentro dela está a chamada: qual contrato, qual função, quais argumentos.
 
-Mesmo envelope, mesmas assinaturas, mesmo fechamento em ~5 segundos. O reino clássico e o reino dos contratos compartilham o mesmo fluxo sanguíneo.`,
+Mesmo envelope, mesmas assinaturas, mesmo fechamento em ~5 segundos.`,
     },
     {
       kind: "theory",

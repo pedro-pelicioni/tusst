@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "La Travesía",
+  title: "Path payments",
   tagline: "Path payments: envía una moneda, entrega otra, atómicamente.",
   steps: [
     {
@@ -68,7 +68,7 @@ Dos variantes:
     },
     {
       kind: "fill",
-      prompt: `Dibuja el río — ¿qué ocurre entre el envío y la entrega en un pago encadenado?`,
+      prompt: `¿Qué ocurre entre el envío y la entrega en un pago encadenado?`,
       file: "remittance.txt",
       before: `enviar 100 USDC  →  `,
       after: `  →  entregar EURC — una transacción atómica`,
@@ -113,7 +113,7 @@ La conversión FX — históricamente la parte cara y opaca — se vuelve un sal
       kind: "theory",
       body: `## La capa encima del río
 
-Sobre la maquinaria nativa, el ecosistema construye en Soroban: **Soroswap**, **Phoenix** y **Aquarius** ejecutan protocolos AMM como contratos inteligentes, y los agregadores enrutan cada operación a través de libros nativos, pools nativos y pools de contrato buscando el mejor precio. No necesitas sus internos todavía — solo sabe que el río tiene una base sólida y un puerto activo construido encima.
+Sobre la maquinaria nativa, el ecosistema construye en Soroban: **Soroswap**, **Phoenix** y **Aquarius** ejecutan protocolos AMM como contratos inteligentes, y los agregadores enrutan cada operación a través de libros nativos, pools nativos y pools de contrato buscando el mejor precio. No necesitas sus internos todavía — quédate con que hay una capa nativa y una capa de contratos encima.
 
 Una pregunta queda abierta: ¿dónde entran y salen los *verdaderos* dólares y euros? Eso es negocio de los anclajes — las puertas del reino, y el próximo capítulo.`,
     },

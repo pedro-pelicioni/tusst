@@ -1,7 +1,7 @@
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 
-// All product pages (tracks, lessons, cards, login) share the standard
+// All product pages (tracks, lessons, login) share the standard
 // chrome. The landing page at `/` ships its own cinematic nav + footer.
 export default function AppLayout({
   children,

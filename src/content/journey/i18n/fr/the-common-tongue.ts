@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "La Langue Commune",
+  title: "SEP : les standards d'interopérabilité",
   tagline: "SEP : implémentez une fois, et chaque porte s'ouvre.",
   steps: [
     { kind: "theory", body: `## L'arithmétique qui impose un standard
@@ -21,7 +21,7 @@ Il existe de nombreux portefeuilles et de nombreuses ancres. Sans normes, chaque
 
 La réponse de Stellar tient dans les **SEP**, les *Stellar Ecosystem Proposals*. Ces normes publiques définissent précisément la manière dont portefeuilles, ancres et services communiquent. Implémente une SEP une fois et ton portefeuille fonctionnera avec **toute ancre** qui la respecte également — dépôt, authentification, identité et le reste.
 
-Cette culture d’interopérabilité avant tout est l’une des superpuissances silencieuses de Stellar : les utilisateurs choisissent n’importe quelle porte, et toutes les portes partagent une même forme de clé.`,
+Grâce à cette culture d’interopérabilité avant tout, les utilisateurs peuvent choisir n’importe quelle porte : toutes partagent la même forme de clé.`,
     },
     {
       kind: "theory",

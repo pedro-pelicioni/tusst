@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Yaşayan Kontratlar",
+  title: "Soroban: Stellar'da kontratlar",
   tagline: "Soroban: ledger'da Wasm ve state koymak için üç raf.",
   steps: [
     {
@@ -12,7 +12,7 @@ export const conceptText: JourneyConceptText = {
 
 Zarif kısım da şu: birini çağırmak için yeni bir işlem formatı gerekmez. Parçalarına ayırdığın zarf tek bir operasyon taşır — \`invoke_host_function\` — ve çağrı onun içinde yolculuk eder: hangi kontrat, hangi fonksiyon, hangi argümanlar.
 
-Aynı zarf, aynı imzalar, aynı ~5 saniyelik kapanış. Klasik diyar ile kontrat diyarı tek bir kan dolaşımını paylaşır.`,
+Aynı zarf, aynı imzalar, aynı ~5 saniyelik kapanış.`,
     },
     {
       kind: "theory",

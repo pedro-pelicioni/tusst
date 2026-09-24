@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
-  title: "Le Royaume de Stellar",
+  title: "Le consensus et le réseau Stellar",
   tagline: "Consensus (SCP) : comment des milliers de machines s'accordent sans roi.",
   steps: [
     {
@@ -157,7 +157,7 @@ Chaque lab de la Forge tourne sur ce rythme — tu l’as déjà senti si tu a
     {
       kind: "rustBranch",
       lessonSlug: "stellar-101-1",
-      body: `La Campagne Acte VI — **La Porte de la Constellation** — parcourt ce même ciel en pratique : phrases secrètes du réseau, horizons, et tes premières cartes stellaires. Optionnel, et vaut le détour quand tu veux la carte derrière la théorie.`,
+      body: `L'Acte VI de la Campagne — **La Porte de la Constellation** — met tout ça en pratique : comptes, frais, trustlines et ton premier paiement. Optionnel, et vaut le détour quand tu veux la carte derrière la théorie.`,
     },
   ],
   testOut: [

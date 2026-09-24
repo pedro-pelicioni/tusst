@@ -273,13 +273,13 @@ export const cardText: Record<string, CardText> = {
   stroowarrior: {
     type: "Savaşçı",
     flavor:
-      "Gerçek savaşçı, sarsılmaz ışığını ancak dünya titrediğinde gösterir.",
+      "Borrow checker'la ilk kavgasını kaybetti. Hatayı okudu. Rövanşı kazandı.",
   },
   stropillusion: {
     epithet: "Aynalar Salonu Kâşifi",
     type: "Stropie · İllüzyonist",
     flavor:
-      "Yansımalar aldatır, sırlar gizli kalır — o, sonsuz aynaların içinde gerçekliği büker.",
+      "Her ayna ayrı bir dal; match hiçbirini atlamasına izin vermez.",
   },
   stroopkeeper: {
     epithet: "Sonsuz Kasaların Bekçisi",
@@ -303,17 +303,17 @@ export const cardText: Record<string, CardText> = {
     epithet: "Takımyıldız Kapısı'nın Gezgini",
     type: "Stropie · Gezgin",
     flavor:
-      "Gökyüzünün haritasını yaralarından çıkardı ve ışığın söndüğü yerde Kapı'yı geçti.",
+      "Kapı'yı rezervi tam, gizli anahtarı kendine saklı hâlde geçti.",
   },
   stroopbeholder: {
     type: "Stropie · Ucube",
     flavor:
-      "Yıkımın derinliklerinden, sayısız gözü yalnızca fethi görür.",
+      "Sayısız gözü tek bir şey arar: unutulmuş bir require_auth.",
   },
   stroopzipper: {
     epithet: "Yeniden Yazılan Gökyüzünün Habercisi",
     type: "Stropie · Haberci",
     flavor:
-      "Gökyüzü değişirken kırılmaz — kendini yeniden fermuarlar, ışıltılı dikiş dikiş.",
+      "Fork yok: ağ oylar ve tek bir ledger'da topluca geçer.",
   },
 };

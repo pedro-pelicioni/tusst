@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Temiz Kale",
+  title: "Clean architecture",
   tagline: "Clean architecture: kaynak kodu bağımlılıkları içeri bakar, yalnızca içeri.",
   steps: [
     { kind: "theory", body: `## Kale ve surları
@@ -15,9 +15,7 @@ Bir kale düşün. **İç halkada** *entity*'lerin ve *use-case*'lerin yaşar �
 
 Çünkü iki halka farklı hızda yaşlanır. Framework'ler durmadan değişir: SDK major sürümleri iner, UI kütüphaneleri yükselir ve düşer, veritabanları değiştirilir. **İş kuralları hepsinden uzun yaşar** — "iki taraf da onaylamalı" beş yıl sonra hangi framework onu barındırıyorsa orada da doğru olacak.
 
-Alanın chain SDK'sını import ediyorsa, SDK'daki her kırıcı değişiklik bir *alan* migrasyonuna dönüşür — en yavaş değişen kodun, en hızlı değişen bağımlılığına rehin. Okları içeri çevir, değişim ucuz olduğu yerde, dış halkada kalsın.
-
-Mesele kaledir. Framework'ler mobilya.` },
+Alanın chain SDK'sını import ediyorsa, SDK'daki her kırıcı değişiklik bir *alan* migrasyonuna dönüşür — en yavaş değişen kodun, en hızlı değişen bağımlılığına rehin. Okları içeri çevir, değişim ucuz olduğu yerde, dış halkada kalsın.` },
     { kind: "diagram", body: "Kale, dıştan içe:",
       caption: "Her ok içeri bakar. Alan bir veritabanının adını asla öğrenmez.",
       view: { kind: "stack", bands: [
@@ -27,7 +25,7 @@ Mesele kaledir. Framework'ler mobilya.` },
         { id: "domain", label: "alan", note: "Kâğıt üstünde de doğru kalacak kurallar. Hiçbir şey import etmez.", tone: "gold" },
       ] } },
     { kind: "widget", component: "dependency-rule",
-      body: `Yasanın bir şekli var ve düzyazı onu çizemez. **Import'ları aç** ve yasal olanların nereye düştüğünü izle — sonra bilerek bir surda gedik aç ve sana neye mal olduğunu oku.` },
+      body: `**Import'ları aç** ve yasal olanların nereye düştüğünü izle — sonra bilerek bir surda gedik aç ve sana neye mal olduğunu oku.` },
     { kind: "theory", body: `## Her gedik makuldü
 
 Kimse kuralı kötü niyetle çiğnemez. Bir salı günü, iyi bir sebeple, teslim tarihi ensesindeyken çiğner.
@@ -45,7 +43,7 @@ Kural, hakkını tam da bürokrasi gibi hissettirdiği günlerde verir — çün
         "adapters/horizon.ts, implement etmek için alandaki PaymentsPort interface'ini import ediyor",
         "ui/ReleaseButton.tsx, çağırmak için alandaki release use-case'ini import ediyor",
       ], answer: 0,
-      explain: `Diğer ikisi dış halkanın iç halkanın adını anması — kuralın tam tasarlandığı gibi işlemesi. Alanın SDK'yı import etmesi ise içerinin dışarının adını anması: artık bir tedarikçi her major sürüm çıkardığında kalenin en derin odaları sarsılıyor.` },
+      explain: `Diğer ikisi dış halkanın iç halkanın adını anması — kuralın tam tasarlandığı gibi işlemesi. Alanın SDK'yı import etmesi ise içerinin dışarının adını anması: artık bir tedarikçi her major sürüm çıkardığında alanın da değişmesi gerekiyor.` },
     { kind: "quiz", question: `Koku nerede?`,
       options: [
         "Escrow fonlarının serbest bırakılıp bırakılamayacağına kendisi karar verip sonra butonu render eden bir React bileşeni",

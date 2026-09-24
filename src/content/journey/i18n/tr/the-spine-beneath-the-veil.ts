@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Örtünün Altındaki Omurga",
+  title: "Özel ödemeler ve uyumluluk",
   tagline: "Private payments ve uyumluluk: karşı tarafları gizle, denetlenebilir kal.",
   steps: [
     {
@@ -68,7 +68,7 @@ Sınırsız "özel", bir yaptırım sorumlusunun kâbusudur ve bu tasarımlar or
 
 Bu üç güvence, adıyla bilmeye değer bir parça tarafından uygulanır: **Association Set Provider (ASP)**. Bir ASP, kefil olduğu yatırmaların bir *kümesini* yayımlar — bir izin listesi — ya da kefil olmayı reddettiklerini — bir ret listesi. Para çekmek için, fonlarının o kümenin içindeki bir yatırmaya kadar izlenebildiğini **hangisi olduğunu açıklamadan** kanıtlarsın. SPP bunu anahtar tabanlı bir association set üzerine kurar; katılımcılara referans verilebilsin diye arkasında herkese açık bir anahtar kaydı vardır.
 
-Sonucun üstünde biraz dur, çünkü numaranın tamamı bu: **aynı çekme işlemi aynı anda hem özel hem denetlenebilir**. Özel, çünkü senin belirli yatırmana giden bağ asla yayımlanmaz. Denetlenebilir, çünkü kefil olunmuş bir kümeye üyeliğini kanıtlamadan çekemezdin. Farklı ASP'ler farklı yargı alanlarına hizmet edebilir — ve kimin kutsamasını taşıyacağını sen seçersin.
+Sonucun üstünde biraz dur, çünkü numaranın tamamı bu: **aynı çekme işlemi aynı anda hem özel hem denetlenebilir**. Özel, çünkü senin belirli yatırmana giden bağ asla yayımlanmaz. Denetlenebilir, çünkü kefil olunmuş bir kümeye üyeliğini kanıtlamadan çekemezdin. Farklı ASP'ler farklı yargı alanlarına hizmet edebilir — ve hangisinin sana kefil olacağını sen seçersin.
 
 Hedef tek satırda: **suç için değil, kullanıcılar için gizlilik**. Halka açık raylarda gizli *ve* uyumlu transferler — kurumların beklediği şey ham gizlilik değil, işte bu bileşim.`,
     },
@@ -107,16 +107,16 @@ Yukarıdakilerin hepsi şu anda, gerçekten var olan bir pool'da kontrol edilebi
 - \`is_known_root(<o sayı>)\` — **true**. Şimdi tek bir rakamı değiştir ve tekrar sor: **false**. Az önce pool'un kendi hatırlanan kökler halkasında yürüdün.
 - \`is_spent(<herhangi bir sayı>)\` — **false**. Bu, nullifier kümesi: pool'un çifte harcamaya karşı savunması ve bir çekme işleminin kendisi hakkında yayımladığı neredeyse tek şey.
 
-Bunları sırayla oku ve *eksik* olana dikkat et. O cevapların hiçbiri bir adres, bir tutar ya da bir karşı taraf içermiyor. Zincir sana tam gerçeği söylüyor ve hiçbir şey söylemiyor.
+Bunları sırayla oku ve *eksik* olana dikkat et. O cevapların hiçbiri bir adres, bir tutar ya da bir karşı taraf içermiyor.
 
 **İki uyarı, çünkü bir kontratın spec'i seni kendisi hakkında uyaramaz.** Bu pool, kibarca cevap verip hiçbir anlam taşımayan beş artık fonksiyon açığa çıkarıyor — \`balance\`, \`transfer\`, \`approve\` ve arkadaşları; Forge onları seni kandıramasınlar diye *yem* olarak işaretliyor. Ve ön izlemenin state'i **2026-09-02'de arşivleniyor**; ondan sonra biri onları geri yüklemek için ödeme yapana kadar o okumalar cevap vermeyi bırakıyor. Bu Forge'un hatası değil: bu ağdaki her kontratın altında yaşadığı Soroban state kirası.`,
     },
     {
       kind: "labLink",
       labSlug: "confidential-tokens",
-      body: `Forge'un örsünde: bir **Confidential Token'lar** lab'ı; orada bir testnet token'ını saracak ve transfer hâlâ dürüstçe sonuçlanırken tutarların explorer'dan kaybolmasını izleyeceksin. Kartında *dövülüyor* yazıyor — bu sınır sen okurken çekiçleniyor.
+      body: `Forge'da: bir **Confidential Token'lar** lab'ı; orada bir testnet token'ını saracak ve transfer hâlâ dürüstçe sonuçlanırken tutarların explorer'dan kaybolmasını izleyeceksin. Şimdilik kartında *hazırlanıyor* yazıyor.
 
-Bu tarihlerin ne kadar taze olduğuna dikkat et. Bu kadar yeni bir teknolojiye binmek, protokolün kendi nabzını okumak demek — son bölüm sana nasıl olduğunu gösteriyor.`,
+Bu tarihlerin ne kadar taze olduğuna dikkat et. Bu kadar yeni bir teknolojiyle çalışmak, protokol yükseltmelerini yakından takip etmek demek — son bölüm sana nasıl olduğunu gösteriyor.`,
     },
   ],
   testOut: [

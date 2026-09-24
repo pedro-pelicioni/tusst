@@ -9,7 +9,6 @@ export const common = {
     journey: "jornada",
     campaign: "campanha",
     advanced: "avançado",
-    cards: "cartas",
     armory: "arsenal",
     forge: "forja",
     signOut: "sair",

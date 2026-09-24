@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "La Traversée",
+  title: "Path payments",
   tagline: "Path payments : envoyez une monnaie, livrez-en une autre, atomiquement.",
   steps: [
     {
@@ -68,7 +68,7 @@ Deux variantes :
     },
     {
       kind: "fill",
-      prompt: `Trace la rivière — que se passe-t-il entre l’envoi et la livraison dans un paiement par chemin ?`,
+      prompt: `Que se passe-t-il entre l’envoi et la livraison dans un paiement par chemin ?`,
       file: "remittance.txt",
       before: `envoyer 100 USDC  →  `,
       after: `  →  livrer EURC — une transaction atomique`,
@@ -113,7 +113,7 @@ La conversion FX — historiquement l’étape coûteuse et opaque — devient u
       kind: "theory",
       body: `## La couche au-dessus de la rivière
 
-Au-dessus des mécanismes natifs, l’écosystème intègre Soroban : **Soroswap**, **Phoenix** et **Aquarius** exécutent des protocoles AMM sous forme de contrats intelligents, tandis que les agrégateurs recherchent le meilleur prix dans les carnets natifs, les pools natifs et les pools gérés par contrat. Tu n’as pas encore besoin d'en connaître le fonctionnement interne : retiens simplement que la rivière possède à la fois un socle rocheux et un port animé construit au-dessus.
+Au-dessus des mécanismes natifs, l’écosystème intègre Soroban : **Soroswap**, **Phoenix** et **Aquarius** exécutent des protocoles AMM sous forme de contrats intelligents, tandis que les agrégateurs recherchent le meilleur prix dans les carnets natifs, les pools natifs et les pools gérés par contrat. Tu n’as pas encore besoin d'en connaître le fonctionnement interne : retiens simplement qu'il y a une couche native et une couche de contrats par-dessus.
 
 Une question demeure : par où les *véritables* dollars et euros entrent-ils et sortent-ils ? C’est le rôle des ancres — les portes du royaume et le sujet du prochain chapitre.`,
     },

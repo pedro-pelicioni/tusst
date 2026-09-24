@@ -102,11 +102,18 @@
     linear-gradient(180deg, #0b0716 0%, #120b22 46%, #07050e 100%);
 }
 
-.ld-scene--intro {
+.ld-scene--why {
   background:
-    radial-gradient(85% 80% at 78% 62%, rgba(217, 185, 106, 0.13), transparent 58%),
-    radial-gradient(70% 60% at 12% 20%, rgba(143, 123, 255, 0.07), transparent 60%),
-    linear-gradient(180deg, #07050e 0%, #0e0a18 55%, #0a0712 100%);
+    radial-gradient(70% 80% at 78% 55%, rgba(143, 123, 255, 0.16), transparent 60%),
+    radial-gradient(40% 50% at 62% 78%, rgba(255, 176, 92, 0.12), transparent 60%),
+    linear-gradient(180deg, #07050e 0%, #110b1f 55%, #0a0712 100%);
+}
+
+.ld-scene--trial {
+  background:
+    radial-gradient(60% 50% at 50% 0%, rgba(143, 123, 255, 0.12), transparent 70%),
+    radial-gradient(50% 40% at 50% 100%, rgba(217, 185, 106, 0.08), transparent 70%),
+    linear-gradient(180deg, #0a0712 0%, #0d0918 50%, #0a0712 100%);
 }
 
 .ld-scene--carousel {
@@ -115,16 +122,11 @@
     linear-gradient(180deg, #0a0712 0%, #150f26 50%, #0a0712 100%);
 }
 
-.ld-scene--campaign {
+.ld-scene--map {
   background:
-    radial-gradient(95% 75% at 72% 68%, rgba(217, 185, 106, 0.1), transparent 60%),
-    linear-gradient(180deg, #07050e 0%, #100b1d 55%, #08060f 100%);
-}
-
-.ld-scene--boss {
-  background:
-    radial-gradient(90% 80% at 70% 60%, rgba(161, 61, 61, 0.2), transparent 58%),
-    linear-gradient(180deg, #08060f 0%, #150a12 55%, #060409 100%);
+    radial-gradient(70% 55% at 50% 55%, rgba(40, 70, 160, 0.16), transparent 70%),
+    radial-gradient(50% 40% at 50% 0%, rgba(217, 185, 106, 0.07), transparent 70%),
+    linear-gradient(180deg, #0a0712 0%, #0b0c1f 50%, #07050e 100%);
 }
 
 .ld-scene--forge {
@@ -154,6 +156,168 @@
     linear-gradient(90deg, rgba(5, 4, 9, 0.82) 0%, rgba(5, 4, 9, 0.5) 38%, rgba(5, 4, 9, 0.06) 70%),
     linear-gradient(180deg, rgba(5, 4, 9, 0.55) 0%, transparent 26%, transparent 70%, rgba(5, 4, 9, 0.7) 100%);
 }
+
+/* the why scene carries more copy than the others (thesis + pull quote),
+   so its left scrim reaches further and stays darker */
+.ld-scrim--why {
+  background:
+    linear-gradient(90deg, rgba(5, 4, 9, 0.9) 0%, rgba(5, 4, 9, 0.72) 34%, rgba(5, 4, 9, 0.2) 58%, transparent 72%),
+    linear-gradient(180deg, rgba(5, 4, 9, 0.6) 0%, transparent 24%, transparent 72%, rgba(10, 7, 18, 1) 100%);
+}
+
+/* the closing scene reuses the hero island as a far-off backdrop: a dark
+   vignette over the centre where the copy sits, fading to black at the
+   footer strip */
+.ld-scrim--cta {
+  background:
+    radial-gradient(55% 60% at 50% 45%, rgba(5, 4, 9, 0.8) 0%, rgba(5, 4, 9, 0.66) 60%, rgba(5, 4, 9, 0.58) 100%),
+    linear-gradient(180deg, rgba(10, 7, 18, 1) 0%, rgba(5, 4, 9, 0.3) 22%, rgba(5, 4, 9, 0.35) 70%, rgba(5, 4, 9, 0.96) 100%);
+}
+
+/* below wide desktop (and on any portrait screen) the copy column reaches
+   the candle — the art becomes a dim backdrop instead of a side panel */
+@media (max-width: 1179px), (orientation: portrait) {
+  .ld-scrim--why {
+    background: linear-gradient(180deg, rgba(5, 4, 9, 0.8) 0%, rgba(5, 4, 9, 0.84) 65%, rgba(10, 7, 18, 1) 100%);
+  }
+}
+
+/* ── Why: the pull quote and the trial cards ──────────────────────── */
+.ld-truth {
+  position: relative;
+  padding-left: 22px;
+  border-left: 2px solid rgba(201, 106, 106, 0.7);
+}
+
+.ld-truth blockquote::before {
+  content: "\201C";
+  position: absolute;
+  left: -6px;
+  top: 12px;
+  font: 900 64px/1 var(--font-cinzel), serif;
+  color: rgba(201, 106, 106, 0.28);
+  pointer-events: none;
+}
+
+/* a Kamui-style card frame: violet rim, gold gems pinned to the top
+   corners, the answer sealed until opened */
+.ld-trial-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 24px 24px;
+  border: 1px solid rgba(143, 123, 255, 0.34);
+  border-radius: 14px;
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(143, 123, 255, 0.14), transparent 70%),
+    linear-gradient(180deg, rgba(28, 19, 50, 0.92) 0%, rgba(12, 9, 22, 0.94) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 24px 60px rgba(0, 0, 0, 0.55);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.ld-trial-card::before,
+.ld-trial-card::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #f4ce7b, #b07a2c);
+  box-shadow: 0 0 12px rgba(244, 206, 123, 0.55);
+}
+.ld-trial-card::before { left: 18px; }
+.ld-trial-card::after { right: 18px; }
+
+.ld-trial-card:hover,
+.ld-trial-card:has(details[open]) {
+  border-color: rgba(217, 185, 106, 0.5);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 0 40px rgba(143, 123, 255, 0.18),
+    0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.ld-trial-reveal > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.ld-trial-reveal > summary::-webkit-details-marker { display: none; }
+.ld-trial-reveal > summary::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.25s ease;
+}
+.ld-trial-reveal[open] > summary::before { transform: rotate(45deg); }
+
+@keyframes ld-answer-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+.ld-trial-reveal[open] .ld-trial-answer { animation: ld-answer-in 0.35s ease both; }
+
+/* the world map: the /path chart in a gilded frame, numbered pins on the
+   three islands, one card per path below */
+.ld-map-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(217, 185, 106, 0.35);
+  border-radius: 18px;
+  box-shadow:
+    0 0 0 6px rgba(12, 9, 22, 0.9),
+    0 0 0 7px rgba(143, 123, 255, 0.25),
+    0 40px 90px rgba(0, 0, 0, 0.6);
+}
+
+.ld-map-pin {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: clamp(26px, 3.2vw, 40px);
+  height: clamp(26px, 3.2vw, 40px);
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--ow-frame-light);
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #3a2a5c, #120c22 70%);
+  box-shadow: 3px 4px 0 rgba(26, 16, 36, 0.85), 0 0 22px rgba(244, 206, 123, 0.45);
+  color: #fff2cb;
+  font: 700 clamp(10px, 1.1vw, 14px) / 1 var(--font-cinzel), serif;
+  pointer-events: none;
+}
+
+.ld-path-card {
+  display: flex;
+  flex-direction: column;
+  padding: 22px 22px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(24, 17, 42, 0.85), rgba(10, 8, 18, 0.9));
+}
+
+.ld-path-card:first-child {
+  border-color: rgba(217, 185, 106, 0.4);
+  box-shadow: 0 0 34px rgba(217, 185, 106, 0.1);
+}
+
+/* the hero roster's eight pixel forms pop in one after another whenever
+   the active hero changes (the list items remount on change) */
+@keyframes ld-form-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.85); }
+  to { opacity: 1; transform: none; }
+}
+.ld-form { animation: ld-form-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) var(--form-delay, 0ms) both; }
 
 /* parallax layers get bleed so translation never exposes an edge */
 .ld-layer {
@@ -253,6 +417,11 @@
 
   #landing .ld-mote {
     display: none;
+  }
+
+  /* pseudo-elements escape the [class^="ld-"] match above */
+  #landing .ld-trial-reveal > summary::before {
+    transition: none !important;
   }
 }
 

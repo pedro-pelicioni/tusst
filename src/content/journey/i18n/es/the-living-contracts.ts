@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Los Contratos Vivos",
+  title: "Soroban: contratos en Stellar",
   tagline: "Soroban: Wasm en el libro mayor, y tres estantes donde poner estado.",
   steps: [
     {
@@ -12,7 +12,7 @@ export const conceptText: JourneyConceptText = {
 
 Y aquí está la parte elegante: llamar a uno no necesita un nuevo formato de transacción. El sobre que desglosaste lleva una sola operación — \`invoke_host_function\` — y dentro viaja la llamada: qué contrato, qué función, qué argumentos.
 
-Mismo sobre, mismas firmas, mismo cierre de ~5 segundos. El reino clásico y el reino de los contratos comparten una sola corriente sanguínea.`,
+Mismo sobre, mismas firmas, mismo cierre de ~5 segundos.`,
     },
     {
       kind: "theory",

@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "İskelet ve Organlar",
+  title: "Orkestrasyon",
   tagline: "Orkestrasyon: deterministik kenarlar, yargı düğümlerin içinde.",
   steps: [
     {
@@ -130,7 +130,7 @@ Yalnızca tasarım — orkestrasyon kodu yok, araç ya da framework adı yok.`,
 
 Kemerinde şimdi ne olduğuna bak: doğrunun ne demek olduğunu söyleyen **spec'ler**; onu sonsuza dek kontrol eden **sınavlar**; kelimeleri dürüst tutan **sınırlar**; değişimi kapsayan bir **kale**; modeli kapsayan bir **harness**; onun ne gördüğünü biçimlendiren **kelimeler**; kendini düzeltmesine izin veren **döngüler**; ve birçok zihni tek bir plana dokuyan bir **graf**.
 
-Bunların hiçbirini yapay zekâ senin yerine taşımaz. Hepsi, yapay zekâyı kendisinin on katı değerli kılar.
+Yapay zekâ bunların hiçbirini kendiliğinden getirmez. Her biri onu çok daha kullanışlı yapar.
 
 Yolda sırada: diyara dönüş — zanaatı Forge'a taşı ve gerçek ağda harca.`,
     },

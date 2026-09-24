@@ -150,7 +150,7 @@ let is_lit: bool = true;   // yes/no value
 
 ### Your task
 
-Label the three vials in the starter code with their types:
+Label the three variables in the starter code with their types:
 
 1. \`age\` is a whole number → \`i32\`
 2. \`price\` is a decimal number → \`f64\`
@@ -249,7 +249,7 @@ Expected output:
   "rust-fundamentals-5": {
     instructions: `## Ownership Basics
 
-Rust's oldest law: **every value has exactly one owner.** When you assign a \`String\` to another variable, ownership *moves* — the old name can't be used anymore:
+Rust's core rule: **every value has exactly one owner.** When you assign a \`String\` to another variable, ownership *moves* — the old name can't be used anymore:
 
 \`\`\`rust
 let a = String::from("gem");
@@ -653,7 +653,7 @@ for n in 1..=6 {
 
 ### Your task
 
-Walk the Overlord's ten mirrors:
+Walk the Hall's ten mirrors:
 
 1. \`for n in 1..=10\`
 2. **If** \`n\` is divisible by 3 (\`n % 3 == 0\`), print \`mirror\`.
@@ -707,7 +707,7 @@ mirror
   "rust-standard-library-1": {
     instructions: `## Vec Basics
 
-A \`Vec\` is a growable list — the satchel of the realm:
+A \`Vec\` is a growable list:
 
 \`\`\`rust
 let mut items = vec!["torch", "rope"];  // create with contents
@@ -930,7 +930,7 @@ fn main() {
   "rust-standard-library-5": {
     instructions: `## String Handling
 
-A \`String\` is growable text. Two spells today:
+A \`String\` is growable text. Two tools today:
 
 \`\`\`rust
 let mut s = String::from("Keeper");
@@ -1238,7 +1238,7 @@ fn find(present: bool) -> Option<i32> {
   "mastering-option-2": {
     instructions: `## Unwrap Safely
 
-\`.unwrap()\` rips the value out of an Option — and **panics** (crashes) on \`None\`. The marsh is full of those who unwrapped.
+\`.unwrap()\` rips the value out of an Option — and **panics** (crashes) on \`None\`.
 
 The safe idiom carries a default:
 
@@ -1627,7 +1627,7 @@ Sign it with your secret key, pay the ~100-stroop toll, and in ~5 seconds it's f
 
 ### Your task
 
-Chart the first payment since the Panic: **25 XLM**.
+Send your first payment: **25 XLM**.
 
 Expected output:
 
@@ -1656,7 +1656,7 @@ amount = 0                     # send 25
   "soroban-smart-contracts-1": {
     instructions: `## Your First Contract
 
-A Soroban contract is a Rust library compiled to WASM and carved into the ledger. Three things make it a contract:
+A Soroban contract is a Rust library compiled to WASM and deployed to the ledger. Three things make it a contract:
 
 - \`#![no_std]\` — no OS, no heap allocator, no standard library. The ledger is the machine.
 - \`#[contract]\` on a unit struct — the contract's identity.
@@ -1848,11 +1848,11 @@ pub const MAINNET_VOTE: &str = "";   // ← YYYY-MM-DD of the Mainnet vote
   "stellar-protocol-27-2": {
     instructions: `## Smart Accounts & \`__check_auth\`
 
-In the Lair you learned \`require_auth()\` — the seal. But *who* verifies the seal?
+You already know \`require_auth()\` — the seal. But *who* verifies the seal?
 
-Under the old sky, an account was simple: two keys. The secret key signs; the network checks that signature against the public key using **ed25519** — a specific cryptographic scheme for making and verifying digital signatures. Sign with the secret half, verify with the public half — nobody without the secret key can forge it.
+A classic account is simple: two keys. The secret key signs; the network checks that signature against the public key using **ed25519** — a specific cryptographic scheme for making and verifying digital signatures. Sign with the secret half, verify with the public half — nobody without the secret key can forge it.
 
-But an \`Address\` on Stellar was never *only* a promise of keys — only a promise of identity. It can also point to a **contract**: no keypair at all, just code that writes its own rule for what counts as "signed." That rule lives in one entry point, \`__check_auth\`.
+But an \`Address\` on Stellar doesn't have to be a keypair. It can also point to a **contract**: no keypair at all, just code that writes its own rule for what counts as "signed." That rule lives in one entry point, \`__check_auth\`.
 
 | | classic account | contract account |
 |---|---|---|
@@ -1865,7 +1865,7 @@ Same \`Address\` type. Same \`require_auth()\` call site. Two entirely different
 fn __check_auth(env: Env, payload: Hash<32>, signatures: ..., contexts: Vec<Context>)
 \`\`\`
 
-The account *is* a contract, and \`__check_auth\` is its law of signatures. This is how **custom accounts** exist: multisig wallets, social recovery, passkey logins, account abstraction — each just a different \`__check_auth\`. (OpenZeppelin was already building these; Protocol 27 makes the hard parts first-class.)
+The account *is* a contract, and \`__check_auth\` is its signature policy. This is how **custom accounts** exist: multisig wallets, social recovery, passkey logins, account abstraction — each just a different \`__check_auth\`. (OpenZeppelin was already building these; Protocol 27 makes the hard parts first-class.)
 
 Context: [Protocol 27 discussion — modular custom accounts & signature security](https://developers.stellar.org/meetings/2026/04/30#protocol-discussion-modular-custom-accounts-and-signature-security-in-protocol-27).
 
@@ -1912,7 +1912,7 @@ impl GuardianAccount {
   "stellar-protocol-27-3": {
     instructions: `## Authentication Delegation (CAP-0071-01)
 
-Before the Zipper, a custom account that wanted *another* contract to vouch for it had no protocol support — builders faked it with fragile rounds of pre-simulation to propagate the auth context. Protocol 27 makes delegation law with two new host functions:
+Before the Zipper, a custom account that wanted *another* contract to vouch for it had no protocol support — builders faked it with fragile rounds of pre-simulation to propagate the auth context. Protocol 27 makes delegation first-class with two new host functions:
 
 - \`delegate_account_auth\` — callable **only inside \`__check_auth\`**: hands the current auth check to a delegate address, whose own signature logic then runs.
 - \`get_delegated_signers_for_current_auth_check\` — lets the contract being called see which delegated signers approved.
@@ -1980,7 +1980,7 @@ A **replay attack** takes something valid — a signature, a stamped seal — an
 
 Then a signature made for the old admin can be **replayed** for the new one — duplicate mints, unauthorized actions. It has *never happened on-chain*, but the blast radius justified a protocol fix.
 
-**\`SOROBAN_CREDENTIALS_ADDRESS_V2\`** binds the signature payload to the address it was made for. A stolen echo no longer matches a different door. The old \`SOROBAN_CREDENTIALS_ADDRESS\` stays valid **until Protocol 28** — a migration window, not a cliff. Interim safeguard for admin-style contracts: include the signer's address in the payload yourself.
+**\`SOROBAN_CREDENTIALS_ADDRESS_V2\`** binds the signature payload to the address it was made for. The old \`SOROBAN_CREDENTIALS_ADDRESS\` stays valid **until Protocol 28** — a migration window, not a cliff. Interim safeguard for admin-style contracts: include the signer's address in the payload yourself.
 
 Watch: [Stellar Developer Meeting — custom accounts & signature security](https://www.youtube.com/watch?v=5O1cDDGv7_o).
 
@@ -2028,7 +2028,7 @@ impl BoundAccount {
   "stellar-protocol-27-5": {
     instructions: `## Migrating to Protocol 27
 
-A protocol upgrade is a caravan, and the release order was the road: **Core → SDKs → RPC & Galexie → Horizon → Testnet → Mainnet**. Every SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixir — shipped a Protocol-27 release and must be upgraded before Mainnet turns.
+The rollout went in order: **Core → SDKs → RPC & Galexie → Horizon → Testnet → Mainnet**. Every SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixir — shipped a Protocol-27 release and must be upgraded before Mainnet turns.
 
 The one **breaking change** most apps feel: \`@stellar/stellar-base\` was **consolidated into \`@stellar/stellar-sdk\`**. Old imports break; the fix is renaming the package.
 
@@ -2080,7 +2080,7 @@ pub const UPGRADE_ALL_SDKS: bool = false;
   "stellar-protocol-27-6": {
     instructions: `## Boss: The Delegated Account
 
-Everything converges. The Echo Wraith arrives with a stolen seal — and meets an account that is *law*: a custom account whose \`__check_auth\` verifies its root signer **and** delegates to a steward, exactly as Protocol 27 intended.
+The Echo Wraith shows up with a stolen signature. Beat it with a custom account whose \`__check_auth\` verifies its root signer **and** delegates to a steward.
 
 Your \`ZipperAccount\` must, inside \`__check_auth\`:
 

@@ -28,7 +28,7 @@ In Chapter I you learned to write down what *right* means. A **test** is that se
 
 This matters *more* with AI, not less. A model can argue with your prose, reinterpret your intent, "improve" your requirements. It cannot argue with \`assert_eq!\`. **Tests are the spec the machine can't argue with** — the one place where a plausible answer and a right answer stop being confusable.
 
-Write them **first**, and every forge that follows is graded from birth.`,
+Write them **first**, and every forge after that gets graded.`,
     },
     {
       kind: "theory",
@@ -126,7 +126,7 @@ Assert it after *every* operation your tests perform — deposit, release, refun
       after: `);`,
       choices: ["refunds", "fees", "interest", "gas"],
       answer: 0,
-      explain: `The same iron ring from Chapter I, now with teeth: money leaves the escrow only as releases or refunds. Written as an assertion, the machine re-checks it on every forge — free, forever.`,
+      explain: `Chapter I's invariant, now executable: money leaves the escrow only as releases or refunds. As an assertion, the machine re-checks it on every run, for free.`,
     },
     {
       kind: "theory",

@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Protokolün Keskin Ucu",
+  title: "CAP'ler, SEP'ler ve protokol yükseltmeleri",
   tagline: "CAP'ler, SEP'ler ve adlı sürümler: yaşayan bir protokolün dalgasına binmek.",
   steps: [
     {
@@ -16,14 +16,14 @@ Bu, SCP'nin çifte mesai yapması — işlemler üzerinde uzlaşan aynı konsens
     },
     {
       kind: "theory",
-      body: `## Değişimin iki nehri: CAP'ler ve SEP'ler
+      body: `## İki tür değişim: CAP'ler ve SEP'ler
 
 Değişim iki kanaldan akar ve bu ayrımı ezberlemeye değer:
 
 - **CAP'ler** — *Core Advancement Proposals* — **protokolün kendisini** değiştirir: konsensüs, ledger kuralları, yeni host function'lar, ücret mekanikleri. Validator oyu gerektirirler, çünkü her düğüm birebir aynı şekilde çalıştırmak zorunda.
 - **SEP'ler** — *Stellar Ecosystem Proposals* — zincirin **çevresindeki** standartlar: cüzdan-anchor akışları, token arayüzleri, stellar.toml. Oyla değil, uygulanarak benimsenirler.
 
-Zincir hukuku ile ticaret teamülü. CAP-59 sana ZK eğrilerini verdi; SEP-24 sana deposit akışlarını. Farklı nehirler; ikisi de herkese açık, ikisi de açık tartışmayla şekilleniyor.`,
+Zincir hukuku ile ticaret teamülü. CAP-59 sana ZK eğrilerini verdi; SEP-24 sana deposit akışlarını. İkisi de herkese açık, ikisi de açıkça tartışılıyor.`,
     },
     {
       kind: "diagram",
@@ -82,7 +82,7 @@ Yükseltmelerin artık adları var ve ritim hızlı:
 - **Protocol 27 "Zipper"** — mainnet **Temmuz 2026**; smart account'lar için **CAP-71** kimlik doğrulama delegasyonunu taşıyor.
 - **Protocol 28 "Adapter"** — **testnet 27 Ağustos 2026'da yükseltildi**; mainnet **16 Eylül 2026** için planlandı.
 
-Yaklaşık bir mevsim arayla, her biri adlı, her biri yükseltme rehberleriyle duyurulmuş. Diyar geleceğe sürüklenmiyor — yayınlanmış bir takvimle yürüyor.`,
+Yaklaşık bir mevsim arayla, her biri adlı, her biri yükseltme rehberleriyle duyurulmuş.`,
     },
     {
       kind: "theory",
@@ -123,20 +123,20 @@ Ağustos 2026 sonu itibarıyla o pencere **şu an açık**: testnet zaten 28'de;
       kind: "theory",
       body: `## Ucu gözlemek
 
-Yaşayan bir protokolün dalgasına binmek kahramanca bir çaba değil, bir okuma alışkanlığıdır:
+Protokolü takip etmek kahramanca bir çaba değil, bir okuma alışkanlığıdır:
 
 - **stellar.org dev blog** — yükseltme duyuruları, tarihler ve "inşacılar ne yapmalı" rehberleri.
 - GitHub'daki **CAP deposu** — öneriler çıkmadan çok önce; bugünün taslağı gelecek yılın host function'ı.
 - **Açık protokol toplantıları** — CAP'lerin herkesin önünde tartışıldığı yer.
 
-Ayda yarım saat, seni bu bölümdeki her son tarihin önünde tutar. Yükseltme notlarını okuyan inşacı dalgaya biner; okumayan sürüm dışı kalır.`,
+Ayda yarım saat, seni bu bölümdeki her son tarihin önünde tutar.`,
     },
     {
       kind: "rustBranch",
       lessonSlug: "stellar-protocol-27-1",
       body: `Kampanya'nın **Perde VIII**'i bu bölümü gerçekten yapıyor: çalışan bir projeyi kendi ellerinle bir protokol yükseltmesinden geçiriyorsun — SDK'ları yükseltmek, sürüm notlarını okumak, profesyonel bir ekip gibi yeni sürüme karşı test etmek.
 
-Ve böylece diyarın haritası çıkarıldı — konsensüsten kontratlara, kapılardan örtülere, uçtan uca. Geriye en iyi kısım kalıyor: **git ve içinde inşa et**. Forge açık.`,
+Böylece diyarı konsensüsten kontratlara kadar tamamladın. Geriye en iyi kısım kalıyor: **git ve içinde inşa et**. Forge açık.`,
     },
   ],
   testOut: [

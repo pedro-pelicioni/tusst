@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "El Destino de un Sobre",
+  title: "El ciclo de vida de una transacción",
   tagline: "Secuencia, comisiones y el ciclo de vida de la transacción: enviada, incluida, fallida, cobrada.",
   steps: [
     {

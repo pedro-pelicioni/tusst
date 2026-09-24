@@ -43,7 +43,7 @@ Um laço melhora só até onde as **observações** dele são verdadeiras. Corri
 - **saída dos testes** — qual prova, qual asserção, qual linha?
 - **estado on-chain** — o que o ledger de fato guarda depois da execução?
 
-Sinais, não vibrações. "A saída parece razoável" não corrige nada, porque nunca pode ser falso. Todo verificador que você colocou no arreio agora rende juros: ligado ao laço, ele vira os olhos pelos quais o modelo se guia — **em cada iteração**.`,
+Sinais, não achismo. "A saída parece razoável" não corrige nada, porque nunca pode ser falso. Todo verificador que você colocou no arreio agora rende juros: ligado ao laço, ele vira os olhos pelos quais o modelo se guia — **em cada iteração**.`,
     },
     {
       kind: "quiz",
@@ -54,7 +54,7 @@ Sinais, não vibrações. "A saída parece razoável" não corrige nada, porque 
         "O fato de o código ter compilado de primeira — forte evidência de que a lógica está certa",
       ],
       answer: 0,
-      explain: `Compilar significa que os tipos batem, não que o comportamento é o desejado — e um autorresumo é a mente corrigindo o próprio dever de casa. Um sinal de direção precisa ser externo, específico e capaz de ser má notícia. "1 falhou, linha 41" é uma manchete; "parece correto" é meteorologia.`,
+      explain: `Compilar significa que os tipos batem, não que o comportamento é o desejado — e um autorresumo é a mente corrigindo o próprio dever de casa. Um sinal de direção precisa ser externo, específico e capaz de ser má notícia. "1 falhou, linha 41" diz para onde ir; "parece correto" não diz nada.`,
     },
     {
       kind: "theory",

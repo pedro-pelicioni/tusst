@@ -27,7 +27,7 @@ export const wordsOfPower: Concept = {
 
 The model does not know your repo. It does not remember yesterday, and it cannot see the file you *didn't* attach. Its entire universe is the text sitting in front of it right now.
 
-That is the deepest rule of prompting, and it isn't mystical: **you are deciding what exists.** Whatever you put in front of it is the world; whatever you leave out never happened.
+That is the core rule of prompting: **you decide what exists.** If you left it out, the model doesn't have it.
 
 So the question behind every prompt is not "how do I phrase this?" but *"what does the model need in order to get this right?"* This chapter is the first half of that answer — the words themselves. The next one is the harder half.`,
     },

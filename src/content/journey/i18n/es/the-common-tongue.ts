@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "La Lengua Común",
+  title: "SEPs: los estándares de interoperabilidad",
   tagline: "SEPs: impleméntalo una vez, y toda puerta se abre.",
   steps: [
     { kind: "theory", body: `## La aritmética que obliga a que exista un estándar
@@ -21,7 +21,7 @@ Hay muchas carteras y muchos anclajes. Sin estándares, cada par necesitaría un
 
 La respuesta de Stellar es el **SEP**: *Stellar Ecosystem Proposal*. Los SEPs son estándares públicos que definen exactamente cómo carteras, anclajes y servicios se comunican entre sí. Implementas un SEP una vez y tu cartera funciona con **todos los anclajes** que lo implementen también — flujos de depósito, autenticación, identidad, todo eso.
 
-Esta cultura de interoperabilidad es una de las superpotencias silenciosas de Stellar: los usuarios eligen cualquier puerta, y todas las puertas comparten la misma forma de llave.`,
+Gracias a esta cultura de interoperabilidad, los usuarios pueden elegir cualquier puerta: todas comparten la misma forma de llave.`,
     },
     {
       kind: "theory",

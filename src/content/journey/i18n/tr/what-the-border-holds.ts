@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Sınırın Ardında Duranlar",
+  title: "Entity'ler, value object'ler ve aggregate'ler",
   tagline: "Taktik DDD: kimlik, değer ve tek parça halinde hareket etmesi gereken küme.",
   steps: [
     { kind: "theory", body: `## Entity'ler ve value object'ler

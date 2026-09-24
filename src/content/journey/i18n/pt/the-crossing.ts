@@ -68,7 +68,7 @@ Dois sabores:
     },
     {
       kind: "fill",
-      prompt: `Desenhe o rio — o que acontece entre o envio e a entrega em um pagamento encadeado?`,
+      prompt: `O que acontece entre o envio e a entrega em um pagamento encadeado?`,
       file: "remittance.txt",
       before: `envia 100 USDC  →  `,
       after: `  →  entrega EURC — uma transação atômica`,
@@ -116,7 +116,7 @@ A conversão FX — historicamente o caro e opaco meio‑termo — torna‑se um
       kind: "theory",
       body: `## A camada acima do rio
 
- Sobre a maquinaria nativa, o ecossistema constrói em Soroban: **Soroswap**, **Phoenix** e **Aquarius** rodam protocolos AMM como contratos inteligentes, e agregadores roteiam cada trade entre livros nativos, pools nativos e pools de contrato buscando o melhor preço. Você ainda não precisa dos detalhes internos — basta saber que o rio tem tanto um leito sólido quanto um porto movimentado construído em cima.
+Sobre a maquinaria nativa, o ecossistema constrói em Soroban: **Soroswap**, **Phoenix** e **Aquarius** rodam protocolos AMM como contratos inteligentes, e agregadores roteiam cada trade entre livros nativos, pools nativos e pools de contrato buscando o melhor preço. Você ainda não precisa dos detalhes internos — basta saber que existe uma camada nativa e uma camada de contratos por cima.
 
 Uma pergunta ainda fica aberta: onde os *verdadeiros* dólares e euros entram e saem? Essa é a tarefa dos anchors — os portões do reino, e o próximo capítulo.`,
     },

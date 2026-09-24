@@ -48,7 +48,7 @@ const steps: Record<string, LessonStep[]> = {
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Welcome to **Rust**, the language the old Forgeborn used to hold the sky together.
+      body: `Welcome to **Rust**. Let's write your first program.
 
 Every Rust program starts at the \`main\` function — the entry point. When your program runs, \`main\` is what gets called.
 
@@ -124,14 +124,14 @@ Like labeled chests, variables have contents — and names that tell us what's i
     },
     {
       kind: "theory",
-      body: `Here's the old law of the armory: variables in Rust are **immutable by default**. Once bound, the value can't change.
+      body: `Variables in Rust are **immutable by default**. Once bound, the value can't change.
 
 \`\`\`rust
 let x = 5;
 x = 10; // ❌ compile error: cannot assign twice
 \`\`\`
 
-The compiler — your harshest ally — will refuse to forge this.`,
+The compiler rejects this.`,
     },
     {
       kind: "quiz",
@@ -142,11 +142,11 @@ The compiler — your harshest ally — will refuse to forge this.`,
         "x becomes 15",
       ],
       answer: 0,
-      explain: "Once forged, never changed — unless you declare otherwise.",
+      explain: "Without `mut`, a variable can't be reassigned.",
     },
     {
       kind: "theory",
-      body: `To allow reassignment, declare your intent to the steel itself with \`mut\`:
+      body: `To allow reassignment, add \`mut\`:
 
 \`\`\`rust
 let mut x = 5;
@@ -331,7 +331,7 @@ Expected output:
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Now the law that makes Rust *Rust* — the one carved on the vault door:
+      body: `Now the rule that makes Rust *Rust*:
 
 **Every value has exactly one owner.**
 
@@ -362,7 +362,7 @@ This isn't cruelty — it's how Rust knows exactly who must clean up every value
         "Read it, but not change it",
       ],
       answer: 0,
-      explain: "The value moved. Reach for a again and the wards will burn you — at compile time.",
+      explain: "The value moved. Use `a` again and the code won't compile.",
     },
     {
       kind: "theory",
@@ -388,7 +388,7 @@ let b = a.clone();   // ✅ two Strings, two owners
       kind: "editor",
       intro: `### Final trial — the law of one keeper
 
-The starter code moves \`sword\` into \`copy\`, then tries to use \`sword\` again — the wards refuse. Fix it by **cloning** instead of moving.
+The starter code moves \`sword\` into \`copy\`, then tries to use \`sword\` again — the compiler refuses. Fix it by **cloning** instead of moving.
 
 Expected output:
 
@@ -639,7 +639,7 @@ Note \`==\` (a question: "equal?") versus \`=\` (an order: "store this").`,
         "The compiler adds a break automatically",
       ],
       answer: 0,
-      explain: "Travelers who walk it forever become part of the wall.",
+      explain: "Without `break`, nothing ever stops it.",
     },
     {
       kind: "fill",
@@ -885,14 +885,14 @@ items.push("map");    // add to the end — the satchel grows
 items.len()           // how many inside? → 3
 \`\`\`
 
-And the old gods' rule: positions count **from zero**. \`items[0]\` is \`"torch"\`, \`items[1]\` is \`"rope"\`.`,
+And note: positions count **from zero**. \`items[0]\` is \`"torch"\`, \`items[1]\` is \`"rope"\`.`,
     },
     {
       kind: "quiz",
       question: "After `let mut v = vec![10, 20]; v.push(30);` — what is `v[0]`?",
       options: ["10 — positions count from zero", "30 — push puts it first", "20 — the second item"],
       answer: 0,
-      explain: "push adds to the END; indexing starts at 0, as the old gods intended.",
+      explain: "push adds to the END; indexing starts at 0.",
     },
     {
       kind: "fill",
@@ -992,7 +992,7 @@ let vault = vec!["hammer", "chisel"];
 vault[5]   // 💥 PANIC — the program crashes
 \`\`\`
 
-Square brackets *assume* the slot exists. Assumptions, in the vaults, are fatal.`,
+Square brackets *assume* the slot exists.`,
     },
     {
       kind: "theory",
@@ -1119,7 +1119,7 @@ let mut s = String::from("Keeper");
 s.push_str(" of keys");   // append text to the end
 \`\`\`
 
-\`push_str\` is the chisel for living inscriptions. (Its cousin \`push\` adds a single character.)`,
+\`push_str\` appends text; its cousin \`push\` adds a single character.`,
     },
     {
       kind: "theory",
@@ -1230,7 +1230,7 @@ middle: [2, 3, 4]
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Deep in the Hoarder's vault, past every satchel and ledger, sits a workshop nobody enters uninvited. Here, treasure doesn't begin as treasure — it begins as a **blueprint**:
+      body: `Time to define your own types. Each one starts as a **blueprint**:
 
 \`\`\`rust
 struct Player {
@@ -1239,7 +1239,7 @@ struct Player {
 }
 \`\`\`
 
-A \`struct\` binds several values into one named shape. Define it once; the vault remembers the shape forever after.`,
+A \`struct\` binds several values into one named shape. Define it once, reuse it anywhere.`,
     },
     {
       kind: "theory",
@@ -1288,7 +1288,7 @@ Ferrisia has 100 hp
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `A blueprint alone is inert — it holds shape, but no behavior. The Hoarder teaches you the rite that wakes it: an \`impl\` block.
+      body: `A blueprint alone holds shape, but no behavior. Behavior goes in an \`impl\` block.
 
 \`\`\`rust
 impl Player {
@@ -1429,7 +1429,7 @@ let x = Some(5).unwrap();   // → 5. fine.
 let y = ghost.unwrap();     // ghost is None → 💥 PANIC
 \`\`\`
 
-On \`None\`, unwrap **panics** — the whole program drowns. The gravestones in this marsh all say the same thing.`,
+On \`None\`, unwrap **panics** — the whole program crashes.`,
     },
     {
       kind: "theory",
@@ -1450,7 +1450,7 @@ You've used this idiom twice already — at the Hoarder's shelf, and it will gua
         "Returns None",
       ],
       answer: 0,
-      explain: "Never unwrap what you haven't checked. The marsh is full of those who did.",
+      explain: "Never unwrap what you haven't checked.",
     },
     {
       kind: "fill",
@@ -1635,7 +1635,7 @@ The patterns unwrap as they match: \`v\` is the value, \`e\` is the reason.`,
       kind: "theory",
       body: `Over the courtroom door: \`#[must_use]\`.
 
-It means Rust **warns you** if you receive a Result and ignore it — an unread verdict is a bug waiting to happen. Every Result must be read, matched, or deliberately passed along. The Court forgets nothing.`,
+It means Rust **warns you** if you receive a Result and ignore it — an unread verdict is a bug waiting to happen. Every Result must be read, matched, or deliberately passed along.`,
     },
     {
       kind: "quiz",
@@ -1656,7 +1656,7 @@ It means Rust **warns you** if you receive a Result and ignore it — an unread 
       after: "(e) => println!(\"denied: {}\", e),\n}",
       choices: ["Err", "None", "Fail"],
       answer: 0,
-      explain: "Ok and Err — both arms, both handled. The compiler accepts nothing less.",
+      explain: "Ok and Err — both arms handled, or it won't compile.",
     },
     {
       kind: "editor",
@@ -1961,7 +1961,7 @@ build the operation
         → final. forever. on the ledger.
 \`\`\`
 
-This is the sky the Beholder broke — and the one you're about to relight. After this Gate: Soroban, where the ledger runs *your* Rust.`,
+After this Gate: Soroban, where the ledger runs *your* Rust.`,
     },
     {
       kind: "quiz",
@@ -2004,7 +2004,7 @@ lumens flowing ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Before the Gate, in the Hoarder's vault, you learned the rite of \`struct\` and \`impl\` — a blueprint, and the maker that gives it life. Nothing beyond the Gate is different in kind.
+      body: `In the Hoarder's vault you learned \`struct\` and \`impl\`: a blueprint, and the code that gives it behavior. Contracts are built from the same two pieces.
 
 \`\`\`rust
 #[contract]
@@ -2375,7 +2375,7 @@ __check_auth: the account writes its own law ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `A crown that guards every vault alone soon breaks. Real accounts want to say: *"let my steward vouch for me."*
+      body: `One key guarding everything is a single point of failure. Real accounts want to say: *"let my steward vouch for me."*
 
 Before the Zipper there was no protocol support for that — builders faked delegation with fragile rounds of **pre-simulation** to propagate the auth context. It worked. Barely. Sometimes.`,
     },
@@ -2521,7 +2521,7 @@ seal bound to its door: the echo dies ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Nothing crosses into the reforged sky unchanged. The release caravan traveled in strict order:
+      body: `The release caravan traveled in strict order:
 
 **Core → SDKs → RPC & Galexie → Horizon → Testnet → Mainnet**
 

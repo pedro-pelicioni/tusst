@@ -30,14 +30,14 @@ That is SCP doing double duty — the same consensus that agrees on transactions
     },
     {
       kind: "theory",
-      body: `## Two rivers of change: CAPs and SEPs
+      body: `## Two kinds of change: CAPs and SEPs
 
 Change flows through two channels, and the split is worth memorizing:
 
 - **CAPs** — *Core Advancement Proposals* — change the **protocol itself**: consensus, ledger rules, new host functions, fee mechanics. They need validator votes because every node must execute identically.
 - **SEPs** — *Stellar Ecosystem Proposals* — the standards **around** the chain: wallet-anchor flows, token interfaces, stellar.toml. Adopted by implementation, not by vote.
 
-Chain law versus trade custom. CAP-59 gave you ZK curves; SEP-24 gave you deposit flows. Different rivers, both public, both shaped in open discussion.`,
+Chain law versus trade custom. CAP-59 gave you ZK curves; SEP-24 gave you deposit flows. Both public, both debated in the open.`,
     },
     {
       kind: "diagram",
@@ -96,7 +96,7 @@ Upgrades get names now, and the rhythm is brisk:
 - **Protocol 27 "Zipper"** — mainnet **July 2026**, carrying **CAP-71** authentication delegation for smart accounts.
 - **Protocol 28 "Adapter"** — **testnet upgraded August 27, 2026**; mainnet scheduled for **September 16, 2026**.
 
-Roughly a season apart, each named, each announced with upgrade guides. The realm does not drift into the future — it marches on a published schedule.`,
+Roughly a season apart, each named, each announced with upgrade guides.`,
     },
     {
       kind: "theory",
@@ -137,20 +137,20 @@ As of late August 2026 that window is **open right now**: testnet already runs 2
       kind: "theory",
       body: `## Watching the edge
 
-Surfing a living protocol is a reading habit, not a heroic effort:
+Keeping up is a reading habit, not a heroic effort:
 
 - The **stellar.org dev blog** — upgrade announcements, dates, and "what builders must do" guides.
 - The **CAP repository** on GitHub — proposals long before they ship; today's draft is next year's host function.
 - **Open protocol meetings** — where CAPs are debated in public.
 
-Half an hour a month keeps you ahead of every deadline in this chapter. The builder who reads upgrade notes surfs the wave; the one who doesn't gets versioned out.`,
+Half an hour a month keeps you ahead of every deadline in this chapter.`,
     },
     {
       kind: "rustBranch",
       lessonSlug: "stellar-protocol-27-1",
       body: `The Campaign's **Act VIII** does this chapter for real: you take a working project through a protocol upgrade hands-on — bumping SDKs, reading release notes, testing against the new version like a professional crew.
 
-And with that, the realm is mapped — consensus to contracts, gates to veils, edge to edge. What remains is the best part: **go build in it**. The Forge is open.`,
+That covers the realm, from consensus to contracts. What remains is the best part: **go build in it**. The Forge is open.`,
     },
   ],
   testOut: [

@@ -21,7 +21,7 @@ Existem muitas carteiras e muitas âncoras. Sem padrões, cada par precisaria de
 
 A resposta do Stellar é o **SEP**: *Stellar Ecosystem Proposal*. SEPs são padrões públicos que definem exatamente como carteiras, âncoras e serviços se comunicam. Você implementa um SEP uma vez e sua carteira funciona com **toda âncora** que o implemente também — fluxos de depósito, autenticação, identidade, tudo.
 
-Essa cultura de interoperabilidade‑primeiro é um dos superpoderes silenciosos do Stellar: os usuários escolhem qualquer porta, e todas as portas compartilham a mesma forma de chave.`,
+Graças a essa cultura de interoperabilidade, o usuário escolhe qualquer porta: todas usam o mesmo formato de chave.`,
     },
     {
       kind: "theory",

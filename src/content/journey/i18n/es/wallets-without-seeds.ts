@@ -7,7 +7,7 @@ import type { Concept } from "../types";
 export const walletsWithoutSeeds: Concept = {
   meta: {
     slug: "wallets-without-seeds",
-    title: "Carteras sin semillas",
+    title: "Smart accounts y passkeys",
     tagline: "Smart accounts y passkeys: y comisiones que patrocina otro.",
     numeral: "VII",
     arc: "realm",
@@ -191,7 +191,7 @@ Traducción para constructores: carteras multidispositivo, recuperación con gua
       labSlug: "passkey-smart-wallet",
       body: `La Forja está lista: entra en **Smart Wallet con Passkey**, registra una clave de acceso real, despliega su contrato de cuenta inteligente en la testnet y responde a un nuevo desafío WebAuthn con tu propio dispositivo.
 
-Cuando el libro mayor confirme que el código desplegado es el Wasm canónico de la cuenta inteligente, vuelve al camino. Se curva en un lugar más extraño: un libro mayor donde *las cantidades mismas* llevan un velo.`,
+Cuando el libro mayor confirme que el código desplegado es el Wasm canónico de la cuenta inteligente, listo. A continuación: un libro mayor donde *los propios importes* quedan ocultos.`,
     },
   ],
   testOut: [

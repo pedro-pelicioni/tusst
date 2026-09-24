@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Lo Que Guarda la Frontera",
+  title: "Entidades, value objects y agregados",
   tagline: "DDD táctico: identidad, valor, y el conjunto que debe moverse a la vez.",
   steps: [
     {

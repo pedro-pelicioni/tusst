@@ -192,7 +192,7 @@ Translation for builders: multi-device wallets, guardian recovery and policy-hea
       labSlug: "passkey-smart-wallet",
       body: `The Forge is ready: enter **Passkey Smart Wallet**, enroll a real passkey, deploy its smart-account contract to testnet, and answer a fresh WebAuthn challenge with your own device.
 
-When the ledger confirms that the deployed code is the canonical smart-account Wasm, return to the road. It bends somewhere stranger: a ledger where the *amounts themselves* wear a veil.`,
+When the ledger confirms that the deployed code is the canonical smart-account Wasm, you're done. Next: a ledger where the *amounts themselves* are hidden.`,
     },
   ],
   testOut: [

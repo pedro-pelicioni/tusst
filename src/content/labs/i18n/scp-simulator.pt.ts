@@ -52,7 +52,7 @@ Observe o que eles *não* fazem: nunca se dividem em duas histórias concorrente
         "Eles precisam refazer a cadeia desde o bloco gênese",
         "Nada; uma rede parada fica parada para sempre",
       ],
-      explain: `Experimente no simulador: levante os caídos, proponha, e o ritmo retorna. Paradas são pausas, não mortes.`,
+      explain: `Experimente no simulador: levante os caídos, proponha, e o ritmo retorna.`,
     },
     "claim": {
       body: `Você fechou ledgers, parou uma rede e a recuperou — o ciclo completo de acordo federado, em uma única sessão. Conclua o lab e receba seu XP.`,

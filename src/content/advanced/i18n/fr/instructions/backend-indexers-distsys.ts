@@ -227,7 +227,7 @@ Failed has 0 outgoing transitions
 
 La garantie de chevauchement est strictement \`R + W > N\`. La ligne \`N=5, R=2, W=3\` fait exactement 5 et ne chevauche **pas** — un quorum de lecture de deux peut être entièrement disjoint des trois nœuds qui ont pris l'écriture, et renvoie des données stale sans erreur.
 
-Une partition ne demande pas la permission. Avec N=5, W=3 et un split 3|2, le côté majoritaire réunit encore un quorum ; le côté minoritaire n'atteint ni R=3 ni W=3 et refuse les deux. Ce refus est le choix CP, et tu l'as fait quand tu as choisi R et W.
+Avec N=5, W=3 et une partition 3|2, le côté majoritaire réunit encore un quorum ; le côté minoritaire n'atteint ni R=3 ni W=3 et refuse les deux. Ce refus est le choix CP, et tu l'as fait quand tu as choisi R et W.
 
 Les lectures se résolvent par **numéro de version**, pas par timestamp d'horloge murale.
 

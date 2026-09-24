@@ -6,7 +6,7 @@ export const steps3: Record<string, LessonStep[]> = {
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Kapı'dan önce, İstifçi'nin kasasında \`struct\` ve \`impl\` ritüelini öğrendin — bir taslak ve ona hayat veren usta. Kapı'nın ötesinde hiçbir şey özünde farklı değil.
+      body: `İstifçi'nin kasasında \`struct\` ve \`impl\`'i öğrendin: bir taslak ve ona davranış kazandıran kod. Kontratlar da aynı iki parçayı kullanır.
 
 \`\`\`rust
 #[contract]
@@ -375,7 +375,7 @@ __check_auth: the account writes its own law ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Her kasayı tek başına koruyan bir taç çok geçmeden kırılır. Gerçek hesaplar şunu demek ister: *"kâhyam benim adıma kefil olsun."*
+      body: `Her şeyi tek bir anahtarın koruması, tek bir hata noktası demektir. Gerçek hesaplar şunu demek ister: *"kâhyam benim adıma kefil olsun."*
 
 Zipper'dan önce protokolde bunun desteği yoktu — inşacılar delegasyonu, auth bağlamını yaymak için kırılgan **ön simülasyon** turlarıyla taklit ediyordu. Çalışıyordu. Zar zor. Bazen.`,
     },
@@ -521,7 +521,7 @@ seal bound to its door: the echo dies ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Yeniden dövülen göğe hiçbir şey değişmeden geçemez. Sürüm kervanı katı bir sırayla yol aldı:
+      body: `Sürüm kervanı katı bir sırayla yol aldı:
 
 **Core → SDK'lar → RPC & Galexie → Horizon → Testnet → Mainnet**
 
@@ -661,7 +661,7 @@ __check_auth: signature verified, steward honored — the echo is silent ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `İstifçi'nin kasasının derinliklerinde, her çantanın ve her ledger'ın ötesinde, kimsenin davetsiz girmediği bir atölye var. Burada hazine, hazine olarak başlamaz — bir **taslak** olarak başlar:
+      body: `Sıra kendi tiplerini tanımlamakta. Her biri bir **taslak** olarak başlar:
 
 \`\`\`rust
 struct Player {
@@ -670,7 +670,7 @@ struct Player {
 }
 \`\`\`
 
-Bir \`struct\`, birkaç değeri tek bir isimli biçimde bağlar. Bir kez tanımla; kasa o biçimi sonsuza kadar hatırlar.`,
+Bir \`struct\`, birkaç değeri tek bir isimli biçimde bağlar. Bir kez tanımla, her yerde yeniden kullan.`,
     },
     {
       kind: "theory",
@@ -719,7 +719,7 @@ Ferrisia has 100 hp
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Tek başına bir taslak cansızdır — biçim tutar ama davranış tutmaz. İstifçi sana onu uyandıran ritüeli öğretir: bir \`impl\` bloğu.
+      body: `Tek başına bir taslak biçim tutar ama davranış tutmaz. Davranış bir \`impl\` bloğuna yazılır.
 
 \`\`\`rust
 impl Player {

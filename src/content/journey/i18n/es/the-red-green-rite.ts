@@ -8,7 +8,7 @@ import type { Concept } from "../types";
 export const theRedGreenRite: Concept = {
   meta: {
     slug: "the-red-green-rite",
-    title: "El Rito Rojo‑Verde",
+    title: "Desarrollo guiado por pruebas",
     tagline: "TDD: pruebas primero, forja después.",
     numeral: "II",
     arc: "craft",
@@ -25,9 +25,9 @@ export const theRedGreenRite: Concept = {
 
 En el Capítulo I aprendiste a escribir qué significa *correcto*. Una **prueba** es esa frase hecha ejecutable — una especificación que la máquina vuelve a comprobar en milisegundos, cada vez, para siempre.
 
-Esto importa *más* con IA, no menos. Un gólem puede discutir tu prosa, reinterpretar tu intención, “mejorar” tus requisitos. No puede discutir con \`assert_eq!\`. **Las pruebas son la especificación con la que la máquina no puede discutir** — el único lugar donde una respuesta plausible y una respuesta correcta dejan de ser confundibles.
+Esto importa *más* con IA, no menos. Un modelo puede discutir tu prosa, reinterpretar tu intención, “mejorar” tus requisitos. No puede discutir con \`assert_eq!\`. **Las pruebas son la especificación con la que la máquina no puede discutir** — el único lugar donde una respuesta plausible y una respuesta correcta dejan de ser confundibles.
 
-Escríbelas **primero**, y cada forja que sigue se califica desde el nacimiento.`,
+Escríbelas **primero**, y todo lo que venga después queda evaluado.`,
     },
     {
       kind: "theory",
@@ -80,7 +80,7 @@ Rojo demuestra que la prueba puede atrapar el error que protege. Verde demuestra
         "Volver a ejecutar el conjunto unas cuantas veces más para asegurarse de que el verde es estable",
       ],
       answer: 0,
-      explain: `Cuando el mismo gólem forja tanto el código como sus pruebas, una prueba que afirma demasiado poco permanece verde para siempre. Rojo es la única prueba de que la prueba tiene dientes — una ruptura deliberada te dice que muerde.`,
+      explain: `Cuando el mismo modelo forja tanto el código como sus pruebas, una prueba que afirma demasiado poco permanece verde para siempre. Rojo es la única prueba de que la prueba tiene dientes — una ruptura deliberada te dice que muerde.`,
     },
     {
       kind: "theory",
@@ -125,21 +125,21 @@ Afirmalo después de *cada* operación que tus pruebas realicen — depósito, l
       after: `);`,
       choices: ["refunds", "fees", "interest", "gas"],
       answer: 0,
-      explain: `El mismo anillo de hierro del Capítulo I, ahora con dientes: el dinero sale del escrow solo como liberaciones o reembolsos. Escrito como una aserción, la máquina lo vuelve a comprobar en cada forja — gratis, para siempre.`,
+      explain: `La invariante del Capítulo I, ahora ejecutable: el dinero solo sale del escrow como liberaciones o reembolsos. Como aserción, la máquina la comprueba en cada ejecución, gratis.`,
     },
     {
       kind: "theory",
-      body: `## Aceptar el trabajo del gólem sin miedo
+      body: `## Aceptar el trabajo del modelo sin miedo
 
 Aquí está la recompensa. Una IA te entrega 300 líneas. Sin pruebas, tus opciones son *leer cada línea con mucho cuidado* o *confiar*. Ambas fallan a escala.
 
 Con un conjunto escrito primero, la aceptación es mecánica: **rojo — rechazar**, con el fallo como retroalimentación. **verde — aceptar**, y leer por estilo cuando quieras.
 
-La misma red hace que refactorizar sea intrépido — tanto el tuyo como el del gólem. “Reescribe este módulo, mantén las pruebas verdes” es una instrucción segura *solo porque* las pruebas existen y el gólem no pudo escribirlas para que encajaran con su propio código.`,
+La misma red hace que refactorizar sea intrépido — tanto el tuyo como el del modelo. “Reescribe este módulo, mantén las pruebas verdes” es una instrucción segura *solo porque* las pruebas existen y el modelo no pudo escribirlas para que encajaran con su propio código.`,
     },
     {
       kind: "quiz",
-      question: `El gólem se enorgullece de reportar **100 % de cobertura de líneas**. ¿Qué aprendiste realmente?`,
+      question: `El modelo se enorgullece de reportar **100 % de cobertura de líneas**. ¿Qué aprendiste realmente?`,
       options: [
         "Cada línea se ejecutó durante las pruebas — lo que no dice nada sobre cuánta lógica realmente verifican las aserciones",
         "El código es correcto — cada línea fue ejercitada y aprobó",
@@ -159,8 +159,8 @@ La misma red hace que refactorizar sea intrépido — tanto el tuyo como el del 
       options: ["Una prueba que nunca ha fallado nunca ha demostrado que puede — escribirla primero es como sabes que vigila lo correcto","Es más rápido, porque evitas reescribir la prueba después","Obliga a que la implementación sea más simple de lo que sería"], answer: 0 },
     { question: `¿Qué le da una prueba en rojo a una pareja con IA que no le dan los requisitos en prosa?`,
       options: ["Un criterio de aceptación que no puede malinterpretar, y una señal capaz de ser mala noticia","Un prompt más corto, que deja sitio a más contexto","Permiso para cambiar la API pública"], answer: 0 },
-    { question: `El golem hace pasar la prueba tratando como caso especial justo la entrada que la prueba usa. ¿Qué revela eso?`,
-      options: ["La prueba especificó de menos — nombró un ejemplo en vez de la regla","El golem actúa de mala fe y necesita instrucciones más estrictas","Nada; pasar la prueba es la definición de terminado"], answer: 0 },
+    { question: `El modelo hace pasar la prueba tratando como caso especial justo la entrada que la prueba usa. ¿Qué revela eso?`,
+      options: ["La prueba especificó de menos — nombró un ejemplo en vez de la regla","El modelo actúa de mala fe y necesita instrucciones más estrictas","Nada; pasar la prueba es la definición de terminado"], answer: 0 },
     { question: `Tu suite está en verde tras un cambio del que dudas. ¿Qué te ha dicho eso en realidad?`,
       options: ["Que no se ha roto nada de lo que la suite vigila — que es solo hasta donde la suite resulta vigilar","Que el cambio es correcto","Que el cambio es seguro para desplegar"], answer: 0 },
   ],

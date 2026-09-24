@@ -22,7 +22,7 @@ No Capítulo I você aprendeu a escrever o que *certo* significa. Um **teste** �
 
 Isso importa *mais* com IA, não menos. Um modelo pode discutir seu texto, reinterpretar sua intenção, “melhorar” seus requisitos. Ele não pode discutir \`assert_eq!\`. **Testes são a especificação que a máquina não pode contestar** — o único lugar onde uma resposta plausível e uma resposta correta deixam de ser confundíveis.
 
-Escreva‑os **primeiro**, e toda forja que vier depois será avaliada desde o nascimento.`,
+Escreva‑os **primeiro**, e todo código que vier depois já passa por avaliação.`,
     },
     {
       kind: "theory",
@@ -120,7 +120,7 @@ Afirme‑as após *cada* operação que seus testes realizam — depósito, libe
       after: `);`,
       choices: ["refunds", "fees", "interest", "gas"],
       answer: 0,
-      explain: `O mesmo anel de ferro do Capítulo I, agora com dentes: o dinheiro sai do escrow apenas como liberações ou reembolsos. Escrito como asserção, a máquina o verifica a cada forja — grátis, para sempre.`,
+      explain: `A invariante do Capítulo I, agora executável: o dinheiro só sai do escrow como liberação ou reembolso. Como asserção, a máquina verifica isso a cada execução, de graça.`,
     },
     {
       kind: "theory",

@@ -38,8 +38,8 @@ export const visuals = {
       "el README",
       "un archivo de código muerto que nadie borró",
     ],
-    starving: "Nada en el banco. El golem tendrá que adivinar lo que querías decir — y lo hará.",
-    partial: "Relevante, pero incompleto. Lo que dejaste fuera, el golem se lo inventa.",
+    starving: "Nada en el banco. El modelo tendrá que adivinar lo que querías decir — y lo hará.",
+    partial: "Relevante, pero incompleto. Lo que dejaste fuera, el modelo se lo inventa.",
     clean: "La tarea, y nada más. Esto es lo que parece la curaduría.",
     noisy: "{percent}% del banco es ruido. Tu única restricción crucial compite ahora con él — y un archivo distractor es una invitación a editarlo.",
     overflow: "Por encima del presupuesto. El banco se truncó, y no eres tú quien elige qué mitad sobrevivió.",
@@ -73,7 +73,7 @@ export const visuals = {
     hint: "No hay excepción ingeniosa ahí arriba. Todo lo que está por encima de la diagonal es una migración esperando a que un proveedor publique una versión mayor.",
   },
   blastRadius: {
-    grantsLabel: "qué puede hacer el golem",
+    grantsLabel: "qué puede hacer el modelo",
     grants: [
       "leer el repositorio",
       "ejecutar la suite de pruebas",

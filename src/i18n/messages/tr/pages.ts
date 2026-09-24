@@ -1,4 +1,4 @@
-// App pages: path (Salon `home`'u kullanır), campaign, cards, tracks/[slug], profile.
+// App pages: path (Salon `home`'u kullanır), campaign, tracks/[slug], profile.
 export const pages = {
   campaign: {
     kicker: "isteğe bağlı yol",
@@ -16,23 +16,6 @@ export const pages = {
     skirmishesForgingSoon: "dersler hazırlanıyor — yakında",
     startLearning: "Öğrenmeye başla",
     viewChampions: "Kartlarını gör",
-  },
-  cards: {
-    metaTitle: "Karakterler — TUSST",
-    metaDescription:
-      "Diyarın sekiz karakteri — yedisini oynayabilirsin, biriyle dövüşürsün. Her biriyle bir kampanya bölümünü bitirince tanışırsın.",
-    kicker: "// kadro",
-    title: "Karakterler",
-    intro:
-      "Bu diyarda sekiz karakter yürür; her kampanya bölümünün sonunda biri seni bekler. Yedisi sen olabilirsin: birini seç, çıraklıktan ışıyan şampiyonluğa uzanan sekiz form boyunca seninle birlikte büyüsün. Sekizincisi bir yol arkadaşı değil.",
-    bossCard: "boss",
-    formsLabel: "sekiz form",
-    playCta: "Bu karakterle oyna",
-    bossNote: "Dövüşülür, oynanmaz.",
-    actLink: "Bölüm {numeral} — {title}",
-    unassigned: "atanmamış",
-    footnote:
-      "karakterler yalnızca kozmetiktir — seçimin hiçbir avantaj sağlamaz, hiçbir şeyi kilitlemez. her biriyle kampanya bölümünü bitirdiğinde tanışırsın ve kimi oynadığını profilinden dilediğin zaman değiştirebilirsin.",
   },
   track: {
     backToPath: "kampanya",
@@ -79,6 +62,6 @@ export const pages = {
       locked: "kilitli",
     },
     continueCampaign: "Kampanyaya devam et",
-    viewChampions: "Kartlarını gör",
+    openCampaignMap: "Kampanya haritasını aç",
   },
 };

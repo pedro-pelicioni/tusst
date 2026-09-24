@@ -9,7 +9,6 @@ export const common = {
     journey: "voyage",
     campaign: "campagne",
     advanced: "avancé",
-    cards: "cartes",
     armory: "arsenal",
     forge: "forge",
     signOut: "déconnexion",

@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Güç Sözleri",
+  title: "Prompt engineering",
   tagline: "Prompt mühendisliği: işe yarayan her prompt'un sahip olduğu dört parça.",
   steps: [
     {
@@ -10,7 +10,7 @@ export const conceptText: JourneyConceptText = {
 
 Model repo'nu bilmiyor. Dünü hatırlamıyor ve *eklemediğin* dosyayı göremiyor. Bütün evreni, şu an önünde duran metinden ibaret.
 
-Prompt yazmanın en derin kuralı bu ve hiç de mistik değil: **neyin var olduğuna sen karar veriyorsun.** Önüne ne koyarsan dünya odur; neyi dışarıda bırakırsan hiç yaşanmamıştır.
+Prompt yazmanın temel kuralı bu: **neyin var olduğuna sen karar veriyorsun.** Dışarıda bıraktığın şey modelde yok.
 
 Dolayısıyla her prompt'un arkasındaki soru "bunu nasıl ifade ederim?" değil, *"modelin bunu doğru yapması için neye ihtiyacı var?"* Bu bölüm o cevabın ilk yarısı — sözlerin kendisi. Sonraki bölüm, zor olan yarısı.`,
     },

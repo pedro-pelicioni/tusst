@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Kimsenin Silemediği Kitap",
+  title: "Blockchain nedir",
   tagline: "Blockchain nedir — tek bir kısaltma bile kullanmadan anlatıyoruz.",
   steps: [
     {

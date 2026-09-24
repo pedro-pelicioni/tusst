@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Sözünü Tutan Makineler",
+  title: "Akıllı kontrat nedir",
   tagline: "Akıllı kontrat nedir: kendi kendine çalışan bir kural, daha mistik bir şey değil.",
   steps: [
     {

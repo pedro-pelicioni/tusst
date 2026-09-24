@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Portes du Royaume",
+  title: "Anchors et rampes d'entrée et de sortie",
   tagline: "Anchors : là où le registre touche le sol.",
   steps: [
     {
@@ -106,7 +106,7 @@ Deux portes réglementées, un passage de rivière atomique au milieu. La chaîn
 
 Tu n’as pas besoin d’une licence bancaire pour développer cette intégration. La SDF exploite **testanchor** sur testnet — une ancre entièrement fonctionnelle qui prend en charge SEP-1, SEP-10 et SEP-24 avec de l’argent fictif. Oriente ton code de portefeuille vers elle et répète tout le parcours de dépôt et de retrait avant d'engager le moindre dollar réel.
 
-Portes, rivières, confiance — tout jusqu’à présent a été le *royaume classique*, la machinerie intégrée dans le protocole. Le prochain chapitre nous fait passer à la partie que tu programmes toi‑même : **Soroban**, où les contrats sont vivants et même le stockage a un battement de cœur.`,
+Portes, rivières, confiance — tout jusqu’à présent a été le *royaume classique*, la machinerie intégrée dans le protocole. Le prochain chapitre nous fait passer à la partie que tu programmes toi‑même : **Soroban**, où même le stockage se loue.`,
     },
     { kind: "theory", body: `## Les sigles devant lesquels vous venez de passer
 

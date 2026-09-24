@@ -109,7 +109,7 @@ A fronteira não é uma falha de design. **A fronteira é o design.**`,
 
 Contextos ainda precisam conversar. **Mapeamento de contexto** é nomear as fronteiras e construir pontes deliberadas — tradução na borda, para que nenhuma linguagem de um lado vaze para o outro.
 
-Os **anchors** do Stellar são esse padrão com um modelo de negócio. De um lado: o *contexto bancário* — IBANs, dias úteis, retenções de compliance. Do outro: o *contexto de ledger* — trustlines, assets, finalidade de 5 segundos. O anchor **traduza**: um wire de entrada vira tokens emitidos; um token resgatado vira pagamento bancário.
+Os **anchors** do Stellar são esse padrão com um modelo de negócio. De um lado: o *contexto bancário* — IBANs, dias úteis, retenções de compliance. Do outro: o *contexto de ledger* — trustlines, assets, finalidade de 5 segundos. O anchor **traduz**: um wire de entrada vira tokens emitidos; um token resgatado vira pagamento bancário.
 
 Nenhum dos mundos precisou adotar o modelo do outro. Essa é uma fronteira saudável: cruzada por tradução, nunca por vazamento.`,
     },

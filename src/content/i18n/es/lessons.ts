@@ -77,7 +77,7 @@ let is_lit: bool = true;   // valor sí/no
 
 ### Tu misión
 
-Etiqueta los tres frascos del código inicial con sus tipos:
+Etiqueta las tres variables del código inicial con sus tipos:
 
 1. \`age\` es un número entero → \`i32\`
 2. \`price\` es un número decimal → \`f64\`
@@ -131,7 +131,7 @@ Salida esperada:
   "rust-fundamentals-5": {
     instructions: `## Fundamentos de ownership
 
-La ley más antigua de Rust: **todo valor tiene exactamente un dueño.** Cuando asignas un \`String\` a otra variable, el ownership *se mueve* — el nombre anterior ya no se puede usar:
+La regla fundamental de Rust: **todo valor tiene exactamente un dueño.** Cuando asignas un \`String\` a otra variable, el ownership *se mueve* — el nombre anterior ya no se puede usar:
 
 \`\`\`rust
 let a = String::from("gem");
@@ -383,7 +383,7 @@ mirror
   "rust-standard-library-1": {
     instructions: `## Fundamentos de Vec
 
-Un \`Vec\` es una lista que crece — la mochila del reino:
+Un \`Vec\` es una lista que crece:
 
 \`\`\`rust
 let mut items = vec!["torch", "rope"];  // crear con contenido
@@ -488,7 +488,7 @@ gold: 100
   "rust-standard-library-5": {
     instructions: `## Manejo de String
 
-Un \`String\` es texto que crece. Dos hechizos para hoy:
+Un \`String\` es texto que crece. Dos herramientas para hoy:
 
 \`\`\`rust
 let mut s = String::from("Keeper");
@@ -573,7 +573,7 @@ Some(7)
   "mastering-option-2": {
     instructions: `## Unwrap con seguridad
 
-\`.unwrap()\` arranca el valor de un Option — y entra en **pánico** (colapsa) con \`None\`. El pantano está lleno de quienes hicieron unwrap.
+\`.unwrap()\` arranca el valor de un Option — y entra en **pánico** (colapsa) con \`None\`.
 
 El idioma seguro lleva un valor por defecto:
 
@@ -786,7 +786,7 @@ Fírmala con tu clave secreta, paga el peaje de ~100 stroops y en ~5 segundos es
 
 ### Tu misión
 
-Traza el primer pago desde el Pánico: **25 XLM**.
+Envía tu primer pago: **25 XLM**.
 
 Salida esperada:
 
@@ -799,7 +799,7 @@ lumens flowing ✓
   "soroban-smart-contracts-1": {
     instructions: `## Tu primer contrato
 
-Un contrato Soroban es una biblioteca de Rust compilada a WASM y tallada en el ledger. Tres cosas lo convierten en contrato:
+Un contrato Soroban es una biblioteca de Rust compilada a WASM y desplegada en el ledger. Tres cosas lo convierten en contrato:
 
 - \`#![no_std]\` — sin sistema operativo, sin asignador de heap, sin biblioteca estándar. El ledger es la máquina.
 - \`#[contract]\` sobre un unit struct — la identidad del contrato.
@@ -907,13 +907,13 @@ beacon lit: protocol 27 (zipper) ✓
   "stellar-protocol-27-2": {
     instructions: `## Smart accounts y \`__check_auth\`
 
-En la Guarida aprendiste \`require_auth()\` — el sello. Pero ¿*quién* verifica el sello? Para una cuenta normal, el protocolo comprueba una firma ed25519. Cuando el \`Address\` pertenece a un **contrato**, el host invoca el punto de entrada del propio contrato:
+Ya conoces \`require_auth()\` — el sello. Pero ¿*quién* verifica el sello? Para una cuenta normal, el protocolo comprueba una firma ed25519. Cuando el \`Address\` pertenece a un **contrato**, el host invoca el punto de entrada del propio contrato:
 
 \`\`\`rust
 fn __check_auth(env: Env, payload: Hash<32>, signatures: ..., contexts: Vec<Context>)
 \`\`\`
 
-La cuenta *es* un contrato, y \`__check_auth\` es su ley de firmas. Así existen las **custom accounts**: carteras multisig, social recovery, inicio de sesión con passkeys, account abstraction — cada una es solo un \`__check_auth\` distinto. (OpenZeppelin ya las construía; el Protocol 27 hace nativas las partes difíciles.)
+La cuenta *es* un contrato, y \`__check_auth\` es su política de firmas. Así existen las **custom accounts**: carteras multisig, social recovery, inicio de sesión con passkeys, account abstraction — cada una es solo un \`__check_auth\` distinto. (OpenZeppelin ya las construía; el Protocol 27 hace nativas las partes difíciles.)
 
 Contexto: [discusión del Protocol 27 — custom accounts modulares y seguridad de firmas](https://developers.stellar.org/meetings/2026/04/30#protocol-discussion-modular-custom-accounts-and-signature-security-in-protocol-27).
 
@@ -933,7 +933,7 @@ __check_auth: the account writes its own law ✓
   "stellar-protocol-27-3": {
     instructions: `## Delegación de autenticación (CAP-0071-01)
 
-Antes del Zipper, una custom account que quisiera que *otro* contrato respondiera por ella no tenía soporte del protocolo — los constructores lo improvisaban con frágiles rondas de pre-simulación para propagar el contexto de auth. El Protocol 27 hace de la delegación una ley, con dos nuevas host functions:
+Antes del Zipper, una custom account que quisiera que *otro* contrato respondiera por ella no tenía soporte del protocolo — los constructores lo improvisaban con frágiles rondas de pre-simulación para propagar el contexto de auth. El Protocol 27 hace nativa la delegación, con dos nuevas host functions:
 
 - \`delegate_account_auth\` — llamable **solo dentro de \`__check_auth\`**: entrega la verificación de auth actual a una dirección delegada, cuya propia lógica de firmas se ejecuta entonces.
 - \`get_delegated_signers_for_current_auth_check\` — permite al contrato llamado ver qué firmantes delegados aprobaron.
@@ -960,7 +960,7 @@ crown delegated: steward honored ✓
   "stellar-protocol-27-4": {
     instructions: `## Seguridad de firmas y credenciales V2 (CAP-0071-02)
 
-Las auditorías de seguridad encontraron un eco sutil en el formato antiguo de credenciales. El escenario exige tres cosas a la vez:
+Las auditorías de seguridad encontraron una brecha sutil de replay en el formato antiguo de credenciales. El escenario exige tres cosas a la vez:
 
 1. Un contrato estilo admin que **no incluye la dirección del firmante** en el payload firmado.
 2. El admin es **rotado** a otra dirección…
@@ -968,7 +968,7 @@ Las auditorías de seguridad encontraron un eco sutil en el formato antiguo de c
 
 Entonces una firma hecha para el admin viejo puede sufrir **replay** hacia el nuevo — mints duplicados, acciones no autorizadas. *Nunca ha ocurrido on-chain*, pero el daño potencial justificó el arreglo en el protocolo.
 
-El **\`SOROBAN_CREDENTIALS_ADDRESS_V2\`** vincula el signature payload a la dirección para la que fue creado. Un eco robado ya no abre otra puerta. El viejo \`SOROBAN_CREDENTIALS_ADDRESS\` sigue válido **hasta el Protocol 28** — ventana de migración, no precipicio. Salvaguarda provisional para contratos estilo admin: incluye tú mismo la dirección del firmante en el payload.
+El **\`SOROBAN_CREDENTIALS_ADDRESS_V2\`** vincula el signature payload a la dirección para la que fue creado. El viejo \`SOROBAN_CREDENTIALS_ADDRESS\` sigue válido **hasta el Protocol 28** — ventana de migración, no precipicio. Salvaguarda provisional para contratos estilo admin: incluye tú mismo la dirección del firmante en el payload.
 
 Mira: [Stellar Developer Meeting — custom accounts y seguridad de firmas](https://www.youtube.com/watch?v=5O1cDDGv7_o).
 
@@ -989,7 +989,7 @@ seal bound to its door: the echo dies ✓
   "stellar-protocol-27-5": {
     instructions: `## Migrando al Protocol 27
 
-Un protocol upgrade es una caravana, y el orden de lanzamientos fue el camino: **Core → SDKs → RPC y Galexie → Horizon → Testnet → Mainnet**. Cada SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixir — publicó una versión Protocol 27 y debe actualizarse antes de que gire la Mainnet.
+El despliegue siguió este orden: **Core → SDKs → RPC y Galexie → Horizon → Testnet → Mainnet**. Cada SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixir — publicó una versión Protocol 27 y debe actualizarse antes de que gire la Mainnet.
 
 El único **breaking change** que sienten la mayoría de las apps: \`@stellar/stellar-base\` fue **consolidado en \`@stellar/stellar-sdk\`**. Los imports viejos se rompen; el arreglo es renombrar el paquete.
 
@@ -1021,7 +1021,7 @@ caravan cleared the Gate: nothing left behind ✓
   "stellar-protocol-27-6": {
     instructions: `## Jefe: La cuenta delegada
 
-Todo converge. El Espectro del Eco llega con un sello robado — y encuentra una cuenta que es *ley*: una custom account cuyo \`__check_auth\` verifica a su firmante raíz **y** delega en un custodio, exactamente como pretendía el Protocol 27.
+El Espectro del Eco aparece con una firma robada. Derrótalo con una custom account cuyo \`__check_auth\` verifica a su firmante raíz **y** delega en un custodio.
 
 Tu \`ZipperAccount\` debe, dentro de \`__check_auth\`:
 

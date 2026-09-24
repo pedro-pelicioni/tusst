@@ -3,7 +3,7 @@ import type { Concept } from "../types";
 export const theRealmOfStellar: Concept = {
   meta: {
     slug: "the-realm-of-stellar",
-    title: "El Reino de Stellar",
+    title: "Consenso y la red Stellar",
     tagline: "Consenso (SCP): cómo miles de máquinas se ponen de acuerdo sin un rey.",
     numeral: "I",
     arc: "realm",
@@ -167,7 +167,7 @@ Cada laboratorio de la Forja se ejecuta sobre este ritmo — ya lo sentiste si o
     {
       kind: "rustBranch",
       lessonSlug: "stellar-101-1",
-      body: `El Acto VI de la Campaña — **La Puerta de la Constelación** — recorre este mismo cielo de forma práctica: frases de red, horizontes y tus primeros mapas estelares. Opcional, y vale la desviación cuando quieres el mapa detrás de la teoría.`,
+      body: `El Acto VI de la Campaña — **La Puerta de la Constelación** — lo lleva a la práctica: cuentas, comisiones, trustlines y tu primer pago. Opcional, y vale la desviación cuando quieres el mapa detrás de la teoría.`,
     },
   ],
   testOut: [

@@ -8,12 +8,12 @@ export const armory = {
   kicker: "l'arsenal",
   title: "Dépense ce que les leçons t'ont payé",
   intro:
-    "Chaque leçon terminée verse 10 pièces d'or dans ta bourse. Voici ce qu'elles achètent — une lame, une pièce d'équipement, une créature sur tes talons. Rien de tout cela ne te rend plus fort. Tout cela te rend unique.",
+    "Chaque leçon terminée verse 10 pièces d'or dans ta bourse. Voici ce qu'elles achètent — une lame, une pièce d'équipement, une créature sur tes talons. Rien de tout cela ne te rend plus fort.",
 
   // Affiché à la place de la boutique tant que la couche monétaire reste cachée.
   locked: {
     title: "Les portes sont closes",
-    body: "L'Arsenal ouvre après ta première leçon terminée. Va en terminer une, et les portes le sauront.",
+    body: "L'Arsenal ouvre après ta première leçon terminée.",
     cta: "Choisir une leçon",
   },
 

@@ -31,7 +31,7 @@ An unwatched loop doesn't converge — it **spends**. A loop without a stop is a
 - **Max iterations** — a hard ceiling, always.
 - **No-progress detection** — the same error twice means *change strategy or escalate*, never "again, but harder."
 
-The rule of the realm: never start a loop you haven't decided how to stop.`,
+The rule: never start a loop you haven't decided how to stop.`,
     },
     {
       kind: "widget",

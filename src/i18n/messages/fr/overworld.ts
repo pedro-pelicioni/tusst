@@ -149,7 +149,7 @@ export const overworld = {
     },
   },
   tutorial: {
-    header: "Ton premier pas vers la légende",
+    header: "Comment jouer",
     stepOf: "Étape {current} sur {total}",
     skip: "Je sais jouer · passer le tutoriel",
     next: "Suivant →",
@@ -162,7 +162,7 @@ export const overworld = {
         body: "Clique sur « Marcher jusqu'à la mission ». Ton héros suit le sentier tout seul. À l'arrivée, le bouton devient « Entrer dans la mission » — clique dessus pour commencer !",
       },
       {
-        tag: "02 / 03 · LE SAVOIR, C'EST LE POUVOIR",
+        tag: "02 / 03 · RÉPONDS POUR FRAPPER",
         title: "Lis, puis frappe.",
         body: "Chaque mission est un court chapitre avec des vérifications. Chaque bonne réponse frappe le boss ; chaque erreur coûte un cœur — mais rien ici ne te bloque. Envie d'explorer ? Toute mission reste toujours ouverte.",
       },
@@ -247,7 +247,7 @@ export const overworld = {
     progress: "{current} / {total} défis",
   },
   victory: {
-    headerLevel: "NIVEAU {level} ÉVEILLÉ",
+    headerLevel: "NIVEAU {level} ATTEINT",
     headerRevisit: "MISSION REVISITÉE",
     headerDone: "MISSION TERMINÉE",
     congrats: "BIEN JOUÉ, {name} !",

@@ -532,7 +532,7 @@ Beşinci satır, insanların güvenli sanarak production'a çıkardığı konfig
       kind: "theory",
       body: `R ve W, soyut bir "tutarlılığa" karşı değil **birbirlerine** karşı takas edilen iki kadrandır. N=3'te \`W=1\` yazmada iki node arızasını tolere eder, okumada sıfır; \`W=3\` bunu tersine çevirir. Latency de aynı eğriyi izler, çünkü her quorum en yavaş üyesini bekler — yani W'yi yükseltmek özellikle yazma yolundaki p99'u yükseltir.
 
-Bir partition (ağ bölünmesi) izin istemez. N=5, W=3 ve 3|2'lik bir bölünmede çoğunluk tarafı hâlâ bir quorum toplar ve versiyon 2'yi commit eder; azınlık tarafının iki erişilebilir node'u vardır ve ne R=3'e ne W=3'e ulaşabilir, dolayısıyla ikisini de reddeder.
+N=5, W=3 ve 3|2'lik bir ağ bölünmesinde (partition) çoğunluk tarafı hâlâ bir quorum toplar ve versiyon 2'yi commit eder; azınlık tarafının iki erişilebilir node'u vardır ve ne R=3'e ne W=3'e ulaşabilir, dolayısıyla ikisini de reddeder.
 
 O ret **tam olarak** CP tercihidir ve onu R ile W'yi seçtiğin anda yaptın. n4/n5'in bayat versiyon 1'ini servis etmek AP tercihi olurdu — erişilebilir ve yanlış. CAP ağın bir özelliği değildir; bu iki satırdan hangisini production'a çıkardığındır.
 

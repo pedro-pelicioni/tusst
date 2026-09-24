@@ -40,7 +40,7 @@ Conceder demais raramente é uma decisão. É uma terça-feira à tarde.
 
 O modelo precisa conferir um saldo, então ganha acesso à rede — de forma estreita, para aquilo. Uma semana depois ele precisa instalar uma dependência, então a rede fica aberta. Alguém está depurando um problema de mainnet e larga uma chave real no ambiente "só para esta execução", e ninguém remove, porque remover é uma tarefa e nada está quebrado no momento.
 
-Agora volte e faça a pergunta que o arreio existe para responder: *quando isto der errado, o que pega?* Rede aberta mais chave real mais um plano confiantemente errado não é um perfil de risco hipotético. São três terças-feiras comuns, empilhadas.
+Agora volte e faça a pergunta que o harness existe para responder: *quando isto der errado, o que pega?* Rede aberta mais chave real mais um plano confiantemente errado não é um perfil de risco hipotético. São três terças-feiras comuns, empilhadas.
 
 A auditoria é barata e ninguém faz: **liste o que o modelo tem hoje e, para cada item, nomeie a tarefa que precisou daquilo.** Qualquer coisa sem nome nessa coluna é uma concessão que ninguém lembra de ter feito.`,
     },
@@ -102,9 +102,9 @@ Para cada passo do harness, faça a pergunta: *"quando isso está errado, o que 
       kind: "theory",
       body: `## Você esteve dentro de um esse tempo todo
 
-Olhe em volta: **o TUSST é um arreio.**
+Olhe em volta: **o TUSST é um harness.**
 
-O runner avaliado da Forja é um arreio de verificação — sua solução executa num sandbox, provas escondidas a julgam, e nenhuma quantidade de prosa confiante transforma um vermelho em verde. Os labs on-chain vão além: eles não perguntam *se você diz* que fez o deploy — eles **leem a chain** e conferem.
+O runner avaliado da Forja é um harness de verificação — sua solução executa num sandbox, provas escondidas a julgam, e nenhuma quantidade de prosa confiante transforma um vermelho em verde. Os labs on-chain vão além: eles não perguntam *se você diz* que fez o deploy — eles **leem a chain** e conferem.
 
 É a disciplina numa imagem: construa a bancada de modo que errar seja *detectável* e acertar seja *demonstrável* — para modelos e para humanos.
 
@@ -116,7 +116,7 @@ O runner avaliado da Forja é um arreio de verificação — sua solução execu
       options: ["Um modelo só deve segurar chaves cuja perda total você consiga dar de ombros — lumens do friendbot são de graça, uma chave de tesouraria é um incidente com contagem regressiva","Chaves de mainnet são recusadas pela maioria dos SDKs em contexto automatizado","Transações de testnet são mais rápidas, então o laço itera antes"], answer: 0 },
     { question: `Qual destes é um caminho de falha projetado?`,
       options: ["Uma suíte vermelha barra o auto-merge, e um humano recebe o diff mais a saída da falha","O prompt instrui firmemente o modelo a ter cuidado e conferir tudo duas vezes","O laço repete a mesma tarefa sem limite até algo passar"], answer: 0 },
-    { question: `Qual é a única pergunta a fazer de cada passo de um arreio?`,
+    { question: `Qual é a única pergunta a fazer de cada passo de um harness?`,
       options: ["Quando isto der errado, o que pega?","Com que frequência esse passo falha na prática?","Esse passo pode ficar mais rápido ou mais barato?"], answer: 0 },
     { question: `Você dá ao modelo rede aberta e permissão de escrever em qualquer lugar. O que isso comprou de fato?`,
       options: ["Quase nenhuma capacidade extra, e uma porção grande de raio de destruição — o formato clássico da concessão \"só por garantia\"","Ganhos mais ou menos proporcionais em capacidade e em risco","Mais capacidade que risco, já que a maioria das tarefas acaba precisando dos dois"], answer: 0 },

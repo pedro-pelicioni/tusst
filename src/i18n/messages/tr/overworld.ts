@@ -148,7 +148,7 @@ export const overworld = {
     },
   },
   tutorial: {
-    header: "Efsaneye doğru ilk adımın",
+    header: "Nasıl oynanır",
     stepOf: "Adım {current} / {total}",
     skip: "Nasıl oynanacağını biliyorum · öğreticiyi atla",
     next: "Sonraki →",
@@ -161,7 +161,7 @@ export const overworld = {
         body: "“Göreve yürü”ye tıkla. Kahramanın patikayı tek başına izler. Vardığında düğme “Göreve gir”e dönüşür — başlamak için tıkla!",
       },
       {
-        tag: "02 / 03 · BİLGİ GÜÇTÜR",
+        tag: "02 / 03 · VURMAK İÇİN CEVAPLA",
         title: "Önce oku, sonra vur.",
         body: "Her görev, kontrollerle biten kısa bir bölümdür. Her doğru cevap boss'a vurur; her hata bir kalbe mal olur — ama burada hiçbir şey seni dışarıda bırakmaz. Meraklı mısın? Her görev her zaman açık.",
       },
@@ -246,7 +246,7 @@ export const overworld = {
     progress: "{current} / {total} meydan okuma",
   },
   victory: {
-    headerLevel: "SEVİYE {level} UYANDI",
+    headerLevel: "SEVİYE {level} AÇILDI",
     headerRevisit: "GÖREV YENİDEN ZİYARET EDİLDİ",
     headerDone: "GÖREV TEMİZLENDİ",
     congrats: "TEBRİKLER, {name}!",

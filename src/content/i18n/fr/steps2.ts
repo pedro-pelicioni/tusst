@@ -76,7 +76,7 @@ let x = Some(5).unwrap();   // → 5. très bien.
 let y = ghost.unwrap();     // ghost est None → 💥 PANIC
 \`\`\`
 
-Sur \`None\`, unwrap **panique** — tout le programme sombre. Les pierres tombales de ce marais racontent toutes la même histoire.`,
+Sur \`None\`, unwrap **panique** — tout le programme plante.`,
     },
     {
       kind: "theory",
@@ -97,7 +97,7 @@ Tu as déjà utilisé cet idiome deux fois — sur l'étagère de l'Amasseur, et
         "Renvoie None",
       ],
       answer: 0,
-      explain: "Ne fais jamais unwrap sur ce que tu n'as pas vérifié. Le marais est plein de ceux qui l'ont fait.",
+      explain: "Ne fais jamais unwrap sur ce que tu n'as pas vérifié.",
     },
     {
       kind: "fill",
@@ -282,7 +282,7 @@ Les motifs déballent en même temps qu'ils correspondent : \`v\` est la valeur,
       kind: "theory",
       body: `Au-dessus de la porte du tribunal : \`#[must_use]\`.
 
-Cela signifie que Rust **t'avertit** si tu reçois un Result et l'ignores — un verdict non lu est un bug en embuscade. Chaque Result doit être lu, matché, ou délibérément transmis. La Cour n'oublie rien.`,
+Cela signifie que Rust **t'avertit** si tu reçois un Result et l'ignores — un verdict non lu est un bug en embuscade. Chaque Result doit être lu, matché, ou délibérément transmis.`,
     },
     {
       kind: "quiz",
@@ -303,7 +303,7 @@ Cela signifie que Rust **t'avertit** si tu reçois un Result et l'ignores — un
       after: "(e) => println!(\"denied: {}\", e),\n}",
       choices: ["Err", "None", "Fail"],
       answer: 0,
-      explain: "Ok et Err — deux branches, deux cas gérés. Le compilateur n'accepte rien de moins.",
+      explain: "Ok et Err — les deux branches gérées, sinon ça ne compile pas.",
     },
     {
       kind: "editor",
@@ -608,7 +608,7 @@ construis l'opération
         → définitif. pour toujours. sur le ledger.
 \`\`\`
 
-C'est le ciel que le Beholder a brisé — et celui que tu t'apprêtes à rallumer. Après cette Porte : Soroban, où le ledger exécute *ton* Rust.`,
+Après cette Porte : Soroban, où le ledger exécute *ton* Rust.`,
     },
     {
       kind: "quiz",
@@ -651,7 +651,7 @@ lumens flowing ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Avant la Porte, dans la réserve de l'Accumulateur, tu as appris le rite de \`struct\` et \`impl\` — un moule et l'artisan qui lui donne vie. Au-delà de la Porte, leur nature ne change pas.
+      body: `Dans la chambre forte de l'Amasseur, tu as appris \`struct\` et \`impl\` : un moule, et le code qui lui donne un comportement. Les contrats reposent sur ces deux mêmes pièces.
 
 \`\`\`rust
 #[contract]
@@ -1022,7 +1022,7 @@ __check_auth: the account writes its own law ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Une couronne qui garde seule tous les coffres finit par se briser. Les vrais comptes veulent dire : *« que mon intendant réponde pour moi. »*
+      body: `Une seule clé qui garde tout, c'est un point de défaillance unique. Les vrais comptes veulent dire : *« que mon intendant réponde pour moi. »*
 
 Avant le Zipper, aucun soutien du protocole — les bâtisseurs simulaient la délégation par de fragiles allers-retours de **pré-simulation** pour propager le contexte d'auth. Ça marchait. À peine. Parfois.`,
     },
@@ -1168,7 +1168,7 @@ seal bound to its door: the echo dies ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Rien ne franchit le ciel reforgé sans changer. La caravane des releases a voyagé dans un ordre strict :
+      body: `La caravane des releases a voyagé dans un ordre strict :
 
 **Core → SDKs → RPC & Galexie → Horizon → Testnet → Mainnet**
 

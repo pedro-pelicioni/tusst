@@ -54,8 +54,8 @@ export const labs = {
   player: {
     exit: "Leave the lab",
     wallet: {
-      none: "no sigil yet",
-      yours: "your sigil",
+      none: "no wallet yet",
+      yours: "your wallet",
       copy: "Copy address",
       copied: "Copied",
     },
@@ -80,7 +80,7 @@ export const labs = {
       buildFailed: "Compilation failed — the runner rejected this contract. Try again.",
       buildTimeout: "Compilation timed out — the forge was busy. Try again.",
       localWalletRequired:
-        "This rite needs the Forge's local testnet key to pay deployment fees — forge it in the previous step.",
+        "This step needs the Forge's local testnet key to pay deployment fees — create it in the previous step.",
       passkeyUnavailable:
         "Passkeys need a secure browser context and WebAuthn support. Open this lab over HTTPS on a passkey-capable device.",
       passkeyMismatch:
@@ -102,7 +102,7 @@ export const labs = {
         "Your run lives in this browser. Sign in and the Forge will verify it on-chain — proof, not promises — and pay out your XP.",
       signIn: "Sign in to claim",
       failed:
-        "The ledger disagrees — some deeds are missing: {checks}. Finish the steps above and claim again.",
+        "Not on the ledger yet: {checks}. Finish the steps above and claim again.",
       checkNames: {
         "account-exists": "a living account",
         trustline: "the USDC trustline",
@@ -119,7 +119,7 @@ export const labs = {
       xpEarned: "+{xp} xp",
       levelUp: "Level {level} reached!",
       xpTotal: "{xp} xp total",
-      already: "Already claimed — the ledger remembers.",
+      already: "Already claimed.",
       backToForge: "Back to the Forge",
       openIde: "Keep going in the IDE",
     },

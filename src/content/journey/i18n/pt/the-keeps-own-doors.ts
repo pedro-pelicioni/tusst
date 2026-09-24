@@ -83,7 +83,7 @@ O trabalho inteiro do adaptador é a tradução entre esses dois vocabulários. 
 
 Um núcleo sem importações de framework é uma **ilha pura**: construa‑a em um teste, passe‑a um adaptador falso, verifique o comportamento. Sem rede, sem cadeia dockerizada, sem RPC instável — os testes do rito Vermelho‑Verde rodam em **milissegundos**.
 
-Esse é o retorno silencioso e cumulativo: equipes com fortalezas limpas escrevem mais testes *porque testes são baratos*, e testes baratos significam loops curtos — para humanos e modelos alike.
+Esse é o retorno silencioso e cumulativo: equipes com fortalezas limpas escrevem mais testes *porque testes são baratos*, e testes baratos significam loops curtos — para humanos e para modelos.
 
 Os adaptadores ainda têm seus próprios testes contra a rede real — uma camada fina e honesta, testada separadamente em sua velocidade mais lenta.`,
     },
@@ -137,7 +137,7 @@ Aqui está o que a fortaleza lhe oferece na era da IA: **módulos bem delimitado
 
 “Reescreva o adaptador Horizon para o novo RPC — aqui está a porta que ele deve satisfazer, aqui estão seus testes” é uma tarefa que um modelo completa *dentro de uma caixa*: o contexto de um pequeno arquivo, um contrato a cumprir, testes a passar, e muralhas que limitam o raio de explosão. O modelo reconstrói um cômodo sem jamais percorrer toda a fortaleza.
 
-Próxima disciplina: o próprio modelo — e o banco que você deve construir ao seu redor.`,
+Próxima disciplina: o próprio modelo — e a bancada que você precisa montar em volta dele.`,
     },
   ],
   testOut: [

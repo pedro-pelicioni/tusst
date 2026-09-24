@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "La Fortaleza Limpia",
+  title: "Clean architecture",
   tagline: "Clean architecture: las dependencias de código fuente apuntan hacia dentro, solo.",
   steps: [
     {
@@ -20,9 +20,7 @@ La **regla de dependencia** es la única ley de la fortaleza: *las dependencias 
 
 Porque los dos anillos envejecen de forma distinta. Los frameworks cambian: aparecen nuevas versiones mayores del SDK, las librerías UI suben y bajan, las bases de datos se sustituyen. **Las reglas de negocio sobreviven a todo eso** — “ambas partes deben aprobar” seguirá siendo verdad en cualquier framework que lo aloje dentro de cinco años.
 
-Si tu dominio importa el SDK de la cadena, cada cambio mayor del SDK se convierte en una *migración del dominio* — tu código que cambia más despacio queda rehén de tu dependencia que cambia más rápido. Apunta las flechas hacia adentro y el desgaste queda en el anillo externo, donde es barato.
-
-La fortaleza es el punto. Los frameworks son el mobiliario.`,
+Si tu dominio importa el SDK de la cadena, cada cambio mayor del SDK se convierte en una *migración del dominio* — tu código que cambia más despacio queda rehén de tu dependencia que cambia más rápido. Apunta las flechas hacia adentro y el desgaste queda en el anillo externo, donde es barato.`,
     },
     {
       kind: "diagram",
@@ -59,7 +57,7 @@ La fortaleza es el punto. Los frameworks son el mobiliario.`,
       },
     },
     { kind: "widget", component: "dependency-rule",
-      body: `La ley tiene una forma, y la prosa no puede dibujarla. **Activa algunos imports** y mira dónde caen los legales — luego rompe un muro a propósito y lee lo que te cuesta.` },
+      body: `**Activa algunos imports** y mira dónde caen los legales — luego rompe un muro a propósito y lee lo que te cuesta.` },
     { kind: "theory", body: `## Toda brecha fue razonable
 
 Nadie rompe la regla por maldad. La rompe un martes, por un buen motivo, con una fecha límite encima.
@@ -80,7 +78,7 @@ La regla se gana el sueldo justo los días en que parece burocracia — porque e
         "ui/ReleaseButton.tsx importa el caso de uso release del dominio, para llamarlo",
       ],
       answer: 0,
-      explain: `Las otras dos son el anillo externo nombrando al interno — la regla funciona exactamente como se diseñó. El dominio importando el SDK es el interno nombrando al externo: ahora las habitaciones más profundas de la fortaleza tiemblan cada vez que un proveedor lanza una versión mayor.`,
+      explain: `Las otras dos son el anillo externo nombrando al interno — la regla funciona exactamente como se diseñó. El dominio importando el SDK es el interno nombrando al externo: ahora el dominio tiene que cambiar cada vez que un proveedor lanza una versión mayor.`,
     },
     {
       kind: "quiz",

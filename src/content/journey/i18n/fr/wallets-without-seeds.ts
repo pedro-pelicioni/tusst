@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
-  title: "Portefeuilles sans phrases secrètes",
+  title: "Smart accounts et passkeys",
   tagline: "Smart accounts et passkeys : et des frais parrainés par quelqu'un d'autre.",
   steps: [
     {
@@ -139,7 +139,7 @@ Les portefeuilles traditionnels accueillent chaque nouvel utilisateur avec un ri
     {
       kind: "labLink",
       labSlug: "passkey-smart-wallet",
-      body: `La Forge est prête : ouvre **Passkey Smart Wallet**, enregistre une véritable passkey, déploie son contrat de compte intelligent sur testnet et réponds à un nouveau défi WebAuthn avec ton propre appareil.\n\nLorsque le registre aura confirmé que le code déployé correspond au Wasm canonique du compte intelligent, reprends la route. Elle mène vers un territoire encore plus étrange : un registre où *les montants eux-mêmes* se couvrent d'un voile.`,
+      body: `La Forge est prête : ouvre **Passkey Smart Wallet**, enregistre une véritable passkey, déploie son contrat de compte intelligent sur testnet et réponds à un nouveau défi WebAuthn avec ton propre appareil.\n\nLorsque le registre aura confirmé que le code déployé correspond au Wasm canonique du compte intelligent, c'est terminé. Ensuite : un registre où *les montants eux-mêmes* sont masqués.`,
     },
   ],
   testOut: [

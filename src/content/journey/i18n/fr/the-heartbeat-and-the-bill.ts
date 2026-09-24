@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Le Battement et la Facture",
+  title: "Archivage d'état et frais",
   tagline: "Archivage d'état et frais : l'état se loue, et un appel se mesure, il ne s'enchérit pas.",
   steps: [
     {

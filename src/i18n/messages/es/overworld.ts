@@ -148,7 +148,7 @@ export const overworld = {
     },
   },
   tutorial: {
-    header: "Tu primer paso hacia la leyenda",
+    header: "Cómo se juega",
     stepOf: "Paso {current} de {total}",
     skip: "Ya sé jugar · saltar el tutorial",
     next: "Siguiente →",
@@ -161,7 +161,7 @@ export const overworld = {
         body: "Haz clic en “Caminar a la misión”. Tu héroe sigue el sendero por su cuenta. Al llegar, el botón se convierte en “Entrar en la misión” — ¡haz clic para empezar!",
       },
       {
-        tag: "02 / 03 · EL SABER ES PODER",
+        tag: "02 / 03 · RESPONDE PARA ATACAR",
         title: "Lee, luego ataca.",
         body: "Cada misión es un capítulo corto con comprobaciones. Cada respuesta correcta golpea al jefe; cada fallo cuesta un corazón — pero aquí nada te cierra el paso. ¿Curiosidad? Cualquier misión está siempre abierta.",
       },
@@ -246,7 +246,7 @@ export const overworld = {
     progress: "{current} / {total} desafíos",
   },
   victory: {
-    headerLevel: "NIVEL {level} DESPERTADO",
+    headerLevel: "NIVEL {level} ALCANZADO",
     headerRevisit: "MISIÓN REVISITADA",
     headerDone: "MISIÓN SUPERADA",
     congrats: "¡BIEN HECHO, {name}!",

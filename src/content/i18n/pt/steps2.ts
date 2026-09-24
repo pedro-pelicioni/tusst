@@ -76,7 +76,7 @@ let x = Some(5).unwrap();   // → 5. tranquilo.
 let y = ghost.unwrap();     // ghost é None → 💥 PÂNICO
 \`\`\`
 
-Diante de \`None\`, unwrap **entra em pânico** — o programa inteiro afunda. As lápides deste pântano dizem todas a mesma coisa.`,
+Diante de \`None\`, unwrap **entra em pânico** — o programa inteiro quebra.`,
     },
     {
       kind: "theory",
@@ -97,7 +97,7 @@ Você já usou esse padrão duas vezes — na prateleira do Acumulador — e ele
         "Retorna None",
       ],
       answer: 0,
-      explain: "Nunca dê unwrap no que você não checou. O pântano está cheio dos que deram.",
+      explain: "Nunca dê unwrap no que você não checou.",
     },
     {
       kind: "fill",
@@ -282,7 +282,7 @@ Os padrões desembrulham ao casar: \`v\` é o valor, \`e\` é o motivo.`,
       kind: "theory",
       body: `Sobre a porta do tribunal: \`#[must_use]\`.
 
-Significa que o Rust **te avisa** se você receber um Result e ignorá-lo — um veredito não lido é um bug esperando para acontecer. Todo Result deve ser lido, casado num match ou repassado de propósito. A Corte não esquece nada.`,
+Significa que o Rust **te avisa** se você receber um Result e ignorá-lo — um veredito não lido é um bug esperando para acontecer. Todo Result deve ser lido, casado num match ou repassado de propósito.`,
     },
     {
       kind: "quiz",
@@ -303,7 +303,7 @@ Significa que o Rust **te avisa** se você receber um Result e ignorá-lo — um
       after: "(e) => println!(\"denied: {}\", e),\n}",
       choices: ["Err", "None", "Fail"],
       answer: 0,
-      explain: "Ok e Err — os dois braços, ambos tratados. O compilador não aceita menos que isso.",
+      explain: "Ok e Err — os dois braços tratados, senão não compila.",
     },
     {
       kind: "editor",
@@ -608,7 +608,7 @@ monte a operação
         → final. para sempre. no ledger.
 \`\`\`
 
-Este é o céu que o Beholder quebrou — e o que você está prestes a reacender. Depois deste Portão: Soroban, onde o ledger executa o *seu* Rust.`,
+Depois deste Portão: Soroban, onde o ledger executa o *seu* Rust.`,
     },
     {
       kind: "quiz",
@@ -651,7 +651,7 @@ lumens flowing ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Antes do Portão, no cofre do Acumulador, você aprendeu o rito de \`struct\` e \`impl\` — um molde e o artesão que lhe dá vida. Além do Portão, a essência continua a mesma.
+      body: `No cofre do Acumulador você aprendeu \`struct\` e \`impl\`: um molde e o código que dá comportamento a ele. Contratos usam essas mesmas duas peças.
 
 \`\`\`rust
 #[contract]
@@ -1022,7 +1022,7 @@ __check_auth: the account writes its own law ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Uma coroa que guarda todos os cofres sozinha logo se parte. Contas de verdade querem dizer: *"deixe meu guardião responder por mim."*
+      body: `Uma chave só guardando tudo é um ponto único de falha. Contas de verdade querem dizer: *"deixe meu guardião responder por mim."*
 
 Antes do Zipper não havia suporte do protocolo para isso — os construtores improvisavam a delegação com frágeis rodadas de **pré-simulação** para propagar o contexto de auth. Funcionava. Por pouco. Às vezes.`,
     },
@@ -1168,7 +1168,7 @@ seal bound to its door: the echo dies ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Nada cruza para o céu reforjado sem mudar. A caravana de releases viajou em ordem estrita:
+      body: `A caravana de releases viajou em ordem estrita:
 
 **Core → SDKs → RPC e Galexie → Horizon → Testnet → Mainnet**
 

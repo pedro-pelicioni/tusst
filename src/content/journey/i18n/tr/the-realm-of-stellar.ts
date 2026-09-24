@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Stellar Diyarı",
+  title: "Konsensüs ve Stellar ağı",
   tagline: "Konsensüs (SCP): binlerce makine bir kral olmadan nasıl anlaşır.",
   steps: [
     {
@@ -160,7 +160,7 @@ Forge'daki her lab bu ritmin üstünde çalışır — cüzdan lab'ında bir iş
     {
       kind: "rustBranch",
       lessonSlug: "stellar-101-1",
-      body: `Kampanya'nın Perde VI'sı — **Takımyıldız Kapısı** — aynı gökyüzünü elinle yürütüyor: ağ passphrase'leri, horizon'lar ve ilk yıldız haritaların. İsteğe bağlı; teorinin arkasındaki haritayı istediğinde sapağa değer.`,
+      body: `Kampanya'nın Perde VI'sı — **Takımyıldız Kapısı** — bunu uygulamalı yaptırıyor: hesaplar, ücretler, trustline'lar ve ilk ödemen. İsteğe bağlı; teorinin arkasındaki haritayı istediğinde sapağa değer.`,
     },
   ],
   testOut: [

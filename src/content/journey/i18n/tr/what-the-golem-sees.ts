@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Golem'in Gördüğü",
+  title: "Context engineering",
   tagline: "Bağlam mühendisliği: yığmak değil, seçmek.",
   steps: [
     {
