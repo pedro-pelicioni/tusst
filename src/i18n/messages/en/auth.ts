@@ -6,6 +6,7 @@ export const auth = {
   tagline: "Sign in to save your hero, your XP and every mission you clear.",
   note: "No password, no form — one click and you're on the map.",
   backHome: "← Back to the landing",
+  privacyLink: "How we handle your data",
   continueTo: "You'll be sent back to where you were.",
   errors: {
     title: "The gate didn't open",

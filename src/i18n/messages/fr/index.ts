@@ -9,9 +9,10 @@ import { ide } from "./ide";
 import { journey } from "./journey";
 import { labs } from "./labs";
 import { landing } from "./landing";
+import { legal } from "./legal";
 import { lesson } from "./lesson";
 import { overworld } from "./overworld";
 import { pages } from "./pages";
 import { visuals } from "./visuals";
 
-export const fr: Messages = { advanced, armory, auth, common, home, ide, journey, labs, landing, lesson, overworld, pages, visuals };
+export const fr: Messages = { advanced, armory, auth, common, home, ide, journey, labs, landing, legal, lesson, overworld, pages, visuals };

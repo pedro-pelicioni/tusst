@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getMessages } from "@/i18n/server";
 
 export async function Footer() {
@@ -8,9 +9,17 @@ export async function Footer() {
         <p className="font-mono text-[11px] text-muted">
           {m.common.footer.tagline}
         </p>
-        <p className="font-mono text-[11px] text-muted">
-          {m.common.footer.motto}
-        </p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+          <p className="font-mono text-[11px] text-muted">
+            {m.common.footer.motto}
+          </p>
+          <Link
+            href="/privacy"
+            className="font-mono text-[11px] text-muted2 underline decoration-line-strong underline-offset-4 transition-colors hover:text-fg"
+          >
+            {m.common.footer.privacy}
+          </Link>
+        </div>
       </div>
     </footer>
   );

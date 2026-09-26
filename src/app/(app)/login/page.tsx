@@ -215,6 +215,12 @@ export default async function LoginPage({
         >
           {m.auth.backHome}
         </Link>
+        <Link
+          href="/privacy"
+          className="font-mono text-[11px] text-muted underline decoration-line-strong underline-offset-4 transition hover:text-fg"
+        >
+          {m.auth.privacyLink}
+        </Link>
       </div>
     </div>
   );

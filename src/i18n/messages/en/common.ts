@@ -32,5 +32,6 @@ export const common = {
   footer: {
     tagline: "TUSST · The Ultimate Stellar Supreme Tutorial",
     motto: "learn rust → master stellar · open-source",
+    privacy: "Privacy",
   },
 };

@@ -56,7 +56,13 @@ export function FinalCta({
 
         <div className="mt-24 w-full border-t border-white/10 pt-7">
           <p className="font-mono text-[9px] uppercase tracking-[0.34em] text-muted">
-            tusst · {m.footer.tagline} · {m.footer.motto}
+            tusst · {m.footer.tagline} · {m.footer.motto} ·{" "}
+            <Link
+              href="/privacy"
+              className="underline decoration-white/25 underline-offset-4 transition-colors hover:text-fg focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-4"
+            >
+              {m.footer.privacy}
+            </Link>
           </p>
         </div>
       </div>

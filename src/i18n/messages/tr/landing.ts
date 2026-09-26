@@ -105,6 +105,7 @@ export const landing = {
   footer: {
     tagline: "THE ULTIMATE STELLAR SUPREME TUTORIAL",
     motto: "NOTHING LEFT UNHANDLED",
+    privacy: "gizlilik",
   },
   a11y: {
     carouselLabel: "Oynanabilir kahramanlar",

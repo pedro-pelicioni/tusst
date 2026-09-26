@@ -6,6 +6,7 @@ export const auth = {
   tagline: "Entre para salvar seu herói, seu XP e cada missão que você concluir.",
   note: "Sem senha, sem formulário — um clique e você está no mapa.",
   backHome: "← Voltar para a página inicial",
+  privacyLink: "Como tratamos seus dados",
   continueTo: "Você será levado de volta para onde estava.",
   errors: {
     title: "O portão não abriu",

@@ -105,6 +105,7 @@ export const landing = {
   footer: {
     tagline: "the ultimate stellar supreme tutorial",
     motto: "nothing left unhandled",
+    privacy: "privacidad",
   },
   a11y: {
     carouselLabel: "Héroes jugables",

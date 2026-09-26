@@ -6,6 +6,7 @@ export const auth = {
   tagline: "Kahramanını, XP'ni ve temizlediğin her görevi kaydetmek için giriş yap.",
   note: "Şifre yok, form yok — tek tıkla haritadasın.",
   backHome: "← Açılış sayfasına dön",
+  privacyLink: "Verilerini nasıl işliyoruz",
   continueTo: "Kaldığın yere geri gönderileceksin.",
   errors: {
     title: "Kapı açılmadı",
