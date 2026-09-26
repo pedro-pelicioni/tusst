@@ -167,8 +167,8 @@ export const visuals = {
     verdictSoon: "Bir adım daha ve saat dolar. Bundan sonra olacaklar, üç rafı birbirinden ayıran tek şeydir.",
     verdictArchived: [
       "",
-      "Arşivlendi, silinmedi. Veri aktif ledger'ın dışında ve biri onu geri getirene kadar çağrın başarısız olacak — ama hâlâ orada, ve geri getirme bir ücrettir, yeniden yazma değil.",
-      "Kontrat instance'ının kendisi arşivlendi. Kimse onu çağıramaz ve sahip olduğu her persistent kayıt onunla birlikte gitti. Geri getirmek her şeyi geri getirir.",
+      "Arşivlendi, silinmedi. Veri aktif ledger'ın dışında ama hâlâ orada: ona ihtiyaç duyan bir işlem önce onu geri getirebilir. Geri getirme bir ücrettir, yeniden yazma değil.",
+      "Kontrat instance'ının kendisi arşivlendi ve bütün instance storage'ı da onunla birlikte gitti — ikisi tek bir ledger kaydıdır. Bir çağrı önce instance'ı bir ücret karşılığında geri getirebilir ve hepsi geri gelir.",
     ],
     verdictLost: [
       "Gitti. Arşivlenmedi — silindi. Temporary storage için geri getirme yoktur, onu geri getirecek bir ücret de. Burada yaşayan ne varsa başka bir yerden yeniden inşa edilmek zorunda, yoksa düpedüz kayıp.",

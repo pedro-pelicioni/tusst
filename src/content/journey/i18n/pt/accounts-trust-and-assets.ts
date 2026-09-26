@@ -20,7 +20,7 @@ A reserva não é uma taxa. É **aluguel por depósito**: o livro‑razão perma
 
 Em muitas cadeias, qualquer pessoa pode lançar tokens lixo no seu endereço. No Stellar isso não acontece: para manter qualquer ativo além de XLM, sua conta deve primeiro abrir uma **linha de confiança** para ele.
 
-Uma linha de confiança diz: *"Eu aceito o ativo X do emissor Y, até este **limite**."* Ela é criada com a operação \`change_trust\`, é sua própria entrada no livro‑razão — então bloqueia **uma reserva base** — e enquanto não existir, pagamentos desse ativo para você simplesmente falham.
+Uma linha de confiança diz: *"Eu aceito o ativo X do emissor Y, até este **limite**."* Ela é criada com a operação \`change_trust\`, é sua própria entrada no livro‑razão — então bloqueia **uma reserva base** — e enquanto não existir, um pagamento desse ativo para você falha com \`op_no_trust\`.
 
 Opt‑in por design: seu balanço contém apenas o que você concordou em segurar.`,
     },

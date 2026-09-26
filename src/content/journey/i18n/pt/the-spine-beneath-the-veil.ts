@@ -65,7 +65,7 @@ Onde Tokens Confidenciais atendem partes que se conhecem, o SPP cobre casos em q
 
 Essas três salvaguardas são aplicadas por uma peça que vale conhecer pelo nome: o **Association Set Provider (ASP)**. Um ASP publica um *conjunto* de depósitos pelos quais ele responde — uma allow list — ou aqueles pelos quais ele se recusa a responder — uma deny list. Para sacar, você prova que seus fundos remontam a algum depósito dentro desse conjunto, **sem revelar qual**. O SPP constrói isso sobre um association set baseado em chaves, apoiado por um registro público de chaves para que os participantes possam sequer ser referenciados.
 
-Repare na consequência, porque ela é o truque inteiro: **o mesmo saque é privado e auditável ao mesmo tempo**. Privado, porque o vínculo com o seu depósito específico nunca é publicado. Auditável, porque você não poderia ter sacado sem provar pertencimento a um conjunto avalizado. ASPs diferentes podem atender jurisdições diferentes — e você escolhe de quem carrega o aval.
+Repare na consequência, porque ela é o truque inteiro: **o mesmo saque é privado e auditável ao mesmo tempo**. Privado, porque o vínculo com o seu depósito específico nunca é publicado. Auditável, porque você não poderia ter sacado sem provar pertencimento a um conjunto avalizado. ASPs diferentes podem atender jurisdições diferentes — e você escolhe qual deles responde por você.
 
 O objetivo em uma frase: **privacidade para usuários, não para crimes**. Transferências confidenciais *e* compatíveis em trilhas públicas — essa combinação, não o segredo bruto, é o que as instituições esperavam.`,
     },
@@ -104,16 +104,16 @@ Abra a [Forge](/ide), vá em **Explore** e escolha **pool de privacidade SPP · 
 - \`is_known_root(<esse número>)\` — **true**. Agora mude um dígito e pergunte de novo: **false**. Você acabou de percorrer o anel de raízes que o pool lembra.
 - \`is_spent(<qualquer número>)\` — **false**. Este é o conjunto de nullifiers: a defesa do pool contra gasto duplo, e quase a única coisa que um saque publica sobre si mesmo.
 
-Leia na ordem e repare no que está *faltando*. Nenhuma dessas respostas contém endereço, valor ou contraparte. A chain está dizendo a verdade exata e não está dizendo nada.
+Leia na ordem e repare no que está *faltando*. Nenhuma dessas respostas contém endereço, valor ou contraparte.
 
-**Dois avisos, porque a spec de um contrato não consegue avisar sobre ela mesma.** Este pool expõe cinco funções sobradas — \`balance\`, \`transfer\`, \`approve\` e companhia — que respondem educadamente e não significam nada; a Forge marca elas como *isca* para que não enganem você. E o estado do preview **arquiva em 2026-09-02**, depois disso as leituras param de responder até alguém pagar para restaurar. Isso não é a Forge falhando: é o state rent do Soroban, sob o qual todo contrato desta rede vive.`,
+**Dois avisos, porque a spec de um contrato não consegue avisar sobre ela mesma.** Este pool expõe cinco funções sobradas — \`balance\`, \`transfer\`, \`approve\` e companhia — que respondem educadamente e não significam nada; a Forge marca elas como *isca* para que não enganem você. E o estado do preview funciona com **TTLs**. Quando um deles vence, as entradas são arquivadas, não perdidas: leituras continuam respondendo, e a próxima escrita restaura elas primeiro, pagando uma taxa. Isso é o state rent do Soroban, sob o qual todo contrato desta rede vive — a Forge lê o relógio do contrato direto da chain e avisa você quando o prazo estiver perto.`,
     },
     {
       kind: "labLink",
       labSlug: "confidential-tokens",
-      body: `Na bigorna da Forja: um laboratório de **Tokens Confidenciais**, onde você envolverá um token da testnet e verá os valores desaparecerem do explorador enquanto a transferência continua sendo liquidada corretamente. O cartão indica *em desenvolvimento* — esta fronteira está sendo construída enquanto você lê.
+      body: `Na Forja: um laboratório de **Tokens Confidenciais**, onde você envolverá um token da testnet e verá os valores desaparecerem do explorador enquanto a transferência continua sendo liquidada corretamente. Por enquanto, o cartão dele indica *em preparo*.
 
-Observe como essas datas são recentes. Trabalhar com tecnologia tão nova significa ler o próprio pulso do protocolo — o capítulo final mostra como fazer isso.`,
+Observe como essas datas são recentes. Tecnologia tão nova exige acompanhar os upgrades do protocolo de perto — o capítulo final mostra como.`,
     },
   ],
   testOut: [

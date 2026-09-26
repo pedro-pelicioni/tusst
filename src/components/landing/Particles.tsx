@@ -33,21 +33,22 @@ const PATTERN: Mote[] = [
   { x: 97, dur: 18, delay: -8, size: 3, sway: 4.0 },
 ];
 
-const TONES: Record<"hero" | "boss" | "forge", string[]> = {
+const TONES: Record<"hero" | "forge" | "why", string[]> = {
   hero: [
     "rgba(207, 195, 255, 0.9)",
     "rgba(217, 185, 106, 0.85)",
     "rgba(255, 255, 255, 0.75)",
   ],
-  boss: [
-    "rgba(201, 106, 106, 0.85)",
-    "rgba(217, 185, 106, 0.6)",
-    "rgba(161, 61, 61, 0.8)",
-  ],
   forge: [
     "rgba(69, 214, 196, 0.85)",
     "rgba(217, 185, 106, 0.8)",
     "rgba(207, 195, 255, 0.6)",
+  ],
+  // candle embers and the golem's rune-glow
+  why: [
+    "rgba(255, 176, 92, 0.85)",
+    "rgba(217, 185, 106, 0.8)",
+    "rgba(160, 120, 255, 0.75)",
   ],
 };
 

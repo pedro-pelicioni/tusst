@@ -532,7 +532,7 @@ La cinquième ligne est la configuration que les gens mettent en prod en la croy
       kind: "theory",
       body: `R et W sont deux molettes qui se troquent **l'une contre l'autre**, pas contre une « cohérence » abstraite. À N=3, \`W=1\` tolère deux pannes de nœud en écriture et zéro en lecture ; \`W=3\` inverse ça. La latence suit la même courbe, parce que chaque quorum attend son membre le plus lent — donc monter W monte le p99 spécifiquement sur le chemin d'écriture.
 
-Une partition ne demande pas la permission. Avec N=5, W=3 et un split 3|2, le côté majoritaire réunit encore un quorum et commit la version 2 ; le côté minoritaire a deux nœuds joignables et ne peut atteindre ni R=3 ni W=3, donc il refuse les deux.
+Avec N=5, W=3 et une partition 3|2, le côté majoritaire réunit encore un quorum et commit la version 2 ; le côté minoritaire a deux nœuds joignables et ne peut atteindre ni R=3 ni W=3, donc il refuse les deux.
 
 Ce refus **est** le choix CP, et tu l'as fait quand tu as choisi R et W. Servir la version 1 stale de n4/n5 aurait été le choix AP — disponible, et faux. CAP n'est pas une propriété du réseau ; c'est laquelle de ces deux lignes tu as shippée.
 

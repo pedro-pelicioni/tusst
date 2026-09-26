@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Les Contrats Vivants",
+  title: "Soroban : des contrats sur Stellar",
   tagline: "Soroban : du Wasm sur le registre, et trois étagères pour l'état.",
   steps: [
     {
@@ -12,7 +12,7 @@ export const conceptText: JourneyConceptText = {
 
 Et voici la partie élégante : appeler un contrat ne nécessite aucun nouveau format de transaction. L’enveloppe que tu as décortiquée contient une seule opération — \`invoke_host_function\` — et à l’intérieur se trouve l’appel : quel contrat, quelle fonction, quels arguments.
 
-Même enveloppe, mêmes signatures, même clôture en cinq secondes environ. Le monde classique et celui des contrats partagent le même système circulatoire.`,
+Même enveloppe, mêmes signatures, même clôture en cinq secondes environ.`,
     },
     {
       kind: "theory",
@@ -21,7 +21,7 @@ Même enveloppe, mêmes signatures, même clôture en cinq secondes environ. Le 
 Soroban donne à un contrat trois niveaux de stockage — choisis par entrée, tarifés différemment :
 
 - **Temporaire** — peu coûteux et éphémère, il disparaît définitivement à expiration. Il convient aux devis, aux nonces et aux états limités dans le temps.
-- **Persistant** — destiné aux soldes utilisateurs et aux registres de propriété. Il survit à l’expiration grâce à l’*archivage* présenté à l'étape suivante.
+- **Persistant** — destiné aux soldes utilisateurs et aux registres de propriété. Il survit à l’expiration grâce à l’*archivage* présenté au chapitre suivant.
 - **Instance** — petit état attaché au contrat lui‑même : adresse d’administration, configuration, métadonnées nécessaires à chaque appel.
 
 Choisir la mauvaise étagère est une erreur de débutant coûteuse : un stockage d'instance trop volumineux alourdit chaque appel, tandis qu'un solde placé en stockage temporaire finit tout simplement par disparaître. Le choix de l'étagère fait partie intégrante de la conception.`,
@@ -36,7 +36,7 @@ Choisir la mauvaise étagère est une erreur de débutant coûteuse : un stock
           {
             id: "instance",
             label: "instance",
-            note: "Les réglages du contrat lui-même, qui vivent et meurent avec lui.",
+            note: "Les réglages du contrat lui-même, calés sur son horloge : archivés et restaurés avec lui.",
             tone: "gold",
           },
           {
@@ -66,7 +66,7 @@ Tu peux ainsi appeler un contrat que tu n’as jamais vu avec des types vérifi�
     },
     { kind: "quiz",
       question: `Vous stockez le nonce de session d'un utilisateur, sans valeur quelques minutes après son émission. Quelle étagère ?`,
-      options: ["Temporaire — le loyer le plus bas, et l'oubli est exactement ce que vous voulez","Persistante, pour pouvoir la restaurer si un appel arrive en retard","D'instance, pour qu'elle disparaisse si le contrat est un jour archivé"],
+      options: ["Temporaire — le loyer le plus bas, et l'oubli est exactement ce que vous voulez","Persistante, pour pouvoir la restaurer si un appel arrive en retard","D'instance, pour qu'elle vive exactement aussi longtemps que le contrat"],
       answer: 0,
       explain: `Faire correspondre l'étagère à la durée de vie réelle de la donnée est toute la décision de conception, et c'est celle qu'on rate dans la direction qui paraît prudente : mettre une donnée éphémère sur l'étagère persistante coûte plus cher pour toujours, pour une garantie dont la donnée n'a jamais eu besoin.` },
     { kind: "fill",

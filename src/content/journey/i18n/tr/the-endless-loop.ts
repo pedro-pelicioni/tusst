@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Sonsuz Döngü",
+  title: "Ajan döngüleri",
   tagline: "Agentic loop'lar: uygula, gözle, düzelt — ve döngüyü tırmandıran sinyaller.",
   steps: [
     { kind: "theory", body: `## Dilekten döngüye
@@ -36,7 +36,7 @@ Sinyaller, hisler değil. "Çıktı makul görünüyor" hiçbir şeyi düzeltmez
         "Modelin kendi kapanış özeti: artık her şey doğru görünüyor",
         "Kodun ilk denemede derlenmiş olması — mantığın doğru olduğuna güçlü bir kanıt",
       ], answer: 0,
-      explain: `Derlenmek tiplerin uyuştuğu anlamına gelir, davranışın istenen davranış olduğu anlamına değil — kendi özetiyse zihnin kendi ödevine not vermesidir. Yönlendirici bir sinyal dışarıdan gelmeli, spesifik olmalı ve kötü haber olabilmeli. "1 kaldı, 41. satır" bir başlıktır; "doğru görünüyor" hava durumudur.` },
+      explain: `Derlenmek tiplerin uyuştuğu anlamına gelir, davranışın istenen davranış olduğu anlamına değil — kendi özetiyse zihnin kendi ödevine not vermesidir. Yönlendirici bir sinyal dışarıdan gelmeli, spesifik olmalı ve kötü haber olabilmeli. "1 kaldı, 41. satır" nereye gideceğini söyler; "doğru görünüyor" hiçbir şey söylemez.` },
     { kind: "theory", body: `## Tek bir tur, izlenmiş halde
 
 Çevrimlere kafa sallamak kolay. İşte tek bir tur, kablodan gerçekte ne geçtiğiyle birlikte.

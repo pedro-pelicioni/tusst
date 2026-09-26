@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Le Donjon Propre",
+  title: "Clean architecture",
   tagline: "Clean architecture : les dépendances de code source pointent vers l'intérieur, uniquement.",
   steps: [
     {
@@ -20,9 +20,7 @@ La **règle de dépendance** est la seule loi du bastion : *les dépendances d
 
 Parce que les deux cercles vieillissent différemment. Les frameworks changent : de nouvelles versions majeures des SDK paraissent, les bibliothèques d'interface gagnent puis perdent en popularité et les bases de données sont remplacées. **Les règles métier survivent à tous ces changements** — « les deux parties doivent approuver » restera vrai quel que soit le framework qui les hébergera dans cinq ans.
 
-Si ton domaine importe le SDK de la chaîne, chaque évolution majeure du SDK devient une *migration du domaine* : ton code le plus stable se retrouve prisonnier de la dépendance qui change le plus vite. Oriente les flèches vers l'intérieur et ces changements restent dans le cercle extérieur, où ils coûtent moins cher.
-
-Le bastion est le point. Les frameworks sont le mobilier.`,
+Si ton domaine importe le SDK de la chaîne, chaque évolution majeure du SDK devient une *migration du domaine* : ton code le plus stable se retrouve prisonnier de la dépendance qui change le plus vite. Oriente les flèches vers l'intérieur et ces changements restent dans le cercle extérieur, où ils coûtent moins cher.`,
     },
     {
       kind: "diagram",
@@ -59,7 +57,7 @@ Le bastion est le point. Les frameworks sont le mobilier.`,
       },
     },
     { kind: "widget", component: "dependency-rule",
-      body: `La loi a une forme, et la prose ne sait pas la dessiner. **Activez quelques imports** et regardez où tombent les licites — puis percez un mur exprès et lisez ce que cela vous coûte.` },
+      body: `**Activez quelques imports** et regardez où tombent les licites — puis percez un mur exprès et lisez ce que cela vous coûte.` },
     { kind: "theory", body: `## Chaque brèche était raisonnable
 
 Personne n'enfreint la règle par malice. On l'enfreint un mardi, pour une bonne raison, avec une échéance sur le dos.
@@ -80,7 +78,7 @@ La règle gagne sa place précisément les jours où elle ressemble à de la bur
         "ui/ReleaseButton.tsx importe le cas d'utilisation release depuis le domaine, afin de l'appeler",
       ],
       answer: 0,
-      explain: `Les deux autres sont le cercle extérieur qui nomme l'intérieur — la règle fonctionne exactement comme conçue. Le domaine qui importe le SDK est l'intérieur qui nomme l'extérieur : maintenant les pièces les plus profondes du bastion tremblent chaque fois qu'un fournisseur publie une version majeure.`,
+      explain: `Les deux autres sont le cercle extérieur qui nomme l'intérieur — la règle fonctionne exactement comme conçue. Le domaine qui importe le SDK est l'intérieur qui nomme l'extérieur : maintenant le domaine doit changer chaque fois qu'un fournisseur publie une version majeure.`,
     },
     {
       kind: "quiz",

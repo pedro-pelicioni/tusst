@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Kırmızı-Yeşil Ritüeli",
+  title: "Test güdümlü geliştirme",
   tagline: "TDD: önce testler, sonra dövmek.",
   steps: [
     {
@@ -12,7 +12,7 @@ Bölüm I'de *doğru*nun ne demek olduğunu yazıya dökmeyi öğrendin. Bir **t
 
 Bu, yapay zekâyla *daha çok* önem kazanıyor, daha az değil. Bir model senin düzyazınla tartışabilir, niyetini yeniden yorumlayabilir, gereksinimlerini "iyileştirebilir". Ama \`assert_eq!\` ile tartışamaz. **Testler, makinenin itiraz edemediği spec'tir** — akla yatkın bir cevapla doğru cevabın birbirine karışmaktan çıktığı tek yer.
 
-Onları **önce** yaz; ondan sonra dövdüğün her şey doğduğu andan itibaren notlanır.`,
+Onları **önce** yaz; ondan sonra dövdüğün her şey notlanır.`,
     },
     {
       kind: "theory",
@@ -110,7 +110,7 @@ Testlerinin yaptığı *her* işlemden sonra bunu assert et — depozito, serbes
       after: `);`,
       choices: ["refunds", "fees", "interest", "gas"],
       answer: 0,
-      explain: `Bölüm I'deki aynı demir halka, artık dişleriyle: para escrow'dan yalnızca serbest bırakma ya da iade olarak çıkar. Bir assertion olarak yazıldığında makine onu her dövmede yeniden denetler — bedava, sonsuza dek.`,
+      explain: `Bölüm I'deki invariant, artık çalıştırılabilir: para escrow'dan yalnızca serbest bırakma ya da iade olarak çıkar. Assertion olarak yazıldığında makine onu her çalıştırmada bedavaya yeniden denetler.`,
     },
     {
       kind: "theory",

@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "La Mano en el Freno",
+  title: "Guardrails y reglas de parada",
   tagline: "Bucles agénticos y frenos: sin regla de parada no es autonomía, es una factura.",
   steps: [
     { kind: "theory", body: `## Todo bucle necesita un freno
@@ -13,7 +13,7 @@ Un bucle sin vigilancia no converge — **gasta**. Un bucle sin parada es una fa
 - **Máximo de iteraciones** — un techo duro, siempre.
 - **Detección de falta de avance** — el mismo error dos veces significa *cambia de estrategia o escala*, nunca "otra vez, pero con más ganas".
 
-La regla del reino: nunca empieces un bucle sin haber decidido cómo pararlo.` },
+La regla: nunca empieces un bucle sin haber decidido cómo pararlo.` },
     { kind: "widget", component: "loop-brake",
       body: `Dos interruptores, cuatro ejecuciones. **Gira el bucle** con los frenos puestos y el feedback honesto, y luego quita una cosa cada vez y mira de cuál te libras.` },
     { kind: "theory", body: `## Lo que cuesta cuando nada lo detiene
@@ -42,7 +42,7 @@ Esa es la forma del asunto: **el freno no te ahorra dinero en las ejecuciones bu
 
 Una prueba que falla al azar — tiempos, orden, un puerto compartido — es una molestia para los humanos. Suspiramos y la repetimos. Para un bucle es **veneno**, porque el bucle *actúa sobre cada señal*.
 
-Llega un rojo fantasma → el golem "arregla" código que nunca estuvo roto → el cambio entra → en la siguiente iteración, otro fantasma → otro arreglo. El bucle está aprendiendo supersticiones, cada una sobre la anterior, todas a partir de ruido.
+Llega un rojo fantasma → el modelo "arregla" código que nunca estuvo roto → el cambio entra → en la siguiente iteración, otro fantasma → otro arreglo. El bucle está aprendiendo supersticiones, cada una sobre la anterior, todas a partir de ruido.
 
 La regla: **haz el feedback determinista antes de conectarlo a un bucle.** Una prueba inestable es peor que ninguna prueba — el silencio no engaña a nadie; el ruido engaña sin cansarse.` },
     { kind: "quiz", question: `Una prueba falla al azar una de cada cinco veces, por cuestión de tiempos. Para un humano es una molestia. ¿Qué es para un bucle?`,
@@ -64,11 +64,11 @@ La regla: **haz el feedback determinista antes de conectarlo a un bucle.** Una p
         ] } },
     { kind: "theory", body: `## La altitud correcta
 
-¿Dónde se coloca el humano mientras el bucle gira? No dentro — revisar cada pulsación significa que *tú* eres el bucle, a ritmo de golem. Y tampoco por encima de las nubes, sellando lo que caiga.
+¿Dónde se coloca el humano mientras el bucle gira? No dentro — revisar cada pulsación significa que *tú* eres el bucle, a ritmo de modelo. Y tampoco por encima de las nubes, sellando lo que caiga.
 
 La altitud correcta es la **frontera**: revisa el *diff* contra la *especificación*. ¿Pasaron las evals? ¿El cambio respeta las reglas del Capítulo I? ¿Se movió algo que no tenía nada que hacer ahí? Confía en los instrumentos del bucle para lo pequeño; guarda el juicio humano para lo que los instrumentos no ven.
 
-**A continuación:** cuando un bucle no basta — muchos golems pequeños, un plan tejido.` },
+**A continuación:** cuando un bucle no basta — muchos modelos pequeños, un plan tejido.` },
   ],
   testOut: [
     { question: `Un bucle lleva veintiocho iteraciones fallando la misma eval con el mismo error. ¿Qué te debe el arnés?`,

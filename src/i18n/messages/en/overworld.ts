@@ -148,7 +148,7 @@ export const overworld = {
     },
   },
   tutorial: {
-    header: "Your first step toward legend",
+    header: "How to play",
     stepOf: "Step {current} of {total}",
     skip: "I know how to play · skip the tutorial",
     next: "Next →",
@@ -161,7 +161,7 @@ export const overworld = {
         body: "Click “Walk to the mission”. Your hero follows the trail alone. On arrival the button turns into “Enter the mission” — click it to begin!",
       },
       {
-        tag: "02 / 03 · KNOWLEDGE IS POWER",
+        tag: "02 / 03 · ANSWER TO STRIKE",
         title: "Read, then strike.",
         body: "Each mission is a short chapter with checks. Every right answer strikes the boss; every miss costs a heart — but nothing here locks you out. Curious? Any mission is always open.",
       },
@@ -246,7 +246,7 @@ export const overworld = {
     progress: "{current} / {total} challenges",
   },
   victory: {
-    headerLevel: "LEVEL {level} AWAKENED",
+    headerLevel: "LEVEL {level} REACHED",
     headerRevisit: "MISSION REVISITED",
     headerDone: "MISSION CLEARED",
     congrats: "WELL DONE, {name}!",

@@ -80,7 +80,8 @@ export default async function ProfilePage() {
     {
       label: p.stats.championCards,
       value: `${cardsClaimed}/${acts.length}`,
-      href: "/cards",
+      // each act's card is its reward on the campaign map
+      href: "/campaign",
     },
   ];
 
@@ -320,7 +321,7 @@ export default async function ProfilePage() {
             href={
               current?.nextLessonSlug
                 ? `/lessons/${current.nextLessonSlug}`
-                : "/cards"
+                : "/campaign"
             }
             className="inline-block rounded-full px-8 py-3.5 font-display text-sm font-bold uppercase tracking-[0.16em] text-[#0b0817] transition-transform hover:-translate-y-[2px]"
             style={{
@@ -328,7 +329,7 @@ export default async function ProfilePage() {
               boxShadow: "0 0 34px rgba(143,123,255,0.4)",
             }}
           >
-            {current ? p.continueCampaign : p.viewChampions}
+            {current ? p.continueCampaign : p.openCampaignMap}
           </Link>
         </div>
       </div>

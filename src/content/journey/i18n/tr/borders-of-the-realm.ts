@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Diyarın Sınırları",
+  title: "Bounded context'ler",
   tagline: "DDD ve bounded context'ler: tek kelime, üç anlam ve bunu güvenli kılan sınırlar.",
   steps: [
     { kind: "theory", body: `## Tek kelime, üç anlam

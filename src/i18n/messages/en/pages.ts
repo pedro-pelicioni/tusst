@@ -1,4 +1,4 @@
-// App pages: path (the Hall reuses `home`), campaign, cards, tracks/[slug], profile.
+// App pages: path (the Hall reuses `home`), campaign, tracks/[slug], profile.
 export const pages = {
   campaign: {
     kicker: "the optional road",
@@ -16,23 +16,6 @@ export const pages = {
     skirmishesForgingSoon: "lessons in preparation — soon",
     startLearning: "Start learning",
     viewChampions: "View your cards",
-  },
-  cards: {
-    metaTitle: "The Characters — TUSST",
-    metaDescription:
-      "The eight characters of the realm — seven you can play, one you fight. Each is met by finishing a campaign section.",
-    kicker: "// the cast",
-    title: "The Characters",
-    intro:
-      "Eight characters walk this realm, one waiting at the end of each campaign section. Seven of them you can be: pick one and they grow with you through eight forms, from apprentice to radiant champion. The eighth is not a companion.",
-    bossCard: "boss",
-    formsLabel: "eight forms",
-    playCta: "Play as this character",
-    bossNote: "Fought, not played.",
-    actLink: "Section {numeral} — {title}",
-    unassigned: "unassigned",
-    footnote:
-      "characters are cosmetic only — your choice carries no advantage and gates nothing. you meet each one by finishing its campaign section, and you can change who you play from your profile at any time.",
   },
   track: {
     backToPath: "campaign",
@@ -79,6 +62,6 @@ export const pages = {
       locked: "locked",
     },
     continueCampaign: "Continue the campaign",
-    viewChampions: "View your cards",
+    openCampaignMap: "Open the campaign map",
   },
 };

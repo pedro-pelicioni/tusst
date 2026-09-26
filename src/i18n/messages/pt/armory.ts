@@ -8,12 +8,12 @@ export const armory = {
   kicker: "o arsenal",
   title: "Gaste o que as lições te pagaram",
   intro:
-    "Cada lição concluída pinga 10 de ouro na sua bolsa. Aqui está o que ela compra — uma lâmina, uma peça de equipamento, uma criatura na sua cola. Nada disso te deixa mais forte. Tudo isso te deixa mais você.",
+    "Cada lição concluída pinga 10 de ouro na sua bolsa. Aqui está o que ela compra — uma lâmina, uma peça de equipamento, uma criatura na sua cola. Nada disso te deixa mais forte.",
 
   // Aparece no lugar da loja enquanto a camada de moedas segue escondida.
   locked: {
     title: "As portas estão fechadas",
-    body: "O Arsenal abre depois da sua primeira lição concluída. Vá concluir uma, e as portas vão saber.",
+    body: "O Arsenal abre depois da sua primeira lição concluída.",
     cta: "Escolher uma lição",
   },
 

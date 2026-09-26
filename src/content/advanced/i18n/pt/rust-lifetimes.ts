@@ -302,7 +302,7 @@ Para um serviço RPC que decodifica uma requisição, usa e descarta dentro de u
       question:
         "Por que `fn parse(raw: &'a str) -> Frame<'a>` é a assinatura certa para o construtor?",
       options: [
-        "Ela declara que as fatias do frame apontam para dentro de `raw`, então o compilador amarra os destinos dos dois",
+        "Ela declara que as fatias do frame apontam para dentro de `raw`, então o compilador amarra os lifetimes dos dois",
         "Ela força `raw` a ser copiado para dentro do frame, tornando o frame independente",
         "É só estilo — `fn parse(raw: &str) -> Frame` significa a mesma coisa",
       ],

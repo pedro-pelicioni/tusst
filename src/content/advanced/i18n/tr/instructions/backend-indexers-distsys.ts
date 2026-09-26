@@ -227,7 +227,7 @@ Failed has 0 outgoing transitions
 
 Örtüşme garantisi kesinlikle \`R + W > N\`. \`N=5, R=2, W=3\` satırının toplamı tam 5 eder ve **örtüşmez** — iki node'luk bir okuma quorum'u (yeter sayı), yazmayı alan üç node'dan tamamen ayrık olabilir ve hatasız biçimde bayat veri döner.
 
-Bir partition (ağ bölünmesi) izin istemez. N=5, W=3 ve 3|2'lik bir bölünmede çoğunluk tarafı hâlâ bir quorum toplar; azınlık tarafı ne R=3'e ne W=3'e ulaşır ve ikisini de reddeder. O ret CP tercihidir ve onu R ile W'yi seçtiğin anda yaptın.
+N=5, W=3 ve 3|2'lik bir ağ bölünmesinde (partition) çoğunluk tarafı hâlâ bir quorum toplar; azınlık tarafı ne R=3'e ne W=3'e ulaşır ve ikisini de reddeder. O ret CP tercihidir ve onu R ile W'yi seçtiğin anda yaptın.
 
 Okumalar duvar saati zaman damgasına göre değil, **versiyon numarasına** göre çözülür.
 

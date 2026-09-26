@@ -1,8 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Tisser le Graphe",
-  tagline: "Graph engineering : beaucoup de petits golems, chacun sur son établi, un plan tissé.",
+  title: "Graph engineering",
+  tagline: "Graph engineering : beaucoup de petits modèles, chacun sur son établi, un plan tissé.",
   steps: [
     {
       kind: "theory",
@@ -124,7 +124,7 @@ La discipline consiste à repérer la véritable indépendance : les travaux p
       options: [
         "Évaluer trois bibliothèques candidates selon la même liste de contrôle — travail indépendant, sans état partagé",
         "Écrire un script de migration et exécuter ce même script — les superposer fait gagner du temps",
-        "Trois golems éditant le même module en même temps, pour le finir trois fois plus vite",
+        "Trois modèles éditant le même module en même temps, pour le finir trois fois plus vite",
       ],
       answer: 0,
       explain: `Exécuter avant que les données soient prêtes viole une dépendance, et modifier un fichier partagé multiplie les conflits de fusion. Le test est simple et fiable : si le nœud A ne lit ni la sortie ni l'état du nœud B, ils peuvent s'exécuter en parallèle.`,
@@ -144,13 +144,13 @@ La discipline consiste à repérer la véritable indépendance : les travaux p
 
 Le chapitre sur l'environnement contrôlé t'a prévenu : se relire soi-même laisse subsister ses propres angles morts. Un graphe corrige ce problème *par sa structure*.
 
-Ajoute un **nœud vérificateur** : un golem forge ; un *autre* nœud — contexte frais, sans attachement aux choix déjà faits — est chargé de **réfuter** : trouver où le diff viole la spéc, chasser les cas limites, essayer de le casser.
+Ajoute un **nœud vérificateur** : un modèle forge ; un *autre* nœud — contexte frais, sans attachement aux choix déjà faits — est chargé de **réfuter** : trouver où le diff viole la spéc, chasser les cas limites, essayer de le casser.
 
 La mission confiée au nœud compte. « Relis ça » invite à un simple acquiescement. *« Trouve ce qui ne va pas »* oriente l'esprit vers les failles. Une paire adversariale repère ce qu'une auto-évaluation ne peut pas voir ; c'est pourquoi les véritables ateliers associent un créateur à un inspecteur.`,
     },
     {
       kind: "fill",
-      prompt: `Donne au deuxième golem son vrai travail :`,
+      prompt: `Donne au deuxième modèle son vrai travail :`,
       file: "graph.toml",
       before: `verifier.goal = "`,
       after: ` le diff du nœud forgeron"`,
@@ -171,7 +171,7 @@ Ce que vous avez est une forme. Ce que vous n'avez pas encore est une machine su
       options: ["Chaque nœud reçoit son propre établi trié, si bien que la qualité ne se dilue pas entre des étapes sans rapport","Les modèles facturent moins plusieurs requêtes courtes qu'une longue","Cela laisse le modèle choisir son ordre de travail, ce qui améliore les résultats"], answer: 0 },
     { question: `Quel est le test pour savoir si deux nœuds peuvent tourner en parallèle ?`,
       options: ["Le nœud A ne lit pas la sortie du nœud B et ne touche pas à son état","On s'attend à ce que les deux nœuds prennent à peu près le même temps","Aucun des deux n'écrit sur le réseau"], answer: 0 },
-    { question: `Pourquoi donner au second golem l'objectif « réfuter » plutôt que « relire » ?`,
+    { question: `Pourquoi donner au second modèle l'objectif « réfuter » plutôt que « relire » ?`,
       options: ["Un nœud à qui l'on demande d'approuver trouvera le moyen d'approuver — la réfutation est le seul objectif qui vise les trous","La réfutation produit une sortie plus courte, donc moins coûteuse","La relecture exige le contexte d'origine, la réfutation non"], answer: 0 },
     { question: `Quatre tâches en parallèle, deux étapes chacune. Que coûte réellement d'attendre que toutes finissent l'étape un ?`,
       options: ["Le temps d'étape un de la tâche la plus lente, dépensé à ne rien faire des autres — et de nouveau à l'étape deux","Rien, tant que les tâches tournent en parallèle au sein de chaque étape","Seulement la surcharge de coordination de l'ordonnanceur"], answer: 0 },

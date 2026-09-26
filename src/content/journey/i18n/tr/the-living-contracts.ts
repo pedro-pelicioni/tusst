@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Yaşayan Kontratlar",
+  title: "Soroban: Stellar'da kontratlar",
   tagline: "Soroban: ledger'da Wasm ve state koymak için üç raf.",
   steps: [
     {
@@ -12,7 +12,7 @@ export const conceptText: JourneyConceptText = {
 
 Zarif kısım da şu: birini çağırmak için yeni bir işlem formatı gerekmez. Parçalarına ayırdığın zarf tek bir operasyon taşır — \`invoke_host_function\` — ve çağrı onun içinde yolculuk eder: hangi kontrat, hangi fonksiyon, hangi argümanlar.
 
-Aynı zarf, aynı imzalar, aynı ~5 saniyelik kapanış. Klasik diyar ile kontrat diyarı tek bir kan dolaşımını paylaşır.`,
+Aynı zarf, aynı imzalar, aynı ~5 saniyelik kapanış.`,
     },
     {
       kind: "theory",
@@ -21,7 +21,7 @@ Aynı zarf, aynı imzalar, aynı ~5 saniyelik kapanış. Klasik diyar ile kontra
 Soroban bir kontrata üç depolama katmanı verir — girdi başına seçilir, farklı fiyatlandırılır:
 
 - **Temporary** — ucuz, kısa ömürlü, süresi dolunca sonsuza dek gider. Fiyat teklifleri, nonce'lar, zaman kutulu state.
-- **Persistent** — gerçek arşiv: kullanıcı bakiyeleri, sahiplik kayıtları. Süresi dolduğunda *arşivleme* sayesinde hayatta kalır (sonraki adım).
+- **Persistent** — gerçek arşiv: kullanıcı bakiyeleri, sahiplik kayıtları. Süresi dolduğunda *arşivleme* sayesinde hayatta kalır (sonraki bölüm).
 - **Instance** — kontratın kendisine yapıştırılmış küçük state: admin adresi, yapılandırma, her çağrının ihtiyaç duyduğu metadata.
 
 Yanlış rafı seçmek klasik bir çaylak vergisidir: instance şişkinliğini her bir çağrı sırtında taşır, temporary bakiyelerse kaybolup gider. Raf, tasarımın *bir parçasıdır*.`,
@@ -36,7 +36,7 @@ Yanlış rafı seçmek klasik bir çaylak vergisidir: instance şişkinliğini h
           {
             id: "instance",
             label: "instance",
-            note: "Kontratın kendi ayarları; kontratla birlikte yaşar, kontratla birlikte ölür.",
+            note: "Kontratın kendi ayarları, kontratın kendi saatine bağlı: onunla birlikte arşivlenir, onunla birlikte geri yüklenir.",
             tone: "gold",
           },
           {
@@ -70,7 +70,7 @@ Hiç görmediğin bir kontratı, tipleri derleme zamanında kontrol edilmiş hal
       options: [
         "Temporary — en ucuz kira ve onu unutmak tam olarak istediğin şey",
         "Persistent, böylece bir çağrı geç gelirse geri yüklenebilir",
-        "Instance, böylece kontrat bir gün arşivlenirse kaybolur",
+        "Instance, böylece kontrat ne kadar yaşarsa o da tam o kadar yaşar",
       ],
       answer: 0,
       explain: `Rafı verinin gerçek ömrüne eşlemek tasarım kararının tamamıdır ve insanlar bunu güvenli görünen yönde yanlış yapar: kısa ömürlü veriyi persistent rafa koymak, verinin hiç ihtiyaç duymadığı bir garanti için sonsuza dek daha fazlaya mal olur.`,

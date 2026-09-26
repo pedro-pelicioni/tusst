@@ -139,11 +139,10 @@ const JOBS = [
   // adventuring party sprite: saliency-cut (the characters ARE the
   // subject, unlike the rock layers), tight-trimmed, placed by HeroScene
   { src: "hero-party-cut.png", out: "hero/party.webp", kind: "alpha", budgetKB: 200, resize: { width: 1400 }, alphaQuality: 90, trim: true },
-  { src: "intro-scene.png", out: "intro/scene.webp", kind: "scene", budgetKB: 350 },
-  { src: "intro-character-cut.png", out: "intro/character.webp", kind: "alpha", budgetKB: 250, resize: { width: 1200 } },
+  // "why learn it the old way": the golem scribe writes without end while the
+  // apprentice reads the one contract before sealing it
+  { src: "why-scene.png", out: "why/scene.webp", kind: "scene", budgetKB: 350, resize: { width: 2560 } },
   { src: "carousel-bg.png", out: "carousel/bg.webp", kind: "scene", budgetKB: 250 },
-  { src: "feature-campaign.png", out: "features/campaign.webp", kind: "scene", budgetKB: 350 },
-  { src: "feature-boss.png", out: "features/boss.webp", kind: "scene", budgetKB: 350 },
   { src: "feature-forge.png", out: "features/forge.webp", kind: "scene", budgetKB: 350 },
   { src: path.join("..", "..", "docs", "screenshots", "forge-ide.png"), out: "features/forge-card.webp", kind: "scene", budgetKB: 200, resize: { width: 1280 } },
   // Social card: a 1200x630 render of the pixel hero (island backdrop, sigil,

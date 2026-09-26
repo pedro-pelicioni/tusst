@@ -38,8 +38,8 @@ export const visuals = {
       "el README",
       "un archivo de código muerto que nadie borró",
     ],
-    starving: "Nada en el banco. El golem tendrá que adivinar lo que querías decir — y lo hará.",
-    partial: "Relevante, pero incompleto. Lo que dejaste fuera, el golem se lo inventa.",
+    starving: "Nada en el banco. El modelo tendrá que adivinar lo que querías decir — y lo hará.",
+    partial: "Relevante, pero incompleto. Lo que dejaste fuera, el modelo se lo inventa.",
     clean: "La tarea, y nada más. Esto es lo que parece la curaduría.",
     noisy: "{percent}% del banco es ruido. Tu única restricción crucial compite ahora con él — y un archivo distractor es una invitación a editarlo.",
     overflow: "Por encima del presupuesto. El banco se truncó, y no eres tú quien elige qué mitad sobrevivió.",
@@ -73,7 +73,7 @@ export const visuals = {
     hint: "No hay excepción ingeniosa ahí arriba. Todo lo que está por encima de la diagonal es una migración esperando a que un proveedor publique una versión mayor.",
   },
   blastRadius: {
-    grantsLabel: "qué puede hacer el golem",
+    grantsLabel: "qué puede hacer el modelo",
     grants: [
       "leer el repositorio",
       "ejecutar la suite de pruebas",
@@ -167,8 +167,8 @@ export const visuals = {
     verdictSoon: "Un paso más y el reloj se acaba. Lo que pasa después es lo único que separa a los tres estantes.",
     verdictArchived: [
       "",
-      "Archivada, no borrada. El dato salió del libro mayor activo y tu llamada fallará hasta que alguien lo restaure — pero sigue ahí, y la restauración es una comisión, no una reescritura.",
-      "La propia instancia del contrato está archivada. Nadie puede llamarlo, y toda entrada persistente que posee se fue con él. Restaurar lo devuelve todo.",
+      "Archivada, no borrada. El dato salió del libro mayor activo, pero sigue ahí: una transacción que lo necesite puede restaurarlo primero. La restauración es una comisión, no una reescritura.",
+      "La propia instancia del contrato está archivada, y todo su almacenamiento de instancia se fue con ella — ambos son una sola entrada del libro mayor. Una llamada puede restaurar primero la instancia, pagando una comisión, y todo vuelve.",
     ],
     verdictLost: [
       "Perdida. No archivada — borrada. No hay restauración para el almacenamiento temporal, y no hay comisión que la traiga de vuelta. Lo que vivía aquí hay que reconstruirlo desde otro sitio, o sencillamente se perdió.",

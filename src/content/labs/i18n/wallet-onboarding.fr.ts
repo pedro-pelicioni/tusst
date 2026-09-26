@@ -7,27 +7,27 @@ export const labText = {
   },
   steps: {
     "intro": {
-      body: `## Chaque héros a besoin d’un sigil
+      body: `## D’abord, une paire de clés
 
 Sur Stellar, ton identité est une **paire de clés** : une adresse publique que tu montres au monde (elle commence par \`G\`) et une clé secrète que tu gardes précieusement (elle commence par \`S\`).
 
-Pas de formulaire. Pas d’e‑mail. Pas de permission. Tu *forges* une identité à partir de mathématiques pures — et dans les prochaines minutes elle détiendra des fonds, acceptera un actif et paiera un autre compte. Tout est réel, sur le **testnet** : les terrains d’entraînement de Stellar, où les pièces n’ont aucune valeur mais la machinerie est la même.`,
+Pas de formulaire. Pas d’e‑mail. Pas de permission. Tu *forges* une identité à partir de mathématiques pures — et dans les prochaines minutes elle détiendra des fonds, acceptera un actif et paiera un autre compte. Tout est réel, sur le **testnet** : le réseau d’entraînement de Stellar, où les pièces n’ont aucune valeur mais la machinerie est la même.`,
     },
     "forge-keys": {
       title: "Forge tes clés",
       body: `Un seul coup de marteau génère 32 octets de hasard et dérive les deux clés à partir de celui‑ci. Le secret reste **dans ton navigateur** — TUSST ne le voit jamais, et aucun serveur n’est impliqué dans ce que tu signes aujourd’hui.`,
       cta: "Forge la paire de clés",
-      successBody: `Ton sigil est frappé :
+      successBody: `Ton adresse :
 
 \`{address}\`
 
-Cette adresse est publique — partage‑la librement. La clé secrète qui la sous-tend signe en ton nom ; quiconque la détient contrôle le compte. Sur testnet, cela n’a aucune conséquence financière. Sur le mainnet, protège‑la comme un dragon.`,
+Cette adresse est publique — partage‑la librement. La clé secrète qui la sous-tend signe en ton nom ; quiconque la détient contrôle le compte. Sur testnet, cela n’a aucune conséquence financière. Sur le mainnet, ne partage jamais la clé secrète.`,
     },
     "friendbot": {
       title: "Réveille le compte",
       body: `Actuellement ton adresse n’est encore que des mathématiques — **le grand livre ne l’a jamais entendue**. Un compte n’existe que lorsqu’on le finance au-delà de la *réserve de base* (un petit dépôt XLM qui paie son entrée dans le grand livre).
 
-Sur le testnet, un esprit infatigable appelé **Friendbot** finance quiconque le demande.`,
+Sur le testnet, un faucet appelé **Friendbot** finance quiconque le demande.`,
       cta: "Appelle Friendbot",
       successBody: `Friendbot a répondu — ton compte existe maintenant **sur le grand livre** avec {balance} XLM.
 
@@ -53,41 +53,41 @@ C’est pourquoi personne ne peut t’envoyer des tokens indésirables sur Stell
 Remarque ce que ça a coûté : une petite commission (~0.00001 XLM) et une réserve de base supplémentaire verrouillée, car une ligne de confiance est une nouvelle entrée du grand livre. Ton numéro de séquence a aussi grimpé.`,
     },
     "shrine": {
-      title: "Grave un sigil compagnon",
-      body: `Tu ne peux pas envoyer un paiement dans le vide — tu as besoin d’une **destination**. Gravons une seconde adresse : un petit sanctuaire pour recevoir ta première offrande.
+      title: "Crée une deuxième adresse",
+      body: `Tu ne peux pas envoyer un paiement dans le vide — tu as besoin d’une **destination**. Créons une deuxième adresse pour recevoir ton premier paiement.
 
-Nous allons le générer et *jeter la clé secrète dans la mer*. Le compte existera, détiendra ce que tu lui enverras, et ne répondra à personne. Un monument.`,
-      cta: "Grave le sigil",
-      successBody: `Le sigil du sanctuaire :
+Nous allons la générer et *jeter la clé secrète*. Le compte existera et détiendra ce que tu lui enverras, mais personne ne pourra jamais signer pour lui.`,
+      cta: "Créer l’adresse",
+      successBody: `La deuxième adresse :
 
 \`{companion}\`
 
-Il n’existe pas encore sur le grand livre — pareil que le tien avant Friendbot. Mais cette fois, c’est **toi** qui lui donneras vie.`,
+Elle n’existe pas encore sur le grand livre — comme la tienne avant Friendbot. Mais cette fois, c’est **toi** qui lui donneras vie.`,
     },
     "create-companion": {
-      title: "Érige le sanctuaire",
-      body: `Une opération \`create_account\` finance une nouvelle adresse au-delà de la réserve de base — exactement ce que Friendbot a fait pour toi. Maintenant tu le fais pour le sanctuaire, depuis **ton** solde : 100 XLM d’or testnet.`,
-      cta: "Érige‑le (envoie 100 XLM)",
-      successBody: `Le sanctuaire se dresse. Tu viens d’effectuer le même rite que Friendbot : **les comptes créent des comptes**. C’est toute la hiérarchie ; il n’existe pas de registre central.`,
+      title: "Crée le compte",
+      body: `Une opération \`create_account\` finance une nouvelle adresse au-delà de la réserve de base — exactement ce que Friendbot a fait pour toi. Maintenant tu le fais pour la deuxième adresse, depuis **ton** solde : 100 XLM de testnet.`,
+      cta: "Crée‑le (envoie 100 XLM)",
+      successBody: `Compte créé. Tu viens de faire ce que Friendbot a fait pour toi : **les comptes créent des comptes**. C’est toute la hiérarchie ; il n’existe pas de registre central.`,
     },
     "payment": {
-      title: "Fais une offrande",
+      title: "Envoie un paiement",
       body: `Le classique. Une opération \`payment\` déplace de la valeur d’un compte à un autre — réglée en ~5 secondes, pour une commission d’environ **0.00001 XLM**. C’est la transaction autour de laquelle Stellar a été construit.`,
       cta: "Envoie 25 XLM",
-      successBody: `Offrande livrée — 25 XLM, final, irréversible, dans le registre public :
+      successBody: `Paiement envoyé — 25 XLM, final, irréversible, dans le registre public :
 
 \`{tx}\`
 
 Commission, augmentation de séquence, deux soldes mis à jour, une clôture du ledger. Cinq secondes. C’est un paiement Stellar.`,
     },
     "quiz-recap": {
-      question: `Quelqu’un veut envoyer **USDC** à ton compte sanctuaire. Arrivera‑t‑il ?`,
+      question: `Quelqu’un veut envoyer **USDC** à ton deuxième compte. Arrivera‑t‑il ?`,
       options: [
-        "Non — le sanctuaire n’a jamais ouvert de ligne de confiance USDC, donc le grand livre le refuse",
+        "Non — le deuxième compte n’a jamais ouvert de ligne de confiance USDC, donc le paiement échoue avec op_no_trust",
         "Oui — tout compte peut recevoir n’importe quel actif",
         "Seulement s’ils paient une commission plus élevée",
       ],
-      explain: `Exact. Les lignes de confiance sont par compte, par actif. Ton compte principal fait confiance à l'USDC ; le sanctuaire ne détient que le XLM natif. Et comme son secret est au fond de la mer, personne ne pourra jamais en ouvrir une pour lui.`,
+      explain: `Exact. Les lignes de confiance sont par compte, par actif. Ton compte principal fait confiance à l'USDC ; le deuxième compte ne détient que le XLM natif. Et comme son secret a été jeté, personne ne pourra jamais en ouvrir une pour lui.`,
     },
     "claim": {
       body: `Le ledger enregistre tout ce que tu viens de faire : un compte créé, une ligne de confiance ouverte, un paiement réglé. Présente ton adresse, et la Forge consultera la chaîne elle-même — **preuve, pas promesses** — avant de libérer tes XP.`,

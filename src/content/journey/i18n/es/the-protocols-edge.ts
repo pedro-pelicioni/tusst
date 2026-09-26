@@ -3,8 +3,8 @@ import type { Concept } from "../types";
 export const theProtocolsEdge: Concept = {
   meta: {
     slug: "the-protocols-edge",
-    title: "La frontera del protocolo",
-    tagline: "CAPs, SEPs y versiones nombradas: cabalgando un protocolo vivo.",
+    title: "CAPs, SEPs y upgrades del protocolo",
+    tagline: "CAPs, SEPs y versiones nombradas: al ritmo de un protocolo vivo.",
     numeral: "IX",
     arc: "realm",
     level: 2,
@@ -26,14 +26,14 @@ Eso es SCP cumpliendo una doble función: el mismo consenso que acuerda las tran
     },
     {
       kind: "theory",
-      body: `## Dos ríos de cambio: CAPs y SEPs
+      body: `## Dos tipos de cambio: CAPs y SEPs
 
 El cambio fluye por dos canales, y vale la pena memorizar la diferencia:
 
 - **CAPs** — *Core Advancement Proposals* — cambian el **propio protocolo**: consenso, reglas del ledger, nuevas funciones host y mecánica de tarifas. Necesitan los votos de los validadores porque cada nodo debe ejecutarlas de forma idéntica.
 - **SEPs** — *Stellar Ecosystem Proposals* — son los estándares **alrededor** de la cadena: flujos entre wallets y anchors, interfaces de tokens y stellar.toml. Se adoptan mediante implementaciones, no por votación.
 
-La ley de la cadena frente a las costumbres del comercio. La CAP-59 aportó las curvas ZK; la SEP-24, los flujos de depósito. Ríos distintos, ambos públicos y moldeados en debates abiertos.`,
+La ley de la cadena frente a las costumbres del comercio. La CAP-59 aportó las curvas ZK; la SEP-24, los flujos de depósito. Ambas son públicas y se debaten en abierto.`,
     },
     {
       kind: "diagram",
@@ -92,7 +92,7 @@ Las actualizaciones ahora tienen nombres, y el ritmo es ágil:
 - **Protocol 27 "Zipper"** — llegó a mainnet en **julio de 2026** e incorporó la delegación de autenticación de la **CAP-71** para smart accounts.
 - **Protocol 28 "Adapter"** — **testnet se actualizó el 27 de agosto de 2026**; la actualización de mainnet está programada para el **16 de septiembre de 2026**.
 
-Aproximadamente una estación entre versiones, cada una con nombre y anunciada junto con sus guías de actualización. El reino no deriva hacia el futuro: avanza según un calendario publicado.`,
+Aproximadamente una estación entre versiones, cada una con nombre y anunciada junto con sus guías de actualización.`,
     },
     {
       kind: "theory",
@@ -139,14 +139,14 @@ Seguir el ritmo de un protocolo vivo es un hábito de lectura, no una hazaña he
 - El **repositorio de CAPs en GitHub**: propuestas mucho antes de que se publiquen; el borrador de hoy es la función host del año próximo.
 - Las **reuniones abiertas del protocolo**, donde las CAPs se debaten en público.
 
-Media hora al mes basta para adelantarte a todos los plazos de este capítulo. Quien lee las notas de actualización navega la ola; quien no, se queda atrás.`,
+Media hora al mes basta para adelantarte a todos los plazos de este capítulo.`,
     },
     {
       kind: "rustBranch",
       lessonSlug: "stellar-protocol-27-1",
       body: `El **Acto VIII** de la Campaña lleva este capítulo a la práctica: haces que un proyecto funcional atraviese una actualización de protocolo, actualizas los SDK, lees las notas de lanzamiento y pruebas la nueva versión como lo haría un equipo profesional.
 
-Con eso, el reino queda cartografiado: del consenso a los contratos, de las puertas a los velos, de un extremo al otro. Solo falta la mejor parte: **construir en él**. La Forja está abierta.`,
+Con eso queda cubierto el reino, del consenso a los contratos. Solo falta la mejor parte: **construir en él**. La Forja está abierta.`,
     },
   ],
   testOut: [

@@ -1,6 +1,7 @@
-// Closing scene + site footer: the hero sky plate returns (same file —
-// already cached), one centered display headline, the primary CTA, the
-// Forge escape hatch, and the brand strip.
+// Closing scene + site footer: the page ends where it began — the Journey
+// island (same file as the hero, already cached), dimmed under a heavy
+// vignette so it reads as a backdrop — with one balanced display headline,
+// the hero's crimson pixel button, the Forge escape hatch, and the brand strip.
 
 import Image from "next/image";
 import Link from "next/link";
@@ -17,9 +18,9 @@ export function FinalCta({
 }) {
   return (
     <footer data-scene className="ld-scene ld-scene--cta">
-      <SceneLayers layers={[{ src: "/landing/hero/sky.webp", plx: 0.05, className: "object-top" }]} />
+      <SceneLayers layers={[{ src: "/landing/hero/island.webp", plx: 0.05, className: "ld-pixel" }]} />
       <Particles tone="hero" count={8} />
-      <div aria-hidden className="ld-scrim" />
+      <div aria-hidden className="ld-scrim ld-scrim--cta" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center px-6 pb-14 pt-28 text-center md:pt-36">
         <div data-reveal className="flex flex-col items-center">
@@ -31,17 +32,13 @@ export function FinalCta({
             quality={75}
             className="ld-glow h-14 w-14 rounded-full"
           />
-          <h2 className="mt-7 font-display text-[clamp(36px,6vw,64px)] font-black uppercase leading-[1.05] text-fg">
-            {m.cta.titleTop}
-            <br />
-            {m.cta.titleBottom}
+          <h2 className="mt-7 font-display text-[clamp(32px,5vw,56px)] font-black uppercase leading-[1.06] text-fg">
+            <span className="block [text-wrap:balance]">{m.cta.titleTop}</span>
+            <span className="block text-gold [text-wrap:balance]">{m.cta.titleBottom}</span>
           </h2>
-          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-muted2">{m.cta.body}</p>
+          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-fg/80">{m.cta.body}</p>
 
-          <Link
-            href={beginHref}
-            className="mt-10 rounded-full bg-accent px-9 py-4 font-display text-[14px] font-bold uppercase tracking-[0.18em] text-[#0b0716] shadow-[0_0_40px_rgba(143,123,255,0.45)] transition hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-accent-soft focus-visible:outline-offset-4"
-          >
+          <Link href={beginHref} className="ld-btn-pixel mt-10">
             {m.cta.button}
           </Link>
 

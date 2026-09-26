@@ -5,7 +5,7 @@ export const steps3: Record<string, LessonStep[]> = {
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Nas profundezas do cofre do Acumulador, depois de todas as bolsas e livros-razão, existe uma oficina onde ninguém entra sem convite. Ali, um tesouro não começa como tesouro — começa como um **molde**:
+      body: `Hora de definir seus próprios tipos. Cada um começa como um **molde**:
 
 
 \`\`\`rust
@@ -15,7 +15,7 @@ struct Player {
 }
 \`\`\`
 
-Uma \`struct\` reúne vários valores em uma única forma nomeada. Defina-a uma vez, e o cofre reconhecerá essa forma para sempre.`,
+Uma \`struct\` reúne vários valores em uma única forma nomeada. Defina uma vez e reutilize onde quiser.`,
     },
     {
       kind: "theory",
@@ -66,7 +66,7 @@ Ferrisia has 100 hp
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Um molde sozinho é inerte: ele define uma forma, mas nenhum comportamento. O Acumulador ensina o rito que o desperta — um bloco \`impl\`.
+      body: `Um molde sozinho define uma forma, mas nenhum comportamento. O comportamento vai num bloco \`impl\`.
 
 \`\`\`rust
 impl Player {

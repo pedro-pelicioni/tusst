@@ -49,8 +49,8 @@ export const labs = {
   player: {
     exit: "Lab'dan ayrıl",
     wallet: {
-      none: "henüz mühür yok",
-      yours: "senin mührün",
+      none: "henüz cüzdan yok",
+      yours: "senin cüzdanın",
       copy: "Adresi kopyala",
       copied: "Kopyalandı",
     },
@@ -75,7 +75,7 @@ export const labs = {
       buildFailed: "Derleme başarısız — runner bu kontratı reddetti. Tekrar dene.",
       buildTimeout: "Derleme zaman aşımına uğradı — Forge meşguldü. Tekrar dene.",
       localWalletRequired:
-        "Bu ritüel, deploy ücretlerini ödemek için Forge'un yerel testnet anahtarına ihtiyaç duyar — önceki adımda döv.",
+        "Bu adım, deploy ücretlerini ödemek için Forge'un yerel testnet anahtarına ihtiyaç duyar — önceki adımda oluştur.",
       passkeyUnavailable:
         "Passkey'ler güvenli bir tarayıcı bağlamı ve WebAuthn desteği ister. Bu lab'ı passkey destekleyen bir cihazda HTTPS üzerinden aç.",
       passkeyMismatch:
@@ -97,7 +97,7 @@ export const labs = {
         "Koşun bu tarayıcıda yaşıyor. Giriş yap, Forge onu zincir üstünde doğrulasın — vaat değil, kanıt — ve XP'ni ödesin.",
       signIn: "Almak için giriş yap",
       failed:
-        "Ledger aynı fikirde değil — bazı kahramanlıklar eksik: {checks}. Yukarıdaki adımları bitir ve tekrar al.",
+        "Ledger'da henüz yok: {checks}. Yukarıdaki adımları bitir ve tekrar al.",
       checkNames: {
         "account-exists": "yaşayan bir hesap",
         trustline: "USDC trustline'ı",
@@ -114,7 +114,7 @@ export const labs = {
       xpEarned: "+{xp} xp",
       levelUp: "Seviye {level} açıldı!",
       xpTotal: "toplam {xp} xp",
-      already: "Zaten alınmış — ledger unutmaz.",
+      already: "Zaten alınmış.",
       backToForge: "Forge'a dön",
       openIde: "IDE'de devam et",
     },

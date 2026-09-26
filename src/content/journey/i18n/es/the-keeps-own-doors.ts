@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Las Puertas de la Fortaleza",
+  title: "Ports y adapters",
   tagline: "Puertos y adaptadores: el dominio declara la puerta, el mundo encaja en ella.",
   steps: [
     {
@@ -72,7 +72,7 @@ Todo el trabajo del adaptador es la traducción entre esos dos vocabularios. Si 
 
 Un núcleo sin importaciones de framework es una **isla pura**: constrúyela en una prueba, pásale un adaptador falso, verifica su comportamiento. Sin red, sin cadena dockerizada, sin RPC inestable — las pruebas del rito Rojo-Verde se ejecutan en **milisegundos**.
 
-Este es el beneficio silencioso y acumulativo: los equipos con fortalezas limpias escriben más pruebas *porque las pruebas son baratas*, y las pruebas baratas generan bucles rápidos — tanto para humanos como para golems.
+Este es el beneficio silencioso y acumulativo: los equipos con fortalezas limpias escriben más pruebas *porque las pruebas son baratas*, y las pruebas baratas generan bucles rápidos — tanto para humanos como para modelos.
 
 Los adaptadores siguen teniendo sus propias pruebas contra la red real — una capa delgada y honesta, probada por separado a su propio ritmo más lento.`,
     },
@@ -118,9 +118,9 @@ Declara los **puertos** que necesita este caso de uso — las puertas que posee 
 
 Esto es lo que la fortaleza te brinda en la era de IA: **los módulos bien delimitados son prompts bien delimitados**.
 
-“Reescribe el adaptador Horizon para apuntar al nuevo RPC — aquí está el puerto que debe cumplir, aquí están sus pruebas” es una tarea que un golem completa *dentro de una caja*: el contexto de un solo archivo, un contrato que cumplir, pruebas que pasar, y muros que limitan el radio de explosión. El golem reconstruye una habitación sin nunca vagar por toda la fortaleza.
+“Reescribe el adaptador Horizon para apuntar al nuevo RPC — aquí está el puerto que debe cumplir, aquí están sus pruebas” es una tarea que un modelo completa *dentro de una caja*: el contexto de un solo archivo, un contrato que cumplir, pruebas que pasar, y muros que limitan el radio de explosión. El modelo reconstruye una habitación sin nunca vagar por toda la fortaleza.
 
-Próxima disciplina: el propio golem — y el banco que debes construir a su alrededor.`,
+Próxima disciplina: el propio modelo — y el banco que debes construir a su alrededor.`,
     },
   ],
   testOut: [

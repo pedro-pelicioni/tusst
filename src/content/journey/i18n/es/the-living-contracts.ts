@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Los Contratos Vivos",
+  title: "Soroban: contratos en Stellar",
   tagline: "Soroban: Wasm en el libro mayor, y tres estantes donde poner estado.",
   steps: [
     {
@@ -12,7 +12,7 @@ export const conceptText: JourneyConceptText = {
 
 Y aquí está la parte elegante: llamar a uno no necesita un nuevo formato de transacción. El sobre que desglosaste lleva una sola operación — \`invoke_host_function\` — y dentro viaja la llamada: qué contrato, qué función, qué argumentos.
 
-Mismo sobre, mismas firmas, mismo cierre de ~5 segundos. El reino clásico y el reino de los contratos comparten una sola corriente sanguínea.`,
+Mismo sobre, mismas firmas, mismo cierre de ~5 segundos.`,
     },
     {
       kind: "theory",
@@ -21,7 +21,7 @@ Mismo sobre, mismas firmas, mismo cierre de ~5 segundos. El reino clásico y e
 Soroban le da a un contrato tres niveles de almacenamiento — elegidos por entrada, con precios diferentes:
 
 - **Temporal** — barato, de corta duración, desaparece para siempre una vez que expira. Cotizaciones de precios, nonces, estado con límite de tiempo.
-- **Persistente** — el archivo real: saldos de usuarios, registros de propiedad. Sobrevive a la expiración mediante *archivado* (próximo paso).
+- **Persistente** — el archivo real: saldos de usuarios, registros de propiedad. Sobrevive a la expiración mediante *archivado* (próximo capítulo).
 - **Instancia** — pequeño estado pegado al propio contrato: dirección del administrador, configuración, los metadatos que necesita cada llamada.
 
 Elegir la estantería equivocada es un error clásico de novato: el inflado de instancia hace que cada llamada lo lleve consigo, y los saldos temporales simplemente desaparecen. La estantería *es* parte del diseño.`,
@@ -36,7 +36,7 @@ Elegir la estantería equivocada es un error clásico de novato: el inflado de i
           {
             id: "instance",
             label: "instancia",
-            note: "La configuración del propio contrato, que vive y muere con él.",
+            note: "La configuración del propio contrato, que comparte su reloj: se archiva y se restaura junto con él.",
             tone: "gold",
           },
           {
@@ -66,7 +66,7 @@ Llama a un contrato que nunca has visto, con tipos verificados en tiempo de comp
     },
     { kind: "quiz",
       question: `Vas a guardar el nonce de sesión de un usuario, que no significa nada a los pocos minutos de emitirse. ¿Qué estante?`,
-      options: ["Temporal — el alquiler más barato, y olvidarlo es exactamente lo que quieres","Persistente, para poder restaurarlo si llega una llamada tardía","De instancia, para que desaparezca si el contrato se archiva algún día"],
+      options: ["Temporal — el alquiler más barato, y olvidarlo es exactamente lo que quieres","Persistente, para poder restaurarlo si llega una llamada tardía","De instancia, para que viva exactamente tanto como el contrato"],
       answer: 0,
       explain: `Casar el estante con la vida real del dato es toda la decisión de diseño, y es una que la gente falla en la dirección que parece segura: poner datos de vida corta en el estante persistente cuesta más para siempre, por una garantía que el dato nunca necesitó.` },
     { kind: "fill",

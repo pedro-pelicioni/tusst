@@ -9,7 +9,7 @@ export const steps1: Record<string, LessonStep[]> = {
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Boas-vindas ao **Rust**, a linguagem que os antigos Forgeborn usavam para manter o céu inteiro.
+      body: `Boas-vindas ao **Rust**. Vamos escrever seu primeiro programa.
 
 Todo programa em Rust começa na função \`main\` — o ponto de entrada. Quando seu programa roda, é \`main\` que é chamada.
 
@@ -85,14 +85,14 @@ Como baús etiquetados, variáveis têm conteúdo — e nomes que dizem o que h�
     },
     {
       kind: "theory",
-      body: `Eis a velha lei do arsenal: variáveis em Rust são **imutáveis por padrão**. Uma vez vinculado, o valor não pode mudar.
+      body: `Variáveis em Rust são **imutáveis por padrão**. Uma vez vinculado, o valor não pode mudar.
 
 \`\`\`rust
 let x = 5;
 x = 10; // ❌ erro de compilação: não é possível atribuir duas vezes
 \`\`\`
 
-O compilador — seu aliado mais severo — vai se recusar a forjar isso.`,
+O compilador rejeita isso.`,
     },
     {
       kind: "quiz",
@@ -103,11 +103,11 @@ O compilador — seu aliado mais severo — vai se recusar a forjar isso.`,
         "x vira 15",
       ],
       answer: 0,
-      explain: "Uma vez forjado, nunca mudado — a menos que você declare o contrário.",
+      explain: "Sem `mut`, uma variável não pode ser reatribuída.",
     },
     {
       kind: "theory",
-      body: `Para permitir reatribuição, declare sua intenção ao próprio aço com \`mut\`:
+      body: `Para permitir reatribuição, adicione \`mut\`:
 
 \`\`\`rust
 let mut x = 5;
@@ -292,7 +292,7 @@ Saída esperada:
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Agora a lei que faz o Rust ser *Rust* — a que está gravada na porta do cofre:
+      body: `Agora a regra que faz o Rust ser *Rust*:
 
 **Todo valor tem exatamente um dono.**
 
@@ -323,7 +323,7 @@ Isso não é crueldade — é assim que o Rust sabe exatamente quem deve limpar 
         "Lê-la, mas não alterá-la",
       ],
       answer: 0,
-      explain: "O valor se moveu. Estenda a mão para a de novo e as proteções vão te queimar — em tempo de compilação.",
+      explain: "O valor se moveu. Use `a` de novo e o código não compila.",
     },
     {
       kind: "theory",
@@ -349,7 +349,7 @@ let b = a.clone();   // ✅ duas Strings, dois donos
       kind: "editor",
       intro: `### Prova final — a lei do guardião único
 
-O código inicial move \`sword\` para \`copy\` e depois tenta usar \`sword\` de novo — as proteções recusam. Conserte **clonando** em vez de mover.
+O código inicial move \`sword\` para \`copy\` e depois tenta usar \`sword\` de novo — o compilador recusa. Conserte **clonando** em vez de mover.
 
 Saída esperada:
 
@@ -600,7 +600,7 @@ Repare em \`==\` (uma pergunta: "igual?") versus \`=\` (uma ordem: "guarde isto"
         "O compilador adiciona um break automaticamente",
       ],
       answer: 0,
-      explain: "Viajantes que o percorrem para sempre viram parte da parede.",
+      explain: "Sem `break`, nada o interrompe.",
     },
     {
       kind: "fill",
@@ -846,14 +846,14 @@ items.push("map");    // adiciona ao final — a mochila cresce
 items.len()           // quantos dentro? → 3
 \`\`\`
 
-E a regra dos deuses antigos: posições contam **a partir do zero**. \`items[0]\` é \`"torch"\`, \`items[1]\` é \`"rope"\`.`,
+E atenção: posições contam **a partir do zero**. \`items[0]\` é \`"torch"\`, \`items[1]\` é \`"rope"\`.`,
     },
     {
       kind: "quiz",
       question: "Depois de `let mut v = vec![10, 20]; v.push(30);` — quanto é `v[0]`?",
       options: ["10 — posições contam a partir do zero", "30 — push o coloca primeiro", "20 — o segundo item"],
       answer: 0,
-      explain: "push adiciona ao FINAL; a indexação começa em 0, como os deuses antigos determinaram.",
+      explain: "push adiciona ao FINAL; a indexação começa em 0.",
     },
     {
       kind: "fill",
@@ -953,7 +953,7 @@ let vault = vec!["hammer", "chisel"];
 vault[5]   // 💥 PANIC — o programa quebra
 \`\`\`
 
-Colchetes *presumem* que o compartimento existe. Presunções, nos cofres, são fatais.`,
+Colchetes *presumem* que o compartimento existe.`,
     },
     {
       kind: "theory",
@@ -1080,7 +1080,7 @@ let mut s = String::from("Keeper");
 s.push_str(" of keys");   // anexa texto ao final
 \`\`\`
 
-\`push_str\` é o cinzel das inscrições vivas. (Seu primo \`push\` adiciona um único caractere.)`,
+\`push_str\` anexa texto; o primo dele, \`push\`, adiciona um único caractere.`,
     },
     {
       kind: "theory",

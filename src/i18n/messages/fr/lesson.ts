@@ -12,13 +12,13 @@ export const lesson = {
   comingSoonEnd: ".",
 
   // LessonSteps (step player)
-  praise: ["Bien forgé !", "C'est ça !", "Les runes approuvent.", "Sans faute."],
-  incorrect: "Pas tout à fait — étudie la rune encore une fois.",
+  praise: ["Bien joué.", "C'est ça.", "Correct.", "Propre."],
+  incorrect: "Pas tout à fait — relis ce passage.",
   skirmishComplete: "combat terminé",
   doneSignedIn:
-    "Le phare brille un peu plus fort. Ta progression est gravée dans la Ledgerstone.",
+    "Progression sauvegardée sur ton compte.",
   doneAnonymous:
-    "Le phare brille un peu plus fort — mais les runes non écrites s'effacent. Crée un compte gratuit pour sauvegarder ta progression et réclamer tes cartes de champion.",
+    "Rien n'est encore sauvegardé ici. Crée un compte gratuit pour sauvegarder ta progression et réclamer tes cartes de champion.",
   saveProgress: "Sauvegarder ma progression",
   nextSkirmish: "Combat suivant ›",
   backToAct: "Retour à l'acte",

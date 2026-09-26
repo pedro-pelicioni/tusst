@@ -52,7 +52,7 @@ Yapmadıkları şeye dikkat: asla iki rakip tarihe bölünmüyorlar.`,
         "Zinciri genesis'ten itibaren yeniden indirmeleri gerekir",
         "Hiçbir şey; duraklamış bir ağ sonsuza dek duraklamış kalır",
       ],
-      explain: `Simülatörde dene: düşenleri kaldır, öner, ritim geri gelir. Duraklamalar birer mola, ölüm değil.`,
+      explain: `Simülatörde dene: düşenleri kaldır, öner, ritim geri gelir.`,
     },
     "claim": {
       body: `Ledger'lar kapattın, bir ağı durdurdun ve iyileştirdin — federe uzlaşının tüm yaşam döngüsü, tek oturuşta. Lab'ı mühürle ve XP'ni al.`,

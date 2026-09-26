@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Comptes, Confiance et Actifs",
+  title: "Comptes, trustlines et actifs",
   tagline: "Comptes, réserves et trustlines : pourquoi détenir un actif se choisit.",
   steps: [
     {
@@ -20,7 +20,7 @@ La réserve n'est pas des frais. C'est un **louer-avec-dépôt** : le registre r
 
 Sur de nombreuses chaînes, n'importe qui peut envoyer des jetons inutiles à ton adresse. Sur Stellar, ce n'est pas le cas : pour détenir un actif autre que XLM, ton compte doit d'abord ouvrir une **ligne de confiance** vers celui-ci.
 
-Une ligne de confiance indique : *« J'accepte l'actif X de l'émetteur Y, jusqu'à cette **limite**. »* Elle est créée avec l'opération \`change_trust\`, elle est sa propre entrée de registre — elle bloque **une réserve de base** — et tant qu'elle n'existe pas, les paiements de cet actif vers toi échouent simplement.
+Une ligne de confiance indique : *« J'accepte l'actif X de l'émetteur Y, jusqu'à cette **limite**. »* Elle est créée avec l'opération \`change_trust\`, elle est sa propre entrée de registre — elle bloque **une réserve de base** — et tant qu'elle n'existe pas, un paiement de cet actif vers toi échoue avec \`op_no_trust\`.
 
 Opt-in par conception : ton bilan ne contient que ce que tu as accepté de détenir.`,
     },

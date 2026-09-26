@@ -1,14 +1,14 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Lo Que el Golem Ve",
+  title: "Context engineering",
   tagline: "Context engineering: curaduría, no acumulación.",
   steps: [
     {
       kind: "theory",
       body: `## Curaduría, no acumulación
 
-El prompt engineering pregunta *cómo redactar*. El **context engineering** hace la pregunta más importante: *¿qué llega delante del golem, para empezar?*
+El prompt engineering pregunta *cómo redactar*. El **context engineering** hace la pregunta más importante: *¿qué llega delante del modelo, para empezar?*
 
 Para un bug en el flujo de reembolsos necesita tres cosas:
 
@@ -25,12 +25,12 @@ No el repositorio entero. No las notas de migración del mes pasado. La habilida
 El bug de reembolsos, de verdad. Esto es lo que entra, con tamaño y motivo:
 
 - \`refunds.rs\` (180 líneas) — el código que está mal. No el módulo que lo llama; el que decide.
-- Las tres cláusulas de reembolso de la especificación (14 líneas) — para que "correcto" tenga una definición que no sea la opinión del golem.
+- Las tres cláusulas de reembolso de la especificación (14 líneas) — para que "correcto" tenga una definición que no sea la opinión del modelo.
 - \`test_refund_after_deadline\` y su salida de fallo (20 líneas) — la única prueba en rojo, y lo que realmente imprimió.
 
 Y lo que se queda fuera, que es la mitad difícil:
 
-- \`payments.rs\`, aunque los reembolsos vivan dentro de pagos — no es donde está el bug, y **todo archivo en el banco es un archivo que el golem puede decidir mejorar**.
+- \`payments.rs\`, aunque los reembolsos vivan dentro de pagos — no es donde está el bug, y **todo archivo en el banco es un archivo que el modelo puede decidir mejorar**.
 - Las notas de migración de la versión que introdujo el plazo. Describen un esquema que ha cambiado dos veces desde entonces, y el material viejo enseña con aplomo.
 - El resto de la suite de pruebas. Seiscientas líneas en verde no dicen nada sobre la única que está en rojo.
 
@@ -61,7 +61,7 @@ Unas 210 líneas, frente a un repositorio de cuarenta mil. Esa proporción *es* 
     },
     {
       kind: "quiz",
-      question: `Vas a mandar al golem a arreglar un bug en el flujo de reembolsos. ¿Qué va al banco?`,
+      question: `Vas a mandar al modelo a arreglar un bug en el flujo de reembolsos. ¿Qué va al banco?`,
       options: [
         "El módulo de reembolsos, las reglas de reembolso de la especificación y la prueba que falla — y poco más",
         "El repositorio entero, para que no falte ningún detalle potencialmente relevante",
@@ -76,7 +76,7 @@ Unas 210 líneas, frente a un repositorio de cuarenta mil. Esa proporción *es* 
 
 Aquí viene la parte contraintuitiva: el contexto irrelevante no solo malgasta sitio — **hace daño activo**.
 
-- Un archivo distractor invita al golem a tocarlo "por ayudar".
+- Un archivo distractor invita al modelo a tocarlo "por ayudar".
 - Los vocabularios mezclados arrastran el modelo equivocado de Cuenta — la pesadilla del Capítulo III, autoinfligida.
 - Los documentos viejos y el código muerto enseñan comportamiento antiguo como si fuera el actual.
 - Y cuanto más largo el banco, más fina la atención: tu única restricción crucial compite ahora con diez mil tokens de ruido.
@@ -92,7 +92,7 @@ La curaduría corta en los dos sentidos. **Quitar del banco es tan potente como 
         "Líneas en blanco de más entre las secciones del prompt",
       ],
       answer: 0,
-      explain: `El material sin relación te cuesta sitio y atención. El material *contradictorio* te cuesta corrección: el golem no tiene forma de saber cuál de las dos versiones de la verdad es la actual, y seguro-y-equivocado es el modo de fallo caro.`,
+      explain: `El material sin relación te cuesta sitio y atención. El material *contradictorio* te cuesta corrección: el modelo no tiene forma de saber cuál de las dos versiones de la verdad es la actual, y seguro-y-equivocado es el modo de fallo caro.`,
     },
     {
       kind: "fill",
@@ -107,13 +107,13 @@ La curaduría corta en los dos sentidos. **Quitar del banco es tan potente como 
         "algo que el modelo resuelve automáticamente",
       ],
       answer: 0,
-      explain: `Es el capítulo entero en una línea. Redactar es una habilidad que se practica en una tarde; decidir qué no ve nunca el golem es la parte que sigue siendo difícil, y la que separa un banco que funciona de uno que está lleno.`,
+      explain: `Es el capítulo entero en una línea. Redactar es una habilidad que se practica en una tarde; decidir qué no ve nunca el modelo es la parte que sigue siendo difícil, y la que separa un banco que funciona de uno que está lleno.`,
     },
     {
       kind: "theory",
       body: `## Por qué este es el último capítulo tranquilo
 
-Hasta ahora el golem ha hecho una cosa cada vez: tú montas el banco, escribes la petición, lees la respuesta. El bucle sigues siendo tú.
+Hasta ahora el modelo ha hecho una cosa cada vez: tú montas el banco, escribes la petición, lees la respuesta. El bucle sigues siendo tú.
 
 En el momento en que empieza a actuar sobre su propia salida — ejecutar la prueba que acaba de escribir, leer el fallo, intentarlo otra vez — todo esto se compone. Un banco que solo estaba desordenado pasa a ser un banco que **crece**, solo, con cada paso que da.
 

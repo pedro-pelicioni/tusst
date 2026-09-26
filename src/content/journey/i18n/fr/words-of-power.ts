@@ -1,18 +1,18 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Mots de Pouvoir",
+  title: "Prompt engineering",
   tagline: "Prompt engineering : les quatre parties de tout prompt qui fonctionne.",
   steps: [
     {
       kind: "theory",
       body: `## Vos mots sont tout ce qu'il a
 
-Le golem ne connaît pas votre dépôt. Il ne se souvient pas d'hier, et il ne voit pas le fichier que vous n'avez *pas* joint. Son univers entier, c'est le texte posé devant lui à cet instant.
+Le modèle ne connaît pas votre dépôt. Il ne se souvient pas d'hier, et il ne voit pas le fichier que vous n'avez *pas* joint. Son univers entier, c'est le texte posé devant lui à cet instant.
 
-C'est la règle la plus profonde du prompting, et elle n'a rien de mystique : **c'est vous qui décidez ce qui existe.** Ce que vous mettez devant lui est le monde ; ce que vous laissez de côté n'a jamais eu lieu.
+C'est la règle centrale du prompting : **c'est vous qui décidez ce qui existe.** Si vous l'avez laissé de côté, le modèle ne l'a pas.
 
-La question derrière chaque prompt n'est donc pas « comment le formuler ? » mais *« de quoi le golem a-t-il besoin pour réussir ? »* Ce chapitre est la première moitié de la réponse — les mots eux-mêmes. Le suivant est la moitié difficile.`,
+La question derrière chaque prompt n'est donc pas « comment le formuler ? » mais *« de quoi le modèle a-t-il besoin pour réussir ? »* Ce chapitre est la première moitié de la réponse — les mots eux-mêmes. Le suivant est la moitié difficile.`,
     },
     {
       kind: "theory",
@@ -31,7 +31,7 @@ La plupart des mauvais prompts ne sont pas mal *rédigés* — il leur **manque 
       kind: "diagram",
       body: "Les quatre parties, dans l'ordre qui leur revient :",
       caption:
-        "La demande vient en dernier exprès : tout ce qui la précède est le cadre à travers lequel le golem lit la tâche.",
+        "La demande vient en dernier exprès : tout ce qui la précède est le cadre à travers lequel le modèle lit la tâche.",
       view: {
         kind: "stack",
         bands: [
@@ -44,20 +44,20 @@ La plupart des mauvais prompts ne sont pas mal *rédigés* — il leur **manque 
     },
     {
       kind: "quiz",
-      question: `Quelle instruction améliore réellement le code du golem ?`,
+      question: `Quelle instruction améliore réellement le code du modèle ?`,
       options: [
         "Valide le montant : rejette zéro et les négatifs avec une erreur typée ; ne fais jamais de panic ; garde l'API publique inchangée",
         "Écris s'il te plaît un code bien propre, professionnel, de très haute qualité, prêt pour la production",
         "Tu es le meilleur programmeur ayant jamais existé — code en conséquence",
       ],
       answer: 0,
-      explain: `Le golem ne peut pas échouer à « haute qualité » — toute sortie se qualifie plausiblement. Il *peut* échouer à « ne fais jamais de panic », et c'est tout le propos : un critère d'acceptation crée la possibilité d'avoir tort, et c'est cela qui guide un modèle. La précision bat la politesse — et la flatterie.`,
+      explain: `Le modèle ne peut pas échouer à « haute qualité » — toute sortie se qualifie plausiblement. Il *peut* échouer à « ne fais jamais de panic », et c'est tout le propos : un critère d'acceptation crée la possibilité d'avoir tort, et c'est cela qui guide un modèle. La précision bat la politesse — et la flatterie.`,
     },
     {
       kind: "theory",
       body: `## Montrez, ne décrivez pas
 
-Les adjectifs décrivent la qualité ; **les exemples la définissent.** Un exemple travaillé pèse plus que trois paragraphes d'adjectifs, car le golem est une machine à continuer des motifs — alors donnez-lui un motif qui mérite d'être continué.
+Les adjectifs décrivent la qualité ; **les exemples la définissent.** Un exemple travaillé pèse plus que trois paragraphes d'adjectifs, car le modèle est une machine à continuer des motifs — alors donnez-lui un motif qui mérite d'être continué.
 
 Vous voulez des tests dans le style maison ? Collez **un test idéal** et dites « comme ça ». Vous voulez des messages d'erreur portant un code et une piste de correction ? Montrez-en *un*.
 
@@ -65,7 +65,7 @@ Le Chapitre I vous a appris que les exigences en prose laissent fuir de l'ambigu
     },
     {
       kind: "quiz",
-      question: `Votre équipe a une façon bien à elle d'écrire les messages d'erreur. Qu'est-ce qui la fait reproduire par le golem ?`,
+      question: `Votre équipe a une façon bien à elle d'écrire les messages d'erreur. Qu'est-ce qui la fait reproduire par le modèle ?`,
       options: [
         "Coller un vrai message d'erreur du code et dire « comme ça »",
         "Décrire la convention soigneusement en trois phrases",
@@ -90,7 +90,7 @@ Le Chapitre I vous a appris que les exigences en prose laissent fuir de l'ambigu
 
 La première sortie est fausse. Très bien — c'est une donnée. Le réflexe d'amateur est de relancer les dés ; celui de l'ingénieur est de **lire l'échec et de trouver l'instruction manquante**.
 
-Le golem a ignoré un cas limite ? Vos contraintes ne l'ont jamais mentionné. Mauvais style ? Vous avez décrit au lieu de montrer. Il a touché des fichiers interdits ? La frontière n'a pas été dite.
+Le modèle a ignoré un cas limite ? Vos contraintes ne l'ont jamais mentionné. Mauvais style ? Vous avez décrit au lieu de montrer. Il a touché des fichiers interdits ? La frontière n'a pas été dite.
 
 Chaque échec nomme un trou dans vos mots — rapiécez le *prompt*, pas seulement la sortie, exactement comme le Chapitre I vous a appris à resserrer une spécification.`,
     },
@@ -117,7 +117,7 @@ Voici la tâche que vous vous apprêtez à confier :
 
 Vous savez désormais écrire un prompt qui dit exactement ce qu'il veut. C'est la discipline facile, et la plupart des gens s'arrêtent là.
 
-La difficile consiste à décider **ce que le golem a le droit de voir** — quels fichiers, quelle spécification, quel test, et, bien plus important, quoi laisser dehors. Formuler est une compétence ; sélectionner est le métier.
+La difficile consiste à décider **ce que le modèle a le droit de voir** — quels fichiers, quelle spécification, quel test, et, bien plus important, quoi laisser dehors. Formuler est une compétence ; sélectionner est le métier.
 
 **Ensuite :** l'établi lui-même, et pourquoi y ajouter n'est pas gratuit.`,
     },

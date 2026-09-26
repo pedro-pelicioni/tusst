@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Hesaplar, Güven ve Varlıklar",
+  title: "Hesaplar, trustline'lar ve varlıklar",
   tagline: "Hesaplar, rezervler ve trustline'lar: bir varlığı tutmak neden opt-in'dir.",
   steps: [
     {
@@ -20,7 +20,7 @@ Rezerv bir ücret değil. **Depozitoyla kira**: şişkinliğin bir fiyat etiketi
 
 Birçok zincirde herkes adresine çöp token airdrop'layabilir. Stellar'da yapamazlar: XLM dışında herhangi bir varlığı (asset) tutmak için hesabının önce ona bir **trustline** açması gerekir.
 
-Trustline şunu der: *"Y ihraççısından (issuer) gelen X varlığını, şu **limite** kadar kabul ediyorum."* \`change_trust\` operasyonuyla oluşturulur, kendi başına bir ledger kaydıdır — yani **bir temel rezerv** kilitler — ve o var olana kadar sana o varlıkla yapılan ödemeler düpedüz başarısız olur.
+Trustline şunu der: *"Y ihraççısından (issuer) gelen X varlığını, şu **limite** kadar kabul ediyorum."* \`change_trust\` operasyonuyla oluşturulur, kendi başına bir ledger kaydıdır — yani **bir temel rezerv** kilitler — ve o var olana kadar sana o varlıkla yapılan bir ödeme \`op_no_trust\` ile başarısız olur.
 
 Tasarım gereği opt-in: bilançonda yalnızca tutmayı kabul ettiklerin var.`,
     },

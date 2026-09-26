@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
-  title: "Le rite rouge-vert",
+  title: "Développement piloté par les tests",
   tagline: "TDD : les tests d'abord, la forge ensuite.",
   steps: [
     {
@@ -10,9 +10,9 @@ export const conceptText = {
 
 Dans le chapitre I, tu as appris à définir ce que signifie *être correct*. Un **test** rend cette définition exécutable : la machine peut vérifier la spécification en quelques millisecondes, à chaque forge.
 
-C’est plus important avec l’IA, pas moins. Un golem peut débattre avec ta prose, réinterpréter ton intention, « améliorer » tes exigences. Il ne peut pas débattre avec \`assert_eq!\`. **Les tests sont la spécification que la machine ne peut pas contester** — le seul endroit où une réponse plausible et une réponse correcte ne sont plus confondues.
+C’est plus important avec l’IA, pas moins. Un modèle peut débattre avec ta prose, réinterpréter ton intention, « améliorer » tes exigences. Il ne peut pas débattre avec \`assert_eq!\`. **Les tests sont la spécification que la machine ne peut pas contester** — le seul endroit où une réponse plausible et une réponse correcte ne sont plus confondues.
 
-Écris-les **d’abord** : chaque forge suivante disposera ainsi de critères d'évaluation dès sa naissance.`,
+Écris-les **d’abord**, et tout ce qui suit est évalué.`,
     },
     {
       kind: "theory",
@@ -65,7 +65,7 @@ Le rouge prouve que le test peut attraper le bug qu’il protège. Le vert prouv
         "Relancer la suite quelques fois de plus pour s’assurer que le vert est stable",
       ],
       answer: 0,
-      explain: `Quand le même golem forge à la fois le code et ses tests, un test qui affirme trop peu reste vert pour toujours. Le rouge est la seule preuve qu’un test a des dents — une rupture délibérée te montre qu’il mord.`,
+      explain: `Quand le même modèle forge à la fois le code et ses tests, un test qui affirme trop peu reste vert pour toujours. Le rouge est la seule preuve qu’un test a des dents — une rupture délibérée te montre qu’il mord.`,
     },
     {
       kind: "theory",
@@ -110,21 +110,21 @@ Vérifie-le après *chaque* opération effectuée par tes tests — dépôt, lib
       after: `);`,
       choices: ["refunds", "fees", "interest", "gas"],
       answer: 0,
-      explain: `Le même anneau de fer qu'au chapitre I, désormais doté de dents : l’argent ne quitte l’entiercement que sous forme de libération ou de remboursement. Formulé comme une assertion, il est vérifié automatiquement à chaque forge.`,
+      explain: `L'invariant du chapitre I, désormais exécutable : l’argent ne quitte l’entiercement que sous forme de libération ou de remboursement. Formulé comme une assertion, il est vérifié automatiquement à chaque exécution.`,
     },
     {
       kind: "theory",
-      body: `## Accepter le travail du golem sans peur
+      body: `## Accepter le travail du modèle sans peur
 
 Voici le gain. Une IA te remet 300 lignes. Sans tests, tes options sont *lire chaque ligne très attentivement* ou *faire confiance*. Les deux échouent à l’échelle.
 
 Avec une suite écrite d’abord, l’acceptation est mécanique : **rouge — rejeter**, avec l’échec comme retour. **Vert — accepter**, et lire pour le style à ton rythme.
 
-Le même filet permet de refactoriser sans crainte — qu'il s'agisse de ton travail ou de celui du golem. « Réécris ce module en gardant les tests au vert » n'est une instruction sûre *que parce que* les tests existaient déjà et que le golem n'a pas pu les adapter à son propre code.`,
+Le même filet permet de refactoriser sans crainte — qu'il s'agisse de ton travail ou de celui du modèle. « Réécris ce module en gardant les tests au vert » n'est une instruction sûre *que parce que* les tests existaient déjà et que le modèle n'a pas pu les adapter à son propre code.`,
     },
     {
       kind: "quiz",
-      question: `Le golem annonce fièrement **100 % de couverture de lignes**. Qu’as‑tu réellement appris ?`,
+      question: `Le modèle annonce fièrement **100 % de couverture de lignes**. Qu’as‑tu réellement appris ?`,
       options: [
         "Chaque ligne a été exécutée pendant les tests — ce qui ne dit rien sur la quantité de comportements que les assertions vérifient réellement",
         "Le code est correct — chaque ligne a été exercée et a passé",
@@ -144,8 +144,8 @@ Le même filet permet de refactoriser sans crainte — qu'il s'agisse de ton tra
       options: ["Un test qui n'a jamais échoué n'a jamais prouvé qu'il le pouvait — l'écrire d'abord, c'est ainsi qu'on sait qu'il surveille la bonne chose","C'est plus rapide, car on évite de réécrire le test ensuite","Cela force l'implémentation à être plus simple qu'elle ne l'aurait été"], answer: 0 },
     { question: `Qu'est-ce qu'un test au rouge apporte à un binôme avec l'IA que des exigences en prose n'apportent pas ?`,
       options: ["Un critère d'acceptation qu'elle ne peut pas mal lire, et un signal capable d'être une mauvaise nouvelle","Un prompt plus court, qui laisse de la place à plus de contexte","L'autorisation de modifier l'API publique"], answer: 0 },
-    { question: `Le golem fait passer le test en traitant comme cas particulier exactement l'entrée qu'utilise le test. Qu'est-ce que cela révèle ?`,
-      options: ["Le test sous-spécifiait le comportement — il a nommé un exemple plutôt que la règle","Le golem agit de mauvaise foi et exige des instructions plus strictes","Rien ; passer le test est la définition de terminé"], answer: 0 },
+    { question: `Le modèle fait passer le test en traitant comme cas particulier exactement l'entrée qu'utilise le test. Qu'est-ce que cela révèle ?`,
+      options: ["Le test sous-spécifiait le comportement — il a nommé un exemple plutôt que la règle","Le modèle agit de mauvaise foi et exige des instructions plus strictes","Rien ; passer le test est la définition de terminé"], answer: 0 },
     { question: `Votre suite est au vert après un changement dont vous doutez. Que vous a-t-elle réellement dit ?`,
       options: ["Que rien de ce que la suite surveille n'a cassé — c'est-à-dire seulement jusqu'où la suite se trouve surveiller","Que le changement est correct","Que le changement peut être déployé sans risque"], answer: 0 },
   ],

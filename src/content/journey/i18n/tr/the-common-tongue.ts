@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Ortak Dil",
+  title: "SEP'ler: birlikte çalışabilirlik standartları",
   tagline: "SEP'ler: bir kez uygula, her kapı açılsın.",
   steps: [
     {
@@ -24,7 +24,7 @@ Bir sürü cüzdan, bir sürü anchor var. Standartlar olmasa her çift özel bi
 
 Stellar'ın cevabı **SEP**: *Stellar Ecosystem Proposal*. SEP'ler; cüzdanların, anchor'ların ve servislerin birbiriyle tam olarak nasıl konuşacağını tanımlayan halka açık standartlardır. Bir SEP'i bir kez uygula, cüzdanın onu uygulayan **her anchor'la** çalışsın — para yatırma akışları, kimlik doğrulama, kimlik, hepsi.
 
-Bu "önce birlikte çalışabilirlik" kültürü Stellar'ın sessiz süper güçlerinden biri: kullanıcılar istedikleri kapıyı seçer ve bütün kapılar aynı anahtar şeklini paylaşır.`,
+Bu "önce birlikte çalışabilirlik" kültürü sayesinde kullanıcılar istedikleri kapıyı seçebilir: bütün kapılar aynı anahtar şeklini paylaşır.`,
     },
     {
       kind: "theory",

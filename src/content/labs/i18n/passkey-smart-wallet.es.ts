@@ -63,7 +63,7 @@ La dirección comienza con **C** porque la cartera es un contrato. Su regla de a
     },
     "authenticate-passkey": {
       title: "Deja que la passkey firme",
-      body: `El despliegue registró una clave pública, pero una cartera solo es útil cuando la red acepta sus firmas. La Forja financia la nueva cuenta C con XLM de testnet, prepara una **transferencia de 1 XLM de vuelta a tu cuenta de lanzamiento**, y pide a la credencial vinculada vinculada a \`{contract}\` que la autorice.
+      body: `El despliegue registró una clave pública, pero una cartera solo es útil cuando la red acepta sus firmas. La Forja financia la nueva cuenta C con XLM de testnet, prepara una **transferencia de 1 XLM de vuelta a tu cuenta de lanzamiento**, y pide a la credencial exacta vinculada a \`{contract}\` que la autorice.
 
 Aprueba el cuadro de diálogo del dispositivo. Esta vez la firma se envía a la red y el \`__check_auth\` de la smart account debe aceptarla.`,
       cta: "Firma y envía 1 XLM con la passkey",

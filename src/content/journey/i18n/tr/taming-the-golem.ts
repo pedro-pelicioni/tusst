@@ -1,16 +1,16 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Golem'i Ehlileştirmek",
+  title: "Harness engineering",
   tagline: "Harness engineering: model kiralıktır, harness ise senindir.",
   steps: [
     {
       kind: "theory",
-      body: `## Boşluktaki bir zihin
+      body: `## Tek başına model
 
-Her şeyi soyup at, bir LLM tam olarak tek bir şey yapar: **metin girer, metin çıkar**. Kod çalıştıramaz, repo'nu okuyamaz, zinciri kontrol edemez. Tek başına, boşluktaki bir zihindir — parlak, kör ve silahsız.
+Her şeyi soyup at, bir LLM tam olarak tek bir şey yapar: **metin girer, metin çıkar**. Kod çalıştıramaz, repo'nu okuyamaz, zinciri kontrol edemez.
 
-O zihni bir *işçiye* dönüştüren her şey **harness**'tır (koşum takımı): çağırabildiği araçlar, dokunabildiği dosyalar, onu içinde tutan sandbox, çıktısını yargılayan doğrulayıcılar.
+Onu bir *işçiye* dönüştüren her şey **harness**'tır (koşum takımı): çağırabildiği araçlar, dokunabildiği dosyalar, onu içinde tutan sandbox, çıktısını yargılayan doğrulayıcılar.
 
 Ve işte çoğu kişinin gözden kaçırdığı kısım: model kiralıktır. **Harness ise mühendisliktir — ve senindir.**`,
     },
@@ -85,11 +85,9 @@ Modelin en tehlikeli huyu cehalet değil — **yanılırken bile kendinden emin 
 Bu yüzden bir harness asla güvenmez; tatlı dille kandırılamayan yargıçlar kullanarak **yeniden kontrol eder**:
 
 - **derleyici** — build bile oluyor mu?
-- **test paketi** — Ayin'den kalan sınavların, kırmızı ya da yeşil
+- **test paketi** — testlerin, kırmızı ya da yeşil
 - **linter** — standartlar korundu mu?
-- **zincirin kendisi** — ledger, modelin söylediğini söylüyor mu?
-
-İddialar veridir. Doğrulayıcılar hakikattir.`,
+- **zincirin kendisi** — ledger, modelin söylediğini söylüyor mu?`,
     },
     {
       kind: "quiz",

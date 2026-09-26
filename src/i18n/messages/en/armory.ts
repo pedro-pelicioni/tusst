@@ -10,12 +10,12 @@ export const armory = {
   kicker: "the armory",
   title: "Spend what the lessons paid you",
   intro:
-    "Every finished lesson pays 10 gold into your pouch. Here is what it buys — a blade, a piece of gear, a creature at your heel. None of it makes you stronger. All of it makes you yours.",
+    "Every finished lesson pays 10 gold into your pouch. Here is what it buys — a blade, a piece of gear, a creature at your heel. None of it makes you stronger.",
 
   // Shown instead of the shop when the currency layer is still hidden.
   locked: {
     title: "The doors are shut",
-    body: "The Armory opens after your first finished lesson. Go finish one, and the doors will know.",
+    body: "The Armory opens after your first finished lesson.",
     cta: "Pick a lesson",
   },
 

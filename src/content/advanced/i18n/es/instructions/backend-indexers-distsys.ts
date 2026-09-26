@@ -227,7 +227,7 @@ Failed has 0 outgoing transitions
 
 La garantía de solapamiento es estrictamente \`R + W > N\`. La fila \`N=5, R=2, W=3\` suma exactamente 5 y **no** solapa — un quorum de lectura de dos puede ser completamente disjunto de los tres nodos que aceptaron la escritura, y devuelve datos stale sin ningún error.
 
-Una partición no pide permiso. Con N=5, W=3 y un split 3|2, el lado mayoritario todavía reúne quorum; el lado minoritario no llega ni a R=3 ni a W=3 y rechaza ambos. Ese rechazo es la elección CP, y la hiciste cuando elegiste R y W.
+Con N=5, W=3 y una partición 3|2, el lado mayoritario todavía reúne quorum; el lado minoritario no llega ni a R=3 ni a W=3 y rechaza ambos. Ese rechazo es la elección CP, y la hiciste cuando elegiste R y W.
 
 Las lecturas se resuelven por **número de versión**, no por timestamp de reloj de pared.
 

@@ -74,7 +74,7 @@ Abra a aba **Conta** da Forja com este endereço: os signatários e os limiares 
         "Tranquilo: os dois restantes podem destituir a chave perdida",
         "Tranquilo: a chave mestra sempre pode redefinir os signatários",
       ],
-      explain: `Esta é de longe a forma mais comum de um tesouro real morrer. A regra que te protege do ladrão protege igualmente a ausência dele. Sempre deixe um caminho de recuperação cujo limiar você ainda consegue alcançar.`,
+      explain: `Esta é de longe a forma mais comum de um tesouro real morrer. A mesma regra que barra o ladrão barra você quando uma chave some. Sempre deixe um caminho de recuperação cujo limiar você ainda consegue alcançar.`,
     },
     "claim-xp": {
       body: `Você transformou uma conta comum num tesouro de dois-de-dois sem publicar uma linha de código.

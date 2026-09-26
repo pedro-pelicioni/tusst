@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "La Main sur le Frein",
+  title: "Garde-fous et règles d'arrêt",
   tagline: "Boucles agentiques et garde-fous : sans règle d'arrêt ce n'est pas de l'autonomie, c'est une facture.",
   steps: [
     { kind: "theory", body: `## Toute boucle a besoin d'un frein
@@ -13,7 +13,7 @@ Une boucle non surveillée ne converge pas — elle **dépense**. Une boucle san
 - **Nombre maximal d'itérations** — un plafond dur, toujours.
 - **Détection d'absence de progrès** — la même erreur deux fois signifie *change de stratégie ou remonte*, jamais « encore, mais plus fort ».
 
-La règle du royaume : ne lancez jamais une boucle sans avoir décidé comment l'arrêter.` },
+La règle : ne lancez jamais une boucle sans avoir décidé comment l'arrêter.` },
     { kind: "widget", component: "loop-brake",
       body: `Deux interrupteurs, quatre séries. **Faites tourner la boucle** avec les freins montés et un retour honnête, puis retirez une chose à la fois et voyez laquelle passe sans conséquence.` },
     { kind: "theory", body: `## Ce que ça coûte quand rien ne l'arrête
@@ -42,7 +42,7 @@ Voilà la forme de la chose : **le frein ne vous fait pas économiser d'argent s
 
 Un test qui échoue au hasard — minutage, ordre, un port partagé — est une contrariété pour un humain. On soupire et on relance. Pour une boucle, c'est du **poison**, car la boucle *agit sur chaque signal*.
 
-Un rouge fantôme arrive → le golem « corrige » du code qui n'a jamais été cassé → la modification est intégrée → à l'itération suivante, un nouveau fantôme → une autre correction. La boucle apprend des superstitions, chacune s'ajoutant à la précédente, toutes issues du bruit.
+Un rouge fantôme arrive → le modèle « corrige » du code qui n'a jamais été cassé → la modification est intégrée → à l'itération suivante, un nouveau fantôme → une autre correction. La boucle apprend des superstitions, chacune s'ajoutant à la précédente, toutes issues du bruit.
 
 La règle : **rendez le retour déterministe avant de le brancher sur une boucle.** Une épreuve instable est pire qu'aucune épreuve — le silence ne trompe personne ; le bruit trompe sans se fatiguer.` },
     { kind: "quiz", question: `Un test échoue au hasard une fois sur cinq, pour une question de minutage. Pour un humain, c'est une gêne. Pour une boucle, c'est quoi ?`,
@@ -64,11 +64,11 @@ La règle : **rendez le retour déterministe avant de le brancher sur une boucle
         ] } },
     { kind: "theory", body: `## La bonne altitude
 
-Où se tient l'humain pendant que la boucle tourne ? Pas dedans — relire chaque frappe signifie que *vous* êtes la boucle, au tempo du golem. Et pas au-dessus des nuages non plus, à tamponner ce qui atterrit.
+Où se tient l'humain pendant que la boucle tourne ? Pas dedans — relire chaque frappe signifie que *vous* êtes la boucle, au tempo du modèle. Et pas au-dessus des nuages non plus, à tamponner ce qui atterrit.
 
 La bonne altitude, c'est la **frontière** : relisez le *diff* face à la *spécification*. Les evals passent-elles ? La modification respecte-t-elle les règles du Chapitre I ? Quelque chose a-t-il bougé sans avoir rien à faire là ? Faites confiance aux instruments de la boucle pour le menu ; gardez le jugement humain pour ce que les instruments ne voient pas.
 
-**Ensuite :** quand une boucle ne suffit pas — beaucoup de petits golems, un plan tissé.` },
+**Ensuite :** quand une boucle ne suffit pas — beaucoup de petits modèles, un plan tissé.` },
   ],
   testOut: [
     { question: `Une boucle échoue sur la même eval avec la même erreur depuis vingt-huit itérations. Que vous doit le harnais ?`,

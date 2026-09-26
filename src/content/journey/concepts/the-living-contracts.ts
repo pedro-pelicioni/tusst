@@ -29,7 +29,7 @@ export const theLivingContracts: Concept = {
 
 And here is the elegant part: calling one needs no new transaction format. The envelope you dissected carries a single operation — \`invoke_host_function\` — and inside rides the call: which contract, which function, which arguments.
 
-Same envelope, same signatures, same ~5-second close. The classic realm and the contract realm share one bloodstream.`,
+Same envelope, same signatures, same ~5-second close.`,
     },
     {
       kind: "theory",
@@ -38,7 +38,7 @@ Same envelope, same signatures, same ~5-second close. The classic realm and the 
 Soroban gives a contract three storage tiers — chosen per entry, priced differently:
 
 - **Temporary** — cheap, short-lived, gone forever once it expires. Price quotes, nonces, time-boxed state.
-- **Persistent** — the real archive: user balances, ownership records. Survives expiry through *archival* (next step).
+- **Persistent** — the real archive: user balances, ownership records. Survives expiry through *archival* (next chapter).
 - **Instance** — small state glued to the contract itself: admin address, configuration, the metadata every call needs.
 
 Choosing the wrong shelf is a classic rookie tax: instance bloat makes every single call carry it, and temporary balances simply vanish. The shelf *is* part of the design.`,
@@ -53,7 +53,7 @@ Choosing the wrong shelf is a classic rookie tax: instance bloat makes every sin
           {
             id: "instance",
             label: "instance",
-            note: "The contract's own settings, living and dying with the contract itself.",
+            note: "The contract's own settings, on the contract's own clock: archived and restored along with it.",
             tone: "gold",
           },
           {
@@ -87,7 +87,7 @@ Call a contract you have never seen, with types checked at compile time. That is
       options: [
         "Temporary — the cheapest rent, and forgetting it is exactly what you want",
         "Persistent, so it can be restored if a call arrives late",
-        "Instance, so it disappears if the contract is ever archived",
+        "Instance, so it lives exactly as long as the contract does",
       ],
       answer: 0,
       explain: `Matching the shelf to the data's actual lifetime is the whole design decision, and it is one people get wrong in the safe-looking direction: putting short-lived data on the persistent shelf costs more forever, for a guarantee the data never needed.`,

@@ -17,7 +17,9 @@ import type { ForgeWallet } from "./wallet";
 // by SIMULATION, not a UI toggle: every call is simulated first; when the
 // simulation needs no auth and touches no write footprint, the decoded result
 // returns immediately without signing. Otherwise the transaction is
-// assembled, signed by the wallet and submitted.
+// assembled, signed by the wallet and submitted. Archived state is the one
+// wrinkle: restoring it counts as a write, so a read of archived state has
+// to be proven restore-only before it is answered as a read.
 //
 // A simulation needs a source account to hang the transaction on, but for a
 // read it never spends, never signs and is never submitted — so the account
@@ -30,6 +32,11 @@ export interface InvokeOutcome {
   readOnly: boolean;
   result: unknown;
   txHash?: string;
+  /**
+   * The value came from simulating a read against archived state: it is
+   * what the call returns, but nothing was restored or submitted.
+   */
+  fromArchive?: boolean;
 }
 
 /**
@@ -100,15 +107,23 @@ export async function invokeFunction({
   const success = sim as rpc.Api.SimulateTransactionSuccessResponse;
 
   const authCount = success.result?.auth?.length ?? 0;
-  const writes = success.transactionData.build().resources.footprint.readWrite
-    .length;
+  const data = success.transactionData.build();
+  const writes = data.resources.footprint.readWrite.length;
+  const decoded = () => {
+    const retval = success.result?.retval;
+    return retval ? spec.funcResToNative(fnName, retval) : null;
+  };
 
   if (authCount === 0 && writes === 0) {
-    const retval = success.result?.retval;
-    return {
-      readOnly: true,
-      result: retval ? spec.funcResToNative(fnName, retval) : null,
-    };
+    return { readOnly: true, result: decoded() };
+  }
+
+  // A getter on archived state looks like a write (see writesOnlyRestore).
+  // When the restore is all it would write, the simulated value is the
+  // answer — wallet or not. Signing it would spend a fee on a restore the
+  // caller never asked for; a real write restores what it touches anyway.
+  if (authCount === 0 && (await writesOnlyRestore(server, success, data))) {
+    return { readOnly: true, fromArchive: true, result: decoded() };
   }
 
   // Simulation says this one writes. Without a wallet there is nothing to
@@ -125,6 +140,47 @@ export async function invokeFunction({
       ? spec.funcResToNative(fnName, confirmed.returnValue)
       : null,
   };
+}
+
+/**
+ * True when the only thing a simulated call would write is Protocol 23
+ * restores. Simulation restores archived entries on the way in: their keys
+ * move into the read-write footprint and their indices are listed in the
+ * resource extension. Counting those is not enough — a no-auth `bump()` on
+ * an archived counter restores AND writes the same key. So also require that
+ * every entry the call leaves behind is byte-for-byte the archived one.
+ */
+async function writesOnlyRestore(
+  server: rpc.Server,
+  success: rpc.Api.SimulateTransactionSuccessResponse,
+  data: xdr.SorobanTransactionData,
+): Promise<boolean> {
+  const readWrite = data.resources.footprint.readWrite;
+  const archived =
+    data.ext.type === "resourceExt"
+      ? data.ext.resourceExt.archivedSorobanEntries
+      : [];
+  if (readWrite.length === 0 || archived.length !== readWrite.length) {
+    return false;
+  }
+  // Without the state diff there is no proof, so it stays a write.
+  if (!success.stateChanges) return false;
+
+  // Archived entries still come back from the RPC, with their last value.
+  const { entries } = await server.getLedgerEntries(...readWrite);
+  const archivedValue = new Map(
+    entries.map((e) => [e.key.toXdr("base64"), e.val.toXdr("base64")]),
+  );
+  return success.stateChanges
+    .filter((change) => change.key.type !== "ttl")
+    .every((change) => {
+      const was = archivedValue.get(change.key.toXdr("base64"));
+      return (
+        was !== undefined &&
+        change.after !== null &&
+        change.after.data.toXdr("base64") === was
+      );
+    });
 }
 
 /**

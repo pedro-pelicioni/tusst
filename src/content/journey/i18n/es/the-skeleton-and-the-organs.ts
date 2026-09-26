@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "El Esqueleto y los Órganos",
+  title: "Orquestación",
   tagline: "Orquestación: aristas deterministas, juicio dentro de los nodos.",
   steps: [
     {
@@ -24,7 +24,7 @@ Desdibujar la separación — dejar que el modelo improvise el siguiente paso �
         "En ninguna parte — una pipeline seria es determinista de extremo a extremo, o no es ingeniería",
       ],
       answer: 0,
-      explain: `El flujo de control improvisado genera fallos no reproducibles — no puedes depurar una ruta que nunca ocurre de la misma forma. Y una pipeline sin juicio en ningún lado no necesitaría gólems. Esqueleto determinista, órganos que juzgan: cada tipo de fiabilidad donde corresponde.`,
+      explain: `El flujo de control improvisado genera fallos no reproducibles — no puedes depurar una ruta que nunca ocurre de la misma forma. Y una pipeline sin juicio en ningún lado no necesitaría modelos. Esqueleto determinista, órganos que juzgan: cada tipo de fiabilidad donde corresponde.`,
     },
     { kind: "fill",
       prompt: `Completa la separación que hace depurable a un grafo:`,
@@ -60,11 +60,11 @@ En un grafo, un nodo fallido **falla solo**. Su contexto queda en cuarentena; su
       question: `La tarea: renombrar una función y sus llamadas en un solo archivo. ¿Qué eliges?`,
       options: [
         "Un bucle simple — o simplemente tu editor; el coste de coordinación de un grafo superaría la tarea",
-        "Un grafo — más gólems significa más calidad, tanto en tareas pequeñas como grandes",
+        "Un grafo — más modelos significa más calidad, tanto en tareas pequeñas como grandes",
         "Un grafo — las tareas pequeñas son exactamente el lugar para practicar para las grandes",
       ],
       answer: 0,
-      explain: `Cada nodo implica una configuración: contexto que curar, aristas que definir, fallos que encaminar. En una tarea pequeña, el andamiaje supera al trabajo — una consejo de guerra convocado para aplastar una mosca. Tarea simple, bucle simple; el grafo solo vale la pena cuando la descomposición lo justifica.`,
+      explain: `Cada nodo implica una configuración: contexto que curar, aristas que definir, fallos que encaminar. En una tarea pequeña, el andamiaje supera al trabajo — un consejo de guerra convocado para aplastar una mosca. Tarea simple, bucle simple; el grafo solo vale la pena cuando la descomposición lo justifica.`,
     },
     { kind: "exercise", mode: "spec-write",
       brief: `## La prueba del examinador: teje uno
@@ -86,9 +86,9 @@ Solo diseño — sin código de orquestación, sin nombres de herramienta ni fra
       kind: "theory",
       body: `## El oficio, ensamblado
 
-Mira lo que llevas ahora en el cinturón: **especificaciones** que dicen qué es correcto; **pruebas** que lo verifican siempre; **límites** que mantienen las palabras honestas; una **fortaleza** que contiene el cambio; un **arnés** que contiene al gólem; **palabras** que moldean lo que ve; **bucles** que le permiten autocorregirse; y un **grafo** que teje muchas mentes en un solo plan.
+Mira lo que llevas ahora en el cinturón: **especificaciones** que dicen qué es correcto; **pruebas** que lo verifican siempre; **límites** que mantienen las palabras honestas; una **fortaleza** que contiene el cambio; un **arnés** que contiene al modelo; **palabras** que moldean lo que ve; **bucles** que le permiten autocorregirse; y un **grafo** que teje muchas mentes en un solo plan.
 
-Ninguno de estos lo hará la IA por ti. Todos ellos hacen que la IA valga diez veces su propio esfuerzo.
+La IA no trae ninguno de estos por sí sola. Cada uno la hace mucho más útil.
 
 Lo siguiente en el camino: volver al reino — llevar el oficio al Forge y gastarlo en la red real.`,
     },

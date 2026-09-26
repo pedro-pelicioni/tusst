@@ -47,8 +47,8 @@ export const labs = {
   player: {
     exit: "Sair do lab",
     wallet: {
-      none: "sem selo ainda",
-      yours: "seu selo",
+      none: "sem carteira ainda",
+      yours: "sua carteira",
       copy: "Copiar endereço",
       copied: "Copiado",
     },
@@ -66,18 +66,18 @@ export const labs = {
     viewContract: "Ver a smart wallet no explorer",
     retry: "Tentar novamente",
     errors: {
-      testnetBusy: "Os espíritos da testnet estão ocupados — tente novamente em instantes.",
+      testnetBusy: "A testnet está ocupada — tente novamente em instantes.",
       walletRequired: "Forje suas chaves primeiro — volte uma tela.",
       missingState: "Um passo anterior ficou para trás — volte e complete.",
       forgeCold: "A forja está fria — o runner está inacessível. Tente de novo em instantes.",
       buildFailed: "A compilação falhou — o runner rejeitou este contrato. Tente novamente.",
       buildTimeout: "A compilação estourou o tempo — a forja estava lotada. Tente novamente.",
       localWalletRequired:
-        "Este rito precisa da chave testnet local da Forja para pagar o deploy — forje-a no passo anterior.",
+        "Este passo precisa da chave testnet local da Forja para pagar o deploy — crie-a no passo anterior.",
       passkeyUnavailable:
         "Passkeys exigem contexto seguro e suporte a WebAuthn. Abra este lab por HTTPS num dispositivo compatível.",
       passkeyMismatch:
-        "Essa passkey pertence a outra smart wallet. Tente de novo e escolha a credencial que acabou de forjar.",
+        "Essa passkey pertence a outra smart wallet. Tente de novo e escolha a credencial que acabou de criar.",
       passkeyFailed:
         "A cerimônia da passkey não terminou. Aprove o pedido do dispositivo e tente novamente.",
       smartWalletDeployFailed:
@@ -95,7 +95,7 @@ export const labs = {
         "Sua jornada vive neste navegador. Entre e a Forja verifica tudo on-chain — prova, não promessa — e paga seu XP.",
       signIn: "Entrar para reivindicar",
       failed:
-        "O ledger discorda — faltam feitos: {checks}. Complete os passos acima e reivindique de novo.",
+        "O ledger ainda não mostra: {checks}. Complete os passos acima e reivindique de novo.",
       checkNames: {
         "account-exists": "uma conta viva",
         trustline: "a trustline de USDC",
@@ -112,7 +112,7 @@ export const labs = {
       xpEarned: "+{xp} xp",
       levelUp: "Nível {level} alcançado!",
       xpTotal: "{xp} xp no total",
-      already: "Já reivindicado — o ledger lembra.",
+      already: "Já reivindicado.",
       backToForge: "Voltar à Forja",
       openIde: "Seguir no IDE",
     },

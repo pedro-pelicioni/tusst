@@ -80,7 +80,7 @@ Notice what they *don't* do: they never split into two competing histories.`,
         "Nothing; a stalled network is stalled forever",
       ],
       answer: 0,
-      explain: `Try it in the simulator: raise the fallen, propose, and the rhythm returns. Stalls are pauses, not deaths.`,
+      explain: `Try it in the simulator: raise the fallen, propose, and the rhythm returns.`,
     },
     {
       kind: "checkpoint",

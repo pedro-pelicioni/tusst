@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Kalenin Kendi Kapıları",
+  title: "Port'lar ve adapter'lar",
   tagline: "Port'lar ve adapter'lar: kapıyı alan ilan eder, dünya ona uyar.",
   steps: [
     { kind: "theory", body: `## Port'lar ve adapter'lar

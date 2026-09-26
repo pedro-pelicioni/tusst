@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Bir İşlemin Anatomisi",
+  title: "Bir işlemin anatomisi",
   tagline: "İşlem zarfı: ledger'ı değiştiren her şeyi taşıyan tek bir biçim.",
   steps: [
     {

@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "El Lado del Emisor",
+  title: "Emisión de activos",
   tagline: "Emisión de activos: cualquiera puede emitir — el oficio es todo lo que viene después.",
   steps: [
     {
@@ -72,13 +72,13 @@ Estas banderas son la razón por la que instituciones reguladas pueden emitir en
         "la URL de la página del ancla",
       ],
       answer: 0,
-      explain: `No hay un espacio de nombres que alguien pueda ocupar. Las billeteras resuelven cuál \`USDC\` es real mediante la dirección del emisor — y, como verás en las Puertas del Reino, ese emisor lo prueba con un archivo en su propio dominio.`,
+      explain: `No hay un espacio de nombres que alguien pueda ocupar. Las billeteras resuelven cuál \`USDC\` es real mediante la dirección del emisor — y, como verás cuando lleguemos a los anchors, ese emisor lo prueba con un archivo en su propio dominio.`,
     },
     {
       kind: "theory",
       body: `## El Stellar Asset Contract
 
-Los activos clásicos y los contratos inteligentes comparten un mismo reino, y el puente es el **Stellar Asset Contract (SAC)**. Cualquier activo clásico — incluido XLM — puede ser *invocado* como contrato: un despliegue, cero código que escribir, y el activo ahora habla **SEP‑41**, la interfaz estándar de tokens de Soroban.
+Los activos clásicos y los contratos inteligentes comparten el mismo libro mayor, y el puente es el **Stellar Asset Contract (SAC)**. Cualquier activo clásico — incluido XLM — puede *exponerse* como contrato: un despliegue, cero código que escribir, y el activo ahora habla **SEP‑41**, la interfaz estándar de tokens de Soroban.
 
 Mismo activo, misma oferta, una sola hoja de balance — pero ahora los contratos pueden poseerlo, moverlo y construir sobre él. USDC en un pool de préstamos y USDC en la línea de confianza de la abuela son el *mismo* USDC.
 

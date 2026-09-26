@@ -175,7 +175,7 @@ Every lab in the Forge runs on top of this rhythm — you already felt it if you
     {
       kind: "rustBranch",
       lessonSlug: "stellar-101-1",
-      body: `The Campaign's Act VI — **The Constellation Gate** — walks this same sky hands-on: network passphrases, horizons, and your first star-charts. Optional, and worth the detour when you want the map behind the theory.`,
+      body: `The Campaign's Act VI — **The Constellation Gate** — does this hands-on: accounts, fees, trustlines and your first payment. Optional, and worth the detour when you want the map behind the theory.`,
     },
   ],
   testOut: [

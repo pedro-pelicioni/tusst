@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "La clé et le sceau",
+  title: "Clés, signatures et comptes",
   tagline: "Clés et signatures : votre compte est une clé, signer est un sceau.",
   steps: [
     {

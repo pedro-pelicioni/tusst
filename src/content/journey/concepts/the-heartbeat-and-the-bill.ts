@@ -28,7 +28,7 @@ Most chains let state pile up forever — every node drags around every abandone
 When the TTL runs out:
 
 - **Temporary** entries are deleted. Gone.
-- **Persistent** and **instance** entries are **archived** — evicted from the live ledger, but restorable later with a proof, returning exactly as they were.
+- **Persistent** and **instance** entries are **archived** — evicted from the live ledger, not erased. A later transaction that needs one can restore it on the way in, for a fee, and it returns exactly as it was.
 
 This is **state archival**, and no other major chain does it. The live ledger stays lean, validators stay cheap, history stays recoverable.`,
     },
@@ -43,7 +43,7 @@ This is **state archival**, and no other major chain does it. The live ledger st
 
 Abstract shelves become a design decision the moment you have real data. Take a simple escrow contract:
 
-- **The admin address and the fee rate** go on **instance** storage. They belong to the contract itself, they are read on almost every call, and if the contract is archived they should go with it — there is nothing to salvage from a fee rate whose contract no longer exists.
+- **The admin address and the fee rate** go on **instance** storage. They belong to the contract itself, they are read on almost every call, and they share the contract's clock: as long as the contract is live, so are they, and restoring an archived contract brings them back with it.
 - **Each open escrow** goes on **persistent** storage. Somebody's funds are in there. If its TTL lapses the entry must still be recoverable, because "we forgot" is not an acceptable answer to "where is my money".
 - **A short-lived quote** a caller fetches before committing goes on **temporary** storage. It is worthless in ten minutes and nobody should pay rent to keep it.
 
@@ -89,7 +89,7 @@ The result is a cost you can quote in advance: "this action costs about a cent" 
 Every Soroban client follows one rhythm:
 
 1. **Simulate** the call against an RPC node — no signature, no cost.
-2. The simulation returns the **footprint** — precisely which ledger entries the call will read and write — plus resource estimates and the auth it needs.
+2. The simulation returns the **footprint** — precisely which ledger entries the call will read and write — plus resource estimates, the auth it needs, and any archived entries it must restore first.
 3. You **sign exactly what you simulated** and submit.
 
 The signed transaction carries its footprint, so validators know its whole world before executing it; nothing outside the footprint may be touched. Skip simulation and you are guessing numbers the network will simply reject.`,
@@ -119,7 +119,7 @@ The signed transaction carries its footprint, so validators know its whole world
     {
       question: `A persistent entry's TTL reaches zero. What happens?`,
       options: [
-        "It is archived, not deleted — calls that need it fail until someone restores it, and restoring is a fee",
+        "It is archived, not deleted — a later transaction that needs it can restore it first, and the restore costs a fee",
         "It is deleted, the same as a temporary entry",
         "The contract is paused until the entry is rewritten",
       ],

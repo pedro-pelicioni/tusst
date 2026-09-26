@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { contract } from "@stellar/stellar-sdk";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
@@ -13,10 +13,14 @@ import {
 } from "@/lib/stellar/invoke";
 import { errorInfo, errorText } from "@/lib/stellar/errors";
 import {
-  isPastArchiveDate,
   lookupKnownContract,
   type KnownContract,
 } from "@/lib/stellar/known-contracts";
+import {
+  archiveStatus,
+  fetchContractLiveness,
+  type ContractLiveness,
+} from "@/lib/stellar/liveness";
 import {
   describeFunctions,
   formValuesToScVals,
@@ -40,7 +44,12 @@ interface FnState {
   values: Record<string, string>;
   busy: boolean;
   error: string;
-  outcome: { readOnly: boolean; text: string; txHash?: string } | null;
+  outcome: {
+    readOnly: boolean;
+    fromArchive?: boolean;
+    text: string;
+    txHash?: string;
+  } | null;
 }
 
 /** A contract id plus the human name we know it by, when we know one. */
@@ -75,6 +84,15 @@ export function ContractWorkbench({
   const [fnState, setFnState] = useState<Record<string, FnState>>({});
   const [openFn, setOpenFn] = useState<string | null>(null);
   const [showDecoys, setShowDecoys] = useState(false);
+  // Keyed by id so a slow answer for the previous contract cannot land on
+  // the next one.
+  const [liveness, setLiveness] = useState<{
+    id: string;
+    info: ContractLiveness;
+  } | null>(null);
+  // Every load() takes a ticket; only the latest may write results, so a
+  // slow answer for an earlier id cannot overwrite a newer one.
+  const loadTicket = useRef(0);
 
   // The freshly-deployed id arrives from outside React's event flow.
   /* eslint-disable react-hooks/set-state-in-effect */
@@ -101,6 +119,7 @@ export function ContractWorkbench({
       setLoadError(m.ide.workbench.invalidId);
       return;
     }
+    const ticket = ++loadTicket.current;
     setLoading(true);
     setLoadError("");
     setSpec(null);
@@ -108,20 +127,24 @@ export function ContractWorkbench({
     setFunctions([]);
     setFnState({});
     setShowDecoys(false);
+    setLiveness(null);
     try {
       const loaded = await fetchContractSpec(id, wallet?.address);
+      if (ticket !== loadTicket.current) return;
       setSpec(loaded);
       setLoadedId(id);
       setFunctions(describeFunctions(loaded));
       onSpecLoaded?.(id);
+      refreshLiveness(id);
     } catch (e) {
+      if (ticket !== loadTicket.current) return;
       const { message, code } = errorInfo(e, m.ide.workbench.loadFailed);
-      const expiring = lookupKnownContract(id);
-      // A 404 means the ledger entry is not there. For an id we curated
-      // ourselves the id is not in question, so the entry was archived —
-      // say that instead of blaming the learner's typing.
-      if (expiring?.archivesOn && code === 404) {
-        setLoadError(fmt(m.ide.known.archived, { date: expiring.archivesOn }));
+      // The instance entry does not exist at all. Archived entries still
+      // come back from the RPC, so this is a wrong id, another network, or
+      // a testnet reset — never "archived". Other 404s (a missing Wasm, an
+      // unresolvable external ref) keep their own message below.
+      if (code === 404 && /contract instance/i.test(message)) {
+        setLoadError(m.ide.workbench.notFound);
       } else {
         const trimmed = message.slice(0, 300);
         setLoadError(
@@ -131,18 +154,28 @@ export function ContractWorkbench({
         );
       }
     } finally {
-      setLoading(false);
+      if (ticket === loadTicket.current) setLoading(false);
     }
   };
 
+  // Advisory only: a failed TTL lookup must not cost the learner the spec.
+  const refreshLiveness = (id: string) => {
+    fetchContractLiveness(id)
+      .then((info) => info && setLiveness({ id, info }))
+      .catch(() => {});
+  };
+
   const invoke = async (fn: SpecFunctionDescriptor) => {
-    if (!spec) return;
+    // The spec on screen belongs to loadedId; the text box may already hold
+    // another id, and calling that with this spec would be nonsense.
+    if (!spec || !loadedId) return;
+    const target = loadedId;
     const state = fnState[fn.name];
     patchFn(fn.name, { busy: true, error: "", outcome: null });
     try {
       const args = formValuesToScVals(spec, fn, state?.values ?? {});
       const outcome = await invokeFunction({
-        contractId: contractId.trim(),
+        contractId: target,
         spec,
         fnName: fn.name,
         args,
@@ -152,10 +185,13 @@ export function ContractWorkbench({
         busy: false,
         outcome: {
           readOnly: outcome.readOnly,
+          fromArchive: outcome.fromArchive,
           text: displayResult(outcome.result),
           txHash: outcome.txHash,
         },
       });
+      // A signed call restores whatever it touched, so the notice may be stale.
+      if (!outcome.readOnly) refreshLiveness(target);
     } catch (e) {
       patchFn(fn.name, {
         busy: false,
@@ -168,6 +204,8 @@ export function ContractWorkbench({
   };
 
   const known = loadedId ? lookupKnownContract(loadedId) : undefined;
+  const live = liveness && liveness.id === loadedId ? liveness.info : null;
+  const archive = live ? archiveStatus(live) : "live";
   const decoyNames = new Set(known?.decoys ?? []);
   const realFns = functions.filter((f) => !decoyNames.has(f.name));
   const decoyFns = functions.filter((f) => decoyNames.has(f.name));
@@ -230,9 +268,11 @@ export function ContractWorkbench({
             {state?.outcome && (
               <div className="rounded border border-line bg-bg-elev px-2 py-1.5">
                 <p className="font-mono text-[10px] uppercase tracking-wider text-muted">
-                  {state.outcome.readOnly
-                    ? m.ide.workbench.readResult
-                    : m.ide.workbench.writeResult}
+                  {state.outcome.fromArchive
+                    ? m.ide.workbench.archivedReadResult
+                    : state.outcome.readOnly
+                      ? m.ide.workbench.readResult
+                      : m.ide.workbench.writeResult}
                 </p>
                 <pre className="mt-1 whitespace-pre-wrap break-all font-mono text-[11px] text-pop">
                   {state.outcome.text}
@@ -310,15 +350,13 @@ export function ContractWorkbench({
         {loadError && <p className="font-mono text-[10px] text-red-400">{loadError}</p>}
       </div>
 
-      {known?.archivesOn && !loadError && (
-        <p
-          className={`font-mono text-[10px] ${
-            isPastArchiveDate(known) ? "text-red-400" : "text-amber-400"
-          }`}
-        >
-          {isPastArchiveDate(known)
-            ? fmt(m.ide.known.archived, { date: known.archivesOn })
-            : fmt(m.ide.known.archivesOn, { date: known.archivesOn })}
+      {live && archive !== "live" && !loadError && (
+        <p className="font-mono text-[10px] text-amber-400">
+          {archive === "archived"
+            ? m.ide.workbench.stateArchived
+            : fmt(m.ide.workbench.stateArchivesOn, {
+                date: live.approxArchiveAt.toISOString().slice(0, 10),
+              })}
         </p>
       )}
 

@@ -148,7 +148,7 @@ export const overworld = {
     },
   },
   tutorial: {
-    header: "Seu primeiro passo rumo à lenda",
+    header: "Como jogar",
     stepOf: "Passo {current} de {total}",
     skip: "Já sei jogar · pular o tutorial",
     next: "Próximo →",
@@ -161,7 +161,7 @@ export const overworld = {
         body: "Clique em “Caminhar até a missão”. Seu herói segue a trilha sozinho. Ao chegar, o botão vira “Entrar na missão” — clique nele para começar!",
       },
       {
-        tag: "02 / 03 · CONHECIMENTO É PODER",
+        tag: "02 / 03 · RESPONDA PARA ATACAR",
         title: "Leia, depois ataque.",
         body: "Cada missão é um capítulo curto com verificações. Toda resposta certa acerta o chefão; todo erro custa um coração — mas nada aqui te tranca fora. Curiosidade? Qualquer missão está sempre aberta.",
       },
@@ -246,7 +246,7 @@ export const overworld = {
     progress: "{current} / {total} desafios",
   },
   victory: {
-    headerLevel: "NÍVEL {level} DESPERTADO",
+    headerLevel: "NÍVEL {level} ALCANÇADO",
     headerRevisit: "MISSÃO REVISITADA",
     headerDone: "MISSÃO CONCLUÍDA",
     congrats: "MUITO BEM, {name}!",

@@ -532,7 +532,7 @@ La fila cinco es la configuración que la gente lleva a producción creyendo que
       kind: "theory",
       body: `R y W son dos perillas que se intercambian **entre sí**, no contra una "consistencia" abstracta. Con N=3, \`W=1\` tolera dos fallas de nodo en escritura y cero en lectura; \`W=3\` lo invierte. La latencia sigue la misma curva, porque cada quorum espera a su miembro más lento — así que subir W sube el p99 específicamente en el camino de escritura.
 
-Una partición no pide permiso. Con N=5, W=3 y un split 3|2, el lado mayoritario todavía reúne quorum y hace commit de la versión 2; el lado minoritario tiene dos nodos alcanzables y no llega ni a R=3 ni a W=3, así que rechaza ambos.
+Con N=5, W=3 y una partición 3|2, el lado mayoritario todavía reúne quorum y hace commit de la versión 2; el lado minoritario tiene dos nodos alcanzables y no llega ni a R=3 ni a W=3, así que rechaza ambos.
 
 Ese rechazo **es** la elección CP, y la hiciste cuando elegiste R y W. Servir la versión 1 stale de n4/n5 habría sido la elección AP — disponible, y equivocada. CAP no es una propiedad de la red; es cuál de esas dos líneas llevaste a producción.
 

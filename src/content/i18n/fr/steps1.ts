@@ -9,7 +9,7 @@ export const steps1: Record<string, LessonStep[]> = {
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Bienvenue en **Rust**, le langage que les anciens Forgeborn utilisaient pour tenir le ciel en place.
+      body: `Bienvenue en **Rust**. On va écrire ton premier programme.
 
 Tout programme Rust commence par la fonction \`main\` — le point d'entrée. Quand ton programme s'exécute, c'est \`main\` qui est appelée.
 
@@ -91,14 +91,14 @@ Comme des coffres étiquetés, les variables ont un contenu — et des noms qui 
     },
     {
       kind: "theory",
-      body: `Voici la vieille loi de l'armurerie : en Rust, les variables sont **immuables par défaut**. Une fois liée, la valeur ne peut plus changer.
+      body: `En Rust, les variables sont **immuables par défaut**. Une fois liée, la valeur ne peut plus changer.
 
 \`\`\`rust
 let x = 5;
 x = 10; // ❌ erreur de compilation : impossible d'assigner deux fois
 \`\`\`
 
-Le compilateur — ton allié le plus intransigeant — refusera de forger ceci.`,
+Le compilateur refuse ce code.`,
     },
     {
       kind: "quiz",
@@ -111,11 +111,11 @@ Le compilateur — ton allié le plus intransigeant — refusera de forger ceci.
       ],
       answer: 0,
       explain:
-        "Une fois forgée, jamais changée — sauf si tu en déclares autrement.",
+        "Sans `mut`, une variable ne peut pas être réassignée.",
     },
     {
       kind: "theory",
-      body: `Pour autoriser la réassignation, déclare ton intention à l'acier lui-même avec \`mut\` :
+      body: `Pour autoriser la réassignation, ajoute \`mut\` :
 
 \`\`\`rust
 let mut x = 5;
@@ -318,7 +318,7 @@ Sortie attendue :
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Maintenant la loi qui fait de Rust *Rust* — celle gravée sur la porte de la chambre forte :
+      body: `Maintenant la règle qui fait de Rust *Rust* :
 
 **Chaque valeur a exactement un propriétaire.**
 
@@ -351,7 +351,7 @@ Ce n'est pas de la cruauté — c'est ainsi que Rust sait exactement qui doit ne
       ],
       answer: 0,
       explain:
-        "La valeur s'est déplacée. Tends la main vers a et les sceaux te brûleront — à la compilation.",
+        "La valeur s'est déplacée. Réutilise `a` et le code ne compile pas.",
     },
     {
       kind: "theory",
@@ -379,7 +379,7 @@ let b = a.clone();   // ✅ deux Strings, deux propriétaires
       kind: "editor",
       intro: `### Épreuve finale — la loi du gardien unique
 
-Le code de départ déplace \`sword\` dans \`copy\`, puis tente d'utiliser \`sword\` à nouveau — les sceaux refusent. Répare-le en **clonant** au lieu de déplacer.
+Le code de départ déplace \`sword\` dans \`copy\`, puis tente d'utiliser \`sword\` à nouveau — le compilateur refuse. Répare-le en **clonant** au lieu de déplacer.
 
 Sortie attendue :
 
@@ -636,7 +636,7 @@ Remarque \`==\` (une question : « égal ? ») contre \`=\` (un ordre : « stock
       ],
       answer: 0,
       explain:
-        "Les voyageurs qui l'arpentent pour toujours finissent par faire partie du mur.",
+        "Sans `break`, rien ne l'arrête.",
     },
     {
       kind: "fill",
@@ -888,7 +888,7 @@ items.push("map");    // ajoute à la fin — le sac grandit
 items.len()           // combien dedans ? → 3
 \`\`\`
 
-Et la règle des anciens dieux : les positions comptent **à partir de zéro**. \`items[0]\` est \`"torch"\`, \`items[1]\` est \`"rope"\`.`,
+Et attention : les positions comptent **à partir de zéro**. \`items[0]\` est \`"torch"\`, \`items[1]\` est \`"rope"\`.`,
     },
     {
       kind: "quiz",
@@ -901,7 +901,7 @@ Et la règle des anciens dieux : les positions comptent **à partir de zéro**. 
       ],
       answer: 0,
       explain:
-        "push ajoute à la FIN ; l'indexation commence à 0, comme les anciens dieux l'ont voulu.",
+        "push ajoute à la FIN ; l'indexation commence à 0.",
     },
     {
       kind: "fill",
@@ -1003,7 +1003,7 @@ let vault = vec!["hammer", "chisel"];
 vault[5]   // 💥 PANIC — le programme plante
 \`\`\`
 
-Les crochets *supposent* que la case existe. Les suppositions, dans les chambres fortes, sont fatales.`,
+Les crochets *supposent* que la case existe.`,
     },
     {
       kind: "theory",
@@ -1133,7 +1133,7 @@ let mut s = String::from("Keeper");
 s.push_str(" of keys");   // ajoute du texte à la fin
 \`\`\`
 
-\`push_str\` est le burin des inscriptions vivantes. (Son cousin \`push\` ajoute un seul caractère.)`,
+\`push_str\` ajoute du texte ; son cousin \`push\` ajoute un seul caractère.`,
     },
     {
       kind: "theory",

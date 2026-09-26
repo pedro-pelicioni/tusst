@@ -1,30 +1,23 @@
 "use client";
 
-// 3D card carousel over the runic backdrop: three visible
-// slots (center card large, neighbors receding with a rotateY), flip-in
-// animation when the center changes, PREVIOUS/NEXT controls, progress
-// dashes, arrow keys and pointer swipe. No autoplay. Under
-// prefers-reduced-motion the CSS kills transitions/animations and the
-// change becomes an instant swap.
+// The playable cast as a 3D card carousel over the runic backdrop: three
+// visible slots (center card large, neighbors receding with a rotateY),
+// flip-in animation when the center changes, PREVIOUS/NEXT controls,
+// progress dashes, arrow keys and pointer swipe. Under the active card: its
+// role and the eight pixel forms the hero grows through, then the door to
+// the /hero picker. No autoplay. Under prefers-reduced-motion the CSS kills
+// transitions/animations and the change becomes an instant swap.
+//
+// Seven cards, not eight: the Beholder is the Act VII boss, not someone you
+// play (see src/content/heroes.ts).
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRef, useState } from "react";
+import { HEROES, HERO_FORMS, type HeroId } from "@/content/heroes";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
-import type { Messages } from "@/i18n/messages";
-
-type CardMetaKey = keyof Messages["landing"]["carousel"]["cards"];
-
-const CHAMPIONS: { slug: string; name: string; metaKey: CardMetaKey }[] = [
-  { slug: "stroowarrior", name: "STROOWARRIOR", metaKey: "metaStroowarrior" },
-  { slug: "stropillusion", name: "STROPILLUSION", metaKey: "metaStropillusion" },
-  { slug: "stroopkeeper", name: "STROOPKEEPER", metaKey: "metaStroopkeeper" },
-  { slug: "stroophantom", name: "STROOPHANTOM", metaKey: "metaStroophantom" },
-  { slug: "strooracle", name: "STROORACLE", metaKey: "metaStrooracle" },
-  { slug: "astrostroopie", name: "ASTROSTROOPIE", metaKey: "metaAstrostroopie" },
-  { slug: "stroopbeholder", name: "STROOPBEHOLDER", metaKey: "metaStroopbeholder" },
-  { slug: "stroopzipper", name: "STROOPZIPPER", metaKey: "metaStroopzipper" },
-];
+import { sheetPosition } from "@/lib/hero";
 
 function circularOffset(i: number, index: number, length: number): number {
   let d = i - index;
@@ -33,14 +26,25 @@ function circularOffset(i: number, index: number, length: number): number {
   return d;
 }
 
-export function ChampionCarousel() {
-  const m = useMessages().landing;
+export function ChampionCarousel({
+  ctaHref,
+  sheets,
+}: {
+  ctaHref: string;
+  /** heroes whose pixel form sheet has landed (checked on the server) */
+  sheets: HeroId[];
+}) {
+  const messages = useMessages();
+  const m = messages.landing;
+  const heroCopy = messages.overworld.heroes;
   const [index, setIndex] = useState(0);
   const swipeStart = useRef<number | null>(null);
 
-  const total = CHAMPIONS.length;
+  const total = HEROES.length;
   const go = (next: number) => setIndex(((next % total) + total) % total);
-  const active = CHAMPIONS[index];
+  const active = HEROES[index];
+  const activeCopy = heroCopy[active.id];
+  const activeName = activeCopy.name.toUpperCase();
 
   const onKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "ArrowLeft") {
@@ -79,9 +83,10 @@ export function ChampionCarousel() {
         </div>
 
         <div className="ld-stage relative mx-auto mt-14 h-[min(118vw,430px)] w-full max-w-3xl" data-reveal="2">
-          {CHAMPIONS.map((champion, i) => {
+          {HEROES.map((hero, i) => {
             const offset = circularOffset(i, index, total);
             const hidden = Math.abs(offset) > 1;
+            const name = heroCopy[hero.id].name.toUpperCase();
             const style: React.CSSProperties = hidden
               ? {
                   transform: `translateX(calc(-50% + ${Math.sign(offset) * 150}%)) scale(0.6)`,
@@ -95,10 +100,10 @@ export function ChampionCarousel() {
                   };
             return (
               <button
-                key={champion.slug}
+                key={hero.id}
                 type="button"
                 onClick={() => go(i)}
-                aria-label={fmt(m.a11y.goToCard, { name: champion.name })}
+                aria-label={fmt(m.a11y.goToCard, { name })}
                 aria-current={offset === 0 || undefined}
                 aria-hidden={hidden || undefined}
                 inert={hidden}
@@ -122,8 +127,8 @@ export function ChampionCarousel() {
                   className={`block overflow-hidden rounded-2xl border border-white/10 ${offset === 0 ? "ld-card--flip shadow-[0_0_60px_rgba(143,123,255,0.3),0_30px_70px_rgba(0,0,0,0.75)]" : "shadow-[0_20px_50px_rgba(0,0,0,0.6)]"}`}
                 >
                   <Image
-                    src={`/cards/${champion.slug}.png`}
-                    alt={champion.name}
+                    src={`/cards/${hero.cardId}.png`}
+                    alt={name}
                     width={848}
                     height={1264}
                     quality={60}
@@ -138,17 +143,49 @@ export function ChampionCarousel() {
 
         <p aria-live="polite" className="mt-10 text-center">
           <span className="font-display text-[19px] font-bold tracking-[0.22em] text-fg">
-            {active.name}
+            {activeName}
           </span>
           <span className="mt-1.5 block font-mono text-[11px] uppercase tracking-[0.3em] text-gold">
-            {m.carousel.cards[active.metaKey]}
+            {activeCopy.role}
           </span>
           <span className="sr-only">
-            {fmt(m.a11y.cardStatus, { name: active.name, index: index + 1, total })}
+            {fmt(m.a11y.cardStatus, { name: activeName, index: index + 1, total })}
           </span>
         </p>
 
-        <div className="mt-9 flex items-center justify-center gap-8">
+        {sheets.includes(active.id) ? (
+          <div className="mt-6 flex flex-col items-center gap-3">
+            <ol
+              aria-label={fmt(m.a11y.formsList, { name: activeCopy.name })}
+              className="grid w-full max-w-[26rem] grid-cols-8 gap-1 sm:gap-2"
+            >
+              {Array.from({ length: HERO_FORMS }, (_, form) => (
+                <li
+                  key={`${active.id}-${form}`}
+                  title={activeCopy.forms[form]}
+                  className="ld-form"
+                  style={{ "--form-delay": `${form * 40}ms` } as React.CSSProperties}
+                >
+                  <span
+                    aria-hidden
+                    className="ld-pixel block aspect-square w-full bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(${active.sheet})`,
+                      backgroundSize: "400% 200%",
+                      backgroundPosition: sheetPosition(form),
+                    }}
+                  />
+                  <span className="sr-only">{activeCopy.forms[form]}</span>
+                </li>
+              ))}
+            </ol>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted2">
+              {m.carousel.formsLabel}
+            </p>
+          </div>
+        ) : null}
+
+        <div className="mt-9 flex items-center justify-center gap-3 sm:gap-8">
           <button
             type="button"
             onClick={() => go(index - 1)}
@@ -158,18 +195,18 @@ export function ChampionCarousel() {
             <span aria-hidden className="flex h-8 w-8 items-center justify-center rounded-md bg-accent/20 text-accent-soft">
               ←
             </span>
-            {m.carousel.previous}
+            <span className="hidden sm:inline">{m.carousel.previous}</span>
           </button>
 
-          <div className="flex items-center gap-2">
-            {CHAMPIONS.map((champion, i) => (
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {HEROES.map((hero, i) => (
               <button
-                key={champion.slug}
+                key={hero.id}
                 type="button"
                 onClick={() => go(i)}
-                aria-label={fmt(m.a11y.goToCard, { name: champion.name })}
+                aria-label={fmt(m.a11y.goToCard, { name: heroCopy[hero.id].name.toUpperCase() })}
                 aria-current={i === index || undefined}
-                className={`h-[3px] rounded-full transition-all focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4 ${i === index ? "w-9 bg-accent" : "w-5 bg-white/15 hover:bg-white/30"}`}
+                className={`h-[3px] rounded-full transition-all focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4 ${i === index ? "w-6 bg-accent sm:w-9" : "w-3 bg-white/15 hover:bg-white/30 sm:w-5"}`}
               />
             ))}
           </div>
@@ -180,11 +217,17 @@ export function ChampionCarousel() {
             aria-label={m.a11y.nextCard}
             className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.3em] text-muted2 transition-colors hover:text-fg focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4"
           >
-            {m.carousel.next}
+            <span className="hidden sm:inline">{m.carousel.next}</span>
             <span aria-hidden className="flex h-8 w-8 items-center justify-center rounded-md bg-accent/20 text-accent-soft">
               →
             </span>
           </button>
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <Link href={ctaHref} className="ld-btn-pixel">
+            {m.carousel.cta}
+          </Link>
         </div>
       </div>
     </section>

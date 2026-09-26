@@ -3,267 +3,269 @@ import type { ActText, CardText, SkirmishText } from "../types";
 // Localized campaign narrative. Card NAMES and act numerals stay as-is.
 export const actText: Record<string, ActText> = {
   "rust-fundamentals": {
-    title: "La Citadelle Rouillée",
-    territory: "Capitale en ruine de l'art runique",
+    title: "Les fondamentaux de Rust",
+    territory: "syntaxe, types, ownership",
     synopsis:
-      "Tu t'éveilles dans les ruines oxydées de la Citadelle. Ferrisia la Mère-Crabe t'enseigne les mots d'éveil, la liaison des noms et la loi de la Lame Inflexible. Rallume le phare, Forgeborn.",
+      "Le rez-de-chaussée du langage : affichage, bindings et mutabilité, types, fonctions, et les règles d'ownership et d'emprunt dont tout le reste dépend.",
   },
   "control-flow": {
-    title: "La Salle des Chemins qui Bifurquent",
-    territory: "Labyrinthe de miroirs",
+    title: "Flux de contrôle",
+    territory: "branches, match, boucles",
     overlord: null,
     synopsis:
-      "Un labyrinthe où chaque couloir mène à un destin différent. Le Seigneur des Miroirs piège les voyageurs dans des boucles infinies. Bifurque avec sagesse, matche chaque reflet et brise la boucle éternelle.",
+      "Branchements et répétition en Rust, y compris le `match` exhaustif — le mécanisme qui rend sûre la gestion d'`Option` et de `Result` plus tard.",
   },
   "rust-standard-library": {
-    title: "Les Coffres Sans Fin",
-    territory: "Archive-donjon sous le royaume",
+    title: "La bibliothèque standard",
+    territory: "collections, itérateurs, structs",
     overlord: null,
     synopsis:
-      "Sous le royaume dorment tous les outils que les anciens Stroopies ont jamais forgés : sacs extensibles, registres enchantés, chaînes d'esprits paresseux qui ne travaillent que lorsqu'on les collecte. L'Amasseur veille sur tout — et indexe tout avec un décalage de un.",
+      "Les types dont tu te serviras tous les jours : `Vec`, `HashMap`, strings et slices, itérateurs, et donner un comportement à tes propres types avec `impl`.",
   },
   "mastering-option": {
-    title: "Le Marais Évanescent",
-    territory: "Marécages hantés du peut-être",
+    title: "Option<T>",
+    territory: "l'absence, modélisée comme un type",
     synopsis:
-      "Ici, les choses sont ou ne sont pas — peut-être. Des villageois disparaissent dans le None ; les imprudents font unwrap à l'aveugle et on ne les revoit jamais. Dans le marais, tu poses la seule question qui compte : Some, ou None ?",
+      "Rust n'a pas de null. `Option<T>` fait de « il n'y a peut-être rien ici » un cas que le compilateur t'oblige à traiter.",
   },
   "mastering-result": {
-    title: "Le Procès des Deux Destins",
-    territory: "La Haute Cour du royaume",
+    title: "Result<T, E>",
+    territory: "l'échec, modélisé comme une valeur",
     synopsis:
-      "Chaque rune est jugée ici : Ok ou Err. La devise de la Cour est gravée au-dessus de la porte — #[must_use]. Apprends à propager le jugement avec ?, à te relever d'un Err avec grâce, et à ne jamais paniquer devant la cour.",
+      "Les erreurs sont des valeurs, pas des exceptions. Fais-leur un match, convertis-les et propage-les avec `?` au lieu de dérouler une pile.",
   },
   "stellar-101": {
-    title: "La Porte de la Constellation",
-    territory: "Le ciel brisé",
+    title: "Stellar 101",
+    territory: "comptes, lumens, trustlines, paiements",
     synopsis:
-      "Cinq champions réunis, tu t'élèves. Des forts-étoiles pour les comptes, sceau et secret pour les paires de clés, des ponts de lumière pour les trustlines — et les lumens qui circulent à nouveau pour la première fois depuis la Panique.",
+      "Comment le réseau fonctionne vraiment : ce qu'est un compte, ce que paie un lumen, pourquoi détenir un actif est opt-in, et comment un paiement est construit puis soumis.",
   },
   "soroban-smart-contracts": {
-    title: "L'Antre du Beholder",
-    territory: "Forteresse des erreurs non gérées",
+    title: "Smart contracts Soroban",
+    territory: "contrats, stockage, autorisation",
     overlord: null,
     synopsis:
-      "Au-delà de la Porte, il attend, dans une forteresse bâtie de chaque erreur jamais gérée. Forge des runes Soroban, déploie-les dans le ciel vivant, et retourne contre le Beholder ses propres contrats corrompus.",
+      "Écrire un contrat Soroban en Rust, y stocker de l'état et le sécuriser — les trois choses dont tout vrai contrat a besoin.",
   },
   "stellar-protocol-27": {
-    title: "Le Ciel Réécrit",
-    territory: "Le firmament lui-même, en pleine reforge",
+    title: "Protocol 27",
+    territory: "smart accounts & délégation d'auth",
     overlord: null,
     synopsis:
-      "Le Beholder gît, brisé — mais le ciel vivant ne porte pas le deuil ; il se reforge, couture après couture. Les étoiles appellent cela le Zipper : le Protocol 27. Pourtant, dans les décombres de l'Antre, un œil ne s'est jamais fermé. Il a appris à copier le sceau du signataire et à le prononcer deux fois. Maîtrise les lois réécrites du ciel, Forgeborn, et fais taire le Spectre de l'Écho.",
+      "La mise à niveau actuelle : des smart accounts qui définissent leur propre politique d'auth, la délégation via CAP-0071, les signatures liées à l'adresse, et le chemin de migration.",
   },
 };
 
 export const skirmishText: Record<string, SkirmishText> = {
-  // Act I — The Rusted Citadel
+  // Rust Fundamentals
   "rust-fundamentals-1": {
-    title: "Les Mots d'Éveil",
+    title: "Hello, World!",
     intro:
-      "Le phare de la Citadelle est éteint depuis la Grande Panique, et il ne répond qu'à une rune prononcée. Ferrisia te tend un burin. « Toute rune jamais forgée commence à `main` », dit-elle. « Parle, Forgeborn — et surveille tes points-virgules. Le phare est pointilleux. »",
+      "Tout programme Rust commence à `main`. Tu vas afficher une ligne exacte et découvrir la macro `println!` — l'outil qui te servira à inspecter tout ce qui suit.",
   },
   "rust-fundamentals-2": {
-    title: "La Lame Inflexible",
+    title: "Variables & mutabilité",
     intro:
-      "Dans l'armurerie, chaque lame est liée immuable par l'ancienne loi — une fois forgée, jamais changée. Pour en reforger une, tu dois déclarer ton intention à l'acier lui-même. Le Gardien de l'Emprunt observe depuis le seuil, bras croisés, attendant que tu tentes de la changer sans `mut`.",
+      "Les bindings sont immuables par défaut. Tu vas voir l'erreur de compilation que ça provoque, et la corriger avec `mut` — le premier de nombreux endroits où Rust te fait déclarer ton intention.",
   },
   "rust-fundamentals-3": {
-    title: "Les Formes de la Matière",
+    title: "Types de données",
     intro:
-      "Ferrisia ouvre une armoire de fioles étiquetées : nombres entiers, nombres à virgule, vérités et mensonges. « La Citadelle refuse toute rune dont elle ne peut nommer la forme », dit-elle. « Étiquette tes fioles, Forgeborn — le phare ne lit que ce qui est typé. »",
+      "Entiers, flottants, booléens et caractères — et quand le compilateur a besoin que tu annotes un type qu'il ne peut pas inférer seul.",
   },
   "rust-fundamentals-4": {
-    title: "La Recette du Forgeron de Runes",
+    title: "Fonctions",
     intro:
-      "Au mur de la forge est accrochée une recette : prends deux lingots, fusionne-les, rends l'alliage. « Une recette écrite une fois sert mille forgeages », dit Ferrisia. « Les forgerons les appelaient des fonctions. Écris la tienne, et la forge l'appellera par son nom. »",
+      "Paramètres, types de retour, et le retour implicite de Rust : la dernière expression sans point-virgule est la valeur. Cette seule règle explique beaucoup de syntaxe par la suite.",
   },
   "rust-fundamentals-5": {
-    title: "La Loi du Gardien Unique",
+    title: "Les bases de l'ownership",
     intro:
-      "La porte du coffre porte la plus ancienne loi de la Citadelle : chaque trésor a exactement un gardien. Confie un trésor à un autre et il n'est plus tien — tends à nouveau la main vers lui et les sceaux te brûleront. Ce soir, tu apprends pourquoi les anciens forgerons forgeaient parfois une véritable copie à la place.",
+      "Chaque valeur a exactement un propriétaire. Assigner une `String` la déplace, et l'ancien binding est mort — l'idée sur laquelle repose tout le reste de Rust.",
   },
   "rust-fundamentals-6": {
-    title: "La Lame Empruntée",
+    title: "Emprunt & références",
     intro:
-      "Le Gardien de l'Emprunt parle enfin : « Nul besoin de céder une lame pour qu'un autre lise son inscription. Prête-la — une référence — et elle revient dans ta main quand il a terminé. » Il tapote le glyphe `&` gravé dans son gantelet. « Cette marque. Apprends-la. »",
+      "Pas besoin de céder une valeur pour qu'une fonction la lise. Prête une référence avec `&` et elle te revient — l'alternative de tous les jours au clonage.",
   },
 
-  // Act II — The Hall of Forking Roads
+  // Control Flow
   "control-flow-1": {
-    title: "Les Deux Portes",
+    title: "if / else",
     intro:
-      "La première salle du labyrinthe abrite deux portes et une seule torche. « Chaque chemin ici est une question », murmure un reflet qui est presque toi. « Si la torche brûle, une porte. Sinon, l'autre. Le dédale ne respecte qu'un voyageur capable de décider. »",
+      "En Rust, un branchement est une expression, pas seulement une instruction — un `if` peut donc produire une valeur que tu lies directement.",
   },
   "control-flow-2": {
-    title: "La Salle de Tous les Reflets",
+    title: "Expressions match",
     intro:
-      "Un couloir de miroirs, chacun montrant une porte différente que tu aurais pu prendre. La règle du Seigneur des Miroirs est absolue : nomme ce que tu vois dans chaque miroir — chacun d'eux — ou reste piégé entre eux. L'ancien art runique appelle cela un `match`, et il n'oublie rien.",
+      "`match` doit être exhaustif : le compilateur rejette tout cas oublié. C'est le mécanisme derrière la gestion sûre d'`Option` et de `Result` plus tard.",
   },
   "control-flow-3": {
-    title: "Le Couloir Sans Fin",
+    title: "loop",
     intro:
-      "Ce couloir se répète. La même torchère, la même fissure dans la pierre, encore et encore. Les voyageurs qui l'arpentent pour toujours finissent par faire partie du mur. La seule issue est de compter tes échos — et, quand le compte est bon, de rompre le sortilège d'un `break` en pleine foulée.",
+      "Une boucle inconditionnelle, et `break` avec une valeur — la façon idiomatique de réessayer jusqu'à ce que ça marche.",
   },
   "control-flow-4": {
-    title: "La Galerie qui Sombre",
+    title: "Boucles while",
     intro:
-      "Le sol descend un étage à la fois, et l'eau monte. « Tant qu'il reste des étages au-dessus de la marée, continue de descendre vers la salle du coffre », dit le reflet, sans grande aide. Vérifie la condition avant chaque pas — la galerie noie les imprudents.",
+      "Boucler tant qu'une condition tient. Tu verras aussi pourquoi `while let` existe et où il bat un simple `while`.",
   },
   "control-flow-5": {
-    title: "Les Pas Comptés",
+    title: "Boucles for",
     intro:
-      "Cinq pierres de gué traversent le lac-miroir, numérotées de un à cinq. Marche sur chacune exactement une fois, dans l'ordre, en l'annonçant à voix haute — le lac écoute. Les anciens forgerons avaient une rune pour parcourir un chemin connu sans compter sur ses doigts : `for`.",
+      "Parcourir une plage ou une collection — la boucle que tu écriras vraiment, et le premier endroit où apparaissent les itérateurs.",
   },
   "control-flow-6": {
-    title: "Le Dédale du Seigneur des Miroirs",
+    title: "Flux de contrôle imbriqué",
     intro:
-      "La galerie finale : dix miroirs, et le Seigneur des Miroirs caché derrière un miroir sur trois. Parcours la rangée ; annonce le numéro de chaque miroir — mais là où il se cache, crie « mirror » à la place. Branche à l'intérieur de ta boucle, Forgeborn. Brise le cœur du labyrinthe.",
+      "Combiner branches et boucles, et garder le résultat lisible quand la logique cesse d'être triviale.",
   },
 
-  // Act III — The Endless Vaults
+  // The Standard Library
   "rust-standard-library-1": {
-    title: "Le Sac Sans Fond",
+    title: "Les bases de Vec",
     intro:
-      "Le premier coffre renferme l'outil favori des Stroopies : un sac qui grandit pour contenir tout ce que tu y pousses. « Un `Vec` », dit le Stroopkeeper en déverrouillant la vitrine. « Chaque aventurier en porte un. Peu le respectent. Il compte à partir de zéro, comme les anciens dieux l'ont voulu. »",
+      "Un tableau extensible : push, indexation, et pourquoi `Vec` est la collection par défaut de presque tout programme Rust.",
   },
   "rust-standard-library-2": {
-    title: "La Chaîne des Esprits Paresseux",
+    title: "Itérateurs",
     intro:
-      "Plus profond encore, des esprits pendent en chaînes — chacun tenant une valeur, sans rien faire du tout. « Des itérateurs », murmure le Gardien. « Les travailleurs les plus paresseux du royaume. Ils ne lèvent pas le petit doigt avant que tu ne collectes. Enchaîne-les bien et ils additionneront une fortune en un souffle. »",
+      "`map`, `filter` et `collect` — et le fait que rien ne s'exécute tant qu'un consommateur ne demande pas d'éléments.",
   },
   "rust-standard-library-3": {
-    title: "L'Étagère Peut-Être Vide",
+    title: "Option & map",
     intro:
-      "Le piège de l'Amasseur : une étagère à cinq emplacements, et des aventuriers qui tendent la main vers le sixième. Jadis, ce geste faisait s'effondrer le coffre tout entier. Le `.get` du sac demande poliment à la place — et la réponse, Forgeborn, peut n'être rien du tout.",
+      "Transformer une valeur qui n'existe peut-être pas, sans faire d'unwrap avant.",
   },
   "rust-standard-library-4": {
-    title: "Le Registre Enchanté",
+    title: "HashMap",
     intro:
-      "Un livre qui répond aux questions : demande-lui « gold ? » et il répond « 100 ». Chaque entrée est une clé liée à une valeur, sans ordre particulier — l'enchantement troque l'ordre contre la vitesse. Les forgerons l'appelaient une `HashMap`. L'Amasseur l'appelle sa mémoire.",
+      "Recherche clé/valeur, et l'API `entry` qui lit ou insère en un seul hachage.",
   },
   "rust-standard-library-5": {
-    title: "L'Inscription Vivante",
+    title: "Manipulation de String",
     intro:
-      "Certaines inscriptions sont gravées une fois et ne changent jamais — d'autres grandissent, lettre après lettre, à mesure que leur histoire s'écrit. Ce soir, tu travailles avec l'espèce vivante : `String`, le texte extensible du royaume, et `format!`, le sortilège qui en tisse plusieurs en un.",
+      "`String` contre `&str`, pourquoi tu ne peux pas indexer une chaîne par un nombre, et ce que UTF-8 vient faire là-dedans.",
   },
   "rust-standard-library-6": {
-    title: "Une Fenêtre sur le Trésor",
+    title: "Slices",
     intro:
-      "L'Amasseur ne te laissera pas emporter le trésor — mais il te laissera regarder. Une slice est une fenêtre ouverte sur une portion du trésor : aucune copie, aucun vol, seulement une vue d'ici à là. Attention aux limites : la fenêtre inclut son début et exclut sa fin.",
+      "Une vue empruntée sur une partie d'une collection — pas de copie, pas d'allocation.",
   },
   "rust-standard-library-7": {
-    title: "Le Plan de la Chambre la Plus Profonde",
+    title: "Structs",
     intro:
-      "Au-delà des ledgers et de l’encre vivante, il reste une porte : l’atelier de l’Accumulateur, où chaque trésor commence par un plan. « Une `struct`, explique-t-il en traçant le moule d’une griffe, rassemble plusieurs parties sous un seul nom — une forme que la chambre forte reconnaîtra pour toujours. »",
+      "Regrouper des données liées sous un seul nom, avec le type de chaque champ déclaré.",
   },
   "rust-standard-library-8": {
-    title: "Le Rite qui Éveille le Réceptacle",
+    title: "impl et méthodes",
     intro:
-      "Un plan reste inerte tant qu’il n’a pas reçu un rite : une façon de le créer et une voix pour répondre en son nom. « Un bloc `impl` apprend à la forme ce qu’elle sait faire, dit l’Accumulateur. Ajoute aussi `derive`, afin qu’elle révèle ses propres secrets quand tu le lui demandes. »",
+      "Attacher un comportement à un type, et la différence entre `self`, `&self` et `&mut self`.",
   },
 
-  // Act IV — The Vanishing Marsh
+  // Option<T>
   "mastering-option-1": {
-    title: "Some, ou None ?",
+    title: "Some ou None",
     intro:
-      "Le Stroophantom se matérialise — ou pas. Difficile à dire. « Dans le marais, chaque réponse est enveloppée », dit-il depuis quelque part. « `Some(thing)`, ou `None`. D'autres royaumes prétendent que l'absence n'existe pas et s'y fracassent à minuit. Ici, on la met dans le type. »",
+      "`Option<T>` fait de l'absence un cas que le compilateur t'oblige à traiter — c'est pour ça que Rust n'a pas de null.",
   },
   "mastering-option-2": {
-    title: "Les Fous Qui Ont Unwrappé",
+    title: "Unwrap sans danger",
     intro:
-      "Des pierres tombales bordent le sentier, chacune gravée du même dernier mot : `.unwrap()`. « Ils ont supposé », soupire le Fantôme. « Sur `None`, unwrap panique — tout le programme se noie. Porte plutôt une valeur par défaut, et le marais ne pourra rien contre toi. »",
+      "`unwrap_or`, `unwrap_or_else` et `expect`, et la règle qui dit quand `unwrap()` est acceptable en production.",
   },
   "mastering-option-3": {
-    title: "Demande au Marais Lui-Même",
+    title: "if let",
     intro:
-      "Au cœur du marais, une lanterne qui est peut-être allumée — ou pas. Le Fantôme enseigne l'ultime courtoisie : « `if let Some(light)` — s'il y a quelque chose, prends-le par son nom et utilise-le. Sinon, emprunte le chemin du else. Ne suppose jamais. Demande. »",
+      "Matcher un seul cas et ignorer le reste, quand un `match` complet ne serait que du bruit.",
   },
 
-  // Act V — The Trial of Two Fates
+  // Result<T, E>
   "mastering-result-1": {
-    title: "Les Deux Verdicts",
+    title: "Ok ou Err",
     intro:
-      "La Strooracle préside, et sa cour ne connaît que deux jugements : `Ok(value)` et `Err(reason)`. « Le marais t'a enseigné l'absence », dit-elle. « Moi, je t'enseigne l'échec — et l'échec, Forgeborn, énonce toujours sa raison pour le procès-verbal. »",
+      "`Result<T, E>` porte soit la valeur, soit la raison de l'échec — et `#[must_use]` t'empêche de l'ignorer en silence.",
   },
   "mastering-result-2": {
-    title: "La Lecture du Jugement",
+    title: "Match sur Result",
     intro:
-      "Un parchemin arrive, scellé, avec un verdict à l'intérieur. Dans cette cour, on ne devine pas les verdicts — on les `match` : une branche pour `Ok`, une branche pour `Err`, les deux traitées, rien d'ignoré. La devise au-dessus de la porte s'illumine à ton entrée : `#[must_use]`.",
+      "Traiter les deux branches explicitement, et décider à chaque appel si un échec est récupérable.",
   },
   "mastering-result-3": {
-    title: "La Marque de la Propagation",
+    title: "L'opérateur ?",
     intro:
-      "Toutes les cours n'ont pas à trancher ; certaines renvoient l'affaire plus haut. L'Oracle te montre la plus petite rune du royaume : `?`. « Sur Ok, déballe et continue. Sur Err, renvoie-le à qui t'a appelé — sur-le-champ. Une seule marque, et le jugement remonte le courant. »",
+      "Propager un échec à l'appelant en un caractère, au lieu d'un `match` à chaque niveau.",
   },
 
-  // Act VI — The Constellation Gate
+  // Stellar 101
   "stellar-101-1": {
-    title: "La Charte du Fort-Étoile",
+    title: "Comptes & paires de clés",
     intro:
-      "Astrostroopie t'accueille à la Porte avec une charte et deux clés. « Chaque âme du ciel est un fort-étoile — un compte. Le sceau `G`, tu peux le crier du haut des tours ; la graine `S`, tu la gardes au péril de ta vie. Perds le premier, c'est gênant. Perds la seconde, c'est tout perdre. »",
+      "Un compte Stellar, c'est une clé publique. La clé secrète signe ; la clé publique identifie. Tout le reste repose là-dessus.",
   },
   "stellar-101-2": {
-    title: "Le Péage de la Porte",
+    title: "Lumens & frais",
     intro:
-      "« La monnaie du ciel est le lumen », dit le Voyageur en lançant une pièce qui se scinde en dix millions d'étincelles. « Chaque étincelle, un stroop. Chaque traversée paie un petit péage — une centaine de stroops, selon le trafic — pour que nul n'inonde le ciel de bruit. »",
+      "XLM, stroops, la réserve de base, et pourquoi chaque compte doit garder un solde minimum.",
   },
   "stellar-101-3": {
-    title: "Le Pont de Lumière",
+    title: "Trustlines & actifs",
     intro:
-      "Au-delà des lumens, le ciel transporte chaque actif qu'un fort-étoile ose émettre — mais seulement sur des ponts que tu bâtis toi-même. « Une trustline », dit Astrostroopie, « c'est toi qui dis au ciel : j'accepte CET actif, de CET émetteur. Pas de pont, pas de cargaison. Le ciel prend le consentement au sérieux. »",
+      "Détenir un actif non natif est opt-in : tu ouvres d'abord une trustline, et c'est un choix délibéré du protocole.",
   },
   "stellar-101-4": {
-    title: "Première Lumière à Travers le Ciel",
+    title: "Ton premier paiement",
     intro:
-      "Tout converge : un fort-étoile de destination, un actif, un montant. Le Voyageur s'écarte de la console. « Aucun lumen n'a franchi cette Porte depuis la Panique. Envoie le paiement, Forgeborn. Que le trafic soit. »",
+      "Construire, signer et soumettre un paiement — la forme que partagent toutes les opérations Stellar.",
   },
 
-  // Act VII — The Beholder's Lair
+  // Soroban Smart Contracts
   "soroban-smart-contracts-1": {
-    title: "La Première Rune du Ciel",
+    title: "Ton premier contrat",
     intro:
-      "La porte de la forteresse lit les runes, pas l'acier. Ici, ton Rust n'est plus un programme — c'est un contrat, gravé dans le ciel vivant où chaque étoile peut l'appeler. Pas de bibliothèque standard, pas de système d'exploitation : juste `#![no_std]`, l'Env, et ta parole. Grave la première rune du ciel.",
+      "`#[contract]`, `#[contractimpl]` et une fonction exportée — le minimum dont un contrat Soroban a besoin pour exister.",
   },
   "soroban-smart-contracts-2": {
-    title: "Le Registre Qui Se Souvient",
+    title: "Le stockage du contrat",
     intro:
-      "À l'intérieur de la forteresse, un registre s'écrit tout seul. Tout ce que le Beholder a jamais compté est stocké ici — mais dans le ciel, le stockage se loue, il ne se possède pas. Lis, incrémente, réécris. Le registre se souvient de ce que ton contrat lui dit de retenir, et de rien d'autre.",
+      "Stockage instance, persistent et temporary : trois étagères avec des durées de vie et des coûts différents.",
   },
   "soroban-smart-contracts-3": {
-    title: "Le Sceau du Signataire",
+    title: "Autorisation",
     intro:
-      "La corruption du Beholder a commencé par une seule fonction sans garde — n'importe qui pouvait retirer ce qui ne lui appartenait pas. Une seule ligne l'aurait arrêtée. Exige le sceau du signataire avant de déplacer le moindre lumen : `require_auth`. Retourne son propre coffre contre lui.",
+      "`require_auth` fait la différence entre un contrat que n'importe qui peut vider et un contrat que seul son propriétaire peut déplacer.",
   },
+
+  // Protocol 27
   "stellar-protocol-27-1": {
-    title: "Le Basculement du Ciel",
+    title: "Vue d'ensemble du Protocol 27",
     intro:
-      "Le Beholder vaincu, les étoiles-validatrices se rassemblent. Elles ne rapiècent pas le ciel — elles votent, et à un ledger désigné le firmament entier bascule d'un seul coup. Les étoiles appellent cette reforge le Zipper : le Protocol 27. Observe une mise à niveau de l'intérieur, Forgeborn.",
+      "Ce que change la mise à niveau, et pourquoi la délégation d'authentification compte pour quiconque construit des wallets.",
   },
   "stellar-protocol-27-2": {
-    title: "Le Sceau, Ravivé",
+    title: "Smart accounts & __check_auth",
     intro:
-      "Retourne au coffre que tu as scellé dans l'Antre. `require_auth` a tenu — mais une question rôde dans les salles reconstruites : et si celui qui tient le sceau n'était pas une paire de clés, mais un *contrat* ? Les comptes qui sont des contrats écrivent leur propre loi des signatures : `__check_auth`.",
+      "Un compte-contrat décide lui-même de ce qui compte comme une signature valide — cette fonction, c'est toute la politique.",
   },
   "stellar-protocol-27-3": {
-    title: "La Couronne Déléguée",
+    title: "Délégation d'authentification (CAP-0071)",
     intro:
-      "Aucun gardien ne veille seul sur tous les coffres. Sous l'ancien ciel, prêter son sceau exigeait de fragiles rituels de divination — simule, propage, prie. Le ciel réécrit fait de la délégation une loi : `delegate_account_auth`, prononcé dans `__check_auth`, confie la vérification à un intendant de confiance.",
+      "Permettre à un compte de déléguer sa vérification d'auth à un autre, et ce que ça débloque pour la récupération et les clés de session.",
   },
   "stellar-protocol-27-4": {
-    title: "L'Écho Qui Signe Deux Fois",
+    title: "Sécurité des signatures & credentials V2",
     intro:
-      "Il se révèle enfin : l'œil qui ne s'est jamais fermé. Le Spectre de l'Écho vole un sceau véritable et le prononce à nouveau — devant un autre coffre, signé de la même plume. Le ciel réécrit répond par un sceau lié à sa propre porte : des credentials qui nomment leur adresse.",
+      "Les signatures liées à l'adresse, et l'attaque par rejeu que le format de credential V2 ferme.",
   },
   "stellar-protocol-27-5": {
-    title: "La Caravane de la Migration",
+    title: "Migrer vers le Protocol 27",
     intro:
-      "Les caravanes s'alignent devant la Porte, chariots chargés de chaque outil forgé sous l'ancien ciel. Rien ne franchit le firmament reforgé sans changer — chaque SDK reforgé, chaque import renommé. Parcours la route de la caravane, Forgeborn, et ne laisse derrière toi rien qui parle encore l'ancienne langue.",
+      "Ce qui casse, ce qui ne casse pas, et dans quel ordre changer les choses à travers les SDK.",
   },
   "stellar-protocol-27-6": {
-    title: "Le Dernier Écho du Spectre",
+    title: "Tout assembler : un compte délégué",
     intro:
-      "Le Spectre vient pour ton coffre avec un sceau volé et un écho parfait. Mais ton compte n'est plus une porte à clé unique — c'est une loi : un `__check_auth` qui vérifie son signataire et délègue à une couronne-intendante. Lie le sceau. Fais taire l'écho. Achève la campagne.",
+      "Implémente `__check_auth` de bout en bout : vérifie la signature, respecte le délégué et rejette le rejeu.",
   },
 };
 
@@ -271,13 +273,13 @@ export const cardText: Record<string, CardText> = {
   stroowarrior: {
     type: "Guerrier",
     flavor:
-      "Ce n'est que lorsque le monde tremble que le vrai guerrier révèle son éclat inébranlable.",
+      "A perdu son premier combat contre le borrow checker. A lu l'erreur. A gagné la revanche.",
   },
   stropillusion: {
     epithet: "Explorateur de la Galerie des Glaces",
     type: "Stropie · Illusionniste",
     flavor:
-      "Les reflets trompent, les secrets restent cachés — il plie la réalité au sein des miroirs sans fin.",
+      "Chaque miroir est une branche différente, et match ne le laisse en sauter aucune.",
   },
   stroopkeeper: {
     epithet: "Gardien des Coffres Sans Fin",
@@ -301,17 +303,17 @@ export const cardText: Record<string, CardText> = {
     epithet: "Voyageur de la Porte de la Constellation",
     type: "Stropie · Voyageur",
     flavor:
-      "Il a cartographié le ciel par ses blessures, et franchi la Porte là où la lumière avait failli.",
+      "Il a franchi la Porte avec sa réserve payée et sa clé secrète gardée pour lui.",
   },
   stroopbeholder: {
     type: "Stropie · Aberration",
     flavor:
-      "Des profondeurs de la ruine, ses yeux innombrables ne voient que la conquête.",
+      "Ses innombrables yeux ne cherchent qu'une chose : un require_auth oublié.",
   },
   stroopzipper: {
     epithet: "Héraut du Ciel Réécrit",
     type: "Stropie · Héraut",
     flavor:
-      "Le ciel ne se brise pas quand il change — il se referme sur lui-même, couture lumineuse après couture.",
+      "Pas de fork : le réseau vote, puis bascule tout entier en un seul ledger.",
   },
 };

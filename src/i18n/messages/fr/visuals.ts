@@ -38,8 +38,8 @@ export const visuals = {
       "le README",
       "un fichier de code mort que personne n'a supprimé",
     ],
-    starving: "Rien sur l'établi. Le golem devra deviner ce que vous vouliez dire — et il le fera.",
-    partial: "Pertinent, mais incomplet. Ce que vous avez omis, le golem l'inventera.",
+    starving: "Rien sur l'établi. Le modèle devra deviner ce que vous vouliez dire — et il le fera.",
+    partial: "Pertinent, mais incomplet. Ce que vous avez omis, le modèle l'inventera.",
     clean: "La tâche, et rien d'autre. Voilà à quoi ressemble la curation.",
     noisy: "{percent}% de l'établi est du bruit. Votre unique contrainte cruciale doit désormais rivaliser avec lui — et un fichier parasite est une invitation à le modifier.",
     overflow: "Hors budget. L'établi a été tronqué, et ce n'est pas vous qui choisissez quelle moitié a survécu.",
@@ -73,7 +73,7 @@ export const visuals = {
     hint: "Il n'y a pas d'exception astucieuse là-haut. Tout ce qui est au-dessus de la diagonale est une migration qui attend qu'un éditeur publie une version majeure.",
   },
   blastRadius: {
-    grantsLabel: "ce que le golem a le droit de faire",
+    grantsLabel: "ce que le modèle a le droit de faire",
     grants: [
       "lire le dépôt",
       "lancer la suite de tests",
@@ -167,8 +167,8 @@ export const visuals = {
     verdictSoon: "Encore un pas et l'horloge s'arrête. Ce qui se passe ensuite est la seule chose qui sépare les trois étagères.",
     verdictArchived: [
       "",
-      "Archivée, pas supprimée. La donnée a quitté le registre actif et votre appel échouera jusqu'à ce que quelqu'un la restaure — mais elle est toujours là, et la restauration est des frais, pas une réécriture.",
-      "L'instance du contrat elle-même est archivée. Personne ne peut l'appeler, et chaque entrée persistante qu'elle possède est partie avec. La restaurer ramène l'ensemble.",
+      "Archivée, pas supprimée. La donnée a quitté le registre actif, mais elle est toujours là : une transaction qui en a besoin peut la restaurer d'abord. La restauration coûte des frais, pas une réécriture.",
+      "L'instance du contrat elle-même est archivée, et tout son stockage d'instance est parti avec elle — les deux ne forment qu'une seule entrée de registre. Un appel peut restaurer d'abord l'instance, moyennant des frais, et tout revient.",
     ],
     verdictLost: [
       "Perdue. Pas archivée — supprimée. Il n'existe aucune restauration pour le stockage temporaire, et aucun montant ne la ramène. Ce qui vivait ici doit être reconstruit depuis ailleurs, ou c'est simplement perdu.",

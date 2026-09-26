@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Le Squelette et les Organes",
+  title: "Orchestration",
   tagline: "Orchestration : des arêtes déterministes, le jugement dans les nœuds.",
   steps: [
     {
@@ -24,7 +24,7 @@ Si tu brouilles cette séparation — en laissant le modèle improviser l'étape
         "Nulle part — un pipeline sérieux est déterministe de bout en bout, sinon ce n'est pas de l'ingénierie",
       ],
       answer: 0,
-      explain: `Un flux de contrôle improvisé produit des échecs impossibles à reproduire : tu ne peux pas déboguer un chemin qui change à chaque exécution. À l'inverse, un pipeline dépourvu de tout jugement n'avait pas besoin de golems. Squelette déterministe, organes capables de juger : chaque forme d'intelligence reste à sa place.`,
+      explain: `Un flux de contrôle improvisé produit des échecs impossibles à reproduire : tu ne peux pas déboguer un chemin qui change à chaque exécution. À l'inverse, un pipeline dépourvu de tout jugement n'avait pas besoin de modèles. Squelette déterministe, organes capables de juger : chaque forme d'intelligence reste à sa place.`,
     },
     { kind: "fill",
       prompt: `Complétez la séparation qui rend un graphe débogable :`,
@@ -60,7 +60,7 @@ Dans un graphe, un nœud qui échoue **échoue seul**. Son contexte reste isolé
       question: `La tâche : renommer une fonction et ses sites d'appel dans un seul fichier. Que prends‑tu ?`,
       options: [
         "Une boucle simple — voire seulement ton éditeur ; coordonner un graphe coûterait plus cher que la tâche elle-même",
-        "Un graphe — davantage de golems signifie toujours davantage de qualité, quelle que soit la taille de la tâche",
+        "Un graphe — davantage de modèles signifie toujours davantage de qualité, quelle que soit la taille de la tâche",
         "Un graphe — les petites tâches sont l'endroit idéal pour s'entraîner aux grandes",
       ],
       answer: 0,
@@ -86,9 +86,9 @@ Conception uniquement — pas de code d'orchestration, pas de noms d'outil ni de
       kind: "theory",
       body: `## Le savoir-faire, assemblé
 
-Regarde les outils désormais accrochés à ta ceinture : des **spécifications** qui définissent ce qui est correct ; des **tests** qui le vérifient durablement ; des **frontières** qui préservent le sens des mots ; un **bastion** qui contient le changement ; un **environnement contrôlé** qui contient le golem ; des **mots** qui façonnent ce qu'il voit ; des **boucles** qui lui permettent de se corriger ; enfin, un **graphe** qui rassemble de nombreux esprits autour d'un même plan.
+Regarde les outils désormais accrochés à ta ceinture : des **spécifications** qui définissent ce qui est correct ; des **tests** qui le vérifient durablement ; des **frontières** qui préservent le sens des mots ; un **bastion** qui contient le changement ; un **environnement contrôlé** qui contient le modèle ; des **mots** qui façonnent ce qu'il voit ; des **boucles** qui lui permettent de se corriger ; enfin, un **graphe** qui rassemble de nombreux esprits autour d'un même plan.
 
-Aucun de ces éléments ne sera pris en charge par l'IA à ta place. Ensemble, ils décuplent pourtant son efficacité.
+L'IA n'apporte aucun de ces éléments d'elle-même. Chacun la rend bien plus utile.
 
 Prochaine étape : retour au royaume — apporte ce savoir-faire dans la Forge et mets-le à l'épreuve sur le véritable réseau.`,
     },

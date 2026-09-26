@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "İhraççının Tarafı",
+  title: "Varlık ihracı",
   tagline: "Varlık ihracı: herkes mint edebilir — zanaat, ondan sonra gelen her şeydir.",
   steps: [
     {
@@ -78,7 +78,7 @@ Regüle kurumların herkese açık bir ledger'da ihraç yapabilmesinin sebebi bu
       kind: "theory",
       body: `## Stellar Asset Contract
 
-Klasik varlıklar ve akıllı kontratlar tek bir diyarı paylaşır; köprü de **Stellar Asset Contract (SAC)**. Herhangi bir klasik varlık — XLM dahil — bir kontrat olarak *çağrılabilir*: tek bir deploy, yazılacak sıfır kod, ve varlık artık standart Soroban token arayüzü **SEP-41**'i konuşuyor.
+Klasik varlıklar ve akıllı kontratlar aynı ledger'ı paylaşır; köprü de **Stellar Asset Contract (SAC)**. Herhangi bir klasik varlık — XLM dahil — bir kontrat olarak *sunulabilir*: tek bir deploy, yazılacak sıfır kod, ve varlık artık standart Soroban token arayüzü **SEP-41**'i konuşuyor.
 
 Aynı varlık, aynı arz, tek bilanço — ama artık kontratlar onu tutabilir, taşıyabilir ve üstüne inşa edebilir. Bir lending pool'undaki USDC ile büyükannenin trustline'ındaki USDC *aynı USDC*.
 

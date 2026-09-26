@@ -20,9 +20,7 @@ A **regra de dependência** é a única lei da fortaleza: *as dependências de c
 
 Porque os dois anéis envelhecem de forma diferente. Frameworks giram: versões maiores do SDK chegam, bibliotecas de UI sobem e caem, bancos de dados são trocados. **Regras de negócio sobrevivem a tudo isso** — “ambas as partes devem aprovar” ainda será verdade em qualquer framework que a hospede daqui a cinco anos.
 
-Se seu domínio importa o SDK da cadeia, toda mudança quebradora do SDK vira uma migração *do domínio* — seu código que muda mais devagar fica refém da sua dependência que muda mais rápido. Aponte as setas para dentro e a rotatividade fica no anel externo, onde é barata.
-
-A fortaleza é o ponto. Frameworks são mobília.`,
+Se seu domínio importa o SDK da cadeia, toda mudança quebradora do SDK vira uma migração *do domínio* — seu código que muda mais devagar fica refém da sua dependência que muda mais rápido. Aponte as setas para dentro e a rotatividade fica no anel externo, onde é barata.`,
     },
     {
       kind: "diagram",
@@ -61,7 +59,7 @@ A fortaleza é o ponto. Frameworks são mobília.`,
     {
       kind: "widget",
       component: "dependency-rule",
-      body: `A lei tem uma forma, e prosa não consegue desenhá-la. **Ligue alguns imports** e veja onde os legais caem — depois rompa um muro de propósito e leia o que isso te custa.`,
+      body: `**Ligue alguns imports** e veja onde caem os permitidos — depois rompa um muro de propósito e leia o que isso te custa.`,
     },
     {
       kind: "theory",
@@ -86,7 +84,7 @@ A regra se paga exatamente nos dias em que parece burocracia — porque no dia e
         "ui/ReleaseButton.tsx importa o caso de uso de liberação do domínio, a fim de chamá‑lo",
       ],
       answer: 0,
-      explain: `As outras duas são o anel externo nomeando o interno — a regra funcionando exatamente como projetada. O domínio importando o SDK é o interno nomeando o externo: agora os cômodos mais profundos da fortaleza tremem a cada versão maior lançada pelo fornecedor.`,
+      explain: `As outras duas são o anel externo nomeando o interno — a regra funcionando exatamente como projetada. O domínio importando o SDK é o interno nomeando o externo: agora o domínio precisa mudar a cada versão maior lançada pelo fornecedor.`,
     },
     {
       kind: "quiz",

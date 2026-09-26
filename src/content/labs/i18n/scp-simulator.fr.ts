@@ -52,7 +52,7 @@ Remarque ce qu’ils *ne* font pas : ils ne se divisent jamais en deux histoir
         "Ils doivent re‑télécharger la chaîne depuis le bloc de genèse",
         "Rien ; un réseau bloqué reste bloqué pour toujours",
       ],
-      explain: `Teste‑le dans le simulateur : relève les tombés, propose, et le rythme revient. Les blocages sont des pauses, pas des morts.`,
+      explain: `Teste‑le dans le simulateur : relève les tombés, propose, et le rythme revient.`,
     },
     "claim": {
       body: `Tu as fermé des grands livres, arrêté un réseau puis l’as remis en marche — le cycle complet de l’accord fédéré, en une seule séance. Termine le lab et récupère tes XP.`,

@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Le Côté de l'Émetteur",
+  title: "Émission d'actifs",
   tagline: "Émission d'actifs : n'importe qui peut émettre — le métier, c'est tout ce qui suit.",
   steps: [
     {
@@ -72,13 +72,13 @@ Ces drapeaux expliquent pourquoi les institutions réglementées peuvent émettr
         "l’URL du site de l’ancre",
       ],
       answer: 0,
-      explain: `Il n'y a pas d'espace de noms à occuper. Les portefeuilles résolvent quel \`USDC\` est réel via l'adresse de l'émetteur — et, comme tu le verras aux Portes du Royaume, cet émetteur le prouve avec un fichier sur son propre domaine.`,
+      explain: `Il n'y a pas d'espace de noms à occuper. Les portefeuilles résolvent quel \`USDC\` est réel via l'adresse de l'émetteur — et, comme tu le verras quand on arrivera aux anchors, cet émetteur le prouve avec un fichier sur son propre domaine.`,
     },
     {
       kind: "theory",
       body: `## Le Stellar Asset Contract
 
-Les actifs classiques et les contrats intelligents partagent un même royaume, et le pont est le **Stellar Asset Contract (SAC)**. Tout actif classique — XLM inclus — peut être *invocée* comme un contrat : un déploiement, zéro code à écrire, et l'actif parle désormais **SEP-41**, l'interface de token Soroban standard.
+Les actifs classiques et les contrats intelligents partagent le même registre, et le pont est le **Stellar Asset Contract (SAC)**. Tout actif classique — XLM inclus — peut être *exposé* comme un contrat : un déploiement, zéro code à écrire, et l'actif parle désormais **SEP-41**, l'interface de token Soroban standard.
 
 Même actif, même offre, même bilan — mais maintenant les contrats peuvent le détenir, le déplacer et y construire. USDC dans un pool de prêt et USDC dans la ligne de confiance de la grand-mère sont le *même USDC*.
 

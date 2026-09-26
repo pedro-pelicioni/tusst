@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Le Registre Voilé",
+  title: "Zero-knowledge et tokens confidentiels",
   tagline: "Zero-knowledge et jetons confidentiels : preuve sans divulgation.",
   steps: [
     {
@@ -96,7 +96,7 @@ Les flux financiers importants ont besoin d’un *silence sélectif*. Toute la q
       kind: "theory",
       body: `## Preuve sans divulgation
 
-La réponse vient du cadeau le plus étrange de la cryptographie : la **preuve à connaissance nulle**.
+La réponse, c'est la **preuve à connaissance nulle**.
 
 Une preuve ZK convainc un vérificateur qu’une affirmation est vraie — *« ce montant caché est positif et mon solde caché suffit à le couvrir »* — sans **rien révéler d’autre** : ni le montant, ni le solde.
 
@@ -106,7 +106,7 @@ Place un tel vérificateur dans les règles du grand livre, et la chaîne peut i
     },
     {
       kind: "theory",
-      body: `## Le royaume forge les outils
+      body: `## Stellar livre les maths
 
 La vérification on-chain exige des calculs complexes exposés sous forme de **fonctions hôtes** — et Stellar les a introduits progressivement :
 

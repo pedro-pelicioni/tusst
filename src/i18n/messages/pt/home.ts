@@ -24,7 +24,7 @@ export const home = {
       title: "Campanha de Rust",
       blurb:
         "Oito seções, de Rust básico a contratos Soroban, corrigidas num sandbox de verdade. Opcional, e o jeito mais rápido de sujar as mãos.",
-      cta: "Marchar na Campanha",
+      cta: "Abrir a Campanha",
       progress: "{done}/{total} seções concluídas",
     },
     advanced: {

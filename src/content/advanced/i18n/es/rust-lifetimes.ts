@@ -308,7 +308,7 @@ Para un servicio RPC que decodifica una petición, la usa y la descarta dentro d
       question:
         "¿Por qué `fn parse(raw: &'a str) -> Frame<'a>` es la firma correcta para el constructor?",
       options: [
-        "Declara que los slices del frame apuntan dentro de `raw`, así que el compilador ata los destinos de ambos",
+        "Declara que los slices del frame apuntan dentro de `raw`, así que el compilador ata los lifetimes de ambos",
         "Fuerza a que `raw` se copie dentro del frame, haciendo el frame independiente",
         "Es solo estilo — `fn parse(raw: &str) -> Frame` significa lo mismo",
       ],

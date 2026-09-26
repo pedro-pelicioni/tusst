@@ -527,7 +527,7 @@ A quinta linha é a configuração que as pessoas colocam em produção acredita
       kind: "theory",
       body: `R e W são dois botões que se compensam **entre si**, não contra alguma "consistência" abstrata. Com N=3, \`W=1\` tolera duas falhas de nó na escrita e zero na leitura; \`W=3\` inverte isso. A latência segue a mesma curva, porque cada quorum espera pelo membro mais lento — então subir W sobe o p99 especificamente no caminho de escrita.
 
-Uma partição não pede licença. Com N=5, W=3 e um split 3|2, o lado majoritário ainda reúne quorum e commita a versão 2; o lado minoritário tem dois nós alcançáveis e não chega nem a R=3 nem a W=3, então recusa os dois.
+Com N=5, W=3 e uma partição 3|2, o lado majoritário ainda reúne quorum e commita a versão 2; o lado minoritário tem dois nós alcançáveis e não chega nem a R=3 nem a W=3, então recusa os dois.
 
 Essa recusa **é** a escolha CP, e você a fez quando escolheu R e W. Servir a versão 1 stale de n4/n5 teria sido a escolha AP — disponível, e errada. CAP não é uma propriedade da rede; é qual dessas duas linhas você colocou em produção.
 

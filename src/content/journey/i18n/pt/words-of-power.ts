@@ -10,7 +10,7 @@ export const conceptText: JourneyConceptText = {
 
 O modelo não conhece seu repositório. Ele não lembra de ontem, e não enxerga o arquivo que você *não* anexou. O universo inteiro dele é o texto que está na frente dele agora.
 
-Essa é a regra mais profunda de prompting, e não tem nada de místico: **você está decidindo o que existe.** O que você põe na frente dele é o mundo; o que você deixa de fora nunca aconteceu.
+Essa é a regra central de prompting: **você decide o que existe.** Se você deixou de fora, o modelo não tem.
 
 Então a pergunta por trás de todo prompt não é "como eu formulo isso?", e sim *"o que o modelo precisa ter para acertar?"* Este capítulo é a primeira metade da resposta — as palavras em si. O próximo é a metade mais difícil.`,
     },
