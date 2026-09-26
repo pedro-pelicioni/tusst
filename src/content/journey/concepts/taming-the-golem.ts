@@ -23,11 +23,11 @@ export const tamingTheGolem: Concept = {
   steps: [
     {
       kind: "theory",
-      body: `## A mind in a void
+      body: `## The bare model
 
-Strip everything away and an LLM does exactly one thing: **text in, text out**. It cannot run code, read your repo, or check the chain. Alone, it is a mind in a void — brilliant, blind, and unarmed.
+Strip everything away and an LLM does exactly one thing: **text in, text out**. It cannot run code, read your repo, or check the chain.
 
-Everything that turns that mind into a *worker* is the **harness**: the tools it may call, the files it may touch, the sandbox that contains it, the verifiers that judge its output.
+Everything that turns it into a *worker* is the **harness**: the tools it may call, the files it may touch, the sandbox that contains it, the verifiers that judge its output.
 
 And here is the part most people miss: the model is rented. **The harness is engineering — and it is yours.**`,
     },
@@ -102,11 +102,9 @@ The model's most dangerous trait isn't ignorance — it's **confidence while wro
 So a harness never trusts; it **re-checks**, using judges that can't be sweet-talked:
 
 - the **compiler** — does it even build?
-- the **test suite** — your trials from the Rite, red or green
+- the **test suite** — your tests, red or green
 - the **linter** — did the standards hold?
-- the **chain itself** — does the ledger say what the model says?
-
-Claims are data. Verifiers are truth.`,
+- the **chain itself** — does the ledger say what the model says?`,
     },
     {
       kind: "quiz",

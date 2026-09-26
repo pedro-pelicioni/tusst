@@ -3,16 +3,20 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CharacterAvatar } from "./CharacterAvatar";
+import { MusicPanel } from "./music/MusicControl";
 import { useMessages } from "@/i18n/client";
 
 /** Profile avatar that opens a dropdown with the nav links and sign out. */
 export function NavMenu({
   name,
   journeyLive = false,
+  armoryOpen = false,
   signOutAction,
 }: {
   name: string;
   journeyLive?: boolean;
+  /** `User.goldRevealed` — the Armory door only exists once gold does */
+  armoryOpen?: boolean;
   signOutAction: () => Promise<void>;
 }) {
   const m = useMessages();
@@ -24,8 +28,8 @@ export function NavMenu({
     ...(journeyLive ? [{ href: "/journey", label: m.common.nav.journey }] : []),
     { href: "/labs", label: m.common.nav.forge },
     { href: "/campaign", label: m.common.nav.campaign },
-    { href: "/advanced", label: m.common.nav.advanced },
-    { href: "/cards", label: m.common.nav.cards },
+    { href: "/harbor", label: m.common.nav.advanced },
+    ...(armoryOpen ? [{ href: "/armory", label: m.common.nav.armory }] : []),
   ];
 
   useEffect(() => {
@@ -81,6 +85,14 @@ export function NavMenu({
               {l.label}
             </Link>
           ))}
+          {/* Phones: the bar has no room for the music pill, so it lives here. */}
+          <div className="my-1 h-px bg-line sm:hidden" />
+          <div className="px-4 pb-2 pt-2.5 sm:hidden">
+            <div className="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted2">
+              {m.common.music.label}
+            </div>
+            <MusicPanel />
+          </div>
           <div className="my-1 h-px bg-line" />
           <form action={signOutAction}>
             <button

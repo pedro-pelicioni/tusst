@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Diyarın Kapıları",
+  title: "Anchor'lar ve giriş/çıkış rampaları",
   tagline: "Anchor'lar: ledger'ın yere değdiği yer.",
   steps: [
     {
@@ -125,7 +125,7 @@ Chicago'daki Ana'nın Lizbon'daki annesine para göndermesini izle:
 
 Bütün bunlara karşı geliştirme yapmak için bankacılık lisansına ihtiyacın yok. SDF, testnet'te **testanchor** çalıştırıyor — SEP-1, SEP-10 ve SEP-24 konuşan, oyun parasıyla çalışan, tamamen işlevsel bir anchor. Cüzdan kodunu ona yönelt ve ortaya tek bir gerçek dolar girmeden önce bütün yatırma-çekme dansının provasını yap.
 
-Kapılar, nehirler, güven — şimdiye kadarki her şey *klasik* diyardı: protokolün içine gömülü mekanizma. Sonraki bölümde kendin programladığın tarafa geçiyoruz: kontratların canlı olduğu, hatta depolamanın bile kalp atışı olduğu **Soroban**.`,
+Kapılar, nehirler, güven — şimdiye kadarki her şey *klasik* diyardı: protokolün içine gömülü mekanizma. Sonraki bölümde kendin programladığın tarafa geçiyoruz: depolamanın bile kiralık olduğu **Soroban**.`,
     },
     {
       kind: "theory",

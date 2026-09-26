@@ -170,7 +170,7 @@ Todo laboratório da Forja roda nesse ritmo — você já sentiu isso se acompan
     {
       kind: "rustBranch",
       lessonSlug: "stellar-101-1",
-      body: `O Ato VI da Campanha — **O Portão da Constelação** — explora esse mesmo céu na prática: frases‑senha da rede, horizontes e seus primeiros mapas estelares. Opcional, e vale o desvio quando você quer o mapa por trás da teoria.`,
+      body: `O Ato VI da Campanha — **O Portão da Constelação** — faz isso na prática: contas, taxas, trustlines e seu primeiro pagamento. Opcional, e vale o desvio quando você quer o mapa por trás da teoria.`,
     },
   ],
   testOut: [

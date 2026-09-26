@@ -23,9 +23,9 @@ export const ozTokenWizard: LabScenario = {
     {
       kind: "narrate",
       id: "intro",
-      body: `## Don't forge alone
+      body: `## Don't start from scratch
 
-Real smiths don't smelt their own iron for every blade. On Stellar, token contracts are forged from **OpenZeppelin's audited building blocks** — the same battle-tested libraries that secure billions across chains, ported to Soroban as \`stellar-tokens\`.
+On Stellar, token contracts are built from **OpenZeppelin's audited building blocks** — the same battle-tested libraries that secure billions across chains, ported to Soroban as \`stellar-tokens\`.
 
 In the next few minutes you will **choose your extensions**, watch the Forge assemble **real Rust** from them, **compile it** in a sandboxed runner, **deploy the Wasm** to testnet under your own signature, and **mint** your first supply.
 
@@ -34,11 +34,11 @@ No mockups. The same pipeline the free-mode IDE uses.`,
     {
       kind: "action",
       id: "sigil",
-      title: "Summon your sigil",
-      body: `Deploying costs a signature, and a signature needs your keypair. If you forged one in the wallet lab, the Forge summons it; if not, a fresh one is struck now.`,
-      cta: "Summon the keypair",
+      title: "Load your keypair",
+      body: `Deploying costs a signature, and a signature needs your keypair. If you made one in the wallet lab, the Forge reuses it; if not, it creates a fresh one now.`,
+      cta: "Load the keypair",
       action: { type: "generate-keypair", target: "wallet" },
-      successBody: `Your sigil answers:
+      successBody: `Your address:
 
 \`{address}\`
 
@@ -48,10 +48,10 @@ Every transaction ahead — the deploy, the mint — will carry this signature.`
       kind: "action",
       id: "fund",
       title: "Stoke the account",
-      body: `Deploys and invocations pay small resource fees, so the account must be alive and funded. Friendbot tops it up — and if it's already funded, he simply nods.`,
+      body: `Deploys and invocations pay small resource fees, so the account must be alive and funded. Friendbot tops it up — if it's already funded, nothing changes.`,
       cta: "Stoke it (Friendbot)",
       action: { type: "friendbot" },
-      successBody: `The account breathes — {balance} XLM at the ready. Fuel enough for a thousand deploys.`,
+      successBody: `Funded: {balance} XLM. Enough for a thousand deploys.`,
     },
     {
       kind: "input",
@@ -155,7 +155,7 @@ A **burnable** token lets holders destroy their own units, shrinking total suppl
             burnable: ctx.state.extBurnable === "yes",
           }),
       },
-      successBody: `The runner returns your contract as a **Wasm blob** — Rust melted down and recast for the ledger's virtual machine.
+      successBody: `The runner returns your contract as a **Wasm blob** — Rust compiled for the ledger's virtual machine.
 
 Note what did NOT happen: your name, symbol and supply are not baked into the code. They travel as **constructor arguments** in the next step, so the same verified Wasm could birth a thousand different tokens.`,
     },
@@ -174,7 +174,7 @@ Note what did NOT happen: your name, symbol and supply are not baked into the co
           initial_supply: `${ctx.state.tokenSupply}0000000`,
         }),
       },
-      successBody: `**{symbol} lives.** Contract address:
+      successBody: `**{symbol} is live.** Contract address:
 
 \`{contract}\`
 
@@ -185,7 +185,7 @@ That address now answers SEP-41 calls — \`balance\`, \`transfer\`, \`name\` �
       kind: "action",
       id: "mint",
       title: "Mint a bonus round",
-      body: `Your constructor already minted the initial supply to you. Now invoke the living contract directly: the Forge fetches its **spec from the chain**, builds a \`mint\` call, **simulates** it, and has you sign the real thing — the same simulate-then-sign flow every Soroban dApp uses.`,
+      body: `Your constructor already minted the initial supply to you. Now invoke the deployed contract directly: the Forge fetches its **spec from the chain**, builds a \`mint\` call, **simulates** it, and has you sign the real thing — the same simulate-then-sign flow every Soroban dApp uses.`,
       cta: "Mint 25 more {symbol}",
       action: {
         type: "contract-invoke",
@@ -215,7 +215,7 @@ Anyone else calling \`mint\` gets rejected by the same line. That's on-chain acc
     {
       kind: "checkpoint",
       id: "claim",
-      body: `The ledger holds your Wasm, your contract, and a balance minted to your sigil. The Forge will ask the chain itself — **simulating \`balance(you)\` on your contract** — before paying out. Proof, not promises.`,
+      body: `The ledger holds your Wasm, your contract, and a balance minted to your address. The Forge will ask the chain itself — **simulating \`balance(you)\` on your contract** — before paying out. Proof, not promises.`,
     },
   ],
   verify: [

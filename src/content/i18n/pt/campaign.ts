@@ -263,13 +263,13 @@ export const cardText: Record<string, CardText> = {
     epithet: null,
     type: "Guerreiro",
     flavor:
-      "Só quando o mundo treme é que o verdadeiro guerreiro revela sua luz inabalável.",
+      "Perdeu a primeira briga pro borrow checker. Leu o erro. Ganhou a revanche.",
   },
   stropillusion: {
     epithet: "Explorador do Salão dos Espelhos",
     type: "Stropie · Ilusionista",
     flavor:
-      "Reflexos enganam, segredos permanecem ocultos — ele dobra a realidade dentro dos espelhos infinitos.",
+      "Cada espelho é um branch diferente, e o match não deixa ele pular nenhum.",
   },
   stroopkeeper: {
     epithet: "Guardião dos Cofres Sem Fim",
@@ -293,17 +293,17 @@ export const cardText: Record<string, CardText> = {
     epithet: "Viajante do Portal da Constelação",
     type: "Stropie · Viajante",
     flavor:
-      "Ele mapeou o céu pelas suas feridas e cruzou o Portal onde a luz havia falhado.",
+      "Cruzou o Portal com a reserva em dia e a chave secreta só pra ele.",
   },
   stroopbeholder: {
     epithet: null,
     type: "Stropie · Aberração",
-    flavor: "Das profundezas da ruína, seus muitos olhos veem apenas conquista.",
+    flavor: "Seus muitos olhos procuram uma coisa só: um require_auth esquecido.",
   },
   stroopzipper: {
     epithet: "Arauto do Céu Reescrito",
     type: "Stropie · Arauto",
     flavor:
-      "O céu não se quebra quando muda — ele se fecha de novo, costura por costura luminosa.",
+      "Nada de fork: a rede vota e todo mundo vira junto, no mesmo ledger.",
   },
 };

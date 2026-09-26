@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
-  title: "Piensa antes de forjar",
+  title: "Desarrollo guiado por specs",
   tagline: "Spec-driven development: la habilidad que la IA no puede ejercer por ti.",
   steps: [
     {
@@ -143,7 +143,7 @@ Ninguna de estas interpretaciones es un error de *programación*. Son **huecos e
     },
     {
       kind: "theory",
-      body: `## Invariantes: el anillo de hierro de la especificación
+      body: `## Invariantes: siempre verdaderos
 
 Las líneas más poderosas de una especificación son los **invariantes**: afirmaciones que deben cumplirse *en todo momento*, sin importar qué función se haya ejecutado:
 
@@ -185,7 +185,7 @@ Ha llegado el momento de forjar tu propia especificación. Este es el encargo:
 
 > El gremio quiere una **hucha de propinas** on-chain. Cualquiera puede depositar propinas. Solo el **guardián** del gremio puede recoger lo que contiene. Al gremio le preocupan dos cosas: que el guardián consiga retirar *más* de lo que hay y que las propinas queden bloqueadas para siempre si el guardián desaparece.
 
-Escribe la especificación — **solo comportamiento**, como enseña este capítulo: qué debe ocurrir, qué nunca debe ocurrir y cuáles son los casos límite. Un examinador de IA la evaluará con la rúbrica siguiente (y calificará como los gólems de la forja: al pie de la letra).`,
+Escribe la especificación — **solo comportamiento**, como enseña este capítulo: qué debe ocurrir, qué nunca debe ocurrir y cuáles son los casos límite. Un examinador de IA la evaluará con la rúbrica siguiente (y calificará exactamente como forja el modelo: al pie de la letra).`,
       rubric: `1. Solo comportamiento: nada de formatos de almacenamiento, bibliotecas ni firmas de funciones.
 2. La regla de depósito y la regla de recogida están expresadas sin ambigüedad (quién puede actuar y sobre qué).
 3. Al menos un **invariante** que deba cumplirse en todo momento.

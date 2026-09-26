@@ -7,19 +7,19 @@ export const labText = {
   },
   steps: {
     "intro": {
-      body: `## Não forje sozinho
+      body: `## Não comece do zero
 
-Os ferreiros de verdade não fundem seu próprio ferro para cada lâmina. No Stellar, contratos de token são forjados a partir dos blocos auditados da **OpenZeppelin** — as mesmas bibliotecas testadas em batalha que protegem bilhões em cadeias, portadas para Soroban como \`stellar-tokens\`.
+No Stellar, contratos de token são montados a partir dos blocos auditados da **OpenZeppelin** — as mesmas bibliotecas testadas em batalha que protegem bilhões em cadeias, portadas para Soroban como \`stellar-tokens\`.
 
 Nos próximos minutos você vai **escolher as extensões**, verá a Forja montar **Rust de verdade** a partir delas, vai **compilar** o código em um runner isolado, **publicar o Wasm** na testnet com sua própria assinatura e **cunhar** a oferta inicial.
 
 Sem mockups. O mesmo pipeline que o IDE em modo livre usa.`,
     },
     "sigil": {
-      title: "Convoque seu sigilo",
+      title: "Carregue seu par de chaves",
       body: `Publicar um contrato exige uma assinatura, e a assinatura exige seu par de chaves. Se você já criou um no lab de carteira, a Forja vai reutilizá-lo; caso contrário, um novo será criado agora.`,
       cta: "Preparar o par de chaves",
-      successBody: `Seu sigilo responde:
+      successBody: `Seu endereço:
 
 \`{address}\`
 
@@ -99,7 +99,7 @@ Um token **queimável** permite que os detentores destruam suas próprias unidad
       title: "Gere o Rust e compile",
       body: `A Forja agora monta **{name} ({symbol})** a partir de suas escolhas — Rust de verdade \`stellar-tokens\`, vinculado às mesmas versões auditadas que o IDE usa — e compila para **WebAssembly** em um runner isolado. Uma compilação real leva um ou dois minutos; acompanhe.`,
       cta: "Compilar para Wasm",
-      successBody: `O runner devolveu seu contrato como um **blob Wasm** — o Rust foi transformado para a máquina virtual do ledger.
+      successBody: `O runner devolveu seu contrato como um **blob Wasm** — Rust compilado para a máquina virtual do ledger.
 
 Observe o que NÃO aconteceu: seu nome, símbolo e oferta não estão embutidos no código. Eles viajam como **argumentos do construtor** na próxima etapa, então o mesmo Wasm verificado pode gerar mil tokens diferentes.`,
     },
@@ -107,7 +107,7 @@ Observe o que NÃO aconteceu: seu nome, símbolo e oferta não estão embutidos 
       title: "Publique na testnet",
       body: `São duas transações, ambas assinadas por você: primeiro o Wasm é **carregado** no ledger; depois, uma **instância do contrato** é criada a partir dele. O \`__constructor\` roda uma vez com o nome, o símbolo e a oferta e cunha tudo para seu endereço.`,
       cta: "Publicar e executar o construtor",
-      successBody: `**{symbol} vive.** Endereço do contrato:
+      successBody: `**{symbol} está no ar.** Endereço do contrato:
 
 \`{contract}\`
 
@@ -131,7 +131,7 @@ Qualquer outro que invoque \`mint\` é rejeitado pela mesma linha. Isso é contr
       explain: `Um padrão é uma linguagem compartilhada, não um acordo de marketing nem uma garantia de segurança. SEP-41 significa que seu token responde às chamadas que o ecossistema já sabe fazer — por isso o wizard usa o padrão em vez de inventar novos pontos de entrada.`,
     },
     "claim": {
-      body: `O ledger guarda seu Wasm, seu contrato e um saldo cunhado para seu sigilo. Antes de liberar a recompensa, a Forja consultará a própria cadeia — **simulando \`balance(you)\` no seu contrato** — Prova, não promessa.`,
+      body: `O ledger guarda seu Wasm, seu contrato e um saldo cunhado para seu endereço. A Forja consultará a própria cadeia — **simulando \`balance(you)\` no seu contrato** — antes de liberar a recompensa. Prova, não promessa.`,
     },
   },
 } satisfies LabTextOverlay;

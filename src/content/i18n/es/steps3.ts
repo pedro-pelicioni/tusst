@@ -5,7 +5,7 @@ export const steps3: Record<string, LessonStep[]> = {
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `En las profundidades de la bóveda del Acaparador, más allá de todos los sacos y libros mayores, hay un taller al que nadie entra sin invitación. Allí, un tesoro no comienza como tesoro: comienza como un **plano**.
+      body: `Es hora de definir tus propios tipos. Cada uno empieza como un **plano**.
 
 \`\`\`rust
 struct Player {
@@ -14,7 +14,7 @@ struct Player {
 }
 \`\`\`
 
-Una \`struct\` reúne varios valores en una única forma con nombre. Defínela una vez y la bóveda reconocerá esa forma para siempre.`,
+Una \`struct\` reúne varios valores en una única forma con nombre. Defínela una vez y reutilízala donde quieras.`,
     },
     {
       kind: "theory",
@@ -65,7 +65,7 @@ Ferrisia has 100 hp
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Un plano por sí solo es inerte: define una forma, pero no un comportamiento. El Acaparador te enseña el rito que lo despierta: un bloque \`impl\`.
+      body: `Un plano por sí solo define una forma, pero no un comportamiento. El comportamiento va en un bloque \`impl\`.
 
 \`\`\`rust
 impl Player {

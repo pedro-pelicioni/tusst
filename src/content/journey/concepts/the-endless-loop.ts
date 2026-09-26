@@ -91,7 +91,7 @@ Signals, not vibes. "The output looks reasonable" corrects nothing, because it c
         "The fact that the code compiled on the first try — strong evidence the logic is right",
       ],
       answer: 0,
-      explain: `Compiling means the types line up, not that the behavior is wanted — and a self-summary is the mind grading its own homework. A steering signal must be external, specific, and capable of being bad news. "1 failed, line 41" is a heading; "looks correct" is weather.`,
+      explain: `Compiling means the types line up, not that the behavior is wanted — and a self-summary is the mind grading its own homework. A steering signal must be external, specific, and capable of being bad news. "1 failed, line 41" tells you where to go; "looks correct" doesn't.`,
     },
     {
       kind: "theory",

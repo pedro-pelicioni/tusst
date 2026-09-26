@@ -1,4 +1,4 @@
-// App pages: path (Salon `home`'u kullanır), campaign, cards, tracks/[slug], profile.
+// App pages: path (Salon `home`'u kullanır), campaign, tracks/[slug], profile.
 export const pages = {
   campaign: {
     kicker: "isteğe bağlı yol",
@@ -16,20 +16,6 @@ export const pages = {
     skirmishesForgingSoon: "dersler hazırlanıyor — yakında",
     startLearning: "Öğrenmeye başla",
     viewChampions: "Kartlarını gör",
-  },
-  cards: {
-    metaTitle: "Kart Koleksiyonu — TUSST",
-    metaDescription:
-      "Her kampanya bölümü için bir tane koleksiyon kartı. Bir bölümün son dersini bitir, kartını al.",
-    kicker: "// koleksiyon",
-    title: "Kart Koleksiyonu",
-    intro:
-      "Sekiz kart, her kampanya bölümü için bir tane. Bir bölümün son dersini bitir, kartı koleksiyonuna katılsın. Tamamen kozmetik — hiçbir avantaj sağlamazlar ve bu sayfadaki hiçbir şey içerik kilitlemez.",
-    bossCard: "boss kartı",
-    actLink: "Bölüm {numeral} — {title}",
-    unassigned: "atanmamış",
-    footnote:
-      "kartlar yalnızca kozmetiktir — avantaj sağlamaz, hiçbir şeyi kilitlemez. nadir baskılar, bir bölümü tek yanlış cevap vermeden bitirenlere verilir.",
   },
   track: {
     backToPath: "kampanya",
@@ -76,6 +62,6 @@ export const pages = {
       locked: "kilitli",
     },
     continueCampaign: "Kampanyaya devam et",
-    viewChampions: "Kartlarını gör",
+    openCampaignMap: "Kampanya haritasını aç",
   },
 };

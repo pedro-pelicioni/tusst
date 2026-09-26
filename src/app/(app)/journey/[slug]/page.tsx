@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { chaptersByArc } from "@/content/journey";
+import { chaptersByArc, journeyChapters } from "@/content/journey";
 import { getConceptLocalized } from "@/content/journey/i18n";
 import { labBySlug } from "@/content/labs";
 import { LAB_TEXT } from "@/content/labs/i18n";
@@ -12,7 +12,7 @@ import {
 } from "@/content/labs/localize";
 import { acts } from "@/content/campaign";
 import { getActLocalized } from "@/content/i18n";
-import { getLocale } from "@/i18n/server";
+import { getLocale, getMessages } from "@/i18n/server";
 import { getUnlockedActCount } from "@/lib/unlock";
 import { XP_CONCEPT } from "@/lib/xp";
 import {
@@ -20,9 +20,10 @@ import {
   type BranchState,
   type LabLinkState,
 } from "@/components/journey/ConceptPlayer";
-import { SceneArt, hasV2Asset } from "@/components/scene/SceneArt";
-import { SceneParticles } from "@/components/scene/SceneParticles";
-import { SceneRoot } from "@/components/scene/SceneRoot";
+import { hasV2Asset } from "@/components/scene/SceneArt";
+import type { BattleSkin } from "@/components/overworld/BattleFrame";
+import { JOURNEY_POSITIONS, JOURNEY_WORLD } from "@/content/overworld/journey-world";
+import { buildHeroView } from "@/lib/hero-view";
 
 // One journey chapter. Concept steps are pure data, so the server enriches
 // them here — lab completion for labLink steps, campaign lock state for
@@ -56,6 +57,15 @@ export default async function ConceptPage({
 
   const session = await auth();
   const userId = session?.user?.id;
+  const m = await getMessages();
+  // The hero for the battle frame — signed-out visitors fight as the default
+  // hero at form 0, exactly as the island shows them.
+  const character = userId
+    ? await prisma.character.findUnique({
+        where: { userId },
+        select: { heroId: true, xp: true },
+      })
+    : null;
 
   // Enrich labLink steps with live/completed state.
   const labSlugs = concept.steps.flatMap((s) =>
@@ -132,52 +142,52 @@ export default async function ConceptPage({
     .map((c) => c.meta.slug);
   const nextSlug = liveSlugs[liveSlugs.indexOf(slug) + 1] ?? null;
 
-  return (
-    <SceneRoot id="concept-player">
-      <section
-        data-scene
-        // 140px = the nav (57) plus the app footer (82). Sizing to
-        // 100dvh−nav alone overshot by exactly the footer's height, which
-        // then showed up as a black band with a hard rule under the lesson.
-        className="sc-scene sc-scene--journey min-h-[calc(100dvh-140px)]"
-      >
-        {/* Reading surface: art stays a backdrop, never a distraction. No
-            data-reveal anywhere inside — the player swaps steps without
-            remounting, and SceneMotion only ever observes what existed at
-            mount, so a later step would be held at opacity:0 forever. */}
-        {/* Atmosphere, not scenery — the reading column sits on top of it, so
-            the art is held back a little and the scene's own dark centre does
-            the rest. */}
-        <SceneArt
-          layers={[
-            {
-              src: "/v2/journey/map-bg-v2.webp",
-              priority: true,
-              quality: 60,
-              className: "opacity-60",
-            },
-          ]}
-        />
-        <div className="sc-scrim" />
-        <SceneParticles tone="journey" count={8} />
+  // The battle skin: this chapter's region boss (level grows with the
+  // mission number), the island cropped around the chapter's node, and the
+  // two ways back — both land the hero ON this node; `go=` makes the island
+  // walk to the next chapter. Presentation only; XP and grading live in the
+  // player and the API exactly as before.
+  const chapterIndex = Math.max(
+    0,
+    journeyChapters.findIndex((c) => c.meta.slug === slug),
+  );
+  const bossArt = `/v2/overworld/bosses/${concept.meta.arc}.webp`;
+  const battle: BattleSkin = {
+    hero: buildHeroView({
+      heroId: character?.heroId,
+      name: session?.user?.name,
+      xp: character?.xp ?? 0,
+      signedIn: !!userId,
+      m: m.overworld,
+    }),
+    boss: {
+      name: m.overworld.bosses[concept.meta.arc],
+      level: 4 + chapterIndex * 3,
+      art: hasV2Asset(bossArt) ? bossArt : null,
+    },
+    arena: {
+      src: hasV2Asset(JOURNEY_WORLD.image.src) ? JOURNEY_WORLD.image.src : null,
+      pos: JOURNEY_POSITIONS[slug] ?? [50, 50],
+    },
+    missionNumber: String(chapterIndex + 1).padStart(2, "0"),
+    backHref: `/journey?at=${slug}`,
+    nextHref: nextSlug ? `/journey?at=${slug}&go=${nextSlug}` : null,
+    nextTitle: nextSlug ? getConceptLocalized(nextSlug, locale)?.meta.title ?? null : null,
+  };
 
-        <div className="relative">
-          <ConceptPlayer
-            conceptSlug={slug}
-            title={concept.meta.title}
-            numeral={concept.meta.numeral}
-            sigilSrc={
-              hasV2Asset(concept.meta.sigil) ? concept.meta.sigil : null
-            }
-            steps={concept.steps}
-            xp={XP_CONCEPT}
-            signedIn={!!userId}
-            nextHref={nextSlug ? `/journey/${nextSlug}` : null}
-            labState={labState}
-            branchState={branchState}
-          />
-        </div>
-      </section>
-    </SceneRoot>
+  return (
+    <ConceptPlayer
+      conceptSlug={slug}
+      title={concept.meta.title}
+      numeral={concept.meta.numeral}
+      sigilSrc={hasV2Asset(concept.meta.sigil) ? concept.meta.sigil : null}
+      steps={concept.steps}
+      xp={XP_CONCEPT}
+      signedIn={!!userId}
+      nextHref={nextSlug ? `/journey/${nextSlug}` : null}
+      labState={labState}
+      branchState={branchState}
+      battle={battle}
+    />
   );
 }

@@ -76,7 +76,7 @@ let x = Some(5).unwrap();   // → 5. bien.
 let y = ghost.unwrap();     // ghost es None → 💥 PANIC
 \`\`\`
 
-Sobre un \`None\`, unwrap entra en **pánico** — el programa entero se ahoga. Las lápidas de este pantano dicen todas lo mismo.`,
+Sobre un \`None\`, unwrap entra en **pánico** — el programa entero colapsa.`,
     },
     {
       kind: "theory",
@@ -97,7 +97,7 @@ Ya usaste este idioma dos veces — en el estante del Acaparador, y volverá a p
         "Devuelve None",
       ],
       answer: 0,
-      explain: "Nunca hagas unwrap de lo que no has comprobado. El pantano está lleno de quienes lo hicieron.",
+      explain: "Nunca hagas unwrap de lo que no has comprobado.",
     },
     {
       kind: "fill",
@@ -282,7 +282,7 @@ Los patrones desenvuelven al encajar: \`v\` es el valor, \`e\` es la razón.`,
       kind: "theory",
       body: `Sobre la puerta del tribunal: \`#[must_use]\`.
 
-Significa que Rust **te advierte** si recibes un Result y lo ignoras — un veredicto sin leer es un bug esperando su momento. Todo Result debe leerse, pasarse por match o entregarse deliberadamente hacia arriba. La Corte no olvida nada.`,
+Significa que Rust **te advierte** si recibes un Result y lo ignoras — un veredicto sin leer es un bug esperando su momento. Todo Result debe leerse, pasarse por match o entregarse deliberadamente hacia arriba.`,
     },
     {
       kind: "quiz",
@@ -303,7 +303,7 @@ Significa que Rust **te advierte** si recibes un Result y lo ignoras — un vere
       after: "(e) => println!(\"denied: {}\", e),\n}",
       choices: ["Err", "None", "Fail"],
       answer: 0,
-      explain: "Ok y Err — ambas ramas, ambas atendidas. El compilador no acepta menos.",
+      explain: "Ok y Err — ambas ramas atendidas, o no compila.",
     },
     {
       kind: "editor",
@@ -536,7 +536,7 @@ Una **trustline** es esa aceptación — un puente que abres desde tu cuenta hac
 trustline = "Acepto USDC, emitido por G...CENTRE"
 \`\`\`
 
-Sin trustline, no hay saldo — los pagos en ese activo simplemente no pueden llegarte. (Cada trustline abierta también eleva un poco tu reserva.)`,
+Sin trustline, no hay saldo — un pago que te envíen en ese activo falla con \`op_no_trust\`. (Cada trustline abierta también eleva un poco tu reserva.)`,
     },
     {
       kind: "quiz",
@@ -608,7 +608,7 @@ construye la operación
         → definitiva. para siempre. en el ledger.
 \`\`\`
 
-Este es el cielo que el Beholder rompió — y el que estás a punto de volver a encender. Tras esta Puerta: Soroban, donde el ledger ejecuta *tu* Rust.`,
+Tras esta Puerta: Soroban, donde el ledger ejecuta *tu* Rust.`,
     },
     {
       kind: "quiz",
@@ -651,7 +651,7 @@ lumens flowing ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Antes de la Puerta, en la bóveda del Acumulador, aprendiste el rito de \`struct\` e \`impl\`: un molde y el artesano que le da vida. Más allá de la Puerta, la esencia no cambia.
+      body: `En la bóveda del Acaparador aprendiste \`struct\` e \`impl\`: un molde y el código que le da comportamiento. Los contratos usan esas mismas dos piezas.
 
 \`\`\`rust
 #[contract]
@@ -766,18 +766,18 @@ let count: u32 = env.storage().instance()
 env.storage().instance().set(&COUNTER, &count);
 \`\`\`
 
-\`get\` devuelve un \`Option<T>\` — puede que la clave nunca se haya escrito, o que su renta (TTL) haya expirado. \`unwrap_or(0)\` es el idioma del contador.`,
+\`get\` devuelve un \`Option<T>\` porque puede que la clave nunca se haya escrito. \`unwrap_or(0)\` es el idioma del contador. Un TTL expirado no es un \`None\` aquí: el instance storage se archiva junto con el contrato, y la transacción lo restaura antes de que tu código se ejecute, o falla sin ejecutarlo.`,
     },
     {
       kind: "quiz",
       question: "¿Por qué `storage().get(&KEY)` devuelve un `Option<T>` en lugar de `T`?",
       options: [
-        "Puede que la clave nunca se haya escrito — o que su TTL haya expirado",
+        "Puede que la clave no exista: nunca se escribió, se eliminó o (solo en el temporary storage) expiró",
         "Todas las funciones del SDK devuelven Option por consistencia",
         "Para forzar el manejo de errores en desajustes de tipo",
       ],
       answer: 0,
-      explain: "El almacenamiento del ledger se renta, no se posee. La ausencia es un estado normal — manéjala.",
+      explain: "La ausencia es un estado normal — manéjala. La expiración solo la causa en el temporary storage: las entradas expiradas de instance y persistent storage se archivan, y la transacción las restaura primero o falla. Nunca llegan a tu código como `None`.",
     },
     {
       kind: "fill",
@@ -1022,7 +1022,7 @@ __check_auth: the account writes its own law ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Una corona que guarda todas las bóvedas sola pronto se quiebra. Las cuentas reales quieren decir: *"que mi custodio responda por mí."*
+      body: `Una sola clave que lo guarda todo es un punto único de falla. Las cuentas reales quieren decir: *"que mi custodio responda por mí."*
 
 Antes del Zipper no había soporte del protocolo para eso — los constructores fingían la delegación con frágiles rondas de **pre-simulación** para propagar el contexto de auth. Funcionaba. Apenas. A veces.`,
     },
@@ -1168,7 +1168,7 @@ seal bound to its door: the echo dies ✓
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Nada cruza al cielo reforjado sin cambiar. La caravana de lanzamientos viajó en orden estricto:
+      body: `La caravana de lanzamientos viajó en orden estricto:
 
 **Core → SDKs → RPC y Galexie → Horizon → Testnet → Mainnet**
 

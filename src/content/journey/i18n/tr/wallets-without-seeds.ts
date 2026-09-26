@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Tohumsuz Cüzdanlar",
+  title: "Smart account'lar ve passkey'ler",
   tagline: "Akıllı hesaplar ve passkey'ler: üstüne, ücretini başkasının sponsor olduğu işlemler.",
   steps: [
     {
@@ -177,7 +177,7 @@ Delegasyon, bir yetkinin imzalama gücünü bir başkasına protokol düzeyinde,
       labSlug: "passkey-smart-wallet",
       body: `Forge hazır: **Passkey Akıllı Cüzdan**'a gir, gerçek bir passkey kaydet, akıllı hesap kontratını testnet'e deploy et ve yepyeni bir WebAuthn challenge'ına kendi cihazınla cevap ver.
 
-Ledger, deploy edilen kodun kanonik akıllı hesap Wasm'ı olduğunu onayladığında yola geri dön. Yol daha tuhaf bir yere kıvrılıyor: *tutarların kendisinin* örtü taktığı bir ledger.`,
+Ledger, deploy edilen kodun kanonik akıllı hesap Wasm'ı olduğunu onayladığında iş tamam. Sırada: *tutarların kendisinin* gizlendiği bir ledger.`,
     },
   ],
   testOut: [

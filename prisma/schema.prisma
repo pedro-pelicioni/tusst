@@ -41,6 +41,7 @@ model User {
   labProgress     LabProgress[]
   journeyProgress JourneyProgress[]
   xpEvents        XpEvent[]
+  armory          ArmoryPiece[]
 }
 
 model Account {
@@ -93,6 +94,11 @@ model Character {
   // adding lessons later to an act a player already cleared can never
   // retroactively re-lock the acts after it. See memory `tusst-seed-safety`.
   maxUnlockedAct Int @default(1)
+
+  // The hero chosen once at /hero — one of the ids in src/content/heroes.ts
+  // (stroowarrior · stropillusion · stroopkeeper). Null until chosen; readers
+  // fall back to the default hero via heroById().
+  heroId String?
 }
 
 // ----------------------------------------------------------------------------
@@ -316,4 +322,41 @@ model XpEvent {
 
   @@unique([userId, source, sourceKey])
   @@index([userId, createdAt])
+}
+
+// ----------------------------------------------------------------------------
+// v3 — the Armory (what the hidden gold finally buys)
+//
+// The catalog itself is pure TS (src/content/armory.ts) keyed by item id, the
+// same content-identity rule as lessons / labs / journey concepts: prices and
+// sheet cells live in code, this table only tracks per-user state. `itemId` is
+// therefore append-only — it is the identity a purchase is recorded against.
+//
+// NOTE: `Skin` / `Inventory` above are the Phase-1 sketch of this idea and
+// have never been read or written by any code path. They are left in place
+// rather than dropped, because dropping a table is not reversible against a
+// production database; a follow-up migration can retire them once prod is
+// confirmed empty.
+// ----------------------------------------------------------------------------
+
+model ArmoryPiece {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// item id from src/content/armory.ts — append-only content identity
+  itemId     String
+  /// "weapon" | "equipment" | "mascot", denormalized so the equip swap is one
+  /// indexed query instead of a join against the TS catalog
+  slot       String
+  /// gold actually paid, frozen at purchase time so re-pricing an item can
+  /// never rewrite what a player spent
+  paid       Int
+  equipped   Boolean  @default(false)
+  acquiredAt DateTime @default(now())
+
+  // The buy guard: a second purchase of the same item aborts with P2002
+  // instead of charging twice (src/app/(app)/armory/actions.ts).
+  @@unique([userId, itemId])
+  @@index([userId, slot])
 }

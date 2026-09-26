@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Frendeki El",
+  title: "Guardrail'ler ve durdurma kuralları",
   tagline: "Agentic loop'lar ve guardrail'ler: durma kuralı yoksa bu otonomi değil, faturadır.",
   steps: [
     { kind: "theory", body: `## Her döngüye bir fren gerekir
@@ -13,7 +13,7 @@ Gözetimsiz bir döngü yakınsamaz — **harcar**. Durağı olmayan bir döngü
 - **Maksimum iterasyon** — sert bir tavan, her zaman.
 - **İlerleme yok tespiti** — aynı hata iki kez geliyorsa *strateji değiştir ya da yukarı bildir*; asla "yine, ama daha sert" değil.
 
-Diyarın kuralı: nasıl durduracağına karar vermediğin bir döngüyü asla başlatma.` },
+Kural: nasıl durduracağına karar vermediğin bir döngüyü asla başlatma.` },
     { kind: "widget", component: "loop-brake",
       body: `İki anahtar, dört çalıştırma. Frenler takılı ve geri bildirim dürüstken **döngüyü döndür**, sonra her seferinde bir şeyi çıkar ve hangisini çıkarınca yırttığını izle.` },
     { kind: "theory", body: `## Hiçbir şey durdurmayınca bedeli ne olur

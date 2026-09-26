@@ -23,8 +23,8 @@ export const home = {
       label: "el camino opcional",
       title: "Campaña de Rust",
       blurb:
-        "Ocho actos de maestría Rust → Soroban. Opcional, profunda y digna de cada combate.",
-      cta: "Marchar en la Campaña",
+        "Ocho actos, de Rust básico a contratos Soroban. Opcional y en profundidad.",
+      cta: "Abrir la Campaña",
       progress: "{done}/{total} actos superados",
     },
     advanced: {

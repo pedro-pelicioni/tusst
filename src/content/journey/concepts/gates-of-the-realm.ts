@@ -141,7 +141,7 @@ Two regulated gates, one atomic river crossing in the middle. The chain never sa
 
 You don't need a banking license to build against all this. The SDF runs **testanchor** on testnet — a fully working anchor speaking SEP-1, SEP-10 and SEP-24 with play money. Point your wallet code at it and rehearse the entire deposit-and-withdraw dance before a single real dollar is involved.
 
-Gates, rivers, trust — everything so far has been the *classic* realm, machinery baked into the protocol. Next chapter we cross into the part you program yourself: **Soroban**, where contracts are alive and even storage has a heartbeat.`,
+Gates, rivers, trust — everything so far has been the *classic* realm, machinery baked into the protocol. Next chapter we cross into the part you program yourself: **Soroban**, where even storage is rented.`,
     },
     {
       kind: "theory",

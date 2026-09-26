@@ -96,7 +96,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   trustHost: true,
-  pages: { signIn: "/login" },
+  pages: { signIn: "/login", error: "/login" },
   providers,
   events: {
     // OAuth signups go through the adapter (not the dev-login upsert), so
@@ -122,6 +122,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   callbacks: {
+    // Only ever land on our own origin: relative paths and same-origin
+    // absolute URLs pass through; anything else (open redirect attempts,
+    // protocol-relative "//evil") falls back to the world map.
+    redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) {
+        return url.startsWith("//") ? `${baseUrl}/path` : `${baseUrl}${url}`;
+      }
+      try {
+        if (new URL(url).origin === new URL(baseUrl).origin) return url;
+      } catch {
+        // Unparseable URL — fall through to the safe default.
+      }
+      return `${baseUrl}/path`;
+    },
     jwt({ token, user }) {
       if (user) token.id = user.id as string;
       return token;

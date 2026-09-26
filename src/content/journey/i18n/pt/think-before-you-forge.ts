@@ -143,7 +143,7 @@ Nenhuma dessas interpretações é um erro de *código*. São **buracos na spec*
     },
     {
       kind: "theory",
-      body: `## Invariantes: o anel de ferro da spec
+      body: `## Invariantes: sempre verdadeiras
 
 As linhas mais fortes de uma spec são as **invariantes** — afirmações que precisam continuar verdadeiras *em todos os momentos*, não importa qual função tenha sido executada:
 
@@ -185,7 +185,7 @@ Chegou a hora de forjar sua própria spec. A encomenda é esta:
 
 > A guilda quer um **cofre de gorjetas** on-chain. Qualquer pessoa pode depositar gorjetas nele. Somente o **guardião** da guilda pode recolher o que estiver dentro. A guilda teme duas coisas: o guardião conseguir retirar *mais* do que o cofre possui e as gorjetas ficarem presas para sempre caso o guardião desapareça.
 
-Escreva a spec — **somente comportamento**, como este capítulo ensinou: o que deve acontecer, o que nunca pode acontecer e os casos de borda. Um examinador de IA vai avaliá-la usando a rubrica abaixo (e ele corrige exatamente como os modelos da forja: ao pé da letra).`,
+Escreva a spec — **somente comportamento**, como este capítulo ensinou: o que deve acontecer, o que nunca pode acontecer e os casos de borda. Um examinador de IA vai avaliá-la usando a rubrica abaixo (e corrige exatamente como o modelo forja: ao pé da letra).`,
       rubric: `1. Somente comportamento — nada de formatos de armazenamento, bibliotecas ou assinaturas de funções.
 2. A regra de depósito e a regra de coleta estão declaradas sem ambiguidade (quem pode agir e sobre o quê).
 3. Pelo menos uma **invariante** que precisa ser verdadeira em todos os momentos.

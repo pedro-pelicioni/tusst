@@ -6,11 +6,11 @@ export const conceptText: JourneyConceptText = {
   steps: [
     {
       kind: "theory",
-      body: `## Uma mente no vazio
+      body: `## O modelo sozinho
 
-Remova tudo e um LLM faz exatamente uma coisa: **texto entra, texto sai**. Ele não pode executar código, ler seu repositório ou checar a cadeia. Sozinho, ele é uma mente no vazio — brilhante, cega e desarmada.
+Remova tudo e um LLM faz exatamente uma coisa: **texto entra, texto sai**. Ele não pode executar código, ler seu repositório ou checar a cadeia.
 
-Tudo que transforma essa mente em um *trabalhador* é o **harness**: as ferramentas que ele pode chamar, os arquivos que pode tocar, a sandbox que o contém, os verificadores que julgam sua saída.
+Tudo que o transforma em um *trabalhador* é o **harness**: as ferramentas que ele pode chamar, os arquivos que pode tocar, a sandbox que o contém, os verificadores que julgam sua saída.
 
 E aqui está a parte que a maioria das pessoas perde: o modelo é alugado. **O harness é engenharia — e é seu.**`,
     },
@@ -85,11 +85,9 @@ A característica mais perigosa do modelo não é ignorância — é **confianç
 Então um harness nunca confia; ele **recheca**, usando juízes que não podem ser convencidos por conversa fiada:
 
 - o **compilador** — ele realmente compila?
-- a **suite de testes** — seus testes do Rito, vermelhos ou verdes
+- a **suite de testes** — seus testes, vermelhos ou verdes
 - o **linter** — os padrões foram mantidos?
-- a **cadeia em si** — o ledger diz o que o modelo afirma?
-
-Reclamações são dados. Verificadores são a verdade.`,
+- a **cadeia em si** — o ledger diz o que o modelo afirma?`,
     },
     {
       kind: "quiz",

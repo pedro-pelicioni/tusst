@@ -527,7 +527,7 @@ Row five is the configuration people ship believing it is safe. R+W equals N, so
       kind: "theory",
       body: `R and W are two dials that trade against **each other**, not against some abstract "consistency". At N=3, \`W=1\` tolerates two node failures on write and zero on read; \`W=3\` inverts it. Latency follows the same curve, because each quorum waits for its slowest member — so raising W raises p99 on the write path specifically.
 
-A partition does not ask permission. With N=5, W=3 and a 3|2 split, the majority side still musters a quorum and commits version 2; the minority side has two reachable nodes and cannot reach either R=3 or W=3, so it refuses both.
+With N=5, W=3 and a 3|2 partition, the majority side still musters a quorum and commits version 2; the minority side has two reachable nodes and cannot reach either R=3 or W=3, so it refuses both.
 
 That refusal **is** the CP choice, and you made it when you picked R and W. Serving n4/n5's stale version 1 would have been the AP choice — available, and wrong. CAP is not a property of the network; it is which of those two lines you shipped.
 

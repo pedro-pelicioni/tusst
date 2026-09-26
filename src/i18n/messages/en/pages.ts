@@ -1,4 +1,4 @@
-// App pages: path (the Hall reuses `home`), campaign, cards, tracks/[slug], profile.
+// App pages: path (the Hall reuses `home`), campaign, tracks/[slug], profile.
 export const pages = {
   campaign: {
     kicker: "the optional road",
@@ -16,20 +16,6 @@ export const pages = {
     skirmishesForgingSoon: "lessons in preparation — soon",
     startLearning: "Start learning",
     viewChampions: "View your cards",
-  },
-  cards: {
-    metaTitle: "Card Collection — TUSST",
-    metaDescription:
-      "Collectible cards, one per campaign section. Finish a section's last lesson to claim its card.",
-    kicker: "// collection",
-    title: "Card Collection",
-    intro:
-      "Eight cards, one per campaign section. Finish a section's last lesson and its card joins your collection. Purely cosmetic — they carry no advantage, and nothing on this page gates any content.",
-    bossCard: "boss card",
-    actLink: "Section {numeral} — {title}",
-    unassigned: "unassigned",
-    footnote:
-      "cards are cosmetic only — they carry no advantage and gate nothing. rare prints are awarded for finishing a section without a wrong answer.",
   },
   track: {
     backToPath: "campaign",
@@ -76,6 +62,6 @@ export const pages = {
       locked: "locked",
     },
     continueCampaign: "Continue the campaign",
-    viewChampions: "View your cards",
+    openCampaignMap: "Open the campaign map",
   },
 };

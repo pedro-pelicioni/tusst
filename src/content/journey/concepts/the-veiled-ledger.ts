@@ -113,7 +113,7 @@ Serious money needs *selective* silence. The question is how a public ledger can
       kind: "theory",
       body: `## Proof without disclosure
 
-The answer comes from cryptography's strangest gift: the **zero-knowledge proof**.
+The answer is the **zero-knowledge proof**.
 
 A ZK proof convinces a verifier that a statement is true — *"this hidden amount is positive, and my hidden balance covers it"* — while revealing **nothing else**: not the amount, not the balance.
 
@@ -123,7 +123,7 @@ Put such a verifier inside the ledger's rules, and the chain can enforce honesty
     },
     {
       kind: "theory",
-      body: `## The realm forges the tools
+      body: `## Stellar ships the math
 
 On-chain verification needs specific heavy math as **host functions** — and Stellar shipped it in layers:
 

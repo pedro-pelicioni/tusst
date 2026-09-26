@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Puertas del Reino",
+  title: "Anchors y rampas de entrada y salida",
   tagline: "Anchors: donde el libro mayor toca el suelo.",
   steps: [
     {
@@ -106,7 +106,7 @@ Dos puertas reguladas, un cruce atómico en el medio. La cadena nunca vio un "d�
 
 No necesitas una licencia bancaria para construir sobre todo esto. El SDF ejecuta **testanchor** en testnet — un anclaje completamente funcional que habla SEP-1, SEP-10 y SEP-24 con dinero de juego. Apunta tu código de cartera a él y ensaya todo el baile de depósito y retiro antes de que intervenga un solo dólar real.
 
-Puertas, ríos, confianza — todo lo que hasta ahora ha sido el reino *clásico*, maquinaria incrustada en el protocolo. En el próximo capítulo cruzaremos a la parte que tú programas: **Soroban**, donde los contratos están vivos y hasta el almacenamiento tiene un latido.`,
+Puertas, ríos, confianza — todo lo visto hasta ahora ha sido el reino *clásico*, maquinaria incrustada en el protocolo. En el próximo capítulo cruzaremos a la parte que tú programas: **Soroban**, donde hasta el almacenamiento se alquila.`,
     },
     { kind: "theory", body: `## Las siglas que acabas de pasar por alto
 

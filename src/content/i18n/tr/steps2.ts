@@ -76,7 +76,7 @@ let x = Some(5).unwrap();   // → 5. sorun yok.
 let y = ghost.unwrap();     // ghost None → 💥 PANIC
 \`\`\`
 
-\`None\` üzerinde unwrap **panic** yapar — bütün program boğulur. Bu bataklıktaki mezar taşlarının hepsi aynı şeyi söylüyor.`,
+\`None\` üzerinde unwrap **panic** yapar — bütün program çöker.`,
     },
     {
       kind: "theory",
@@ -97,7 +97,7 @@ Bu kalıbı zaten iki kez kullandın — İstifçi'nin rafında; ve Soroban kale
         "None döndürür",
       ],
       answer: 0,
-      explain: "Kontrol etmediğin şeyi asla unwrap etme. Bataklık, bunu yapanlarla dolu.",
+      explain: "Kontrol etmediğin şeyi asla unwrap etme.",
     },
     {
       kind: "fill",
@@ -282,7 +282,7 @@ Desenler eşleşirken sarmalı da çözer: \`v\` değer, \`e\` neden.`,
       kind: "theory",
       body: `Mahkeme salonunun kapısının üstünde: \`#[must_use]\`.
 
-Anlamı şu: bir Result alıp görmezden gelirsen Rust **seni uyarır** — okunmamış bir hüküm, patlamayı bekleyen bir bug'dır. Her Result okunmalı, match edilmeli ya da bilerek yukarı aktarılmalı. Divan hiçbir şeyi unutmaz.`,
+Anlamı şu: bir Result alıp görmezden gelirsen Rust **seni uyarır** — okunmamış bir hüküm, patlamayı bekleyen bir bug'dır. Her Result okunmalı, match edilmeli ya da bilerek yukarı aktarılmalı.`,
     },
     {
       kind: "quiz",
@@ -303,7 +303,7 @@ Anlamı şu: bir Result alıp görmezden gelirsen Rust **seni uyarır** — okun
       after: "(e) => println!(\"denied: {}\", e),\n}",
       choices: ["Err", "None", "Fail"],
       answer: 0,
-      explain: "Ok ve Err — iki kol, ikisi de ele alınmış. Derleyici daha azını kabul etmez.",
+      explain: "Ok ve Err — iki kol da ele alınmalı, yoksa kod derlenmez.",
     },
     {
       kind: "editor",
@@ -536,7 +536,7 @@ Aynı kod, farklı ihraççı → tamamen farklı bir varlık. Kimlik, ihraçç�
 trustline = "G...CENTRE tarafından ihraç edilen USDC'yi kabul ediyorum"
 \`\`\`
 
-Trustline yok, bakiye yok — o varlıktaki ödemeler sana ulaşamaz bile. (Açık her trustline rezervini de biraz yükseltir.)`,
+Trustline yok, bakiye yok — o varlıkta sana yapılan bir ödeme \`op_no_trust\` ile başarısız olur. (Açık her trustline rezervini de biraz yükseltir.)`,
     },
     {
       kind: "quiz",
@@ -608,7 +608,7 @@ işlemi kur
         → kesin. sonsuza dek. ledger'da.
 \`\`\`
 
-Bu, Beholder'ın kırdığı gökyüzü — ve senin yeniden aydınlatmak üzere olduğun gökyüzü. Bu Kapı'dan sonra: Soroban — ledger'ın *senin* Rust kodunu çalıştırdığı yer.`,
+Bu Kapı'dan sonra: Soroban — ledger'ın *senin* Rust kodunu çalıştırdığı yer.`,
     },
     {
       kind: "quiz",

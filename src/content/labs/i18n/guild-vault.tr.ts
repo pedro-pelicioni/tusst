@@ -74,7 +74,7 @@ Forge'un **Hesap** sekmesini bu adresle aç: imzacılar ve eşikler tam orada, z
         "Sorun yok: kalan ikisi kayıp anahtarı oylayıp çıkarabilir",
         "Sorun yok: master key imzacıları her zaman sıfırlayabilir",
       ],
-      explain: `Gerçek hazinelerin ölmesinin en yaygın yolu tam olarak bu. Seni hırsızdan koruyan kural, hırsızın yokluğunu da aynı derecede korur. Her zaman eşiğine hâlâ ulaşabildiğin bir kurtarma yolu bırak.`,
+      explain: `Gerçek hazinelerin ölmesinin en yaygın yolu tam olarak bu. Hırsızı durduran kural, bir anahtar kaybolunca seni de durdurur. Her zaman eşiğine hâlâ ulaşabildiğin bir kurtarma yolu bırak.`,
     },
     "claim-xp": {
       body: `Tek satır kod deploy etmeden sıradan bir hesabı ikide-iki hazineye çevirdin.

@@ -49,8 +49,8 @@ export const labs = {
   player: {
     exit: "Quitter le lab",
     wallet: {
-      none: "pas encore de sceau",
-      yours: "ton sceau",
+      none: "pas encore de wallet",
+      yours: "ton wallet",
       copy: "Copier l'adresse",
       copied: "Copié",
     },
@@ -75,11 +75,11 @@ export const labs = {
       buildFailed: "La compilation a échoué : le runner a rejeté ce contrat. Réessaie.",
       buildTimeout: "La compilation a expiré : la forge était occupée. Réessaie.",
       localWalletRequired:
-        "Ce rite a besoin de la clé testnet locale de la Forge pour payer le déploiement — forge-la à l'étape précédente.",
+        "Cette étape a besoin de la clé testnet locale de la Forge pour payer le déploiement — crée-la à l'étape précédente.",
       passkeyUnavailable:
         "Les passkeys exigent un contexte sécurisé et WebAuthn. Ouvre ce lab en HTTPS sur un appareil compatible.",
       passkeyMismatch:
-        "Cette passkey appartient à un autre smart wallet. Réessaie et choisis l'identifiant que tu viens de forger.",
+        "Cette passkey appartient à un autre smart wallet. Réessaie et choisis l'identifiant que tu viens de créer.",
       passkeyFailed:
         "La cérémonie de passkey n'a pas abouti. Approuve la demande de l'appareil puis réessaie.",
       smartWalletDeployFailed:
@@ -97,7 +97,7 @@ export const labs = {
         "Ta partie vit dans ce navigateur. Connecte-toi et la Forge vérifiera tout on-chain — des preuves, pas des promesses — avant de payer ton XP.",
       signIn: "Se connecter pour réclamer",
       failed:
-        "Le ledger n'est pas d'accord — il manque des exploits : {checks}. Termine les étapes ci-dessus et réclame à nouveau.",
+        "Pas encore sur le ledger : {checks}. Termine les étapes ci-dessus et réclame à nouveau.",
       checkNames: {
         "account-exists": "un compte vivant",
         trustline: "la trustline USDC",
@@ -114,7 +114,7 @@ export const labs = {
       xpEarned: "+{xp} xp",
       levelUp: "Niveau {level} atteint !",
       xpTotal: "{xp} xp au total",
-      already: "Déjà réclamé — le ledger s'en souvient.",
+      already: "Déjà réclamé.",
       backToForge: "Retour à la Forge",
       openIde: "Continuer dans l'IDE",
     },

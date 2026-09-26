@@ -49,8 +49,8 @@ export const labs = {
   player: {
     exit: "Salir del lab",
     wallet: {
-      none: "sin sello aún",
-      yours: "tu sello",
+      none: "sin wallet aún",
+      yours: "tu wallet",
       copy: "Copiar dirección",
       copied: "Copiado",
     },
@@ -75,11 +75,11 @@ export const labs = {
       buildFailed: "La compilación falló: el runner rechazó este contrato. Inténtalo de nuevo.",
       buildTimeout: "La compilación agotó el tiempo: la fragua estaba ocupada. Inténtalo de nuevo.",
       localWalletRequired:
-        "Este rito necesita la clave testnet local de la Forja para pagar el despliegue — fórjala en el paso anterior.",
+        "Este paso necesita la clave testnet local de la Forja para pagar el despliegue — créala en el paso anterior.",
       passkeyUnavailable:
         "Las passkeys necesitan un contexto seguro y soporte WebAuthn. Abre este lab por HTTPS en un dispositivo compatible.",
       passkeyMismatch:
-        "Esa passkey pertenece a otra smart wallet. Inténtalo de nuevo y elige la credencial que acabas de forjar.",
+        "Esa passkey pertenece a otra smart wallet. Inténtalo de nuevo y elige la credencial que acabas de crear.",
       passkeyFailed:
         "La ceremonia de la passkey no terminó. Aprueba la solicitud del dispositivo e inténtalo de nuevo.",
       smartWalletDeployFailed:
@@ -97,7 +97,7 @@ export const labs = {
         "Tu partida vive en este navegador. Inicia sesión y la Forja lo verificará on-chain — pruebas, no promesas — y pagará tu XP.",
       signIn: "Inicia sesión para reclamar",
       failed:
-        "El ledger no está de acuerdo — faltan hazañas: {checks}. Completa los pasos de arriba y reclama de nuevo.",
+        "El ledger aún no muestra: {checks}. Completa los pasos de arriba y reclama de nuevo.",
       checkNames: {
         "account-exists": "una cuenta viva",
         trustline: "la trustline de USDC",
@@ -114,7 +114,7 @@ export const labs = {
       xpEarned: "+{xp} xp",
       levelUp: "¡Nivel {level} alcanzado!",
       xpTotal: "{xp} xp en total",
-      already: "Ya reclamado — el ledger recuerda.",
+      already: "Ya reclamado.",
       backToForge: "Volver a la Forja",
       openIde: "Seguir en el IDE",
     },

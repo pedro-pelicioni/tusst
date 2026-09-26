@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Dövmeden Önce Düşün",
+  title: "Spec güdümlü geliştirme",
   tagline: "Spec odaklı geliştirme: yapay zekânın senin yerine yapamayacağı beceri.",
   steps: [
     {
@@ -140,7 +140,7 @@ Bu okumaların hiçbiri bir *kodlama* hatası değil. Bunlar **spec delikleri** 
     },
     {
       kind: "theory",
-      body: `## Invariant'lar: spec'in demir halkası
+      body: `## Invariant'lar: her an doğru
 
 Bir spec'in en güçlü satırları **invariant**'lardır (değişmezler) — hangi fonksiyon çalışmış olursa olsun *her an* geçerli olması gereken ifadeler:
 

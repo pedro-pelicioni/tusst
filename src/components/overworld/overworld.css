@@ -1,0 +1,589 @@
+/* The overworld — a pixel-art island under a floating game HUD.
+   Every animated class carries the `ow-` prefix so the reduced-motion kill
+   switch at the bottom catches all of it (same rule as `ld-` / `sc-`). */
+
+.ow-shell {
+  position: absolute;
+  inset: 0;
+  /* `clip`, not `hidden`: a focused node near the edge must never scroll the
+     stage (the camera is the only thing that moves the island) */
+  overflow: clip;
+  background:
+    radial-gradient(120% 80% at 50% 120%, rgba(6, 36, 52, 0.6), transparent 60%),
+    var(--ow-sea);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+.ow-shell:focus-visible { outline: 0; }
+
+.ow-world {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  cursor: grab;
+  isolation: isolate;
+}
+.ow-world.is-dragging { cursor: grabbing; }
+.ow-world > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+}
+.ow-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: inset 0 0 120px rgba(5, 3, 12, 0.55);
+  background: linear-gradient(0deg, rgba(6, 4, 14, 0.5), transparent 16%, transparent 82%, rgba(6, 4, 14, 0.25));
+}
+
+/* the world map does not pan: center the cover-sized chart */
+.ow-shell--static { touch-action: auto; }
+.ow-world-static {
+  aspect-ratio: var(--ow-aspect);
+  width: max(100%, calc((100dvh - 56px) * var(--ow-aspect)));
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: default;
+  will-change: auto;
+}
+/* Portrait screens (iPad held upright): the chart is sized to COVER the stage,
+   so at 768×1024 it is drawn 1734 wide and the two island cards end up only
+   ~16% visible — and this map does not pan, so nothing brings them back. Fit
+   it by width there instead. Landscape and desktop keep the full-bleed chart. */
+@media (max-aspect-ratio: 1 / 1) {
+  .ow-world-static {
+    width: 100%;
+  }
+  /* Fitting by width leaves a short strip, so full-height cards would pile on
+     top of each other. Strip them to the title and the button — the name and
+     the way in are what the card is for; progress still lives in the HUD. */
+  .ow-door-blurb,
+  .ow-door-progress {
+    display: none;
+  }
+  .ow-door {
+    width: 170px;
+  }
+}
+.ow-door { z-index: 6; text-decoration: none; }
+/* The landmass as a button: invisible until pointed at, then a warm wash so
+   it reads as clickable. Sits below .ow-door so the card keeps priority. */
+.ow-hotspot {
+  position: absolute;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+.ow-hotspot:hover,
+.ow-hotspot:active {
+  background: color-mix(in srgb, var(--ow-hotspot-tone, #ffe9a1) 14%, transparent);
+  box-shadow: inset 0 0 60px color-mix(in srgb, var(--ow-hotspot-tone, #ffe9a1) 30%, transparent);
+}
+/* Card flipped above its landmark: the pin swaps to the bottom face so it
+   still points at the spot on the map. */
+.ow-door-pin.is-below {
+  top: auto;
+  bottom: -14px;
+}
+.ow-door-pin {
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  width: 14px;
+  height: 14px;
+  transform: translateX(-50%) rotate(45deg);
+  border: 2px solid #fff1b5;
+  /* not ow-float: that keyframe writes `transform` wholesale and would drop
+     this pin's own centring and 45° rotation for the length of the animation */
+  animation: ow-pin-float 2.4s ease-in-out infinite;
+}
+
+/* ── stand-in island (no art yet) ─────────────────────────────── */
+.ow-standin { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ── route ─────────────────────────────────────────────────────── */
+.ow-route {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 3;
+}
+.ow-route path {
+  fill: none;
+  stroke: #ffe9a1;
+  stroke-width: 0.35;
+  stroke-dasharray: 0.7 0.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: ow-dash 1.2s linear infinite;
+}
+.ow-route .ow-route-roads {
+  stroke: rgba(255, 233, 161, 0.18);
+  stroke-width: 0.5;
+  stroke-dasharray: none;
+  animation: none;
+}
+
+/* ── region labels ─────────────────────────────────────────────── */
+.ow-region {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  pointer-events: none;
+  padding: 4px 10px;
+  font: 10px var(--font-silkscreen), monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff1c5;
+  text-shadow: 2px 2px #0c0714;
+  background: rgba(12, 7, 20, 0.55);
+  border: 1px solid rgba(244, 206, 123, 0.5);
+  white-space: nowrap;
+}
+
+/* ── mission nodes ─────────────────────────────────────────────── */
+.ow-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  overflow: visible;
+  color: inherit;
+  transition: filter 0.15s;
+}
+.ow-node:focus-visible { outline: 3px solid #cfc3ff; outline-offset: 4px; }
+.ow-node.is-selected { z-index: 5; }
+.ow-marker {
+  position: relative;
+  z-index: 2;
+  width: 34px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  font: 11px var(--font-silkscreen), monospace;
+  background: #3d2a5a;
+  color: #fff0bd;
+  border: 2px solid #f0cf85;
+  box-shadow: 2px 3px #1a1024;
+}
+.ow-node.is-selected .ow-marker {
+  background: #ffdb80;
+  color: #392414;
+  border-color: #fff1b5;
+  box-shadow: 0 3px #9e652e, 0 0 0 2px #321b10;
+}
+.ow-node.is-done .ow-marker { background: #ddba70; color: #392414; border-color: #ffebad; }
+.ow-node.is-locked .ow-marker { background: #574235; color: #dfc9a6; border-color: #ba9c73; box-shadow: 2px 3px #25140b; }
+.ow-node.is-soon .ow-marker { opacity: 0.75; border-style: dashed; }
+.ow-node.is-recommended:not(.is-selected) .ow-marker { animation: ow-pulse 1.8s ease-in-out infinite; }
+.ow-node-art {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 62px;
+  height: 62px;
+  pointer-events: none;
+  z-index: 1;
+  display: grid;
+  place-items: end center;
+  filter: drop-shadow(0 4px 2px rgba(6, 10, 20, 0.6));
+  animation: ow-breathe 2.7s steps(3) infinite;
+}
+.ow-node-art img { width: 100%; height: 100%; object-fit: contain; image-rendering: auto; }
+.ow-node-art .ow-glyph {
+  font: 26px var(--font-cinzel), serif;
+  color: #ffe7a6;
+  text-shadow: 0 2px 0 #1a1024, 0 0 14px rgba(207, 195, 255, 0.6);
+}
+.ow-node.is-done .ow-node-art { opacity: 0.55; filter: grayscale(0.6); animation: none; }
+.ow-node.is-locked .ow-node-art { filter: saturate(0.4) brightness(0.6) drop-shadow(0 4px 2px rgba(6, 10, 20, 0.6)); animation-delay: -1s; }
+.ow-node-art::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  width: 38px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(10, 20, 30, 0.45);
+  z-index: -1;
+}
+.ow-node-level {
+  position: absolute;
+  top: -66px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font: 8px var(--font-silkscreen), monospace;
+  color: #ffebbd;
+  background: rgba(57, 27, 47, 0.92);
+  border: 1px solid #cc9959;
+  padding: 2px 5px;
+  white-space: nowrap;
+}
+.ow-node.is-selected .ow-node-level { background: #872b3b; }
+.ow-tip {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  width: max-content;
+  max-width: 220px;
+  padding: 6px 9px;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  color: #ffe7a6;
+  background: #321c13;
+  border: 1px solid #d6b16b;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+.ow-tip b { display: block; font: 9px var(--font-silkscreen), monospace; letter-spacing: 0.06em; margin-bottom: 2px; }
+.ow-node:hover .ow-tip,
+.ow-node:focus-visible .ow-tip,
+.ow-node.is-selected .ow-tip { opacity: 1; }
+.ow-node.ow-waypoint .ow-marker { width: 18px; height: 18px; font-size: 7px; border-radius: 50%; border-width: 2px; }
+.ow-node.ow-waypoint .ow-tip { top: 16px; }
+.ow-node.ow-fortress .ow-marker { width: 40px; height: 34px; font-size: 12px; }
+.ow-node.ow-fortress .ow-node-art { width: 84px; height: 84px; bottom: 28px; }
+.ow-node.ow-fortress .ow-node-level { top: -90px; }
+.ow-node.ow-waypoint.is-wide .ow-marker { width: auto; min-width: 18px; padding: 0 3px; border-radius: 9px; }
+/* harbor docks: the fortress marker, no floating art (the landmark is painted) */
+.ow-node.ow-dock .ow-marker { width: 40px; height: 34px; font-size: 12px; }
+
+/* ── hero ──────────────────────────────────────────────────────── */
+.ow-hero {
+  position: absolute;
+  left: var(--map-x, 50%);
+  top: var(--map-y, 50%);
+  width: 80px;
+  height: 80px;
+  transform: translate(-50%, -86%);
+  z-index: 8;
+  pointer-events: none;
+}
+.ow-hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  width: 44px;
+  height: 10px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(8, 16, 26, 0.5);
+  z-index: -1;
+}
+.ow-hero-sprite {
+  /* It is a <span>: without this the 100% box collapses to 0×0 and the hero
+     disappears. Invisible while the sheets were missing (the stand-in is its
+     own grid), so it only bites once real art lands. */
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 400% 200%;
+  image-rendering: pixelated;
+  transform: scaleX(var(--facing, 1));
+  filter: drop-shadow(0 6px 3px rgba(0, 0, 0, 0.45));
+}
+.ow-hero-standin {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  transform: scaleX(var(--facing, 1));
+}
+.ow-hero-standin > span {
+  width: 46px;
+  height: 46px;
+  transform: rotate(45deg);
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 18px rgba(207, 195, 255, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.ow-hero-standin > span > b {
+  transform: rotate(-45deg);
+  font: 800 16px var(--font-cinzel), serif;
+  color: #0b0817;
+}
+.ow-hero.is-walking .ow-hero-sprite,
+.ow-hero.is-walking .ow-hero-standin { animation: ow-walk-bob 0.34s steps(2) infinite; }
+.ow-hero.is-ascended { width: 94px; height: 94px; }
+.ow-hero.is-divine { width: 110px; height: 110px; filter: drop-shadow(0 0 16px rgba(255, 220, 120, 0.7)); }
+.ow-hero-level {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font: 9px var(--font-silkscreen), monospace;
+  color: #ffe7a6;
+  background: #321c13;
+  border: 1px solid #d6b16b;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+.ow-hero.is-arriving { animation: ow-arrive 0.9s ease-out both; }
+
+/* ── HUD panels ────────────────────────────────────────────────── */
+.ow-hud { position: absolute; z-index: 12; }
+/* a parchment panel is `relative` for its corner mark; as a HUD it must float */
+.ow-hud.ow-panel-parchment { position: absolute; }
+.ow-panel-wood {
+  background: linear-gradient(120deg, rgba(42, 26, 54, 0.94), rgba(26, 16, 36, 0.95));
+  border: 2px solid var(--ow-frame);
+  box-shadow: var(--ow-gilding);
+  backdrop-filter: blur(7px);
+  color: #f6e4bc;
+}
+.ow-panel-parchment {
+  position: relative;
+  background: linear-gradient(105deg, #f7ebca, #ecd5a3 65%, #dfbd80);
+  border: 3px solid var(--ow-frame);
+  box-shadow: var(--ow-gilding);
+  color: var(--ow-parchment-ink);
+}
+.ow-panel-parchment::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 16px;
+  height: 16px;
+  border-top: 2px solid #916331;
+  border-right: 2px solid #916331;
+  pointer-events: none;
+}
+.ow-eyebrow {
+  font: 9px var(--font-silkscreen), monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ow-title { font: 14px/1.5 var(--font-silkscreen), monospace; letter-spacing: -0.01em; }
+.ow-btn-primary {
+  display: block;
+  width: 100%;
+  padding: 11px 10px;
+  font: 11px/1.4 var(--font-silkscreen), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fff2cb;
+  text-shadow: 1px 2px #5d1720;
+  background: linear-gradient(#bd4551 0%, #a32c3c 48%, #812130 50%, #942635 100%);
+  border: 2px solid var(--ow-frame-light);
+  box-shadow: inset 0 0 0 1px #e7816d, 3px 4px #2a1220;
+  cursor: pointer;
+  transition: filter 0.12s, transform 0.08s;
+}
+.ow-btn-primary:hover { filter: brightness(1.08); }
+.ow-btn-primary:active { transform: translate(1px, 1px); box-shadow: inset 0 0 0 1px #e7816d, 1px 2px #2a1220; }
+.ow-btn-primary:disabled { filter: saturate(0.35); opacity: 0.75; cursor: default; transform: none; }
+.ow-btn-primary.is-busy { animation: ow-busy 1.1s ease-in-out infinite; }
+.ow-btn-quiet {
+  display: block;
+  width: 100%;
+  padding: 7px 10px;
+  font: 12px var(--font-geist-sans), system-ui, sans-serif;
+  color: #653825;
+  background: linear-gradient(#f7e3b3, #e2c388);
+  border: 1px solid #ae8042;
+  box-shadow: 2px 2px #bb9259;
+  cursor: pointer;
+  text-align: center;
+}
+.ow-btn-quiet:hover { filter: brightness(1.04); }
+.ow-btn-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font: 12px var(--font-geist-sans), system-ui, sans-serif;
+  color: #ffedc9;
+  background: linear-gradient(#4a2f66, #2a1a36);
+  border: 1px solid #aa7b42;
+  box-shadow: inset 0 1px rgba(230, 188, 115, 0.4), 2px 3px #0d0714;
+  cursor: pointer;
+}
+.ow-btn-dark:hover { filter: brightness(1.1); }
+.ow-btn-dark:disabled { opacity: 0.5; cursor: default; }
+.ow-bar { height: 6px; background: #27140e; border: 1px solid #6d4a2b; overflow: hidden; }
+.ow-bar > span { display: block; height: 100%; background: linear-gradient(90deg, #bb732b, #ffdc78); transition: width 0.4s; }
+.ow-chip {
+  display: inline-block;
+  padding: 2px 6px;
+  font: 8px var(--font-silkscreen), monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid #a9783f;
+  color: #6d2630;
+  background: rgba(255, 240, 200, 0.6);
+}
+.ow-portrait {
+  background-repeat: no-repeat;
+  background-size: 400% 200%;
+  image-rendering: pixelated;
+  border: 2px solid #deb969;
+  box-shadow: 2px 3px #1d0d09;
+  background-color: #341c22;
+}
+.ow-portrait-standin {
+  display: grid;
+  place-items: center;
+  font: 800 22px var(--font-cinzel), serif;
+  color: #0b0817;
+}
+
+/* badges */
+.ow-badge {
+  width: 22px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  font: 7px var(--font-silkscreen), monospace;
+  background: #3a2a4a;
+  border: 1px solid #996e3d;
+  color: #bda278;
+  cursor: pointer;
+  padding: 0;
+}
+.ow-badge.is-earned { background: linear-gradient(#ffe9a0, #d99d3c); border-color: #ffe9aa; color: #542f17; }
+.ow-badge:hover { filter: brightness(1.15); }
+
+/* dialogs */
+.ow-dialog {
+  margin: auto;
+  width: min(560px, calc(100% - 32px));
+  max-height: calc(100dvh - 40px);
+  padding: 8px;
+  color: var(--ow-parchment-ink);
+  background: linear-gradient(#25122bd9, #1a1024ee), var(--ow-wood);
+  border: 6px solid var(--ow-frame);
+  box-shadow: 0 0 0 2px #ffe5a1, 0 0 0 6px #4c2c18, 0 0 0 8px #9c7037, 0 22px 90px #000b;
+  overflow: auto;
+}
+.ow-dialog::backdrop { background: rgba(11, 6, 20, 0.85); backdrop-filter: blur(4px); }
+.ow-dialog-inner { background: linear-gradient(105deg, #fff0c9, #ecd5a3 65%, #dfbd80); border: 1px solid #e3be72; }
+.ow-dialog-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  font: 10px var(--font-silkscreen), monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffe6a5;
+  background: linear-gradient(#8f2a3a, #6a1f2c);
+  border-bottom: 2px solid #e5bb63;
+}
+.ow-dialog-top .ow-close {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  font: 14px var(--font-silkscreen), monospace;
+  color: #ffe6a5;
+  background: #4a1a26;
+  border: 1px solid #e5bb63;
+  cursor: pointer;
+}
+.ow-dialog-body { padding: 22px 26px; }
+.ow-dialog-demo {
+  position: relative;
+  height: 118px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  margin-bottom: 18px;
+  background: linear-gradient(#2a1a4a, #1a1230);
+  border: 2px solid #a28149;
+  overflow: hidden;
+}
+.ow-dialog-demo::after {
+  content: "";
+  position: absolute;
+  bottom: 16px;
+  width: 80%;
+  height: 8px;
+  background: repeating-linear-gradient(90deg, #c9a970 0 9px, transparent 9px 15px);
+  opacity: 0.5;
+}
+.ow-dialog-demo .ow-hero { position: relative; left: auto; top: auto; transform: none; width: 84px; height: 84px; }
+.ow-dialog-demo .ow-keys { font: 11px var(--font-silkscreen), monospace; color: #ffdc88; z-index: 2; text-align: center; line-height: 1.6; }
+.ow-dialog-demo.is-walk .ow-hero { animation: ow-demo-walk 3s ease-in-out infinite; }
+.ow-dots { display: flex; justify-content: center; gap: 9px; margin: 18px 0 6px; }
+.ow-dots span { width: 8px; height: 8px; background: #b49666; transform: rotate(45deg); }
+.ow-dots .is-active { background: #91303a; box-shadow: 0 0 0 2px #d6a251; }
+
+/* forms gallery */
+.ow-form-cell { border: 2px solid #b98a49; background: rgba(255, 240, 200, 0.55); padding: 8px; text-align: center; }
+.ow-form-cell.is-current { border-color: #8f2a3a; box-shadow: 0 0 0 2px #ffdb80; }
+.ow-form-cell.is-locked .ow-portrait { filter: brightness(0.25) saturate(0.3); }
+
+/* editor */
+.ow-editor {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  z-index: 40;
+  padding: 8px 12px;
+  font: 11px var(--font-jetbrains-mono), monospace;
+  color: #ffe7a6;
+  background: rgba(12, 7, 20, 0.9);
+  border: 1px solid #d6b16b;
+  white-space: nowrap;
+}
+.ow-editor-dot { position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: #ff5f9e; border: 1px solid #fff; z-index: 6; pointer-events: none; }
+
+/* ── keyframes ─────────────────────────────────────────────────── */
+@keyframes ow-walk-bob { 0% { transform: translateY(0) scaleX(var(--facing, 1)); } 50% { transform: translateY(-3px) scaleX(var(--facing, 1)); } 100% { transform: translateY(0) scaleX(var(--facing, 1)); } }
+@keyframes ow-breathe { 50% { transform: translate(-50%, -3px); } }
+@keyframes ow-pulse { 0%, 100% { box-shadow: 2px 3px #1a1024, 0 0 0 0 rgba(207, 195, 255, 0.7); } 50% { box-shadow: 2px 3px #1a1024, 0 0 0 7px rgba(207, 195, 255, 0); } }
+@keyframes ow-dash { to { stroke-dashoffset: -1.2; } }
+@keyframes ow-arrive { 0% { filter: brightness(2.2) drop-shadow(0 0 22px #ffe297); } 100% { filter: none; } }
+@keyframes ow-busy { 50% { filter: brightness(1.15); } }
+@keyframes ow-demo-walk { 0%, 100% { transform: translateX(-20px); } 50% { transform: translateX(30px); } }
+@keyframes ow-float { 50% { transform: translateY(-6px); } }
+@keyframes ow-pin-float {
+  50% { transform: translateX(-50%) translateY(-5px) rotate(45deg); }
+}
+
+/* ── responsive ────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .ow-node-art { width: 48px; height: 48px; bottom: 20px; }
+  .ow-node-level { top: -54px; }
+  .ow-tip { display: none; }
+  .ow-hero { width: 68px; height: 68px; }
+  .ow-region { font-size: 8px; padding: 3px 7px; }
+}
+
+/* ── reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ow-shell *, .ow-dialog *, .ow-battle * { animation: none !important; transition: none !important; }
+}

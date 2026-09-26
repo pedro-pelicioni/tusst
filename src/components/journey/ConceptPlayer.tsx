@@ -9,10 +9,16 @@
 // and campaign lock state.
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { Markdown } from "@/components/Markdown";
 import { Diagram, DiagramFrame } from "@/components/visuals/Diagram";
 import { WidgetSlot } from "@/components/visuals/WidgetSlot";
+import {
+  BattleFrame,
+  type BattleHit,
+  type BattleSkin,
+} from "@/components/overworld/BattleFrame";
+import { VictoryScreen } from "@/components/overworld/VictoryScreen";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
 import type { JourneyStep } from "@/content/journey/types";
@@ -93,6 +99,7 @@ export function ConceptPlayer({
   nextHref,
   labState,
   branchState,
+  battle,
 }: {
   conceptSlug: string;
   title: string;
@@ -105,6 +112,13 @@ export function ConceptPlayer({
   nextHref: string | null;
   labState: Record<string, LabLinkState>;
   branchState: Record<string, BranchState>;
+  /**
+   * The battle skin (hero vs the region's boss around this very tree). Only
+   * presentation: when present the player is wrapped in a BattleFrame and
+   * the done screen becomes the VictoryScreen; grading, XP and step flow are
+   * byte-identical either way.
+   */
+  battle?: BattleSkin;
 }) {
   const m = useMessages();
   const [index, setIndex] = useState(0);
@@ -115,6 +129,25 @@ export function ConceptPlayer({
   const [claim, setClaim] = useState<ClaimStatus>({ s: "idle" });
   const [exSpec, setExSpec] = useState("");
   const [exStatus, setExStatus] = useState<ExerciseStatus>({ s: "idle" });
+
+  // Battle skin bookkeeping — cosmetic mirrors of the feedback this player
+  // already computes. Nothing here gates a step or touches grading; without
+  // a `battle` prop `strike` is a no-op so the classic player stays inert.
+  const hasBattle = !!battle;
+  const [strikes, setStrikes] = useState(0);
+  const [misses, setMisses] = useState(0);
+  const [hit, setHit] = useState<BattleHit>(null);
+  const [hitKey, setHitKey] = useState(0);
+  const strike = useCallback(
+    (who: "boss" | "player") => {
+      if (!hasBattle) return;
+      if (who === "boss") setStrikes((n) => n + 1);
+      else setMisses((n) => n + 1);
+      setHit(who);
+      setHitKey((k) => k + 1);
+    },
+    [hasBattle],
+  );
 
   // Restore an unsent spec draft on mount — same sync-from-localStorage
   // pattern (and lint carve-out) as the lab player's run hydration.
@@ -129,6 +162,14 @@ export function ConceptPlayer({
 
   const total = steps.length;
   const step = steps[Math.min(index, total - 1)];
+  // The boss's HP: one point per graded step (quiz / fill / exercise).
+  const graded = useMemo(
+    () =>
+      steps.filter(
+        (s) => s.kind === "quiz" || s.kind === "fill" || s.kind === "exercise",
+      ).length,
+    [steps],
+  );
 
   const optionOrder = useMemo(() => {
     if (step.kind === "quiz")
@@ -226,6 +267,7 @@ export function ConceptPlayer({
         feedback: body.feedback,
         xpEarned: body.xp?.awarded ? body.xp.earned : undefined,
       });
+      strike(body.meets ? "boss" : "player");
     } catch {
       setExStatus({ s: "error", reason: "unavailable" });
     }
@@ -263,8 +305,52 @@ export function ConceptPlayer({
   const percent =
     claim.s === "done" ? 100 : atSeal ? 96 : Math.round((index / total) * 100);
 
+  /* ─── battle skin: wrap whatever the player renders ─── */
+  const hpMax = Math.max(1, graded);
+  const header = battle
+    ? fmt(m.overworld.battle.header, {
+        number: battle.missionNumber,
+        current: atSeal ? total : Math.min(index + 1, total),
+        total,
+      })
+    : "";
+  const frame = (node: ReactNode, defeated = false) =>
+    battle ? (
+      <BattleFrame
+        hero={battle.hero}
+        boss={battle.boss}
+        arena={battle.arena}
+        hp={{ max: hpMax, current: defeated ? 0 : Math.max(0, hpMax - strikes) }}
+        hearts={Math.max(0, 3 - misses)}
+        hit={hit}
+        hitKey={hitKey}
+        header={header}
+      >
+        {node}
+      </BattleFrame>
+    ) : (
+      node
+    );
+
   /* ─── done screen ─── */
   if (claim.s === "done") {
+    if (battle) {
+      return frame(
+        <VictoryScreen
+          hero={battle.hero}
+          xpEarned={claim.earned}
+          leveledUp={claim.leveledUp}
+          levelBefore={claim.level - (claim.leveledUp ? 1 : 0)}
+          levelAfter={claim.level}
+          alreadyClaimed={claim.already}
+          nextHref={battle.nextHref}
+          nextTitle={battle.nextTitle}
+          backHref={battle.backHref}
+          missionTitle={title}
+        />,
+        true,
+      );
+    }
     const p = m.journey.player.done;
     return (
       <div className="mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center px-5 py-16 text-center">
@@ -322,12 +408,12 @@ export function ConceptPlayer({
     );
   }
 
-  return (
+  return frame(
     <div className="mx-auto flex min-h-[calc(100dvh-140px)] max-w-3xl flex-col px-5 py-6">
       {/* ─── top bar ─── */}
       <div className="flex items-center gap-3">
         <Link
-          href="/journey"
+          href={battle?.backHref ?? "/journey"}
           aria-label={m.journey.player.exit}
           className="shrink-0 text-lg leading-none text-muted transition hover:text-fg"
         >
@@ -826,8 +912,10 @@ export function ConceptPlayer({
                           step.explain ??
                           m.lesson.praise[index % m.lesson.praise.length],
                       });
+                      strike("boss");
                     } else {
                       setFeedback({ correct: false, text: m.lesson.incorrect });
+                      strike("player");
                     }
                   }}
                   className="w-full rounded-full px-7 py-3.5 font-display text-[13px] font-bold uppercase tracking-[0.14em] text-[#0b0817] transition-transform hover:-translate-y-[1px] disabled:opacity-40 sm:w-auto"

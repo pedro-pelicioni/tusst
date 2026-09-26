@@ -1,0 +1,411 @@
+/* The battle skin — a map crop as the arena (hero vs boss, HP + hearts) beside
+   the untouched step column. Every class here is `ow-battle-*`; the
+   reduced-motion kill switch in overworld.css (`.ow-battle *`) covers all of
+   it, and the strike particles are removed outright below. */
+
+.ow-battle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: calc(100dvh - 56px);
+  overflow: clip;
+  background: var(--ow-wood);
+}
+
+/* ── stage (arena + console) ───────────────────────────────────── */
+.ow-battle-stage {
+  display: flex;
+  flex-direction: column;
+  height: 160px;
+  background: linear-gradient(#1a1024, #0d0716);
+  border-bottom: 3px solid var(--ow-frame);
+}
+.ow-battle-arena {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #0e3a48;
+  background-image:
+    linear-gradient(180deg, rgba(5, 28, 38, 0.6), rgba(6, 22, 32, 0.32) 45%, rgba(8, 12, 22, 0.78)),
+    var(--ow-arena-src, radial-gradient(120% 90% at 50% 110%, #1b6e86, #0b2b38 60%, #071a24));
+  background-size: auto, auto 180%;
+  background-position: 0 0, var(--ow-arena-x, 50%) var(--ow-arena-y, 50%);
+  background-repeat: no-repeat;
+}
+/* scanlines */
+.ow-battle-arena::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.16) 0 2px, transparent 2px 4px);
+  mix-blend-mode: multiply;
+}
+/* the battle level tag: between the two figures on the mobile strip, above
+   the boss's head from lg up (the plates own both top corners' neighbours) */
+.ow-battle-caption {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  z-index: 4;
+  transform: translateX(-50%);
+  padding: 3px 8px;
+  font: 8px var(--font-silkscreen), monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #ffe7a6;
+  background: rgba(12, 7, 20, 0.72);
+  border: 1px solid #d6b16b;
+}
+
+/* figures */
+.ow-battle-platform {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  z-index: 0;
+  width: 120px;
+  height: 28px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 40%, rgba(255, 226, 150, 0.3), rgba(20, 40, 50, 0.55) 60%, transparent 72%);
+  border: 2px solid rgba(244, 206, 123, 0.35);
+}
+.ow-battle-hero,
+.ow-battle-boss {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+}
+.ow-battle-hero { left: 4%; bottom: 8%; }
+.ow-battle-boss { right: 5%; bottom: 8%; }
+.ow-battle-hero .ow-hero {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  width: 64px;
+  height: 64px;
+}
+.ow-battle-hero .ow-hero.is-ascended { width: 72px; height: 72px; }
+.ow-battle-hero .ow-hero.is-divine { width: 80px; height: 80px; }
+.ow-battle-figure {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.55));
+  animation: ow-battle-breathe 2.8s steps(3) infinite;
+}
+.ow-battle-glyph {
+  display: grid;
+  place-items: center;
+  font: 44px var(--font-cinzel), serif;
+  color: #ffe7a6;
+  text-shadow: 0 3px 0 #1a1024, 0 0 22px rgba(207, 195, 255, 0.6);
+}
+.ow-battle-boss.is-hit { animation: ow-battle-shake 0.5s steps(4) both; }
+.ow-battle-hero.is-hit { animation: ow-battle-flinch 0.5s steps(4) both; }
+.ow-battle-flash {
+  position: absolute;
+  inset: -6px;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6c8 0 38%, rgba(255, 246, 200, 0.5) 56%, transparent 72%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  animation: ow-battle-flash 0.45s steps(3) both;
+}
+.ow-battle-hero .ow-battle-flash {
+  background: radial-gradient(circle, #ff8a8a 0 38%, rgba(255, 138, 138, 0.5) 56%, transparent 72%);
+}
+.ow-battle-boss.is-defeated .ow-battle-figure {
+  filter: grayscale(1) brightness(0.5) drop-shadow(0 8px 6px rgba(0, 0, 0, 0.55));
+  opacity: 0.6;
+  transform: rotate(8deg);
+  animation: none;
+}
+.ow-battle-defeated {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 4;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  padding: 4px 8px;
+  font: 10px var(--font-silkscreen), monospace;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  color: #ffe6a5;
+  background: #872b3b;
+  border: 2px solid #e5bb63;
+  box-shadow: 2px 3px #1a1024;
+}
+
+/* strike particles */
+.ow-battle-fx {
+  position: absolute;
+  z-index: 5;
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+}
+.ow-battle-fx::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, #fff9d6 0 28%, #ffd166 30% 52%, transparent 54%);
+  box-shadow: 0 0 14px #ffd166, 0 0 30px rgba(255, 209, 102, 0.6);
+}
+.ow-battle-fx.is-counter::before {
+  background: radial-gradient(circle, #ffd6d6 0 28%, #ff5c6a 30% 52%, transparent 54%);
+  box-shadow: 0 0 14px #ff5c6a, 0 0 30px rgba(255, 92, 106, 0.6);
+}
+.ow-battle-fx.is-strike { animation: ow-battle-hit-sm 0.5s steps(8) both; }
+.ow-battle-fx.is-counter { animation: ow-battle-counter-sm 0.5s steps(8) both; }
+
+/* name plates */
+.ow-battle-plate {
+  position: absolute;
+  z-index: 4;
+  width: min(170px, 46%);
+  padding: 6px 9px 7px;
+}
+.ow-battle-plate-boss { top: 8px; right: 8px; }
+.ow-battle-plate-hero { top: 8px; left: 8px; }
+.ow-battle-plate-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.ow-battle-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 9px/1.3 var(--font-silkscreen), monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #3a2416;
+}
+.ow-battle-hp {
+  height: 9px;
+  margin-top: 5px;
+  background: #27140e;
+  border: 1px solid #6d4a2b;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+.ow-battle-hp > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #7a1d2a, #c9394d 60%, #ff7a5a);
+  transition: width 0.45s steps(6);
+}
+.ow-battle-sub {
+  display: block;
+  margin-top: 4px;
+  font: 7px var(--font-silkscreen), monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ow-parchment-muted);
+}
+.ow-battle-hearts {
+  display: flex;
+  gap: 3px;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1;
+  color: #c9243d;
+  text-shadow: 1px 1px #5d1720;
+}
+.ow-battle-hearts .is-lost { color: #b3a086; text-shadow: none; opacity: 0.55; }
+
+/* console strip (lg only) */
+.ow-battle-console {
+  display: none;
+  margin: 10px;
+  padding: 10px 14px;
+}
+.ow-battle-console p { margin-top: 4px; font-size: 12.5px; line-height: 1.45; color: #583c27; }
+
+/* ── step column ───────────────────────────────────────────────── */
+.ow-battle-side {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  background:
+    radial-gradient(85% 75% at 30% 30%, rgba(143, 123, 255, 0.14), transparent 60%),
+    radial-gradient(70% 55% at 82% 78%, rgba(106, 168, 255, 0.1), transparent 58%),
+    linear-gradient(180deg, #07050e 0%, #0d0a1b 55%, #060409 100%);
+}
+.ow-battle-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 20px;
+  font: 10px var(--font-silkscreen), monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffe6a5;
+  background: linear-gradient(#8f2a3a, #6a1f2c);
+  border-bottom: 2px solid #e5bb63;
+  box-shadow: 0 3px 0 #2a1220;
+}
+.ow-battle-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── victory ───────────────────────────────────────────────────── */
+.ow-battle-victory {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 28px 16px;
+}
+.ow-battle-victory-card {
+  width: min(560px, 100%);
+  padding: 22px 24px 24px;
+  text-align: center;
+}
+.ow-battle-victory-title {
+  margin-top: 6px;
+  font: 600 14px/1.4 var(--font-cinzel), serif;
+  letter-spacing: 0.04em;
+  color: #583c27;
+}
+.ow-battle-forms {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 18px 0 8px;
+}
+.ow-battle-form {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  min-width: 120px;
+  padding: 10px;
+  border: 2px solid #b98a49;
+  background: rgba(255, 240, 200, 0.55);
+}
+.ow-battle-form.is-new {
+  border-color: #8f2a3a;
+  box-shadow: 0 0 0 2px #ffdb80;
+  animation: ow-battle-evolve 0.9s steps(4) both;
+}
+.ow-battle-form-name { font-size: 11px; font-weight: 600; color: #3a2416; }
+.ow-battle-forms-arrow { font: 18px var(--font-silkscreen), monospace; color: #8f2a3a; }
+.ow-battle-xp {
+  margin-top: 14px;
+  font: 16px/1.4 var(--font-silkscreen), monospace;
+  color: #8f2a3a;
+  text-shadow: 1px 1px #ffdb80;
+}
+.ow-battle-note { margin-top: 8px; font-size: 12.5px; line-height: 1.45; color: #75583c; }
+.ow-battle-next {
+  margin-top: 18px;
+  padding: 12px 14px;
+  text-align: left;
+  border: 2px dashed #b98a49;
+  background: rgba(255, 240, 200, 0.45);
+}
+.ow-battle-next p { margin-top: 4px; font-size: 13px; line-height: 1.45; color: #3a2416; }
+.ow-battle-actions { display: grid; gap: 8px; margin-top: 16px; }
+.ow-battle-actions a { text-align: center; text-decoration: none; }
+
+/* ── keyframes ─────────────────────────────────────────────────── */
+@keyframes ow-battle-breathe { 50% { transform: translateY(-3px); } }
+@keyframes ow-battle-shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(10px); }
+  50% { transform: translateX(-7px); }
+  75% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+@keyframes ow-battle-flinch {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+@keyframes ow-battle-flash { 0% { opacity: 0.95; } 100% { opacity: 0; } }
+@keyframes ow-battle-hit-sm {
+  0% { left: 22%; bottom: 30%; opacity: 1; transform: scale(0.7); }
+  70% { opacity: 1; }
+  100% { left: 78%; bottom: 34%; opacity: 0; transform: scale(1.6); }
+}
+@keyframes ow-battle-counter-sm {
+  0% { left: 78%; bottom: 34%; opacity: 1; transform: scale(0.7); }
+  70% { opacity: 1; }
+  100% { left: 20%; bottom: 30%; opacity: 0; transform: scale(1.6); }
+}
+@keyframes ow-battle-hit {
+  0% { left: 20%; bottom: 36%; opacity: 1; transform: scale(0.7); }
+  70% { opacity: 1; }
+  100% { left: 76%; bottom: 62%; opacity: 0; transform: scale(1.6); }
+}
+@keyframes ow-battle-counter {
+  0% { left: 76%; bottom: 62%; opacity: 1; transform: scale(0.7); }
+  70% { opacity: 1; }
+  100% { left: 18%; bottom: 34%; opacity: 0; transform: scale(1.6); }
+}
+@keyframes ow-battle-evolve {
+  0% { filter: brightness(2.4) drop-shadow(0 0 18px #ffe297); transform: scale(0.92); }
+  100% { filter: none; transform: none; }
+}
+
+/* ── two columns from lg up ────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .ow-battle { grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr); }
+  .ow-battle-stage {
+    position: sticky;
+    top: 56px;
+    height: calc(100dvh - 56px);
+    border-bottom: 0;
+    border-right: 3px solid var(--ow-frame);
+  }
+  .ow-battle-console { display: block; }
+  .ow-battle-caption { top: 14px; bottom: auto; left: auto; right: 14px; transform: none; font-size: 9px; }
+  .ow-battle-hero { left: 10%; bottom: 20%; }
+  .ow-battle-boss { right: 10%; bottom: auto; top: 14%; }
+  .ow-battle-hero .ow-hero { width: 100px; height: 100px; }
+  .ow-battle-hero .ow-hero.is-ascended { width: 112px; height: 112px; }
+  .ow-battle-hero .ow-hero.is-divine { width: 124px; height: 124px; }
+  .ow-battle-figure { width: 132px; height: 132px; }
+  .ow-battle-glyph { font-size: 76px; }
+  .ow-battle-platform { width: 160px; height: 36px; }
+  .ow-battle-plate { width: min(270px, 48%); padding: 8px 12px 9px; }
+  .ow-battle-plate-boss { top: 14px; left: 14px; right: auto; }
+  .ow-battle-plate-hero { top: auto; left: auto; bottom: 14px; right: 14px; }
+  .ow-battle-name { font-size: 10px; }
+  .ow-battle-hp { height: 11px; margin-top: 6px; }
+  .ow-battle-sub { font-size: 8px; }
+  .ow-battle-hearts { font-size: 17px; margin-top: 6px; }
+  .ow-battle-fx.is-strike { animation-name: ow-battle-hit; }
+  .ow-battle-fx.is-counter { animation-name: ow-battle-counter; }
+  .ow-battle-victory { padding: 40px 24px; }
+}
+@media (min-width: 640px) {
+  .ow-battle-actions { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── reduced motion: no particles at all ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ow-battle-fx, .ow-battle-flash { display: none; }
+}

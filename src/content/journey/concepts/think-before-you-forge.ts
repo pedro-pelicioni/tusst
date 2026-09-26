@@ -158,7 +158,7 @@ None of these readings is a *coding* mistake. They are **spec holes** — and ev
     },
     {
       kind: "theory",
-      body: `## Invariants: the spec's iron ring
+      body: `## Invariants: always true
 
 The strongest lines in a spec are **invariants** — statements that must hold *at every moment*, no matter which function ran:
 

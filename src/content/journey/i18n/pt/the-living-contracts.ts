@@ -12,7 +12,7 @@ export const conceptText: JourneyConceptText = {
 
 E aqui está a parte elegante: chamar um contrato não requer um novo formato de transação. O envelope que você analisou carrega uma única operação — \`invoke_host_function\` — e dentro dela está a chamada: qual contrato, qual função, quais argumentos.
 
-Mesmo envelope, mesmas assinaturas, mesmo fechamento em ~5 segundos. O reino clássico e o reino dos contratos compartilham o mesmo fluxo sanguíneo.`,
+Mesmo envelope, mesmas assinaturas, mesmo fechamento em ~5 segundos.`,
     },
     {
       kind: "theory",
@@ -21,7 +21,7 @@ Mesmo envelope, mesmas assinaturas, mesmo fechamento em ~5 segundos. O reino c
 Soroban oferece ao contrato três camadas de armazenamento — escolhidas por entrada, com preços diferentes:
 
 - **Temporary** — barato, de curta duração, desaparece para sempre ao expirar. Cotações de preço, nonces, estado com limite de tempo.
-- **Persistent** — o verdadeiro arquivo: saldos de usuários, registros de propriedade. Sobrevive à expiração através do *arquivo* (próximo passo).
+- **Persistent** — o verdadeiro arquivo: saldos de usuários, registros de propriedade. Sobrevive à expiração através do *arquivamento* (próximo capítulo).
 - **Instance** — pequeno estado colado ao próprio contrato: endereço do admin, configuração, os metadados que toda chamada precisa.
 
 Escolher a prateleira errada é um clássico erro de iniciante: inchaço de instância faz com que cada chamada carregue esse peso, e saldos temporários simplesmente desaparecem. A prateleira *é* parte do design.`,
@@ -36,7 +36,7 @@ Escolher a prateleira errada é um clássico erro de iniciante: inchaço de inst
           {
             id: "instance",
             label: "instância",
-            note: "As configurações do próprio contrato, que vivem e morrem com ele.",
+            note: "As configurações do próprio contrato, no relógio dele: arquivadas e restauradas junto com o contrato.",
             tone: "gold",
           },
           {
@@ -70,7 +70,7 @@ Chame um contrato que você nunca viu, com tipos verificados em tempo de compila
       options: [
         "Temporária — o aluguel mais barato, e esquecer é exatamente o que você quer",
         "Persistente, para poder ser restaurado se uma chamada chegar atrasada",
-        "De instância, para sumir se o contrato um dia for arquivado",
+        "De instância, para viver exatamente o tempo que o contrato vive",
       ],
       answer: 0,
       explain: `Casar a prateleira com o tempo de vida real do dado é a decisão de projeto inteira, e é uma que as pessoas erram na direção que parece segura: pôr dado de vida curta na prateleira persistente custa mais para sempre, por uma garantia de que o dado nunca precisou.`,

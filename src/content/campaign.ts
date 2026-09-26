@@ -45,7 +45,7 @@ export const cards: ChampionCard[] = [
     type: "Warrior",
     power: 7,
     flavor:
-      "Only when the world trembles does the true warrior reveal his unyielding light.",
+      "Lost his first fight with the borrow checker. Read the error. Won the rematch.",
     rarity: "common",
     image: "/cards/stroowarrior.png",
     awardedByTrack: "rust-fundamentals",
@@ -57,7 +57,7 @@ export const cards: ChampionCard[] = [
     type: "Stropie · Illusionist",
     power: 6,
     flavor:
-      "Reflections deceive, secrets remain hidden — he bends reality within the endless mirrors.",
+      "Every mirror is a different branch, and match won't let him skip one.",
     rarity: "common",
     image: "/cards/stropillusion.png",
     awardedByTrack: "control-flow",
@@ -105,7 +105,7 @@ export const cards: ChampionCard[] = [
     type: "Stropie · Voyager",
     power: 8,
     flavor:
-      "He charted the sky by its wounds, and crossed the Gate where the light had failed.",
+      "Crossed the Gate with his reserve funded and his secret key kept to himself.",
     rarity: "rare",
     image: "/cards/astrostroopie.png",
     awardedByTrack: "stellar-101",
@@ -116,7 +116,7 @@ export const cards: ChampionCard[] = [
     epithet: null,
     type: "Stropie · Aberration",
     power: 10,
-    flavor: "From the depths of ruin, its many eyes see only conquest.",
+    flavor: "Its many eyes look for one thing: a missing require_auth.",
     rarity: "boss",
     image: "/cards/stroopbeholder.png",
     awardedByTrack: "soroban-smart-contracts",
@@ -128,7 +128,7 @@ export const cards: ChampionCard[] = [
     type: "Stropie · Herald",
     power: 10,
     flavor:
-      "The sky does not break when it changes — it zips itself anew, seam by luminous seam.",
+      "No fork: the network votes, then zips everyone over in one ledger.",
     rarity: "boss",
     image: "/cards/stroopzipper.png",
     awardedByTrack: "stellar-protocol-27",

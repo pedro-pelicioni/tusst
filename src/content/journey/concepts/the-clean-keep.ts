@@ -37,9 +37,7 @@ The **dependency rule** is the keep's one law: *source-code dependencies point i
 
 Because the two rings age differently. Frameworks churn: SDK majors land, UI libraries rise and fall, databases get swapped. **Business rules outlive all of it** — "both parties must approve" will still be true in whatever framework hosts it five years from now.
 
-If your domain imports the chain SDK, every SDK breaking change becomes a *domain* migration — your slowest-changing code held hostage by your fastest-changing dependency. Point the arrows inward and churn stays in the outer ring, where it's cheap.
-
-The keep is the point. Frameworks are furniture.`,
+If your domain imports the chain SDK, every SDK breaking change becomes a *domain* migration — your slowest-changing code held hostage by your fastest-changing dependency. Point the arrows inward and churn stays in the outer ring, where it's cheap.`,
     },
     {
       kind: "diagram",
@@ -78,7 +76,7 @@ The keep is the point. Frameworks are furniture.`,
     {
       kind: "widget",
       component: "dependency-rule",
-      body: `The law has a shape, and prose cannot draw it. **Switch imports on** and watch where the legal ones land — then breach a wall on purpose and read what it costs you.`,
+      body: `**Switch imports on** and watch where the legal ones land — then breach a wall on purpose and read what it costs you.`,
     },
     {
       kind: "theory",
@@ -103,7 +101,7 @@ The rule earns its keep precisely on the days it feels like bureaucracy — beca
         "ui/ReleaseButton.tsx imports the release use-case from the domain, in order to call it",
       ],
       answer: 0,
-      explain: `The other two are the outer ring naming the inner — the rule working exactly as designed. The domain importing the SDK is the inner naming the outer: now the keep's deepest rooms shake every time a vendor ships a major version.`,
+      explain: `The other two are the outer ring naming the inner — the rule working exactly as designed. The domain importing the SDK is the inner naming the outer: now the domain has to change every time a vendor ships a major version.`,
     },
     {
       kind: "quiz",

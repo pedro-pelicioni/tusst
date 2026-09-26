@@ -1,4 +1,4 @@
-// Páginas do app: path (o Salão usa `home`), campaign, cards, tracks/[slug], profile.
+// Páginas do app: path (o Salão usa `home`), campaign, tracks/[slug], profile.
 export const pages = {
   campaign: {
     kicker: "a estrada opcional",
@@ -16,20 +16,6 @@ export const pages = {
     skirmishesForgingSoon: "lições em preparo — em breve",
     startLearning: "Começar a aprender",
     viewChampions: "Ver suas cartas",
-  },
-  cards: {
-    metaTitle: "Coleção de cartas — TUSST",
-    metaDescription:
-      "Cartas colecionáveis, uma por seção da campanha. Termine a última lição de uma seção para ganhar a carta dela.",
-    kicker: "// coleção",
-    title: "Coleção de cartas",
-    intro:
-      "Oito cartas, uma por seção da campanha. Termine a última lição de uma seção e a carta dela entra na sua coleção. Puramente cosmético — não dão vantagem nenhuma e não travam conteúdo algum.",
-    bossCard: "carta do chefe",
-    actLink: "Seção {numeral} — {title}",
-    unassigned: "não atribuída",
-    footnote:
-      "as cartas são puramente cosméticas — não dão vantagem nenhuma e não travam conteúdo. edições raras são concedidas por terminar uma seção sem errar nenhuma resposta.",
   },
   track: {
     backToPath: "trilha da campanha",
@@ -63,7 +49,7 @@ export const pages = {
     forgeborn: "builder",
     lvlXp: "nv {level} · {xp} xp",
     since: "desde {date}",
-    goldCoinAlt: "Moeda de ouro — o dracma Stroop",
+    goldCoinAlt: "Moeda de ouro",
     goldCaption: "ouro · ganho uma lição de cada vez",
     stats: {
       skirmishesWon: "lições concluídas",
@@ -76,6 +62,6 @@ export const pages = {
       locked: "bloqueado",
     },
     continueCampaign: "Continuar a campanha",
-    viewChampions: "Ver suas cartas",
+    openCampaignMap: "Abrir o mapa da campanha",
   },
 };

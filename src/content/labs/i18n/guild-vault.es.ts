@@ -74,7 +74,7 @@ Abre la pestaña **Cuenta** de la Fragua con esta dirección: los firmantes y lo
         "Bien: los dos restantes pueden destituir la clave perdida",
         "Bien: la clave maestra siempre puede reiniciar los firmantes",
       ],
-      explain: `Esta es con diferencia la forma más común en que muere un tesoro real. La regla que te protege del ladrón protege igual su ausencia. Deja siempre una vía de recuperación cuyo umbral todavía puedas alcanzar.`,
+      explain: `Esta es con diferencia la forma más común en que muere un tesoro real. La misma regla que frena a un ladrón te frena a ti cuando se pierde una clave. Deja siempre una vía de recuperación cuyo umbral todavía puedas alcanzar.`,
     },
     "claim-xp": {
       body: `Convertiste una cuenta corriente en un tesoro de dos-de-dos sin desplegar una línea de código.

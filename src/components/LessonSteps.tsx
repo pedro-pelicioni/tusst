@@ -6,12 +6,19 @@
 // The final "editor" step reuses LessonPlayer (server-graded, checks hidden).
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { LessonPlayer } from "@/components/LessonPlayer";
 import { Markdown } from "@/components/Markdown";
+import {
+  BattleFrame,
+  type BattleHit,
+  type BattleSkin,
+} from "@/components/overworld/BattleFrame";
+import { VictoryScreen } from "@/components/overworld/VictoryScreen";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
 import type { LessonStep } from "@/content/steps";
+import type { XpAwardOutcome } from "@/lib/xp";
 
 const MASCOT_CELEBRATE = "/mascot/mascot-celebrate.png";
 const MASCOT_ENCOURAGE = "/mascot/mascot-encourage.png";
@@ -91,6 +98,7 @@ export function LessonSteps({
   fileName,
   language,
   mentorEnabled = false,
+  battle,
 }: {
   lessonSlug: string;
   steps: LessonStep[];
@@ -104,6 +112,14 @@ export function LessonSteps({
   fileName?: string;
   language?: string;
   mentorEnabled?: boolean;
+  /**
+   * The battle skin (hero vs the act's overlord around this very tree). Only
+   * presentation: the tree is wrapped in a BattleFrame and the congrats
+   * screen becomes the VictoryScreen. This player never learns how much XP
+   * the sandbox granted, so the page passes the lesson's XP value and
+   * whether the lesson was already cleared before this run.
+   */
+  battle?: BattleSkin & { xp?: number; alreadyDone?: boolean };
 }) {
   const m = useMessages();
   const [index, setIndex] = useState(0);
@@ -113,7 +129,37 @@ export function LessonSteps({
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [done, setDone] = useState(false);
 
+  // Battle skin bookkeeping — cosmetic mirrors of `check` / the sandbox pass.
+  // Without a `battle` prop `strike` is a no-op so the classic player stays
+  // inert.
+  const hasBattle = !!battle;
+  // What the sandbox pass actually credited. The API returns it, the
+  // editor step hands it up, and the victory screen reports it instead of
+  // claiming a level-up that never happened.
+  const [xpAward, setXpAward] = useState<XpAwardOutcome | null>(null);
+  const [strikes, setStrikes] = useState(0);
+  const [misses, setMisses] = useState(0);
+  const [hit, setHit] = useState<BattleHit>(null);
+  const [hitKey, setHitKey] = useState(0);
+  const strike = useCallback(
+    (who: "boss" | "player") => {
+      if (!hasBattle) return;
+      if (who === "boss") setStrikes((n) => n + 1);
+      else setMisses((n) => n + 1);
+      setHit(who);
+      setHitKey((k) => k + 1);
+    },
+    [hasBattle],
+  );
+
   const total = steps.length;
+  // The boss's HP: one point per step that is actually checked.
+  const graded = useMemo(
+    () =>
+      steps.filter((s) => s.kind === "quiz" || s.kind === "fill" || s.kind === "editor")
+        .length,
+    [steps],
+  );
   // Progress counts the congrats screen as 100%.
   const percent = done ? 100 : Math.round((index / total) * 100);
   const step = steps[Math.min(index, total - 1)];
@@ -176,8 +222,10 @@ export function LessonSteps({
         correct: true,
         text: explain ?? m.lesson.praise[index % m.lesson.praise.length],
       });
+      strike("boss");
     } else {
       setFeedback({ correct: false, text: m.lesson.incorrect });
+      strike("player");
     }
   };
 
@@ -186,8 +234,60 @@ export function LessonSteps({
     setFeedback(null);
   };
 
+  /* ─── battle skin: wrap whatever the player renders ─── */
+  const hpMax = Math.max(1, graded);
+  const header = battle
+    ? fmt(m.overworld.battle.header, {
+        number: battle.missionNumber,
+        current: done ? total : Math.min(index + 1, total),
+        total,
+      })
+    : "";
+  const frame = (node: ReactNode, defeated = false) =>
+    battle ? (
+      <BattleFrame
+        hero={battle.hero}
+        boss={battle.boss}
+        arena={battle.arena}
+        hp={{ max: hpMax, current: defeated ? 0 : Math.max(0, hpMax - strikes) }}
+        hearts={Math.max(0, 3 - misses)}
+        hit={hit}
+        hitKey={hitKey}
+        header={header}
+      >
+        {node}
+      </BattleFrame>
+    ) : (
+      node
+    );
+
   /* ─── congrats screen ─── */
   if (done) {
+    if (battle) {
+      return frame(
+        <VictoryScreen
+          hero={battle.hero}
+          xpEarned={xpAward?.earned ?? battle.xp ?? 0}
+          leveledUp={xpAward?.leveledUp ?? false}
+          // The level pair comes from the award, never from `hero.level`:
+          // a passing run calls router.refresh(), so by the time this
+          // renders the server hero already carries the NEW level and the
+          // evolution would compare a value against itself.
+          levelBefore={
+            xpAward
+              ? xpAward.level - (xpAward.leveledUp ? 1 : 0)
+              : battle.hero.level
+          }
+          levelAfter={xpAward?.level ?? battle.hero.level}
+          alreadyClaimed={xpAward ? !xpAward.awarded : battle.alreadyDone ?? false}
+          nextHref={battle.nextHref}
+          nextTitle={battle.nextTitle}
+          backHref={battle.backHref}
+          missionTitle={title}
+        />,
+        true,
+      );
+    }
     return (
       <div className="mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center px-5 py-16 text-center">
         <img
@@ -242,12 +342,12 @@ export function LessonSteps({
     );
   }
 
-  return (
+  return frame(
     <div className="mx-auto flex min-h-[calc(100dvh-140px)] max-w-3xl flex-col px-5 py-6">
       {/* ─── top bar: exit + step nav + progress ─── */}
       <div className="flex items-center gap-3">
         <Link
-          href={trackHref}
+          href={battle?.backHref ?? trackHref}
           aria-label={m.lesson.exitLesson}
           className="shrink-0 text-lg leading-none text-muted transition hover:text-fg"
         >
@@ -405,7 +505,11 @@ export function LessonSteps({
               signedIn={signedIn}
               allowAnonymous={allowAnonymous}
               mentorEnabled={mentorEnabled}
-              onPass={advance}
+              onPass={(xp) => {
+                setXpAward((prev) => xp ?? prev);
+                strike("boss");
+                advance();
+              }}
               editorHeight="300px"
               fileName={fileName}
               language={language}

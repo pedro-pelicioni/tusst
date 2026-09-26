@@ -106,7 +106,7 @@ Só projeto — sem código de orquestração, sem nomes de ferramenta ou framew
 
 Olhe o que está no seu cinto agora: **especificações** que dizem o que é certo; **testes** que verificam isso eternamente; **fronteiras** que mantêm as palavras honestas; um **keep** que contém mudanças; um **arnês** que contém o modelo; **palavras** que moldam o que ele vê; **loops** que permitem correção; e um **grafo** que entrelaça muitas mentes em um plano.
 
-Nenhum desses carregará a IA por você. Todos eles tornam a IA valer dez vezes mais.
+A IA não traz nenhum deles sozinha. Cada um a torna muito mais útil.
 
 Próximo passo na jornada: voltar ao reino — levar o ofício à Forja e colocá-lo em prática na rede real.`,
     },

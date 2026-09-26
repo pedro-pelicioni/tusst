@@ -1,7 +1,11 @@
 import { cookies } from "next/headers";
 
-// Server-side reader for the onboarding answers mirrored into a cookie by
-// <OnboardingFlow />. Gates the campaign path and track pages.
+// Server-side reader for the legacy `tusst_onboarding` cookie. The
+// onboarding questionnaire that wrote it was removed on 2026-09-20 (new
+// visitors now sign in, pick a hero and land on the world map); the cookie
+// is read for backward compatibility only, so players who answered it keep
+// the acts it unlocked. New users get the floor of 1. Gates the campaign
+// path and track pages alongside the ratcheted campaign progress.
 
 export const ONBOARDING_COOKIE = "tusst_onboarding";
 

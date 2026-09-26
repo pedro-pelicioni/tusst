@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Les Portes du Donjon",
+  title: "Ports et adapters",
   tagline: "Ports et adaptateurs : le domaine déclare la porte, le monde s'y ajuste.",
   steps: [
     {
@@ -77,7 +77,7 @@ Tout le travail de l'adaptateur est la traduction entre ces deux vocabulaires. S
 
 Un cœur sans import de framework est une **île pure** : instancie-le dans un test, fournis-lui un adaptateur factice et vérifie son comportement. Aucun réseau, aucun nœud conteneurisé, aucun RPC instable — les tests du Rite rouge-vert s'exécutent en **quelques millisecondes**.
 
-C'est un gain discret mais cumulatif : les équipes dont les bastions sont propres écrivent davantage de tests *parce qu'ils sont peu coûteux*, et des tests rapides permettent des boucles de rétroaction courtes — pour les humains comme pour les golems.
+C'est un gain discret mais cumulatif : les équipes dont les bastions sont propres écrivent davantage de tests *parce qu'ils sont peu coûteux*, et des tests rapides permettent des boucles de rétroaction courtes — pour les humains comme pour les modèles.
 
 Les adaptateurs gagnent toujours leurs propres tests contre le réseau réel — une couche mince et honnête, testée séparément à sa propre vitesse plus lente.`,
     },
@@ -123,9 +123,9 @@ Déclarez les **ports** dont ce cas d'usage a besoin — les portes que le domai
 
 Voici ce que le bastion t'offre à l'ère de l'IA : **les modules bien délimités sont de bons prompts bien délimités.**
 
-« Réécris l'adaptateur Horizon pour cibler le nouveau RPC : voici le port qu'il doit respecter et les tests qu'il doit réussir » est une tâche que le golem peut accomplir *dans une boîte* : un seul fichier de contexte, un contrat à satisfaire, des tests à réussir et des murs qui limitent le rayon d'impact. Il reconstruit une pièce sans jamais errer dans le bastion.
+« Réécris l'adaptateur Horizon pour cibler le nouveau RPC : voici le port qu'il doit respecter et les tests qu'il doit réussir » est une tâche qu'un modèle peut accomplir *dans une boîte* : un seul fichier de contexte, un contrat à satisfaire, des tests à réussir et des murs qui limitent le rayon d'impact. Il reconstruit une pièce sans jamais errer dans le bastion.
 
-Prochaine discipline : le golem lui-même — et l'établi que tu dois construire autour de lui.`,
+Prochaine discipline : le modèle lui-même — et l'établi que tu dois construire autour de lui.`,
     },
   ],
   testOut: [

@@ -84,7 +84,7 @@ Where Confidential Tokens suit parties who know each other, SPP covers cases whe
 
 Those three safeguards are enforced by a piece worth knowing by name: the **Association Set Provider (ASP)**. An ASP publishes a *set* of deposits it vouches for — an allow list — or the ones it refuses to vouch for — a deny list. To withdraw, you prove your funds trace back to some deposit inside that set, **without revealing which one**. SPP builds this on a key-based association set, backed by a public key registry so participants can be referenced at all.
 
-Sit with the consequence, because it is the whole trick: **the same withdrawal is private and auditable at once**. Private, because the link to your particular deposit is never published. Auditable, because you could not have withdrawn without proving membership of a vouched-for set. Different ASPs can serve different jurisdictions — and you choose whose blessing you carry.
+Sit with the consequence, because it is the whole trick: **the same withdrawal is private and auditable at once**. Private, because the link to your particular deposit is never published. Auditable, because you could not have withdrawn without proving membership of a vouched-for set. Different ASPs can serve different jurisdictions — and you choose which one vouches for you.
 
 The goal in one line: **privacy for users, not for crime**. Confidential *and* compliant transfers on public rails — that combination, not raw secrecy, is what institutions were waiting for.`,
     },
@@ -123,16 +123,16 @@ Open the [Forge](/ide), switch to **Explore**, and pick **SPP privacy pool · XL
 - \`is_known_root(<that number>)\` — **true**. Now change a single digit and ask again: **false**. You just walked the pool's own ring of remembered roots.
 - \`is_spent(<any number>)\` — **false**. This is the nullifier set: the pool's defence against double-spending, and very nearly the only thing a withdrawal publishes about itself.
 
-Read them in order and notice what is *missing*. Not one of those answers contains an address, an amount or a counterparty. The chain is telling you the exact truth and telling you nothing.
+Read them in order and notice what is *missing*. Not one of those answers contains an address, an amount or a counterparty.
 
-**Two warnings, because a contract's spec cannot warn you about itself.** This pool exposes five leftover functions — \`balance\`, \`transfer\`, \`approve\` and friends — that answer politely and mean nothing at all; the Forge marks them *decoy* so they cannot fool you. And the preview's state **archives on 2026-09-02**, after which those reads stop answering until somebody pays to restore them. That is not the Forge failing: it is Soroban state rent, which every contract on this network lives under.`,
+**Two warnings, because a contract's spec cannot warn you about itself.** This pool exposes five leftover functions — \`balance\`, \`transfer\`, \`approve\` and friends — that answer politely and mean nothing at all; the Forge marks them *decoy* so they cannot fool you. And the preview's state runs on **TTLs**. When one lapses, the entries are archived, not lost: reads still answer, and the next write restores them first, for a fee. That is Soroban state rent, which every contract on this network lives under — the Forge reads the contract's clock from the chain and warns you when it gets close.`,
     },
     {
       kind: "labLink",
       labSlug: "confidential-tokens",
-      body: `On the Forge's anvil: a **Confidential Tokens** lab, where you'll wrap a testnet token and watch amounts vanish from the explorer while the transfer still settles honestly. Its card reads *being forged* — this frontier is being hammered as you read.
+      body: `In the Forge: a **Confidential Tokens** lab, where you'll wrap a testnet token and watch amounts vanish from the explorer while the transfer still settles honestly. For now its card reads *in preparation*.
 
-Notice how young these dates are. Riding tech this fresh means reading the protocol's own pulse — the final chapter shows you how.`,
+Notice how young these dates are. Tech this fresh means following protocol upgrades closely — the final chapter shows you how.`,
     },
   ],
   testOut: [

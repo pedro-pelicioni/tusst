@@ -9,7 +9,7 @@ export const steps1: Record<string, LessonStep[]> = {
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `**Rust**'a hoş geldin — eski Forgeborn'ların gökyüzünü bir arada tutmak için kullandığı dil.
+      body: `**Rust**'a hoş geldin. Hadi ilk programını yazalım.
 
 Her Rust programı \`main\` fonksiyonundan başlar — giriş noktası. Programın çalıştığında çağrılan şey \`main\`'dir.
 
@@ -85,14 +85,14 @@ Etiketli sandıklar gibi, değişkenlerin de bir içeriği vardır — ve içind
     },
     {
       kind: "theory",
-      body: `İşte cephaneliğin eski yasası: Rust'ta değişkenler **varsayılan olarak değiştirilemez** (immutable). Bir kez bağlandı mı, değer bir daha değişmez.
+      body: `Rust'ta değişkenler **varsayılan olarak değiştirilemez** (immutable). Bir kez bağlandı mı, değer bir daha değişmez.
 
 \`\`\`rust
 let x = 5;
 x = 10; // ❌ derleme hatası: iki kez atama yapılamaz
 \`\`\`
 
-Derleyici — en sert müttefikin — bunu dövmeyi reddeder.`,
+Derleyici bunu reddeder.`,
     },
     {
       kind: "quiz",
@@ -103,11 +103,11 @@ Derleyici — en sert müttefikin — bunu dövmeyi reddeder.`,
         "x 15 olur",
       ],
       answer: 0,
-      explain: "Bir kez dövüldü mü, bir daha değişmez — sen aksini söylemedikçe.",
+      explain: "`mut` olmadan bir değişkene yeniden atama yapılamaz.",
     },
     {
       kind: "theory",
-      body: `Yeniden atamaya izin vermek için niyetini çeliğin kendisine \`mut\` ile bildir:
+      body: `Yeniden atamaya izin vermek için \`mut\` ekle:
 
 \`\`\`rust
 let mut x = 5;
@@ -292,7 +292,7 @@ Beklenen çıktı:
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Şimdi Rust'ı *Rust* yapan yasa — kasanın kapısına kazınmış olan:
+      body: `Şimdi Rust'ı *Rust* yapan kural:
 
 **Her değerin tam olarak bir sahibi vardır.**
 
@@ -323,7 +323,7 @@ Bu zalimlik değil — Rust'ın her değeri kimin temizleyeceğini tam olarak bi
         "Okuyabilirsin ama değiştiremezsin",
       ],
       answer: 0,
-      explain: "Değer taşındı. a'ya bir daha uzanırsan koruma büyüleri seni yakar — derleme zamanında.",
+      explain: "Değer taşındı. `a`'yı yeniden kullanırsan kod derlenmez.",
     },
     {
       kind: "theory",
@@ -349,7 +349,7 @@ let b = a.clone();   // ✅ iki String, iki sahip
       kind: "editor",
       intro: `### Son sınav — tek bekçi yasası
 
-Başlangıç kodu \`sword\`'u \`copy\`'ye taşıyor, sonra \`sword\`'u yeniden kullanmaya çalışıyor — koruma büyüleri reddediyor. Taşımak yerine **klonlayarak** düzelt.
+Başlangıç kodu \`sword\`'u \`copy\`'ye taşıyor, sonra \`sword\`'u yeniden kullanmaya çalışıyor — derleyici reddediyor. Taşımak yerine **klonlayarak** düzelt.
 
 Beklenen çıktı:
 
@@ -600,7 +600,7 @@ loop {
         "Derleyici kendiliğinden bir break ekler",
       ],
       answer: 0,
-      explain: "Onu sonsuza dek yürüyen gezginler duvarın bir parçası olur.",
+      explain: "`break` olmadan onu hiçbir şey durdurmaz.",
     },
     {
       kind: "fill",
@@ -846,14 +846,14 @@ items.push("map");    // sona ekle — çanta büyür
 items.len()           // içinde kaç tane var? → 3
 \`\`\`
 
-Ve eski tanrıların kuralı: konumlar **sıfırdan** sayılır. \`items[0]\` \`"torch"\`, \`items[1]\` ise \`"rope"\`'tur.`,
+Ve dikkat: konumlar **sıfırdan** sayılır. \`items[0]\` \`"torch"\`, \`items[1]\` ise \`"rope"\`'tur.`,
     },
     {
       kind: "quiz",
       question: "`let mut v = vec![10, 20]; v.push(30);` sonrasında `v[0]` nedir?",
       options: ["10 — konumlar sıfırdan sayılır", "30 — push onu başa koyar", "20 — ikinci öğe"],
       answer: 0,
-      explain: "push SONA ekler; indeksleme 0'dan başlar, eski tanrıların istediği gibi.",
+      explain: "push SONA ekler; indeksleme 0'dan başlar.",
     },
     {
       kind: "fill",
@@ -953,7 +953,7 @@ let vault = vec!["hammer", "chisel"];
 vault[5]   // 💥 PANIC — program çöker
 \`\`\`
 
-Köşeli parantezler yuvanın var olduğunu *varsayar*. Kasalarda varsayımlar ölümcüldür.`,
+Köşeli parantezler yuvanın var olduğunu *varsayar*.`,
     },
     {
       kind: "theory",
@@ -1080,7 +1080,7 @@ let mut s = String::from("Keeper");
 s.push_str(" of keys");   // sona metin ekle
 \`\`\`
 
-\`push_str\`, yaşayan yazıtların keskisidir. (Kuzeni \`push\` tek bir karakter ekler.)`,
+\`push_str\` metin ekler; kuzeni \`push\` ise tek bir karakter ekler.`,
     },
     {
       kind: "theory",

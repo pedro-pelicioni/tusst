@@ -7,6 +7,7 @@ import Editor, { type OnMount } from "@monaco-editor/react";
 import { Markdown } from "@/components/Markdown";
 import { useMessages } from "@/i18n/client";
 import { fmt } from "@/i18n/format";
+import type { XpAwardOutcome } from "@/lib/xp";
 
 interface CheckResult {
   name: string;
@@ -54,8 +55,12 @@ export function LessonPlayer({
   allowAnonymous?: boolean;
   /** AI mentor hints — server-gated (signed in + MENTOR_API_KEY set). */
   mentorEnabled?: boolean;
-  /** Step-player mode: called when the user continues after a pass. */
-  onPass?: () => void;
+  /**
+   * Step-player mode: called when the user continues after a pass, carrying
+   * the XP the API actually granted (null for an anonymous run or a replay
+   * that credited nothing) so the victory screen can report the truth.
+   */
+  onPass?: (xp: XpAwardOutcome | null) => void;
   editorHeight?: string;
   /** Display name of the edited file (e.g. lib.rs, star-chart.toml). */
   fileName?: string;
@@ -74,6 +79,9 @@ export function LessonPlayer({
   const [output, setOutput] = useState("");
   const [message, setMessage] = useState("");
   const [gold, setGold] = useState<GoldReward | null>(null);
+  // What the last passing submission actually credited — handed to the
+  // step player so the victory screen shows the real level, not a guess.
+  const [xpAward, setXpAward] = useState<XpAwardOutcome | null>(null);
   const [mentor, setMentor] = useState<MentorState>({ status: "idle" });
   const router = useRouter();
 
@@ -104,6 +112,7 @@ export function LessonPlayer({
     setResults([]);
     setOutput("");
     setGold(null);
+    setXpAward(null);
     setMentor({ status: "idle" });
     try {
       const res = await fetch("/api/submissions", {
@@ -121,6 +130,9 @@ export function LessonPlayer({
       setResults(data.results ?? []);
       setOutput(data.output ?? "");
       setGold(data.gold ?? null);
+      // Present only on a first completion that credited XP; a replay or an
+      // anonymous run leaves it undefined and the caller falls back.
+      setXpAward((data.xp as XpAwardOutcome | undefined) ?? null);
       setStatus(data.passed ? "pass" : "fail");
       // Refresh server components so the header pouch counter picks up the
       // freshly credited gold (and the first-time reveal).
@@ -206,6 +218,7 @@ export function LessonPlayer({
     setOutput("");
     setMessage("");
     setGold(null);
+    setXpAward(null);
     setMentor({ status: "idle" });
   };
 
@@ -413,7 +426,7 @@ export function LessonPlayer({
                 {onPass ? (
                   <button
                     type="button"
-                    onClick={onPass}
+                    onClick={() => onPass(xpAward)}
                     className="rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-accent transition hover:bg-accent/20"
                   >
                     {m.lesson.continueStep}

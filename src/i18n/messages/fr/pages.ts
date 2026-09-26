@@ -1,14 +1,14 @@
-// App pages: path (le Hall utilise `home`), campaign, cards, tracks/[slug], profile.
+// App pages: path (le Hall utilise `home`), campaign, tracks/[slug], profile.
 export const pages = {
   campaign: {
     kicker: "la route optionnelle",
-    title: "Campagne Rust — Forgeborn",
+    title: "Campagne Rust",
     optionalNote:
       "La voie de la maîtrise. Chaque acte est optionnel — et chaque acte t'aiguise. Le Voyage pointe ici dès que tu veux le Rust derrière un concept.",
   },
   path: {
     kicker: "voie de campagne",
-    title: "Forgeborn — de Rust à Soroban",
+    title: "De Rust à Soroban",
     championCards: "Cartes de champion",
     claimed: "{percent}% réclamées",
     actReward: "récompense d'acte",
@@ -16,20 +16,6 @@ export const pages = {
     skirmishesForgingSoon: "combats en cours de forge — bientôt",
     startLearning: "Commencer à apprendre",
     viewChampions: "Voir tes champions",
-  },
-  cards: {
-    metaTitle: "Champions du Royaume — TUSST",
-    metaDescription:
-      "Les cartes de champion de la Constellation Brisée. Remporte le combat final d'un acte pour réclamer son champion.",
-    kicker: "// la constellation brisée",
-    title: "Champions du Royaume",
-    intro:
-      "Huit cartes pour huit actes, dispersées par la Grande Panique. Chaque acte de la campagne s'achève sur un combat final — remporte-le, et son champion rejoint ta collection. La dernière carte ne se donne pas. Elle se prend.",
-    bossCard: "carte de boss",
-    actLink: "Acte {numeral} — {title}",
-    unassigned: "non attribuée",
-    footnote:
-      "les cartes sont une progression cosmétique — elles n'apportent aucun avantage en jeu. les tirages rares récompensent un acte terminé sans faute. la réclamation on-chain arrive avec le projet final Soroban.",
   },
   track: {
     backToPath: "voie de campagne",
@@ -60,10 +46,10 @@ export const pages = {
       "{count} défis sur {total} disponibles · d'autres arrivent.",
   },
   profile: {
-    forgeborn: "forgeborn",
+    forgeborn: "bâtisseur",
     lvlXp: "niv {level} · {xp} xp",
     since: "depuis {date}",
-    goldCoinAlt: "Pièce d'or — la drachme Stroop",
+    goldCoinAlt: "Pièce d'or",
     goldCaption: "or · gagné une leçon à la fois",
     stats: {
       skirmishesWon: "combats gagnés",
@@ -76,6 +62,6 @@ export const pages = {
       locked: "verrouillé",
     },
     continueCampaign: "Continuer la campagne",
-    viewChampions: "Voir tes champions",
+    openCampaignMap: "Ouvrir la carte de la campagne",
   },
 };

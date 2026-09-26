@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Örtülü Ledger",
+  title: "Zero-knowledge ve gizli tokenlar",
   tagline: "Zero-knowledge ve gizli token'lar: açıklamadan kanıt.",
   steps: [
     {
@@ -96,7 +96,7 @@ Ciddi paranın *seçici* sessizliğe ihtiyacı var. Soru şu: halka açık bir l
       kind: "theory",
       body: `## Açıklamadan kanıt
 
-Cevap kriptografinin en tuhaf armağanından geliyor: **zero-knowledge proof** (sıfır bilgi kanıtı).
+Cevap: **zero-knowledge proof** (sıfır bilgi kanıtı).
 
 Bir ZK kanıtı, doğrulayıcıyı bir ifadenin doğru olduğuna ikna eder — *"bu gizli tutar pozitif ve gizli bakiyem onu karşılıyor"* — ve bunun dışında **hiçbir şey** açığa çıkarmaz: ne tutarı, ne bakiyeyi.
 
@@ -106,7 +106,7 @@ Böyle bir doğrulayıcıyı ledger'ın kurallarının içine koy; zincir, görm
     },
     {
       kind: "theory",
-      body: `## Diyar araçları döver
+      body: `## Stellar matematiği getiriyor
 
 Zincir üstü doğrulamanın **host function** olarak belirli ağır matematiğe ihtiyacı var — ve Stellar bunu katman katman gönderdi:
 

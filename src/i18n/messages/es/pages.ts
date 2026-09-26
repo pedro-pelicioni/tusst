@@ -1,14 +1,14 @@
-// App pages: path (el Salón usa `home`), campaign, cards, tracks/[slug], profile.
+// App pages: path (el Salón usa `home`), campaign, tracks/[slug], profile.
 export const pages = {
   campaign: {
     kicker: "el camino opcional",
-    title: "Campaña de Rust — Forgeborn",
+    title: "Campaña de Rust",
     optionalNote:
       "La senda de maestría. Cada acto es opcional — y cada acto te afila más. El Viaje enlaza aquí cuando quieras el Rust detrás de un concepto.",
   },
   path: {
     kicker: "senda de campaña",
-    title: "Forgeborn — de Rust a Soroban",
+    title: "De Rust a Soroban",
     championCards: "Cartas de campeón",
     claimed: "{percent}% reclamadas",
     actReward: "recompensa del acto",
@@ -16,20 +16,6 @@ export const pages = {
     skirmishesForgingSoon: "combates en la forja — pronto",
     startLearning: "Empezar a aprender",
     viewChampions: "Ver tus campeones",
-  },
-  cards: {
-    metaTitle: "Campeones del Reino — TUSST",
-    metaDescription:
-      "Las cartas de campeón de la Constelación Rota. Gana el combate final de un acto para reclamar a su campeón.",
-    kicker: "// la constelación rota",
-    title: "Campeones del Reino",
-    intro:
-      "Ocho cartas para ocho actos, esparcidas por el Gran Pánico. Cada acto de la campaña termina con un combate final — supéralo y su campeón se une a tu colección. La última carta no se regala. Se toma.",
-    bossCard: "carta de jefe",
-    actLink: "Acto {numeral} — {title}",
-    unassigned: "sin asignar",
-    footnote:
-      "las cartas son progresión cosmética — no otorgan ventaja de juego. las ediciones raras se conceden por completar un acto de forma impecable. el reclamo on-chain llega con el proyecto final de Soroban.",
   },
   track: {
     backToPath: "senda de campaña",
@@ -60,10 +46,10 @@ export const pages = {
       "{count} de {total} desafíos disponibles · más están en camino.",
   },
   profile: {
-    forgeborn: "forgeborn",
+    forgeborn: "constructor",
     lvlXp: "nv {level} · {xp} xp",
     since: "desde {date}",
-    goldCoinAlt: "Moneda de oro — la dracma Stroop",
+    goldCoinAlt: "Moneda de oro",
     goldCaption: "oro · ganado lección a lección",
     stats: {
       skirmishesWon: "combates ganados",
@@ -76,6 +62,6 @@ export const pages = {
       locked: "bloqueado",
     },
     continueCampaign: "Continuar la campaña",
-    viewChampions: "Ver tus campeones",
+    openCampaignMap: "Abrir el mapa de la campaña",
   },
 };

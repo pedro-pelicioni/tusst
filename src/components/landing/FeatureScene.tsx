@@ -1,7 +1,7 @@
 // One full-viewport illustrated feature section: eyebrow +
 // display headline + body on the darker left half, optionally a framed
-// floating card on the right, ambient particles per mood. Used three
-// times (campaign / boss / forge).
+// floating card on the right, ambient particles per mood. Used by the
+// Forge scene.
 
 import Image from "next/image";
 import Link from "next/link";
@@ -22,16 +22,14 @@ export function FeatureScene({
   copy,
   accentClass,
   particles,
-  note,
   cta,
   card,
 }: {
-  id: "campaign" | "boss" | "forge";
+  id: "forge";
   art: string;
   copy: FeatureCopy;
   accentClass: string;
-  particles?: "boss" | "forge";
-  note?: string;
+  particles?: "forge";
   cta?: { href: string; label: string; badge?: string };
   card?: { src: string; alt: string; width: number; height: number; glowClass: string };
 }) {
@@ -74,12 +72,6 @@ export function FeatureScene({
             {copy.titleBottom}
           </h2>
           <p className="mt-7 max-w-lg text-[15px] leading-relaxed text-muted2">{copy.body}</p>
-
-          {note ? (
-            <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.26em] text-ember">
-              {note}
-            </p>
-          ) : null}
 
           {cta ? (
             <Link

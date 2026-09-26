@@ -310,7 +310,7 @@ Bir isteği decode edip kullanan ve tek bir handler içinde drop eden bir RPC se
       question:
         "Constructor için neden `fn parse(raw: &'a str) -> Frame<'a>` doğru imzadır?",
       options: [
-        "Frame'in dilimlerinin `raw`'ın içini gösterdiğini belirtir; derleyici de ikisinin kaderini birbirine bağlar",
+        "Frame'in dilimlerinin `raw`'ın içini gösterdiğini belirtir; derleyici de ikisinin lifetime'larını birbirine bağlar",
         "`raw`'ın frame'e kopyalanmasını zorunlu kılar ve frame'i bağımsız hale getirir",
         "Yalnızca üslup meselesi — `fn parse(raw: &str) -> Frame` aynı anlama gelir",
       ],

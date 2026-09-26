@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText = {
-  title: "Pense avant de forger",
+  title: "Développement piloté par la spec",
   tagline: "Spec-driven development : la compétence que l'IA ne peut pas exercer à votre place.",
   steps: [
     {
@@ -140,7 +140,7 @@ Aucune de ces interprétations n'est une erreur de programmation. Ce sont des **
     },
     {
       kind: "theory",
-      body: `## Invariants : l'anneau de fer de la spécification
+      body: `## Invariants : toujours vrais
 
 Les lignes les plus fortes d'une spécification sont les **invariants** — déclarations qui doivent rester vraies *à tout moment*, peu importe quelle fonction a été exécutée :
 
@@ -180,7 +180,7 @@ Il est temps de forger ta propre spécification. Voici la commande :
 
 > La guilde veut un **pot de pourboires** sur chaîne. N'importe qui peut y déposer des pourboires. Seul le **gardien** de la guilde peut récupérer ce qui est à l'intérieur. La guilde est paranoïaque à propos de deux choses : que le gardien prenne *plus* que le pot contient, et que les pourboires restent bloqués pour toujours si le gardien disparaît.
 
-Rédige la spécification en décrivant **uniquement le comportement**, comme ce chapitre te l'a appris : ce qui doit se produire, ce qui ne doit jamais se produire et les cas limites. Un examinateur IA l'évaluera selon la grille ci-dessous — il corrige exactement comme le golem forge : à la lettre.`,
+Rédige la spécification en décrivant **uniquement le comportement**, comme ce chapitre te l'a appris : ce qui doit se produire, ce qui ne doit jamais se produire et les cas limites. Un examinateur IA l'évaluera selon la grille ci-dessous — il corrige exactement comme le modèle forge : à la lettre.`,
       rubric: `1. Uniquement le comportement — aucun agencement de stockage, bibliothèque ou signature de fonction.
 2. La règle de dépôt et la règle de collecte sont chacune énoncées sans ambiguïté (qui peut agir, sur quoi).
 3. Au moins un **invariant** qui doit rester vrai en tout temps.

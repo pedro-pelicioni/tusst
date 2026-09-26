@@ -77,7 +77,7 @@ let is_lit: bool = true;   // evet/hayır değeri
 
 ### Görevin
 
-Başlangıç kodundaki üç şişeyi tipleriyle etiketle:
+Başlangıç kodundaki üç değişkeni tipleriyle etiketle:
 
 1. \`age\` bir tam sayı → \`i32\`
 2. \`price\` bir ondalıklı sayı → \`f64\`
@@ -131,7 +131,7 @@ Beklenen çıktı:
   "rust-fundamentals-5": {
     instructions: `## Ownership Temelleri
 
-Rust'ın en eski yasası: **her değerin tam olarak bir sahibi (owner) vardır.** Bir \`String\`'i başka bir değişkene atadığında ownership (sahiplik) *taşınır* — eski isim artık kullanılamaz:
+Rust'ın temel kuralı: **her değerin tam olarak bir sahibi (owner) vardır.** Bir \`String\`'i başka bir değişkene atadığında ownership (sahiplik) *taşınır* — eski isim artık kullanılamaz:
 
 \`\`\`rust
 let a = String::from("gem");
@@ -357,7 +357,7 @@ for n in 1..=6 {
 
 ### Görevin
 
-Hükümdar'ın on aynasını dolaş:
+Salon'un on aynasını dolaş:
 
 1. \`for n in 1..=10\`
 2. **Eğer** \`n\` 3'e tam bölünüyorsa (\`n % 3 == 0\`), \`mirror\` yazdır.
@@ -383,7 +383,7 @@ mirror
   "rust-standard-library-1": {
     instructions: `## Vec Temelleri
 
-\`Vec\` büyüyebilen bir listedir — diyarın çantası:
+\`Vec\` büyüyebilen bir listedir:
 
 \`\`\`rust
 let mut items = vec!["torch", "rope"];  // içerikle birlikte oluştur
@@ -488,7 +488,7 @@ gold: 100
   "rust-standard-library-5": {
     instructions: `## String İşlemleri
 
-\`String\` büyüyebilen metindir. Bugünlük iki büyü:
+\`String\` büyüyebilen metindir. Bugünlük iki araç:
 
 \`\`\`rust
 let mut s = String::from("Keeper");
@@ -649,7 +649,7 @@ Some(7)
   "mastering-option-2": {
     instructions: `## Güvenle Unwrap Et
 
-\`.unwrap()\` değeri Option'ın içinden söküp alır — ve \`None\` görünce **panic** atar (çöker). Bataklık, unwrap edenlerle dolu.
+\`.unwrap()\` değeri Option'ın içinden söküp alır — ve \`None\` görünce **panic** atar (çöker).
 
 Güvenli kalıp yanında bir varsayılan taşır:
 
@@ -862,7 +862,7 @@ Gizli anahtarınla imzala, ~100 stroop'luk geçiş vergisini öde ve ~5 saniyede
 
 ### Görevin
 
-Panik'ten bu yana ilk ödemenin rotasını çiz: **25 XLM**.
+İlk ödemeni gönder: **25 XLM**.
 
 Beklenen çıktı:
 
@@ -875,7 +875,7 @@ lumens flowing ✓
   "soroban-smart-contracts-1": {
     instructions: `## İlk Kontratın
 
-Bir Soroban kontratı, WASM'a derlenip ledger'a (deftere) kazınmış bir Rust kütüphanesidir. Onu kontrat yapan üç şey var:
+Bir Soroban kontratı, WASM'a derlenip ledger'a (deftere) deploy edilmiş bir Rust kütüphanesidir. Onu kontrat yapan üç şey var:
 
 - \`#![no_std]\` — işletim sistemi yok, heap ayırıcı yok, standart kütüphane yok. Makine, ledger'ın kendisi.
 - Bir unit struct üstünde \`#[contract]\` — kontratın kimliği.
@@ -906,7 +906,7 @@ let count: u32 = env.storage().instance().get(&KEY).unwrap_or(0);
 env.storage().instance().set(&KEY, &count);
 \`\`\`
 
-\`get\` bir \`Option<T>\` döndürür — anahtar hiç yazılmamış (ya da kirası dolmuş) olabilir; bu yüzden sayaçlar için kalıp \`unwrap_or(0)\`'dır. Anahtarlar ve değerler referansla geçirilir.
+\`get\` bir \`Option<T>\` döndürür, çünkü anahtar hiç yazılmamış olabilir; bu yüzden sayaçlar için kalıp \`unwrap_or(0)\`'dır. Süresi dolmuş bir instance girdisi \`None\` olarak dönmez: arşivlenir ve işlem, kodun çalışmadan önce onu geri yükler (ya da kodu hiç çalıştırmadan başarısız olur). Anahtarlar ve değerler referansla geçirilir.
 
 ### Görevin
 
@@ -983,11 +983,11 @@ beacon lit: protocol 27 (zipper) ✓
   "stellar-protocol-27-2": {
     instructions: `## Smart Account'lar ve \`__check_auth\`
 
-İn'de \`require_auth()\`'u öğrendin — mührü. Peki mührü *kim* doğrular?
+\`require_auth()\`'u zaten biliyorsun — mührü. Peki mührü *kim* doğrular?
 
-Eski gökyüzünün altında bir hesap basitti: iki anahtar. Gizli anahtar imzalar; ağ o imzayı açık anahtara karşı **ed25519** ile kontrol eder — dijital imza üretip doğrulamaya yarayan belirli bir kriptografik şema. Gizli yarıyla imzala, açık yarıyla doğrula — gizli anahtarı olmayan kimse taklit edemez.
+Klasik bir hesap basittir: iki anahtar. Gizli anahtar imzalar; ağ o imzayı açık anahtara karşı **ed25519** ile kontrol eder — dijital imza üretip doğrulamaya yarayan belirli bir kriptografik şema. Gizli yarıyla imzala, açık yarıyla doğrula — gizli anahtarı olmayan kimse taklit edemez.
 
-Ama Stellar'da bir \`Address\` hiçbir zaman *yalnızca* bir anahtar vaadi olmadı — yalnızca bir kimlik vaadiydi. Bir **kontrata** da işaret edebilir: anahtar çifti hiç yok, sadece "imzalanmış" sayılanın kuralını kendi yazan kod. O kural tek bir giriş noktasında yaşar: \`__check_auth\`.
+Ama Stellar'da bir \`Address\` anahtar çifti olmak zorunda değil. Bir **kontrata** da işaret edebilir: anahtar çifti hiç yok, sadece "imzalanmış" sayılanın kuralını kendi yazan kod. O kural tek bir giriş noktasında yaşar: \`__check_auth\`.
 
 | | klasik hesap | kontrat hesabı |
 |---|---|---|
@@ -1000,7 +1000,7 @@ Aynı \`Address\` tipi. Aynı \`require_auth()\` çağrı noktası. Altında bam
 fn __check_auth(env: Env, payload: Hash<32>, signatures: ..., contexts: Vec<Context>)
 \`\`\`
 
-Hesap bir kontrat*tır* ve \`__check_auth\` onun imza yasasıdır. **Custom account**'lar böyle var olur: multisig cüzdanlar, social recovery, passkey girişleri, account abstraction — her biri sadece farklı bir \`__check_auth\`. (OpenZeppelin bunları zaten inşa ediyordu; Protocol 27 zor kısımları birinci sınıf yapıyor.)
+Hesap bir kontrat*tır* ve \`__check_auth\` onun imza politikasıdır. **Custom account**'lar böyle var olur: multisig cüzdanlar, social recovery, passkey girişleri, account abstraction — her biri sadece farklı bir \`__check_auth\`. (OpenZeppelin bunları zaten inşa ediyordu; Protocol 27 zor kısımları birinci sınıf yapıyor.)
 
 Bağlam: [Protocol 27 tartışması — modüler custom account'lar ve imza güvenliği](https://developers.stellar.org/meetings/2026/04/30#protocol-discussion-modular-custom-accounts-and-signature-security-in-protocol-27).
 
@@ -1020,7 +1020,7 @@ __check_auth: the account writes its own law ✓
   "stellar-protocol-27-3": {
     instructions: `## Authentication Delegation (CAP-0071-01)
 
-Zipper'dan önce, *başka* bir kontratın kendisine kefil olmasını isteyen bir custom account'ın protokol desteği yoktu — inşacılar bunu, auth bağlamını yaymak için kırılgan ön-simülasyon turlarıyla taklit ediyordu. Protocol 27 devri iki yeni host function ile yasaya bağlıyor:
+Zipper'dan önce, *başka* bir kontratın kendisine kefil olmasını isteyen bir custom account'ın protokol desteği yoktu — inşacılar bunu, auth bağlamını yaymak için kırılgan ön-simülasyon turlarıyla taklit ediyordu. Protocol 27 devri iki yeni host function ile birinci sınıf yapıyor:
 
 - \`delegate_account_auth\` — **yalnızca \`__check_auth\` içinden** çağrılabilir: mevcut auth kontrolünü bir delege adrese devreder, ardından onun kendi imza mantığı çalışır.
 - \`get_delegated_signers_for_current_auth_check\` — çağrılan kontratın hangi delege imzacıların onay verdiğini görmesini sağlar.
@@ -1055,7 +1055,7 @@ Bir **replay saldırısı** geçerli bir şeyi — bir imzayı, basılmış bir 
 
 O zaman eski admin için üretilmiş bir imza yeni admin için **yeniden oynatılabilir** — mükerrer mint'ler, yetkisiz eylemler. *Zincir üstünde hiç yaşanmadı*, ama patlama alanı bir protokol düzeltmesini haklı çıkardı.
 
-**\`SOROBAN_CREDENTIALS_ADDRESS_V2\`**, imza payload'ını üretildiği adrese bağlar. Çalınmış bir yankı artık başka bir kapıya uymaz. Eski \`SOROBAN_CREDENTIALS_ADDRESS\`, **Protocol 28'e kadar** geçerli kalır — bir geçiş penceresi, uçurum değil. Admin tarzı kontratlar için geçici önlem: imzacının adresini payload'a kendin ekle.
+**\`SOROBAN_CREDENTIALS_ADDRESS_V2\`**, imza payload'ını üretildiği adrese bağlar. Eski \`SOROBAN_CREDENTIALS_ADDRESS\`, **Protocol 28'e kadar** geçerli kalır — bir geçiş penceresi, uçurum değil. Admin tarzı kontratlar için geçici önlem: imzacının adresini payload'a kendin ekle.
 
 İzle: [Stellar Developer Meeting — custom account'lar ve imza güvenliği](https://www.youtube.com/watch?v=5O1cDDGv7_o).
 
@@ -1076,7 +1076,7 @@ seal bound to its door: the echo dies ✓
   "stellar-protocol-27-5": {
     instructions: `## Protocol 27'ye Geçiş
 
-Bir protokol yükseltmesi bir kervandır ve sürüm sırası da yoldu: **Core → SDK'lar → RPC & Galexie → Horizon → Testnet → Mainnet**. Her SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixir — bir Protocol 27 sürümü çıkardı ve Mainnet dönmeden önce yükseltilmesi gerekiyor.
+Sürümler şu sırayla çıktı: **Core → SDK'lar → RPC & Galexie → Horizon → Testnet → Mainnet**. Her SDK — Rust, JavaScript, Go, Java, Python, iOS, PHP, .NET, Flutter, Elixir — bir Protocol 27 sürümü çıkardı ve Mainnet dönmeden önce yükseltilmesi gerekiyor.
 
 Çoğu uygulamanın hissettiği tek **breaking change**: \`@stellar/stellar-base\`, **\`@stellar/stellar-sdk\` içinde birleştirildi**. Eski import'lar kırılır; çözüm paketin adını değiştirmek.
 
@@ -1108,7 +1108,7 @@ caravan cleared the Gate: nothing left behind ✓
   "stellar-protocol-27-6": {
     instructions: `## Boss: Delege Edilmiş Hesap
 
-Her şey burada birleşiyor. Yankı Hayaleti çalıntı bir mühürle geliyor — ve *yasanın ta kendisi* olan bir hesapla karşılaşıyor: \`__check_auth\`'u kök imzacısını doğrulayan **ve** bir kâhyaya devreden bir custom account, tam Protocol 27'nin tasarladığı gibi.
+Yankı Hayaleti çalıntı bir imzayla geliyor. Onu, \`__check_auth\`'u kök imzacısını doğrulayan **ve** bir kâhyaya devreden bir custom account ile yen.
 
 \`ZipperAccount\` kontratın \`__check_auth\` içinde şunları yapmalı:
 

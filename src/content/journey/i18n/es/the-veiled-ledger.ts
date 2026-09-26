@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "El Libro Velado",
+  title: "Zero-knowledge y tokens confidenciales",
   tagline: "Zero-knowledge y tokens confidenciales: prueba sin revelación.",
   steps: [
     {
@@ -96,7 +96,7 @@ El dinero serio necesita *silencio selectivo*. La pregunta es cómo un libro pú
       kind: "theory",
       body: `## Prueba sin divulgación
 
-La respuesta proviene del regalo más extraño de la criptografía: la **prueba de conocimiento cero**.
+La respuesta es la **prueba de conocimiento cero**.
 
 Una prueba ZK convence a un verificador de que una afirmación es verdadera — *"esta cantidad oculta es positiva, y mi saldo oculto la cubre"* — sin revelar **nada más**: ni la cantidad, ni el saldo.
 
@@ -106,7 +106,7 @@ Inserta tal verificador dentro de las reglas del libro, y la cadena puede impone
     },
     {
       kind: "theory",
-      body: `## El reino forja las herramientas
+      body: `## Stellar entrega las matemáticas
 
 La verificación en cadena necesita matemáticas pesadas específicas como **funciones de host** — y Stellar lo entregó en capas:
 

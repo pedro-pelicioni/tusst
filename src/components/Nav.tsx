@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { MusicControl } from "./music/MusicControl";
 import { NavMenu } from "./NavMenu";
+import { SignInLink } from "./SignInLink";
 import { auth, signOut } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getMessages } from "@/i18n/server";
@@ -36,7 +38,10 @@ export async function Nav() {
     ...(JOURNEY_LIVE ? [{ href: "/journey", label: m.common.nav.journey }] : []),
     { href: "/labs", label: m.common.nav.forge },
     { href: "/campaign", label: m.common.nav.campaign },
-    { href: "/advanced", label: m.common.nav.advanced },
+    { href: "/harbor", label: m.common.nav.advanced },
+    // The Armory appears with the pouch, never before: the hidden-currency
+    // reveal is the whole point (see prisma/schema.prisma).
+    ...(pouch?.goldRevealed ? [{ href: "/armory", label: m.common.nav.armory }] : []),
   ];
 
   return (
@@ -83,7 +88,10 @@ export async function Nav() {
               )}
               {pouch?.goldRevealed && (
                 <Link
-                  href="/profile"
+                  // The pouch is the shortest road to the Armory: click the
+                  // gold, see what it buys. It only renders once the currency
+                  // is revealed, so this leaks nothing.
+                  href="/armory"
                   aria-label={fmt(m.common.nav.pouchAria, { gold: pouch.gold })}
                   title={fmt(m.common.nav.pouchTitle, { gold: pouch.gold })}
                   className="flex items-center gap-1.5 rounded-full border border-[#b8873e]/35 bg-[#b8873e]/10 px-2.5 py-1 transition hover:border-[#b8873e]/70 hover:bg-[#b8873e]/20"
@@ -99,10 +107,12 @@ export async function Nav() {
                   </span>
                 </Link>
               )}
+              <MusicControl phone="hidden" />
               <LanguageSwitcher />
               <NavMenu
                 name={user.name ?? "guardian"}
                 journeyLive={JOURNEY_LIVE}
+                armoryOpen={!!pouch?.goldRevealed}
                 signOutAction={handleSignOut}
               />
             </>
@@ -117,13 +127,11 @@ export async function Nav() {
                   {l.label}
                 </Link>
               ))}
+              <MusicControl phone="mute" />
               <LanguageSwitcher />
-              <Link
-                href="/login"
-                className="whitespace-nowrap rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20"
-              >
+              <SignInLink className="whitespace-nowrap rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-accent transition hover:bg-accent/20">
                 {m.common.nav.signIn}
-              </Link>
+              </SignInLink>
             </>
           )}
         </nav>

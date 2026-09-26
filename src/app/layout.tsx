@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, JetBrains_Mono, Cinzel } from "next/font/google";
+import { Geist, JetBrains_Mono, Cinzel, Silkscreen } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { LocaleProvider } from "@/i18n/client";
+import { MusicProvider } from "@/components/music/MusicProvider";
 import { MESSAGES } from "@/i18n/messages";
 import { getLocale } from "@/i18n/server";
 import "./globals.css";
@@ -22,6 +23,14 @@ const display = Cinzel({
   variable: "--font-cinzel",
   subsets: ["latin"],
   weight: ["500", "600", "700", "800", "900"],
+});
+
+// Pixel face for the overworld HUD and the landing hero title — the one
+// place TUSST speaks 16-bit.
+const pixel = Silkscreen({
+  variable: "--font-silkscreen",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 const OG_LOCALES = {
@@ -62,7 +71,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: OG_LOCALES[locale],
       images: [
         {
-          url: "/landing/og.jpg",
+          url: "/landing/og-overworld.jpg",
           width: 1200,
           height: 630,
           alt: messages.landing.metaImageAlt,
@@ -73,7 +82,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: ["/landing/og.jpg"],
+      images: ["/landing/og-overworld.jpg"],
     },
     robots: {
       index: true,
@@ -92,11 +101,11 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${sans.variable} ${mono.variable} ${display.variable} h-full antialiased`}
+      className={`${sans.variable} ${mono.variable} ${display.variable} ${pixel.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-bg text-fg">
         <LocaleProvider locale={locale} messages={MESSAGES[locale]}>
-          {children}
+          <MusicProvider>{children}</MusicProvider>
         </LocaleProvider>
         <Analytics />
       </body>

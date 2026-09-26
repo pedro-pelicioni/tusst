@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMessages } from "@/i18n/client";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
-const SECTIONS = ["champions", "campaign", "boss", "forge"] as const;
+const SECTIONS = ["why", "champions", "map", "forge"] as const;
 
 export function LandingNav({ enterHref }: { enterHref: string }) {
   const m = useMessages().landing;
@@ -35,6 +35,18 @@ export function LandingNav({ enterHref }: { enterHref: string }) {
       window.removeEventListener("scroll", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
+  }, []);
+
+  // Past lg both the overlay and the hamburger are hidden, so an open menu
+  // (and its body scroll lock) must close when the desktop links take over —
+  // e.g. rotating an iPad from portrait to landscape.
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = (e: MediaQueryListEvent) => {
+      if (e.matches) setOpen(false);
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
   }, []);
 
   useEffect(() => {
@@ -69,7 +81,7 @@ export function LandingNav({ enterHref }: { enterHref: string }) {
         key={id}
         href={`#${id}`}
         onClick={goTo(id)}
-        className={`font-mono uppercase tracking-[0.28em] text-muted2 transition-colors hover:text-fg focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4 ${extra}`}
+        className={`font-mono uppercase text-muted2 transition-colors hover:text-fg focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4 ${extra}`}
       >
         {m.nav[id]}
       </a>
@@ -101,8 +113,8 @@ export function LandingNav({ enterHref }: { enterHref: string }) {
             </span>
           </Link>
 
-          <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-9 text-[11px] md:flex">
-            {links("")}
+          <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-5 whitespace-nowrap text-[11px] lg:flex xl:gap-9">
+            {links("tracking-[0.2em] xl:tracking-[0.28em]")}
           </div>
 
           <div className="flex items-center gap-3">
@@ -120,7 +132,7 @@ export function LandingNav({ enterHref }: { enterHref: string }) {
               aria-expanded={open}
               aria-controls="ld-mobile-menu"
               aria-label={open ? m.nav.closeMenu : m.nav.openMenu}
-              className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-md border border-line-strong focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 md:hidden"
+              className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-md border border-line-strong focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 lg:hidden"
             >
               <span
                 aria-hidden
@@ -138,9 +150,9 @@ export function LandingNav({ enterHref }: { enterHref: string }) {
       <div
         id="ld-mobile-menu"
         inert={!open}
-        className={`fixed inset-0 z-[70] flex flex-col items-center justify-center gap-8 bg-[rgba(5,4,9,0.97)] transition-opacity duration-300 md:hidden ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        className={`fixed inset-0 z-[70] flex flex-col items-center justify-center gap-8 bg-[rgba(5,4,9,0.97)] transition-opacity duration-300 lg:hidden ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}
       >
-        {links("text-[14px]")}
+        {links("text-[14px] tracking-[0.28em]")}
         <Link
           href={enterHref}
           onClick={() => setOpen(false)}

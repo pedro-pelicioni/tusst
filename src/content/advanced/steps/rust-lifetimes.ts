@@ -305,7 +305,7 @@ For an RPC service that decodes a request, uses it, and drops it inside one hand
       question:
         "Why is `fn parse(raw: &'a str) -> Frame<'a>` the right signature for the constructor?",
       options: [
-        "It states that the frame's slices point into `raw`, so the compiler ties their fates together",
+        "It states that the frame's slices point into `raw`, so the compiler ties their lifetimes together",
         "It forces `raw` to be copied into the frame, making the frame independent",
         "It is only stylistic — `fn parse(raw: &str) -> Frame` means the same thing",
       ],

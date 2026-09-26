@@ -232,7 +232,7 @@ diagrams for grading/compile/deploy/invoke, and deployment options — lives in
 
 ```
 src/
-  app/                 # routes: landing, onboarding, /path, /tracks, /lessons, /cards,
+  app/                 # routes: landing, onboarding, /path, /tracks, /lessons, /hero,
                        #         /profile, /login, /ide, and the API (submissions,
                        #         soroban pipeline, mentor, auth)
   components/          # shared UI, landing, onboarding, and 16 Forge modules

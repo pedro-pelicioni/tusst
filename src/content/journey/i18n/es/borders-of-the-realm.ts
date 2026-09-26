@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Fronteras del Reino",
+  title: "Bounded contexts",
   tagline: "DDD y contextos delimitados: una palabra, tres significados, y las fronteras que lo hacen seguro.",
   steps: [
     {
@@ -134,11 +134,11 @@ Nombra los **contextos delimitados** que dibujarías y, para cada uno: las palab
 4. No resuelve las diferencias proponiendo un modelo único para todos.
 5. Solo modelado — sin esquemas de base de datos, sin nombres de servicio o framework, sin código.`,
       minChars: 180 },
-    { kind: "theory", body: `## Por qué el golem necesita tu mapa
+    { kind: "theory", body: `## Por qué el modelo necesita tu mapa
 
 Un LLM ha leído un millón de bases de código donde "cuenta", "transferencia" y "saldo" significaban cosas distintas. Deja tus fronteras sin declarar y **mezclará vocabularios a mitad de archivo** — una regla de KYC filtrándose en tu modelo de pagos, la idea de Cuenta de un exchange tiñendo la de tu billetera — cada línea localmente plausible.
 
-Así que escribe la frontera en el banco: *"Estamos en el contexto de Pagos. Cuenta significa titular de saldo. Compliance es un modelo aparte — referéncialo solo por dirección."* Un contexto declarado es una valla que el golem respeta.
+Así que escribe la frontera en el banco: *"Estamos en el contexto de Pagos. Cuenta significa titular de saldo. Compliance es un modelo aparte — referéncialo solo por dirección."* Un contexto declarado es una valla que el modelo respeta.
 
 **A continuación:** ya has trazado las líneas. Qué vive de verdad dentro de una — y qué cosas solo pueden cambiar juntas.` },
   ],

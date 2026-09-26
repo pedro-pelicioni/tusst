@@ -309,7 +309,7 @@ Pour un service RPC qui décode une requête, l'utilise et la drop dans un seul 
       question:
         "Pourquoi `fn parse(raw: &'a str) -> Frame<'a>` est-elle la bonne signature pour le constructeur ?",
       options: [
-        "Elle déclare que les slices du frame pointent dans `raw`, donc le compilateur lie leurs sorts",
+        "Elle déclare que les slices du frame pointent dans `raw`, donc le compilateur lie leurs lifetimes",
         "Elle force `raw` à être copié dans le frame, ce qui rend le frame indépendant",
         "C'est purement stylistique — `fn parse(raw: &str) -> Frame` veut dire la même chose",
       ],

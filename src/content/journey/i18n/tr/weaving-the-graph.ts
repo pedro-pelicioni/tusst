@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Grafı Dokumak",
+  title: "Graph engineering",
   tagline: "Graph engineering: her biri kendi tezgâhında birçok küçük model, dokunmuş tek bir plan.",
   steps: [
     {

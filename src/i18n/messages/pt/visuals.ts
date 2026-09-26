@@ -167,8 +167,8 @@ export const visuals = {
     verdictSoon: "Mais um passo e o relógio zera. O que acontece a seguir é a única coisa que separa as três prateleiras.",
     verdictArchived: [
       "",
-      "Arquivada, não apagada. O dado saiu do ledger ativo e sua chamada vai falhar até alguém restaurar — mas ele continua lá, e a restauração é uma taxa, não uma reescrita.",
-      "A própria instância do contrato foi arquivada. Ninguém consegue chamá-lo, e toda entrada persistente que ele possui foi junto. Restaurar traz o conjunto de volta.",
+      "Arquivada, não apagada. O dado saiu do ledger ativo, mas continua lá: uma transação que precisar dele pode restaurá-lo primeiro. A restauração é uma taxa, não uma reescrita.",
+      "A própria instância do contrato foi arquivada, e todo o armazenamento de instância foi junto — os dois são uma única entrada do ledger. Uma chamada pode restaurar a instância primeiro, por uma taxa, e tudo volta.",
     ],
     verdictLost: [
       "Perdida. Não arquivada — apagada. Não existe restauração para armazenamento temporário, e não há taxa que traga de volta. O que morava aqui precisa ser reconstruído de outro lugar, ou simplesmente se perdeu.",

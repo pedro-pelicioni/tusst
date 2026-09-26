@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Karşıya Geçiş",
+  title: "Path payment'lar",
   tagline: "Path payment'lar: bir para birimi gönder, başkasını teslim et, atomik olarak.",
   steps: [
     {
@@ -71,7 +71,7 @@ USDC gönderirsin. Ağ onu emir defterleri ve likidite pool'larından geçirir �
     },
     {
       kind: "fill",
-      prompt: `Nehrin haritasını çıkar — bir path payment'ta gönderme ile teslimat arasında ne olur?`,
+      prompt: `Bir path payment'ta gönderme ile teslimat arasında ne olur?`,
       file: "remittance.txt",
       before: `100 USDC gönder  →  `,
       after: `  →  EURC teslim et — tek bir atomik işlem`,
@@ -122,7 +122,7 @@ Döviz dönüşümü — tarihsel olarak pahalı, opak orta kısım — herkese 
       kind: "theory",
       body: `## Nehrin üstündeki katman
 
-Yerli makinenin üstüne ekosistem Soroban'da inşa ediyor: **Soroswap**, **Phoenix** ve **Aquarius** AMM protokollerini akıllı kontrat olarak çalıştırıyor; aggregator'lar ise en iyi fiyatın peşinde her takası yerli defterler, yerli pool'lar ve kontrat pool'ları arasında yönlendiriyor. İç yapılarına henüz ihtiyacın yok — sadece nehrin hem bir ana kayası hem de üstüne kurulmuş işlek bir limanı olduğunu bil.
+Yerli makinenin üstüne ekosistem Soroban'da inşa ediyor: **Soroswap**, **Phoenix** ve **Aquarius** AMM protokollerini akıllı kontrat olarak çalıştırıyor; aggregator'lar ise en iyi fiyatın peşinde her takası yerli defterler, yerli pool'lar ve kontrat pool'ları arasında yönlendiriyor. İç yapılarına henüz ihtiyacın yok — sadece yerli bir katman ve onun üstünde bir kontrat katmanı olduğunu bil.
 
 Açık kalan tek soru: *gerçek* dolarlar ve eurolar nereden girip çıkıyor? O, anchor'ların işi — diyarın kapıları ve bir sonraki bölüm.`,
     },

@@ -28,6 +28,7 @@ export const advanced = {
   resume: "Resume track",
   review: "Review track",
   backToIndex: "advanced path",
+  mapLink: "See it on the Harbor map →",
   lessonsHeading: "// lessons",
   soon: "in preparation",
   done: "done",

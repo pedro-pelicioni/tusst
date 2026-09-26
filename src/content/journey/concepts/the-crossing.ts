@@ -87,7 +87,7 @@ Two flavors:
     },
     {
       kind: "fill",
-      prompt: `Chart the river — what happens between sending and delivery in a path payment?`,
+      prompt: `What happens between sending and delivery in a path payment?`,
       file: "remittance.txt",
       before: `send 100 USDC  →  `,
       after: `  →  deliver EURC — one atomic transaction`,
@@ -138,7 +138,7 @@ The FX conversion — historically the expensive, opaque middle — becomes a tr
       kind: "theory",
       body: `## The layer above the river
 
-On top of the native machinery, the ecosystem builds in Soroban: **Soroswap**, **Phoenix** and **Aquarius** run AMM protocols as smart contracts, and aggregators route each trade across native books, native pools and contract pools hunting the best price. You don't need their internals yet — just know the river has both a bedrock and a busy harbor built on top.
+On top of the native machinery, the ecosystem builds in Soroban: **Soroswap**, **Phoenix** and **Aquarius** run AMM protocols as smart contracts, and aggregators route each trade across native books, native pools and contract pools hunting the best price. You don't need their internals yet — just know there's a native layer and a contract layer on top.
 
 One question remains open: where do the *real* dollars and euros enter and leave? That is the business of anchors — the gates of the realm, and the next chapter.`,
     },

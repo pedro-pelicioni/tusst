@@ -16,7 +16,7 @@ Para finanças isso costuma ser *o* ponto de venda — reservas auditáveis, tri
 - Pague um fornecedor e seus **concorrentes leem seus preços e volumes**.
 - Mova o tesouro e o mercado antecipa sua intenção.
 
-Dinheiro sério precisa de *silêncio seletivo*. A questão é como um livro‑feito‑público pode guardar segredos sem se tornar um segredo total.`,
+Dinheiro sério precisa de *silêncio seletivo*. A questão é como um ledger público pode guardar segredos sem virar um.`,
     },
     {
       kind: "diagram",
@@ -96,17 +96,17 @@ Dinheiro sério precisa de *silêncio seletivo*. A questão é como um livro‑f
       kind: "theory",
       body: `## Prova sem divulgação
 
-A resposta vem do presente mais estranho da criptografia: a **prova de conhecimento zero**.
+A resposta é a **prova de conhecimento zero**.
 
 Uma prova ZK convence um verificador de que uma afirmação é verdadeira — *"este valor oculto é positivo, e meu saldo oculto o cobre"* — sem revelar **nada mais**: nem o valor, nem o saldo.
 
 A prova é um pequeno bloco de matemática que qualquer pessoa pode checar de forma barata, e a verificação não requer confiança no provedor. Se verifica, a afirmação vale. Ponto final.
 
-Coloque esse verificador dentro das regras do livro‑feito e a cadeia pode impor honestidade sobre números que nunca tem permissão de ver.`,
+Coloque esse verificador dentro das regras do ledger e a cadeia pode impor honestidade sobre números que nunca tem permissão de ver.`,
     },
     {
       kind: "theory",
-      body: `## O reino forja as ferramentas
+      body: `## A Stellar entrega a matemática
 
 A verificação on‑chain precisa de matemática pesada específica como **funções de host** — e a Stellar entregou isso em camadas:
 
@@ -124,7 +124,7 @@ Essa segunda onda foi o que virou a balança: tornou **sistemas de pagamento pri
         "Nada — a aceitação é apenas marketing probabilístico",
       ],
       answer: 0,
-      explain: `Essa assimetria é todo o truque: a validade se torna pública enquanto os dados permanecem privados. O livro‑feito pode impor “ninguém gasta o que não tem” sem jamais ler um saldo.`,
+      explain: `Essa assimetria é todo o truque: a validade se torna pública enquanto os dados permanecem privados. O ledger pode impor “ninguém gasta o que não tem” sem jamais ler um saldo.`,
     },
     {
       kind: "theory",

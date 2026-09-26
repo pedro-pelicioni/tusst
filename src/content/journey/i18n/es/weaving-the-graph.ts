@@ -1,8 +1,8 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Tejiendo el Grafo",
-  tagline: "Graph engineering: muchos golems pequeños, cada uno en su banco, un plan tejido.",
+  title: "Graph engineering",
+  tagline: "Graph engineering: muchos modelos pequeños, cada uno en su banco, un plan tejido.",
   steps: [
     {
       kind: "theory",
@@ -124,7 +124,7 @@ La disciplina consiste en detectar la *verdadera* independencia: el trabajo para
       options: [
         "Evaluar tres bibliotecas candidatas contra la misma lista de verificación — trabajo independiente, sin estado compartido",
         "Escribir un script de migración y ejecutar ese mismo script — superponiéndolos se ahorra tiempo",
-        "Tres gólems editando el mismo módulo a la vez, para terminarlo tres veces más rápido",
+        "Tres modelos editando el mismo módulo a la vez, para terminarlo tres veces más rápido",
       ],
       answer: 0,
       explain: `Ejecutar antes de escribir viola una dependencia, y la edición simultánea del mismo archivo genera conflictos de fusión y pasos extra. La prueba es sencilla y fiable: si el nodo A no lee la salida del nodo B ni toca su estado, pueden ejecutarse juntos.`,
@@ -144,13 +144,13 @@ La disciplina consiste en detectar la *verdadera* independencia: el trabajo para
 
 El capítulo del arnés te advirtió: la auto‑revisión comparte los puntos ciegos del yo. Un grafo lo corrige *estructuralmente*.
 
-Añade un **nodo verificador**: un gólem forja; un nodo *diferente* — contexto fresco, sin apego a las decisiones ya tomadas — recibe la orden de **refutar**: encontrar dónde el diff viola la especificación, buscar casos límite, intentar romperlo.
+Añade un **nodo verificador**: un modelo forja; un nodo *diferente* — contexto fresco, sin apego a las decisiones ya tomadas — recibe la orden de **refutar**: encontrar dónde el diff viola la especificación, buscar casos límite, intentar romperlo.
 
 La descripción del trabajo importa. “Revisa esto” invita a un asentimiento. *“Encuentra qué está mal en esto”* dirige la mente a los agujeros. Los pares adversariales capturan lo que la auto‑revisión estructuralmente no puede — por eso los forjadores reales emparejan a un creador con un inspector.`,
     },
     {
       kind: "fill",
-      prompt: `Da al segundo gólem su verdadero trabajo:`,
+      prompt: `Da al segundo modelo su verdadero trabajo:`,
       file: "graph.toml",
       before: `verifier.goal = "`,
       after: ` el diff del nodo forjador"`,
@@ -171,7 +171,7 @@ Lo que tienes es una forma. Lo que aún no tienes es una máquina en la que algu
       options: ["Cada nodo recibe su propio banco curado, así la calidad no se diluye entre pasos que no tienen nada que ver entre sí","Los modelos cobran menos por varias peticiones cortas que por una larga","Deja que el modelo elija su propio orden de trabajo, lo que mejora los resultados"], answer: 0 },
     { question: `¿Cuál es la prueba para saber si dos nodos pueden correr en paralelo?`,
       options: ["El nodo A ni lee la salida del nodo B ni toca su estado","Se espera que ambos nodos tarden aproximadamente lo mismo","Ninguno de los dos escribe en la red"], answer: 0 },
-    { question: `¿Por qué darle al segundo golem el objetivo \"refutar\" y no \"revisar\"?`,
+    { question: `¿Por qué darle al segundo modelo el objetivo \"refutar\" y no \"revisar\"?`,
       options: ["Un nodo al que se le manda aprobar encontrará la forma de aprobar — la refutación es el único objetivo que apunta la mente a los agujeros","La refutación produce salida más corta, lo que cuesta menos","La revisión requiere el contexto original, y la refutación no"], answer: 0 },
     { question: `Cuatro tareas en paralelo, cada una con dos etapas. ¿Qué cuesta realmente esperar a que todas terminen la etapa uno?`,
       options: ["El tiempo de etapa uno de la tarea más lenta, gastado sin hacer nada con las demás — y otra vez en la etapa dos","Nada, mientras las tareas corran en paralelo dentro de cada etapa","Solo la sobrecarga de coordinación del planificador"], answer: 0 },

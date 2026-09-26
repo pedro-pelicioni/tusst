@@ -74,7 +74,7 @@ Ouvrez l'onglet **Compte** de la Forge sur cette adresse : les signataires et le
         "Sans souci : les deux restants peuvent destituer la clé perdue",
         "Sans souci : la clé maîtresse peut toujours réinitialiser les signataires",
       ],
-      explain: `C'est de loin la façon la plus courante dont meurt un vrai trésor. La règle qui vous protège du voleur protège tout aussi bien son absence. Gardez toujours une voie de récupération dont le seuil reste atteignable.`,
+      explain: `C'est de loin la façon la plus courante dont meurt un vrai trésor. La même règle qui bloque un voleur vous bloque aussi dès qu'une clé est perdue. Gardez toujours une voie de récupération dont le seuil reste atteignable.`,
     },
     "claim-xp": {
       body: `Vous avez transformé un compte ordinaire en trésor deux-sur-deux sans déployer une ligne de code.

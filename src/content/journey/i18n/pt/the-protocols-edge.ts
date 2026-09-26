@@ -4,7 +4,7 @@ export const theProtocolsEdge: Concept = {
   meta: {
     slug: "the-protocols-edge",
     title: "CAPs, SEPs e upgrades de protocolo",
-    tagline: "CAPs, SEPs e versões nomeadas: cavalgando um protocolo vivo.",
+    tagline: "CAPs, SEPs e versões nomeadas: acompanhando um protocolo vivo.",
     numeral: "IX",
     arc: "realm",
     level: 2,
@@ -26,14 +26,14 @@ Isso é o SCP cumprindo dois papéis — o mesmo consenso que aprova transaçõe
     },
     {
       kind: "theory",
-      body: `## Dois rios de mudança: CAPs e SEPs
+      body: `## Dois tipos de mudança: CAPs e SEPs
 
 A mudança flui por dois canais, e vale a pena memorizar a divisão:
 
 - **CAPs** — *Core Advancement Proposals* — alteram o **protocolo em si**: consenso, regras de ledger, novas funções host, mecânicas de taxas. Precisam de voto dos validadores porque cada nó deve executar de forma idêntica.
-- **SEPs** — *Stellar Ecosystem Proposals* — são os padrões **ao redor** da cadeia: fluxos carteira‑âncora, interfaces de token, stellar.toml. São adotados por implementações, não por voto.
+- **SEPs** — *Stellar Ecosystem Proposals* — são os padrões **ao redor** da chain: fluxos carteira‑âncora, interfaces de token, stellar.toml. São adotados por implementações, não por voto.
 
-Lei da cadeia versus costume comercial. CAP‑59 trouxe curvas ZK; SEP‑24 trouxe fluxos de depósito. Rios diferentes, ambos públicos, ambos moldados em discussão aberta.`,
+Lei da chain versus costume comercial. CAP‑59 trouxe curvas ZK; SEP‑24 trouxe fluxos de depósito. Os dois são públicos e debatidos abertamente.`,
     },
     {
       kind: "diagram",
@@ -92,7 +92,7 @@ As upgrades agora recebem nomes, e o ritmo está acelerado:
 - **Protocolo 27 "Zipper"** — mainnet **julho de 2026**, trazendo **CAP‑71** delegação de autenticação para contas inteligentes.
 - **Protocolo 28 "Adapter"** — **testnet atualizado em 27 de agosto de 2026**; mainnet programada para **16 de setembro de 2026**.
 
-Mais ou menos uma estação de diferença, cada uma nomeada, cada uma anunciada com guias de upgrade. O reino não vagueia para o futuro — ele avança segundo um calendário publicado.`,
+Mais ou menos uma estação de diferença, cada uma nomeada, cada uma anunciada com guias de upgrade.`,
     },
     {
       kind: "theory",
@@ -133,20 +133,20 @@ A partir de final de agosto de 2026 essa janela está **aberta agora**: o testne
       kind: "theory",
       body: `## Observando a borda
 
-Surfar um protocolo vivo é um hábito de leitura, não um esforço heroico:
+Acompanhar o protocolo é um hábito de leitura, não um esforço heroico:
 
 - O **blog de desenvolvedores da stellar.org** — anúncios de upgrades, datas e guias de “o que os desenvolvedores precisam fazer”.
 - O **repositório CAP** no GitHub — propostas muito antes de serem enviadas; o rascunho de hoje é a função host do próximo ano.
 - **Reuniões abertas do protocolo** — onde os CAPs são debatidos publicamente.
 
-Meia hora por mês mantém você à frente de cada prazo neste capítulo. O desenvolvedor que lê as notas de upgrade surfa a onda; quem não lê fica desatualizado.`,
+Meia hora por mês mantém você à frente de cada prazo neste capítulo.`,
     },
     {
       kind: "rustBranch",
       lessonSlug: "stellar-protocol-27-1",
-      body: `A **Ato VIII** da Campanha traz este capítulo à prática: você leva um projeto funcional através de um upgrade de protocolo — atualizando SDKs, lendo notas de release, testando contra a nova versão como uma equipe profissional.
+      body: `O **Ato VIII** da Campanha traz este capítulo à prática: você leva um projeto funcional através de um upgrade de protocolo — atualizando SDKs, lendo notas de release, testando contra a nova versão como uma equipe profissional.
 
-E com isso, o reino está mapeado — consenso para contratos, portões para véus, borda para borda. O que resta é a melhor parte: **vá construir nele**. A Forge está aberta.`,
+Com isso, o reino está coberto, do consenso aos contratos. O que resta é a melhor parte: **vá construir nele**. A Forge está aberta.`,
     },
   ],
   testOut: [

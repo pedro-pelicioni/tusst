@@ -110,7 +110,7 @@ Dois portões regulados, um cruzamento atômico no meio. A cadeia nunca viu um �
 
 Você não precisa de licença bancária para programar contra tudo isso. O SDF roda **testanchor** na testnet — uma âncora totalmente funcional que fala SEP-1, SEP-10 e SEP-24 com dinheiro de brincadeira. Aponte seu código de carteira para ela e ensaie todo o fluxo de depósito e saque antes de envolver um único dólar real.
 
-Portões, rios, confiança — tudo até agora tem sido o *clássico* reino, mecânica embutida no protocolo. No próximo capítulo cruzaremos para a parte que você programa: **Soroban**, onde contratos ganham vida e até o armazenamento tem um batimento cardíaco.`,
+Portões, rios, confiança — tudo até agora tem sido o reino *clássico*, mecânica embutida no protocolo. No próximo capítulo cruzaremos para a parte que você programa: **Soroban**, onde até o armazenamento é alugado.`,
     },
     { kind: "theory", body: `## As siglas por que você passou batido
 

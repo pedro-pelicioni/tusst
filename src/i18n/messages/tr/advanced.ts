@@ -28,6 +28,7 @@ export const advanced = {
   resume: "Parkura devam et",
   review: "Parkuru gözden geçir",
   backToIndex: "ileri seviye yol",
+  mapLink: "Liman haritasında gör →",
   lessonsHeading: "// dersler",
   soon: "hazırlanıyor",
   done: "tamamlandı",

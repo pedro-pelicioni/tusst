@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "La Boucle Sans Fin",
+  title: "Boucles agentiques",
   tagline: "Boucles agentiques : agir, observer, corriger — et les signaux qui la font monter.",
   steps: [
     { kind: "theory", body: `## Du souhait à la boucle
@@ -10,7 +10,7 @@ Le prompting en un coup est un souhait : décrire, recevoir, espérer. La **bouc
 
 > **agir → observer → corriger → agir de nouveau**
 
-Le golem écrit du code, l'*exécute*, lit la plainte du compilateur, corrige, relance — comme vous travaillez, au tempo de la machine. La qualité en un coup a cessé d'être le chiffre intéressant à l'instant où le golem a pu voir ses propres résultats.
+Le modèle écrit du code, l'*exécute*, lit la plainte du compilateur, corrige, relance — comme vous travaillez, au tempo de la machine. La qualité en un coup a cessé d'être le chiffre intéressant à l'instant où le modèle a pu voir ses propres résultats.
 
 Mais une boucle est une machine, pas de la magie. Elle a des pièces qui peuvent être bien ou mal conçues, et ce chapitre traite des deux qui décident si elle monte.` },
     { kind: "diagram", body: "La boucle, et la seule sortie qui compte :",
@@ -29,19 +29,19 @@ Une boucle ne s'améliore que dans la mesure où ses **observations** sont vraie
 - **sortie des tests** — quelle épreuve, quelle assertion, quelle ligne ?
 - **état on-chain** — que contient réellement le registre après l'exécution ?
 
-Des signaux, pas des impressions. « La sortie a l'air raisonnable » ne corrige rien, car cela ne peut jamais être faux. Chaque vérificateur que vous avez mis dans le harnais rapporte maintenant des intérêts : branché sur la boucle, il devient les yeux qui guident le golem — **à chaque itération**.` },
+Des signaux, pas des impressions. « La sortie a l'air raisonnable » ne corrige rien, car cela ne peut jamais être faux. Chaque vérificateur que vous avez mis dans le harnais rapporte maintenant des intérêts : branché sur la boucle, il devient les yeux qui guident le modèle — **à chaque itération**.` },
     { kind: "quiz", question: `Quelle observation peut réellement guider une boucle ?`,
       options: [
         "Le rapport du lanceur de tests : 3 réussis, 1 échoué — refund_after_deadline, assertion ligne 41",
-        "Le résumé final du golem lui-même : tout semble correct maintenant",
+        "Le résumé final du modèle lui-même : tout semble correct maintenant",
         "Le fait que le code ait compilé du premier coup — forte preuve que la logique est bonne",
       ], answer: 0,
-      explain: `Compiler signifie que les types s'accordent, pas que le comportement est celui voulu — et un auto-résumé, c'est l'esprit qui corrige sa propre copie. Un signal de direction doit être externe, précis, et capable d'être une mauvaise nouvelle. « 1 échec, ligne 41 » est un titre ; « ça a l'air correct » est la météo.` },
+      explain: `Compiler signifie que les types s'accordent, pas que le comportement est celui voulu — et un auto-résumé, c'est l'esprit qui corrige sa propre copie. Un signal de direction doit être externe, précis, et capable d'être une mauvaise nouvelle. « 1 échec, ligne 41 » vous dit où aller ; « ça a l'air correct » ne vous dit rien.` },
     { kind: "theory", body: `## Un tour, tracé
 
 Il est facile d'acquiescer devant un cycle abstrait. Voici un seul tour, avec ce qui passe réellement sur le fil.
 
-**Agir.** Le golem modifie \`refunds.rs\` — fait passer la comparaison d'échéance de \`>\` à \`>=\`. Un seul changement, car un tour qui change six choses ne peut pas vous dire laquelle a marché.
+**Agir.** Le modèle modifie \`refunds.rs\` — fait passer la comparaison d'échéance de \`>\` à \`>=\`. Un seul changement, car un tour qui change six choses ne peut pas vous dire laquelle a marché.
 
 **Observer.** Le harnais lance les evals fixes et renvoie exactement ceci :
 
@@ -53,7 +53,7 @@ Pas « toujours cassé ». Une ligne, un nombre, et un décompte comparable à c
 
 **Corriger.** Trois verts sont devenus quatre. La comparaison était donc *l'un* des bugs et pas le seul : l'échéance est traitée, le solde ne l'est pas. Le plan se met à jour — le prochain tour vise le solde.
 
-Remarquez ce qui a donné sa valeur à ce tour. Ce n'est pas le golem qui a décidé s'être amélioré. **C'est le décompte.**` },
+Remarquez ce qui a donné sa valeur à ce tour. Ce n'est pas le modèle qui a décidé s'être amélioré. **C'est le décompte.**` },
     { kind: "theory", body: `## Les evals : la boussole
 
 Comment savez-vous que l'itération 7 a battu la 6 ? Pas au feeling. Les **evals** sont un ensemble *fixe* de vérifications — tests, lint, build, une assertion on-chain — exécutées **à chaque itération**, pour que chaque tentative soit mesurée à la même aune.
@@ -66,7 +66,7 @@ Avec une boussole, la boucle sait *de fait* si elle a avancé : 4 verts sur 7 so
       before: `Les evals tournent à chaque itération, et l'ensemble des vérifications doit rester `,
       after: ` — sinon deux tentatives sont notées par deux examens différents.`,
       choices: ["fixe", "aléatoire", "facultatif", "régénéré à chaque tentative"], answer: 0,
-      explain: `Une aune qui bouge ne mesure rien. C'est aussi pourquoi « laisse le golem écrire ses propres tests en chemin » détruit le signal en silence : l'examen et l'élève cessent d'être deux choses distinctes.` },
+      explain: `Une aune qui bouge ne mesure rien. C'est aussi pourquoi « laisse le modèle écrire ses propres tests en chemin » détruit le signal en silence : l'examen et l'élève cessent d'être deux choses distinctes.` },
     { kind: "exercise", mode: "spec-write",
       brief: `## L'épreuve de l'examinateur : écrivez un contrat d'observation
 
@@ -77,7 +77,7 @@ Une boucle va être pointée sur une tâche réelle :
 Avant qu'elle ne tourne une seule fois, écrivez son **contrat d'observation** : par quels signaux cette boucle va se guider, et ce qui rend chacun digne de confiance. Comportement uniquement — pas de code de harnais, pas de noms de bibliothèques.`,
       rubric: `1. Nomme au moins deux signaux concrets et externes (sortie de test, code de sortie, état on-chain, résultat de lint/build) — ni auto-évaluation, ni « ça a l'air bon ».
 2. Pour au moins un signal, dit ce qui le rend digne de confiance — déterministe, reproductible, ou indépendant du code en cours de modification.
-3. Dit ce qui compte comme TERMINÉ en fonction de ces signaux, et non de l'avis du golem.
+3. Dit ce qui compte comme TERMINÉ en fonction de ces signaux, et non de l'avis du modèle.
 4. Nomme au moins un signal auquel il ne faut PAS se fier, et pourquoi (un auto-résumé, une compilation réussie, un test instable…).
 5. Comportement uniquement — pas d'implémentation du harnais, aucun outil ni bibliothèque spécifique exigé.`,
       minChars: 140 },
@@ -91,7 +91,7 @@ Remarquez ce qui manque : rien ici ne décide quand elle **s'arrête**. Pas quan
   ],
   testOut: [
     { question: `Que remplace une boucle agentique, comparée au prompting en un coup ?`,
-      options: ["L'espoir — le golem voit désormais le résultat de son propre travail et corrige en conséquence","Le besoin d'une spécification, puisque la boucle découvre les exigences en chemin","Le compilateur, puisque la boucle vérifie le code elle-même"], answer: 0 },
+      options: ["L'espoir — le modèle voit désormais le résultat de son propre travail et corrige en conséquence","Le besoin d'une spécification, puisque la boucle découvre les exigences en chemin","Le compilateur, puisque la boucle vérifie le code elle-même"], answer: 0 },
     { question: `Pourquoi « la sortie a l'air raisonnable » ne peut-il jamais guider une boucle ?`,
       options: ["Parce que cela ne peut jamais être faux — un signal incapable d'être une mauvaise nouvelle ne porte aucune information","Parce que cela arrive trop tard dans l'itération pour être exploité","Parce que les modèles ne sont pas entraînés à évaluer des jugements en langue naturelle"], answer: 0 },
     { question: `Pourquoi l'ensemble des evals doit-il rester fixe entre les itérations ?`,

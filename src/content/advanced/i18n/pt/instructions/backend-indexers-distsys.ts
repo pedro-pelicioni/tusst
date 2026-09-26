@@ -227,7 +227,7 @@ Failed has 0 outgoing transitions
 
 A garantia de sobreposição é estritamente \`R + W > N\`. A linha \`N=5, R=2, W=3\` soma exatamente 5 e **não** sobrepõe — um quorum de leitura de dois pode ser totalmente disjunto dos três nós que receberam a escrita, e devolve dado velho sem erro nenhum.
 
-Uma partição não pede permissão. Com N=5, W=3 e um split 3|2, o lado majoritário ainda reúne quorum; o lado minoritário não chega nem a R=3 nem a W=3 e recusa os dois. Essa recusa é a escolha CP, e você a fez quando escolheu R e W.
+Com N=5, W=3 e uma partição 3|2, o lado majoritário ainda reúne quorum; o lado minoritário não chega nem a R=3 nem a W=3 e recusa os dois. Essa recusa é a escolha CP, e você a fez quando escolheu R e W.
 
 Leituras se resolvem por **número de versão**, não por timestamp de relógio de parede.
 

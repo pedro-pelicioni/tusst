@@ -167,8 +167,8 @@ export const visuals = {
     verdictSoon: "One more step and the clock runs out. What happens next is the only thing that separates the three shelves.",
     verdictArchived: [
       "",
-      "Archived, not deleted. The data is off the active ledger and your call will fail until someone restores it — but it is still there, and the restore is a fee, not a rewrite.",
-      "The contract instance itself is archived. Nobody can call it, and every persistent entry it owns went with it. Restoring brings the whole thing back.",
+      "Archived, not deleted. The data is off the active ledger, but it is still there: a transaction that needs it can restore it first. The restore is a fee, not a rewrite.",
+      "The contract instance itself is archived, and all of its instance storage went with it — they are one ledger entry. A call can restore the instance first, for a fee, and it all comes back.",
     ],
     verdictLost: [
       "Gone. Not archived — deleted. There is no restore for temporary storage, and no fee that brings it back. Whatever lived here has to be reconstructed from somewhere else, or it is simply lost.",

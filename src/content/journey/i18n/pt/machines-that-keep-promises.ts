@@ -71,7 +71,7 @@ Ninguém "roda" o contrato. Não há servidor para desligar, empresa para aciona
         "Um contrato de papel assinado: está escrito, mas quem faz cumprir depois é a justiça",
       ],
       answer: 0,
-      explain: `O atendente tem julgamento e o papel precisa de quem execute. Um contrato não tem nem um nem outro — a execução *é* o cumprimento. Essa é a força dele e, como você vai ver agora, também a lâmina.`,
+      explain: `O atendente tem julgamento e o papel precisa de quem execute. Um contrato não tem nem um nem outro — a execução *é* o cumprimento. Essa é a força dele e, como você vai ver agora, também o maior risco.`,
     },
     {
       kind: "theory",

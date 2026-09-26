@@ -1,7 +1,7 @@
 import type { JourneyConceptText } from "../types";
 
 export const conceptText: JourneyConceptText = {
-  title: "Frontières du Royaume",
+  title: "Bounded contexts",
   tagline: "DDD et contextes délimités : un mot, trois sens, et les frontières qui rendent cela sûr.",
   steps: [
     {
@@ -134,11 +134,11 @@ Nommez les **contextes délimités** que vous traceriez, et pour chacun : les mo
 4. Ne résout pas les différences en proposant un modèle unique pour tout le monde.
 5. Modélisation uniquement — pas de schéma de base, pas de noms de service ni de framework, pas de code.`,
       minChars: 180 },
-    { kind: "theory", body: `## Pourquoi le golem a besoin de votre carte
+    { kind: "theory", body: `## Pourquoi le modèle a besoin de votre carte
 
 Un LLM a lu un million de bases de code où « compte », « transfert » et « solde » voulaient dire autre chose. Laissez vos frontières implicites et il **mélangera les vocabulaires en plein fichier** — une règle de KYC qui glisse dans votre modèle de paiements, l'idée de Compte d'une plateforme d'échange qui déteint sur celle de votre portefeuille — chaque ligne localement plausible.
 
-Alors écrivez la frontière sur l'établi : *« Nous sommes dans le contexte Paiements. Compte signifie détenteur de solde. Conformité est un modèle distinct — référencez-le par adresse uniquement. »* Un contexte énoncé est une clôture que le golem respecte.
+Alors écrivez la frontière sur l'établi : *« Nous sommes dans le contexte Paiements. Compte signifie détenteur de solde. Conformité est un modèle distinct — référencez-le par adresse uniquement. »* Un contexte énoncé est une clôture que le modèle respecte.
 
 **Ensuite :** vous avez tracé les lignes. Ce qui vit réellement à l'intérieur de l'une d'elles — et quelles choses n'ont le droit de changer qu'ensemble.` },
   ],

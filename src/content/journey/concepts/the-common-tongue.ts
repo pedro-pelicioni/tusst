@@ -39,7 +39,7 @@ There are many wallets and many anchors. Without standards, each pair would need
 
 Stellar's answer is the **SEP**: *Stellar Ecosystem Proposal*. SEPs are public standards defining exactly how wallets, anchors and services speak to each other. Implement a SEP once and your wallet works with **every anchor** that implements it too — deposit flows, authentication, identity, all of it.
 
-This interoperability-first culture is one of Stellar's quiet superpowers: users pick any door, and all the doors share one key shape.`,
+Because of this interoperability-first culture, users can pick any door: all the doors share one key shape.`,
     },
     {
       kind: "theory",

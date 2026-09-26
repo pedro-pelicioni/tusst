@@ -5,7 +5,7 @@ export const steps3: Record<string, LessonStep[]> = {
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Au plus profond de la chambre forte de l’Accumulateur, au-delà de tous les sacs et ledgers, se trouve un atelier où personne n’entre sans invitation. Ici, un trésor ne commence pas comme un trésor : il commence comme un **plan**.
+      body: `Il est temps de définir tes propres types. Chacun commence par un **plan**.
 
 \`\`\`rust
 struct Player {
@@ -14,7 +14,7 @@ struct Player {
 }
 \`\`\`
 
-Une \`struct\` rassemble plusieurs valeurs dans une forme unique et nommée. Définis-la une fois ; la chambre forte reconnaîtra ensuite cette forme pour toujours.`,
+Une \`struct\` rassemble plusieurs valeurs dans une forme unique et nommée. Définis-la une fois, réutilise-la partout.`,
     },
     {
       kind: "theory",
@@ -65,7 +65,7 @@ Ferrisia has 100 hp
     {
       kind: "theory",
       image: "/mascot/mascot-guide.png",
-      body: `Un plan seul reste inerte : il définit une forme, mais aucun comportement. L’Accumulateur t’enseigne le rite qui l’éveille — un bloc \`impl\`.
+      body: `Un plan seul définit une forme, mais aucun comportement. Le comportement va dans un bloc \`impl\`.
 
 \`\`\`rust
 impl Player {

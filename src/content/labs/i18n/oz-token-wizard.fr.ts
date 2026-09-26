@@ -7,19 +7,19 @@ export const labText = {
   },
   steps: {
     "intro": {
-      body: `## Ne forge pas seul
+      body: `## Ne pars pas de zéro
 
-Les vrais forgerons ne fondent pas leur propre fer pour chaque lame. Sur Stellar, les contrats de token sont forgés à partir des **blocs audités d'OpenZeppelin** — les mêmes bibliothèques éprouvées qui sécurisent des milliards à travers les chaînes, portées à Soroban sous \`stellar-tokens\`.
+Sur Stellar, les contrats de token sont construits à partir des **blocs audités d'OpenZeppelin** — les mêmes bibliothèques éprouvées qui sécurisent des milliards à travers les chaînes, portées à Soroban sous \`stellar-tokens\`.
 
 Dans les prochaines minutes, tu **choisiras tes extensions**, regarderas la Forge assembler du **vrai Rust** à partir d'elles, **le compileras** dans un runner isolé, **déploieras le Wasm** sur le testnet sous ta propre signature, et **émettras** ton offre initiale.
 
 Pas de maquettes. C’est le même pipeline que celui de l’IDE en mode libre.`,
     },
     "sigil": {
-      title: "Invoque ton sigil",
-      body: `Déployer coûte une signature, et une signature a besoin de ta paire de clés. Si tu en as forgé une dans le lab de wallet, la Forge la réutilise ; sinon, une nouvelle est frappée maintenant.`,
+      title: "Charge ta paire de clés",
+      body: `Déployer coûte une signature, et une signature a besoin de ta paire de clés. Si tu en as créé une dans le lab de wallet, la Forge la réutilise ; sinon, elle en crée une nouvelle maintenant.`,
       cta: "Préparer la paire de clés",
-      successBody: `Ton sigil répond :
+      successBody: `Ton adresse :
 
 \`{address}\`
 
@@ -29,7 +29,7 @@ Chaque transaction à venir — le déploiement et l’émission — portera cet
       title: "Alimente le compte",
       body: `Les déploiements et invocations paient de petits frais de ressources, donc le compte doit être vivant et financé. Friendbot le finance ; s’il a déjà des fonds, la Forge le réutilise simplement.`,
       cta: "Financer avec Friendbot",
-      successBody: `Le compte respire — {balance} XLM prêts à l'emploi. Suffisamment de carburant pour mille déploiements.`,
+      successBody: `Financé : {balance} XLM. De quoi faire mille déploiements.`,
     },
     "name": {
       prompt: `## Nomme ta création
@@ -99,7 +99,7 @@ Un token **burnable** permet aux détenteurs de détruire leurs propres unités,
       title: "Génère le Rust et compile",
       body: `La Forge assemble maintenant **{name} ({symbol})** à partir de tes choix — du vrai Rust avec \`stellar-tokens\`, ancré aux mêmes versions auditées que l'IDE utilise — et le compile en **WebAssembly** dans un runner isolé. Une vraie compilation prend une minute ou deux ; regarde ça fonctionner.`,
       cta: "Compile en Wasm",
-      successBody: `Le runner renvoie ton contrat sous forme de **blob Wasm** — le Rust a été transformé pour la machine virtuelle du ledger.
+      successBody: `Le runner renvoie ton contrat sous forme de **blob Wasm** — du Rust compilé pour la machine virtuelle du ledger.
 
 Note ce qui n'a PAS eu lieu : ton nom, symbole et offre ne sont pas intégrés dans le code. Ils voyagent comme **arguments du constructeur** à l'étape suivante, donc le même Wasm vérifié pourrait donner naissance à mille tokens différents.`,
     },
@@ -107,7 +107,7 @@ Note ce qui n'a PAS eu lieu : ton nom, symbole et offre ne sont pas intégrés
       title: "Déploie sur le testnet",
       body: `Deux transactions, toutes deux signées par toi : d'abord le Wasm est **téléchargé** sur le ledger, puis une **instance de contrat** est créée à partir de celui‑ci — et son \`__constructor\` s'exécute une fois avec ton nom, symbole et offre, en émettant tout à ton adresse.`,
       cta: "Déploie et lance le constructeur",
-      successBody: `**{symbol} vit.** Adresse du contrat :
+      successBody: `**{symbol} est en ligne.** Adresse du contrat :
 
 \`{contract}\`
 
@@ -115,7 +115,7 @@ Cette adresse répond désormais aux appels SEP‑41 — \`balance\`, \`transfer
     },
     "mint": {
       title: "Émets une série supplémentaire",
-      body: `Ton constructeur a déjà émis l’offre initiale pour toi. Maintenant invoque directement le contrat vivant : la Forge récupère sa **spec on-chain**, construit un appel \`mint\`, **le simule**, et te fait signer la vraie transaction — le même flux qui consiste à simuler puis signer que chaque dApp Soroban utilise.`,
+      body: `Ton constructeur a déjà émis l’offre initiale pour toi. Maintenant invoque directement le contrat déployé : la Forge récupère sa **spec on-chain**, construit un appel \`mint\`, **le simule**, et te fait signer la vraie transaction — le même flux qui consiste à simuler puis signer que chaque dApp Soroban utilise.`,
       cta: "Émettre 25 {symbol} supplémentaires",
       successBody: `Émission réussie : 25 {symbol} supplémentaires dans ton solde. L’opération a été autorisée parce que le contrat a vérifié \`owner.require_auth()\` et **tu es le propriétaire**.
 
@@ -131,7 +131,7 @@ Tout autre appel à \`mint\` est rejeté par la même ligne. C'est le contrôle 
       explain: `Un standard est un langage commun, pas un accord marketing ou une garantie de sécurité. SEP‑41 signifie que ton token répond aux appels que l'écosystème connaît déjà — c'est pourquoi le wizard a construit sur le standard plutôt que d'inventer des points d'entrée.`,
     },
     "claim": {
-      body: `Le ledger conserve ton Wasm, ton contrat et un solde de tokens émis pour ton sigil. La Forge consultera la chaîne elle-même — **simuler \`balance(you)\` sur ton contrat** — avant de libérer la récompense. Preuve, pas promesses.`,
+      body: `Le ledger conserve ton Wasm, ton contrat et un solde de tokens émis pour ton adresse. La Forge consultera la chaîne elle-même — **en simulant \`balance(you)\` sur ton contrat** — avant de libérer la récompense. Preuve, pas promesses.`,
     },
   },
 } satisfies LabTextOverlay;

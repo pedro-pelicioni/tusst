@@ -122,7 +122,7 @@ Open the Forge's **Conta** tab against this address: the signers and thresholds 
         "Fine: the remaining two can vote out the lost key",
         "Fine: the master key can always reset the signers",
       ],
-      explain: `This is the single most common way real treasuries die. The rule that protects you from theft protects the thief's absence just as well. Always keep a recovery path whose threshold you can still reach.`,
+      explain: `This is the single most common way real treasuries die. The same rule that stops a thief also stops you once a key is gone. Always keep a recovery path whose threshold you can still reach.`,
       answer: 0,
     },
     {
