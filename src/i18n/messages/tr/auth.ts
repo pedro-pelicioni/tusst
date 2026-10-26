@@ -16,6 +16,8 @@ export const auth = {
     OAuthSignin: "Bu sağlayıcıyla girişi başlatamadık. Tekrar dene.",
     AccessDenied: "Sağlayıcı erişimi reddetti. Tekrar dene ya da diğer sağlayıcıyı kullan.",
     Configuration: "Giriş bizim tarafımızda yanlış yapılandırılmış. Birkaç dakika sonra tekrar dene.",
+    InvalidCheck:
+      "Giriş, başladığı tarayıcıdan farklı bir tarayıcıya döndü — Discord uygulaması bağlantıyı açtığında sık olur. Buradan düğmeye tekrar dokun, giriş tamamlanır.",
     Verification: "Bu giriş bağlantısının süresi dolmuş ya da zaten kullanılmış. Yenisini iste.",
     default: "Giriş yapılırken bir şeyler ters gitti. Tekrar dene.",
   },

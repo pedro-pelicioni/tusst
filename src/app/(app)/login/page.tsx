@@ -27,6 +27,7 @@ const KNOWN_ERROR_CODES = [
   "OAuthSignin",
   "AccessDenied",
   "Configuration",
+  "InvalidCheck",
   "Verification",
 ] as const satisfies readonly (keyof Messages["auth"]["errors"])[];
 

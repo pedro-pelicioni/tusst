@@ -16,6 +16,8 @@ export const auth = {
     OAuthSignin: "Não conseguimos iniciar o login com esse provedor. Tente de novo.",
     AccessDenied: "O provedor negou o acesso. Tente de novo ou use o outro provedor.",
     Configuration: "O login está mal configurado do nosso lado. Tente de novo em alguns minutos.",
+    InvalidCheck:
+      "O login voltou para um navegador diferente daquele em que começou — comum quando o app do Discord abre o link. Toque no botão de novo aqui e pronto.",
     Verification: "Esse link de login expirou ou já foi usado. Peça um novo.",
     default: "Algo deu errado ao entrar. Tente de novo.",
   },

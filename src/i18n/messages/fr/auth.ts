@@ -16,6 +16,8 @@ export const auth = {
     OAuthSignin: "Impossible de lancer la connexion avec ce fournisseur. Réessaie.",
     AccessDenied: "Le fournisseur a refusé l'accès. Réessaie ou utilise l'autre fournisseur.",
     Configuration: "La connexion est mal configurée de notre côté. Réessaie dans quelques minutes.",
+    InvalidCheck:
+      "La connexion est revenue dans un autre navigateur que celui où elle a commencé — fréquent quand l'appli Discord ouvre le lien. Touche à nouveau le bouton ici et c'est bon.",
     Verification: "Ce lien de connexion a expiré ou a déjà été utilisé. Demande-en un nouveau.",
     default: "Un problème est survenu pendant la connexion. Réessaie.",
   },

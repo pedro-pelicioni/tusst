@@ -16,6 +16,8 @@ export const auth = {
     OAuthSignin: "We couldn't start the sign-in with that provider. Try again.",
     AccessDenied: "The provider denied access. Try again or use the other provider.",
     Configuration: "Sign-in is misconfigured on our side. Try again in a few minutes.",
+    InvalidCheck:
+      "The sign-in came back to a different browser than the one it started in — common when the Discord app opens the link. Tap the button again from here and you're in.",
     Verification: "That sign-in link expired or was already used. Request a new one.",
     default: "Something went wrong while signing in. Try again.",
   },

@@ -16,6 +16,8 @@ export const auth = {
     OAuthSignin: "No pudimos iniciar el acceso con ese proveedor. Inténtalo de nuevo.",
     AccessDenied: "El proveedor denegó el acceso. Inténtalo de nuevo o usa el otro proveedor.",
     Configuration: "El inicio de sesión está mal configurado de nuestro lado. Inténtalo de nuevo en unos minutos.",
+    InvalidCheck:
+      "El inicio de sesión volvió a un navegador distinto del que empezó — pasa cuando la app de Discord abre el enlace. Toca el botón otra vez desde aquí y listo.",
     Verification: "Ese enlace de acceso expiró o ya fue usado. Solicita uno nuevo.",
     default: "Algo salió mal al iniciar sesión. Inténtalo de nuevo.",
   },
