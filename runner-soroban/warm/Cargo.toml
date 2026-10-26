@@ -22,7 +22,7 @@ doctest = false
 [dependencies]
 soroban-sdk = "=26.1.1"
 # OpenZeppelin Stellar suite
-stellar-access = "=0.7.2"
+stellar-access = "=0.7.3"
 stellar-accounts = "=0.7.2"
 stellar-contract-utils = "=0.7.2"
 stellar-fee-abstraction = "=0.7.2"
