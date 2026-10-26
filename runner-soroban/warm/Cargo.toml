@@ -26,7 +26,7 @@ stellar-access = "=0.7.2"
 stellar-accounts = "=0.7.2"
 stellar-contract-utils = "=0.7.2"
 stellar-fee-abstraction = "=0.7.2"
-stellar-governance = "=0.7.2"
+stellar-governance = "=0.7.3"
 stellar-macros = "=0.7.2"
 stellar-tokens = "=0.7.2"
 # Common ecosystem crates — they target soroban-sdk 25 (their chain, incl.
