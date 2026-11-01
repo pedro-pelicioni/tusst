@@ -34,11 +34,15 @@ if (process.env.AUTH_GITHUB_ID && process.env.AUTH_GITHUB_SECRET) {
 // Discord OAuth — active only when credentials are configured.
 // "identify email" is Discord's minimal read-only pair; we keep the display
 // name (falling back to the username) + email, nothing else.
+// `issuer` is required: Discord now sends `iss=https://discord.com` on the
+// callback (RFC 9207), and without it Auth.js compares against its
+// "https://authjs.dev" placeholder and rejects every login as Configuration.
 if (process.env.AUTH_DISCORD_ID && process.env.AUTH_DISCORD_SECRET) {
   providers.push(
     Discord({
       clientId: process.env.AUTH_DISCORD_ID,
       clientSecret: process.env.AUTH_DISCORD_SECRET,
+      issuer: "https://discord.com",
       authorization: { params: { scope: "identify email" } },
       profile(p) {
         return {
