@@ -9,11 +9,14 @@ import { useMessages } from "@/i18n/client";
 /** Profile avatar that opens a dropdown with the nav links and sign out. */
 export function NavMenu({
   name,
+  level = 1,
   journeyLive = false,
   armoryOpen = false,
   signOutAction,
 }: {
   name: string;
+  /** `Character.level` — shown under the name beside the avatar */
+  level?: number;
   journeyLive?: boolean;
   /** `User.goldRevealed` — the Armory door only exists once gold does */
   armoryOpen?: boolean;
@@ -58,7 +61,7 @@ export function NavMenu({
         onClick={() => setOpen((v) => !v)}
         className="flex items-center rounded-full transition-opacity hover:opacity-80"
       >
-        <CharacterAvatar name={name} levelLabel={m.common.nav.lvl} />
+        <CharacterAvatar name={name} level={level} levelLabel={m.common.nav.lvl} />
       </button>
 
       {open && (

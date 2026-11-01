@@ -111,6 +111,7 @@ export async function Nav() {
               <LanguageSwitcher />
               <NavMenu
                 name={user.name ?? "guardian"}
+                level={pouch?.character?.level ?? 1}
                 journeyLive={JOURNEY_LIVE}
                 armoryOpen={!!pouch?.goldRevealed}
                 signOutAction={handleSignOut}
