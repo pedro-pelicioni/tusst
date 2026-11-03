@@ -39,7 +39,7 @@
     "buffer": "^6.0.3",
     "next": "16.4.3",
     "next-auth": "^5.0.0-beta.32",
-    "nodemailer": "^9.0.1",
+    "nodemailer": "^10.3.1",
     "pg": "^8.23.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
@@ -64,7 +64,7 @@
     "typescript": "^5"
   },
   "overrides": {
-    "nodemailer": "^9.0.1",
+    "nodemailer": "^10.3.1",
     "protobufjs": "^7.6.3",
     "dompurify": "^3.4.17",
     "uuid": "^14.0.1",
@@ -73,7 +73,8 @@
     "@hono/node-server": "^1.19.13",
     "axios": "^1.18.0",
     "fast-uri": "^3.1.9",
-    "brace-expansion@1": "^1.1.16",
-    "brace-expansion@5": "^5.0.7"
+    "toml": "^5.0.1",
+    "brace-expansion@1": "^1.1.21",
+    "brace-expansion@5": "^5.0.12"
   }
 }
